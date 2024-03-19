@@ -1,0 +1,28 @@
+/* src/components/BottomTabs.css */
+.bottom-tabs {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Background color of the tabs */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #ccc; /* Optional: Border at the top of the tabs */
+}
+  
+  .tab-item {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333; /* Text color of the tabs */
+  }
+  
+  .tab-item:hover {
+    background-color: #f0f0f0; /* Background color of the tabs on hover */
+  }
+  .box {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+  }

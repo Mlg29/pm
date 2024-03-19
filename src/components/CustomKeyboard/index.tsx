@@ -1,0 +1,85 @@
+// @ts-ignore
+import { useState } from "react";
+// @ts-ignore
+import {styles} from "./style.js"
+import { MdOutlineCancel } from "react-icons/md";
+import { MdCancelPresentation } from "react-icons/md";
+import { 
+        PiNumberOneBold, 
+        PiNumberTwoBold, 
+        PiNumberThreeBold, 
+        PiNumberFourBold,
+        PiNumberFiveBold,
+        PiNumberSixBold,
+        PiNumberSevenBold,
+        PiNumberEightBold,
+        PiNumberNineBold,
+        PiNumberZeroBold 
+} from "react-icons/pi";
+
+
+
+function CustomeKeyboard() {
+    const [value, setValue] = useState("")
+
+
+    const cancel = () => {
+        const newStr = value?.slice(0, -1);
+        setValue(newStr)
+
+    }
+
+
+    return (
+        <div>
+            <div>
+                <div style={{...styles.row}}>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "1")}>
+                        <PiNumberOneBold size={30} />
+                    </div>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "2")}>
+                        <PiNumberTwoBold  size={30}/>
+                    </div>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "3")}>
+                        <PiNumberThreeBold size={30} />
+                    </div>
+                </div>
+                <div style={{...styles.row}}>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "4")}>
+                        <PiNumberFourBold size={30} />
+                    </div>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "5")}>
+                        <PiNumberFiveBold size={30} />
+                    </div>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "6")}>
+                        <PiNumberSixBold size={30} />
+                    </div>
+                </div>
+                <div style={{...styles.row}}>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "7")}>
+                        <PiNumberSevenBold size={30} />
+                    </div>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "8")}>
+                        <PiNumberEightBold size={30} />
+                    </div>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "9")}>
+                        <PiNumberNineBold size={30} />
+                    </div>
+                </div>
+                <div style={{...styles.row}}>
+                    <div style={{...styles.box2}}>
+                        {/* <MdOutlineCancel size={30} />  */}
+                    </div>
+                    <div style={{...styles.box}} onClick={() => setValue(value + "0")}>
+                        <PiNumberZeroBold size={30} />
+                    </div>
+                    <div style={{...styles.box}} onClick={() => cancel()}>
+                        <MdCancelPresentation size={30} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CustomeKeyboard

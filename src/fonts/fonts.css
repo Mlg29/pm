@@ -1,0 +1,7 @@
+/* src/styles/fonts.css */
+@font-face {
+    font-family: 'Kinetika';
+    src: url('./Kinetika-Regular.ttf') format('truetype');
+    /* Additional font properties can be defined here, such as font-weight, font-style, etc. */
+  }
+  
