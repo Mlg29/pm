@@ -9,6 +9,7 @@ import Transaction from './Transaction';
 import Profile from './Profile';
 import ProtectedRoute from "../components/ProtectedRoute.jsx"
 import { useState } from 'react';
+import SignupScreen from './SignupScreen/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,6 +20,7 @@ function Routers() {
       <Route path="/"  element={<SplashScreen />} />
       <Route path="/onboarding" element={<OnboardScreen />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/sign-up" element={<SignupScreen />} />
       {/* <ProtectedRoute
             path="/home"
            element={<HomeScreen />}

@@ -1,5 +1,5 @@
 
-import splashLogo from "../../assets/images/splash.svg"
+import bigLogo from "../../assets/images/bigLogo.svg"
 // src/SplashScreen.jsx
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -21,8 +21,8 @@ const SplashScreen = () => {
   }, [navigate]);
 
   return (
-    <div>
-       <img src={splashLogo} className="logo" alt="Vite logo" />
+    <div style={{display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: 'center', height: '100%', width: "100%", backgroundColor: "#2D0D02"}}>
+       <img src={bigLogo} className="logo" alt="Vite logo" />
     </div>
   );
 };

@@ -12,8 +12,8 @@ function TextInput(props: any) {
    const [show, setShow] = useState(false)
    
     return (
-        <div>
-            <label style={{ ...FONTS.body5 }}>{label} {required ? <span style={{color: "red"}}>*</span> : null}</label>
+        <div style={{marginBottom: 10}}>
+            <label style={{ ...FONTS.body7 }}>{label} {required ? <span style={{color: "red"}}>*</span> : null}</label>
             <div style={{ ...styles.row }}>
                 {
                     type === "username" ?
