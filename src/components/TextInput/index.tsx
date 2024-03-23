@@ -6,6 +6,7 @@ import { AiOutlineEyeInvisible } from "react-icons/ai"
 // @ts-ignore
 import { FONTS } from "../../utils/fonts.js"
 import { useState } from "react";
+import { COLORS } from "../../utils/colors.js";
 
 function TextInput(props: any) {
     const { label, placeholder, required, type,value, handleChange } = props
@@ -18,11 +19,12 @@ function TextInput(props: any) {
                 {
                     type === "username" ?
                         <div style={{margin: "0px 3px 0px 0px"}}>
-                            <LuAtSign size={15} />
+                            <LuAtSign color={COLORS.primaryGray} size={15} />
                         </div>
                         : null
                 }
                 <input
+                    value={value}
                     style={{
                         ...styles.container
 

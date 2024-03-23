@@ -6,7 +6,8 @@ export const styles = {
         width: "90%",
         border: "none",
         border: "none",
-        outline: "none"
+        outline: "none",
+        padding: "5px 5px",
     },
     row: {
         display: "flex",

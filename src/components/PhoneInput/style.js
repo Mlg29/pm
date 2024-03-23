@@ -3,13 +3,14 @@ import { COLORS } from "../../utils/colors";
 
 export const styles = {
     container: {
-        width: "90%",
+        width: "100%",
         border: "none",
         border: "none",
         outline: "none",
         border: `0.1px solid ${COLORS.gray}`,
         padding: "15px 5px",
         borderRadius: 10,
+        marginTop: "5px"
     },
     row: {
         display: "flex",

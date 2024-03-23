@@ -1,25 +1,21 @@
-
-
 import { useNavigate } from "react-router-dom";
 import { styles } from "./style";
 import { useState } from "react";
 import { FONTS } from "../../utils/fonts";
-import TextInput from "../../components/TextInput";
+
 import { MdArrowBackIos } from "react-icons/md";
 import { COLORS } from "../../utils/colors";
-import PhoneInputComponent from "../../components/PhoneInput";
-import DatePickerComponent from "../../components/DatePickerComponent";
-import { MdCheckBox } from "react-icons/md";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
+
 import Button from "../../components/Button";
+import OtpComponent from "../../components/OtpComponent";
+import CustomeKeyboard from "../../components/CustomKeyboard";
 
 
 
-function SignupScreen() {
-  const [step, setStep] = useState(0)
+function VerifyScreen() {
+  const [step, setStep] = useState(1)
   const [terms, setTerms] = useState(false)
   const navigate = useNavigate();
-
 
 
   const stepLevel = () => {
@@ -37,7 +33,7 @@ function SignupScreen() {
     else if (step === 1) {
       return (
         <div style={{ ...styles.line }}>
-          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.active }}></div>
           <div style={{ ...styles.active }}></div>
           <div style={{ ...styles.inactive }}></div>
           <div style={{ ...styles.inactive }}></div>
@@ -91,60 +87,34 @@ function SignupScreen() {
       {stepLevel()}
 
       <div>
-        <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Personal Information</h3>
-        <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Let's get to know you better! Please fill in your personal details to complete your registration.</p>
+        <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Verification</h3>
+        <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Please enter the 6-digit OTP sent to your phone number lor********@gmail.com.</p>
       </div>
 
       <div style={{ marginTop: 20 }}>
-        <TextInput
-          label="First Name"
-          placeholder="Enter your first name"
-          required
+      <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+        <OtpComponent 
+        
         />
-        <TextInput
-          label="Last Name"
-          placeholder="Enter your last name"
-          required
-        />
-        <TextInput
-          label="Email"
-          placeholder="Enter your email address"
-          required
-        />
-        <TextInput
-          label="Username"
-          placeholder="Enter your username"
-          required
-          type="username"
-        />
-        <div style={{ width: "97%" }}>
-          <PhoneInputComponent
-            label="Phone Number"
-            required
-          />
-        </div>
-        <div style={{ width: "97%" }}>
-          <DatePickerComponent
-            label="Date of Birth"
-            propStyle={{ width: "100%" }}
-            required
-          />
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", margin: "20px 0px" }}>
-          {
-            terms ? <MdCheckBox size={20} onClick={() => setTerms(!terms)} />
-              : <MdCheckBoxOutlineBlank onClick={() => setTerms(!terms)} size={20} />
-          }
-          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px" }}>I agree to the Terms and Conditions.</p>
+        <div style={{display: "flex", alignItems: "center", justifyContent: "center", margin: "20px 0px 40px 0px"}}>
+            <p style={{...FONTS.body6}}>Didn’t get OTP?</p>
+            <p style={{...FONTS.h6, margin: "0px 0px 0px 3px"}}>Resend in 1:36s</p>
         </div>
 
+        <div style={{margin: "0px 0px 30px 0px"}}>
+            <CustomeKeyboard 
+            
+            />
+        </div>
+       
         <div style={{ ...styles.bottom }}>
           <div style={{ width: "100%" }}>
             <Button
-              text="Continue"
+              text="Verify"
               propStyle={{ width: "100%" }}
-              handlePress={() => navigate('/verify')}
+              handlePress={() => navigate('/create-password')}
             />
           </div>
         </div>
@@ -154,4 +124,4 @@ function SignupScreen() {
   )
 }
 
-export default SignupScreen
+export default VerifyScreen

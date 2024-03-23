@@ -4,7 +4,11 @@ import { COLORS } from "../../utils/colors";
 
 export const styles = {
     container: {
-        padding: "0px 20px"
+        display: "flex",
+        flexDirection: "column",
+        padding: "0px 20px",
+        flex: 1,
+        height: "100%"
     },
     line: {
         display: "flex",

@@ -6,15 +6,16 @@ import miniLogo from "../../assets/images/miniLogo.svg"
 import { COLORS } from "../../utils/colors";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
+import { MdArrowBackIos } from "react-icons/md";
 
 
 
 
 
-function LoginScreen() {
+function ForgetPassword() {
   const navigate = useNavigate();
-  const [phone, setPhone] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
+
 
 
 
@@ -22,10 +23,12 @@ function LoginScreen() {
   return (
     <div style={{ ...styles.container }}>
       <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-
+      <div style={{ marginTop: 10 }} onClick={() => navigate(-1)}>
+        <MdArrowBackIos size={20} style={{ padding: "16px", background: COLORS.semiGray, borderRadius: 100 }} />
+      </div>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
           <img src={miniLogo} width={100} />
-          <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}> Log In</h3>
+          <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}> Forget Password</h3>
           <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Enter your Log In credentials to gain access to your account.</p>
         </div>
 
@@ -33,30 +36,14 @@ function LoginScreen() {
 
           <TextInput
             label="Phone Number/Email Address"
-            placeholder="Enter your Phone Number/Email Addressd"
+            placeholder="Enter your Phone Number/Email Address"
             required
-            value={phone}
+            value={email}
             handleChange={(val: string) => {
-              setPhone(val)
+              setEmail(val)
             }}
           />
 
-
-
-          <TextInput
-            label="Password"
-            placeholder="Enter your password"
-            required
-            type="password"
-            value={password}
-            handleChange={(val: string) => {
-              setPassword(val)
-            }}
-          />
-
-          <div style={{ margin: "20px 0px" }}>
-            <p style={{ ...FONTS.body7, fontWeight: 'bold', color: `${COLORS.primary}`, textAlign: 'right' }} onClick={() => navigate("/forget-password")}>Forget Password?</p>
-          </div>
         </div>
       </div>
 
@@ -69,11 +56,6 @@ function LoginScreen() {
               handlePress={() => navigate('/pin')}
             />
           </div>
-
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0px"}}>
-          <p style={{ ...FONTS.body6 }}>Don’t have an account? </p>
-            <p style={{ ...FONTS.h6, margin: "0px 3px" }} onClick={() => navigate('/sign-up')}> Create Account</p>
-          </div>
         </div>
       </div>
 
@@ -82,4 +64,4 @@ function LoginScreen() {
   )
 }
 
-export default LoginScreen
+export default ForgetPassword

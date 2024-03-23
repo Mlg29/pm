@@ -20,7 +20,7 @@ function OtpComponent() {
       onPaste={handlePaste}
       renderSeparator={<span style={{width: 10}}></span>}
       renderInput={(props) => <input {...props} /> }
-      inputStyle={{width: "50px", height: "50px"}}
+      inputStyle={{width: "35px", height: "35px"}}
     />
   );
 }

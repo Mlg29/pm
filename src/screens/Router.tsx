@@ -10,6 +10,12 @@ import Profile from './Profile';
 import ProtectedRoute from "../components/ProtectedRoute.jsx"
 import { useState } from 'react';
 import SignupScreen from './SignupScreen/index.js';
+import VerifyScreen from './VerifyScreen/index.js';
+import PasswordScreen from './PasswordScreen/index.js';
+import TransactionPin from './TransactionPin/index.js';
+import SecretQuestion from './SecretQuestion/index.js';
+import AuthSuccess from './AuthSuccess/index.js';
+import ForgetPassword from './ForgetPassword/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -21,6 +27,12 @@ function Routers() {
       <Route path="/onboarding" element={<OnboardScreen />} />
       <Route path="/login" element={<Login />} />
       <Route path="/sign-up" element={<SignupScreen />} />
+      <Route path="/verify" element={<VerifyScreen />} />
+      <Route path="/create-password" element={<PasswordScreen />} />
+      <Route path="/pin" element={<TransactionPin />} />
+      <Route path="/secret-question" element={<SecretQuestion />} />
+      <Route path="/auth-success" element={<AuthSuccess />} />
+      <Route path="/forget-password" element={<ForgetPassword />} />
       {/* <ProtectedRoute
             path="/home"
            element={<HomeScreen />}

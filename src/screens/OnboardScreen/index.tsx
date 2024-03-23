@@ -75,7 +75,7 @@ function OnboardScreen() {
         propStyle={{width: "100%"}}
         handlePress={() =>  navigate('/sign-up')}
       />
-      <p style={{...FONTS.h6, textAlign: 'center'}} onClick={() =>  navigate('/login')}>I already have an account?</p>
+      <p style={{...FONTS.h6, textAlign: 'center', marginTop: "20px"}} onClick={() =>  navigate('/login')}>I already have an account?</p>
       </div>
     </div>
 

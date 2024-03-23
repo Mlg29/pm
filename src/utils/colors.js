@@ -15,4 +15,5 @@ export const COLORS = {
     orange: "#FFA133",
     dimRed: "#D94355",
     cream: "#F9F2F1",
+    primaryGray: "#666666"
  };

@@ -8,19 +8,23 @@ import { styles } from "./style.js"
 import { FONTS } from "../../utils/fonts.js"
 
 
-function PhoneInputComponent() {
+function PhoneInputComponent({ label, required }: any) {
     const [value, setValue] = useState<any>()
 
 
     return (
-     <div style={{...styles.container}}>
-         <PhoneInput
-        placeholder="Enter phone number"
-        value={value}
-        defaultCountry="NG"
-        style={{padding: 5}}
-        onChange={setValue}/>
-     </div>
+        <div style={{marginBottom: 10}}>
+            <label style={{ ...FONTS.body7 }}>{label} {required ? <span style={{color: "red"}}>*</span> : null}</label>
+            <div style={{ ...styles.container }}>
+                <PhoneInput
+                    placeholder="Enter phone number"
+                    value={value}
+                    defaultCountry="NG"
+                    style={{ padding: 5 }}
+                    onChange={setValue} />
+            </div>
+        </div>
+
     )
 }
 
