@@ -13,10 +13,11 @@ import { IoIosTennisball } from "react-icons/io";
 import { MdSportsRugby } from "react-icons/md";
 import { COLORS } from '../../utils/colors';
 import GameCard from '../../components/GameCard';
+import { useNavigate } from 'react-router-dom';
 
 
 function HomeScreen() {
-
+const navigate = useNavigate()
   const itemList = [
     {
       id: 1,
@@ -59,7 +60,7 @@ function HomeScreen() {
           <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>Hi Samson 0.</h3>
         </div>
 
-        <img src={notification} />
+        <img src={notification} onClick={() => navigate("/notification")} />
 
       </div>
 
@@ -80,7 +81,7 @@ function HomeScreen() {
                 {
                   info?.name === "More" ? <img src={info?.image} /> : info?.image
                 }
-                <p style={{...FONTS.body6, color: info?.name === "Soccer" ? COLORS.white : COLORS.primary, margin: "0px 5px"}}>{info?.name}</p>
+                <p style={{...FONTS.h6, color: info?.name === "Soccer" ? COLORS.white : COLORS.primary, margin: "0px 5px"}}>{info?.name}</p>
                 </div>
               </div>
             )

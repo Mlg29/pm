@@ -16,6 +16,8 @@ import TransactionPin from './TransactionPin/index.js';
 import SecretQuestion from './SecretQuestion/index.js';
 import AuthSuccess from './AuthSuccess/index.js';
 import ForgetPassword from './ForgetPassword/index.js';
+import NotificationScreen from './NotificationScreen/index.js';
+import GameDetails from './GameDetails/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,6 +34,7 @@ function Routers() {
       <Route path="/pin" element={<TransactionPin />} />
       <Route path="/secret-question" element={<SecretQuestion />} />
       <Route path="/auth-success" element={<AuthSuccess />} />
+      <Route path="/notification" element={<NotificationScreen />} />
       <Route path="/forget-password" element={<ForgetPassword />} />
       {/* <ProtectedRoute
             path="/home"
@@ -58,6 +61,7 @@ function Routers() {
       <Route path="/bet-slip" element={<BetSlip />} />
        <Route path="/transaction" element={<Transaction />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/game-details" element={<GameDetails />} />
     </Routes>
   </Router>
   )

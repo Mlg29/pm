@@ -6,7 +6,7 @@ import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
 import { styles } from "./style"
 
-function GameCard() {
+function GameDetailCardHeader() {
     const navigate = useNavigate()
 
   return (
@@ -30,15 +30,9 @@ function GameCard() {
 
         </div>
 
-        <div style={{...styles.row2}}>
-            <div style={{...styles.box}}>Home Win</div>
-            <div style={{...styles.box}}>Draw</div>
-            <div style={{...styles.box}}>Away Win</div>
-        </div>
-
 
     </div>
   )
 }
 
-export default GameCard
+export default GameDetailCardHeader
