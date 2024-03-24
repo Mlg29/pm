@@ -8,6 +8,7 @@ import { FONTS } from "../../utils/fonts.js"
 import { useState } from "react";
 import { COLORS } from "../../utils/colors.js";
 
+
 function TextInput(props: any) {
     const { label, placeholder, required, type,value, handleChange } = props
    const [show, setShow] = useState(false)
@@ -18,7 +19,7 @@ function TextInput(props: any) {
             <div style={{ ...styles.row }}>
                 {
                     type === "username" ?
-                        <div style={{margin: "0px 3px 0px 0px"}}>
+                        <div style={{margin: "0px 3px 0px 0px",  display: "flex", justifyContent: 'center'}}>
                             <LuAtSign color={COLORS.primaryGray} size={15} />
                         </div>
                         : null
@@ -35,7 +36,7 @@ function TextInput(props: any) {
                 />
                 {
                     type === "password" ?
-                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                            {
                             !show ? <AiOutlineEyeInvisible size={20} onClick={() => setShow(!show)} />
                             : <AiOutlineEye size={20} onClick={() => setShow(!show)} />

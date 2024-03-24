@@ -64,9 +64,9 @@ function LoginScreen() {
         <div style={{ ...styles.bottom }}>
           <div style={{ width: "100%" }}>
             <Button
-              text="Continue"
+              text="Log In"
               propStyle={{ width: "100%" }}
-              handlePress={() => navigate('/pin')}
+              handlePress={() => navigate('/home')}
             />
           </div>
 

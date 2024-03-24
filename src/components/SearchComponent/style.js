@@ -6,9 +6,9 @@ export const styles = {
         width: "90%",
         border: "none",
         border: "none",
-        background: "transparent",
         outline: "none",
-        padding: "5px 5px",
+        padding: "0px 5px",
+        background: "transparent"
     },
     row: {
         display: "flex",
@@ -16,6 +16,7 @@ export const styles = {
         alignItems: "center",
         padding: "15px 5px",
         borderRadius: 10,
+        background: COLORS.secondaryGray,
         margin: "5px 0px 0px 0px",
         border: `0.1px solid ${COLORS.gray}`
     }
