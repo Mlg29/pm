@@ -18,6 +18,7 @@ import AuthSuccess from './AuthSuccess/index.js';
 import ForgetPassword from './ForgetPassword/index.js';
 import NotificationScreen from './NotificationScreen/index.js';
 import GameDetails from './GameDetails/index.js';
+import BetDetail from './BetDetail/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -62,6 +63,7 @@ function Routers() {
        <Route path="/transaction" element={<Transaction />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/game-details" element={<GameDetails />} />
+      <Route path="/bet-detail" element={<BetDetail />} />
     </Routes>
   </Router>
   )

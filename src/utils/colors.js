@@ -16,5 +16,6 @@ export const COLORS = {
     dimRed: "#D94355",
     cream: "#F9F2F1",
     primaryGray: "#666666",
-    secondaryGray: "#F9F9F9"
+    secondaryGray: "#F9F9F9",
+    lightOrange: "#F5D9B5"
  };

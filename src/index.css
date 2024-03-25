@@ -1,5 +1,5 @@
 :root {
-  font-family: "Poppins", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Poppins, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,6 +11,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-internal-autofill-selected {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important; /* Change the color to match your background */
 }
 
 a {
@@ -26,9 +33,9 @@ p {
   margin: 0px;
 }
 
-h1 h2 h3 h4 h5 h6 {
-  margin: 0px;
-}
+/* h1 h2 h3 h4 h5 h6 p {
+  margin: "0px 0px 0px 0px !important";
+} */
 
 body {
   margin: 0;
@@ -39,10 +46,6 @@ body {
   width: 100%;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
 
 button {
   border-radius: 8px;

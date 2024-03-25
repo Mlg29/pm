@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { RiFileList3Fill } from "react-icons/ri";
 import { RiFileList3Line } from "react-icons/ri";
+import { FONTS } from '../../utils/fonts';
 
 
 
@@ -25,7 +26,7 @@ const BottomTabs = () => {
           {
             location?.pathname === "/home" ?<HiHome size={25} color="#2D0D02" /> : <HiOutlineHome size={25} color='#979797' />
           }
-          <div style={{color: location?.pathname === "/home" ? "#2D0D02" : "#979797" }}>Home</div>
+          <div style={{...FONTS.body7,color: location?.pathname === "/home" ? "#2D0D02" : "#979797" }}>Home</div>
         </div>
       </Link>
       <Link to="/bet-slip" className="tab-item">
@@ -33,7 +34,7 @@ const BottomTabs = () => {
           {
             location?.pathname === "/bet-slip" ? <RiFileList3Fill size={25} color="#2D0D02" /> :  <RiFileList3Line size={25}  color='#979797'/>
           }
-          <div style={{color: location?.pathname === "/bet-slip" ? "#2D0D02" : "#979797" }}>Bet Slip</div>
+          <div style={{...FONTS.body7,color: location?.pathname === "/bet-slip" ? "#2D0D02" : "#979797" }}>BetSlip</div>
         </div>
       </Link>
       <Link to="/transaction" className="tab-item">
@@ -41,7 +42,7 @@ const BottomTabs = () => {
         {
           location?.pathname === "/transaction" ? <PiWalletFill size={25} color="#2D0D02"  /> : <PiWalletLight size={25}  color='#979797' />  
         }
-          <div style={{color: location?.pathname === "/transaction" ? "#2D0D02" : "#979797" }}>Transaction</div>
+          <div style={{...FONTS.body7,color: location?.pathname === "/transaction" ? "#2D0D02" : "#979797" }}>Transaction</div>
         </div>
       </Link>
       <Link to="/profile" className="tab-item">
@@ -49,7 +50,7 @@ const BottomTabs = () => {
         {
           location?.pathname === "/profile" ? <FaUser size={25} color="#2D0D02" /> : <FaRegUser  size={25}  color='#979797'/>
         }
-          <div style={{color: location?.pathname === "/profile" ? "#2D0D02" : "#979797" }}>Profile</div>
+          <div style={{...FONTS.body7,color: location?.pathname === "/profile" ? "#2D0D02" : "#979797" }}>Profile</div>
         </div>
       </Link>
     </div>
