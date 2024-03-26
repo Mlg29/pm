@@ -17,5 +17,7 @@ export const COLORS = {
     cream: "#F9F2F1",
     primaryGray: "#666666",
     secondaryGray: "#F9F9F9",
-    lightOrange: "#F5D9B5"
+    lightOrange: "#F5D9B5",
+    lightGreen: "#D3FAD2",
+    lightRed: "#FDDEDE"
  };

@@ -2,7 +2,10 @@
 
 import './App.css'
 // @ts-ignore
-
+{
+  /* The following line can be included in your src/index.js or App.js file */
+}
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Routers from './screens/Router';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';

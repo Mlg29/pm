@@ -19,6 +19,10 @@ import ForgetPassword from './ForgetPassword/index.js';
 import NotificationScreen from './NotificationScreen/index.js';
 import GameDetails from './GameDetails/index.js';
 import BetDetail from './BetDetail/index.js';
+import TransactionList from './TransactionList/index.js';
+import Deposit from './Deposit/index.js';
+import Withdrawal from './Withdrawal/index.js';
+import PaymentOptions from './PaymentOptions/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -64,6 +68,10 @@ function Routers() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/game-details" element={<GameDetails />} />
       <Route path="/bet-detail" element={<BetDetail />} />
+      <Route path="/transaction-list" element={<TransactionList />} />
+      <Route path="/deposit" element={<Deposit />} />
+      <Route path="/withdrawal" element={<Withdrawal />} />
+      <Route path="/payment-options" element={<PaymentOptions />} />
     </Routes>
   </Router>
   )

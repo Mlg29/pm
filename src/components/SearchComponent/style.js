@@ -14,7 +14,7 @@ export const styles = {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: "15px 5px",
+        padding: "15px 10px",
         borderRadius: 10,
         background: COLORS.secondaryGray,
         margin: "5px 0px 0px 0px",

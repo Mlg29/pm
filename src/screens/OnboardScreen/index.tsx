@@ -60,7 +60,7 @@ function OnboardScreen() {
       {/* <div onClick={handleNext} style={{display: "flex", justifyContent: "flex-end", padding: "0px 20px"}}>
         <h3>Next</h3>
       </div> */}
-      <div style={{padding: "0px 20px"}}>
+      <div style={{padding: "2rem 20px"}}>
         <h3 style={{...FONTS.h2, fontWeight: 'bold'}}>Quickly receive payment after winning</h3>
       </div>
 
