@@ -16,10 +16,12 @@ import {
         PiNumberNineBold,
         PiNumberZeroBold 
 } from "react-icons/pi";
+import { TbFaceIdError } from "react-icons/tb";
+import { COLORS } from "../../utils/colors.js";
 
 
-
-function CustomeKeyboard() {
+function CustomeKeyboard(props: any) {
+    const {isFaceId} = props
     const [value, setValue] = useState("")
 
 
@@ -68,6 +70,9 @@ function CustomeKeyboard() {
                 </div>
                 <div style={{...styles.row}}>
                     <div style={{...styles.box2}}>
+                        {
+                            isFaceId ? <TbFaceIdError  size={70} color={COLORS.gray} /> : null
+                        }
                         {/* <MdOutlineCancel size={30} />  */}
                     </div>
                     <div style={{...styles.box}} onClick={() => setValue(value + "0")}>

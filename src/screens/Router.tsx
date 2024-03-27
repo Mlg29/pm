@@ -23,6 +23,10 @@ import TransactionList from './TransactionList/index.js';
 import Deposit from './Deposit/index.js';
 import Withdrawal from './Withdrawal/index.js';
 import PaymentOptions from './PaymentOptions/index.js';
+import BankTransfer from './PaymentOptions/BankTransfer.js';
+import WalletPin from './PaymentOptions/WalletPin.js';
+import FundWallet from './PaymentOptions/FundWallet.js';
+import BankWithdraw from './Withdrawal/BankWithdraw.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -72,6 +76,10 @@ function Routers() {
       <Route path="/deposit" element={<Deposit />} />
       <Route path="/withdrawal" element={<Withdrawal />} />
       <Route path="/payment-options" element={<PaymentOptions />} />
+      <Route path="/bank-transfer" element={<BankTransfer />} />
+      <Route path="/wallet-pin" element={<WalletPin />} />
+      <Route path="/fund-wallet" element={<FundWallet />} />
+      <Route path="/bank-withdraw" element={<BankWithdraw />} />
     </Routes>
   </Router>
   )
