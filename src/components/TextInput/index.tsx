@@ -10,13 +10,13 @@ import { COLORS } from "../../utils/colors.js";
 
 
 function TextInput(props: any) {
-    const { label, placeholder, required, type,value, handleChange } = props
+    const { label, placeholder, required, type,value,disabled, handleChange } = props
    const [show, setShow] = useState(false)
    
     return (
         <div style={{marginBottom: 10}}>
             <label style={{ ...FONTS.body7 }}>{label} {required ? <span style={{color: "red"}}>*</span> : null}</label>
-            <div style={{ ...styles.row }}>
+            <div style={{ ...styles.row, backgroundColor: disabled ? COLORS.semiGray : "none" }}>
                 {
                     type === "username" ?
                         <div style={{margin: "0px 3px 0px 0px",  display: "flex", justifyContent: 'center'}}>
@@ -27,9 +27,9 @@ function TextInput(props: any) {
                 <input
                     value={value}
                     style={{
-                        ...styles.container
-
+                        ...styles.container,
                     }}
+                    disabled={disabled}
                     type={show ? "text" : type === "password" ? "password": "text"}
                     placeholder={placeholder}
                     onChange={(e) => handleChange(e?.target?.value)}

@@ -27,6 +27,11 @@ import BankTransfer from './PaymentOptions/BankTransfer.js';
 import WalletPin from './PaymentOptions/WalletPin.js';
 import FundWallet from './PaymentOptions/FundWallet.js';
 import BankWithdraw from './Withdrawal/BankWithdraw.js';
+import EditProfile from './Profile/EditProfile.js';
+import ProfileDetail from './Profile/ProfileDetail.js';
+import Security from './Security/index.js';
+import Preference from './NotificationScreen/Preference.js';
+import Language from './NotificationScreen/Language.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,6 +85,13 @@ function Routers() {
       <Route path="/wallet-pin" element={<WalletPin />} />
       <Route path="/fund-wallet" element={<FundWallet />} />
       <Route path="/bank-withdraw" element={<BankWithdraw />} />
+      <Route path="/edit-profile" element={<EditProfile />} />
+      <Route path="/profile-detail" element={<ProfileDetail />} />
+      <Route path="/security" element={<Security />} />
+      <Route path="/notification-preference" element={<Preference />} />
+      <Route path="/language" element={<Language />} />
+    
+    
     </Routes>
   </Router>
   )
