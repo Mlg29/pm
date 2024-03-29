@@ -1,10 +1,35 @@
-// @ts-ignore
-import { styles } from "./style.js"
+
 import { CiSearch } from "react-icons/ci";
 // @ts-ignore
 import { FONTS } from "../../utils/fonts.js"
 import { COLORS } from "../../utils/colors.js";
 import { IoFilterOutline } from "react-icons/io5";
+
+
+type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
+
+
+
+export const styles = {
+    container: {
+        width: "90%",
+        border: "none",
+        outline: "none",
+        padding: "0px 5px",
+        background: "transparent"
+    },
+    row: {
+        display: "flex",
+        flexDirection: "row" as FlexDirection,
+        alignItems: "center",
+        padding: "15px 10px",
+        borderRadius: 10,
+        background: COLORS.secondaryGray,
+        margin: "5px 0px 0px 0px",
+        border: `0.1px solid ${COLORS.gray}`
+    }
+}
+
 
 function SearchInput(props: any) {
     const { placeholder, value, handleChange, allowFilter, handleFilterClick } = props

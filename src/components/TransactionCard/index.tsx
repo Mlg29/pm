@@ -4,11 +4,12 @@ import colorSend2 from "../../assets/images/color-send2.svg"
 import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
 
+type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 
 const styles = {
     container: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "row" as FlexDirection,
         justifyContent: "space-between",
         alignItems: "center",
         margin: "2rem 0px",
@@ -35,7 +36,7 @@ const styles = {
     },
     box2: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column" as FlexDirection,
         justifyContent: "flex-end",
         alignItems: "flex-end",
     }

@@ -7,19 +7,20 @@ import Header from "../../components/Header"
 import { COLORS } from "../../utils/colors"
 import { useState } from "react"
 import { FONTS } from "../../utils/fonts"
+import { FlexDirection } from "../../utils/type"
 
 
 const styles = {
     container: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column" as FlexDirection,
         padding: "0px 20px",
         flex: 1,
         height: "100%"
     },
     line: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "row" as FlexDirection,
         justifyContent: "space-between",
         alignItems: "center",
         padding: "30px 20px 0px 20px"

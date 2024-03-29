@@ -5,25 +5,26 @@ import { FONTS } from "../../utils/fonts"
 import { COLORS } from "../../utils/colors"
 import trash from "../../assets/images/trash.svg"
 import { useNavigate } from "react-router-dom"
+import { FlexDirection } from "../../utils/type"
 
 const styles = {
     container: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column" as FlexDirection,
         flex: 1,
         height: "100%",
         padding: "16px",
     },
     center: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column" as FlexDirection,
         justifyContent: "center",
         alignItems: "center",
         margin: "1rem 0px"
     },
     row: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "row" as FlexDirection,
         justifyContent: "space-between",
         alignItems: "center",
         borderBottom: `1px solid ${COLORS.semiGray}`,

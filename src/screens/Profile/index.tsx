@@ -10,6 +10,7 @@ import notification from "../../assets/images/notification1.svg"
 import user from "../../assets/images/user1.svg"
 import arrowRight from "../../assets/images/arrow-right.svg"
 import { useNavigate } from "react-router-dom"
+import { FlexDirection } from "../../utils/type"
 
 const styles = {
   container: {
@@ -19,7 +20,7 @@ const styles = {
   },
   center: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as FlexDirection,
     justifyContent: "center",
     alignItems: "center",
     margin: "1rem 0px"

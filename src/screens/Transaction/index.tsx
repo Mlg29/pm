@@ -13,6 +13,7 @@ import send1 from "../../assets/images/send-1.svg"
 import send2 from "../../assets/images/send-2.svg"
 import TransactionCard from '../../components/TransactionCard';
 import { useNavigate } from 'react-router-dom';
+import { FlexDirection } from '../../utils/type';
 
 
 const styles = {
@@ -29,7 +30,7 @@ const styles = {
   },
   ctn: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as FlexDirection,
     justifyContent: 'center',
     alignItems: "center",
     margin: "2rem 0px"

@@ -1,7 +1,5 @@
 // @ts-ignore
 import { useState } from "react";
-// @ts-ignore
-import {styles} from "./style.js"
 import { MdOutlineCancel } from "react-icons/md";
 import { MdCancelPresentation } from "react-icons/md";
 import { 
@@ -19,6 +17,38 @@ import {
 import { TbFaceIdError } from "react-icons/tb";
 import { COLORS } from "../../utils/colors.js";
 
+type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
+
+export const styles = {
+    container: {
+        width: "100%",
+        padding: "17px"
+    },
+    row: {
+        display: "flex",
+        flexDirection: "row" as FlexDirection,
+        justifyContent: "space-around",
+        width: "100%",
+        margin: "20px 0px 0px 0px"
+    },
+    box: {
+         width: 80,
+         height: 80,
+         display: 'flex',
+        justifyContent: "center",
+        alignItems: 'center',
+        borderRadius: "50%",
+        background: `${COLORS.semiGray}`
+    },
+    box2: {
+        width: 80,
+        height: 80,
+        display: 'flex',
+       justifyContent: "center",
+       alignItems: 'center',
+       borderRadius: "50%",
+    }
+}
 
 function CustomeKeyboard(props: any) {
     const {isFaceId} = props

@@ -4,6 +4,7 @@ import CustomeKeyboard from "../../components/CustomKeyboard"
 import Header from "../../components/Header"
 import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
+import { TextAlign } from "../../utils/type"
 
 
 const styles = {
@@ -12,7 +13,7 @@ const styles = {
         padding: 30,
         border: "none",
         outline: "none",
-        textAlign: "center",
+        textAlign: "center" as TextAlign,
         fontSize: "40px",
         fontWight: "600",
         fontFamily: "Poppins"

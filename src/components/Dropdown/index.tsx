@@ -1,9 +1,25 @@
 
 
+import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts"
-import { styles } from "./style"
+
+type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 
 
+
+export const styles = {
+    container: {
+        display: "flex",
+        flexDirection: "column" as FlexDirection
+    },
+    select: {
+        padding: "18px 5px",
+        borderRadius: 10,
+        margin: "5px 0px 0px 0px",
+        border: `0.1px solid ${COLORS.gray}`,
+        outline: "none"
+    }
+}
 
 function Dropdown(props: any) {
     const { data, handleSelect, label, placeholder, required } = props

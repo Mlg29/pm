@@ -1,5 +1,4 @@
-// @ts-ignore
-import { styles } from "./style.js"
+
 import { LuAtSign } from "react-icons/lu";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai"
@@ -7,6 +6,28 @@ import { AiOutlineEyeInvisible } from "react-icons/ai"
 import { FONTS } from "../../utils/fonts.js"
 import { useState } from "react";
 import { COLORS } from "../../utils/colors.js";
+
+type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
+
+
+export const styles = {
+    container: {
+        width: "90%",
+        border: "none",
+        background: "none",
+        outline: "none",
+        padding: "5px 5px",
+    },
+    row: {
+        display: "flex",
+        flexDirection: "row" as FlexDirection,
+        alignItems: "center",
+        padding: "15px 5px",
+        borderRadius: 10,
+        margin: "5px 0px 0px 0px",
+        border: `0.1px solid ${COLORS.gray}`
+    }
+}
 
 
 function TextInput(props: any) {

@@ -72,7 +72,7 @@ const navigate = useNavigate()
         <img src={slider} style={{width: "100%"}} />
       </div>
 
-      <div style={{ display: "flex", overflowX: 'auto', whiteSpace: 'nowrap', margin: "10px 0px", scrollbarWidth: 'none', '-ms-overflow-style': 'none' }}>
+      <div style={{ display: "flex", overflowX: 'auto', whiteSpace: 'nowrap', margin: "10px 0px", scrollbarWidth: 'none' }}>
         {
           itemList?.map((info: any) => {
             return (

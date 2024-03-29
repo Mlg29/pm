@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { styles } from "./style";
 import { useState } from "react";
 import { FONTS } from "../../utils/fonts";
 
@@ -12,6 +11,46 @@ import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { FlexDirection } from "../../utils/type";
+
+
+
+
+export const styles = {
+    container: {
+        display: "flex",
+        flexDirection: "column" as FlexDirection,
+        padding: "0px 20px",
+        flex: 1,
+        height: "100%"
+    },
+    line: {
+        display: "flex",
+        flexDirection: "row" as FlexDirection,
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "30px 20px 0px 20px"
+    },
+    active: {
+        backgroundColor: COLORS.primary,
+        width: 60,
+        height: 5,
+        borderRadius: 10
+    },
+    inactive: {
+        backgroundColor: COLORS.semiGray,
+        width: 60,
+        height: 5,
+        borderRadius: 10
+    },
+    bottom: {
+        display: 'flex',
+        flexDirection: "column" as FlexDirection,
+        justifyContent: 'center',
+        alignItems: "center",
+        margin: "0px 0px 10px 0px"
+    }
+}
 
 function PasswordScreen() {
     const [step, setStep] = useState(2)
