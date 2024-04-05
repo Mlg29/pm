@@ -12,6 +12,7 @@ import { MdCheckBox } from "react-icons/md";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import Button from "../../components/Button";
 import { FlexDirection } from "../../utils/type";
+import BackButton from "../../components/BackButton";
 
 
 
@@ -120,8 +121,8 @@ function SignupScreen() {
 
   return (
     <div style={{ ...styles.container }}>
-      <div style={{ marginTop: 10 }} onClick={() => navigate(-1)}>
-        <MdArrowBackIos size={20} style={{ padding: "16px", background: COLORS.semiGray, borderRadius: 100 }} />
+      <div style={{ marginTop: 10 }}>
+       <BackButton />
       </div>
       {stepLevel()}
 

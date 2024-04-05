@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FONTS } from "../../utils/fonts"
 import quick from "../../assets/images/quick.svg"
+import high from "../../assets/images/high.svg"
 import Button from "../../components/Button"
 import { useNavigate } from "react-router-dom"
 import { FlexDirection, ObjectFit } from "../../utils/type"
@@ -39,7 +40,6 @@ export const styles =  {
       borderRadius: 10
   },
   bg: {
-      backgroundColor: COLORS.semiGray,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -115,7 +115,7 @@ function OnboardScreen() {
       </div>
 
     <div style={{...styles.bg}}>
-      <img src={quick} />
+      <img src={high} style={{width: '90%'}} />
     </div>
 
     <div style={{...styles.bottom}}>

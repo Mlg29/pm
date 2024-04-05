@@ -19,7 +19,7 @@ function DatePickerComponent(props: any) {
         <div style={{ ...styles.row, width: "300px", ...propStyle, background: disabled ? COLORS.semiGray : "none" }}>
             <button onClick={disabled ? () => {} : onClick} style={{ width: "100%", textAlign: "left", background: "transparent", outline: "none", border: "none" }} ref={ref}>
                 {/* {value} */}
-                <p style={{...FONTS.body6, margin: "0px"}}>{value}</p>
+                <p style={{...FONTS.body6, margin: "0px", color: COLORS.primary}}>{value}</p>
             </button>
             <LuCalendarDays size={25} onClick={onClick} color={COLORS.primaryGray} />
         </div>

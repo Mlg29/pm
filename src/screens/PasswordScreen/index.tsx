@@ -12,6 +12,7 @@ import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { FlexDirection } from "../../utils/type";
+import BackButton from "../../components/BackButton";
 
 
 
@@ -48,7 +49,7 @@ export const styles = {
         flexDirection: "column" as FlexDirection,
         justifyContent: 'center',
         alignItems: "center",
-        margin: "0px 0px 10px 0px"
+        margin: "1rem 0px 10px 0px"
     }
 }
 
@@ -151,8 +152,8 @@ function PasswordScreen() {
     return (
         <div style={{ ...styles.container }}>
             <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-            <div style={{ marginTop: 10 }} onClick={() => navigate(-1)}>
-                <MdArrowBackIos size={20} style={{ padding: "16px", background: COLORS.semiGray, borderRadius: 100 }} />
+            <div style={{ marginTop: 10 }}>
+                <BackButton />
             </div>
             {stepLevel()}
 

@@ -13,6 +13,7 @@ import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import Dropdown from "../../components/Dropdown";
 import { FlexDirection } from "../../utils/type";
+import BackButton from "../../components/BackButton";
 
 
 
@@ -126,8 +127,8 @@ function SecretQuestion() {
     return (
         <div style={{ ...styles.container }}>
             <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-                <div style={{ marginTop: 10 }} onClick={() => navigate(-1)}>
-                    <MdArrowBackIos size={20} style={{ padding: "16px", background: COLORS.semiGray, borderRadius: 100 }} />
+                <div style={{ marginTop: 10 }}>
+                    <BackButton />
                 </div>
                 {stepLevel()}
 

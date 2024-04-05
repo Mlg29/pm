@@ -6,6 +6,13 @@ import { COLORS } from "../../utils/colors"
 import trash from "../../assets/images/trash.svg"
 import { useNavigate } from "react-router-dom"
 import { FlexDirection } from "../../utils/type"
+import { useState } from "react"
+import { Modal } from 'react-bootstrap';
+
+
+
+
+
 
 const styles = {
     container: {
@@ -40,6 +47,13 @@ const styles = {
 
 function ProfileDetail() {
     const navigate = useNavigate()
+    const [show, setShow] = useState(false);
+
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    
     return (
         <div style={{ ...styles.container }}>
             <Header
@@ -75,7 +89,7 @@ function ProfileDetail() {
                     </div>
                 </div>
 
-                <div style={{...styles.trash}}>
+                <div style={{...styles.trash}} onClick={() => handleShow()}>
                     <img src={trash} />
                     <h3 style={{...FONTS.h6, color: COLORS.red, margin: "0px 0px 0px 10px"}}>Delete Account</h3>
                 </div>
@@ -89,6 +103,36 @@ function ProfileDetail() {
                     handlePress={() => navigate("/edit-profile")}
                 />
             </div>
+
+
+
+            <Modal centered show={show} onHide={handleClose}>
+        <Modal.Body>
+          <p style={{ ...FONTS.h6, marginBottom: "10px", textAlign: "center" }}>Delete Account</p>
+          <p style={{ ...FONTS.body6, marginBottom: "10px", textAlign: "center" }}>You won’t be able to access your data again once you delete your account.</p>
+
+
+          <div style={{ marginTop: "20px" }}>
+
+            <div style={{ width: "100%", marginTop: "20px" }}>
+              <Button
+                text="Yes, Delete my account"
+                propStyle={{ width: "100%", backgroundColor: COLORS.red, color: COLORS.white }}
+
+              />
+            </div>
+            <div style={{ width: "100%", margin: "20px 0px" }}>
+              <Button
+                text="Cancel"
+                propStyle={{ width: "100%", backgroundColor: COLORS.white, color: COLORS.primary, border: `1px solid ${COLORS.primary}` }}
+                handlePress={() => handleClose()}
+              />
+            </div>
+          </div>
+
+        </Modal.Body>
+
+      </Modal>
         </div>
     )
 }

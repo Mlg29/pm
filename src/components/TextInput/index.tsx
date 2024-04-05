@@ -17,6 +17,7 @@ export const styles = {
         background: "none",
         outline: "none",
         padding: "5px 5px",
+        color: COLORS.primary
     },
     row: {
         display: "flex",
@@ -54,6 +55,7 @@ function TextInput(props: any) {
                     type={show ? "text" : type === "password" ? "password": "text"}
                     placeholder={placeholder}
                     onChange={(e) => handleChange(e?.target?.value)}
+                    
                 />
                 {
                     type === "password" ?

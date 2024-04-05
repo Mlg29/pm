@@ -27,7 +27,7 @@ function Security() {
             id: 1,
             name: "Biometrics",
             image: scan,
-            // handleRoute: () => navigate("/bank-withdraw")
+            handleRoute: () => navigate("/biometrics")
         },
         {
             id: 2,
@@ -54,20 +54,20 @@ function Security() {
 <div>
                 {
                     dataList?.map((data: any) => {
-                        return <div key={data?.id} style={{ ...styles.row }}>
-                            <img src={data?.image} onClick={data?.handleRoute} />
+                        return <div key={data?.id} style={{ ...styles.row }} onClick={data?.handleRoute}>
+                            <img src={data?.image}  />
                             <div onClick={data?.handleRoute} style={{ margin: "0px 10px", width: "100%" }}>
                                 <h3 style={{ ...FONTS.body6, margin: "0px" }}>{data?.name}</h3>
                             </div>
-                            {
+                            {/* {
                                 data?.name === "Biometrics" ?  <Form.Check // prettier-ignore
                                 type="switch"
                                 id="custom-switch"
                                 style={{ transform: 'scale(1.7)' }}
                               />
                               :  <img src={arrowright} />
-                            }
-                          
+                            } */}
+                          <img src={arrowright} />
                         </div>
                     })
                 }

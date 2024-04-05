@@ -19,5 +19,6 @@ export const COLORS = {
     secondaryGray: "#F9F9F9",
     lightOrange: "#F5D9B5",
     lightGreen: "#D3FAD2",
-    lightRed: "#FDDEDE"
+    lightRed: "#FDDEDE",
+    lightGray: "#E6E6E6"
  };

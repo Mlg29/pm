@@ -12,7 +12,7 @@ const styles = {
         flexDirection: "row" as FlexDirection,
         justifyContent: "space-between",
         alignItems: "center",
-        margin: "2rem 0px",
+        margin: "1rem 0px",
         paddingBottom: "20px",
         borderBottom: `1px solid ${COLORS.semiGray}`
     },
@@ -59,7 +59,7 @@ function TransactionCard(props: any) {
             <h3 style={{ ...FONTS.h6, width: "50%", color: incoming ? COLORS.green : COLORS.red }}>{text}</h3>
             <div style={{ ...styles.box2 }}>
                 <h3 style={{ ...FONTS.h6, color: incoming ? COLORS.green : COLORS.red  }}>{amount}</h3>
-                <p style={{ ...FONTS.body7, color: COLORS.gray,textAlign: "right", margin: "5px 0px 0px 0px" }}>{date}</p>
+                <p style={{ ...FONTS.body7, color: COLORS.gray,textAlign: "right", margin: "5px 0px 0px 0px", fontSize: "10px" }}>{date}</p>
             </div>
         </div>
     )

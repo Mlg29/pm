@@ -10,6 +10,7 @@ import Routers from './screens/Router';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { useMediaQuery } from 'react-responsive'
+import DesktopRouters from './screens/DesktopRouter';
 
 
 
@@ -29,8 +30,12 @@ function App() {
 
   return (
     <Provider store={store}>
-      <Desktop>Desktop or laptop</Desktop>
-      <Tablet>Tablet</Tablet>
+      <Desktop>
+        <DesktopRouters />
+      </Desktop>
+      <Tablet>
+      <DesktopRouters />
+      </Tablet>
       <Mobile>
         <Routers />
       </Mobile>

@@ -17,7 +17,9 @@ export const styles = {
         borderRadius: 10,
         margin: "5px 0px 0px 0px",
         border: `0.1px solid ${COLORS.gray}`,
-        outline: "none"
+        backgroundColor: COLORS.white,
+        outline: "none",
+        color: COLORS.primary
     }
 }
 

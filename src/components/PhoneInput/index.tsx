@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { styles } from "./style.js"
 // @ts-ignore
 import { FONTS } from "../../utils/fonts.js"
+import { COLORS } from '../../utils/colors.js'
 
 
 function PhoneInputComponent({ label, required }: any) {
@@ -20,7 +21,7 @@ function PhoneInputComponent({ label, required }: any) {
                     placeholder="Enter phone number"
                     value={value}
                     defaultCountry="NG"
-                    style={{ padding: 5 }}
+                    style={{ padding: 5, color: COLORS.primary }}
                     onChange={setValue} />
             </div>
         </div>

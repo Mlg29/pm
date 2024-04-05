@@ -7,6 +7,7 @@ import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import { MdArrowBackIos } from "react-icons/md";
 import { FlexDirection } from "../../utils/type";
+import BackButton from "../../components/BackButton";
 
 
 
@@ -61,8 +62,8 @@ function ForgetPassword() {
   return (
     <div style={{ ...styles.container }}>
       <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-      <div style={{ marginTop: 10 }} onClick={() => navigate(-1)}>
-        <MdArrowBackIos size={20} style={{ padding: "16px", background: COLORS.semiGray, borderRadius: 100 }} />
+      <div style={{ marginTop: 10 }}>
+        <BackButton />
       </div>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
           <img src={miniLogo} width={100} />
