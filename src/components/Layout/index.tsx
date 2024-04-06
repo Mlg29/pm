@@ -2,6 +2,7 @@
 import { useMediaQuery } from "react-responsive"
 import frame from "../../assets/images/frame1.svg"
 import { useEffect, useState } from "react"
+import { OverflowY } from "../../utils/type"
 
 
 
@@ -17,7 +18,7 @@ const styles = {
         alignItems: 'center',
         width: "100%",
         height: "100vh",
-        overflowY: "scroll",
+        overflowY: "scroll" as OverflowY,
         padding: "5rem 0px 0px 0px"
     }
 }
