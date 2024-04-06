@@ -67,7 +67,7 @@ function ForgetPassword() {
       </div>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
           <img src={miniLogo} width={100} />
-          <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}> Forget Password</h3>
+          <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px", cursor: "pointer" }}> Forget Password</h3>
           <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Enter your Log In credentials to gain access to your account.</p>
         </div>
 

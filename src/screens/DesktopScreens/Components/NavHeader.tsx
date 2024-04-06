@@ -125,17 +125,17 @@ function NavHeader() {
         <div>
             <LargScreen>
                 <div style={{ ...styles.rowBtw }}>
-                    <img src={heading} />
+                    <img style={{cursor: "pointer"}} src={heading} onClick={() => navigate("/home")} />
                     <div style={{ ...styles.row }}>
                         <div style={{ width: "50%" }}>
                             <SearchInput placeholder="Search by event, sport, club or game" />
                         </div>
 
-                        <div style={{ background: COLORS.cream, padding: 16, width: 150, borderRadius: 10 }}>
-                            <p style={{ ...FONTS.h6, textAlign: "center" }}>Log In</p>
+                        <div style={{ background: COLORS.cream, padding: 16, width: 150, borderRadius: 10 }} onClick={() => navigate("/login")}>
+                            <p style={{ ...FONTS.h6, textAlign: "center", cursor: "pointer" }}>Log In</p>
                         </div>
-                        <div style={{ background: COLORS.primary, padding: 16, width: 180, borderRadius: 10 }}>
-                            <p style={{ ...FONTS.h6, color: COLORS.white, textAlign: "center" }}>Create Account</p>
+                        <div style={{ background: COLORS.primary, padding: 16, width: 180, borderRadius: 10 }} onClick={() => navigate("/sign-up")}>
+                            <p style={{ ...FONTS.h6, color: COLORS.white, textAlign: "center", cursor: "pointer" }}>Create Account</p>
                         </div>
                     </div>
                 </div>
@@ -145,7 +145,7 @@ function NavHeader() {
                         {
                             itemList?.map((info: any) => {
                                 return (
-                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px' }}>
+                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }}>
                                         <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === "Soccer" ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
                                             {
                                                 info?.name === "More" ? <img src={info?.image} /> : info?.image
@@ -163,17 +163,17 @@ function NavHeader() {
 
             <Desktop>
                 <div style={{ ...styles.rowBtwDes }}>
-                    <img src={heading} />
+                    <img style={{cursor: "pointer"}} src={heading} onClick={() => navigate("/home")} />
                     <div style={{ ...styles.rowDes }}>
                         <div style={{ width: "50%" }}>
                             <SearchInput placeholder="Search by event, sport, club or game" />
                         </div>
 
-                        <div style={{ background: COLORS.cream, padding: 16, width: 150, borderRadius: 10 }}>
-                            <p style={{ ...FONTS.h6, textAlign: "center" }}>Log In</p>
+                        <div style={{ background: COLORS.cream, padding: 16, width: 150, borderRadius: 10 }} onClick={() => navigate("/login")}>
+                            <p style={{ ...FONTS.h6, textAlign: "center", cursor: "pointer" }}>Log In</p>
                         </div>
-                        <div style={{ background: COLORS.primary, padding: 16, width: 180, borderRadius: 10 }}>
-                            <p style={{ ...FONTS.h6, color: COLORS.white, textAlign: "center" }}>Create Account</p>
+                        <div style={{ background: COLORS.primary, padding: 16, width: 180, borderRadius: 10 }} onClick={() => navigate("/sign-up")}>
+                            <p style={{ ...FONTS.h6, color: COLORS.white, textAlign: "center", cursor: "pointer" }}>Create Account</p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +183,7 @@ function NavHeader() {
                         {
                             itemList?.map((info: any) => {
                                 return (
-                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px' }}>
+                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }}>
                                         <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === "Soccer" ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
                                             {
                                                 info?.name === "More" ? <img src={info?.image} /> : info?.image
@@ -200,17 +200,17 @@ function NavHeader() {
 
             <Tablet>
             <div style={{ ...styles.rowBtwTab }}>
-                    <img src={heading} />
+                    <img style={{cursor: "pointer"}} src={heading} onClick={() => navigate("/home")} />
                     <div style={{ ...styles.rowTab }}>
                         <div style={{ width: "30%" }}>
                             <SearchInput placeholder="Search by event, sport, club or game" />
                         </div>
 
-                        <div style={{ background: COLORS.cream, padding: 16, width: 150, borderRadius: 10 }}>
-                            <p style={{ ...FONTS.h6, textAlign: "center" }}>Log In</p>
+                        <div style={{ background: COLORS.cream, padding: 16, width: 150, borderRadius: 10 }} onClick={() => navigate("/login")}>
+                            <p style={{ ...FONTS.h6, textAlign: "center", cursor: "pointer" }}>Log In</p>
                         </div>
-                        <div style={{ background: COLORS.primary, padding: 16, width: 180, borderRadius: 10 }}>
-                            <p style={{ ...FONTS.h6, color: COLORS.white, textAlign: "center" }}>Create Account</p>
+                        <div style={{ background: COLORS.primary, padding: 16, width: 180, borderRadius: 10 }} onClick={() => navigate("/sign-up")}>
+                            <p style={{ ...FONTS.h6, color: COLORS.white, textAlign: "center", cursor: "pointer" }}>Create Account</p>
                         </div>
                     </div>
                 </div>
@@ -219,7 +219,7 @@ function NavHeader() {
                         {
                             itemList?.map((info: any) => {
                                 return (
-                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px' }}>
+                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }}>
                                         <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === "Soccer" ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
                                             {
                                                 info?.name === "More" ? <img src={info?.image} /> : info?.image

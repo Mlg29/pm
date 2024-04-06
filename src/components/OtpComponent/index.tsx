@@ -3,8 +3,8 @@ import OtpInput from 'react-otp-input';
 import { COLORS } from '../../utils/colors';
 
 
-function OtpComponent() {
-  const [otp, setOtp] = useState('');
+function OtpComponent({otp, setOtp}: any) {
+  
 
 
   const handlePaste: React.ClipboardEventHandler = (event) => {

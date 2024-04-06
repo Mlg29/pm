@@ -5,7 +5,7 @@ import Header from "../../components/Header"
 import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
 import { TextAlign } from "../../utils/type"
-
+import {useState} from "react"
 
 const styles = {
     inputs: {
@@ -22,6 +22,7 @@ const styles = {
 
 function Deposit() {
     const navigate = useNavigate()
+    const [value, setValue] = useState("")
     return (
         <div className="top-container">
             <Header
@@ -31,10 +32,13 @@ function Deposit() {
             <p style={{ ...FONTS.body6, margin: "2rem 0px" }}>Please specify the amount you wish to top up into your wallet.</p>
 
             <div>
-                <input style={{...styles.inputs}}  placeholder="0.00" />
+                <input style={{...styles.inputs}} value={value} onChange={(e) => setValue(e?.target?.value)}  placeholder="0.00" />
             </div>
 
-            <CustomeKeyboard />
+            <CustomeKeyboard
+            value={value}
+            setValue={setValue}
+            />
 
             <div style={{ width: "100%", margin: "2rem 0px" }}>
                 <Button

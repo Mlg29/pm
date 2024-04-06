@@ -153,13 +153,13 @@ function SignupScreen() {
           required
           type="username"
         />
-        <div style={{ width: "97%" }}>
+        <div style={{ width: "100%" }}>
           <PhoneInputComponent
             label="Phone Number"
             required
           />
         </div>
-        <div style={{ width: "97%" }}>
+        <div style={{ width: "100%" }}>
           <DatePickerComponent
             label="Date of Birth"
             propStyle={{ width: "100%" }}
@@ -169,8 +169,8 @@ function SignupScreen() {
 
         <div style={{ display: "flex", alignItems: "center", margin: "20px 0px" }}>
           {
-            terms ? <MdCheckBox size={20} onClick={() => setTerms(!terms)} />
-              : <MdCheckBoxOutlineBlank onClick={() => setTerms(!terms)} size={20} />
+            terms ? <MdCheckBox size={20} onClick={() => setTerms(!terms)} style={{cursor: "pointer"}} />
+              : <MdCheckBoxOutlineBlank onClick={() => setTerms(!terms)} size={20} style={{cursor: "pointer"}} />
           }
           <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px" }}>I agree to the Terms and Conditions.</p>
         </div>

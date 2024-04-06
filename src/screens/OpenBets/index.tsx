@@ -34,7 +34,7 @@ const styles = {
 
 function OpenBet() {
     return (
-        <div className='top-container'>
+        <div className='top-container' style={{backgroundColor: "white"}}>
             <Header
                 text="Open Bet"
             />
@@ -76,10 +76,10 @@ function OpenBet() {
 
                             <div style={{ ...styles.row, paddingBottom: "0rem", border: "none" }}>
                                     <div style={{backgroundColor: COLORS.primary, width: "48%", padding: 10, borderRadius: 10}}>
-                                        <p style={{...FONTS.body7, color: COLORS.white, textAlign: "center"}}>Accept Bet</p>
+                                        <p style={{...FONTS.body7, color: COLORS.white, textAlign: "center", cursor: "pointer"}}>Accept Bet</p>
                                     </div>
                                     <div style={{backgroundColor: COLORS.cream, width: "48%", padding: 10, borderRadius: 10}}>
-                                        <p style={{...FONTS.h7, color: COLORS.primary, textAlign: "center"}}>Adjust Bet</p>
+                                        <p style={{...FONTS.h7, color: COLORS.primary, textAlign: "center", cursor: "pointer"}}>Adjust Bet</p>
                                     </div>
                             </div>
                         </div>

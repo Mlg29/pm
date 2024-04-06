@@ -59,7 +59,7 @@ function TextInput(props: any) {
                 />
                 {
                     type === "password" ?
-                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', cursor: "pointer"}}>
                            {
                             !show ? <AiOutlineEyeInvisible size={20} onClick={() => setShow(!show)} />
                             : <AiOutlineEye size={20} onClick={() => setShow(!show)} />

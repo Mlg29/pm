@@ -7,6 +7,8 @@ import { FONTS } from "../../../utils/fonts"
 import { FlexDirection } from "../../../utils/type"
 import NavHeader from "./NavHeader"
 import { useMediaQuery } from "react-responsive"
+import { useNavigate } from "react-router-dom"
+
 
 
 const styles = {
@@ -72,6 +74,7 @@ const styles = {
     }
 }
 function DashboardLayout({ children }) {
+    const navigate = useNavigate()
     const LargScreen = ({ children }: any) => {
         const isLargeScreen = useMediaQuery({ minWidth: 1551 })
         return isLargeScreen ? children : null
@@ -96,7 +99,7 @@ function DashboardLayout({ children }) {
                         {
                             Leagues?.map((data: any) => {
                                 return <div>
-                                    <p style={{ ...FONTS.body6, margin: "15px 0px" }}>{data?.name}</p>
+                                    <p style={{ ...FONTS.body6, margin: "15px 0px", cursor: "pointer" }}>{data?.name}</p>
                                 </div>
                             })
                         }
@@ -107,7 +110,7 @@ function DashboardLayout({ children }) {
                         {
                             Countries?.map((data: any) => {
                                 return <div>
-                                    <p style={{ ...FONTS.body6, margin: "15px 0px" }}>{data?.name}</p>
+                                    <p style={{ ...FONTS.body6, margin: "15px 0px", cursor: "pointer" }}>{data?.name}</p>
                                 </div>
                             })
                         }
@@ -122,8 +125,8 @@ function DashboardLayout({ children }) {
                         <div style={{ ...styles.sub }}>
                             <img src={empty} />
                             <p style={{ ...FONTS.body6, textAlign: "center" }}>You haven’t select any option for this game. Available open bet will be displayed here when you select an option.</p>
-                            <div style={{ background: COLORS.lightGray, padding: 10, borderRadius: 10, width: "100%", margin: "2rem 0px 0px 0px" }}>
-                                <p style={{ ...FONTS.body6, textAlign: "center" }}>Create Bet</p>
+                            <div style={{ background: COLORS.lightGray, padding: 10, borderRadius: 10, width: "100%", margin: "2rem 0px 0px 0px" }} onClick={() => navigate("/open-bets")}>
+                                <p style={{ ...FONTS.body6, textAlign: "center", cursor: "pointer" }}>Create Bet</p>
                             </div>
                         </div>
                     </div>
@@ -166,7 +169,7 @@ function DashboardLayout({ children }) {
                         <div style={{ ...styles.sub }}>
                             <img src={empty} />
                             <p style={{ ...FONTS.body6, textAlign: "center" }}>You haven’t select any option for this game. Available open bet will be displayed here when you select an option.</p>
-                            <div style={{ background: COLORS.lightGray, padding: 10, borderRadius: 10, width: "100%", margin: "2rem 0px 0px 0px" }}>
+                            <div style={{ background: COLORS.lightGray, padding: 10, borderRadius: 10, width: "100%", margin: "2rem 0px 0px 0px" }} onClick={() => navigate("/open-bets")}>
                                 <p style={{ ...FONTS.body6, textAlign: "center" }}>Create Bet</p>
                             </div>
                         </div>
@@ -210,7 +213,7 @@ function DashboardLayout({ children }) {
                         <div style={{ ...styles.sub }}>
                             <img src={empty} />
                             <p style={{ ...FONTS.body7, textAlign: "center" }}>You haven’t select any option for this game. Available open bet will be displayed here when you select an option.</p>
-                            <div style={{ background: COLORS.lightGray, padding: 10, borderRadius: 10, width: "100%", margin: "2rem 0px 0px 0px" }}>
+                            <div style={{ background: COLORS.lightGray, padding: 10, borderRadius: 10, width: "100%", margin: "2rem 0px 0px 0px" }} onClick={() => navigate("/open-bets")}>
                                 <p style={{ ...FONTS.body6, textAlign: "center" }}>Create Bet</p>
                             </div>
                         </div>

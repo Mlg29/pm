@@ -90,13 +90,13 @@ function GameDetails() {
                 <GameDetailCardHeader />
 
                 <div style={{ ...styles.tabs }}>
-                    <div style={{ ...styles.tb, backgroundColor: active === "stat" ? COLORS.white : "transparent" }} onClick={() => setActive("stat")}>
+                    <div style={{ ...styles.tb, backgroundColor: active === "stat" ? COLORS.white : "transparent", cursor: "pointer" }} onClick={() => setActive("stat")}>
                         <p style={{ ...FONTS.body6 }}>STATS</p>
                     </div>
-                    <div style={{ ...styles.tb, backgroundColor: active === "lineup" ? COLORS.white : "transparent" }} onClick={() => setActive("lineup")}>
+                    <div style={{ ...styles.tb, backgroundColor: active === "lineup" ? COLORS.white : "transparent", cursor: "pointer" }} onClick={() => setActive("lineup")}>
                         <p style={{ ...FONTS.body6 }}>LINEUPS</p>
                     </div>
-                    <div style={{ ...styles.tb, backgroundColor: active === "h2h" ? COLORS.white : "transparent" }} onClick={() => setActive("h2h")}>
+                    <div style={{ ...styles.tb, backgroundColor: active === "h2h" ? COLORS.white : "transparent", cursor: "pointer" }} onClick={() => setActive("h2h")}>
                         <p style={{ ...FONTS.body6 }}>H2H</p>
                     </div>
                 </div>

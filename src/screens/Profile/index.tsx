@@ -34,7 +34,7 @@ const styles = {
   row: {
     display: "flex",
     alignItems: "center",
-    padding: "1.5rem 20px",
+    padding: "1rem 20px",
     backgroundColor: COLORS.white,
     marginBottom: "20px",
     borderRadius: 20,
@@ -102,7 +102,7 @@ function Profile() {
         <p style={{ ...FONTS.body7, backgroundColor: COLORS.semiGray, padding: 10, borderRadius: 30 }}>@holuwadharnyz</p>
       </div>
 
-      <div style={{ backgroundColor: COLORS.semiGray, borderRadius: 20 }}>
+      <div style={{ borderRadius: 20 }}>
         {
           itemList?.map((data: any) => {
             return (

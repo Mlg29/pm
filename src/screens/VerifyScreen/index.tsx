@@ -52,7 +52,7 @@ function VerifyScreen() {
   const [step, setStep] = useState(1)
   const [terms, setTerms] = useState(false)
   const navigate = useNavigate();
-
+  const [otp, setOtp] = useState('');
 
   const stepLevel = () => {
     if (step === 0) {
@@ -130,7 +130,8 @@ function VerifyScreen() {
       <div style={{ marginTop: 20 }}>
       <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
         <OtpComponent 
-        
+          otp={otp}
+          setOtp={setOtp}
         />
         </div>
 
@@ -141,7 +142,8 @@ function VerifyScreen() {
 
         <div style={{margin: "0px 0px 30px 0px"}}>
             <CustomeKeyboard 
-            
+             value={otp}
+             setValue={setOtp}
             />
         </div>
        

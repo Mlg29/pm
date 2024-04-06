@@ -93,7 +93,7 @@ function LoginScreen() {
           />
 
           <div style={{ margin: "20px 0px" }}>
-            <p style={{ ...FONTS.body7, fontWeight: 'bold', color: `${COLORS.primary}`, textAlign: 'right' }} onClick={() => navigate("/forget-password")}>Forget Password?</p>
+            <p style={{ ...FONTS.body7, fontWeight: 'bold', color: `${COLORS.primary}`, textAlign: 'right',cursor: "pointer" }} onClick={() => navigate("/forget-password")}>Forget Password?</p>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@ function LoginScreen() {
             />
           </div>
 
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0px"}}>
+          <div style={{display: "flex", justifyContent: "center",cursor: "pointer", alignItems: "center", margin: "20px 0px"}}>
           <p style={{ ...FONTS.body6 }}>Don’t have an account? </p>
             <p style={{ ...FONTS.h6, margin: "0px 3px" }} onClick={() => navigate('/sign-up')}> Create Account</p>
           </div>

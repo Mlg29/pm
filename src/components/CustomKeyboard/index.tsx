@@ -51,8 +51,7 @@ export const styles = {
 }
 
 function CustomeKeyboard(props: any) {
-    const {isFaceId} = props
-    const [value, setValue] = useState("")
+    const {isFaceId, value, setValue} = props
 
 
     const cancel = () => {
