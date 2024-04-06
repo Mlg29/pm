@@ -6,15 +6,19 @@ import { useEffect, useState } from "react"
 
 
 const styles = {
-    conatiner: {
+    container: {
         display: "flex",
-        alignItems: 'center'
+        alignItems: 'center',
+        height: "100vh"
     },
     secondColumn: {
         display: "flex",
         justifyContent: "center",
         alignItems: 'center',
-        width: "100%"
+        width: "100%",
+        height: "100vh",
+        overflowY: "scroll",
+        padding: "5rem 0px 0px 0px"
     }
 }
 
@@ -28,20 +32,27 @@ function Layout({ children }) {
         return isDesktop ? children : null
     }
 
+    const handleImageLoad = () => {
+        setState(false)
+    }
 
-
-    useEffect(() => {
-        setTimeout(() => {
-            setState(false)
-        }, 2000)
-    }, [])
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setState(false)
+    //     }, 2000)
+    // }, [])
 
 
     return (
-        <div style={{ ...styles.conatiner }}>
+        <div style={{ ...styles.container}}>
             <Desktop>
                 <div>
-                    <img src={frame} style={{ height: "100vh" }} />
+                    <img 
+                    src={frame} 
+                    alt="image"
+                    onLoad={handleImageLoad}
+                    style={{ height: "100vh" }} 
+                    />
                 </div>
             </Desktop>
 
