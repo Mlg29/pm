@@ -34,6 +34,7 @@ import Preference from './NotificationScreen/Preference.js';
 import Language from './NotificationScreen/Language.js';
 import Biometric from './Security/Biometric.js';
 import OpenBet from './OpenBets/index.js';
+import OpponentDetail from './OpponentDetail/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,7 +42,7 @@ function Routers() {
   return (
     <Router>
     <Routes>
-      <Route path="/"  element={<SplashScreen />} />
+      <Route path="/"  element={<HomeScreen />} />
       <Route path="/onboarding" element={<OnboardScreen />} />
       <Route path="/login" element={<Login />} />
       <Route path="/sign-up" element={<SignupScreen />} />
@@ -94,7 +95,7 @@ function Routers() {
       <Route path="/language" element={<Language />} />
       <Route path="/biometrics" element={<Biometric />} />
       <Route path="/open-bets" element={<OpenBet />} />
-    
+      <Route path="/opponent-detail" element={<OpponentDetail />} />
     
     </Routes>
   </Router>

@@ -14,42 +14,65 @@ import { MdSportsRugby } from "react-icons/md";
 import { COLORS } from '../../utils/colors';
 import GameCard from '../../components/GameCard';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 
 function HomeScreen() {
 const navigate = useNavigate()
-  const itemList = [
-    {
+const [selected, setSelected] = useState("Soccer")
+
+
+const itemList = [
+  {
       id: 1,
       name: "Soccer",
-      image: <IoMdFootball size={20} color={COLORS.white} />
-    },
-    {
+      image: <IoMdFootball size={20} color={selected === "Soccer" ? COLORS.white : COLORS.primary} />
+  },
+  {
       id: 2,
       name: "Basketball",
-      image: <FaBasketballBall size={20} />
-    },
-    {
+      image: <FaBasketballBall size={20} color={selected === "Basketball" ? COLORS.white : COLORS.primary} />
+  },
+  {
       id: 3,
       name: "Tennis",
-      image: <IoIosTennisball size={20} />
-    },
-    {
+      image: <IoIosTennisball size={20} color={selected === "Tennis" ? COLORS.white : COLORS.primary} />
+  },
+  {
       id: 4,
       name: "Cricket",
-      image: <MdSportsCricket size={20} />
-    },
-    {
+      image: <MdSportsCricket size={20} color={selected === "Cricket" ? COLORS.white : COLORS.primary} />
+  },
+  {
       id: 5,
       name: "Rugby",
-      image: <MdSportsRugby size={20} />
-    },
-    {
+      image: <MdSportsRugby size={20} color={selected === "Rugby" ? COLORS.white : COLORS.primary} />
+  },
+  {
       id: 6,
+      name: "Volleyball",
+      image: <MdSportsRugby size={20} color={selected === "Volleyball" ? COLORS.white : COLORS.primary} />
+  }, {
+      id: 7,
+      name: "Formula 1",
+      image: <MdSportsRugby size={20} color={selected === "Formula 1" ? COLORS.white : COLORS.primary} />
+  },
+  {
+      id: 8,
+      name: "Dog Race",
+      image: <MdSportsRugby size={20} color={selected === "Dog Race" ? COLORS.white : COLORS.primary} />
+  },
+  {
+      id: 9,
+      name: "Horse Race",
+      image: <MdSportsRugby size={20} color={selected === "Horse Race" ? COLORS.white : COLORS.primary} />
+  },
+  {
+      id: 10,
       name: "More",
       image: more
-    },
-  ]
+  },
+]
 
 
   return (
@@ -76,12 +99,12 @@ const navigate = useNavigate()
         {
           itemList?.map((info: any) => {
             return (
-              <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px' }}>
-                <div style={{display: "flex", padding: "10px", backgroundColor: info?.name === "Soccer" ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}`}}>
+              <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }} onClick={() => setSelected(info?.name)}>
+                <div style={{display: "flex", padding: "10px", backgroundColor: info?.name === selected ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}`}}>
                 {
                   info?.name === "More" ? <img src={info?.image} /> : info?.image
                 }
-                <p style={{...FONTS.h6, color: info?.name === "Soccer" ? COLORS.white : COLORS.primary, margin: "0px 5px"}}>{info?.name}</p>
+                <p style={{...FONTS.h6, color: info?.name === selected ? COLORS.white : COLORS.primary, margin: "0px 5px"}}>{info?.name}</p>
                 </div>
               </div>
             )
@@ -92,12 +115,10 @@ const navigate = useNavigate()
         <p style={{...FONTS.body6, color: COLORS.gray, margin: "15px 0px"}}>TODAY</p>
        
        {
-        ["","","","",""]?.map((aa: any) => {
-          return <GameCard />
+        ["","","","",""]?.map((aa: any, i: any) => {
+          return <GameCard key={i} />
         })
        }
-
-
 
       <BottomTabs />
     </div>

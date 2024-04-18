@@ -18,7 +18,7 @@ const styles = {
     row: {
         display: "flex",
         alignItems: "center",
-        padding: "1rem 10px"
+        padding: "1rem 10px",
     }
 }
 
@@ -65,7 +65,7 @@ function Language() {
             <div style={{ display: "flex", flexDirection: 'column', flex: 1 }}>
                 {
                     dataList?.map((data: any) => {
-                        return <div key={data?.id} onClick={() => setSelected(data?.name)} style={{ ...styles.row, backgroundColor: selected === data?.name ? COLORS.cream : COLORS.white, borderRadius: 10 }}>
+                        return <div key={data?.id} onClick={() => setSelected(data?.name)} style={{ ...styles.row, backgroundColor: selected === data?.name ? COLORS.cream : COLORS.white, borderRadius: 10, cursor: "pointer" }}>
                             <img src={data?.image} onClick={data?.handleRoute} />
                             <div onClick={data?.handleRoute} style={{ margin: "0px 10px", width: "100%" }}>
                                 <h3 style={{ ...FONTS.body6, margin: "0px" }}>{data?.name}</h3>

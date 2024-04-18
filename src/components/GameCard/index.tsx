@@ -68,9 +68,9 @@ function GameCard() {
         </div>
 
         <div style={{...styles.row2}}>
-            <div style={{...styles.box}}>Home Win</div>
+            <div style={{...styles.box}}>Barcelona Win</div>
             <div style={{...styles.box}}>Draw</div>
-            <div style={{...styles.box}}>Away Win</div>
+            <div style={{...styles.box}}>Juventus Win</div>
         </div>
 
 

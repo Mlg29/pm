@@ -44,7 +44,7 @@ function DesktopRouters() {
   return (
     <Router>
     <Routes>
-      <Route path="/"  element={<SplashScreen />} />
+      <Route path="/"  element={<Dashboard />} />
       <Route path="/onboarding" element={<Layout><OnboardScreen /></Layout>} />
       <Route path="/login" element={<Layout><Login /></Layout>} />
       <Route path="/sign-up" element={<Layout><SignupScreen /></Layout>} />

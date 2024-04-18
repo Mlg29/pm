@@ -15,7 +15,8 @@ const styles = {
     row: {
         display: "flex",
         alignItems: "center",
-        padding: "1rem 0px"
+        padding: "1rem 0px",
+        cursor: "pointer"
     }
 }
 

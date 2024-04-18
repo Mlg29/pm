@@ -17,7 +17,6 @@ import { FONTS } from '../../utils/fonts';
 const BottomTabs = () => {
   const location = useLocation();
 
-  console.log({location})
 
   return (
     <div className="bottom-tabs">

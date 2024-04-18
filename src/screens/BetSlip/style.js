@@ -23,5 +23,18 @@ export const styles = {
         padding: 10,
         margin: "5px",
         borderRadius: "5px"
+    },
+    rowBtw: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: 12,
+        paddingBottom: 12,
+        borderBottom: "0.5px solid gray"
+    },
+    row: {
+        display: "flex",
+        alignItems: "center",
+        margin: "5px 0px"
     }
 }

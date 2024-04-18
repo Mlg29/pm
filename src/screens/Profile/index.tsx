@@ -36,7 +36,7 @@ const styles = {
     alignItems: "center",
     padding: "1rem 20px",
     backgroundColor: COLORS.white,
-    marginBottom: "20px",
+    marginBottom: "15px",
     borderRadius: 20,
     border: "none"
   }
@@ -106,7 +106,7 @@ function Profile() {
         {
           itemList?.map((data: any) => {
             return (
-              <div key={data?.id} onClick={data?.handleClick} style={{ ...styles.row }}>
+              <div key={data?.id} onClick={data?.handleClick} style={{ ...styles.row, cursor: "pointer" }}>
                 <div style={{ backgroundColor: data?.color, padding: 5, borderRadius: 100 }}>
                   <img src={data?.icon} />
                 </div>

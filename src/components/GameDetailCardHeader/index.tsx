@@ -15,7 +15,8 @@ export const styles = {
         border: `1px solid ${COLORS.semiGray}`,
         borderRadius: 10,
         padding: 10,
-        margin: "0px 0px 20px 0px"
+        margin: "0px 0px 20px 0px",
+        cursor: "pointer"
     },
     row: {
         display: "flex",

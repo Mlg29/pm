@@ -85,14 +85,20 @@ function Transaction() {
           <p style={{ ...FONTS.body7, color: COLORS.white }}>Account Balance</p>
           <div style={{ ...styles.rw }}>
             <p style={{ ...FONTS.body7, color: COLORS.white }}>NGN</p>
-            <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }} >
+           {
+            show ? <div>
+                  <h3 style={{...FONTS.h1, color: COLORS.white}}>4,000</h3>
+              </div>
+              :
+              <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }} >
               <FaAsterisk color={COLORS.white} size={30} />
               <FaAsterisk color={COLORS.white} size={30} />
               <FaAsterisk color={COLORS.white} size={30} />
               <FaAsterisk color={COLORS.white} size={30} />
               <FaAsterisk color={COLORS.white} size={30} />
             </div>
-            <div>
+           }
+            <div style={{cursor: "pointer"}}> 
               {
                 show ? <GoEye color={COLORS.white} onClick={() => setShow(!show)} /> : <GoEyeClosed color={COLORS.white} onClick={() => setShow(!show)} />
               }
@@ -101,12 +107,12 @@ function Transaction() {
         </div>
 
         <div style={{...styles.btnRow}}>
-          <div style={{...styles.btn, backgroundColor: COLORS.cream}} onClick={() => navigate("/withdrawal")}>
+          <div style={{...styles.btn, backgroundColor: COLORS.cream, cursor: "pointer"}} onClick={() => navigate("/withdrawal")}>
             <img src={send2} />
             <p style={{...FONTS.h6, margin: "0px 0px 0px 10px"}}>Withdraw</p>
           </div>
 
-          <div style={{...styles.btn, backgroundColor: COLORS.lightOrange}} onClick={() => navigate("/deposit")}>
+          <div style={{...styles.btn, backgroundColor: COLORS.lightOrange, cursor: "pointer"}} onClick={() => navigate("/deposit")}>
             <img src={send1} />
             <p style={{...FONTS.h6, margin: "0px 0px 0px 10px"}}>Deposit</p>
           </div>
@@ -137,7 +143,7 @@ function Transaction() {
               </div>
 
               <div style={{...styles.btn2}} onClick={() => navigate("/transaction-list")}>
-                <h3 style={{...FONTS.h7}}>View All</h3>
+                <h3 style={{...FONTS.h7, cursor: "pointer"}}>View All</h3>
               </div>
 
 

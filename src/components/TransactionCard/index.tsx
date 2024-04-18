@@ -14,7 +14,8 @@ const styles = {
         alignItems: "center",
         margin: "1rem 0px",
         paddingBottom: "20px",
-        borderBottom: `1px solid ${COLORS.semiGray}`
+        borderBottom: `1px solid ${COLORS.semiGray}`,
+        cursor: "pointer"
     },
     box: {
         backgroundColor: COLORS.lightGreen,

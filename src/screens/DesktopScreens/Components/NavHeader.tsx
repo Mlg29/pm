@@ -9,6 +9,7 @@ import { MdSportsCricket, MdSportsRugby } from "react-icons/md"
 import more from "../../../assets/images/more.svg"
 import { FlexDirection } from "../../../utils/type"
 import { useMediaQuery } from "react-responsive"
+import { useState } from "react"
 
 
 const styles = {
@@ -18,7 +19,7 @@ const styles = {
         alignItems: 'center',
         borderBottom: `1px solid ${COLORS.semiGray}`,
         background: COLORS.white,
-        padding: "0px 20rem"
+        padding: "0px 15rem"
     },
     rowBtwTab: {
         display: "flex",
@@ -57,6 +58,8 @@ const styles = {
 }
 
 function NavHeader() {
+    const [selected, setSelected] = useState("Soccer")
+
     const LargScreen = ({ children }: any) => {
         const isLargeScreen = useMediaQuery({ minWidth: 1551 })
         return isLargeScreen ? children : null
@@ -74,46 +77,46 @@ function NavHeader() {
         {
             id: 1,
             name: "Soccer",
-            image: <IoMdFootball size={20} color={COLORS.white} />
+            image: <IoMdFootball size={20} color={selected === "Soccer" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 2,
             name: "Basketball",
-            image: <FaBasketballBall size={20} />
+            image: <FaBasketballBall size={20} color={selected === "Basketball" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 3,
             name: "Tennis",
-            image: <IoIosTennisball size={20} />
+            image: <IoIosTennisball size={20} color={selected === "Tennis" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 4,
             name: "Cricket",
-            image: <MdSportsCricket size={20} />
+            image: <MdSportsCricket size={20} color={selected === "Cricket" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 5,
             name: "Rugby",
-            image: <MdSportsRugby size={20} />
+            image: <MdSportsRugby size={20} color={selected === "Rugby" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 6,
             name: "Volleyball",
-            image: <MdSportsRugby size={20} />
+            image: <MdSportsRugby size={20} color={selected === "Volleyball" ? COLORS.white : COLORS.primary} />
         }, {
             id: 7,
             name: "Formula 1",
-            image: <MdSportsRugby size={20} />
+            image: <MdSportsRugby size={20} color={selected === "Formula 1" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 8,
             name: "Dog Race",
-            image: <MdSportsRugby size={20} />
+            image: <MdSportsRugby size={20} color={selected === "Dog Race" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 9,
             name: "Horse Race",
-            image: <MdSportsRugby size={20} />
+            image: <MdSportsRugby size={20} color={selected === "Horse Race" ? COLORS.white : COLORS.primary} />
         },
         {
             id: 10,
@@ -145,12 +148,12 @@ function NavHeader() {
                         {
                             itemList?.map((info: any) => {
                                 return (
-                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }}>
-                                        <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === "Soccer" ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
+                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }} onClick={() => setSelected(info?.name)}>
+                                        <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === selected ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
                                             {
                                                 info?.name === "More" ? <img src={info?.image} /> : info?.image
                                             }
-                                            <p style={{ ...FONTS.h6, color: info?.name === "Soccer" ? COLORS.white : COLORS.primary, margin: "0px 5px" }}>{info?.name}</p>
+                                            <p style={{ ...FONTS.h6, color: info?.name === selected ? COLORS.white : COLORS.primary, margin: "0px 5px" }}>{info?.name}</p>
                                         </div>
                                     </div>
                                 )
@@ -183,12 +186,12 @@ function NavHeader() {
                         {
                             itemList?.map((info: any) => {
                                 return (
-                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }}>
-                                        <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === "Soccer" ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
+                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }} onClick={() => setSelected(info?.name)}>
+                                        <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === selected ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
                                             {
                                                 info?.name === "More" ? <img src={info?.image} /> : info?.image
                                             }
-                                            <p style={{ ...FONTS.h6, color: info?.name === "Soccer" ? COLORS.white : COLORS.primary, margin: "0px 5px" }}>{info?.name}</p>
+                                            <p style={{ ...FONTS.h6, color: info?.name === selected ? COLORS.white : COLORS.primary, margin: "0px 5px" }}>{info?.name}</p>
                                         </div>
                                     </div>
                                 )
@@ -219,12 +222,12 @@ function NavHeader() {
                         {
                             itemList?.map((info: any) => {
                                 return (
-                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }}>
-                                        <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === "Soccer" ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
+                                    <div key={info?.id} style={{ display: 'inline-block', margin: '0 5px', cursor: "pointer" }} onClick={() => setSelected(info?.name)}>
+                                        <div style={{ display: "flex", padding: "10px", backgroundColor: info?.name === selected ? COLORS.primary : "transparent", borderRadius: "30px", border: `1px solid ${COLORS.semiGray}` }}>
                                             {
                                                 info?.name === "More" ? <img src={info?.image} /> : info?.image
                                             }
-                                            <p style={{ ...FONTS.h6, color: info?.name === "Soccer" ? COLORS.white : COLORS.primary, margin: "0px 5px" }}>{info?.name}</p>
+                                            <p style={{ ...FONTS.h6, color: info?.name === selected ? COLORS.white : COLORS.primary, margin: "0px 5px" }}>{info?.name}</p>
                                         </div>
                                     </div>
                                 )

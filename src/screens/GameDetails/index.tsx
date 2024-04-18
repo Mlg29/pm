@@ -12,6 +12,8 @@ import CardList from "../../components/CardList"
 import AllTime from "../../components/CardList/AllTime"
 import roma from "../../assets/images/roma.svg"
 import milan from "../../assets/images/millan.svg"
+import Formation from "../../components/Formation"
+
 
 const styles = {
     container: {
@@ -79,6 +81,16 @@ const styles = {
 function GameDetails() {
     const [active, setActive] = useState("stat")
     const navigate = useNavigate()
+    const [selected, setSelected] = useState('')
+
+
+    const handleRoute = (route: string) => {
+        setSelected(route)
+        setTimeout(() => {
+        navigate(`/open-bets`)
+        }, 1000)
+       
+    }
 
 
     return (
@@ -144,6 +156,10 @@ function GameDetails() {
                 }
 
                 {
+                    active === "lineup" && <Formation />
+                }
+
+                {
                     active === "h2h" && <div>
                         <div>
                             <h3 style={{ ...FONTS.h6, textAlign: 'center', marginTop: "1rem" }}>Last 5 Games</h3>
@@ -182,29 +198,59 @@ function GameDetails() {
 
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "center" }}>
+            <div style={{ display: "flex",zIndex: 11, flexDirection: "column", flex: 1, justifyContent: "center" }}>
                 <div style={{ width: "100%" }}>
                     <Button
-                        text="Home Win"
-                        propStyle={{ width: "100%" }}
-                        handlePress={() => navigate('/home')}
+                        text="Barcelona Win"
+                        propStyle={{ width: "100%", backgroundColor: selected === 'home' ? COLORS.primary : COLORS.cream, color: selected === 'home' ? COLORS.cream : COLORS.primary}}
+                       // handlePress={() => navigate('/home')}
+                       handlePress={() => handleRoute('home')}
                     />
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                     <Button
-                        text="Away Win"
-                        propStyle={{ width: "100%", backgroundColor: COLORS.cream, color: COLORS.primary }}
-                        handlePress={() => navigate('/home')}
+                        text="Juventus Win"
+                        propStyle={{ width: "100%", backgroundColor: selected === 'away' ? COLORS.primary : COLORS.cream, color: selected === 'away' ? COLORS.cream : COLORS.primary }}
+                       // handlePress={() => navigate('/home')}
+                       handlePress={() => setSelected('away')}
                     />
                 </div>
                 <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
                     <Button
                         text="Draw"
-                        propStyle={{ width: "100%", backgroundColor: COLORS.white, border: `1px solid ${COLORS.primary}`, color: COLORS.primary }}
-                        handlePress={() => navigate('/home')}
+                        propStyle={{ width: "100%", backgroundColor: selected === 'draw' ? COLORS.primary : COLORS.cream, color: selected === 'draw' ? COLORS.cream : COLORS.primary}}
+                      //  handlePress={() => navigate('/home')}
+                      handlePress={() => setSelected('draw')}
                     />
                 </div>
             </div>
+
+{/* <div style={{ display: "flex", flexDirection: "column", position: "absolute", bottom: 0, width: "100%", justifyContent: "center" }}>
+                <div style={{ width: "100%" }}>
+                    <Button
+                        text="Barcelona Win"
+                        propStyle={{ width: "100%", backgroundColor: selected === 'home' ? COLORS.primary : COLORS.cream, color: selected === 'home' ? COLORS.cream : COLORS.primary}}
+                       // handlePress={() => navigate('/home')}
+                       handlePress={() => handleRoute('home')}
+                    />
+                </div>
+                <div style={{ width: "100%", margin: "10px 0px" }}>
+                    <Button
+                        text="Juventus Win"
+                        propStyle={{ width: "100%", backgroundColor: selected === 'away' ? COLORS.primary : COLORS.cream, color: selected === 'away' ? COLORS.cream : COLORS.primary }}
+                       // handlePress={() => navigate('/home')}
+                       handlePress={() => setSelected('away')}
+                    />
+                </div>
+                <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
+                    <Button
+                        text="Draw"
+                        propStyle={{ width: "100%", backgroundColor: selected === 'draw' ? COLORS.primary : COLORS.cream, color: selected === 'draw' ? COLORS.cream : COLORS.primary}}
+                      //  handlePress={() => navigate('/home')}
+                      handlePress={() => setSelected('draw')}
+                    />
+                </div>
+            </div> */}
 
 
         </div>

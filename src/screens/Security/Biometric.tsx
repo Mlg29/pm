@@ -22,7 +22,7 @@ function Biometric() {
             <Button 
                 text="Activate now"
             />
-            <h3 style={{...FONTS.h5, textAlign: 'center', margin: "1rem 0px"}}>I will do this later</h3>
+            <h3 style={{...FONTS.h5, textAlign: 'center', margin: "1rem 0px", cursor: "pointer"}}>I will do this later</h3>
       </div>
     </div>
   )

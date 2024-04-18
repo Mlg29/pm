@@ -91,7 +91,7 @@ function ProfileDetail() {
 
                 <div style={{...styles.trash}} onClick={() => handleShow()}>
                     <img src={trash} />
-                    <h3 style={{...FONTS.h6, color: COLORS.red, margin: "0px 0px 0px 10px"}}>Delete Account</h3>
+                    <h3 style={{...FONTS.h6, color: COLORS.red, margin: "0px 0px 0px 10px", cursor: "pointer"}}>Delete Account</h3>
                 </div>
             </div>
 

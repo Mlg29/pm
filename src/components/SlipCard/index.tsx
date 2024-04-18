@@ -26,7 +26,7 @@ function SlipCard(props: any) {
  const navigate = useNavigate()
  
     return (
-    <div style={{...styles.container}} onClick={() => navigate("/bet-detail")}>
+    <div style={{...styles.container, cursor: "pointer"}} onClick={() => navigate("/bet-detail")}>
         <div>
             <div style={{...styles.row}}>
                 <img src={homeImage} width={20} />
