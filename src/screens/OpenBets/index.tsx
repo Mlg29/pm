@@ -77,7 +77,7 @@ function OpenBet() {
                             </div>
 
                             <div style={{ ...styles.row, paddingBottom: "0rem", border: "none" }}>
-                                <div style={{ backgroundColor: COLORS.primary, width: "48%", padding: 10, borderRadius: 10 }}>
+                                <div style={{ backgroundColor: COLORS.primary, width: "48%", padding: 10, borderRadius: 10 }} onClick={() => navigate("/options")}>
                                     <p style={{ ...FONTS.body7, color: COLORS.white, textAlign: "center", cursor: "pointer" }}>Accept Bet</p>
                                 </div>
                                 <div style={{ backgroundColor: COLORS.cream, width: "48%", padding: 10, borderRadius: 10 }}>
@@ -93,7 +93,7 @@ function OpenBet() {
 
 
             <div>
-                <div style={{ backgroundColor: COLORS.primary, width: "100%", padding: 20, borderRadius: 10, marginTop: 20 }} onClick={() => navigate('/payment-options')}>
+                <div style={{ backgroundColor: COLORS.primary, width: "100%", padding: 20, borderRadius: 10, marginTop: 20 }} onClick={() => navigate('/create-bet')}>
                     <p style={{ ...FONTS.body5, color: COLORS.white, textAlign: "center", cursor: "pointer" }}>Create New Bet</p>
                 </div>
             </div>

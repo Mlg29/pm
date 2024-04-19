@@ -38,7 +38,8 @@ export const styles = {
         justifyContent: "center",
         alignItems: 'center',
         borderRadius: "50%",
-        background: `${COLORS.semiGray}`
+        background: `${COLORS.semiGray}`,
+        cursor: "pointer"
     },
     box2: {
         width: 80,
@@ -47,6 +48,7 @@ export const styles = {
        justifyContent: "center",
        alignItems: 'center',
        borderRadius: "50%",
+       cursor: "pointer"
     }
 }
 

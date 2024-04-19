@@ -3,12 +3,18 @@ import Header from "../../components/Header"
 import OtpComponent from "../../components/OtpComponent"
 import CustomeKeyboard from "../../components/CustomKeyboard"
 import { FONTS } from "../../utils/fonts"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 
 
 function WalletPin() {
   const navigate = useNavigate()
   const [otp, setOtp] = useState("")
+
+  useEffect(() => {
+      if(otp?.length === 6){
+        return navigate("/bet-success")
+      }
+  }, [otp])
 
   return (
     <div className="top-container" style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%" }}>
@@ -33,9 +39,9 @@ function WalletPin() {
             value={otp}
             setValue={setOtp}
           />
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px 0px" }}>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "2rem 0px" }}>
             <p style={{ ...FONTS.body6 }}>Forget PIN? </p>
-            <p style={{ ...FONTS.h6, margin: "0px 3px" }} onClick={() => navigate('/sign-up')}> Reset PIN</p>
+            <p style={{ ...FONTS.h6, margin: "0px 3px", cursor: "pointer" }} onClick={() => navigate('/sign-up')}> Reset PIN</p>
           </div>
         </div>
       </div>

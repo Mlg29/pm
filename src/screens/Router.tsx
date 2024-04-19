@@ -35,6 +35,9 @@ import Language from './NotificationScreen/Language.js';
 import Biometric from './Security/Biometric.js';
 import OpenBet from './OpenBets/index.js';
 import OpponentDetail from './OpponentDetail/index.js';
+import Options from './PaymentOptions/Options.js';
+import BetSuccess from './SuccessScreen/BetSuccess.js';
+import CreateBet from './CreateBet/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -95,7 +98,10 @@ function Routers() {
       <Route path="/language" element={<Language />} />
       <Route path="/biometrics" element={<Biometric />} />
       <Route path="/open-bets" element={<OpenBet />} />
+      <Route path="/options" element={<Options />} />
       <Route path="/opponent-detail" element={<OpponentDetail />} />
+      <Route path="/bet-success" element={<BetSuccess />} />
+      <Route path="/create-bet" element={<CreateBet/>} />
     
     </Routes>
   </Router>

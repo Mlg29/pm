@@ -21,7 +21,7 @@ function OtpComponent({otp, setOtp}: any) {
       onPaste={handlePaste}
       renderSeparator={<span style={{width: 10}}></span>}
       renderInput={(props) => <input {...props} /> }
-      inputStyle={{width: "35px", height: "35px", backgroundColor: COLORS.white, color: COLORS.primary, border: `1px solid ${COLORS.gray}`}}
+      inputStyle={{width: "38px", height: "38px", borderRadius: 7, backgroundColor: COLORS.white, color: COLORS.primary, border: `1px solid ${COLORS.gray}`}}
     />
   );
 }

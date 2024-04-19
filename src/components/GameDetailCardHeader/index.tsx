@@ -49,7 +49,7 @@ function GameDetailCardHeader(props: any) {
     const {propStyle} = props
 
   return (
-    <div style={{...styles.container, ...propStyle}} onClick={() => navigate("/game-details")}>
+    <div style={{...styles.container, ...propStyle}}>
         <div style={{...styles.row}}>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center'}}>
                 <p style={{...FONTS.body7, margin: "0px 0px 10px 0px"}}>England - PL</p>
