@@ -77,8 +77,8 @@ function Transaction() {
       <div style={{ ...styles.div }}>
         <div style={{ ...styles.container }}>
           <h3 style={{ ...FONTS.h5, color: COLORS.white }}>Transaction</h3>
-          <div>
-            <IoIosNotificationsOutline size={25} color={COLORS.white} style={{ border: "1px solid white", borderRadius: "100%", padding: 5 }} />
+          <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
+            <IoIosNotificationsOutline size={35} color={COLORS.white} style={{ border: "1px solid white", borderRadius: "100%", padding: 5 }} />
           </div>
         </div>
         <div style={{ ...styles.ctn }}>
@@ -86,8 +86,8 @@ function Transaction() {
           <div style={{ ...styles.rw }}>
             <p style={{ ...FONTS.body7, color: COLORS.white }}>NGN</p>
            {
-            show ? <div>
-                  <h3 style={{...FONTS.h1, color: COLORS.white}}>4,000</h3>
+            show ? <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+                  <h2 style={{...FONTS.largeTitle, color: COLORS.white}}>40,000</h2>
               </div>
               :
               <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }} >

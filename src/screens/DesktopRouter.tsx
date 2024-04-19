@@ -37,6 +37,13 @@ import OpenBet from './OpenBets/index.js';
 import Layout from '../components/Layout/index.js';
 import Dashboard from './DesktopScreens/Dashboard.js';
 import DashboardLayout from './DesktopScreens/Components/DashboardLayout.js';
+import Options from './PaymentOptions/Options.js';
+import OpponentDetail from './OpponentDetail/index.js';
+import BetSuccess from './SuccessScreen/BetSuccess.js';
+import CreateBet from './CreateBet/index.js';
+import InviteFriend from './InviteFriend/index.js';
+import ChallengeDetail from './ChallengeDetail/index.js';
+import AdjustBet from './AdjustBet/index.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -97,7 +104,13 @@ function DesktopRouters() {
       <Route path="/language" element={<DashboardLayout><Language /></DashboardLayout>} />
       <Route path="/biometrics" element={<DashboardLayout><Biometric /></DashboardLayout>} />
       <Route path="/open-bets" element={<DashboardLayout><OpenBet /></DashboardLayout>} />
-    
+      <Route path="/options" element={<DashboardLayout><Options /></DashboardLayout>} />
+      <Route path="/opponent-detail" element={<DashboardLayout><OpponentDetail /></DashboardLayout>} />
+      <Route path="/bet-success" element={<DashboardLayout><BetSuccess /></DashboardLayout>} />
+      <Route path="/create-bet" element={<DashboardLayout><CreateBet/></DashboardLayout>} />
+      <Route path="/invite" element={<DashboardLayout><InviteFriend/></DashboardLayout>} />
+      <Route path="/challenge-detail" element={<DashboardLayout><ChallengeDetail /></DashboardLayout>} />
+      <Route path="/adjust-bet" element={<DashboardLayout><AdjustBet /></DashboardLayout>} />
     
     </Routes>
   </Router>

@@ -16,7 +16,9 @@ const styles = {
         textAlign: "center" as TextAlign,
         fontSize: "40px",
         fontWight: "600",
-        fontFamily: "Poppins"
+        fontFamily: "Poppins",
+        color: "black",
+        backgroundColor: "transparent"
     }
 }
 

@@ -35,6 +35,7 @@ button:focus {
   flex-direction: column;
   flex: 1;
   height: 100%;
+  background-color: white;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);

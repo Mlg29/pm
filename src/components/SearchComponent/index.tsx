@@ -38,7 +38,7 @@ function SearchInput(props: any) {
         <div style={{ margin: "20px 0px" }}>
             <div style={{ ...styles.row }}>
                 <div style={{ margin: "0px 3px 0px 0px", display: "flex", justifyContent: 'center' }}>
-                    <CiSearch color={COLORS.primaryGray} size={20} />
+                    <CiSearch color={COLORS.primaryGray} size={20} style={{cursor: "pointer"}} />
                 </div>
                 <input
                     value={value}
@@ -50,7 +50,7 @@ function SearchInput(props: any) {
                     onChange={(e) => handleChange(e?.target?.value)}
                 />
                 {
-                    allowFilter ? <IoFilterOutline onClick={handleFilterClick}  size={20}/> : null
+                    allowFilter ? <IoFilterOutline onClick={handleFilterClick} size={20} style={{cursor: "pointer"}}/> : null
                 }
                 
             </div>

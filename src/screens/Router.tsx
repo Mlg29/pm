@@ -38,6 +38,9 @@ import OpponentDetail from './OpponentDetail/index.js';
 import Options from './PaymentOptions/Options.js';
 import BetSuccess from './SuccessScreen/BetSuccess.js';
 import CreateBet from './CreateBet/index.js';
+import InviteFriend from './InviteFriend/index.js';
+import AdjustBet from './AdjustBet/index.js';
+import ChallengeDetail from './ChallengeDetail/index.js';
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -102,7 +105,11 @@ function Routers() {
       <Route path="/opponent-detail" element={<OpponentDetail />} />
       <Route path="/bet-success" element={<BetSuccess />} />
       <Route path="/create-bet" element={<CreateBet/>} />
-    
+      <Route path="/invite" element={<InviteFriend/>} />
+      <Route path="/challenge-detail" element={<ChallengeDetail />} />
+      <Route path="/adjust-bet" element={<AdjustBet />} />
+
+
     </Routes>
   </Router>
   )

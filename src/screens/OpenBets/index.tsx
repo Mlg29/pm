@@ -80,7 +80,7 @@ function OpenBet() {
                                 <div style={{ backgroundColor: COLORS.primary, width: "48%", padding: 10, borderRadius: 10 }} onClick={() => navigate("/options")}>
                                     <p style={{ ...FONTS.body7, color: COLORS.white, textAlign: "center", cursor: "pointer" }}>Accept Bet</p>
                                 </div>
-                                <div style={{ backgroundColor: COLORS.cream, width: "48%", padding: 10, borderRadius: 10 }}>
+                                <div style={{ backgroundColor: COLORS.cream, width: "48%", padding: 10, borderRadius: 10 }} onClick={() => navigate("/adjust-bet")}>
                                     <p style={{ ...FONTS.h7, color: COLORS.primary, textAlign: "center", cursor: "pointer" }}>Adjust Bet</p>
                                 </div>
                             </div>

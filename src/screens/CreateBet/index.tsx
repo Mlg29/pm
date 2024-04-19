@@ -83,7 +83,7 @@ function CreateBet() {
       <div style={{ ...styles.rowBtn }}>
         <div
           style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-         // onClick={() => navigate("/wallet-pin")}
+         onClick={() => navigate("/invite")}
         >
           <div>
             <IoIosPeople
@@ -108,7 +108,7 @@ function CreateBet() {
       <div style={{ ...styles.rowBtn }}>
         <div
           style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-          //onClick={() => navigate("/wallet-pin")}
+          onClick={() => navigate("/options")}
         >
           <div>
           <RiFileList3Fill

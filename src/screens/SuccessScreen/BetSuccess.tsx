@@ -56,7 +56,7 @@ function BetSuccess() {
 
 
     return (
-        <div style={{ ...styles.container }}>
+        <div className="top-container" style={{ ...styles.container }}>
             <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
 
 

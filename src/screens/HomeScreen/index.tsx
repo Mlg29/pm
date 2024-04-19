@@ -83,7 +83,7 @@ const itemList = [
           <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>Hi Samson 0.</h3>
         </div>
 
-        <img src={notification} onClick={() => navigate("/notification")} />
+        <img src={notification} style={{cursor: "pointer"}} onClick={() => navigate("/notification")} />
 
       </div>
 
