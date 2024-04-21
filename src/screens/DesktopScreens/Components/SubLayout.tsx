@@ -8,6 +8,9 @@ import { FlexDirection } from "../../../utils/type";
 import NavHeader from "./NavHeader";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import BetCard from "../../../components/BetCard";
+import { useState } from "react";
+import OpenBetLayout from "../../../components/OpenBetLayout";
 
 const styles = {
   container: {
@@ -55,6 +58,14 @@ const styles = {
     alignItems: "center",
     padding: 20,
   },
+  sub2: {
+    backgroundColor: COLORS.white,
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
   mini: {
     border: `1px solid ${COLORS.gray}`,
     borderRadius: 10,
@@ -69,6 +80,9 @@ const styles = {
 };
 function SubLayout({ children }) {
   const navigate = useNavigate();
+  const [showBet, setShowBet] = useState(true)
+
+  
   const LargScreen = ({ children }: any) => {
     const isLargeScreen = useMediaQuery({ minWidth: 1551 });
     return isLargeScreen ? children : null;
@@ -88,135 +102,21 @@ function SubLayout({ children }) {
       <LargScreen>
         <div style={{ ...styles.container }}>
           <div style={{ ...styles.box2 }}>{children}</div>
-          <div style={{ ...styles.box3 }}>
-            <div style={{ ...styles.mini }}>
-              <h3
-                style={{
-                  ...FONTS.h5,
-                  ...styles.bg,
-                  margin: "0px",
-                  color: COLORS.white,
-                }}
-              >
-                OPEN BET
-              </h3>
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer"
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p
-                    style={{
-                      ...FONTS.body6,
-                      textAlign: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img src={ads} style={{ width: "100%" }} />
-          </div>
+          <OpenBetLayout />
         </div>
       </LargScreen>
 
       <Desktop>
         <div style={{ ...styles.containerDes }}>
           <div style={{ ...styles.box2 }}>{children}</div>
-          <div style={{ ...styles.box3 }}>
-            <div style={{ ...styles.mini }}>
-              <h3
-                style={{
-                  ...FONTS.h5,
-                  ...styles.bg,
-                  margin: "0px",
-                  color: COLORS.white,
-                }}
-              >
-                OPEN BET
-              </h3>
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer"
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img src={ads} style={{ width: "100%" }} />
-          </div>
+          <OpenBetLayout />
         </div>
       </Desktop>
 
       <Tablet>
         <div style={{ ...styles.containerTab }}>
           <div style={{ ...styles.box2 }}>{children}</div>
-          <div style={{ ...styles.box3 }}>
-            <div style={{ ...styles.mini }}>
-              <h3
-                style={{
-                  ...FONTS.h6,
-                  ...styles.bg,
-                  margin: "0px",
-                  color: COLORS.white,
-                }}
-              >
-                OPEN BET
-              </h3>
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body7, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer"
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img src={ads} style={{ width: "100%" }} />
-          </div>
+          <OpenBetLayout />
         </div>
       </Tablet>
     </div>

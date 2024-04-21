@@ -8,6 +8,7 @@ import { FlexDirection } from "../../../utils/type";
 import NavHeader from "./NavHeader";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import OpenBetLayout from "../../../components/OpenBetLayout";
 
 const styles = {
   container: {
@@ -127,49 +128,7 @@ function DashboardLayout({ children }) {
             </div>
           </div>
           <div style={{ ...styles.box2 }}>{children}</div>
-          <div style={{ ...styles.box3 }}>
-            <div style={{ ...styles.mini }}>
-              <h3
-                style={{
-                  ...FONTS.h5,
-                  ...styles.bg,
-                  margin: "0px",
-                  color: COLORS.white,
-                }}
-              >
-                OPEN BET
-              </h3>
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer"
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p
-                    style={{
-                      ...FONTS.body6,
-                      textAlign: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img src={ads} style={{ width: "100%" }} />
-          </div>
+          <OpenBetLayout />
         </div>
       </LargScreen>
 
@@ -203,43 +162,7 @@ function DashboardLayout({ children }) {
             </div>
           </div>
           <div style={{ ...styles.box2 }}>{children}</div>
-          <div style={{ ...styles.box3 }}>
-            <div style={{ ...styles.mini }}>
-              <h3
-                style={{
-                  ...FONTS.h5,
-                  ...styles.bg,
-                  margin: "0px",
-                  color: COLORS.white,
-                }}
-              >
-                OPEN BET
-              </h3>
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer"
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img src={ads} style={{ width: "100%" }} />
-          </div>
+          <OpenBetLayout />
         </div>
       </Desktop>
 
@@ -273,43 +196,7 @@ function DashboardLayout({ children }) {
             </div>
           </div>
           <div style={{ ...styles.box2 }}>{children}</div>
-          <div style={{ ...styles.box3 }}>
-            <div style={{ ...styles.mini }}>
-              <h3
-                style={{
-                  ...FONTS.h6,
-                  ...styles.bg,
-                  margin: "0px",
-                  color: COLORS.white,
-                }}
-              >
-                OPEN BET
-              </h3>
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body7, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer"
-                  }}
-                 // onClick={() => navigate("/open-bets")}
-                >
-                  <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img src={ads} style={{ width: "100%" }} />
-          </div>
+          <OpenBetLayout />
         </div>
       </Tablet>
     </div>
