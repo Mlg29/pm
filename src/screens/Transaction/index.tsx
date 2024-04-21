@@ -14,6 +14,9 @@ import send2 from "../../assets/images/send-2.svg"
 import TransactionCard from '../../components/TransactionCard';
 import { useNavigate } from 'react-router-dom';
 import { FlexDirection } from '../../utils/type';
+import { useMediaQuery } from 'react-responsive';
+import WithdrawalModal from '../../components/Modals/WithdrawaModal';
+import DepositModal from '../../components/Modals/DepositModal';
 
 
 const styles = {
@@ -50,7 +53,6 @@ const styles = {
     padding: "2rem 0px"
   },
   btn: {
-    width: "35%",
     padding: 10,
     borderRadius: 30,
     display: "flex",
@@ -70,17 +72,24 @@ const styles = {
 
 function Transaction() {
   const [show, setShow] = useState(false)
+  const [showTransfer, setShowTransfer] = useState(false)
+  const [deposit, setDeposit] = useState(false)
   const navigate = useNavigate()
+  const isMobile = useMediaQuery({ maxWidth: 767 })
+
+
 
   return (
     <div>
       <div style={{ ...styles.div }}>
-        <div style={{ ...styles.container }}>
-          <h3 style={{ ...FONTS.h5, color: COLORS.white }}>Transaction</h3>
-          <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
-            <IoIosNotificationsOutline size={35} color={COLORS.white} style={{ border: "1px solid white", borderRadius: "100%", padding: 5 }} />
-          </div>
+      {
+        isMobile &&   <div style={{ ...styles.container }}>
+        <h3 style={{ ...FONTS.h5, color: COLORS.white }}>Transaction</h3>
+        <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
+          <IoIosNotificationsOutline size={35} color={COLORS.white} style={{ border: "1px solid white", borderRadius: "100%", padding: 5 }} />
         </div>
+      </div>
+      }
         <div style={{ ...styles.ctn }}>
           <p style={{ ...FONTS.body7, color: COLORS.white }}>Account Balance</p>
           <div style={{ ...styles.rw }}>
@@ -107,15 +116,24 @@ function Transaction() {
         </div>
 
         <div style={{...styles.btnRow}}>
-          <div style={{...styles.btn, backgroundColor: COLORS.cream, cursor: "pointer"}} onClick={() => navigate("/withdrawal")}>
+          {
+            !isMobile && <div></div>
+          }
+          <div style={{...styles.btn, width: isMobile ? "35%" : "20%", backgroundColor: COLORS.cream, cursor: "pointer"}} 
+          onClick={() => isMobile ? navigate("/withdrawal") : setShowTransfer(true)}
+          >
             <img src={send2} />
             <p style={{...FONTS.h6, margin: "0px 0px 0px 10px"}}>Withdraw</p>
           </div>
 
-          <div style={{...styles.btn, backgroundColor: COLORS.lightOrange, cursor: "pointer"}} onClick={() => navigate("/deposit")}>
+          <div style={{...styles.btn,width: isMobile ? "35%" : "20%", backgroundColor: COLORS.lightOrange, cursor: "pointer"}} 
+          onClick={() => isMobile ? navigate("/deposit") : setDeposit(true)}>
             <img src={send1} />
             <p style={{...FONTS.h6, margin: "0px 0px 0px 10px"}}>Deposit</p>
           </div>
+          {
+            !isMobile && <div></div>
+          }
         </div>
 
       </div>
@@ -147,9 +165,22 @@ function Transaction() {
               </div>
 
 
-
-        <BottomTabs />
+          {
+            isMobile &&  <BottomTabs />
+          }
+       
       </div>
+
+    
+    <WithdrawalModal 
+      show={showTransfer}
+      handleClose={() => setShowTransfer(false)}
+    />
+
+    <DepositModal 
+    show={deposit}
+    handleClose={() => setDeposit(false)}
+    />
 
     </div>
   )

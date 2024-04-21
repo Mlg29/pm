@@ -11,19 +11,24 @@ import SlipCard from '../../components/SlipCard'
 import milan from "../../assets/images/millan.svg"
 import roma from "../../assets/images/roma.svg"
 import user from "../../assets/images/user.svg"
+import { useMediaQuery } from 'react-responsive'
 
 
 
 function BetSlip() {
   const navigate = useNavigate()
   const [active, setActive] = useState("")
+const isMobile = useMediaQuery({ maxWidth: 767 })
 
 
   return (
     <div className='top-container'>
       <div style={{ ...styles.container }}>
         <h3>Bet Slip</h3>
-        <img src={notification} onClick={() => navigate("/notification")} />
+        {
+          isMobile &&  <img src={notification} onClick={() => navigate("/notification")} />
+        }
+       
       </div>
       <div style={{ ...styles.tabs }}>
         <div style={{ ...styles.tb, backgroundColor: active === "active" ? COLORS.white : "transparent", cursor: "pointer" }} onClick={() => setActive("active")}>

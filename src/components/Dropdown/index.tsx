@@ -10,16 +10,18 @@ type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 export const styles = {
     container: {
         display: "flex",
-        flexDirection: "column" as FlexDirection
+        flexDirection: "column" as FlexDirection,
+        backgroundColor: "white"
     },
     select: {
         padding: "18px 5px",
         borderRadius: 10,
         margin: "5px 0px 0px 0px",
         border: `0.1px solid ${COLORS.gray}`,
-        backgroundColor: COLORS.white,
+        backgroundColor: "white",
         outline: "none",
-        color: COLORS.primary
+        color: COLORS.primary,
+        height: "50px"
     }
 }
 

@@ -44,6 +44,7 @@ import CreateBet from './CreateBet/index.js';
 import InviteFriend from './InviteFriend/index.js';
 import ChallengeDetail from './ChallengeDetail/index.js';
 import AdjustBet from './AdjustBet/index.js';
+import SubLayout from './DesktopScreens/Components/SubLayout.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -84,12 +85,12 @@ function DesktopRouters() {
           /> */}
          
      <Route path="/home" element={<Dashboard />} />
-      <Route path="/bet-slip" element={<DashboardLayout><BetSlip /></DashboardLayout>} />
-       <Route path="/transaction" element={<DashboardLayout><Transaction /></DashboardLayout>} />
+      <Route path="/bet-slip" element={<SubLayout><BetSlip /></SubLayout>} />
+       <Route path="/transaction" element={<SubLayout><Transaction /></SubLayout>} />
       <Route path="/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
       <Route path="/game-details" element={<DashboardLayout><GameDetails /></DashboardLayout>} />
-      <Route path="/bet-detail" element={<DashboardLayout><BetDetail /></DashboardLayout>} />
-      <Route path="/transaction-list" element={<DashboardLayout><TransactionList /></DashboardLayout>} />
+      <Route path="/bet-detail" element={<SubLayout><BetDetail /></SubLayout>} />
+      <Route path="/transaction-list" element={<SubLayout><TransactionList /></SubLayout>} />
       <Route path="/deposit" element={<DashboardLayout><Deposit /></DashboardLayout>} />
       <Route path="/withdrawal" element={<DashboardLayout><Withdrawal /></DashboardLayout>} />
       <Route path="/payment-options" element={<DashboardLayout><PaymentOptions /></DashboardLayout>} />
@@ -103,9 +104,9 @@ function DesktopRouters() {
       <Route path="/notification-preference" element={<DashboardLayout><Preference /></DashboardLayout>} />
       <Route path="/language" element={<DashboardLayout><Language /></DashboardLayout>} />
       <Route path="/biometrics" element={<DashboardLayout><Biometric /></DashboardLayout>} />
-      <Route path="/open-bets" element={<DashboardLayout><OpenBet /></DashboardLayout>} />
+      {/* <Route path="/open-bets" element={<DashboardLayout><OpenBet /></DashboardLayout>} /> */}
       <Route path="/options" element={<DashboardLayout><Options /></DashboardLayout>} />
-      <Route path="/opponent-detail" element={<DashboardLayout><OpponentDetail /></DashboardLayout>} />
+      <Route path="/opponent-detail" element={<SubLayout><OpponentDetail /></SubLayout>} />
       <Route path="/bet-success" element={<DashboardLayout><BetSuccess /></DashboardLayout>} />
       <Route path="/create-bet" element={<DashboardLayout><CreateBet/></DashboardLayout>} />
       <Route path="/invite" element={<DashboardLayout><InviteFriend/></DashboardLayout>} />

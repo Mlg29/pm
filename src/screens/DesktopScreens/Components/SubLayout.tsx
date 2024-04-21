@@ -35,7 +35,7 @@ const styles = {
     width: "25%",
   },
   box2: {
-    width: "45%",
+    width: "70%",
     // background: COLORS.semiGray
   },
   box3: {
@@ -67,7 +67,7 @@ const styles = {
     border: "none",
   },
 };
-function DashboardLayout({ children }) {
+function SubLayout({ children }) {
   const navigate = useNavigate();
   const LargScreen = ({ children }: any) => {
     const isLargeScreen = useMediaQuery({ minWidth: 1551 });
@@ -87,45 +87,6 @@ function DashboardLayout({ children }) {
       <NavHeader />
       <LargScreen>
         <div style={{ ...styles.container }}>
-          <div style={{ ...styles.box1 }}>
-            <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
-              {Leagues?.map((data: any) => {
-                return (
-                  <div>
-                    <p
-                      style={{
-                        ...FONTS.body6,
-                        margin: "15px 0px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {data?.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              <SearchInput placeholder="Search by club or country" />
-              {Countries?.map((data: any) => {
-                return (
-                  <div>
-                    <p
-                      style={{
-                        ...FONTS.body6,
-                        margin: "15px 0px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {data?.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
           <div style={{ ...styles.box2 }}>{children}</div>
           <div style={{ ...styles.box3 }}>
             <div style={{ ...styles.mini }}>
@@ -175,33 +136,6 @@ function DashboardLayout({ children }) {
 
       <Desktop>
         <div style={{ ...styles.containerDes }}>
-          <div style={{ ...styles.box1 }}>
-            <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
-              {Leagues?.map((data: any) => {
-                return (
-                  <div>
-                    <p style={{ ...FONTS.body6, margin: "15px 0px" }}>
-                      {data?.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              <SearchInput placeholder="Search by club or country" />
-              {Countries?.map((data: any) => {
-                return (
-                  <div>
-                    <p style={{ ...FONTS.body6, margin: "15px 0px" }}>
-                      {data?.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
           <div style={{ ...styles.box2 }}>{children}</div>
           <div style={{ ...styles.box3 }}>
             <div style={{ ...styles.mini }}>
@@ -245,33 +179,6 @@ function DashboardLayout({ children }) {
 
       <Tablet>
         <div style={{ ...styles.containerTab }}>
-          <div style={{ ...styles.box1 }}>
-            <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h7 }}>Top Leagus</h3>
-              {Leagues?.map((data: any) => {
-                return (
-                  <div>
-                    <p style={{ ...FONTS.body7, margin: "15px 0px" }}>
-                      {data?.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h7 }}>A - Z</h3>
-              <SearchInput placeholder="Search by club or country" />
-              {Countries?.map((data: any) => {
-                return (
-                  <div>
-                    <p style={{ ...FONTS.body7, margin: "15px 0px" }}>
-                      {data?.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
           <div style={{ ...styles.box2 }}>{children}</div>
           <div style={{ ...styles.box3 }}>
             <div style={{ ...styles.mini }}>
@@ -300,7 +207,7 @@ function DashboardLayout({ children }) {
                     margin: "2rem 0px 0px 0px",
                     cursor: "pointer"
                   }}
-                 // onClick={() => navigate("/open-bets")}
+                  //onClick={() => navigate("/open-bets")}
                 >
                   <p style={{ ...FONTS.body6, textAlign: "center" }}>
                     Create Bet
@@ -316,4 +223,4 @@ function DashboardLayout({ children }) {
   );
 }
 
-export default DashboardLayout;
+export default SubLayout;
