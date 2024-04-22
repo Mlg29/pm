@@ -6,6 +6,7 @@ import { FONTS } from "../../utils/fonts";
 import ads from "../../assets/images/ads.svg";
 import empty from "../../assets/images/empty.svg";
 import BetCard from "../BetCard";
+import CreateModal from "../Modals/CreateModal";
 
 const styles = {
   container: {
@@ -78,6 +79,7 @@ const styles = {
 
 const OpenBetLayout = () => {
   const [showBet, setShowBet] = useState(true);
+  const [createBet, setCreateBet] = useState(false);
 
   const LargeScreen = ({ children }: any) => {
     const isLargeScreen = useMediaQuery({ minWidth: 1551 });
@@ -155,7 +157,7 @@ const OpenBetLayout = () => {
                     cursor: "pointer",
                     color: COLORS.white,
                   }}
-                  //onClick={() => navigate("/open-bets")}
+                  onClick={() => setCreateBet(true)}
                 >
                   <p
                     style={{
@@ -229,7 +231,7 @@ const OpenBetLayout = () => {
                     cursor: "pointer",
                     color: COLORS.white,
                   }}
-                  //onClick={() => navigate("/open-bets")}
+                  onClick={() => setCreateBet(true)}
                 >
                   <p
                     style={{
@@ -303,7 +305,7 @@ const OpenBetLayout = () => {
                     cursor: "pointer",
                     color: COLORS.white,
                   }}
-                  //onClick={() => navigate("/open-bets")}
+                  onClick={() => setCreateBet(true)}
                 >
                   <p
                     style={{
@@ -321,6 +323,12 @@ const OpenBetLayout = () => {
           <img src={ads} style={{ width: "100%" }} />
         </div>
       </Tablet>
+
+
+      <CreateModal 
+        show={createBet}
+        handleClose={() => setCreateBet(false)}
+      />
     </>
   );
 };

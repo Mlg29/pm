@@ -7,25 +7,24 @@ import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import { TextAlign } from "../../utils/type";
 
-
 const styles = {
-    inputs: {
-        width: "100%",
-        padding: 30,
-        border: "none",
-        outline: "none",
-        textAlign: "center" as TextAlign,
-        fontSize: "40px",
-        fontWight: "600",
-        fontFamily: "Poppins",
-        color: "black",
-        backgroundColor: "transparent"
-    }
-}
+  inputs: {
+    width: "100%",
+    padding: 30,
+    border: "none",
+    outline: "none",
+    textAlign: "center" as TextAlign,
+    fontSize: "40px",
+    fontWight: "600",
+    fontFamily: "Poppins",
+    color: "black",
+    backgroundColor: "transparent",
+  },
+};
 
 const AdjustBet = () => {
   const [amount, setAmount] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="top-container">
@@ -50,8 +49,14 @@ const AdjustBet = () => {
       </div>
 
       <div>
-                <input style={{...styles.inputs}} value={amount} onChange={(e) => setAmount(e?.target?.value)}  placeholder="0.00" />
-            </div>
+   
+        <input
+          style={{ ...styles.inputs }}
+          value={amount}
+          onChange={(e) => setAmount(e?.target?.value)}
+          placeholder="0.00"
+        />
+      </div>
 
       <CustomeKeyboard value={amount} setValue={setAmount} />
 

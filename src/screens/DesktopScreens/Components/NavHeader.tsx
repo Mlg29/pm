@@ -190,7 +190,7 @@ function NavHeader() {
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3
                 style={{
-                  ...FONTS.body5,
+                  ...FONTS.body6,
                   marginRight: 10,
                   marginBottom: 0,
                   cursor: "pointer",
@@ -203,7 +203,7 @@ function NavHeader() {
               </h3>
               <h3
                 style={{
-                  ...FONTS.body5,
+                  ...FONTS.body6,
                   marginBottom: 0,
                   cursor: "pointer",
                   fontWeight:
@@ -233,27 +233,27 @@ function NavHeader() {
                   size={20}
                   style={{ cursor: "pointer" }}
                 />
-                   <Menu
+                <Menu
                   menuButton={
                     <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      margin: "0px 1rem",
-                    }}
-                  >
-                    <img src={user} style={{ width: 40 }} />
-                    <div style={{ margin: "0px 0.5rem" }}>
-                      <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                        Johnsom Abraham
-                      </h3>
-                      <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                        @johnyanny
-                      </p>
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        cursor: "pointer",
+                        margin: "0px 1rem",
+                      }}
+                    >
+                      <img src={user} style={{ width: 40 }} />
+                      <div style={{ margin: "0px 0.5rem" }}>
+                        <h3 style={{ ...FONTS.body7, margin: 0 }}>
+                          Johnsom Abraham
+                        </h3>
+                        <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
+                          @johnyanny
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   }
                 >
                   <div style={{ backgroundColor: "white", width: 200 }}>
@@ -282,7 +282,6 @@ function NavHeader() {
                   </div>
                 </Menu>
 
-               
                 <IoIosArrowDown />
               </div>
             ) : (
@@ -400,7 +399,7 @@ function NavHeader() {
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3
                 style={{
-                  ...FONTS.body5,
+                  ...FONTS.body6,
                   marginRight: 10,
                   marginBottom: 0,
                   cursor: "pointer",
@@ -413,7 +412,7 @@ function NavHeader() {
               </h3>
               <h3
                 style={{
-                  ...FONTS.body5,
+                  ...FONTS.body6,
                   fontWeight:
                     location?.pathname === "/transaction" ? "600" : "400",
                   marginBottom: 0,
@@ -609,7 +608,7 @@ function NavHeader() {
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3
                 style={{
-                  ...FONTS.body5,
+                  ...FONTS.body6,
                   marginRight: 10,
                   marginBottom: 0,
                   cursor: "pointer",
@@ -622,7 +621,7 @@ function NavHeader() {
               </h3>
               <h3
                 style={{
-                  ...FONTS.body5,
+                  ...FONTS.body6,
                   fontWeight:
                     location?.pathname === "/transaction" ? "600" : "400",
                   marginBottom: 0,
@@ -651,27 +650,27 @@ function NavHeader() {
                   style={{ cursor: "pointer" }}
                 />
 
-<Menu
+                <Menu
                   menuButton={
                     <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      margin: "0px 1rem",
-                    }}
-                  >
-                    <img src={user} style={{ width: 40 }} />
-                    <div style={{ margin: "0px 0.5rem" }}>
-                      <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                        Johnsom Abraham
-                      </h3>
-                      <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                        @johnyanny
-                      </p>
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        cursor: "pointer",
+                        margin: "0px 1rem",
+                      }}
+                    >
+                      <img src={user} style={{ width: 40 }} />
+                      <div style={{ margin: "0px 0.5rem" }}>
+                        <h3 style={{ ...FONTS.body7, margin: 0 }}>
+                          Johnsom Abraham
+                        </h3>
+                        <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
+                          @johnyanny
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   }
                 >
                   <div style={{ backgroundColor: "white", width: 200 }}>

@@ -49,7 +49,7 @@ const styles = {
   },
 };
 
-const AdjustModal = ({ show, handleClose }) => {
+const OpenBetModal = ({ show, handleClose }) => {
   const [otp, setOtp] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [amount, setAmount] = useState("");
@@ -83,53 +83,12 @@ const AdjustModal = ({ show, handleClose }) => {
                 Please specify the amount you wish to adjust your bet stake
               </p>
 
-              <div style={{ ...styles.contain }}>
-                <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
-                  UEFA - Champions League
-                </p>
 
-                <div style={{ ...styles.row }}>
-                  <div style={{ ...styles.center }}>
-                    <img src={milan} />
-                    <h3 style={{ ...FONTS.h6, marginTop: "10px" }}>Milan</h3>
-                    <p style={{ ...FONTS.body7 }}>(You)</p>
-                  </div>
-                  <div style={{ ...styles.center }}>
-                    <p style={{ ...FONTS.body7, marginTop: "10px" }}>
-                      10:15 PM
-                    </p>
-                    <h3 style={{ ...FONTS.h6, marginTop: "5px" }}>₦ 10,000</h3>
-                  </div>
-                  <div style={{ ...styles.center }}>
-                    <img src={roma} />
-                    <h3 style={{ ...FONTS.h6, marginTop: "10px" }}>AS Roma</h3>
-                    <p style={{ ...FONTS.body7 }}>Unknown</p>
-                  </div>
-                </div>
-              </div>
 
-              <div
-                style={{
-                  backgroundColor: COLORS.cream,
-                  padding: "15px 20px",
-                  margin: "1rem 0px 2rem 0px",
-                  borderRadius: 20,
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.gray,
-                    marginBottom: "10px",
-                  }}
-                >
-                  @JohnDoe Bet Amount
-                </p>
-                <h3 style={{ ...FONTS.h6 }}>₦10,000.00</h3>
-              </div>
+
 
               <div>
-                <h3 style={{ ...FONTS.body6 }}>Your Stake</h3>
+                <h3 style={{ ...FONTS.body6, marginBottom: "-20px" }}>Amount</h3>
                 <input
                   style={{ ...styles.inputs }}
                   value={amount}
@@ -156,7 +115,7 @@ const AdjustModal = ({ show, handleClose }) => {
 
               <div style={{ width: "100%", marginTop: 30 }}>
                 <Button
-                  text="Next"
+                  text="Proceed"
                   propStyle={{ width: "100%" }}
                    handlePress={() => handleSuccessShow()}
                 />
@@ -174,4 +133,4 @@ const AdjustModal = ({ show, handleClose }) => {
   );
 };
 
-export default AdjustModal;
+export default OpenBetModal;
