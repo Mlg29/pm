@@ -13,219 +13,252 @@ import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
-
-
-
+import { useMediaQuery } from "react-responsive";
 
 export const styles = {
-    container: {
-        display: "flex",
-        flexDirection: "column" as FlexDirection,
-        padding: "0px 20px",
-        flex: 1,
-        height: "100%"
-    },
-    line: {
-        display: "flex",
-        flexDirection: "row" as FlexDirection,
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "30px 20px 0px 20px"
-    },
-    active: {
-        backgroundColor: COLORS.primary,
-        width: 60,
-        height: 5,
-        borderRadius: 10
-    },
-    inactive: {
-        backgroundColor: COLORS.semiGray,
-        width: 60,
-        height: 5,
-        borderRadius: 10
-    },
-    bottom: {
-        display: 'flex',
-        flexDirection: "column" as FlexDirection,
-        justifyContent: 'center',
-        alignItems: "center",
-        margin: "1rem 0px 10px 0px"
-    }
-}
+  container: {
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    padding: "0px 20px",
+    flex: 1,
+    height: "100%",
+  },
+  line: {
+    display: "flex",
+    flexDirection: "row" as FlexDirection,
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "30px 20px 0px 20px",
+  },
+  active: {
+    backgroundColor: COLORS.primary,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
+  },
+  inactive: {
+    backgroundColor: COLORS.semiGray,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
+  },
+  bottom: {
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "1rem 0px 10px 0px",
+  },
+};
 
 function PasswordScreen() {
-    const [step, setStep] = useState(2)
-    const [terms, setTerms] = useState(false)
-    const navigate = useNavigate();
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [hasNumber, setHasNumber] = useState(false);
-    const [hasSpecialChar, setHasSpecialChar] = useState(false);
-    const [hasLowerCase, setHasLowerCase] = useState(false);
-    const [hasUpperCase, setHasUpperCase] = useState(false);
+  const [step, setStep] = useState(2);
+  const [terms, setTerms] = useState(false);
+  const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [hasNumber, setHasNumber] = useState(false);
+  const [hasSpecialChar, setHasSpecialChar] = useState(false);
+  const [hasLowerCase, setHasLowerCase] = useState(false);
+  const [hasUpperCase, setHasUpperCase] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
-    const stepLevel = () => {
-        if (step === 0) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 1) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 2) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 3) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 4) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.active }}></div>
-                </div>
-            )
-        }
-        else {
-
-        }
+  const stepLevel = () => {
+    if (step === 0) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 1) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 2) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 3) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 4) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.active }}></div>
+        </div>
+      );
+    } else {
     }
+  };
 
+  const requirements = [
+    {
+      id: 1,
+      text: "At least one uppercase",
+      check: hasUpperCase,
+    },
+    {
+      id: 2,
+      text: "At least one lowercase",
+      check: hasLowerCase,
+    },
+    {
+      id: 3,
+      text: "At least one special character",
+      check: hasSpecialChar,
+    },
+    {
+      id: 4,
+      text: "At least one number",
+      check: hasNumber,
+    },
+  ];
 
-    const requirements = [
-        {
-            id: 1,
-            text: "At least one uppercase",
-            check: hasUpperCase
-        },
-        {
-            id: 2,
-            text: "At least one lowercase",
-            check: hasLowerCase
-        },
-        {
-            id: 3,
-            text: "At least one special character",
-            check: hasSpecialChar
-        },
-        {
-            id: 4,
-            text: "At least one number",
-            check: hasNumber
-        }
-    ]
-
-    return (
-        <div style={{ ...styles.container }}>
-            <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
+  return (
+    <div style={{ ...styles.container }}>
+      <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
+        {isMobile && (
+          <>
             <div style={{ marginTop: 10 }}>
-                <BackButton />
+              <BackButton />
             </div>
             {stepLevel()}
+          </>
+        )}
 
-            <div>
-                <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Create Your Log In Password</h3>
-                <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Create a secure 6-Digits PIN to secure your account.</p>
-            </div>
-
-            <div style={{ marginTop: 20 }}>
-
-                <TextInput
-                    label="Password"
-                    placeholder="Enter your password"
-                    required
-                    value={password}
-                    type="password"
-                    handleChange={(val: string) => {
-                        setPassword(val)
-                        setHasNumber(/\d/.test(val));
-                        setHasSpecialChar(/[!@#$%^&*]/.test(val));
-                        setHasLowerCase(/[a-z]/.test(val));
-                        setHasUpperCase(/[A-Z]/.test(val));
-                    }}
-                />
-
-                <div style={{ margin: "0px 0px 10px 0px" }}>
-                    {
-                        requirements?.map((data: any) => {
-                            return <div style={{ display: "flex", alignItems: "center", margin: "5px 0px" }}>
-                                {
-                                    password?.length > 0 ? <div>
-                                        {
-                                            data?.check ? <IoIosCheckmarkCircle color={COLORS.green} /> : <MdCancel color={COLORS.red} />
-                                        }
-                                    </div> : <GoCircle />
-                                }
-
-
-                                <p style={{ ...FONTS.body6, margin: "0px 5px" }}>{data?.text}</p>
-                            </div>
-                        })
-                    }
-                </div>
-
-                <TextInput
-                    label="Confirm Password"
-                    placeholder="Enter your password"
-                    required
-                    type="password"
-                    value={confirmPassword}
-                    handleChange={(val: string) => {
-                        setConfirmPassword(val)
-                    }}
-                />
-                </div>
-            </div>
-
-            <div style={{ display: "flex",flexDirection: "column", flex: 1, justifyContent: "center" }}>
-            <div style={{ ...styles.bottom }}>
-                    <div style={{ width: "100%" }}>
-                        <Button
-                            text="Continue"
-                            propStyle={{ width: "100%" }}
-                            handlePress={() => navigate('/pin')}
-                        />
-                    </div>
-                </div>
-            </div>
-
-
+        <div>
+         {
+            isMobile &&  <h3
+            style={{
+              ...FONTS.h2,
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: "10px 0px",
+            }}
+          >
+            Create Your Log In Password
+          </h3>
+         }
+          <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
+            Create a secure 6-Digits PIN to secure your account.
+          </p>
         </div>
-    )
+
+        <div style={{ marginTop: 20 }}>
+          <TextInput
+            label="Password"
+            placeholder="Enter your password"
+            required
+            value={password}
+            type="password"
+            handleChange={(val: string) => {
+              setPassword(val);
+              setHasNumber(/\d/.test(val));
+              setHasSpecialChar(/[!@#$%^&*]/.test(val));
+              setHasLowerCase(/[a-z]/.test(val));
+              setHasUpperCase(/[A-Z]/.test(val));
+            }}
+          />
+
+          <div style={{ margin: "0px 0px 10px 0px" }}>
+            {requirements?.map((data: any) => {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    margin: "5px 0px",
+                  }}
+                >
+                  {password?.length > 0 ? (
+                    <div>
+                      {data?.check ? (
+                        <IoIosCheckmarkCircle color={COLORS.green} />
+                      ) : (
+                        <MdCancel color={COLORS.red} />
+                      )}
+                    </div>
+                  ) : (
+                    <GoCircle />
+                  )}
+
+                  <p style={{ ...FONTS.body6, margin: "0px 5px" }}>
+                    {data?.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <TextInput
+            label="Confirm Password"
+            placeholder="Enter your password"
+            required
+            type="password"
+            value={confirmPassword}
+            handleChange={(val: string) => {
+              setConfirmPassword(val);
+            }}
+          />
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ ...styles.bottom }}>
+          <div style={{ width: "100%" }}>
+            {
+                isMobile ?  <Button
+                text="Continue"
+                propStyle={{ width: "100%" }}
+                handlePress={() => navigate("/pin")}
+              />
+              :
+              <Button
+              text="Submit"
+              propStyle={{ width: "100%" }}
+            //   handlePress={() => navigate("/pin")}
+            />
+            }
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default PasswordScreen
+export default PasswordScreen;

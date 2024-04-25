@@ -13,6 +13,7 @@ import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
+import { useMediaQuery } from "react-responsive";
 
 
 
@@ -58,7 +59,7 @@ function TransactionPin() {
     const navigate = useNavigate();
     const [pin, setPin] = useState("")
     const [confirmPin, setConfirmPin] = useState("")
- 
+    const isMobile = useMediaQuery({ maxWidth: 767 });
 
     const stepLevel = () => {
         if (step === 0) {
@@ -127,13 +128,21 @@ function TransactionPin() {
     return (
         <div style={{ ...styles.container }}>
             <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-            <div style={{ marginTop: 10 }}>
+           {
+            isMobile && <>
+               <div style={{ marginTop: 10 }}>
                 <BackButton />
             </div>
             {stepLevel()}
+            </>
+           }
+         
 
             <div>
-                <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Create Transaction PIN</h3>
+                {
+                    isMobile &&  <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Create Transaction PIN</h3>
+                }
+               
                 <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Enter a 6-digit PIN for transaction authorization.</p>
             </div>
 
@@ -169,11 +178,19 @@ function TransactionPin() {
             <div style={{ display: "flex",flexDirection: "column", flex: 1, justifyContent: "center" }}>
             <div style={{ ...styles.bottom }}>
                     <div style={{ width: "100%" }}>
-                        <Button
+                        {
+                            isMobile ? <Button
                             text="Continue"
                             propStyle={{ width: "100%" }}
                             handlePress={() => navigate('/secret-question')}
                         />
+                        :
+                        <Button
+                            text="Submit"
+                            propStyle={{ width: "100%" }}
+                           // handlePress={() => navigate('/secret-question')}
+                        />
+                        }
                     </div>
                 </div>
             </div>

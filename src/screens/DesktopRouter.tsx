@@ -45,6 +45,7 @@ import InviteFriend from './InviteFriend/index.js';
 import ChallengeDetail from './ChallengeDetail/index.js';
 import AdjustBet from './AdjustBet/index.js';
 import SubLayout from './DesktopScreens/Components/SubLayout.js';
+import ProfileScreen from './DesktopScreens/ProileScreen.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -87,7 +88,7 @@ function DesktopRouters() {
      <Route path="/home" element={<Dashboard />} />
       <Route path="/bet-slip" element={<SubLayout><BetSlip /></SubLayout>} />
        <Route path="/transaction" element={<SubLayout><Transaction /></SubLayout>} />
-      <Route path="/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
+      <Route path="/profile" element={<ProfileScreen />} />
       <Route path="/game-details" element={<DashboardLayout><GameDetails /></DashboardLayout>} />
       <Route path="/bet-detail" element={<SubLayout><BetDetail /></SubLayout>} />
       <Route path="/transaction-list" element={<SubLayout><TransactionList /></SubLayout>} />

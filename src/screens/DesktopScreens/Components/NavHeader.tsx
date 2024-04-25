@@ -16,6 +16,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { Menu, MenuItem, MenuButton, SubMenu } from "@szhsin/react-menu";
 import logout from "../../../assets/images/logout.svg";
 import user1 from "../../../assets/images/user1.svg";
+import LogOut from "../../../components/Modals/LogOut";
 
 const styles = {
   rowBtw: {
@@ -66,6 +67,11 @@ function NavHeader() {
   const [selected, setSelected] = useState("Soccer");
   const [auth, setAuth] = useState(true);
   const location = useLocation();
+  const [show, setShow] = useState(false);
+
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const LargScreen = ({ children }: any) => {
     const isLargeScreen = useMediaQuery({ minWidth: 1551 });
@@ -264,6 +270,7 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                      onClick={() => navigate("/profile")}
                     >
                       <img src={user1} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Profile</p>
@@ -275,6 +282,7 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                    onClick={() => handleShow()}
                     >
                       <img src={logout} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Log Out</p>
@@ -473,6 +481,7 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                      onClick={() => navigate("/profile")}
                     >
                       <img src={user1} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Profile</p>
@@ -484,6 +493,7 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                      onClick={() => handleShow()}
                     >
                       <img src={logout} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Log Out</p>
@@ -681,6 +691,7 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                      onClick={() => navigate("/profile")}
                     >
                       <img src={user1} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Profile</p>
@@ -692,6 +703,7 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                      onClick={() => handleShow()}
                     >
                       <img src={logout} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Log Out</p>
@@ -803,6 +815,12 @@ function NavHeader() {
           </div>
         </div>
       </Tablet>
+
+
+      <LogOut
+          show={show}
+          handleClose={() => handleClose()}
+        />
     </div>
   );
 }

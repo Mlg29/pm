@@ -176,7 +176,10 @@ const isMobile = useMediaQuery({ maxWidth: 767 })
       </div>
     }
       
-      <BottomTabs />
+      {
+        isMobile && <BottomTabs />
+      }
+     
     </div>
   )
 }

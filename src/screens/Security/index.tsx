@@ -6,6 +6,10 @@ import scan from "../../assets/images/finger-scan.svg"
 import { FONTS } from "../../utils/fonts"
 import arrowright from "../../assets/images/arrow-right.svg"
 import Form from 'react-bootstrap/Form';
+import { useMediaQuery } from "react-responsive"
+import ChangePassword from "../../components/Modals/ChangePassword"
+import ChangePin from "../../components/Modals/ChangePin"
+import { useState } from "react"
 
 
 
@@ -22,35 +26,49 @@ const styles = {
 
 function Security() {
     const navigate = useNavigate()
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+    const [showPassword, setShowPassword] = useState(false)
+    const [showPin, setShowPin] = useState(false)
+
+    const handlePasswordChange = () => {
+      setShowPassword(true)
+    }
+
+    const handlePinChange = () => {
+      setShowPin(true)
+    }
 
     const dataList = [
-        {
-            id: 1,
-            name: "Biometrics",
-            image: scan,
-            handleRoute: () => navigate("/biometrics")
-        },
+        // {
+        //     id: 1,
+        //     name: "Biometrics",
+        //     image: scan,
+        //     handleRoute: () => navigate("/biometrics")
+        // },
         {
             id: 2,
             name: "Change Password",
             image: lock,
-            handleRoute: () => navigate("/fund-wallet")
+            handleRoute: isMobile ? () => navigate("/create-password") : () => handlePasswordChange()
         },
         {
             id: 3,
             name: "Change PIN",
             image: key,
-            handleRoute: () => navigate("/fund-wallet")
+            handleRoute: isMobile ? () => navigate("/fund-wallet") : () => handlePinChange()
         }
     ]
 
 
   return (
     <div className='top-container'>
-      <Header 
+      {
+        isMobile && <Header 
         text="Security"
       
       />
+      }
+      
 
 <div>
                 {
@@ -73,6 +91,17 @@ function Security() {
                     })
                 }
             </div>
+
+
+            <ChangePassword 
+              show={showPassword}
+              handleClose={() => setShowPassword(false)}
+            />
+
+            <ChangePin 
+             show={showPin}
+             handleClose={() => setShowPin(false)}
+            />
     </div>
   )
 }

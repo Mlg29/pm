@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import { FlexDirection } from "../../utils/type"
 import { useState } from "react"
 import { Modal } from 'react-bootstrap';
+import { useMediaQuery } from "react-responsive"
+import EditProfileModal from "../../components/Modals/EditProfileModal"
 
 
 
@@ -48,17 +50,21 @@ const styles = {
 function ProfileDetail() {
     const navigate = useNavigate()
     const [show, setShow] = useState(false);
-
+    const [showEdit, setShowEdit] = useState(false);
+    const isMobile = useMediaQuery({ maxWidth: 767 })
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    const handleShowEdit = () => setShowEdit(true);
     
     return (
         <div style={{ ...styles.container }}>
-            <Header
+            {
+                isMobile &&  <Header
                 text="Profile"
             />
+            }
+           
             <div style={{ display: "flex", flexDirection: 'column', flex: 5 }}>
                 <div style={{ ...styles.center }}>
                     <img src={profile} />
@@ -98,10 +104,17 @@ function ProfileDetail() {
 
 
             <div style={{ display: "flex", flexDirection: 'column', flex: 1 }}>
-                <Button
-                    text="Edit Account"
-                    handlePress={() => navigate("/edit-profile")}
-                />
+               {
+                isMobile ?  <Button
+                text="Edit Account"
+                handlePress={() => navigate("/edit-profile")}
+            />
+            :
+            <Button
+            text="Edit Account"
+            handlePress={() => handleShowEdit()}
+        />
+               }
             </div>
 
 
@@ -133,6 +146,12 @@ function ProfileDetail() {
         </Modal.Body>
 
       </Modal>
+
+      <EditProfileModal 
+        show={showEdit}
+        handleClose={() => setShowEdit(false)}
+        />
+        
         </div>
     )
 }

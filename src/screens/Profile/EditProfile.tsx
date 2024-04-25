@@ -10,6 +10,7 @@ import TextInput from "../../components/TextInput"
 import PhoneInputComponent from "../../components/PhoneInput"
 import DatePickerComponent from "../../components/DatePickerComponent"
 import { FlexDirection, Position } from "../../utils/type"
+import { useMediaQuery } from "react-responsive"
 
 const styles = {
     container: {
@@ -44,11 +45,15 @@ const styles = {
 
 function EditProfile() {
     const navigate = useNavigate()
+    const isMobile = useMediaQuery({ maxWidth: 767 })
     return (
         <div style={{ ...styles.container }}>
-            <Header
+            {
+                isMobile &&  <Header
                 text="Edit Profile"
             />
+            }
+           
             <div style={{ display: "flex", flexDirection: 'column', flex: 5 }}>
                 <h3 style={{ ...FONTS.h4 }}>Personal Information</h3>
                 <p style={{ ...FONTS.body6 }}>Update your personal information</p>
@@ -101,10 +106,17 @@ function EditProfile() {
 
 
             <div style={{ display: "flex", marginTop: "20px", flexDirection: 'column', flex: 1 }}>
-                <Button
-                    text="Save"
-                    handlePress={() => navigate("/edit-profile")}
-                />
+               {
+                isMobile ?  <Button
+                text="Save"
+                handlePress={() => navigate("/edit-profile")}
+            />
+            :
+            <Button
+            text="Save"
+           // handlePress={() => navigate("/edit-profile")}
+        />
+               }
             </div>
         </div>
     )

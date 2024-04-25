@@ -7,6 +7,7 @@ import { FONTS } from "../../utils/fonts"
 import arrowright from "../../assets/images/arrow-right.svg"
 import Form from 'react-bootstrap/Form';
 import Button from "../../components/Button"
+import { useMediaQuery } from "react-responsive"
 
 
 
@@ -22,6 +23,7 @@ const styles = {
 
 function Preference() {
     const navigate = useNavigate()
+    const isMobile = useMediaQuery({ maxWidth: 767 })
 
     const dataList = [
         {
@@ -50,10 +52,13 @@ function Preference() {
 
     return (
         <div className='top-container'>
-            <Header
+            {
+                isMobile &&  <Header
                 text="Notification"
 
             />
+            }
+           
 
             <div style={{ display: "flex", flexDirection: 'column', flex: 5 }}>
                 {
@@ -75,12 +80,23 @@ function Preference() {
             </div>
 
             <div style={{ display: "flex", flexDirection: 'column', flex: 1 }}>
+               {
+                !isMobile && <div style={{marginTop: 10}} />
+               }
                 <div style={{ width: "100%" }}>
-                    <Button
-                        text="Save"
-                        propStyle={{ width: "100%" }}
-                        handlePress={() => navigate('/secret-question')}
-                    />
+                   {
+                    isMobile ?  <Button
+                    text="Save"
+                    propStyle={{ width: "100%" }}
+                    handlePress={() => navigate('/secret-question')}
+                />
+                :
+                <Button
+                text="Save"
+                propStyle={{ width: "100%" }}
+              //  handlePress={() => navigate('/secret-question')}
+            />
+                   }
                 </div>
             </div>
         </div>
