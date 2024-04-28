@@ -5,6 +5,7 @@ import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
 import user from "../../assets/images/user.svg"
 import notification from "../../assets/images/notification.svg"
+import { useMediaQuery } from "react-responsive"
 
 const styles = {
     div: {
@@ -24,11 +25,16 @@ const styles = {
 }
 
 function BetDetail() {
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+
     return (
         <div className="top-container">
-            <Header
+            {
+                isMobile &&  <Header
                 text="Bet Details"
             />
+            }
+           
 
             <h3 style={{ ...FONTS.h5, textAlign: 'center' }}>Congratulations.</h3>
 

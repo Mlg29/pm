@@ -7,6 +7,7 @@ import { COLORS } from "../../utils/colors";
 import SlipCard from "../../components/SlipCard";
 import milan from "../../assets/images/millan.svg"
 import roma from "../../assets/images/roma.svg"
+import { useMediaQuery } from "react-responsive";
 
 const styles = {
   row: {
@@ -26,9 +27,14 @@ const styles = {
 };
 
 const OpponentDetail = () => {
+  const isMobile = useMediaQuery({ maxWidth: 767 })
+
   return (
     <div className="top-container">
-      <Header text="Opponent Details" />
+      {
+        isMobile && <Header text="Opponent Details" />
+      }
+      
 
       <div style={{ ...styles.row }}>
         <img src={user} width={50} />

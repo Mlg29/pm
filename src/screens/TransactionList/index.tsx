@@ -9,11 +9,14 @@ import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 import DatePickerComponent from "../../components/DatePickerComponent";
 import Button from "../../components/Button";
+import { useMediaQuery } from "react-responsive";
 
 function TransactionList() {
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState<any>([]);
+  const isMobile = useMediaQuery({ maxWidth: 767 })
 
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -83,7 +86,10 @@ function TransactionList() {
 
   return (
     <div className="top-container">
-      <Header text="Transactions" />
+      {
+        isMobile && <Header text="Transactions" />
+      }
+     
       <SearchComponent
         placeholder="Search transactions by amount and id"
         allowFilter
