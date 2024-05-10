@@ -12,9 +12,9 @@ import { FONTS } from "../../utils/fonts.js"
 
 
 function DatePickerComponent(props: any) {
-    const { label, required, type,value, handleChange,disabled, propStyle } = props
+    const { label, required, type,value, onChangeDate,disabled, propStyle } = props
 
-    const [startDate, setStartDate] = useState(new Date());
+   
     const ExampleCustomInput = forwardRef(({ value, onClick }: any, ref: any) => (
         <div style={{ ...styles.row, width: "300px", ...propStyle, background: disabled ? COLORS.semiGray : "none" }}>
             <button onClick={disabled ? () => {} : onClick} style={{ width: "100%", textAlign: "left", background: "transparent", outline: "none", border: "none" }} ref={ref}>
@@ -30,8 +30,8 @@ function DatePickerComponent(props: any) {
         <div style={{width: "100%", display: "flex", flexDirection: "column"}}>
             <label style={{ ...FONTS.body7 }}>{label} {required ? <span style={{color: "red"}}>*</span> : null}</label>
             <DatePicker
-                selected={startDate}
-                onChange={(date: any) => setStartDate(date)}
+                selected={value}
+                onChange={(date: any) => onChangeDate(date)}
                 customInput={<ExampleCustomInput />}
             />
         </div>

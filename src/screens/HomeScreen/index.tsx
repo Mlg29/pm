@@ -15,12 +15,14 @@ import { COLORS } from '../../utils/colors';
 import GameCard from '../../components/GameCard';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import heading from "../../assets/images/heading.svg";
+import { BaseUrl } from '../../https';
 
 
 function HomeScreen() {
 const navigate = useNavigate()
 const [selected, setSelected] = useState("Soccer")
-
+const [user, setUser] = useState(false)
 
 const itemList = [
   {
@@ -75,16 +77,27 @@ const itemList = [
 ]
 
 
+
   return (
     <div className='top-container'>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+       {
+        user ? <div style={{ display: "flex", alignItems: "center" }}>
           <RxAvatar size={50} />
           <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>Hi Samson 0.</h3>
         </div>
-
-        <img src={notification} style={{cursor: "pointer"}} onClick={() => navigate("/notification")} />
-
+        :   <img
+        style={{ cursor: "pointer" }}
+        src={heading}
+        onClick={() => navigate("/home")}
+      />
+       }
+       
+        {
+          user ? <img src={notification} style={{cursor: "pointer"}} onClick={() => navigate("/notification")} />
+          :   <RxAvatar size={50} onClick={() => navigate("/login")} style={{cursor: "pointer"}} />
+        }
+       
       </div>
 
       <SearchComponent 

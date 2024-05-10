@@ -9,8 +9,8 @@ import { FONTS } from "../../utils/fonts.js"
 import { COLORS } from '../../utils/colors.js'
 
 
-function PhoneInputComponent({ label, required }: any) {
-    const [value, setValue] = useState<any>()
+function PhoneInputComponent({ label,value, required,onChangeText, errorMsg}: any) {
+  //  const [value, setValue] = useState<any>()
 
 
     return (
@@ -22,8 +22,12 @@ function PhoneInputComponent({ label, required }: any) {
                     value={value}
                     defaultCountry="NG"
                     style={{ padding: 5, color: COLORS.primary }}
-                    onChange={setValue} />
+                    onChange={onChangeText} />
             </div>
+            {
+                errorMsg && <p style={{fontSize: 10, color: 'red', marginTop: 5}}>{errorMsg}</p>
+
+            }
         </div>
 
     )

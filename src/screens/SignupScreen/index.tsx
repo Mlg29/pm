@@ -11,9 +11,13 @@ import DatePickerComponent from "../../components/DatePickerComponent";
 import { MdCheckBox } from "react-icons/md";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import Button from "../../components/Button";
-import { FlexDirection } from "../../utils/type";
+import { CreateAccountFormDataUi, FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
-
+import { useAppDispatch } from "../../redux/hooks";
+import { createUser, verifySignupData } from "../../redux/slices/AuthSlice";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {useFormik} from 'formik';
+import { CreateAccountSchema } from "../../https/schemas";
 
 
 
@@ -55,7 +59,26 @@ function SignupScreen() {
   const [step, setStep] = useState(0)
   const [terms, setTerms] = useState(false)
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+  const [dob, setDob] = useState(new Date());
 
+
+  const initialValues: CreateAccountFormDataUi = {
+    email: '',
+    userName: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+  };
+
+
+  const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
+  useFormik({
+    initialValues,
+    validationSchema: CreateAccountSchema,
+    onSubmit: (data: CreateAccountFormDataUi) => handleSubmitData(data),
+    enableReinitialize: true,
+  });
 
 
   const stepLevel = () => {
@@ -119,6 +142,41 @@ function SignupScreen() {
     }
   }
 
+
+ 
+
+  const handleSubmitData = async (data) => {
+    const payload = {
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      email: data?.email,
+      phoneNumber: data?.phoneNumber,
+      userName: data?.userName,
+      dob: dob?.toISOString().slice(0, 10),
+    }
+    const verifyPayload = {
+      email: data?.email,
+      phoneNumber: data?.phoneNumber,
+      userName: data?.userName,
+    }
+console.log({payload})
+  try {
+    var response =  await dispatch(verifySignupData(verifyPayload));
+    if(verifySignupData.fulfilled.match(response)){
+      console.log("user data===", response)
+    //  NotificationManager.success('Success message', 'Title here');
+    }
+    else {
+      var errMsg = response?.payload as string;
+    //  NotificationManager.error('Error message', errMsg);
+    }
+  }
+  catch(err){
+
+  }
+    
+  }
+
   return (
     <div style={{ ...styles.container }}>
       <div style={{ marginTop: 10 }}>
@@ -136,27 +194,42 @@ function SignupScreen() {
           label="First Name"
           placeholder="Enter your first name"
           required
+          value={values.firstName}
+          onChangeText={handleChange('firstName')}
+          errorMsg={touched.firstName ? errors.firstName : undefined}
         />
         <TextInput
           label="Last Name"
           placeholder="Enter your last name"
           required
+          value={values.lastName}
+          onChangeText={handleChange('lastName')}
+          errorMsg={touched.lastName ? errors.lastName : undefined}
         />
         <TextInput
           label="Email"
           placeholder="Enter your email address"
           required
+          value={values.email}
+          onChangeText={handleChange('email')}
+          errorMsg={touched.email ? errors.email : undefined}
         />
         <TextInput
           label="Username"
           placeholder="Enter your username"
           required
           type="username"
+          value={values.userName}
+          onChangeText={handleChange('userName')}
+          errorMsg={touched.userName ? errors.userName : undefined}
         />
         <div style={{ width: "100%" }}>
           <PhoneInputComponent
             label="Phone Number"
             required
+            value={values.phoneNumber}
+            onChangeText={handleChange('phoneNumber')}
+            errorMsg={touched.phoneNumber ? errors.phoneNumber : undefined}
           />
         </div>
         <div style={{ width: "100%" }}>
@@ -164,6 +237,9 @@ function SignupScreen() {
             label="Date of Birth"
             propStyle={{ width: "100%" }}
             required
+             value={dob}
+             onChangeDate={(date) => setDob(date)}
+           
           />
         </div>
 
@@ -180,12 +256,14 @@ function SignupScreen() {
             <Button
               text="Continue"
               propStyle={{ width: "100%" }}
-              handlePress={() => navigate('/verify')}
+            // handlePress={() => navigate('/verify')}
+              handlePress={() => handleSubmit()}
             />
           </div>
         </div>
 
       </div>
+      {/* <NotificationContainer/> */}
     </div>
   )
 }

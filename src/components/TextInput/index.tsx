@@ -32,7 +32,7 @@ export const styles = {
 
 
 function TextInput(props: any) {
-    const { label, placeholder, required, type,value,disabled, handleChange } = props
+    const { label, placeholder, required, type,value,disabled, onChangeText, errorMsg } = props
    const [show, setShow] = useState(false)
    
     return (
@@ -54,8 +54,8 @@ function TextInput(props: any) {
                     disabled={disabled}
                     type={show ? "text" : type === "password" ? "password": "text"}
                     placeholder={placeholder}
-                    onChange={(e) => handleChange(e?.target?.value)}
-                    
+                    onChange={(e) => onChangeText(e?.target?.value)}
+                
                 />
                 {
                     type === "password" ?
@@ -70,7 +70,11 @@ function TextInput(props: any) {
                 }
 
             </div>
+            {
+                errorMsg && <p style={{fontSize: 10, color: 'red', marginTop: 5}}>{errorMsg}</p>
 
+            }
+   
         </div>
     )
 }
