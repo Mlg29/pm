@@ -18,7 +18,7 @@ import { createUser, verifySignupData } from "../../redux/slices/AuthSlice";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {useFormik} from 'formik';
 import { CreateAccountSchema } from "../../https/schemas";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 
 export const styles = {
@@ -61,6 +61,7 @@ function SignupScreen() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
   const [dob, setDob] = useState(new Date());
+  const [loader, setLoader] = useState(false)
 
 
   const initialValues: CreateAccountFormDataUi = {
@@ -159,16 +160,28 @@ function SignupScreen() {
       phoneNumber: data?.phoneNumber,
       userName: data?.userName,
     }
-console.log({payload})
+    setLoader(true)
   try {
     var response =  await dispatch(verifySignupData(verifyPayload));
     if(verifySignupData.fulfilled.match(response)){
-      console.log("user data===", response)
-    //  NotificationManager.success('Success message', 'Title here');
+     
+      localStorage.setItem("pendingData", JSON.stringify(payload))
+      toast.success("Success", {
+        position: "bottom-center"
+      });
+
+      setTimeout(() => { 
+        setLoader(false)
+        navigate('/verify')
+      }, 1000)
+
     }
     else {
       var errMsg = response?.payload as string;
-    //  NotificationManager.error('Error message', errMsg);
+      setLoader(false)
+      toast.error(errMsg, {
+        position: "bottom-center"
+      });
     }
   }
   catch(err){
@@ -256,6 +269,7 @@ console.log({payload})
             <Button
               text="Continue"
               propStyle={{ width: "100%" }}
+              isLoading={loader}
             // handlePress={() => navigate('/verify')}
               handlePress={() => handleSubmit()}
             />
@@ -263,7 +277,7 @@ console.log({payload})
         </div>
 
       </div>
-      {/* <NotificationContainer/> */}
+      <ToastContainer />
     </div>
   )
 }

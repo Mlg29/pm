@@ -65,9 +65,11 @@ const styles = {
 
 function NavHeader() {
   const [selected, setSelected] = useState("Soccer");
-  const [auth, setAuth] = useState(true);
   const location = useLocation();
   const [show, setShow] = useState(false);
+  const getToken = localStorage.getItem("token");
+  const getUserData = JSON.parse(localStorage.getItem("userData"));
+
 
 
   const handleClose = () => setShow(false);
@@ -192,7 +194,7 @@ function NavHeader() {
             src={heading}
             onClick={() => navigate("/home")}
           />
-          {auth && (
+          {getToken && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3
                 style={{
@@ -222,12 +224,12 @@ function NavHeader() {
             </div>
           )}
           <div style={{ ...styles.row }}>
-            {auth && <div style={{ width: "10%" }}></div>}
+            {getToken && <div style={{ width: "10%" }}></div>}
             <div style={{ width: "50%" }}>
               <SearchInput placeholder="Search by event, sport, club or game" />
             </div>
 
-            {auth ? (
+            {getToken ? (
               <div
                 style={{
                   display: "flex",
@@ -253,10 +255,10 @@ function NavHeader() {
                       <img src={user} style={{ width: 40 }} />
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                          Johnsom Abraham
+                          {getUserData?.firstName} {getUserData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                          @johnyanny
+                          @{getUserData?.userName}
                         </p>
                       </div>
                     </div>
@@ -403,7 +405,7 @@ function NavHeader() {
             src={heading}
             onClick={() => navigate("/home")}
           />
-          {auth && (
+          {getToken && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3
                 style={{
@@ -433,12 +435,12 @@ function NavHeader() {
             </div>
           )}
           <div style={{ ...styles.rowDes }}>
-            {auth && <div style={{ width: "10%" }}></div>}
+            {getToken && <div style={{ width: "10%" }}></div>}
             <div style={{ width: "50%" }}>
               <SearchInput placeholder="Search by event, sport, club or game" />
             </div>
 
-            {auth ? (
+            {getToken ? (
               <div
                 style={{
                   display: "flex",
@@ -464,10 +466,10 @@ function NavHeader() {
                       <img src={user} style={{ width: 40 }} />
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                          Johnsom Abraham
+                        {getUserData?.firstName} {getUserData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                          @johnyanny
+                        @{getUserData?.userName}
                         </p>
                       </div>
                     </div>
@@ -614,7 +616,7 @@ function NavHeader() {
             src={heading}
             onClick={() => navigate("/home")}
           />
-          {auth && (
+          {getToken && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3
                 style={{
@@ -647,7 +649,7 @@ function NavHeader() {
             <div style={{ width: "30%" }}>
               <SearchInput placeholder="Search by event, sport, club or game" />
             </div>
-            {auth ? (
+            {getToken ? (
               <div
                 style={{
                   display: "flex",
@@ -674,10 +676,10 @@ function NavHeader() {
                       <img src={user} style={{ width: 40 }} />
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                          Johnsom Abraham
+                        {getUserData?.firstName} {getUserData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                          @johnyanny
+                        @{getUserData?.userName}
                         </p>
                       </div>
                     </div>

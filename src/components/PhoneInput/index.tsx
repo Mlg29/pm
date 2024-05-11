@@ -21,7 +21,7 @@ function PhoneInputComponent({ label,value, required,onChangeText, errorMsg}: an
                     placeholder="Enter phone number"
                     value={value}
                     defaultCountry="NG"
-                    style={{ padding: 5, color: COLORS.primary }}
+                    style={{ padding: 5, color: 'red !important' }}
                     onChange={onChangeText} />
             </div>
             {

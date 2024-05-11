@@ -128,13 +128,8 @@ export const login = createAsyncThunk(
         `${BaseUrl}/auth/login`,
         payload,
       );
-      console.log("res=====",{response})
-      if (response?.status === 200) {
-        // await localStorage.setItem(
-        //   'userData',
-        //   JSON.stringify(response?.data?.data),
-        // );
-        return response?.data?.data;
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
       }
     } catch (e: any) {
       return rejectWithValue(e?.response?.data?.message);

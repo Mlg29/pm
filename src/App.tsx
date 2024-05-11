@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { useMediaQuery } from 'react-responsive'
 import DesktopRouters from './screens/DesktopRouter';
-import 'react-notifications/lib/notifications.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {

@@ -6,9 +6,13 @@ import { COLORS } from "../../utils/colors";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import { MdArrowBackIos } from "react-icons/md";
-import { FlexDirection } from "../../utils/type";
+import { FlexDirection, ForgetPasswordFormData } from "../../utils/type";
 import BackButton from "../../components/BackButton";
-
+import { forgetPassword } from "../../redux/slices/AuthSlice";
+import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import { useAppDispatch } from "../../redux/hooks";
+import { ForgetPasswordSchema } from "../../https/schemas";
 
 
 
@@ -55,7 +59,47 @@ function ForgetPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("")
 
+  const dispatch = useAppDispatch();
+  const [loader, setLoader] = useState(false);
 
+  const initialValues: ForgetPasswordFormData = {
+    email: "",
+  };
+
+  const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
+    useFormik({
+      initialValues,
+      validationSchema: ForgetPasswordSchema,
+      onSubmit: (data: ForgetPasswordFormData) => handleSubmitData(data),
+      enableReinitialize: true,
+    });
+
+  const handleSubmitData = async (data) => {
+    const payload = {
+      email: data?.email,
+    };
+
+    setLoader(true);
+    try {
+      var response = await dispatch(forgetPassword(payload));
+      if (forgetPassword.fulfilled.match(response)) {
+        toast.success(response?.payload?.data?.message, {
+          position: "bottom-center"
+        });
+
+        setTimeout(() => {
+          setLoader(false)
+          // navigate('/home')
+        }, 1000)
+      } else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        toast.error(errMsg, {
+          position: "bottom-center",
+        });
+      }
+    } catch (err) {}
+  };
 
 
 
@@ -77,10 +121,9 @@ function ForgetPassword() {
             label="Phone Number/Email Address"
             placeholder="Enter your Phone Number/Email Address"
             required
-            value={email}
-            handleChange={(val: string) => {
-              setEmail(val)
-            }}
+            value={values.email}
+            onChangeText={handleChange("email")}
+            errorMsg={touched.email ? errors.email : undefined}
           />
 
         </div>
@@ -92,13 +135,15 @@ function ForgetPassword() {
             <Button
               text="Continue"
               propStyle={{ width: "100%" }}
-              handlePress={() => navigate('/pin')}
+              // handlePress={() => navigate('/pin')}
+              handlePress={() => handleSubmit()}
             />
           </div>
         </div>
       </div>
 
 
+      <ToastContainer />
     </div>
   )
 }

@@ -3,10 +3,23 @@ import { useState } from "react"
 import Button from "../../components/Button"
 import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
+import { useNavigate } from 'react-router-dom';
 
 
 
 const LogOut = ({show, handleClose}) => {
+  const navigate = useNavigate();
+  const [loader, setLoader] = useState(false)
+
+  const handleLogOut = () => {
+    setLoader(true)
+    localStorage.clear()
+    setTimeout(() => {
+      setLoader(false)
+      handleClose()
+      navigate("/home")
+    }, 1000)
+  }
 
     return (
         <Modal centered show={show} onHide={handleClose}>
@@ -20,8 +33,9 @@ const LogOut = ({show, handleClose}) => {
             <div style={{ width: "100%", marginTop: "20px" }}>
               <Button
                 text="Yes, Log out"
+                isLoading={loader}
                 propStyle={{ width: "100%", backgroundColor: COLORS.red, color: COLORS.white }}
-
+                handlePress={() => handleLogOut()}
               />
             </div>
             <div style={{ width: "100%", margin: "20px 0px" }}>

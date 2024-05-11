@@ -7,11 +7,11 @@ import { COLORS} from "../../utils/colors.js"
 import {FONTS} from "../../utils/fonts.js"
 
 function Button(props: any) {
-    const {text, propStyle, handlePress} = props
+    const {text, propStyle, handlePress, isLoading} = props
   return (
     <div>
       <button 
-        onClick={handlePress}
+        onClick={isLoading ? () => {} : handlePress}
         style={{
             background: COLORS.primary, 
             outline: "none",
@@ -21,7 +21,7 @@ function Button(props: any) {
             color: COLORS.white,
             ...propStyle,
             }}>
-        {text}
+        {isLoading ? "Please wait..." : text}
       </button>
     </div>
   )

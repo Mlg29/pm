@@ -10,7 +10,9 @@ import OtpComponent from "../../components/OtpComponent";
 import CustomeKeyboard from "../../components/CustomKeyboard";
 import { FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
-
+import { useAppDispatch } from "../../redux/hooks";
+import { ToastContainer, toast } from 'react-toastify';
+import { verifyEmailOtp } from "../../redux/slices/AuthSlice";
 
 
 
@@ -53,6 +55,9 @@ function VerifyScreen() {
   const [terms, setTerms] = useState(false)
   const navigate = useNavigate();
   const [otp, setOtp] = useState('');
+  const getPendingData = JSON.parse(localStorage.getItem("pendingData"))
+  const dispatch = useAppDispatch()
+  const [loader, setLoader] = useState(false)
 
   const stepLevel = () => {
     if (step === 0) {
@@ -115,6 +120,52 @@ function VerifyScreen() {
     }
   }
 
+  const MaskedEmail = ({ email }) => {
+    const [username, domain] = email.split('@');
+ 
+    const maskedUsername = `${username.slice(0, 3)}*******`;
+  
+    const maskedEmail = `${maskedUsername}@${domain}`;
+  
+    return <span>{maskedEmail}</span>;
+  };
+
+  const handleVerify = async () => {
+
+    const payload = {
+      email: getPendingData?.email,
+      otp: parseInt(otp)
+    }
+
+    console.log({payload})
+    setLoader(true)
+    try {
+      var response =  await dispatch(verifyEmailOtp(payload));
+      if(verifyEmailOtp.fulfilled.match(response)){
+       
+        toast.success("Success", {
+          position: "bottom-center"
+        });
+  
+        setTimeout(() => { 
+          setLoader(false)
+          navigate('/create-password')
+        }, 1000)
+  
+      }
+      else {
+        var errMsg = response?.payload as string;
+        setLoader(false)
+        toast.error(errMsg, {
+          position: "bottom-center"
+        });
+      }
+    }
+    catch(err){
+  
+    }
+  }
+
   return (
     <div style={{ ...styles.container }}>
       <div style={{ marginTop: 10 }}>
@@ -124,7 +175,7 @@ function VerifyScreen() {
 
       <div>
         <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Verification</h3>
-        <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Please enter the 6-digit OTP sent to your phone number lor********@gmail.com.</p>
+        <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Please enter the 6-digit OTP sent to your email <MaskedEmail email={getPendingData?.email} /> </p>
       </div>
 
       <div style={{ marginTop: 20 }}>
@@ -152,12 +203,15 @@ function VerifyScreen() {
             <Button
               text="Verify"
               propStyle={{ width: "100%" }}
-              handlePress={() => navigate('/create-password')}
+              handlePress={() => handleVerify()}
+              isLoading={loader}
             />
           </div>
         </div>
 
       </div>
+
+      <ToastContainer />
     </div>
   )
 }

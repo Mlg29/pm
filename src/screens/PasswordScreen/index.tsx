@@ -11,9 +11,15 @@ import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { FlexDirection } from "../../utils/type";
+import { FlexDirection, PasswordCreation } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useMediaQuery } from "react-responsive";
+import { useAppDispatch } from "../../redux/hooks";
+import { useFormik } from "formik";
+import { CreatePasswordSchema } from "../../https/schemas";
+import { createUser } from "../../redux/slices/AuthSlice";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export const styles = {
   container: {
@@ -62,6 +68,51 @@ function PasswordScreen() {
   const [hasLowerCase, setHasLowerCase] = useState(false);
   const [hasUpperCase, setHasUpperCase] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const getPendingData = JSON.parse(localStorage.getItem("pendingData"));
+  const dispatch = useAppDispatch();
+  const [loader, setLoader] = useState(false);
+
+  const initialValues: PasswordCreation = {
+    password: "",
+    confirmPassword: "",
+  };
+
+  const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
+    useFormik({
+      initialValues,
+      validationSchema: CreatePasswordSchema,
+      onSubmit: (data: PasswordCreation) => handleSubmitData(data),
+      enableReinitialize: true,
+    });
+
+  const handleSubmitData = async (data) => {
+    const payload = {
+      ...getPendingData,
+      password: data?.password,
+    };
+
+    setLoader(true);
+    try {
+      var response = await dispatch(createUser(payload));
+      if (createUser.fulfilled.match(response)) {
+        localStorage.removeItem("pendingData");
+        toast.success("Success", {
+          position: "bottom-center",
+        });
+
+        setTimeout(() => {
+          setLoader(false);
+          navigate("/auth-success");
+        }, 1000);
+      } else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        toast.error(errMsg, {
+          position: "bottom-center",
+        });
+      }
+    } catch (err) {}
+  };
 
   const stepLevel = () => {
     if (step === 0) {
@@ -122,24 +173,26 @@ function PasswordScreen() {
     {
       id: 1,
       text: "At least one uppercase",
-      check: hasUpperCase,
+      check: (/[A-Z]/.test(values.password)),
     },
     {
       id: 2,
       text: "At least one lowercase",
-      check: hasLowerCase,
+      check: (/[a-z]/.test(values.password)),
     },
     {
       id: 3,
       text: "At least one special character",
-      check: hasSpecialChar,
+      check: (/[!@#$%^&*]/.test(values.password)),
     },
     {
       id: 4,
       text: "At least one number",
-      check: hasNumber,
+      check: (/\d/.test(values.password)),
     },
   ];
+
+
 
   return (
     <div style={{ ...styles.container }}>
@@ -154,18 +207,18 @@ function PasswordScreen() {
         )}
 
         <div>
-         {
-            isMobile &&  <h3
-            style={{
-              ...FONTS.h2,
-              fontWeight: "bold",
-              textAlign: "center",
-              margin: "10px 0px",
-            }}
-          >
-            Create Your Log In Password
-          </h3>
-         }
+          {isMobile && (
+            <h3
+              style={{
+                ...FONTS.h2,
+                fontWeight: "bold",
+                textAlign: "center",
+                margin: "10px 0px",
+              }}
+            >
+              Create Your Log In Password
+            </h3>
+          )}
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
             Create a secure 6-Digits PIN to secure your account.
           </p>
@@ -176,15 +229,11 @@ function PasswordScreen() {
             label="Password"
             placeholder="Enter your password"
             required
-            value={password}
             type="password"
-            handleChange={(val: string) => {
-              setPassword(val);
-              setHasNumber(/\d/.test(val));
-              setHasSpecialChar(/[!@#$%^&*]/.test(val));
-              setHasLowerCase(/[a-z]/.test(val));
-              setHasUpperCase(/[A-Z]/.test(val));
-            }}
+            value={values.password}
+            onChangeText={handleChange("password")}
+            errorMsg={touched.password ? errors.password : undefined}
+    
           />
 
           <div style={{ margin: "0px 0px 10px 0px" }}>
@@ -197,7 +246,7 @@ function PasswordScreen() {
                     margin: "5px 0px",
                   }}
                 >
-                  {password?.length > 0 ? (
+                  {values?.password?.length > 0 ? (
                     <div>
                       {data?.check ? (
                         <IoIosCheckmarkCircle color={COLORS.green} />
@@ -222,10 +271,9 @@ function PasswordScreen() {
             placeholder="Enter your password"
             required
             type="password"
-            value={confirmPassword}
-            handleChange={(val: string) => {
-              setConfirmPassword(val);
-            }}
+            value={values.confirmPassword}
+            onChangeText={handleChange("confirmPassword")}
+            errorMsg={touched.confirmPassword ? errors.confirmPassword : undefined}
           />
         </div>
       </div>
@@ -240,23 +288,28 @@ function PasswordScreen() {
       >
         <div style={{ ...styles.bottom }}>
           <div style={{ width: "100%" }}>
-            {
-                isMobile ?  <Button
+            {isMobile ? (
+              <Button
                 text="Continue"
                 propStyle={{ width: "100%" }}
-                handlePress={() => navigate("/pin")}
+                isLoading={loader}
+                // handlePress={() => navigate("/pin")}
+                handlePress={() => handleSubmit()}
               />
-              :
+            ) : (
               <Button
-              text="Submit"
-              propStyle={{ width: "100%" }}
-            //   handlePress={() => navigate("/pin")}
-            />
-            }
-           
+                text="Submit"
+                propStyle={{ width: "100%" }}
+                isLoading={loader}
+                //   handlePress={() => navigate("/pin")}
+                handlePress={() => handleSubmit()}
+              />
+            )}
           </div>
         </div>
       </div>
+
+      <ToastContainer />
     </div>
   );
 }

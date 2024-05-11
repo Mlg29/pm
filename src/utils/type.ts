@@ -22,7 +22,7 @@ export type ButtonType = {
   };
   
   export type LoginFormData = {
-    emailAddress: string;
+    email: string;
     password: string;
   };
   export type CompanyVerificationFormData = {
@@ -71,8 +71,13 @@ export type ButtonType = {
     lastName: string;
   };
 
+  export type PasswordCreation = {
+    password: string;
+    confirmPassword: string;
+  };
+
   export type ForgetPasswordFormData = {
-    emailAddress: string;
+    email: string;
   };
   
   export type PhoneNumberData = {

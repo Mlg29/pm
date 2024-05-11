@@ -19,7 +19,7 @@ export const getRequest = async (url: string) => {
           authorization: `Bearer ${token}`,
         },
       })
-      if(response?.status === 200){
+      if(response?.status === 200 || response?.status === 201){
         return response
       }
 }
@@ -27,7 +27,7 @@ export const getRequest = async (url: string) => {
 export const getRequestNoToken = async (url: string) => {
 
   var response = await axios.get(url)
-    if(response?.status === 200){
+    if(response?.status === 200 || response?.status === 201){
       return response
     }
 }
@@ -40,7 +40,7 @@ export const postRequest =  async (url: string, payload?: any) => {
       authorization: `Bearer ${token}`,
     }
   })
-  if(res?.status === 200){
+  if(res?.status === 200 || res?.status === 201){
     return res
   }
   
@@ -53,7 +53,7 @@ export const postRequestNoToken =  async (url: string, payload?: any) => {
         'Content-Type': 'application/json'
       }
     })
-    if(res?.status === 200){
+    if(res?.status === 200 || res?.status === 201){
       return res
     }
     
@@ -67,7 +67,7 @@ export const updateRequest =  async (url: string, payload?: any) => {
       authorization: `Bearer ${token}`,
     }
   })
-  if(res?.status === 200){
+  if(res?.status === 200 || res?.status === 201){
     return res
   }
   
