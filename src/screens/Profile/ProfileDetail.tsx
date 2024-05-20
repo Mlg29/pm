@@ -6,10 +6,13 @@ import { COLORS } from "../../utils/colors"
 import trash from "../../assets/images/trash.svg"
 import { useNavigate } from "react-router-dom"
 import { FlexDirection } from "../../utils/type"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Modal } from 'react-bootstrap';
 import { useMediaQuery } from "react-responsive"
 import EditProfileModal from "../../components/Modals/EditProfileModal"
+import { useAppDispatch } from "../../redux/hooks"
+import { getUserData } from "../../redux/slices/AuthSlice"
+import moment from "moment"
 
 
 
@@ -52,6 +55,20 @@ function ProfileDetail() {
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const isMobile = useMediaQuery({ maxWidth: 767 })
+    const dispatch = useAppDispatch() as any
+    const [userData, setUserData] = useState(null)
+    
+    const fetchUserInfo = async () => {
+      const response = await dispatch(getUserData())
+      if(getUserData.fulfilled.match(response)) {
+       setUserData(response?.payload)
+      }
+     }
+   
+     useEffect(() => {
+       fetchUserInfo()
+     }, [])
+  
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -68,30 +85,30 @@ function ProfileDetail() {
             <div style={{ display: "flex", flexDirection: 'column', flex: 5 }}>
                 <div style={{ ...styles.center }}>
                     <img src={profile} />
-                    <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>Samson Ojo</h3>
-                    <p style={{ ...FONTS.body7, backgroundColor: COLORS.semiGray, padding: 10, borderRadius: 30 }}>@holuwadharnyz</p>
+                    <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>{userData?.firstName} {userData?.lastName}</h3>
+                    <p style={{ ...FONTS.body7, backgroundColor: COLORS.semiGray, padding: 10, borderRadius: 30 }}>@{userData?.userName}</p>
                 </div>
 
                 <div>
                     <div style={{...styles.row}}>
                         <p style={{...FONTS.body6}}>First Name</p>
-                        <h3 style={{...FONTS.h6}}>Samson</h3>
+                        <h3 style={{...FONTS.h6}}>{userData?.firstName}</h3>
                     </div>
                     <div style={{...styles.row}}>
                         <p style={{...FONTS.body6}}>Last Name</p>
-                        <h3 style={{...FONTS.h6}}>Ojo</h3>
+                        <h3 style={{...FONTS.h6}}>{userData?.lastName}</h3>
                     </div>
                     <div style={{...styles.row}}>
                         <p style={{...FONTS.body6}}>Date of Birth</p>
-                        <h3 style={{...FONTS.h6}}>11 Jan, 1930</h3>
+                        <h3 style={{...FONTS.h6}}>{moment(userData?.dob).format('ll')}</h3>
                     </div>
                     <div style={{...styles.row}}>
                         <p style={{...FONTS.body6}}>Phone Number</p>
-                        <h3 style={{...FONTS.h6}}>+234 800 000 0000</h3>
+                        <h3 style={{...FONTS.h6}}>{userData?.phoneNumber}</h3>
                     </div>
                     <div style={{...styles.row}}>
                         <p style={{...FONTS.body6}}>Email</p>
-                        <h3 style={{...FONTS.h6}}>samsonojo134@gmail.com</h3>
+                        <h3 style={{...FONTS.h6}}>{userData?.email}</h3>
                     </div>
                 </div>
 

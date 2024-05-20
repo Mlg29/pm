@@ -9,8 +9,16 @@ import edit from "../../assets/images/edit.svg"
 import TextInput from "../../components/TextInput"
 import PhoneInputComponent from "../../components/PhoneInput"
 import DatePickerComponent from "../../components/DatePickerComponent"
-import { FlexDirection, Position } from "../../utils/type"
+import { AccountFormDataUi, FlexDirection, Position } from "../../utils/type"
 import { useMediaQuery } from "react-responsive"
+import { useEffect, useState } from "react"
+import { getUserData } from "../../redux/slices/AuthSlice"
+import { useAppDispatch } from "../../redux/hooks"
+import { AccountSchema } from "../../https/schemas"
+import {useFormik} from 'formik';
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 const styles = {
     container: {
@@ -46,6 +54,43 @@ const styles = {
 function EditProfile() {
     const navigate = useNavigate()
     const isMobile = useMediaQuery({ maxWidth: 767 })
+
+    const dispatch = useAppDispatch() as any
+    const [userData, setUserData] = useState(null)
+    
+    const fetchUserInfo = async () => {
+      const response = await dispatch(getUserData())
+      if(getUserData.fulfilled.match(response)) {
+       setUserData(response?.payload)
+      }
+     }
+   
+     useEffect(() => {
+       fetchUserInfo()
+     }, [])
+
+     const initialValues: AccountFormDataUi = {
+        email: userData?.email ? userData?.email : "",
+        userName: userData?.userName ? userData?.userName : "",
+        firstName: userData?.firstName ? userData?.firstName : "",
+        lastName: userData?.lastName ? userData?.lastName : "",
+        phoneNumber: userData?.phoneNumber? userData?.phoneNumber: "",
+      };
+
+      const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
+      useFormik({
+        initialValues,
+        validationSchema: AccountSchema,
+        onSubmit: (data: AccountFormDataUi) => handleSubmitData(data),
+        enableReinitialize: true,
+      });
+    
+
+      const handleSubmitData = (data) => {
+
+      }
+
+     
     return (
         <div style={{ ...styles.container }}>
             {
@@ -66,8 +111,9 @@ function EditProfile() {
                     <div style={{ ...styles.row }}>
                         <TextInput
                             label="First Name"
+                            value={values?.firstName}
                             required
-                            placeholder="Samson"
+                            placeholder="Enter first name"
                             disabled
                         />
                     </div>

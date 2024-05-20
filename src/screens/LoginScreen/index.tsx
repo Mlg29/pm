@@ -77,8 +77,8 @@ function LoginScreen() {
     try {
       var response = await dispatch(login(payload));
       if (login.fulfilled.match(response)) {
-        localStorage.setItem("userData", JSON.stringify(response?.payload?.data?.user))
-        localStorage.setItem("token", JSON.stringify(response?.payload?.data?.accessToken))
+       // localStorage.setItem("userData", JSON.stringify(response?.payload?.data?.user))
+        localStorage.setItem("token", response?.payload?.data?.accessToken)
         toast.success(response?.payload?.data?.message, {
           position: "bottom-center"
         });

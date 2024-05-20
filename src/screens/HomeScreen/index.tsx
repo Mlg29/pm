@@ -13,16 +13,19 @@ import { MdSportsRugby } from "react-icons/md";
 import { COLORS } from "../../utils/colors";
 import GameCard from "../../components/GameCard";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
 import { BaseUrl } from "../../https";
+import { useAppDispatch } from "../../redux/hooks";
+import { getUserData } from "../../redux/slices/AuthSlice";
 
 function HomeScreen() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("Soccer");
   // const [user, setUser] = useState(false)
+  const dispatch = useAppDispatch() as any
   const getToken = localStorage.getItem("token");
-  const getUserData = JSON.parse(localStorage.getItem("userData"));
+  const [userData, setUserData] = useState(null)
 
   const itemList = [
     {
@@ -122,6 +125,17 @@ function HomeScreen() {
     },
   ];
 
+  const fetchUserInfo = async () => {
+   const response = await dispatch(getUserData())
+   if(getUserData.fulfilled.match(response)) {
+    setUserData(response?.payload)
+   }
+  }
+
+  useEffect(() => {
+    fetchUserInfo()
+  }, [])
+
   return (
     <div className="top-container">
       <div
@@ -135,7 +149,7 @@ function HomeScreen() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <RxAvatar size={50} />
             <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>
-              Hi {getUserData?.firstName}
+              Hi {userData?.firstName}
             </h3>
           </div>
         ) : (

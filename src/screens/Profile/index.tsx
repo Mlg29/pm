@@ -12,9 +12,11 @@ import arrowRight from "../../assets/images/arrow-right.svg"
 import { useNavigate } from "react-router-dom"
 import { FlexDirection } from "../../utils/type"
 import { Modal } from 'react-bootstrap';
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../../components/Button"
 import LogOut from "../../components/Modals/LogOut"
+import { useAppDispatch } from "../../redux/hooks"
+import { getUserData } from "../../redux/slices/AuthSlice"
 
 
 
@@ -46,6 +48,20 @@ const styles = {
 function Profile() {
   const navigate = useNavigate()
   const [show, setShow] = useState(false);
+
+  const dispatch = useAppDispatch() as any
+  const [userData, setUserData] = useState(null)
+  
+  const fetchUserInfo = async () => {
+    const response = await dispatch(getUserData())
+    if(getUserData.fulfilled.match(response)) {
+     setUserData(response?.payload)
+    }
+   }
+ 
+   useEffect(() => {
+     fetchUserInfo()
+   }, [])
 
 
   const handleClose = () => setShow(false);
@@ -99,8 +115,8 @@ function Profile() {
 
       <div style={{ ...styles.center }}>
         <img src={profile} />
-        <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>Samson Ojo</h3>
-        <p style={{ ...FONTS.body7, backgroundColor: COLORS.semiGray, padding: 10, borderRadius: 30 }}>@holuwadharnyz</p>
+        <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>{userData?.firstName} {userData?.lastName}</h3>
+        <p style={{ ...FONTS.body7, backgroundColor: COLORS.semiGray, padding: 10, borderRadius: 30 }}>@{userData?.userName}</p>
       </div>
 
       <div style={{ borderRadius: 20 }}>

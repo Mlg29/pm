@@ -46,6 +46,9 @@ import ChallengeDetail from './ChallengeDetail/index.js';
 import AdjustBet from './AdjustBet/index.js';
 import SubLayout from './DesktopScreens/Components/SubLayout.js';
 import ProfileScreen from './DesktopScreens/ProileScreen.js';
+import CreatePasswordNew from './PasswordScreen/CreatePassword.js';
+import PasswordSuccess from './SuccessScreen/PasswordSuccess.js';
+import ForgetPasswordVerify from './VerifyScreen/ForgetPasswordVerify.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -64,27 +67,10 @@ function DesktopRouters() {
       <Route path="/auth-success" element={<Layout><AuthSuccess /></Layout>} />
       <Route path="/notification" element={<NotificationScreen />} />
       <Route path="/forget-password" element={<Layout><ForgetPassword /></Layout>} />
-      {/* <ProtectedRoute
-            path="/home"
-           element={<HomeScreen />}
-            isAuthenticated={isAuthenticated}
-          />
-           <ProtectedRoute
-            path="/bet-slip"
-           element={<BetSlip />}
-            isAuthenticated={isAuthenticated}
-          />
-           <ProtectedRoute
-            path="/transaction"
-           element={<Transaction />}
-            isAuthenticated={isAuthenticated}
-          />
-           <ProtectedRoute
-            path="/profile"
-           element={<Profile />}
-            isAuthenticated={isAuthenticated}
-          /> */}
-         
+      <Route path="/create-new-password" element={<Layout><CreatePasswordNew /></Layout>} />
+      <Route path="/password-success" element={<Layout><PasswordSuccess /></Layout>} />
+      <Route path="/forget-password-verify" element={<Layout><ForgetPasswordVerify /></Layout>} />
+    
      <Route path="/home" element={<Dashboard />} />
       <Route path="/bet-slip" element={<SubLayout><BetSlip /></SubLayout>} />
        <Route path="/transaction" element={<SubLayout><Transaction /></SubLayout>} />

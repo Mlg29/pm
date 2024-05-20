@@ -89,7 +89,7 @@ function ForgetPassword() {
 
         setTimeout(() => {
           setLoader(false)
-          // navigate('/home')
+          navigate('/forget-password-verify', { state: { email: data?.email } })
         }, 1000)
       } else {
         var errMsg = response?.payload as string;
@@ -135,6 +135,7 @@ function ForgetPassword() {
             <Button
               text="Continue"
               propStyle={{ width: "100%" }}
+              isLoading={loader}
               // handlePress={() => navigate('/pin')}
               handlePress={() => handleSubmit()}
             />

@@ -41,6 +41,9 @@ import CreateBet from './CreateBet/index.js';
 import InviteFriend from './InviteFriend/index.js';
 import AdjustBet from './AdjustBet/index.js';
 import ChallengeDetail from './ChallengeDetail/index.js';
+import ForgetPasswordVerify from './VerifyScreen/ForgetPasswordVerify.tsx';
+import CreatePasswordNew from './PasswordScreen/CreatePassword.tsx';
+import PasswordSuccess from './SuccessScreen/PasswordSuccess.tsx';
 
 
 function Routers() {
@@ -60,6 +63,9 @@ function Routers() {
       <Route path="/auth-success" element={<AuthSuccess />} />
       <Route path="/notification" element={<NotificationScreen />} />
       <Route path="/forget-password" element={<ForgetPassword />} />
+      <Route path="/create-new-password" element={<CreatePasswordNew />} />
+      <Route path="/password-success" element={<PasswordSuccess />} />
+      <Route path="/forget-password-verify" element={<ForgetPasswordVerify />} />
       {/* <ProtectedRoute
             path="/home"
            element={<HomeScreen />}

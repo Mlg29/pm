@@ -71,6 +71,14 @@ export type ButtonType = {
     lastName: string;
   };
 
+  export type AccountFormDataUi = {
+    email: string;
+    userName: string;
+    firstName: string;
+    phoneNumber?: string;
+    lastName: string;
+  };
+
   export type PasswordCreation = {
     password: string;
     confirmPassword: string;
