@@ -84,6 +84,12 @@ export type ButtonType = {
     confirmPassword: string;
   };
 
+  export type SecretQuestionCreation = {
+    answer: string;
+    answerTwo: string;
+    answerThree: string;
+  };
+
   export type PinCreation = {
     pin: string;
     confirmPin: string;

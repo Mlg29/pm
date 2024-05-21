@@ -73,6 +73,12 @@ export const AccountSchema = yup.object().shape({
   email: yup.string().email().required("Email is required"),
 });
 
+export const SecretQuestionSchema = yup.object().shape({
+  answer: yup.string().required("Answer One is required"),
+  answerTwo: yup.string().required("Answer Two is required"),
+  answerThree: yup.string().required("Answer Three is required"),
+});
+
 export const CreatePasswordSchema = yup.object().shape({
   password: yup
     .string()
