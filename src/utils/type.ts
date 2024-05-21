@@ -84,6 +84,11 @@ export type ButtonType = {
     confirmPassword: string;
   };
 
+  export type PinCreation = {
+    pin: string;
+    confirmPin: string;
+  };
+
   export type ForgetPasswordFormData = {
     email: string;
   };

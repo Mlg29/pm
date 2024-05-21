@@ -11,9 +11,16 @@ import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { FlexDirection } from "../../utils/type";
+import { FlexDirection, PinCreation } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useMediaQuery } from "react-responsive";
+import { useAppDispatch } from "../../redux/hooks";
+import { useFormik } from "formik";
+import { CreatePinSchema } from "../../https/schemas";
+import { updateTransactionPin } from "../../redux/slices/AuthSlice";
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 
 
@@ -57,9 +64,57 @@ function TransactionPin() {
     const [step, setStep] = useState(3)
     const [terms, setTerms] = useState(false)
     const navigate = useNavigate();
-    const [pin, setPin] = useState("")
-    const [confirmPin, setConfirmPin] = useState("")
+
     const isMobile = useMediaQuery({ maxWidth: 767 });
+    const dispatch = useAppDispatch();
+    const [loader, setLoader] = useState(false);
+
+
+    const initialValues: PinCreation = {
+      pin: "",
+      confirmPin: "",
+    };
+
+
+  const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
+  useFormik({
+    initialValues,
+    validationSchema: CreatePinSchema,
+    onSubmit: (data: PinCreation) => handleSubmitData(data),
+    enableReinitialize: true,
+  });
+
+
+
+
+  const handleSubmitData = async (data) => {
+
+    const payload = {
+      transactionPin: data?.pin,
+    };
+
+    setLoader(true);
+    try {
+      var response = await dispatch(updateTransactionPin(payload));
+      if (updateTransactionPin.fulfilled.match(response)) {
+        toast.success(response?.payload?.data?.message, {
+          position: "bottom-center",
+        });
+
+        setTimeout(() => {
+          setLoader(false);
+          navigate("/pin-success");
+        }, 1000);
+      } else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        toast.error(errMsg, {
+          position: "bottom-center",
+        });
+      }
+    } catch (err) {}
+  };
+
 
     const stepLevel = () => {
         if (step === 0) {
@@ -152,12 +207,10 @@ function TransactionPin() {
                     label="Pin"
                     placeholder="Enter your pin"
                     required
-                    value={pin}
                     type="password"
-                    handleChange={(val: string) => {
-                        setPin(val)
-          
-                    }}
+                    value={values.pin}
+                    onChangeText={handleChange("pin")}
+                    errorMsg={touched.pin ? errors.pin : undefined}
                 />
 
  
@@ -167,10 +220,9 @@ function TransactionPin() {
                     placeholder="Enter your pin"
                     required
                     type="password"
-                    value={confirmPin}
-                    handleChange={(val: string) => {
-                        setConfirmPin(val)
-                    }}
+                    value={values.confirmPin}
+                    onChangeText={handleChange("confirmPin")}
+                    errorMsg={touched.confirmPin ? errors.confirmPin : undefined}
                 />
                 </div>
             </div>
@@ -181,21 +233,23 @@ function TransactionPin() {
                         {
                             isMobile ? <Button
                             text="Continue"
+                            isLoading={loader}
                             propStyle={{ width: "100%" }}
-                            handlePress={() => navigate('/secret-question')}
+                            handlePress={() => handleSubmit()}
                         />
                         :
                         <Button
                             text="Submit"
+                            isLoading={loader}
                             propStyle={{ width: "100%" }}
-                           // handlePress={() => navigate('/secret-question')}
+                           handlePress={() => handleSubmit()}
                         />
                         }
                     </div>
                 </div>
             </div>
 
-
+<ToastContainer />
         </div>
     )
 }

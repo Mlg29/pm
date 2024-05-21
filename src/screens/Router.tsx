@@ -44,6 +44,7 @@ import ChallengeDetail from './ChallengeDetail/index.js';
 import ForgetPasswordVerify from './VerifyScreen/ForgetPasswordVerify.tsx';
 import CreatePasswordNew from './PasswordScreen/CreatePassword.tsx';
 import PasswordSuccess from './SuccessScreen/PasswordSuccess.tsx';
+import PinSuccess from './SuccessScreen/PinSuccess.tsx';
 
 
 function Routers() {
@@ -65,27 +66,8 @@ function Routers() {
       <Route path="/forget-password" element={<ForgetPassword />} />
       <Route path="/create-new-password" element={<CreatePasswordNew />} />
       <Route path="/password-success" element={<PasswordSuccess />} />
+      <Route path="/pin-success" element={<PinSuccess />} />
       <Route path="/forget-password-verify" element={<ForgetPasswordVerify />} />
-      {/* <ProtectedRoute
-            path="/home"
-           element={<HomeScreen />}
-            isAuthenticated={isAuthenticated}
-          />
-           <ProtectedRoute
-            path="/bet-slip"
-           element={<BetSlip />}
-            isAuthenticated={isAuthenticated}
-          />
-           <ProtectedRoute
-            path="/transaction"
-           element={<Transaction />}
-            isAuthenticated={isAuthenticated}
-          />
-           <ProtectedRoute
-            path="/profile"
-           element={<Profile />}
-            isAuthenticated={isAuthenticated}
-          /> */}
          
      <Route path="/home" element={<HomeScreen />} />
       <Route path="/bet-slip" element={<BetSlip />} />
@@ -115,7 +97,7 @@ function Routers() {
       <Route path="/invite" element={<InviteFriend/>} />
       <Route path="/challenge-detail" element={<ChallengeDetail />} />
       <Route path="/adjust-bet" element={<AdjustBet />} />
-
+  
 
     </Routes>
   </Router>

@@ -46,6 +46,27 @@ export const postRequest =  async (url: string, payload?: any) => {
   
 }
 
+export const postImageRequest =  async (url: string, formData?: any) => {
+    try {
+      const response = await axios.post(
+        url,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'accept': 'application/json',
+          },
+        }
+      );
+      return response
+     
+    } catch (error) {
+      console.log(`Error uploading file: ${error.message}`);
+    }
+  
+}
+
+
 export const postRequestNoToken =  async (url: string, payload?: any) => {
 
     var res = await axios.post(url, payload, {

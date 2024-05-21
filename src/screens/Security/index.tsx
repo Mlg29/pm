@@ -39,23 +39,23 @@ function Security() {
     }
 
     const dataList = [
-        // {
-        //     id: 1,
-        //     name: "Biometrics",
-        //     image: scan,
-        //     handleRoute: () => navigate("/biometrics")
-        // },
+        {
+            id: 1,
+            name: "Set Secret Question",
+            image: scan,
+            handleRoute: () => navigate("/secret-question")
+        },
         {
             id: 2,
             name: "Change Password",
             image: lock,
-            handleRoute: isMobile ? () => navigate("/create-password") : () => handlePasswordChange()
+            handleRoute: isMobile ? () => navigate("/create-new-password") : () => handlePasswordChange()
         },
         {
             id: 3,
             name: "Change PIN",
             image: key,
-            handleRoute: isMobile ? () => navigate("/fund-wallet") : () => handlePinChange()
+            handleRoute: isMobile ? () => navigate("/pin") : () => handlePinChange()
         }
     ]
 

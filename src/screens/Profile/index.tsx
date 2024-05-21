@@ -1,25 +1,22 @@
-import { IoIosNotificationsOutline } from "react-icons/io"
-import BottomTabs from "../../components/Tabs"
-import { COLORS } from "../../utils/colors"
-import { FONTS } from "../../utils/fonts"
-import profile from "../../assets/images/profile1.png"
-import bag from "../../assets/images/bag.svg"
-import language from "../../assets/images/language.svg"
-import logout from "../../assets/images/logout.svg"
-import notification from "../../assets/images/notification1.svg"
-import user from "../../assets/images/user1.svg"
-import arrowRight from "../../assets/images/arrow-right.svg"
-import { useNavigate } from "react-router-dom"
-import { FlexDirection } from "../../utils/type"
-import { Modal } from 'react-bootstrap';
-import { useEffect, useState } from "react"
-import Button from "../../components/Button"
-import LogOut from "../../components/Modals/LogOut"
-import { useAppDispatch } from "../../redux/hooks"
-import { getUserData } from "../../redux/slices/AuthSlice"
-
-
-
+import { IoIosNotificationsOutline } from "react-icons/io";
+import BottomTabs from "../../components/Tabs";
+import { COLORS } from "../../utils/colors";
+import { FONTS } from "../../utils/fonts";
+import profile from "../../assets/images/profile1.png";
+import bag from "../../assets/images/bag.svg";
+import language from "../../assets/images/language.svg";
+import logout from "../../assets/images/logout.svg";
+import notification from "../../assets/images/notification1.svg";
+import user from "../../assets/images/user1.svg";
+import arrowRight from "../../assets/images/arrow-right.svg";
+import { useNavigate } from "react-router-dom";
+import { FlexDirection } from "../../utils/type";
+import { Modal } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import Button from "../../components/Button";
+import LogOut from "../../components/Modals/LogOut";
+import { useAppDispatch } from "../../redux/hooks";
+import { getUserData } from "../../redux/slices/AuthSlice";
 
 const styles = {
   container: {
@@ -32,7 +29,7 @@ const styles = {
     flexDirection: "column" as FlexDirection,
     justifyContent: "center",
     alignItems: "center",
-    margin: "1rem 0px"
+    margin: "1rem 0px",
   },
   row: {
     display: "flex",
@@ -41,28 +38,27 @@ const styles = {
     backgroundColor: COLORS.white,
     marginBottom: "15px",
     borderRadius: 20,
-    border: "none"
-  }
-}
+    border: "none",
+  },
+};
 
 function Profile() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
-  const dispatch = useAppDispatch() as any
-  const [userData, setUserData] = useState(null)
-  
-  const fetchUserInfo = async () => {
-    const response = await dispatch(getUserData())
-    if(getUserData.fulfilled.match(response)) {
-     setUserData(response?.payload)
-    }
-   }
- 
-   useEffect(() => {
-     fetchUserInfo()
-   }, [])
+  const dispatch = useAppDispatch() as any;
+  const [userData, setUserData] = useState(null);
 
+  const fetchUserInfo = async () => {
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -73,82 +69,122 @@ function Profile() {
       name: "Profile",
       icon: user,
       color: "#F9F2F1",
-      handleClick: () => navigate("/profile-detail")
+      handleClick: () => navigate("/profile-detail"),
     },
     {
       id: 2,
       name: "Notification Preference",
       icon: notification,
       color: "#7154E80D",
-      handleClick: () => navigate("/notification-preference")
+      handleClick: () => navigate("/notification-preference"),
     },
     {
       id: 3,
       name: "Security",
       icon: bag,
       color: "#E9F7EA",
-      handleClick: () => navigate("/security")
+      handleClick: () => navigate("/security"),
     },
     {
       id: 4,
       name: "App Language",
       icon: language,
       color: "#FFEEE3",
-      handleClick: () => navigate("/language")
+      handleClick: () => navigate("/language"),
     },
     {
       id: 5,
       name: "Log out",
       icon: logout,
-      handleClick: () => handleShow()
-    }
-  ]
+      handleClick: () => handleShow(),
+    },
+  ];
   return (
-    <div className='top-container'>
+    <div className="top-container">
       <div style={{ ...styles.container }}>
         <h3 style={{ ...FONTS.h4, color: COLORS.primary }}>Profile</h3>
         <div>
-          <IoIosNotificationsOutline size={45} color={COLORS.primary} style={{ border: "1px solid white", borderRadius: "100%", padding: 5 }} />
+          <IoIosNotificationsOutline
+            size={45}
+            color={COLORS.primary}
+            style={{
+              border: "1px solid white",
+              borderRadius: "100%",
+              padding: 5,
+            }}
+          />
         </div>
       </div>
 
-
       <div style={{ ...styles.center }}>
-        <img src={profile} />
-        <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>{userData?.firstName} {userData?.lastName}</h3>
-        <p style={{ ...FONTS.body7, backgroundColor: COLORS.semiGray, padding: 10, borderRadius: 30 }}>@{userData?.userName}</p>
+        {userData?.profileImage ? (
+          <img
+            src={userData?.profileImage}
+            style={{
+              width: "100px",
+              height: "100px",
+              borderRadius: "100%",
+            }}
+            alt=""
+          />
+        ) : (
+          <img src={profile} />
+        )}
+        <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>
+          {userData?.firstName} {userData?.lastName}
+        </h3>
+        <p
+          style={{
+            ...FONTS.body7,
+            backgroundColor: COLORS.semiGray,
+            padding: 10,
+            borderRadius: 30,
+          }}
+        >
+          @{userData?.userName}
+        </p>
       </div>
 
       <div style={{ borderRadius: 20 }}>
-        {
-          itemList?.map((data: any) => {
-            return (
-              <div key={data?.id} onClick={data?.handleClick} style={{ ...styles.row, cursor: "pointer" }}>
-                <div style={{ backgroundColor: data?.color, padding: 5, borderRadius: 100 }}>
-                  <img src={data?.icon} />
-                </div>
-                <p style={{ ...FONTS.body6, margin: "0px 20px", width: "100%", color: `${data?.name === "Log out" ? COLORS.red : COLORS.primary}` }}>{data?.name}</p>
-                {
-                  data?.name === "Log out" ? null : <img src={arrowRight} />
-                }
-
+        {itemList?.map((data: any) => {
+          return (
+            <div
+              key={data?.id}
+              onClick={data?.handleClick}
+              style={{ ...styles.row, cursor: "pointer" }}
+            >
+              <div
+                style={{
+                  backgroundColor: data?.color,
+                  padding: 5,
+                  borderRadius: 100,
+                }}
+              >
+                <img src={data?.icon} />
               </div>
-            )
-          })
-        }
+              <p
+                style={{
+                  ...FONTS.body6,
+                  margin: "0px 20px",
+                  width: "100%",
+                  color: `${
+                    data?.name === "Log out" ? COLORS.red : COLORS.primary
+                  }`,
+                }}
+              >
+                {data?.name}
+              </p>
+              {data?.name === "Log out" ? null : <img src={arrowRight} />}
+            </div>
+          );
+        })}
       </div>
-
-
 
       <BottomTabs />
 
-        <LogOut
-          show={show}
-          handleClose={() => handleClose()}
-        />
-     
+      <LogOut show={show} handleClose={() => handleClose()} />
     </div>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

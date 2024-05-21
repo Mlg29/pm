@@ -12,6 +12,7 @@ import {
   getRequestNoToken,
   postRequestNoToken,
   updateRequest,
+  postImageRequest,
 } from "../../https/server";
 import { BaseUrl } from "../../https";
 
@@ -160,16 +161,15 @@ export const getSingleUser = createAsyncThunk("auth/getSingleUser", async () => 
 
 export const uploadImage = createAsyncThunk(
   "auth/uploadImage",
-  async (payload: any, { rejectWithValue }) => {
+  async (formData: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(
+      const response = await postImageRequest(
         `${BaseUrl}/file`,
-        payload
+        formData
       );
-
-      if (response?.status === 200 || response?.status === 201) {
-        return response;
-      }
+     if(response?.status === 200 || response?.status === 201){
+      return response
+     }
     } catch (e: any) {
       return rejectWithValue(e?.response?.data?.message);
     }

@@ -6,6 +6,15 @@ export const store = configureStore({
   reducer: {
    auth: AuthReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck: {
+      // Ignore these paths in the state
+      ignoredPaths: ['auth.image.headers'],
+      // Ignore these action types
+      ignoredActionPaths: ['meta.arg', 'payload.headers'],
+    },
+  }),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

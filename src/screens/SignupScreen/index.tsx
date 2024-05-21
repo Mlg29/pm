@@ -147,6 +147,7 @@ function SignupScreen() {
  
 
   const handleSubmitData = async (data) => {
+    
     const payload = {
       firstName: data?.firstName,
       lastName: data?.lastName,
@@ -160,13 +161,14 @@ function SignupScreen() {
       phoneNumber: data?.phoneNumber,
       userName: data?.userName,
     }
+
     setLoader(true)
   try {
     var response =  await dispatch(verifySignupData(verifyPayload));
     if(verifySignupData.fulfilled.match(response)){
      
       localStorage.setItem("pendingData", JSON.stringify(payload))
-      toast.success("Success", {
+      toast.success(response?.payload?.data?.message, {
         position: "bottom-center"
       });
 

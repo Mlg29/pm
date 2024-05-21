@@ -50,6 +50,7 @@ function TextInput(props: any) {
                     value={value}
                     style={{
                         ...styles.container,
+                        color: disabled ? COLORS.gray : COLORS.black
                     }}
                     disabled={disabled}
                     type={show ? "text" : type === "password" ? "password": "text"}

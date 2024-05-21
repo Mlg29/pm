@@ -15,186 +15,269 @@ import Dropdown from "../../components/Dropdown";
 import { FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 
-
-
 export const styles = {
-    container: {
-        display: "flex",
-        flexDirection: "column" as FlexDirection,
-        padding: "0px 20px",
-        flex: 1,
-        height: "100%"
-    },
-    line: {
-        display: "flex",
-        flexDirection: "row" as FlexDirection,
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "30px 20px 0px 20px"
-    },
-    active: {
-        backgroundColor: COLORS.primary,
-        width: 60,
-        height: 5,
-        borderRadius: 10
-    },
-    inactive: {
-        backgroundColor: COLORS.semiGray,
-        width: 60,
-        height: 5,
-        borderRadius: 10
-    },
-    bottom: {
-        display: 'flex',
-        flexDirection: "column" as FlexDirection,
-        justifyContent: 'center',
-        alignItems: "center",
-        margin: "0px 0px 10px 0px"
-    }
-}
-
+  container: {
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    padding: "0px 20px",
+    flex: 1,
+    height: "100%",
+  },
+  line: {
+    display: "flex",
+    flexDirection: "row" as FlexDirection,
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "30px 20px 0px 20px",
+  },
+  active: {
+    backgroundColor: COLORS.primary,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
+  },
+  inactive: {
+    backgroundColor: COLORS.semiGray,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
+  },
+  bottom: {
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0px 0px 10px 0px",
+  },
+};
 
 function SecretQuestion() {
-    const [step, setStep] = useState(4)
-    const navigate = useNavigate();
-    const [answer, setAnswer] = useState("")
+  const [step, setStep] = useState(4);
+  const navigate = useNavigate();
+  const [answer, setAnswer] = useState("");
+  const [answerTwo, setAnswerTwo] = useState("");
+  const [answerThree, setAnswerThree] = useState("");
 
-
-    const stepLevel = () => {
-        if (step === 0) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 1) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 2) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 3) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 4) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                </div>
-            )
-        }
-        else {
-
-        }
-    }
-
-
-
-
-    return (
-        <div style={{ ...styles.container }}>
-            <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-                <div style={{ marginTop: 10 }}>
-                    <BackButton />
-                </div>
-                {stepLevel()}
-
-                <div>
-                    <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Secret Question</h3>
-                    <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Enter a question you would remember.</p>
-                </div>
-
-                <div style={{ marginTop: 20 }}>
-
-                    <Dropdown
-                        label="Secret Question"
-                        required
-                        data={[
-                            {
-                                id: 1,
-                                value: "What is your favourite pet?"
-                            },
-                            {
-                                id: 2,
-                                value: "Who is your favourite cousin?"
-                            },
-                            {
-                                id: 3,
-                                value: "Who is your favourite cousin?"
-                            },
-                            {
-                                id: 4,
-                                value: "Who is your favourite cousin?"
-                            },
-                            {
-                                id: 5,
-                                value: "Others"
-                            }
-                        ]}
-                        placeholder="Select Secret Question"
-
-                    />
-
-                    <TextInput
-                        label="Secret Question Answer"
-                        placeholder="Enter Answer here"
-                        required
-                        value={answer}
-                        handleChange={(val: string) => {
-                            setAnswer(val)
-                        }}
-                    />
-
-                </div>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "center" }}>
-                <div style={{ ...styles.bottom }}>
-                    <div style={{ width: "100%" }}>
-                        <Button
-                            text="Continue"
-                            propStyle={{ width: "100%" }}
-                            handlePress={() => navigate('/auth-success')}
-                        />
-                    </div>
-                </div>
-            </div>
-
+  const stepLevel = () => {
+    if (step === 0) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
         </div>
-    )
+      );
+    } else if (step === 1) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 2) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 3) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 4) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+        </div>
+      );
+    } else {
+    }
+  };
+
+  return (
+    <div style={{ ...styles.container }}>
+      <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
+        <div style={{ marginTop: 10 }}>
+          <BackButton />
+        </div>
+        {/* {stepLevel()} */}
+
+        <div>
+          <h3
+            style={{
+              ...FONTS.h2,
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: "10px 0px",
+            }}
+          >
+            Secret Question
+          </h3>
+          <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
+            Enter a question you would remember.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 20 }}>
+          <Dropdown
+            label="Secret Question 1"
+            required
+            data={[
+              {
+                id: 1,
+                value: "What is your favourite pet?",
+              },
+              {
+                id: 2,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 3,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 4,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 5,
+                value: "Others",
+              },
+            ]}
+            placeholder="Select Secret Question"
+          />
+
+          <TextInput
+            label="Secret Question Answer 1"
+            placeholder="Enter Answer here"
+            required
+            value={answer}
+            handleChange={(val: string) => {
+              setAnswer(val);
+            }}
+          />
+        </div>
+
+        <div style={{ marginTop: 20 }}>
+          <Dropdown
+            label="Secret Question 2"
+            required
+            data={[
+              {
+                id: 1,
+                value: "What is your favourite pet?",
+              },
+              {
+                id: 2,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 3,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 4,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 5,
+                value: "Others",
+              },
+            ]}
+            placeholder="Select Secret Question"
+          />
+
+          <TextInput
+            label="Secret Question Answer 2"
+            placeholder="Enter Answer here"
+            required
+            value={answerTwo}
+            handleChange={(val: string) => {
+              setAnswerTwo(val);
+            }}
+          />
+        </div>
+
+        <div style={{ marginTop: 20 }}>
+          <Dropdown
+            label="Secret Question 3"
+            required
+            data={[
+              {
+                id: 1,
+                value: "What is your favourite pet?",
+              },
+              {
+                id: 2,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 3,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 4,
+                value: "Who is your favourite cousin?",
+              },
+              {
+                id: 5,
+                value: "Others",
+              },
+            ]}
+            placeholder="Select Secret Question"
+          />
+
+          <TextInput
+            label="Secret Question Answer 3"
+            placeholder="Enter Answer here"
+            required
+            value={answerThree}
+            handleChange={(val: string) => {
+              setAnswerThree(val);
+            }}
+          />
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ ...styles.bottom }}>
+          <div style={{ width: "100%" }}>
+            <Button
+              text="Continue"
+              propStyle={{ width: "100%" }}
+              handlePress={() => navigate("/auth-success")}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default SecretQuestion
+export default SecretQuestion;

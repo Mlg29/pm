@@ -8,7 +8,10 @@ import arrowright from "../../assets/images/arrow-right.svg"
 import Form from 'react-bootstrap/Form';
 import Button from "../../components/Button"
 import { useMediaQuery } from "react-responsive"
-
+import { useEffect, useState } from "react"
+import { useAppDispatch } from "../../redux/hooks"
+import { getUserData, updateUserData } from "../../redux/slices/AuthSlice"
+import { ToastContainer, toast } from "react-toastify";
 
 
 
@@ -24,31 +27,95 @@ const styles = {
 function Preference() {
     const navigate = useNavigate()
     const isMobile = useMediaQuery({ maxWidth: 767 })
+    const [loader, setLoader] = useState(false);
+    const dispatch = useAppDispatch() as any;
+    const [events, setEvents] = useState(false);
+    const [challenge, setChallenge] = useState(false);
+    const [maintenance, setMaintenance] = useState(false);
+    const [announcement, setAnnouncement] = useState(false);
+    const [opponent, setOpponent] = useState(false);
+
+    const [checkedItems, setCheckedItems] = useState({});
+
+    const handleChange = (e) => {
+        const { id, checked} = e.target;
+        setCheckedItems({
+          ...checkedItems,
+          [id]: checked,
+        });
+      };
+
+
+   
+
+    const fetchUserInfo = async () => {
+        const response = await dispatch(getUserData());
+        if (getUserData.fulfilled.match(response)) {
+            setEvents(response?.payload?.betEvents);
+            setChallenge(response?.payload?.betChallenge);
+            setOpponent(response?.payload?.followOpponent);
+            setMaintenance(response?.payload?.maintenance)
+            setAnnouncement(response?.payload?.announcement)
+        }
+      };
+    
+      useEffect(() => {
+        fetchUserInfo();
+      }, []);
 
     const dataList = [
         {
-            id: 1,
+            id: "betEvents",
             name: "Bet Events",
 
         },
         {
-            id: 2,
+            id: "betChallenge",
             name: "Bet Challenge",
         },
         {
-            id: 3,
+            id: "followOpponent",
             name: "Follow opponent’s game",
         },
         {
-            id: 4,
+            id: "maintenance",
             name: "Maintenance",
         },
         {
-            id: 5,
+            id: "announcement",
             name: "Announcement",
         }
     ]
 
+
+    const isEmpty = (obj) => {
+        return Object.keys(obj).length === 0;
+      };
+
+    const handleSubmit = async () => {
+
+        if(isEmpty(checkedItems)){
+            return;
+        }
+    
+        setLoader(true);
+        try {
+          var response = await dispatch(updateUserData(checkedItems));
+    
+          if (updateUserData.fulfilled.match(response)) {
+            setLoader(false);
+            toast.success("Notification Updated Successfully", {
+              position: "bottom-center",
+            });
+          } else {
+            var errMsg = response?.payload as string;
+            setLoader(false);
+            toast.error(errMsg, {
+              position: "bottom-center",
+            });
+          }
+        } catch (err) {}
+      };
 
     return (
         <div className='top-container'>
@@ -64,14 +131,18 @@ function Preference() {
                 {
                     dataList?.map((data: any) => {
                         return <div key={data?.id} style={{ ...styles.row }}>
-                            <img src={data?.image} onClick={data?.handleRoute} />
-                            <div onClick={data?.handleRoute} style={{ margin: "0px 10px", width: "100%" }}>
+                            {/* <img src={data?.image} onClick={data?.handleRoute} /> */}
+                            <div style={{ margin: "0px 10px", width: "100%" }}>
                                 <h3 style={{ ...FONTS.body6, margin: "0px" }}>{data?.name}</h3>
                             </div>
                             <Form.Check // prettier-ignore
                                 type="switch"
-                                id="custom-switch"
                                 style={{ transform: 'scale(1.7)' }}
+                                key={data.id}
+                                id={data.id}
+                                label={data.label}
+                                checked={checkedItems[data.id] || false}
+                                onChange={handleChange}
                             />
 
                         </div>
@@ -87,18 +158,24 @@ function Preference() {
                    {
                     isMobile ?  <Button
                     text="Save"
+                    isLoading={loader}
                     propStyle={{ width: "100%" }}
-                    handlePress={() => navigate('/secret-question')}
+                    handlePress={() => handleSubmit()}
+                   // handlePress={() => navigate('/secret-question')}
                 />
                 :
                 <Button
                 text="Save"
+                isLoading={loader}
                 propStyle={{ width: "100%" }}
+                handlePress={() => handleSubmit()}
               //  handlePress={() => navigate('/secret-question')}
             />
                    }
                 </div>
             </div>
+
+            <ToastContainer />
         </div>
     )
 }
