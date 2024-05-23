@@ -49,6 +49,8 @@ import ProfileScreen from './DesktopScreens/ProileScreen.js';
 import CreatePasswordNew from './PasswordScreen/CreatePassword.js';
 import PasswordSuccess from './SuccessScreen/PasswordSuccess.js';
 import ForgetPasswordVerify from './VerifyScreen/ForgetPasswordVerify.js';
+import TermsAndConditions from './TermsAndConditions.js';
+import PinSuccess from './SuccessScreen/PinSuccess.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -70,7 +72,8 @@ function DesktopRouters() {
       <Route path="/create-new-password" element={<Layout><CreatePasswordNew /></Layout>} />
       <Route path="/password-success" element={<Layout><PasswordSuccess /></Layout>} />
       <Route path="/forget-password-verify" element={<Layout><ForgetPasswordVerify /></Layout>} />
-    
+      <Route path="/terms-and-conditions" element={<Layout><TermsAndConditions /></Layout>} />
+      <Route path="/pin-success" element={<Layout><PinSuccess /></Layout>} />
      <Route path="/home" element={<Dashboard />} />
       <Route path="/bet-slip" element={<SubLayout><BetSlip /></SubLayout>} />
        <Route path="/transaction" element={<SubLayout><Transaction /></SubLayout>} />

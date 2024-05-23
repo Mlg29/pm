@@ -45,6 +45,7 @@ import ForgetPasswordVerify from './VerifyScreen/ForgetPasswordVerify.tsx';
 import CreatePasswordNew from './PasswordScreen/CreatePassword.tsx';
 import PasswordSuccess from './SuccessScreen/PasswordSuccess.tsx';
 import PinSuccess from './SuccessScreen/PinSuccess.tsx';
+import TermsAndConditions from './TermsAndConditions.tsx';
 
 
 function Routers() {
@@ -68,7 +69,8 @@ function Routers() {
       <Route path="/password-success" element={<PasswordSuccess />} />
       <Route path="/pin-success" element={<PinSuccess />} />
       <Route path="/forget-password-verify" element={<ForgetPasswordVerify />} />
-         
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+      
      <Route path="/home" element={<HomeScreen />} />
       <Route path="/bet-slip" element={<BetSlip />} />
        <Route path="/transaction" element={<Transaction />} />

@@ -29,11 +29,7 @@ function Preference() {
     const isMobile = useMediaQuery({ maxWidth: 767 })
     const [loader, setLoader] = useState(false);
     const dispatch = useAppDispatch() as any;
-    const [events, setEvents] = useState(false);
-    const [challenge, setChallenge] = useState(false);
-    const [maintenance, setMaintenance] = useState(false);
-    const [announcement, setAnnouncement] = useState(false);
-    const [opponent, setOpponent] = useState(false);
+
 
     const [checkedItems, setCheckedItems] = useState({});
 
@@ -46,16 +42,16 @@ function Preference() {
       };
 
 
-   
-
     const fetchUserInfo = async () => {
         const response = await dispatch(getUserData());
         if (getUserData.fulfilled.match(response)) {
-            setEvents(response?.payload?.betEvents);
-            setChallenge(response?.payload?.betChallenge);
-            setOpponent(response?.payload?.followOpponent);
-            setMaintenance(response?.payload?.maintenance)
-            setAnnouncement(response?.payload?.announcement)
+          setCheckedItems({
+            betEvents: response?.payload?.betEvents,
+            betChallenges: response?.payload?.betChallenges,
+            followOpponents: response?.payload?.followOpponents,
+            maintenance: response?.payload?.maintenance,
+            announcements: response?.payload?.announcements
+          })
         }
       };
     
@@ -70,11 +66,11 @@ function Preference() {
 
         },
         {
-            id: "betChallenge",
+            id: "betChallenges",
             name: "Bet Challenge",
         },
         {
-            id: "followOpponent",
+            id: "followOpponents",
             name: "Follow opponent’s game",
         },
         {
@@ -82,7 +78,7 @@ function Preference() {
             name: "Maintenance",
         },
         {
-            id: "announcement",
+            id: "announcements",
             name: "Announcement",
         }
     ]
@@ -104,6 +100,7 @@ function Preference() {
     
           if (updateUserData.fulfilled.match(response)) {
             setLoader(false);
+            fetchUserInfo();
             toast.success("Notification Updated Successfully", {
               position: "bottom-center",
             });

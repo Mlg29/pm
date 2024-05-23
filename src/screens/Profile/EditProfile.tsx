@@ -138,6 +138,7 @@ function EditProfile() {
 
       if (updateUserData.fulfilled.match(response)) {
         setLoader(false);
+        fetchUserInfo();
         toast.success("Profile Updated Successfully", {
           position: "bottom-center",
         });

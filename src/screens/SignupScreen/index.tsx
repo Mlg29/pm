@@ -263,7 +263,7 @@ function SignupScreen() {
             terms ? <MdCheckBox size={20} onClick={() => setTerms(!terms)} style={{cursor: "pointer"}} />
               : <MdCheckBoxOutlineBlank onClick={() => setTerms(!terms)} size={20} style={{cursor: "pointer"}} />
           }
-          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px" }}>I agree to the Terms and Conditions.</p>
+          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px", cursor: "pointer"}} onClick={() => navigate("/terms-and-conditions")}>I agree to the Terms and Conditions.</p>
         </div>
 
         <div style={{ ...styles.bottom }}>

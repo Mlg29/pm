@@ -9,7 +9,7 @@ import { MdSportsCricket, MdSportsRugby } from "react-icons/md";
 import more from "../../../assets/images/more.svg";
 import { FlexDirection } from "../../../utils/type";
 import { useMediaQuery } from "react-responsive";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import user from "../../../assets/images/user.svg";
 import { IoIosArrowDown } from "react-icons/io";
@@ -17,6 +17,10 @@ import { Menu, MenuItem, MenuButton, SubMenu } from "@szhsin/react-menu";
 import logout from "../../../assets/images/logout.svg";
 import user1 from "../../../assets/images/user1.svg";
 import LogOut from "../../../components/Modals/LogOut";
+import { useAppDispatch } from "../../../redux/hooks";
+import { getUserData } from "../../../redux/slices/AuthSlice";
+
+
 
 const styles = {
   rowBtw: {
@@ -67,11 +71,24 @@ function NavHeader() {
   const [selected, setSelected] = useState("Soccer");
   const location = useLocation();
   const [show, setShow] = useState(false);
+  const dispatch = useAppDispatch() as any
   const getToken = localStorage.getItem("token");
-  const getUserData = JSON.parse(localStorage.getItem("userData"));
+  const [userData, setUserData] = useState(null)
 
 
+  const fetchUserInfo = async () => {
+    const response = await dispatch(getUserData())
+    if(getUserData.fulfilled.match(response)) {
+     setUserData(response?.payload)
+    }
+   }
+ 
+   useEffect(() => {
+     fetchUserInfo()
+   }, [])
 
+
+   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -252,13 +269,21 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                      <img src={user} style={{ width: 40 }} />
+                      <img 
+                       src={userData?.profileImage}
+                       style={{
+                         width: "40px",
+                         height: "40px",
+                         borderRadius: "100%",
+                       }}
+                       alt=""
+                      />
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                          {getUserData?.firstName} {getUserData?.lastName}
+                          {userData?.firstName} {userData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                          @{getUserData?.userName}
+                          @{userData?.userName}
                         </p>
                       </div>
                     </div>
@@ -463,13 +488,21 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                      <img src={user} style={{ width: 40 }} />
+                      <img 
+                       src={userData?.profileImage}
+                       style={{
+                         width: "40px",
+                         height: "40px",
+                         borderRadius: "100%",
+                       }}
+                       alt=""
+                      />
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                        {getUserData?.firstName} {getUserData?.lastName}
+                        {userData?.firstName} {userData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                        @{getUserData?.userName}
+                        @{userData?.userName}
                         </p>
                       </div>
                     </div>
@@ -673,13 +706,21 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                      <img src={user} style={{ width: 40 }} />
+                      <img 
+                       src={userData?.profileImage}
+                       style={{
+                         width: "40px",
+                         height: "40px",
+                         borderRadius: "100%",
+                       }}
+                       alt=""
+                      />
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                        {getUserData?.firstName} {getUserData?.lastName}
+                        {userData?.firstName} {userData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                        @{getUserData?.userName}
+                        @{userData?.userName}
                         </p>
                       </div>
                     </div>

@@ -7,7 +7,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaAsterisk } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import send1 from "../../assets/images/send-1.svg"
 import send2 from "../../assets/images/send-2.svg"
@@ -17,6 +17,8 @@ import { FlexDirection } from '../../utils/type';
 import { useMediaQuery } from 'react-responsive';
 import WithdrawalModal from '../../components/Modals/WithdrawaModal';
 import DepositModal from '../../components/Modals/DepositModal';
+import { useAppDispatch } from '../../redux/hooks';
+import { getUserData } from '../../redux/slices/AuthSlice';
 
 
 const styles = {
@@ -76,7 +78,21 @@ function Transaction() {
   const [deposit, setDeposit] = useState(false)
   const navigate = useNavigate()
   const isMobile = useMediaQuery({ maxWidth: 767 })
+  const [loader, setLoader] = useState(false);
+  const dispatch = useAppDispatch() as any;
+  const [userData, setUserData] = useState(null);
 
+  const fetchUserInfo = async () => {
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
 
   return (
@@ -96,7 +112,7 @@ function Transaction() {
             <p style={{ ...FONTS.body7, color: COLORS.white }}>NGN</p>
            {
             show ? <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
-                  <h2 style={{...FONTS.largeTitle, color: COLORS.white}}>40,000</h2>
+                  <h2 style={{...FONTS.largeTitle, color: COLORS.white}}>{userData?.walletBalance}</h2>
               </div>
               :
               <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }} >

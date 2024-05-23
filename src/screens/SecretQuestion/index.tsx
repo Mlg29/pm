@@ -20,6 +20,7 @@ import { SecretQuestionSchema } from "../../https/schemas";
 import { updateUserData } from "../../redux/slices/AuthSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMediaQuery } from "react-responsive";
 
 export const styles = {
   container: {
@@ -40,8 +41,8 @@ export const styles = {
     background: "none",
     outline: "none",
     padding: "5px 5px",
-    color: COLORS.primary
-},
+    color: COLORS.primary,
+  },
   line: {
     display: "flex",
     flexDirection: "row" as FlexDirection,
@@ -83,9 +84,7 @@ export const styles = {
 function SecretQuestion() {
   const [step, setStep] = useState(4);
   const navigate = useNavigate();
-  const [answer, setAnswer] = useState("");
-  const [answerTwo, setAnswerTwo] = useState("");
-  const [answerThree, setAnswerThree] = useState("");
+  const isMobile = useMediaQuery({ maxWidth: 767 })
   const dispatch = useAppDispatch();
 
   const [loader, setLoader] = useState(false);
@@ -94,49 +93,85 @@ function SecretQuestion() {
   const questions = [
     {
       id: 1,
-      value: "What is your favourite pet?",
+      value: "What is the name of your favorite pet?",
     },
     {
       id: 2,
-      value: "Who is your favourite cousin?",
+      value: "What is the name of your favorite cousin?",
     },
     {
       id: 3,
-      value: "Who is your favourite cousin?",
+      value: "What was the manufacturer name of your first car??",
     },
     {
       id: 4,
-      value: "Who is your favourite cousin?",
+      value: "What was the name of your first childhood friend??",
     },
     {
       id: 5,
-      value: "Others",
+      value: "What was the first concert you attended?",
     },
   ];
 
   const initialValues = {
-    question1: '',
-    answer1: '',
-    question2: '',
-    answer2: '',
-    question3: '',
-    answer3: '',
+    question1: "",
+    answer1: "",
+    question2: "",
+    answer2: "",
+    question3: "",
+    answer3: "",
   };
 
   const validationSchema = Yup.object({
-    question1: Yup.string().required('Required'),
-    answer1: Yup.string().required('Required'),
-    question2: Yup.string().required('Required'),
-    answer2: Yup.string().required('Required'),
-    question3: Yup.string().required('Required'),
-    answer3: Yup.string().required('Required'),
+    question1: Yup.string().required("Required"),
+    answer1: Yup.string().required("Required"),
+    question2: Yup.string().required("Required"),
+    answer2: Yup.string().required("Required"),
+    question3: Yup.string().required("Required"),
+    answer3: Yup.string().required("Required"),
   });
+
+  const convertToObjectArray = (data) => {
+    const result = [];
+    for (let i = 1; `question${i}` in data; i++) {
+      result.push({
+        question: data[`question${i}`],
+        answer: data[`answer${i}`],
+      });
+    }
+    return result;
+  };
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log("Form values:", values);
+    onSubmit: async (values) => {
+      const convertedArray = convertToObjectArray(values);
+      const payload = {
+        securityQuestions: convertedArray,
+      };
+
+      setLoader(true);
+      try {
+        var response = await dispatch(updateUserData(payload));
+
+        if (updateUserData.fulfilled.match(response)) {
+          setLoader(false);
+          toast.success("Secret Question Updated Successfully", {
+            position: "bottom-center",
+          });
+          setTimeout(() => {
+            navigate(-1)
+          }, 1000)
+
+        } else {
+          var errMsg = response?.payload as string;
+          setLoader(false);
+          toast.error(errMsg, {
+            position: "bottom-center",
+          });
+        }
+      } catch (err) {}
     },
   });
 
@@ -152,114 +187,23 @@ function SecretQuestion() {
   const getFilteredQuestions = (fieldName) => {
     const selectedValues = Object.values(selectedQuestions);
     return questions.filter(
-      (question) => selectedValues.includes(String(question.id)) === (fieldName && formik.values[fieldName] === String(question.id))
+      (question) =>
+        selectedValues.includes(String(question.value)) ===
+        (fieldName && formik.values[fieldName] === String(question.value))
     );
-  };
-
-  // const handleSubmitData = async (data) => {
-  //   const output = Object.keys(data).map(key => {
-
-  //     return {
-  //       question: key,
-  //       answer: data[key]
-  //     }
-  //   });
-
-  //   console.log({output})
-
-  //   return;
-  //   const payload = {
-  //     securityQuestions: [
-  //       {
-  //         "question": "string",
-  //         "answer": "string"
-  //       }
-  //     ],
-  //   };
-
-  //   setLoader(true);
-  //   try {
-  //     var response = await dispatch(updateUserData(payload));
-
-  //     if (updateUserData.fulfilled.match(response)) {
-  //       setLoader(false);
-  //       toast.success("Secret Question Updated Successfully", {
-  //         position: "bottom-center",
-  //       });
-  //     } else {
-  //       var errMsg = response?.payload as string;
-  //       setLoader(false);
-  //       toast.error(errMsg, {
-  //         position: "bottom-center",
-  //       });
-  //     }
-  //   } catch (err) {}
-  // };
-
-  const stepLevel = () => {
-    if (step === 0) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      );
-    } else if (step === 1) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      );
-    } else if (step === 2) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      );
-    } else if (step === 3) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      );
-    } else if (step === 4) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-        </div>
-      );
-    } else {
-    }
   };
 
   return (
     <div style={{ ...styles.container }}>
       <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-        <div style={{ marginTop: 10 }}>
+        {
+          isMobile &&  <div style={{ marginTop: 10 }}>
           <BackButton />
         </div>
-        {/* {stepLevel()} */}
-
-        <div style={{marginBottom: 30}}>
+        }
+       
+        {
+          isMobile &&   <div style={{ marginBottom: 30 }}>
           <h3
             style={{
               ...FONTS.h2,
@@ -274,17 +218,13 @@ function SecretQuestion() {
             Enter a question you would remember.
           </p>
         </div>
+        }
+      
 
-        <form onSubmit={formik.handleSubmit}>
+        <form>
           {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              style={{ ...styles.contain, marginBottom: 10 }}
-            >
-              <label
-                htmlFor={`question${i}`}
-                style={{ ...FONTS.body7 }}
-              >
+            <div key={i} style={{ ...styles.contain, marginBottom: 10 }}>
+              <label htmlFor={`question${i}`} style={{ ...FONTS.body7 }}>
                 Secret Question {i}
               </label>
               <select
@@ -297,18 +237,20 @@ function SecretQuestion() {
               >
                 <option value="">Select a question</option>
                 {getFilteredQuestions(`question${i}`).map((q: any) => {
-                  return  <option key={q.id} value={q.name}>
-                  {q.value}
-                </option>
-                }
-                 
-              )}
+                  return (
+                    <option key={q.id} value={q.name}>
+                      {q.value}
+                    </option>
+                  );
+                })}
               </select>
-              {/* {formik.touched[`question${i}`] &&
+              {formik.touched[`question${i}`] &&
                 formik.errors[`question${i}`] && (
-                  <div style={{fontSize: 10, color: 'red', marginTop: 5}}>{formik.errors[`question${i}`]}</div>
-                )} */}
-              <div style={{marginBottom: 10}}>
+                  <div style={{ fontSize: 10, color: "red", marginTop: 5 }}>
+                    {formik.errors[`question${i}`]}
+                  </div>
+                )}
+              <div style={{ marginBottom: 10 }}>
                 <label style={{ ...FONTS.body7 }} htmlFor={`answer${i}`}>
                   Answer
                 </label>
@@ -320,8 +262,8 @@ function SecretQuestion() {
                     border: `0.1px solid ${COLORS.gray}`,
                     padding: "15px 5px",
                     borderRadius: 10,
-                    width: "100%"
-                }}
+                    width: "100%",
+                  }}
                   id={`answer${i}`}
                   name={`answer${i}`}
                   onChange={formik.handleChange}
@@ -330,17 +272,33 @@ function SecretQuestion() {
                 />
               </div>
 
-              {formik.touched[`answer${i}`] &&
-                formik.errors[`answer${i}`] && (
-                  <div style={{fontSize: 10, color: 'red', marginTop: 5}}>{formik.errors[`answer${i}`]}</div>
-                )}
+              {formik.touched[`answer${i}`] && formik.errors[`answer${i}`] && (
+                <div style={{ fontSize: 10, color: "red", marginTop: 5 }}>
+                  {formik.errors[`answer${i}`]}
+                </div>
+              )}
             </div>
           ))}
-          <button type="submit" style={{width: "100%", marginBottom: 30, backgroundColor: COLORS.primary, padding: 15}}>Submit</button>
-
+          {/* <button
+            type={loader ? "Please wait.." : "submit"}
+            style={{
+              width: "100%",
+              marginBottom: 30,
+              backgroundColor: COLORS.primary,
+              padding: 15,
+            }}
+          >
+            Submit
+          </button> */}
+           <div style={{ width: "100%" }}>
+            <Button
+              text="Submit"
+              propStyle={{ width: "100%" }}
+              isLoading={loader}
+              handlePress={formik.handleSubmit}
+            />
+          </div>
         </form>
-
-     
       </div>
 
       <ToastContainer />

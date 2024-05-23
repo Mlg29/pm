@@ -7,6 +7,7 @@ import Button from "../Button";
 import SuccessModal from "./SuccessModal";
 import house from "../../assets/images/house.svg";
 import PasswordScreen from "../../screens/PasswordScreen";
+import CreatePasswordNew from "../../screens/PasswordScreen/CreatePassword";
 
 const ChangePassword = ({ show, handleClose }) => {
   return (
@@ -16,7 +17,7 @@ const ChangePassword = ({ show, handleClose }) => {
           <Modal.Title style={{ ...FONTS.h6 }}>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <PasswordScreen />
+            <CreatePasswordNew />
         </Modal.Body>
       </Modal>
     </div>
