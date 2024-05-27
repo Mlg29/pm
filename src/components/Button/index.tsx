@@ -7,13 +7,14 @@ import { COLORS} from "../../utils/colors.js"
 import {FONTS} from "../../utils/fonts.js"
 
 function Button(props: any) {
-    const {text, propStyle, handlePress, isLoading} = props
+    const {text, propStyle, handlePress, isLoading, disabled} = props
   return (
     <div>
       <button 
         onClick={isLoading ? () => {} : handlePress}
+        disabled={disabled}
         style={{
-            background: COLORS.primary, 
+            background: disabled ? COLORS.gray : COLORS.primary, 
             outline: "none",
             border: "none",
             ...styles.container, 

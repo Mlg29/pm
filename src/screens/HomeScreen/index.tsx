@@ -4,6 +4,8 @@ import { RxAvatar } from "react-icons/rx";
 import { FONTS } from "../../utils/fonts";
 import SearchComponent from "../../components/SearchComponent";
 import slider from "../../assets/images/slider.svg";
+import slider2 from "../../assets/images/slider2.svg";
+import slider3 from "../../assets/images/slider3.svg";
 import more from "../../assets/images/more.svg";
 import { IoMdFootball } from "react-icons/io";
 import { MdSportsCricket } from "react-icons/md";
@@ -23,9 +25,20 @@ function HomeScreen() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("Soccer");
   // const [user, setUser] = useState(false)
-  const dispatch = useAppDispatch() as any
+  const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const sliderArr = [slider, slider2, slider3];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(currentIndex === 2 ? 0 : currentIndex + 1);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   const itemList = [
     {
@@ -126,15 +139,15 @@ function HomeScreen() {
   ];
 
   const fetchUserInfo = async () => {
-   const response = await dispatch(getUserData())
-   if(getUserData.fulfilled.match(response)) {
-    setUserData(response?.payload)
-   }
-  }
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
+    }
+  };
 
   useEffect(() => {
-    fetchUserInfo()
-  }, [])
+    fetchUserInfo();
+  }, []);
 
   return (
     <div className="top-container">
@@ -178,7 +191,13 @@ function HomeScreen() {
       <SearchComponent placeholder="Search by event, sport, club or game" />
 
       <div>
-        <img src={slider} style={{ width: "100%" }} />
+        {sliderArr?.map((dd, i) => {
+          return currentIndex === i ? (
+            <div>
+              <img src={dd} style={{ width: "100%" }} />
+            </div>
+          ) : null;
+        })}
       </div>
 
       <div

@@ -18,77 +18,68 @@ import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
 import { CreatePinSchema } from "../../https/schemas";
 import { updateTransactionPin } from "../../redux/slices/AuthSlice";
-import { ToastContainer, toast } from 'react-toastify';
-
-
-
-
+import { ToastContainer, toast } from "react-toastify";
+import { MdPrivacyTip } from "react-icons/md";
 
 export const styles = {
-    container: {
-        display: "flex",
-        flexDirection: "column" as FlexDirection,
-        padding: "0px 20px",
-        flex: 1,
-        height: "100%"
-    },
-    line: {
-        display: "flex",
-        flexDirection: "row" as FlexDirection,
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "30px 20px 0px 20px"
-    },
-    active: {
-        backgroundColor: COLORS.primary,
-        width: 60,
-        height: 5,
-        borderRadius: 10
-    },
-    inactive: {
-        backgroundColor: COLORS.semiGray,
-        width: 60,
-        height: 5,
-        borderRadius: 10
-    },
-    bottom: {
-        display: 'flex',
-        flexDirection: "column" as FlexDirection,
-        justifyContent: 'center',
-        alignItems: "center",
-        margin: "0px 0px 10px 0px"
-    }
-}
+  container: {
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    padding: "0px 20px",
+    flex: 1,
+    height: "100%",
+  },
+  line: {
+    display: "flex",
+    flexDirection: "row" as FlexDirection,
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "30px 20px 0px 20px",
+  },
+  active: {
+    backgroundColor: COLORS.primary,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
+  },
+  inactive: {
+    backgroundColor: COLORS.semiGray,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
+  },
+  bottom: {
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0px 0px 10px 0px",
+  },
+};
 
 function TransactionPin() {
-    const [step, setStep] = useState(3)
-    const [terms, setTerms] = useState(false)
-    const navigate = useNavigate();
+  const [step, setStep] = useState(3);
+  const [terms, setTerms] = useState(false);
+  const navigate = useNavigate();
 
-    const isMobile = useMediaQuery({ maxWidth: 767 });
-    const dispatch = useAppDispatch();
-    const [loader, setLoader] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const dispatch = useAppDispatch();
+  const [loader, setLoader] = useState(false);
 
-
-    const initialValues: PinCreation = {
-      pin: "",
-      confirmPin: "",
-    };
-
+  const initialValues: PinCreation = {
+    pin: "",
+    confirmPin: "",
+  };
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
-  useFormik({
-    initialValues,
-    validationSchema: CreatePinSchema,
-    onSubmit: (data: PinCreation) => handleSubmitData(data),
-    enableReinitialize: true,
-  });
-
-
-
+    useFormik({
+      initialValues,
+      validationSchema: CreatePinSchema,
+      onSubmit: (data: PinCreation) => handleSubmitData(data),
+      enableReinitialize: true,
+    });
 
   const handleSubmitData = async (data) => {
-
     const payload = {
       transactionPin: data?.pin,
     };
@@ -103,7 +94,8 @@ function TransactionPin() {
 
         setTimeout(() => {
           setLoader(false);
-          navigate("/pin-success");
+          navigate("/secret-question");
+          //   navigate("/pin-success");
         }, 1000);
       } else {
         var errMsg = response?.payload as string;
@@ -115,143 +107,160 @@ function TransactionPin() {
     } catch (err) {}
   };
 
-
-    const stepLevel = () => {
-        if (step === 0) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 1) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 2) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 3) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.active }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                </div>
-            )
-        }
-        else if (step === 4) {
-            return (
-                <div style={{ ...styles.line }}>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.inactive }}></div>
-                    <div style={{ ...styles.active }}></div>
-                </div>
-            )
-        }
-        else {
-
-        }
+  const stepLevel = () => {
+    if (step === 0) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 1) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 2) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 3) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.active }}></div>
+          <div style={{ ...styles.inactive }}></div>
+        </div>
+      );
+    } else if (step === 4) {
+      return (
+        <div style={{ ...styles.line }}>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.inactive }}></div>
+          <div style={{ ...styles.active }}></div>
+        </div>
+      );
+    } else {
     }
+  };
 
-
-
-
-    return (
-        <div style={{ ...styles.container }}>
-            <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-           {
-            isMobile && <>
-               <div style={{ marginTop: 10 }}>
-                <BackButton />
+  return (
+    <div style={{ ...styles.container }}>
+      <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
+        {isMobile && (
+          <>
+            <div style={{ marginTop: 10 }}>
+              <BackButton />
             </div>
             {stepLevel()}
-            </>
-           }
-         
+          </>
+        )}
 
-            <div>
-                {
-                    isMobile &&  <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Create Transaction PIN</h3>
-                }
-               
-                <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Enter a 6-digit PIN for transaction authorization.</p>
-            </div>
+        <div>
+          <h3
+            style={{
+              ...FONTS.h2,
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: "10px 0px",
+            }}
+          >
+            Create Transaction PIN
+          </h3>
 
-            <div style={{ marginTop: 20 }}>
-
-                <TextInput
-                    label="Pin"
-                    placeholder="Enter your pin"
-                    required
-                    type="password"
-                    value={values.pin}
-                    onChangeText={handleChange("pin")}
-                    errorMsg={touched.pin ? errors.pin : undefined}
-                />
-
- 
-
-                <TextInput
-                    label="Confirm Pin"
-                    placeholder="Enter your pin"
-                    required
-                    type="password"
-                    value={values.confirmPin}
-                    onChangeText={handleChange("confirmPin")}
-                    errorMsg={touched.confirmPin ? errors.confirmPin : undefined}
-                />
-                </div>
-            </div>
-
-            <div style={{ display: "flex",flexDirection: "column", flex: 1, justifyContent: "center" }}>
-            <div style={{ ...styles.bottom }}>
-                    <div style={{ width: "100%" }}>
-                        {
-                            isMobile ? <Button
-                            text="Continue"
-                            isLoading={loader}
-                            propStyle={{ width: "100%" }}
-                            handlePress={() => handleSubmit()}
-                        />
-                        :
-                        <Button
-                            text="Submit"
-                            isLoading={loader}
-                            propStyle={{ width: "100%" }}
-                           handlePress={() => handleSubmit()}
-                        />
-                        }
-                    </div>
-                </div>
-            </div>
-
-<ToastContainer />
+          <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
+            Enter a 6-digit PIN for transaction authorization.
+          </p>
         </div>
-    )
+
+        <div style={{ marginTop: 20 }}>
+          <TextInput
+            label="Pin"
+            placeholder="Enter your 6 digit pin"
+            required
+            type="password"
+            value={values.pin}
+            onChangeText={handleChange("pin")}
+            errorMsg={touched.pin ? errors.pin : undefined}
+          />
+
+          <TextInput
+            label="Confirm Pin"
+            placeholder="Enter your 6 digit pin"
+            required
+            type="password"
+            value={values.confirmPin}
+            onChangeText={handleChange("confirmPin")}
+            errorMsg={touched.confirmPin ? errors.confirmPin : undefined}
+          />
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            padding: "15px",
+            backgroundColor: COLORS.cream,
+            marginBottom: "10px",
+          }}
+        >
+          <MdPrivacyTip size={30} style={{ paddingRight: "5px" }} />
+          <p style={{ ...FONTS.body7 }}>
+            You are advised to be careful with your PIN. Playzeet will not take
+            responsibility of PIN compromise.
+          </p>
+        </div>
+        <div style={{ ...styles.bottom }}>
+          <div style={{ width: "100%" }}>
+            {isMobile ? (
+              <Button
+                text="Continue"
+                isLoading={loader}
+                propStyle={{ width: "100%" }}
+                handlePress={() => handleSubmit()}
+              />
+            ) : (
+              <Button
+                text="Submit"
+                isLoading={loader}
+                propStyle={{ width: "100%" }}
+                handlePress={() => handleSubmit()}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
+      <ToastContainer />
+    </div>
+  );
 }
 
-export default TransactionPin
+export default TransactionPin;

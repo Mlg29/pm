@@ -96,13 +96,16 @@ function PasswordScreen() {
       var response = await dispatch(createUser(payload));
       if (createUser.fulfilled.match(response)) {
         localStorage.removeItem("pendingData");
+        localStorage.setItem("token", response?.payload?.data?.accessToken)
         toast.success("Success", {
           position: "bottom-center",
         });
 
         setTimeout(() => {
           setLoader(false);
-          navigate("/auth-success");
+          navigate("/pin");
+          // navigate("/auth-success");
+
         }, 1000);
       } else {
         var errMsg = response?.payload as string;

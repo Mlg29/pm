@@ -13,6 +13,7 @@ import EditProfileModal from "../../components/Modals/EditProfileModal";
 import { useAppDispatch } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import moment from "moment";
+import { MdPrivacyTip } from "react-icons/md";
 
 const styles = {
   container: {
@@ -127,20 +128,22 @@ function ProfileDetail() {
           </div>
         </div>
 
-        <div style={{ ...styles.trash }} onClick={() => handleShow()}>
-          <img src={trash} />
-          <h3
-            style={{
-              ...FONTS.h6,
-              color: COLORS.red,
-              margin: "0px 0px 0px 10px",
-              cursor: "pointer",
-            }}
-          >
-            Delete Account
-          </h3>
-        </div>
       </div>
+
+      <div
+          style={{
+            display: "flex",
+            flexDirection: 'row',
+            padding: "15px",
+            backgroundColor: COLORS.cream,
+            marginBottom: "10px",
+          }}
+        >
+          <MdPrivacyTip size={30} style={{paddingRight: "5px"}} />
+          <p style={{ ...FONTS.body7 }}>
+            We don't share your personal details with anyone. This information is required solely for verification.
+          </p>
+        </div>
 
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
         {isMobile ? (
@@ -152,6 +155,21 @@ function ProfileDetail() {
           <Button text="Edit Account" handlePress={() => handleShowEdit()} />
         )}
       </div>
+
+      <div style={{ ...styles.trash }} onClick={() => handleShow()}>
+          <img src={trash} style={{opacity: 0.5}} />
+          <h3
+            style={{
+              ...FONTS.h6,
+              color: COLORS.red,
+              margin: "0px 0px 0px 10px",
+              cursor: "pointer",
+              opacity: 0.5
+            }}
+          >
+            Delete Account
+          </h3>
+        </div>
 
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Body>

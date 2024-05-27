@@ -1,9 +1,21 @@
 /* eslint-disable eol-last */
 /* eslint-disable prettier/prettier */
 import * as yup from "yup";
+const phoneRegExp = /^(\+?\d{1,4}|\d{1,4})?\s?\d{7,14}$/;
+
 
 export const LoginSchema = yup.object().shape({
-  email: yup.string().email().required("Email is required"),
+  email: yup.string()
+  .required("Email or phone number is required")
+  .test(
+    'is-valid-contact',
+    'Must be a valid email or phone number',
+    function (value) {
+      const isValidEmail = yup.string().email().isValidSync(value);
+      const isValidPhone = phoneRegExp.test(value);
+      return isValidEmail || isValidPhone;
+    }
+  ),
   password: yup
     .string()
     .min(6, ({ min }) => `Password must be at least ${min} characters`)

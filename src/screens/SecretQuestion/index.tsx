@@ -161,7 +161,8 @@ function SecretQuestion() {
             position: "bottom-center",
           });
           setTimeout(() => {
-            navigate(-1)
+            // navigate(-1)
+            navigate("/auth-success")
           }, 1000)
 
         } else {
@@ -202,8 +203,7 @@ function SecretQuestion() {
         </div>
         }
        
-        {
-          isMobile &&   <div style={{ marginBottom: 30 }}>
+       <div style={{ marginBottom: 30 }}>
           <h3
             style={{
               ...FONTS.h2,
@@ -215,10 +215,9 @@ function SecretQuestion() {
             Secret Question
           </h3>
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
-            Enter a question you would remember.
+            Enter questions and answers you would remember.
           </p>
         </div>
-        }
       
 
         <form>

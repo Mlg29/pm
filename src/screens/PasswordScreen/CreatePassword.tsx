@@ -152,7 +152,7 @@ function CreatePasswordNew() {
                 margin: "10px 0px",
               }}
             >
-              Create Your Log In Password
+              Change Your Log In Password
             </h3>
           )}
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>

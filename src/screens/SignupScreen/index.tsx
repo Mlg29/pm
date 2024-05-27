@@ -263,13 +263,14 @@ function SignupScreen() {
             terms ? <MdCheckBox size={20} onClick={() => setTerms(!terms)} style={{cursor: "pointer"}} />
               : <MdCheckBoxOutlineBlank onClick={() => setTerms(!terms)} size={20} style={{cursor: "pointer"}} />
           }
-          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px", cursor: "pointer"}} onClick={() => navigate("/terms-and-conditions")}>I agree to the Terms and Conditions.</p>
+          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px", cursor: "pointer", color: COLORS.gray}} onClick={() => navigate("/terms-and-conditions")}>I agree to the <span style={{color: COLORS.primary}}>Terms</span> and <span style={{color: COLORS.primary}}>Conditions</span>.</p>
         </div>
 
         <div style={{ ...styles.bottom }}>
           <div style={{ width: "100%" }}>
             <Button
               text="Continue"
+              disabled={!terms}
               propStyle={{ width: "100%" }}
               isLoading={loader}
             // handlePress={() => navigate('/verify')}

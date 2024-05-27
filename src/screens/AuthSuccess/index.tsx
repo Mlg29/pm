@@ -53,6 +53,11 @@ function AuthSuccess() {
     const [answer, setAnswer] = useState("")
 
 
+    const handleLogin = () => {
+        localStorage.clear()
+        navigate('/login')
+    }
+
 
 
     return (
@@ -77,7 +82,7 @@ function AuthSuccess() {
                         <Button
                             text="Continue"
                             propStyle={{ width: "100%" }}
-                            handlePress={() => navigate('/login')}
+                            handlePress={() => handleLogin()}
                         />
                     </div>
                 </div>
