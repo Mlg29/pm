@@ -18,8 +18,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
 import { BaseUrl } from "../../https";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
+import { footballEventState, footballFixtureState, getFootballEvents, getFootballFixtures } from "../../redux/slices/FootballSlice";
 
 function HomeScreen() {
   const navigate = useNavigate();
@@ -29,8 +30,16 @@ function HomeScreen() {
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const footballEvents = useAppSelector(footballEventState) as any
+ // const footballFixtures = useAppSelector(footballFixtureState) as any
+  const [live, setLive] = useState<any>([])
+  const [upcoming, setUpcoming] = useState<any>([])
+  const [today, setToday] = useState<any>([])
+  const [tomorrow, setTomorrow] = useState<any>([])
 
   const sliderArr = [slider, slider2, slider3];
+
+  //console.log({live,today, upcoming, tomorrow})
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,6 +48,26 @@ function HomeScreen() {
 
     return () => clearInterval(interval);
   }, [currentIndex]);
+
+
+  useEffect(()=> {
+    const payloadLive = {
+      status: "LIVE"
+    }
+    dispatch(getFootballFixtures(payloadLive)).then(dd => {
+      setLive(dd?.payload)
+    })
+    // dispatch(getFootballFixtures()).then(dd => {
+    //   setToday()
+    // })
+    // dispatch(getFootballFixtures()).then(dd => {
+    //   setTomorrow()
+    // })
+    // dispatch(getFootballFixtures()).then(dd => {
+    //   setUpcoming()
+    // })
+    dispatch(getFootballEvents())
+  }, [])
 
   const itemList = [
     {
@@ -193,7 +222,7 @@ function HomeScreen() {
       <div>
         {sliderArr?.map((dd, i) => {
           return currentIndex === i ? (
-            <div>
+            <div key={i}>
               <img src={dd} style={{ width: "100%" }} />
             </div>
           ) : null;
@@ -252,11 +281,11 @@ function HomeScreen() {
       </div>
 
       <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-        TODAY
+        LIVE
       </p>
 
-      {["", "", "", "", ""]?.map((aa: any, i: any) => {
-        return <GameCard key={i} />;
+      {live?.data?.map((aa: any, i: any) => {
+        return <GameCard key={i} data={aa} />;
       })}
 
       {getToken && <BottomTabs />}

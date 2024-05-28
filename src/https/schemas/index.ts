@@ -103,6 +103,13 @@ export const CreatePasswordSchema = yup.object().shape({
     .required('Password confirmation is required'),
 });
 
+export const MaxAmountSchema = yup.object().shape({
+  amount: yup
+    .string()
+    .required("Amount is required"),
+
+});
+
 
 export const CreatePinSchema = yup.object().shape({
   pin: yup

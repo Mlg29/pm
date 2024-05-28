@@ -83,6 +83,9 @@ export type ButtonType = {
     password: string;
     confirmPassword: string;
   };
+  export type MaxAmount = {
+    amount: string;
+  };
 
   export type SecretQuestionCreation = {
     answer: string;

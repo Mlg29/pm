@@ -36,41 +36,42 @@ export const styles = {
         padding: 5,
         display: "flex",
         justifyContent: "center",
-        fontSize: 12
+        fontSize: "8px",
+        fontWeight: 600
     }
 }
 
 
 
 
-function GameCard() {
+function GameCard({data}) {
     const navigate = useNavigate()
 
   return (
     <div style={{...styles.container, cursor: "pointer"}} onClick={() => navigate("/game-details")}>
         <div style={{...styles.row}}>
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center'}}>
-                <p style={{...FONTS.body7, margin: "0px 0px 10px 0px"}}>England - PL</p>
+            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', width: "40%"}}>
+                <p style={{...FONTS.body7, fontSize: "8px", margin: "0px 0px 10px 0px"}}>{data?.leagueName}</p>
                 <img src={milan} />
-                <p style={{...FONTS.body7, margin: "10px 0px 0px 0px"}}>Barcelona</p>
+                <p style={{...FONTS.body7,fontSize: "8px", margin: "10px 0px 0px 0px"}}>{data?.localTeamName}</p>
             </div>
             <div>
-                <p style={{...FONTS.body7, backgroundColor: COLORS.red, textAlign: 'center', borderRadius: 10, color: COLORS.white}}>LIVE</p>
-                <h3 style={{...FONTS.h5, margin: "10px 0px 0px 0px"}}>4 - 1</h3>
-                <p style={{...FONTS.body7, textAlign: 'center'}}>81’</p>
+                <p style={{...FONTS.body7,fontSize: "8px",padding: "2px 5px", backgroundColor: COLORS.red, textAlign: 'center', borderRadius: 10, color: COLORS.white}}>{data?.internalStatus}</p>
+                <h3 style={{...FONTS.h5,textAlign: "center", margin: "10px 0px 0px 0px"}}>{data?.localTeamGoals} - {data?.visitorTeamGoals}</h3>
+                <p style={{...FONTS.body7,fontSize: "8px", textAlign: 'center'}}>{data?.status}</p>
             </div>
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center'}}>
-                <p style={{...FONTS.body7, margin: "0px 0px 10px 0px"}}>ID: 33013</p>
+            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', width: "40%"}}>
+                <p style={{...FONTS.body7, fontSize: "8px", margin: "0px 0px 10px 0px"}}>ID: {data?.id}</p>
                 <img src={roma} />
-                <p style={{...FONTS.body7, margin: "10px 0px 0px 0px"}}>Juventus</p>
+                <p style={{...FONTS.body7, fontSize: "8px", margin: "10px 0px 0px 0px"}}>{data?.visitorTeamName}</p>
             </div>
 
         </div>
 
         <div style={{...styles.row2}}>
-            <div style={{...styles.box}}>Barcelona Win</div>
+            <div style={{...styles.box}}>{data?.localTeamName} Win</div>
             <div style={{...styles.box}}>Draw</div>
-            <div style={{...styles.box}}>Juventus Win</div>
+            <div style={{...styles.box}}>{data?.visitorTeamName} Win</div>
         </div>
 
 

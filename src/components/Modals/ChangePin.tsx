@@ -6,7 +6,8 @@ import OtpComponent from "../OtpComponent";
 import Button from "../Button";
 import SuccessModal from "./SuccessModal";
 import house from "../../assets/images/house.svg"
-import TransactionPin from "../../screens/TransactionPin";
+
+import ChangeTransactionPin from "../../screens/TransactionPin/ChangeTransactionPin";
 
 
 
@@ -18,7 +19,7 @@ const ChangePin = ({show, handleClose }) => {
           <Modal.Title style={{ ...FONTS.h6 }}>Change Pin</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <TransactionPin />
+        <ChangeTransactionPin />
         </Modal.Body>
       </Modal>
         </div>

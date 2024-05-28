@@ -15,6 +15,7 @@ import NavHeader from "./Components/NavHeader";
 import ProfileDetail from "../Profile/ProfileDetail";
 import Preference from "../NotificationScreen/Preference";
 import Security from "../Security";
+import Restrictions from "../Restrictions";
 
 const styles = {
   contain: {
@@ -117,6 +118,17 @@ function ProfileScreen() {
             >
               <p style={{ ...FONTS.body6 }}>Security</p>
             </div>
+            <div
+              style={{
+                ...styles.tb,
+                backgroundColor:
+                  active === "restriction" ? COLORS.white : "transparent",
+                cursor: "pointer",
+              }}
+              onClick={() => setActive("restriction")}
+            >
+              <p style={{ ...FONTS.body6 }}>Restrictions</p>
+            </div>
           </div>
 
           {active === "profile" && (
@@ -139,6 +151,13 @@ function ProfileScreen() {
             <div>
               <div style={{ width: "40%", margin: "0 auto" }}>
                 <Security />
+              </div>
+            </div>
+          )}
+          {active === "restriction" && (
+            <div>
+              <div style={{ width: "40%", margin: "0 auto" }}>
+                <Restrictions />
               </div>
             </div>
           )}

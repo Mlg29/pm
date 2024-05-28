@@ -11,16 +11,16 @@ import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { FlexDirection, PasswordCreation } from "../../utils/type";
+import { FlexDirection, PinCreation } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
-import { CreatePasswordSchema } from "../../https/schemas";
-import { createNewPassword, createUser } from "../../redux/slices/AuthSlice";
-import { ToastContainer, toast } from 'react-toastify';
+import { CreatePinSchema } from "../../https/schemas";
+import { updateTransactionPin } from "../../redux/slices/AuthSlice";
+import { ToastContainer, toast } from "react-toastify";
+import { MdPrivacyTip } from "react-icons/md";
 import PinModal from "../../components/Modals/PinModal";
-
 
 export const styles = {
   container: {
@@ -54,13 +54,15 @@ export const styles = {
     flexDirection: "column" as FlexDirection,
     justifyContent: "center",
     alignItems: "center",
-    margin: "1rem 0px 10px 0px",
+    margin: "0px 0px 10px 0px",
   },
 };
 
-function CreatePasswordNew() {
-
+function ChangeTransactionPin() {
+  const [step, setStep] = useState(3);
+  const [terms, setTerms] = useState(false);
   const navigate = useNavigate();
+
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
@@ -74,45 +76,42 @@ function CreatePasswordNew() {
   }
 
 
-  const initialValues: PasswordCreation = {
-    password: "",
-    confirmPassword: "",
+  const initialValues: PinCreation = {
+    pin: "",
+    confirmPin: "",
   };
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
     useFormik({
       initialValues,
-      validationSchema: CreatePasswordSchema,
-      onSubmit: (data: PasswordCreation) => handleSubmitData(data),
+      validationSchema: CreatePinSchema,
+      onSubmit: (data: PinCreation) => handleSubmitData(data),
       enableReinitialize: true,
     });
 
   const handleSubmitData = async (data) => {
     const payload = {
-      password: data?.password,
-    }; 
-    
+      transactionPin: data?.pin,
+    };
     setStorePayload(payload)
     setShow(true)
-   
     return;
   };
 
-
-  const handleAction = async () => {
+  const handleAction = async() => {
     setLoader(true);
     try {
-      var response = await dispatch(createNewPassword(storePayload));
-      if (createNewPassword.fulfilled.match(response)) {
+      var response = await dispatch(updateTransactionPin(storePayload));
+      if (updateTransactionPin.fulfilled.match(response)) {
         toast.success(response?.payload?.data?.message, {
           position: "bottom-center",
         });
-        setLoader(false);
-        setTimeout(() => {
-          setLoader(false);
-          localStorage.clear();
-          navigate("/login");
-        }, 1000);
+    
+    setTimeout(() => {
+      setLoader(false)
+      localStorage.clear();
+      navigate("/login");
+    }, 1000);
       } else {
         var errMsg = response?.payload as string;
         setLoader(false);
@@ -122,32 +121,6 @@ function CreatePasswordNew() {
       }
     } catch (err) {}
   }
-
-
-
-  const requirements = [
-    {
-      id: 1,
-      text: "At least one uppercase",
-      check: (/[A-Z]/.test(values.password)),
-    },
-    {
-      id: 2,
-      text: "At least one lowercase",
-      check: (/[a-z]/.test(values.password)),
-    },
-    {
-      id: 3,
-      text: "At least one special character",
-      check: (/[!@#$%^&*]/.test(values.password)),
-    },
-    {
-      id: 4,
-      text: "At least one number",
-      check: (/\d/.test(values.password)),
-    },
-  ];
-
 
 
   return (
@@ -162,73 +135,41 @@ function CreatePasswordNew() {
         )}
 
         <div>
-          {isMobile && (
-            <h3
-              style={{
-                ...FONTS.h2,
-                fontWeight: "bold",
-                textAlign: "center",
-                margin: "10px 0px",
-              }}
-            >
-              Change Your Log In Password
-            </h3>
-          )}
+          <h3
+            style={{
+              ...FONTS.h2,
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: "10px 0px",
+            }}
+          >
+            Change Transaction PIN
+          </h3>
+
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
-            Create a secure 6-Digits PIN to secure your account.
+            Enter a 6-digit PIN for transaction authorization.
           </p>
         </div>
 
         <div style={{ marginTop: 20 }}>
           <TextInput
-            label="Password"
-            placeholder="Enter your password"
+            label="Pin"
+            placeholder="Enter your 6 digit pin"
             required
             type="password"
-            value={values.password}
-            onChangeText={handleChange("password")}
-            errorMsg={touched.password ? errors.password : undefined}
-    
+            value={values.pin}
+            onChangeText={handleChange("pin")}
+            errorMsg={touched.pin ? errors.pin : undefined}
           />
 
-          <div style={{ margin: "0px 0px 10px 0px" }}>
-            {requirements?.map((data: any) => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    margin: "5px 0px",
-                  }}
-                >
-                  {values?.password?.length > 0 ? (
-                    <div>
-                      {data?.check ? (
-                        <IoIosCheckmarkCircle color={COLORS.green} />
-                      ) : (
-                        <MdCancel color={COLORS.red} />
-                      )}
-                    </div>
-                  ) : (
-                    <GoCircle />
-                  )}
-
-                  <p style={{ ...FONTS.body6, margin: "0px 5px" }}>
-                    {data?.text}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
           <TextInput
-            label="Confirm Password"
-            placeholder="Enter your password"
+            label="Confirm Pin"
+            placeholder="Enter your 6 digit pin"
             required
             type="password"
-            value={values.confirmPassword}
-            onChangeText={handleChange("confirmPassword")}
-            errorMsg={touched.confirmPassword ? errors.confirmPassword : undefined}
+            value={values.confirmPin}
+            onChangeText={handleChange("confirmPin")}
+            errorMsg={touched.confirmPin ? errors.confirmPin : undefined}
           />
         </div>
       </div>
@@ -241,22 +182,35 @@ function CreatePasswordNew() {
           justifyContent: "center",
         }}
       >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            padding: "15px",
+            backgroundColor: COLORS.cream,
+            marginBottom: "10px",
+          }}
+        >
+          <MdPrivacyTip size={30} style={{ paddingRight: "5px" }} />
+          <p style={{ ...FONTS.body7 }}>
+            You are advised to be careful with your PIN. Playzeet will not take
+            responsibility of PIN compromise.
+          </p>
+        </div>
         <div style={{ ...styles.bottom }}>
           <div style={{ width: "100%" }}>
             {isMobile ? (
               <Button
                 text="Continue"
-                propStyle={{ width: "100%" }}
                 isLoading={loader}
-                // handlePress={() => navigate("/pin")}
+                propStyle={{ width: "100%" }}
                 handlePress={() => handleSubmit()}
               />
             ) : (
               <Button
                 text="Submit"
-                propStyle={{ width: "100%" }}
                 isLoading={loader}
-                //   handlePress={() => navigate("/pin")}
+                propStyle={{ width: "100%" }}
                 handlePress={() => handleSubmit()}
               />
             )}
@@ -264,18 +218,16 @@ function CreatePasswordNew() {
         </div>
       </div>
 
-
       <PinModal
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
-        responseText="Password Updated Successfully"
+        responseText="Pin Updated Successfully"
       
       />
-
       <ToastContainer />
     </div>
   );
 }
 
-export default CreatePasswordNew;
+export default ChangeTransactionPin;

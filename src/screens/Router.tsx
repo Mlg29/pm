@@ -46,6 +46,10 @@ import CreatePasswordNew from './PasswordScreen/CreatePassword.tsx';
 import PasswordSuccess from './SuccessScreen/PasswordSuccess.tsx';
 import PinSuccess from './SuccessScreen/PinSuccess.tsx';
 import TermsAndConditions from './TermsAndConditions.tsx';
+import ChangeTransactionPin from './TransactionPin/ChangeTransactionPin.tsx';
+import Restrictions from './Restrictions/index.tsx';
+import Maximum from './Restrictions/Maximum.tsx';
+import NumberOfGames from './Restrictions/NumberOfGames.tsx';
 
 
 function Routers() {
@@ -61,6 +65,7 @@ function Routers() {
       <Route path="/verify" element={<VerifyScreen />} />
       <Route path="/create-password" element={<PasswordScreen />} />
       <Route path="/pin" element={<TransactionPin />} />
+      <Route path="/change-pin" element={<ChangeTransactionPin />} />
       <Route path="/secret-question" element={<SecretQuestion />} />
       <Route path="/auth-success" element={<AuthSuccess />} />
       <Route path="/notification" element={<NotificationScreen />} />
@@ -70,6 +75,9 @@ function Routers() {
       <Route path="/pin-success" element={<PinSuccess />} />
       <Route path="/forget-password-verify" element={<ForgetPasswordVerify />} />
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+      <Route path="/restrictions" element={<Restrictions />} />
+      <Route path="/maximum" element={<Maximum />} />
+      <Route path="/num-of-games" element={<NumberOfGames />} />
       
      <Route path="/home" element={<HomeScreen />} />
       <Route path="/bet-slip" element={<BetSlip />} />

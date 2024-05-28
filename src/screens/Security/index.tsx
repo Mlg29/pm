@@ -11,6 +11,7 @@ import ChangePassword from "../../components/Modals/ChangePassword";
 import ChangePin from "../../components/Modals/ChangePin";
 import { useState } from "react";
 import SecretQuest from "../../components/Modals/SecretQuestion";
+import PinModal from "../../components/Modals/PinModal";
 
 
 const styles = {
@@ -29,6 +30,8 @@ function Security() {
   const [showPin, setShowPin] = useState(false);
   const [showQuest, setShowQuest] = useState(false);
 
+
+
   const handlePasswordChange = () => {
     setShowPassword(true);
   };
@@ -42,12 +45,12 @@ function Security() {
   };
 
   const dataList = [
-    {
-      id: 1,
-      name: "Create Secret Question",
-      image: scan,
-      handleRoute: isMobile ? () => navigate("/secret-question") : () => handleQuestChange(),
-    }, 
+    // {
+    //   id: 1,
+    //   name: "Create Secret Question",
+    //   image: scan,
+    //   handleRoute: isMobile ? () => navigate("/secret-question") : () => handleQuestChange(),
+    // }, 
     {
       id: 2,
       name: "Change Password",
@@ -60,7 +63,7 @@ function Security() {
       id: 3,
       name: "Change PIN",
       image: key,
-      handleRoute: isMobile ? () => navigate("/pin") : () => handlePinChange(),
+      handleRoute: isMobile ? () => navigate("/change-pin") : () => handlePinChange(),
     },
   ];
 
@@ -105,6 +108,10 @@ function Security() {
       <ChangePin show={showPin} handleClose={() => setShowPin(false)} />
 
       <SecretQuest show={showQuest} handleClose={() => setShowQuest(false)} />
+   
+   
+     
+   
     </div>
   );
 }

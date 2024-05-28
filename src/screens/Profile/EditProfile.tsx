@@ -23,6 +23,7 @@ import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import CustomFileInput from "../../components/FileInput";
 import axios from "axios";
+import PinModal from "../../components/Modals/PinModal";
 
 const styles = {
   container: {
@@ -65,6 +66,13 @@ function EditProfile() {
   const fileInputRef = useRef(null);
   const [fileUrl, setFileUrl] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
+  const [show, setShow] = useState(false)
+  const [storePayload, setStorePayload] = useState(null)
+
+
+  const handleClose = () => {
+    setShow(false)
+  }
 
 
   const handleFileChange = async (event) => {
@@ -132,9 +140,17 @@ function EditProfile() {
       //  dob: dob?.toISOString().slice(0, 10),
     };
 
+    setStorePayload(payload)
+
+    setShow(true)
+    return;
+
+  };
+
+  const handleAction = async () => {
     setLoader(true);
     try {
-      var response = await dispatch(updateUserData(payload));
+      var response = await dispatch(updateUserData(storePayload));
 
       if (updateUserData.fulfilled.match(response)) {
         setLoader(false);
@@ -150,7 +166,7 @@ function EditProfile() {
         });
       }
     } catch (err) {}
-  };
+  }
 
   return (
     <div style={{ ...styles.container }}>
@@ -249,6 +265,15 @@ function EditProfile() {
           />
         )}
       </div>
+
+
+      <PinModal 
+        show={show}
+        handleClose={handleClose}
+        handleAction={handleAction}
+        responseText="Profile Updated Successfully"
+      
+      />
 
       <ToastContainer />
     </div>

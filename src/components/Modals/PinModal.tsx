@@ -6,28 +6,39 @@ import OtpComponent from "../OtpComponent";
 import Button from "../Button";
 import SuccessModal from "./SuccessModal";
 
-const PinModal = ({ show, handleClose }) => {
+const PinModal = ({ show, handleClose, handleAction,responseText}) => {
   const [otp, setOtp] = useState("");
   const [showSuccess, setShowSuccess] = useState(false)
+  const [disabled, setDisabled] = useState(true)
+
 
   const handleSuccessShow = () => {
   handleClose()
   setShowSuccess(true)
   }
 
-  useEffect(() => {
-    if(otp?.length === 6){
-      //return navigate("/bet-success")
-      handleSuccessShow()
-    }
+useEffect(() => {
+  if(otp?.length === 6){
+    setDisabled(false)
+  }
+  else {
+     setDisabled(true)
+  }
 }, [otp])
+
+const checkOtp = async () => {
+  await handleAction().then(aa => {
+    handleSuccessShow()
+  })
+  
+}
 
 
   return (
     <>
        <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title style={{ ...FONTS.h6 }}>Payment Option</Modal.Title>
+        <Modal.Title style={{ ...FONTS.h6 }}>PIN</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>
@@ -47,24 +58,22 @@ const PinModal = ({ show, handleClose }) => {
                 textAlign: "center",
               }}
             >
-              Enter your 6-Digit Transaction PIN to place this bet.
+              Enter your 6-Digit Transaction PIN to complete this action.
             </p>
             <OtpComponent otp={otp} setOtp={setOtp} />
           </div>
 
-          {/* <div style={{ display: "flex", flex: 1 }}>
+          <div style={{ display: "flex", flex: 1 }}>
             <div style={{ width: "100%" }}>
               <Button
                 text="Submit"
+                disabled={disabled}
                 propStyle={{ width: "100%" }}
-                // handlePress={() => navigate('/home')}
+                handlePress={() => checkOtp()}
               />
             </div>
-          </div> */}
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "2rem 0px" }}>
-            <p style={{ ...FONTS.body6 }}>Forget PIN? </p>
-            <p style={{ ...FONTS.h6, margin: "0px 3px", cursor: "pointer" }}> Reset PIN</p>
           </div>
+
         </div>
       </Modal.Body>
     </Modal>
@@ -72,6 +81,7 @@ const PinModal = ({ show, handleClose }) => {
     <SuccessModal 
       show={showSuccess}
       handleClose={() => setShowSuccess(false)}
+      responseText={responseText}
     />
     </>
  

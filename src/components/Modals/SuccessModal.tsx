@@ -43,7 +43,7 @@ export const styles = {
 }
 
 
-const SuccessModal = ({ show, handleClose }) => {
+const SuccessModal = ({ show, handleClose, responseText }) => {
     const navigate = useNavigate()
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -72,7 +72,7 @@ const SuccessModal = ({ show, handleClose }) => {
                     margin: "10px 0px",
                   }}
                 >
-                  Wallet Funded
+                  Success
                 </h3>
                 <p
                   style={{
@@ -82,13 +82,13 @@ const SuccessModal = ({ show, handleClose }) => {
                     marginBottom: 30
                   }}
                 >
-                  You have successfully funded your account
+                  {responseText}
                 </p>
               </div>
             </div>
           </div>
 
-          <div
+          {/* <div
             style={{
               display: "flex",
               flexDirection: "column",
@@ -115,7 +115,7 @@ const SuccessModal = ({ show, handleClose }) => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </Modal.Body>
     </Modal>

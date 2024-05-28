@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import AuthReducer from './slices/AuthSlice'
-// ...
+import FootballReducer from './slices/FootballSlice'
+
 
 export const store = configureStore({
   reducer: {
    auth: AuthReducer,
+   football: FootballReducer
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

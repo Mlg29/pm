@@ -84,7 +84,7 @@ function PinSuccess() {
             <p
               style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}
             >
-              Success! Your have successfully created your transaction pin.
+              Success! Your have successfully changed your transaction pin.
             </p>
           </div>
         </div>

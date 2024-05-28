@@ -46,6 +46,13 @@ function TextInput(props: any) {
                         </div>
                         : null
                 }
+                {
+                    type === "amount" ?
+                        <div style={{margin: "0px 3px 0px 0px",  display: "flex", justifyContent: 'center'}}>
+                            <p> ₦ </p>
+                        </div>
+                        : null
+                }
                 <input
                     value={value}
                     style={{

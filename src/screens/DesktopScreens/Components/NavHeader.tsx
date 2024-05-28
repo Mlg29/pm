@@ -20,8 +20,6 @@ import LogOut from "../../../components/Modals/LogOut";
 import { useAppDispatch } from "../../../redux/hooks";
 import { getUserData } from "../../../redux/slices/AuthSlice";
 
-
-
 const styles = {
   rowBtw: {
     display: "flex",
@@ -71,24 +69,21 @@ function NavHeader() {
   const [selected, setSelected] = useState("Soccer");
   const location = useLocation();
   const [show, setShow] = useState(false);
-  const dispatch = useAppDispatch() as any
+  const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
-  const [userData, setUserData] = useState(null)
-
+  const [userData, setUserData] = useState(null);
 
   const fetchUserInfo = async () => {
-    const response = await dispatch(getUserData())
-    if(getUserData.fulfilled.match(response)) {
-     setUserData(response?.payload)
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
     }
-   }
- 
-   useEffect(() => {
-     fetchUserInfo()
-   }, [])
+  };
 
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
-   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -269,15 +264,28 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                      <img 
-                       src={userData?.profileImage}
-                       style={{
-                         width: "40px",
-                         height: "40px",
-                         borderRadius: "100%",
-                       }}
-                       alt=""
-                      />
+                      {userData?.profileImage ? (
+                        <img
+                          src={userData?.profileImage}
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "100%",
+                          }}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          src={user}
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "100%",
+                          }}
+                          alt=""
+                        />
+                      )}
+
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
                           {userData?.firstName} {userData?.lastName}
@@ -309,7 +317,7 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
-                    onClick={() => handleShow()}
+                      onClick={() => handleShow()}
                     >
                       <img src={logout} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Log Out</p>
@@ -488,21 +496,33 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                      <img 
-                       src={userData?.profileImage}
-                       style={{
-                         width: "40px",
-                         height: "40px",
-                         borderRadius: "100%",
-                       }}
-                       alt=""
-                      />
+                       {userData?.profileImage ? (
+                        <img
+                          src={userData?.profileImage}
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "100%",
+                          }}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          src={user}
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "100%",
+                          }}
+                          alt=""
+                        />
+                      )}
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                        {userData?.firstName} {userData?.lastName}
+                          {userData?.firstName} {userData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                        @{userData?.userName}
+                          @{userData?.userName}
                         </p>
                       </div>
                     </div>
@@ -706,21 +726,33 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                      <img 
-                       src={userData?.profileImage}
-                       style={{
-                         width: "40px",
-                         height: "40px",
-                         borderRadius: "100%",
-                       }}
-                       alt=""
-                      />
+                       {userData?.profileImage ? (
+                        <img
+                          src={userData?.profileImage}
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "100%",
+                          }}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          src={user}
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "100%",
+                          }}
+                          alt=""
+                        />
+                      )}
                       <div style={{ margin: "0px 0.5rem" }}>
                         <h3 style={{ ...FONTS.body7, margin: 0 }}>
-                        {userData?.firstName} {userData?.lastName}
+                          {userData?.firstName} {userData?.lastName}
                         </h3>
                         <p style={{ ...FONTS.body7, fontSize: 10, margin: 0 }}>
-                        @{userData?.userName}
+                          @{userData?.userName}
                         </p>
                       </div>
                     </div>
@@ -859,11 +891,7 @@ function NavHeader() {
         </div>
       </Tablet>
 
-
-      <LogOut
-          show={show}
-          handleClose={() => handleClose()}
-        />
+      <LogOut show={show} handleClose={() => handleClose()} />
     </div>
   );
 }
