@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import GameDetailCardHeader from "../../components/GameDetailCardHeader";
 import Header from "../../components/Header";
@@ -115,6 +115,8 @@ function GameDetails() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("");
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const location = useLocation();
+  const gameInfo = location?.state?.data
 
 
   const handleRoute = (route: string) => {
@@ -124,11 +126,13 @@ function GameDetails() {
     }, 1000);
   };
 
+console.log({gameInfo})
+
   return (
     <div style={{ ...styles.container }}>
       <Header text="Game Details" />
       <div style={{ ...styles.btt, display: "flex", flexDirection: "column", flex: 1 }}>
-        <GameDetailCardHeader />
+        <GameDetailCardHeader data={gameInfo} />
 
         <div style={{ ...styles.tabs }}>
           <div
@@ -269,7 +273,7 @@ function GameDetails() {
         <div style={{...styles.mob}}>
           <div style={{ width: "100%" }}>
             <Button
-              text="Barcelona Win"
+              text={`${gameInfo?.localTeamName} Win`}
               propStyle={{
                 width: "100%",
                 backgroundColor:
@@ -282,7 +286,7 @@ function GameDetails() {
           </div>
           <div style={{ width: "100%", margin: "10px 0px" }}>
             <Button
-              text="Juventus Win"
+              text={`${gameInfo?.visitorTeamName} Win`}
               propStyle={{
                 width: "100%",
                 backgroundColor:
@@ -311,7 +315,7 @@ function GameDetails() {
         <div style={{ ...styles.desk }}>
           <div style={{ width: "100%" }}>
             <Button
-              text="Barcelona Win"
+              text={`${gameInfo?.localTeamName} Win`}
               propStyle={{
                 width: "90%",
                 backgroundColor:
@@ -325,7 +329,7 @@ function GameDetails() {
           </div>
           <div style={{ width: "100%", margin: "10px 0px" }}>
             <Button
-              text="Juventus Win"
+              text={`${gameInfo?.visitorTeamName} Win`}
               propStyle={{
                 width: "90%",
                 backgroundColor:

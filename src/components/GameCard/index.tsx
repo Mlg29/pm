@@ -1,7 +1,7 @@
 
 import { useNavigate } from "react-router-dom"
 import milan from "../../assets/images/millan.svg"
-import roma from "../../assets/images/roma.svg"
+import noLogo from "../../assets/images/no.jpg"
 import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
 
@@ -47,12 +47,17 @@ export const styles = {
 function GameCard({data}) {
     const navigate = useNavigate()
 
+
+
   return (
-    <div style={{...styles.container, cursor: "pointer"}} onClick={() => navigate("/game-details")}>
+    <div style={{...styles.container, cursor: "pointer"}} onClick={() => navigate("/game-details", {state: {data: data}})}>
         <div style={{...styles.row}}>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', width: "40%"}}>
                 <p style={{...FONTS.body7, fontSize: "8px", margin: "0px 0px 10px 0px"}}>{data?.leagueName}</p>
-                <img src={milan} />
+              
+                {
+                !data?.localTeamLogo ? <img src={noLogo} style={{width: '30px'}} /> : <img src={data?.localTeamLogo} style={{width: '20px'}} />
+               }
                 <p style={{...FONTS.body7,fontSize: "8px", margin: "10px 0px 0px 0px"}}>{data?.localTeamName}</p>
             </div>
             <div>
@@ -62,7 +67,10 @@ function GameCard({data}) {
             </div>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', width: "40%"}}>
                 <p style={{...FONTS.body7, fontSize: "8px", margin: "0px 0px 10px 0px"}}>ID: {data?.id}</p>
-                <img src={roma} />
+               {
+                !data?.visitorTeamLogo ? <img src={noLogo} style={{width: '30px'}} /> : <img src={data?.visitorTeamLogo} style={{width: '20px'}} />
+               }
+                
                 <p style={{...FONTS.body7, fontSize: "8px", margin: "10px 0px 0px 0px"}}>{data?.visitorTeamName}</p>
             </div>
 

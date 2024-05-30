@@ -15,12 +15,20 @@ import { MdSportsRugby } from "react-icons/md";
 import { COLORS } from "../../utils/colors";
 import GameCard from "../../components/GameCard";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
 import { BaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
-import { footballEventState, footballFixtureState, getFootballEvents, getFootballFixtures } from "../../redux/slices/FootballSlice";
+import {
+  footballEventState,
+  footballFixtureState,
+  getFootballEvents,
+  getFootballFixtures,
+} from "../../redux/slices/FootballSlice";
+
+import io from "socket.io-client";
+import moment from "moment";
 
 function HomeScreen() {
   const navigate = useNavigate();
@@ -30,16 +38,18 @@ function HomeScreen() {
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const footballEvents = useAppSelector(footballEventState) as any
- // const footballFixtures = useAppSelector(footballFixtureState) as any
-  const [live, setLive] = useState<any>([])
-  const [upcoming, setUpcoming] = useState<any>([])
-  const [today, setToday] = useState<any>([])
-  const [tomorrow, setTomorrow] = useState<any>([])
-
+  const footballEvents = useAppSelector(footballEventState) as any;
+  // const footballFixtures = useAppSelector(footballFixtureState) as any
+  const [live, setLive] = useState<any>([]);
+  const [upcoming, setUpcoming] = useState<any>([]);
+  const [today, setToday] = useState<any>([]);
+  const [tomorrow, setTomorrow] = useState<any>([]);
   const sliderArr = [slider, slider2, slider3];
 
-  //console.log({live,today, upcoming, tomorrow})
+  const url = `${BaseUrl}/football`;
+
+  
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,14 +59,49 @@ function HomeScreen() {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
+  useEffect(() => {
+    const socket = io(url);
 
-  useEffect(()=> {
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    // Handle incoming messages
+    socket.on("footballEventUpdate", (message) => {
+      setLive((prevMessages) => [...prevMessages, message]);
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  console.log(live[0])
+
+  let createdDate = moment(new Date()).utc().format();
+  let tomorrowDate = moment(createdDate).add(1, "d");
+
+  useEffect(() => {
     const payloadLive = {
-      status: "LIVE"
-    }
-    dispatch(getFootballFixtures(payloadLive)).then(dd => {
-      setLive(dd?.payload)
-    })
+      status: "LIVE",
+    };
+    const payloadUpcoming = {
+      status: "UPCOMING",
+    };
+    const payloadToday = {
+      startTime: moment(new Date()).format("YYYY-MM-DD"),
+    };
+    const payloadTomorrow = {
+      startTime: tomorrowDate.format("YYYY-MM-DD"),
+    };
+    // dispatch(getFootballFixtures(payloadLive)).then(dd => {
+    //   setLive(dd?.payload)
+    // })
     // dispatch(getFootballFixtures()).then(dd => {
     //   setToday()
     // })
@@ -66,8 +111,8 @@ function HomeScreen() {
     // dispatch(getFootballFixtures()).then(dd => {
     //   setUpcoming()
     // })
-    dispatch(getFootballEvents())
-  }, [])
+    // dispatch(getFootballEvents())
+  }, []);
 
   const itemList = [
     {
@@ -279,12 +324,11 @@ function HomeScreen() {
           );
         })}
       </div>
-
       <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
         LIVE
       </p>
 
-      {live?.data?.map((aa: any, i: any) => {
+      {live?.map((aa: any, i: any) => {
         return <GameCard key={i} data={aa} />;
       })}
 
