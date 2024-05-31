@@ -29,6 +29,8 @@ import {
 
 import io from "socket.io-client";
 import moment from "moment";
+import Loader from "../../components/Loader";
+import SliderComponent from "../../components/Slider";
 
 function HomeScreen() {
   const navigate = useNavigate();
@@ -45,19 +47,8 @@ function HomeScreen() {
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
   const sliderArr = [slider, slider2, slider3];
-
+  const [loader, setLoader] = useState(false);
   const url = `${BaseUrl}/football`;
-
-  
-
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex(currentIndex === 2 ? 0 : currentIndex + 1);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [currentIndex]);
 
   useEffect(() => {
     const socket = io(url);
@@ -72,7 +63,12 @@ function HomeScreen() {
 
     // Handle incoming messages
     socket.on("footballEventUpdate", (message) => {
-      setLive((prevMessages) => [...prevMessages, message]);
+      setLive((prevMessages) => {
+        const updatedMessages = prevMessages.filter(
+          (msg) => msg.id !== message.id
+        );
+        return [...updatedMessages, message];
+      });
     });
 
     // Cleanup on component unmount
@@ -81,15 +77,10 @@ function HomeScreen() {
     };
   }, []);
 
-  console.log(live[0])
-
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
   useEffect(() => {
-    const payloadLive = {
-      status: "LIVE",
-    };
     const payloadUpcoming = {
       status: "UPCOMING",
     };
@@ -99,18 +90,15 @@ function HomeScreen() {
     const payloadTomorrow = {
       startTime: tomorrowDate.format("YYYY-MM-DD"),
     };
-    // dispatch(getFootballFixtures(payloadLive)).then(dd => {
-    //   setLive(dd?.payload)
+    // dispatch(getFootballFixtures(payloadToday)).then(dd => {
+    //   setToday(dd?.payload?.data)
     // })
-    // dispatch(getFootballFixtures()).then(dd => {
-    //   setToday()
+    // dispatch(getFootballFixtures(payloadTomorrow)).then(dd => {
+    //   setTomorrow(dd?.payload?.data)
     // })
-    // dispatch(getFootballFixtures()).then(dd => {
-    //   setTomorrow()
-    // })
-    // dispatch(getFootballFixtures()).then(dd => {
-    //   setUpcoming()
-    // })
+    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload);
+    });
     // dispatch(getFootballEvents())
   }, []);
 
@@ -213,15 +201,35 @@ function HomeScreen() {
   ];
 
   const fetchUserInfo = async () => {
+    setLoader(true);
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
+      setLoader(false);
     }
   };
 
   useEffect(() => {
     fetchUserInfo();
   }, []);
+
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "100vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
+
 
   return (
     <div className="top-container">
@@ -264,15 +272,7 @@ function HomeScreen() {
 
       <SearchComponent placeholder="Search by event, sport, club or game" />
 
-      <div>
-        {sliderArr?.map((dd, i) => {
-          return currentIndex === i ? (
-            <div key={i}>
-              <img src={dd} style={{ width: "100%" }} />
-            </div>
-          ) : null;
-        })}
-      </div>
+      <SliderComponent />
 
       <div
         style={{
@@ -324,13 +324,81 @@ function HomeScreen() {
           );
         })}
       </div>
-      <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-        LIVE
+      {live?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            LIVE
+          </p>
+          {live?.length > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+
+      {live
+        ?.filter((a, i) => i < 10)
+        .map((aa: any, i: any) => {
+          return <GameCard id={i} data={aa} />;
+        })}
+     {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+
+      {upcoming?.data?.map((aa: any, i: any) => {
+        return <GameCard id={i} data={aa} />;
+      })}
+      {/* <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+        TODAY
       </p>
 
-      {live?.map((aa: any, i: any) => {
+      {today?.map((aa: any, i: any) => {
         return <GameCard key={i} data={aa} />;
-      })}
+      })} */}
+
+      {/* <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+        TOMORROW
+      </p>
+
+      {tomorrow?.map((aa: any, i: any) => {
+        return <GameCard key={i} data={aa} />;
+      })} */}
 
       {getToken && <BottomTabs />}
     </div>

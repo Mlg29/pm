@@ -44,13 +44,13 @@ export const styles = {
 
 
 
-function GameCard({data}) {
+function GameCard({data, id}) {
     const navigate = useNavigate()
 
 
 
   return (
-    <div style={{...styles.container, cursor: "pointer"}} onClick={() => navigate("/game-details", {state: {data: data}})}>
+    <div key={id} style={{...styles.container, cursor: "pointer"}} onClick={() => navigate("/game-details", {state: {data: data}})}>
         <div style={{...styles.row}}>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', width: "40%"}}>
                 <p style={{...FONTS.body7, fontSize: "8px", margin: "0px 0px 10px 0px"}}>{data?.leagueName}</p>

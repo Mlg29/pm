@@ -168,7 +168,10 @@ function GameDetailCardHeader(props: any) {
               <div style={{ width: "48%"}}>
                 {dd["@team"] === "localteam" ? (
                   <div style={{ display: "flex" }}>
-                    <p style={{...FONTS.body7, marginRight: 5}}>{dd["@player"]}</p>
+                   <div>
+                   <p style={{...FONTS.body7, marginRight: 5}}>{dd["@player"]}</p>
+                   <p style={{...FONTS.body7, fontSize: 8, marginRight: 5}}>{dd["@assist"]}</p>
+                   </div>
                     <p style={{...FONTS.body7, marginRight: 5}}>{dd["@minute"]}'</p>
                   </div>
                 ) : (
@@ -191,6 +194,7 @@ function GameDetailCardHeader(props: any) {
               </div> 
               : null
                 }
+                
               </div>
             
               
@@ -198,8 +202,10 @@ function GameDetailCardHeader(props: any) {
               {dd["@team"] === "visitorteam" ? (
                 <div style={{ display: "flex" }}> 
                  <p style={{...FONTS.body7, marginRight: 5}}>{dd["@minute"]}'</p>
-                  <p style={{...FONTS.body7, marginRight: 5}}>{dd["@player"]}</p>
-                
+                 <div>
+                 <p style={{...FONTS.body7, marginRight: 5}}>{dd["@player"]}</p>
+                 <p style={{...FONTS.body7, fontSize: 8, marginRight: 5}}>{dd["@assist"]}</p>
+                 </div>                
                 </div>
               ) : (
                 null

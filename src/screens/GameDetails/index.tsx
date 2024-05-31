@@ -12,6 +12,7 @@ import roma from "../../assets/images/roma.svg";
 import milan from "../../assets/images/millan.svg";
 import Formation from "../../components/Formation";
 import { useMediaQuery } from "react-responsive";
+import EmptyState from "../../components/EmptyState";
 
 const styles = {
   container: {
@@ -168,7 +169,11 @@ console.log({gameInfo})
           </div>
         </div>
 
-        {active === "stat" && (
+
+          {
+            gameInfo?.statsAvailable ?
+             <div>
+           {active === "stat" && (
           <div>
             <CardList header="Ball Possession" homeText="50" awayText="50" />
             <CardList header="Goal Attempts" homeText="50" awayText="50" />
@@ -266,7 +271,15 @@ console.log({gameInfo})
               awayLastFive={["L", "W", "D", "W", "L"]}
             />
           </div>
-        )}
+        )} 
+        </div>
+        :
+        <div style={{paddingTop: 50}}>
+          <EmptyState height="100%" header="No Stat Available" />
+        </div>
+          }
+       
+      
       </div>
 
       {isMobile ? (
