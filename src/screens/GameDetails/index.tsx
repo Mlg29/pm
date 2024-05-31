@@ -3,7 +3,7 @@ import Button from "../../components/Button";
 import GameDetailCardHeader from "../../components/GameDetailCardHeader";
 import Header from "../../components/Header";
 import { COLORS } from "../../utils/colors";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FONTS } from "../../utils/fonts";
 import { FlexDirection, OverflowY, Position } from "../../utils/type";
 import CardList from "../../components/CardList";
@@ -13,6 +13,8 @@ import milan from "../../assets/images/millan.svg";
 import Formation from "../../components/Formation";
 import { useMediaQuery } from "react-responsive";
 import EmptyState from "../../components/EmptyState";
+import { BaseUrl } from "../../https";
+import { io } from "socket.io-client";
 
 const styles = {
   container: {
@@ -117,13 +119,46 @@ function GameDetails() {
   const [selected, setSelected] = useState("");
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const location = useLocation();
-  const gameInfo = location?.state?.data
+  const game = location?.state?.data
+  const [gameInfo, setGameInfo] = useState(null)
+  const url = `${BaseUrl}/football`;
 
+  useEffect(() => {
+    setGameInfo(game)
+    const socket = io(url);
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("footballEventUpdate", (message) => {
+      const mes = message;
+      if (mes.id === game?.id) {
+        setGameInfo(mes)
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const handleRoute = (route: string) => {
     setSelected(route);
+    const payload = {
+      userType: route === gameInfo?.localTeamName ? "W1" : route === gameInfo?.visitorTeamName ? "W2" : "D" ,
+      sportEventId: gameInfo?.sportEventId,
+      sportId: gameInfo?.id
+    }
+ 
     setTimeout(() => {
-      navigate(`/open-bets`);
+      navigate(`/open-bets`, {
+        state: {userSelection: payload}
+      });
     }, 1000);
   };
 
@@ -290,11 +325,10 @@ console.log({gameInfo})
               propStyle={{
                 width: "100%",
                 backgroundColor:
-                  selected === "home" ? COLORS.primary : COLORS.cream,
-                color: selected === "home" ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.localTeamName ? COLORS.primary : COLORS.cream,
+                color: selected === gameInfo?.localTeamName ? COLORS.cream : COLORS.primary,
               }}
-              // handlePress={() => navigate('/home')}
-              handlePress={() => handleRoute("home")}
+              handlePress={() => handleRoute(gameInfo?.localTeamName)}
             />
           </div>
           <div style={{ width: "100%", margin: "10px 0px" }}>
@@ -303,11 +337,11 @@ console.log({gameInfo})
               propStyle={{
                 width: "100%",
                 backgroundColor:
-                  selected === "away" ? COLORS.primary : COLORS.cream,
-                color: selected === "away" ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.visitorTeamName ? COLORS.primary : COLORS.cream,
+                color: selected === gameInfo?.visitorTeamName ? COLORS.cream : COLORS.primary,
               }}
               // handlePress={() => navigate('/home')}
-              handlePress={() => setSelected("away")}
+              handlePress={() => handleRoute(gameInfo?.visitorTeamName)}
             />
           </div>
           <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
@@ -320,7 +354,7 @@ console.log({gameInfo})
                 color: selected === "draw" ? COLORS.cream : COLORS.primary,
               }}
               //  handlePress={() => navigate('/home')}
-              handlePress={() => setSelected("draw")}
+              handlePress={() => handleRoute("draw")}
             />
           </div>
         </div>
@@ -332,12 +366,12 @@ console.log({gameInfo})
               propStyle={{
                 width: "90%",
                 backgroundColor:
-                  selected === "home" ? COLORS.primary : COLORS.cream,
-                color: selected === "home" ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.localTeamName ? COLORS.primary : COLORS.cream,
+                color: selected === gameInfo?.localTeamName ? COLORS.cream : COLORS.primary,
                 fontSize: 15,
               }}
               // handlePress={() => navigate('/home')}
-              handlePress={() => handleRoute("home")}
+              handlePress={() => handleRoute(gameInfo?.localTeamName)}
             />
           </div>
           <div style={{ width: "100%", margin: "10px 0px" }}>
@@ -346,12 +380,12 @@ console.log({gameInfo})
               propStyle={{
                 width: "90%",
                 backgroundColor:
-                  selected === "away" ? COLORS.primary : COLORS.cream,
-                color: selected === "away" ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.visitorTeamName ? COLORS.primary : COLORS.cream,
+                color: selected === gameInfo?.visitorTeamName ? COLORS.cream : COLORS.primary,
                 fontSize: 15,
               }}
               // handlePress={() => navigate('/home')}
-              handlePress={() => setSelected("away")}
+              handlePress={() => handleRoute(gameInfo?.visitorTeamName)}
             />
           </div>
           <div style={{ width: "100%", margin: "10px 0px" }}>
@@ -365,7 +399,7 @@ console.log({gameInfo})
                 fontSize: 15,
               }}
               //  handlePress={() => navigate('/home')}
-              handlePress={() => setSelected("draw")}
+              handlePress={() => handleRoute("draw")}
             />
           </div>
         </div>

@@ -4,8 +4,11 @@ import yellowcard from "../../assets/images/yellow.svg";
 import balls from "../../assets/images/balls.svg";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
-import noLogo from "../../assets/images/no.jpg"
-
+import noLogo from "../../assets/images/no.jpg";
+import { BsFillLightningFill } from "react-icons/bs";
+import { PiSoccerBallBold } from "react-icons/pi";
+import { TbRectangleVerticalFilled } from "react-icons/tb";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -51,10 +54,11 @@ function GameDetailCardHeader(props: any) {
     return true;
   }
 
-  
-
-  const eventArray =  isEmpty(data?.events) ? [] : Array.isArray(data?.events?.event) ? data?.events?.event : [data?.events?.event]
-  
+  const eventArray = isEmpty(data?.events)
+    ? []
+    : Array.isArray(data?.events?.event)
+    ? data?.events?.event
+    : [data?.events?.event];
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
@@ -77,10 +81,12 @@ function GameDetailCardHeader(props: any) {
           >
             {data?.leagueName}
           </p>
-          {
-                !data?.localTeamLogo ? <img src={noLogo} style={{width: '30px'}} /> : <img src={data?.localTeamLogo} style={{width: '20px'}} />
-               }
-           <p
+          {!data?.localTeamLogo ? (
+            <img src={noLogo} style={{ width: "30px" }} />
+          ) : (
+            <img src={data?.localTeamLogo} style={{ width: "20px" }} />
+          )}
+          <p
             style={{
               ...FONTS.body7,
               fontSize: "8px",
@@ -104,7 +110,13 @@ function GameDetailCardHeader(props: any) {
           >
             {data?.internalStatus}
           </p>
-          <h3 style={{ ...FONTS.h5,textAlign: "center", margin: "10px 0px 0px 0px" }}>
+          <h3
+            style={{
+              ...FONTS.h5,
+              textAlign: "center",
+              margin: "10px 0px 0px 0px",
+            }}
+          >
             {data?.localTeamGoals} - {data?.visitorTeamGoals}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
@@ -129,9 +141,11 @@ function GameDetailCardHeader(props: any) {
           >
             ID: {data?.id}
           </p>
-          {
-                !data?.visitorTeamLogo ? <img src={noLogo} style={{width: '30px'}} /> : <img src={data?.visitorTeamLogo} style={{width: '20px'}} />
-               }
+          {!data?.visitorTeamLogo ? (
+            <img src={noLogo} style={{ width: "30px" }} />
+          ) : (
+            <img src={data?.visitorTeamLogo} style={{ width: "20px" }} />
+          )}
           <p
             style={{
               ...FONTS.body7,
@@ -154,66 +168,169 @@ function GameDetailCardHeader(props: any) {
       />
 
       <div>
-        {eventArray && eventArray?.map((dd) => {
-          return (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: 10
-              }}
-            >
-              <div style={{ width: "48%"}}>
-                {dd["@team"] === "localteam" ? (
-                  <div style={{ display: "flex" }}>
-                   <div>
-                   <p style={{...FONTS.body7, marginRight: 5}}>{dd["@player"]}</p>
-                   <p style={{...FONTS.body7, fontSize: 8, marginRight: 5}}>{dd["@assist"]}</p>
-                   </div>
-                    <p style={{...FONTS.body7, marginRight: 5}}>{dd["@minute"]}'</p>
-                  </div>
-                ) : (
-                  null
-                )}
-              </div>
-              <div>
-                {
-                  dd["@type"] === "goal" ?
-                   <div style={{ display: "flex", flexDirection: "column" }}>
-                <img src={balls} />
-              </div> 
-              : dd["@type"] === "yellowcard" ?
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <img src={yellowcard} />
-              </div> 
-              : dd["@type"] === "redcard" ?
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <img src={balls} />
-              </div> 
-              : null
-                }
-                
-              </div>
-            
-              
-              <div style={{ width: "48%", display: "flex", flexDirection: "column", alignItems: 'flex-end' }}>
-              {dd["@team"] === "visitorteam" ? (
-                <div style={{ display: "flex" }}> 
-                 <p style={{...FONTS.body7, marginRight: 5}}>{dd["@minute"]}'</p>
-                 <div>
-                 <p style={{...FONTS.body7, marginRight: 5}}>{dd["@player"]}</p>
-                 <p style={{...FONTS.body7, fontSize: 8, marginRight: 5}}>{dd["@assist"]}</p>
-                 </div>                
+        {eventArray &&
+          eventArray?.map((dd, i) => {
+            return (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 10,
+                }}
+              >
+                <div style={{ width: "48%" }}>
+                  {dd["@team"] === "localteam" ? (
+                    <div style={{ display: "flex" }}>
+                      {dd["@type"] === "subst" ? (
+                        <div>
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                              {dd["@player"]}
+                            </p>
+                            <FaArrowRightArrowLeft
+                              size={10}
+                              color={COLORS.orange}
+                              style={{ marginRight: 10 }}
+                            />
+                            <p
+                              style={{
+                                ...FONTS.body7,
+                                fontSize: 8,
+                                marginRight: 5,
+                              }}
+                            >
+                              {dd["@assist"]}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                            {dd["@player"]}
+                          </p>
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            <p
+                              style={{
+                                ...FONTS.body7,
+                                fontSize: 8,
+                                marginRight: 5,
+                              }}
+                            >
+                              {dd["@assist"]}
+                            </p>
+                            {dd["@assist"] && (
+                              <BsFillLightningFill
+                                size={10}
+                                style={{ marginRight: 10 }}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                        {dd["@minute"]}'
+                      </p>
+                    </div>
+                  ) : null}
                 </div>
-              ) : (
-                null
-              )}
+                <div>
+                  {dd["@type"] === "goal" ? (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <PiSoccerBallBold color={COLORS.green} />
+                    </div>
+                  ) : dd["@type"] === "yellowcard" ? (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <TbRectangleVerticalFilled color="#FFC15E" />
+                    </div>
+                  ) : dd["@type"] === "redcard" ? (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <TbRectangleVerticalFilled color="red" />
+                    </div>
+                  ) : null}
+                </div>
+
+                <div
+                  style={{
+                    width: "48%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  {dd["@team"] === "visitorteam" ? (
+                    <div style={{ display: "flex" }}>
+                      <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                        {dd["@minute"]}'
+                      </p>
+                      {
+                        dd["@type"] === "subst" ? (
+                          <div>
+                            <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+ <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                              {dd["@player"]}
+                            </p>
+                            <FaArrowRightArrowLeft
+                              size={10}
+                              color={COLORS.orange}
+                              style={{ marginRight: 10 }}
+                            />
+                            <p
+                              style={{
+                                ...FONTS.body7,
+                                fontSize: 8,
+                                marginRight: 5,
+                              }}
+                            >
+                              {dd["@assist"]}
+                            </p>
+                            </div>
+                          </div>
+                        )
+                        :
+                        (
+                          <div>
+                          <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                            {dd["@player"]}
+                          </p>
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            <p
+                              style={{
+                                ...FONTS.body7,
+                                fontSize: 8,
+                                marginRight: 5,
+                              }}
+                            >
+                              {dd["@assist"]}
+                            </p>
+                            {dd["@assist"] && (
+                              <BsFillLightningFill
+                                size={10}
+                                style={{ marginRight: 10 }}
+                              />
+                            )}
+                          </div>
+                        </div>
+                        )
+                      }
+        
+                    </div>
+                  ) : null}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

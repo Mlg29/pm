@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import { FONTS } from '../../utils/fonts'
 import milan from "../../assets/images/millan.svg"
 import roma from "../../assets/images/roma.svg"
 import { COLORS } from '../../utils/colors'
 import { FlexDirection } from '../../utils/type'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../../redux/hooks'
+import { getOpenBet } from '../../redux/slices/BetSlice'
 
 
 
@@ -35,6 +37,25 @@ const styles = {
 
 function OpenBet() {
     const navigate = useNavigate()
+    const location = useLocation()
+    const userSelection = location?.state?.userSelection
+    const dispatch = useAppDispatch()
+    const [openBets, setOpenBets] = useState([])
+
+
+    console.log({openBets})
+
+
+    useEffect(() => {
+        const payload = {
+            page: 1,
+            pageSize: 20
+        }
+        dispatch(getOpenBet(payload)).then(pp => {
+            setOpenBets(pp?.payload?.data)
+        })
+    }, [])
+
     return (
         <div className='top-container' style={{ backgroundColor: "white" }}>
             <Header

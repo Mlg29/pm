@@ -35,8 +35,8 @@ export const getBetById= createAsyncThunk("bet/getBetById", async (payload: any)
   }
 });
 
-export const getOpenBet = createAsyncThunk("bet/getOpenBet", async () => {
-    var response = await getRequest(`${BaseUrl}/bet/open`);
+export const getOpenBet = createAsyncThunk("bet/getOpenBet", async (payload: any) => {
+    var response = await getRequest(`${BaseUrl}/bet/open?page=${payload?.page}&pageSize=${payload?.pageSize}`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
