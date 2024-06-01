@@ -95,6 +95,8 @@ const AcceptModal = ({ show, handleClose }) => {
     <PinModal 
       show={showSuccess}
       handleClose={() => setShowSuccess(false)}
+      handleAction={() => {}}
+      responseText={""}
     />
     </>
  

@@ -56,6 +56,8 @@ const TransferModal = ({ show, handleClose }) => {
     <PinModal 
       show={showOtp}
       handleClose={() => setShowOtp(false)}
+      handleAction={() => {}}
+      responseText={""}
     />
     </>
 
