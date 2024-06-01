@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { FONTS } from "../../utils/fonts";
 import milan from "../../assets/images/millan.svg";
 import roma from "../../assets/images/roma.svg";
 import { COLORS } from "../../utils/colors";
 import { FlexDirection } from "../../utils/type";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { RiFileList3Fill } from "react-icons/ri";
+import { BaseUrl } from "../../https";
+import { io } from "socket.io-client";
+import GameDetailCardHeader from "../../components/GameDetailCardHeader";
+
 
 
 const styles = {
@@ -43,37 +47,41 @@ const styles = {
 
 function CreateBet() {
   const navigate = useNavigate();
+  const location = useLocation()
+
+  const game = location?.state?.game
+  const [gameInfo, setGameInfo] = useState(null)
+  const url = `${BaseUrl}/football`;
+
+  useEffect(() => {
+    setGameInfo(game)
+    const socket = io(url);
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("footballEventUpdate", (message) => {
+      const mes = message;
+      if (mes.id === game?.id) {
+        setGameInfo(mes)
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <div className="top-container" style={{ backgroundColor: "white" }}>
       <Header text="Create Bet" />
 
-      <div>
-        {[""]?.map((data, i) => {
-          return (
-            <div key={i} style={{ ...styles.contain }}>
-              <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
-                UEFA - Champions League
-              </p>
-
-              <div style={{ ...styles.row }}>
-                <div style={{ ...styles.center }}>
-                  <img src={milan} />
-                  <h3 style={{ ...FONTS.h6, marginTop: "10px" }}>Milan</h3>
-                  <p style={{ ...FONTS.body7 }}>(You)</p>
-                </div>
-                <div style={{ ...styles.center }}>
-                  <p style={{ ...FONTS.body7, marginTop: "10px" }}>10:15 PM</p>
-                </div>
-                <div style={{ ...styles.center }}>
-                  <img src={roma} />
-                  <h3 style={{ ...FONTS.h6, marginTop: "10px" }}>AS Roma</h3>
-                  <p style={{ ...FONTS.body7 }}>Unknown</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <GameDetailCardHeader data={gameInfo} />
 
       <div>
         <h3 style={{ ...FONTS.h6 }}>Bet Option</h3>
@@ -108,7 +116,7 @@ function CreateBet() {
       <div style={{ ...styles.rowBtn }}>
         <div
           style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-          onClick={() => navigate("/options")}
+          onClick={() => navigate("/amount")}
         >
           <div>
           <RiFileList3Fill

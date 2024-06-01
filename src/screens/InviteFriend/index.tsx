@@ -1,14 +1,77 @@
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Header from "../../components/Header"
 import Button from "../../components/Button"
 import { useNavigate } from "react-router-dom"
 import TextInput from "../../components/TextInput"
+import { useAppDispatch } from "../../redux/hooks"
+import { getSingleUser } from "../../redux/slices/AuthSlice"
+import { ToastContainer, toast } from "react-toastify";
+import { FONTS } from "../../utils/fonts"
+import { COLORS } from "../../utils/colors"
+
+
 
 const InviteFriend = () => {
     const navigate = useNavigate()
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState<any>("")
     const [amount, setAmount] = useState("")
+    const dispatch = useAppDispatch()
+    const [loader, setLoader] = useState(false)
+    const [checkLoader, setCheckLoader] = useState(false)
+    const [users, setUsers] = useState([])
+    const [selectedUser, setSelectedUser] = useState("")
+
+    const checkUser = async () => {
+        setCheckLoader(true)
+        setSelectedUser("")
+        const response = await dispatch(getSingleUser(email))
+        if(getSingleUser.fulfilled.match(response)){
+            setCheckLoader(false)
+            setUsers(response?.payload)
+        }
+        else {
+            var errMsg = response?.payload as string;
+            setCheckLoader(false);
+            toast.error(errMsg, {
+              position: "bottom-center",
+            });
+        }
+    }
+    useEffect(() => {
+        if(email?.length > 0){
+            checkUser()
+        }
+    }, [email])
+
+
+    const handleRoute = async () => {
+        if(!selectedUser) {
+            toast.error("Invalid user selected", {
+                position: "bottom-center",
+              });
+              return;
+        }
+        if(!amount){
+            toast.error("Amount is required", {
+                position: "bottom-center",
+              });
+              return;
+        }
+        const payload = {
+            invitedUser: selectedUser,
+            amount: amount
+        }
+        localStorage.setItem("inviteeInfo", JSON.stringify(payload))
+       return navigate('/options')
+       
+    }
+
+
+    const handleSelect = (data) => {
+        setSelectedUser(data?.id)
+        setEmail(data?.userName)
+    }
 
     return (
         <div className="top-container">
@@ -23,17 +86,29 @@ const InviteFriend = () => {
                     required
                     value={email}
                     type="email"
-                    handleChange={(val: string) => {
+                    onChangeText={(val: string) => {
                         setEmail(val)
           
                     }}
                 />
+                {
+                    users?.length > 0 && !selectedUser && <div>
+                    <p style={{...FONTS.h7}}>Select User</p>
+                    {
+                        users?.map(data => {
+                            return <div style={{padding: 8,border: `1px solid ${COLORS.orange}`,marginBottom: 5, cursor: "pointer"}} onClick={() => handleSelect(data)}>
+                                <p style={{...FONTS.body7}}>{data?.firstName} {data?.lastName}</p>
+                            </div>
+                        })
+                    }
+                </div>
+                }
                   <TextInput
                     label="Amount"
                     placeholder="Enter Amount"
                     required
                     value={amount}
-                    handleChange={(val: string) => {
+                    onChangeText={(val: string) => {
                         setAmount(val)
           
                     }}
@@ -44,9 +119,12 @@ const InviteFriend = () => {
             <Button
               text="Place Bet"
               propStyle={{ width: "100%" }}
-              handlePress={() => navigate('/options')}
+              isLoading={loader}
+              handlePress={() => handleRoute()}
             />
             </div>
+
+            <ToastContainer />
         </div>
     )
 }

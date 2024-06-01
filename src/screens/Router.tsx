@@ -50,6 +50,8 @@ import ChangeTransactionPin from './TransactionPin/ChangeTransactionPin.tsx';
 import Restrictions from './Restrictions/index.tsx';
 import Maximum from './Restrictions/Maximum.tsx';
 import NumberOfGames from './Restrictions/NumberOfGames.tsx';
+import BetAmount from './InviteFriend/BetAmount.tsx';
+import GameEventData from './HomeScreen/GameEventData.tsx';
 
 
 function Routers() {
@@ -107,7 +109,10 @@ function Routers() {
       <Route path="/invite" element={<InviteFriend/>} />
       <Route path="/challenge-detail" element={<ChallengeDetail />} />
       <Route path="/adjust-bet" element={<AdjustBet />} />
-  
+      <Route path="/amount" element={<BetAmount />} />
+      <Route path="/events" element={<GameEventData />} />
+
+
 
     </Routes>
   </Router>

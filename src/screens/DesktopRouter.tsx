@@ -51,6 +51,7 @@ import PasswordSuccess from './SuccessScreen/PasswordSuccess.js';
 import ForgetPasswordVerify from './VerifyScreen/ForgetPasswordVerify.js';
 import TermsAndConditions from './TermsAndConditions.js';
 import PinSuccess from './SuccessScreen/PinSuccess.js';
+import GameEventData from './HomeScreen/GameEventData.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -75,6 +76,7 @@ function DesktopRouters() {
       <Route path="/terms-and-conditions" element={<Layout><TermsAndConditions /></Layout>} />
       <Route path="/pin-success" element={<Layout><PinSuccess /></Layout>} />
      <Route path="/home" element={<Dashboard />} />
+     <Route path="/events" element={<GameEventData/>} />
       <Route path="/bet-slip" element={<SubLayout><BetSlip /></SubLayout>} />
        <Route path="/transaction" element={<SubLayout><Transaction /></SubLayout>} />
       <Route path="/profile" element={<ProfileScreen />} />

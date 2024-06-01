@@ -147,14 +147,14 @@ export const login = createAsyncThunk(
 
 export const getUserData = createAsyncThunk("auth/getUserData", async () => {
   var response = await getRequest(`${BaseUrl}/users/profile`);
-  if (response?.status === 200) {
+  if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
 });
 
-export const getSingleUser = createAsyncThunk("auth/getSingleUser", async () => {
-  var response = await getRequest(`${BaseUrl}/users`);
-  if (response?.status === 200) {
+export const getSingleUser = createAsyncThunk("auth/getSingleUser", async (payload: any) => {
+  var response = await getRequest(`${BaseUrl}/users?search=${payload}`);
+  if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
 });

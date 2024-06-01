@@ -8,7 +8,7 @@ function EmptyState(props: any) {
   return (
     <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",height: height ? height : "70vh"}}>
         <img src={emptyState} />
-        <h3 style={{...FONTS.h5}}>{header}</h3>
+        <h3 style={{...FONTS.h5, textAlign: "center"}}>{header}</h3>
         <p style={{...FONTS.body6, margin: '10px 0px'}}>{text}</p>
     </div>
   )

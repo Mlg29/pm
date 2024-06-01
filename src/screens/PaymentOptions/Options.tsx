@@ -8,7 +8,10 @@ import arrowright from "../../assets/images/arrow-right.svg";
 import { COLORS } from "../../utils/colors";
 import { TbCalculatorFilled } from "react-icons/tb";
 import { FaChevronRight } from "react-icons/fa6";
-
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../redux/hooks";
+import { getUserData } from "../../redux/slices/AuthSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const styles = {
   row: {
@@ -25,12 +28,44 @@ const styles = {
 
 function Options() {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+  const [loader, setLoader] = useState(false);
+const dispatch = useAppDispatch()
+const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
+
+
+  const fetchUserInfo = async () => {
+    setLoader(true);
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
+      setLoader(false);
+    }
+  };
+
+  console.log({userData})
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+
+  const goToPin = () => {
+    // if(userFee?.amount > userData?.walletBalance) {
+    //   toast.error("Insufficient Balance", {
+    //     position: "bottom-center",
+    //   });
+    //   return
+    // }
+    navigate("/wallet-pin")
+  }
+
 
   return (
     <div className="top-container">
       <Header text="Payment Option" />
       <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
-        Select your preferred method to top up your wallet.
+        Select your preferred method for payment.
       </p>
 
       <div
@@ -44,21 +79,23 @@ function Options() {
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           Debit amount for this game
         </p>
-        <h3 style={{ ...FONTS.h6 }}>₦10,000.00</h3>
+        <h3 style={{ ...FONTS.h6 }}>₦{userFee?.amount}</h3>
       </div>
 
       <div style={{...styles.rowBtn}}>
-        <div style={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => navigate("/wallet-pin")}>
+        <div style={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => goToPin()}>
             <div>
             <TbCalculatorFilled color={COLORS.white} size={30} style={{backgroundColor: COLORS.primary, padding: 5, borderRadius: "100%", marginRight: 15}} />
             </div>
             <div>
                 <h3 style={{...FONTS.body6}}>Wallet</h3>
-                <p style={{...FONTS.body7}}>Balance: ₦18,720.92</p>
+                <p style={{...FONTS.body7}}>Balance: ₦{userData?.walletBalance}</p>
             </div>
         </div>
         <FaChevronRight />
       </div>
+
+      <ToastContainer />
     </div>
   );
 }

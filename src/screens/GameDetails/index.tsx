@@ -154,15 +154,18 @@ function GameDetails() {
       sportEventId: gameInfo?.sportEventId,
       sportId: gameInfo?.id
     }
+
+    localStorage.setItem("userBetSelection", JSON.stringify(payload))
+
  
     setTimeout(() => {
       navigate(`/open-bets`, {
-        state: {userSelection: payload}
+        state: {userSelection: payload, game: gameInfo}
       });
     }, 1000);
   };
 
-console.log({gameInfo})
+// console.log({gameInfo})
 
   return (
     <div style={{ ...styles.container }}>

@@ -77,6 +77,8 @@ function HomeScreen() {
     };
   }, []);
 
+
+
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
@@ -205,6 +207,9 @@ function HomeScreen() {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
+      setLoader(false);
+    }
+    else {
       setLoader(false);
     }
   };
@@ -343,6 +348,12 @@ function HomeScreen() {
                 cursor: "pointer",
                 margin: "15px 0px",
               }}
+              onClick={() => navigate("/events", {
+                state: {
+                  events: live,
+                  type: "live"
+                }
+              })}
             >
               View more
             </p>
@@ -353,7 +364,9 @@ function HomeScreen() {
       {live
         ?.filter((a, i) => i < 10)
         .map((aa: any, i: any) => {
-          return <GameCard id={i} data={aa} />;
+          return <div key={i}>
+            <GameCard id={i} data={aa} />
+          </div>
         })}
      {upcoming?.data?.length > 0 && (
         <div
@@ -374,6 +387,12 @@ function HomeScreen() {
                 cursor: "pointer",
                 margin: "15px 0px",
               }}
+              onClick={() => navigate("/events", {
+                state: {
+                  events: upcoming,
+                  type: "upcoming",
+                }
+              })}
             >
               View more
             </p>
@@ -382,7 +401,9 @@ function HomeScreen() {
       )}
 
       {upcoming?.data?.map((aa: any, i: any) => {
-        return <GameCard id={i} data={aa} />;
+        return <div key={i}>
+        <GameCard id={i} data={aa} />
+      </div>
       })}
       {/* <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
         TODAY

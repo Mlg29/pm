@@ -22,7 +22,7 @@ const SliderComponent = () => {
     <div>
       {sliderArr?.map((dd, i) => {
         return currentIndex === i ? (
-          <div>
+          <div key={i}>
             <img src={dd} style={{ width: "100%" }} />
           </div>
         ) : null;
