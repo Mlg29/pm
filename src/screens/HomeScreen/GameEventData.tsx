@@ -31,13 +31,14 @@ import io from "socket.io-client";
 import moment from "moment";
 import Loader from "../../components/Loader";
 import SliderComponent from "../../components/Slider";
+import { useMediaQuery } from "react-responsive";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
   const location = useLocation();
   const events = location.state.events;
   const eventType = location.state.type;
-
+  const isMobile = useMediaQuery({ maxWidth: 767 })
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
@@ -140,42 +141,44 @@ function GameEventData(props: any) {
 
   return (
     <div className="top-container">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {getToken ? (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <RxAvatar size={50} />
-            <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>
-              Hi {userData?.firstName}
-            </h3>
-          </div>
-        ) : (
-          <img
-            style={{ cursor: "pointer" }}
-            src={heading}
-            onClick={() => navigate("/home")}
-          />
-        )}
+     {
+      isMobile &&  <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      {getToken ? (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <RxAvatar size={50} />
+          <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>
+            Hi {userData?.firstName}
+          </h3>
+        </div>
+      ) : (
+        <img
+          style={{ cursor: "pointer" }}
+          src={heading}
+          onClick={() => navigate("/home")}
+        />
+      )}
 
-        {getToken ? (
-          <img
-            src={notification}
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/notification")}
-          />
-        ) : (
-          <RxAvatar
-            size={50}
-            onClick={() => navigate("/login")}
-            style={{ cursor: "pointer" }}
-          />
-        )}
-      </div>
+      {getToken ? (
+        <img
+          src={notification}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/notification")}
+        />
+      ) : (
+        <RxAvatar
+          size={50}
+          onClick={() => navigate("/login")}
+          style={{ cursor: "pointer" }}
+        />
+      )}
+    </div>
+     }
 
       {eventType === "live" && (
         <div>

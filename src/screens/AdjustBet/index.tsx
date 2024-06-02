@@ -6,6 +6,7 @@ import { FONTS } from "../../utils/fonts";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import { TextAlign } from "../../utils/type";
+import { formatCurrency } from "../../utils/helper";
 
 const styles = {
   inputs: {
@@ -25,6 +26,24 @@ const styles = {
 const AdjustBet = () => {
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
+  const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
+
+
+
+
+
+  const handleRoute = () => {
+    const payload = {
+      invitedUser: null,
+      amount: userFee?.amount,
+      opponentUsername: userFee?.opponentUsername,
+      adjustedBetAmount: parseInt(amount),
+      isAdjustBet: true,
+      betId: userFee?.betId
+    };
+    localStorage.setItem("inviteeInfo", JSON.stringify(payload));
+    return navigate("/options");
+  }
 
   return (
     <div className="top-container">
@@ -43,9 +62,9 @@ const AdjustBet = () => {
         }}
       >
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
-          @JohnDoe Bet Amount
+          @{userFee?.opponentUsername} Bet Amount
         </p>
-        <h3 style={{ ...FONTS.h6 }}>₦10,000.00</h3>
+        <h3 style={{ ...FONTS.h6 }}>₦{formatCurrency(userFee?.amount)}</h3>
       </div>
 
       <div>
@@ -64,7 +83,7 @@ const AdjustBet = () => {
         <Button
           text="Next"
           propStyle={{ width: "100%" }}
-          handlePress={() => navigate("/options")}
+          handlePress={() => handleRoute()}
         />
       </div>
     </div>

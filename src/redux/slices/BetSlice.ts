@@ -16,6 +16,7 @@ import {
   deleteRequest,
   deleteRequestNoPayload,
   updateRequestWithNoPayload,
+  updateRequestWithPayload,
 } from "../../https/server";
 import { BaseUrl } from "../../https";
 
@@ -82,6 +83,20 @@ export const acceptBet = createAsyncThunk(
     try {
       const response = await updateRequestWithNoPayload(
         `${BaseUrl}/bet/${payload?.id}/accept`);
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
+export const adjustBet = createAsyncThunk(
+  "bet/adjustBet",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await updateRequestWithPayload(`${BaseUrl}/bet/${payload?.id}`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }

@@ -19,6 +19,7 @@ import WithdrawalModal from '../../components/Modals/WithdrawaModal';
 import DepositModal from '../../components/Modals/DepositModal';
 import { useAppDispatch } from '../../redux/hooks';
 import { getUserData } from '../../redux/slices/AuthSlice';
+import { formatCurrency } from '../../utils/helper';
 
 
 const styles = {
@@ -112,7 +113,7 @@ function Transaction() {
             <p style={{ ...FONTS.body7, color: COLORS.white }}>NGN</p>
            {
             show ? <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
-                  <h2 style={{...FONTS.largeTitle, color: COLORS.white}}>{userData?.walletBalance}</h2>
+                  <h2 style={{...FONTS.largeTitle, color: COLORS.white}}>{formatCurrency(userData?.walletBalance)}</h2>
               </div>
               :
               <div style={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }} >

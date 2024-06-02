@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useAppDispatch } from "../../redux/hooks";
-import { acceptBet, createBet } from "../../redux/slices/BetSlice";
+import { acceptBet, adjustBet, createBet } from "../../redux/slices/BetSlice";
 
 function WalletPin() {
   const navigate = useNavigate();
@@ -35,12 +35,34 @@ function WalletPin() {
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
     };
 
+    const adjustPayload = {
+      id: userFee?.betId,
+      opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
+      sportEventId: getUserBet?.sportEventId,
+      betAmount: parseInt(userFee?.adjustedBetAmount),
+      betCurrency: "NGN",
+      prediction: getUserBet?.userType,
+      betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
+    }
     const acceptPayload = {
       id: userFee?.betId
     }
 
     setLoader(true);
-    if (userFee?.isAcceptBet) {
+    if (userFee?.isAdjustBet) {
+      const response = await dispatch(adjustBet(adjustPayload))
+      if (adjustBet.fulfilled.match(response)) {
+        setLoader(false);
+        return navigate("/bet-success");
+      } else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        toast.error(errMsg, {
+          position: "bottom-center",
+        });
+      }
+    }
+    else if (userFee?.isAcceptBet) {
       const response = await dispatch(acceptBet(acceptPayload))
       if (acceptBet.fulfilled.match(response)) {
         setLoader(false);

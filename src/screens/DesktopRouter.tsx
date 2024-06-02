@@ -76,7 +76,6 @@ function DesktopRouters() {
       <Route path="/terms-and-conditions" element={<Layout><TermsAndConditions /></Layout>} />
       <Route path="/pin-success" element={<Layout><PinSuccess /></Layout>} />
      <Route path="/home" element={<Dashboard />} />
-     <Route path="/events" element={<GameEventData/>} />
       <Route path="/bet-slip" element={<SubLayout><BetSlip /></SubLayout>} />
        <Route path="/transaction" element={<SubLayout><Transaction /></SubLayout>} />
       <Route path="/profile" element={<ProfileScreen />} />
@@ -104,7 +103,8 @@ function DesktopRouters() {
       <Route path="/invite" element={<DashboardLayout><InviteFriend/></DashboardLayout>} />
       <Route path="/challenge-detail" element={<DashboardLayout><ChallengeDetail /></DashboardLayout>} />
       <Route path="/adjust-bet" element={<DashboardLayout><AdjustBet /></DashboardLayout>} />
-    
+      <Route path="/events" element={<DashboardLayout><GameEventData /></DashboardLayout>} />
+
     </Routes>
   </Router>
   )

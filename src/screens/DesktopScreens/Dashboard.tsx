@@ -16,6 +16,7 @@ import { getFootballFixtures } from "../../redux/slices/FootballSlice";
 import Loader from "../../components/Loader";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import SliderComponent from "../../components/Slider";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   container: {
@@ -34,20 +35,22 @@ const styles = {
 };
 
 function Dashboard() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useAppDispatch() as any;
-  const sliderArr = [slider, slider2, slider3];
+  const navigate = useNavigate()
   const [loader, setLoader] = useState(false);
   const url = `${BaseUrl}/football`;
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
-
+  const [today, setToday] = useState<any>([]);
+  const [tomorrow, setTomorrow] = useState<any>([]);
 
   const fetchUserInfo = async () => {
-    setLoader(true)
+    setLoader(true);
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
-      setLoader(false)
+      setLoader(false);
+    } else {
+      setLoader(false);
     }
   };
 
@@ -89,54 +92,236 @@ function Dashboard() {
     const payloadUpcoming = {
       status: "UPCOMING",
     };
+    const payloadLive = {
+      status: "LIVE",
+    };
     const payloadToday = {
-      startTime: moment(new Date()).format("YYYY-MM-DD"),
+      date: moment(new Date()).format("YYYY-MM-DD"),
     };
     const payloadTomorrow = {
-      startTime: tomorrowDate.format("YYYY-MM-DD"),
+      date: tomorrowDate.format("YYYY-MM-DD"),
     };
-    // dispatch(getFootballFixtures(payloadToday)).then(dd => {
-    //   setToday(dd?.payload?.data)
-    // })
-    // dispatch(getFootballFixtures(payloadTomorrow)).then(dd => {
-    //   setTomorrow(dd?.payload?.data)
-    // })
+    dispatch(getFootballFixtures(payloadLive)).then((dd) => {
+      setLive(dd?.payload?.data);
+    });
+    dispatch(getFootballFixtures(payloadToday)).then((dd) => {
+      setToday(dd?.payload);
+    });
+    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+      setTomorrow(dd?.payload);
+    });
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
     });
     // dispatch(getFootballEvents())
   }, []);
 
-
-  if(loader){
-    return <div style={{display: "flex",flexDirection: "column", justifyContent: "center", alignItems: "center", flex: 1, height: "100vh"}}>
-      <Loader />
-    </div>
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "100vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <div style={{ ...styles.container }}>
       <DashboardLayout>
         <div>
-         <SliderComponent />
+          <SliderComponent />
           <div style={{ ...styles.div }}>
+          {live?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            LIVE
+          </p>
+          {live?.length > 10 && (
             <p
-              style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() => navigate("/events", {
+                state: {
+                  events: live,
+                  type: "live"
+                }
+              })}
             >
-              LIVE
+              View more
             </p>
+          )}
+        </div>
+      )}
+            {live
+              ?.filter((a, i) => i < 10)
+              .map((aa: any, i: any) => {
+                return (
+                  <div key={i}>
+                    <GameCard id={i} data={aa} />
+                  </div>
+                );
+              })}
 
-            {live?.map((aa: any, i: any) => {
-              return <GameCard key={i} data={aa} />;
-            })}
-            <p
-              style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}
-            >
-              UPCOMING
-            </p>
+            {upcoming?.data?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: "15px 0px",
+                  }}
+                >
+                  UPCOMING
+                </p>
+                {upcoming?.total > 10 && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: "pointer",
+                      margin: "15px 0px",
+                    }}
+                    onClick={() =>
+                      navigate("/events", {
+                        state: {
+                          events: upcoming,
+                          type: "upcoming",
+                        },
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
 
             {upcoming?.data?.map((aa: any, i: any) => {
-              return <GameCard key={i} data={aa} />;
+              return (
+                <div key={i}>
+                  <GameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+
+            {today?.data?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: "15px 0px",
+                  }}
+                >
+                  TODAY
+                </p>
+                {today?.total > 10 && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: "pointer",
+                      margin: "15px 0px",
+                    }}
+                    onClick={() =>
+                      navigate("/events", {
+                        state: {
+                          events: today,
+                          type: "today",
+                        },
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
+
+            {today?.data?.map((aa: any, i: any) => {
+              return (
+                <div key={i}>
+                  <GameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+
+            {tomorrow?.data?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: "15px 0px",
+                  }}
+                >
+                  TOMORROW
+                </p>
+                {tomorrow?.total > 10 && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: "pointer",
+                      margin: "15px 0px",
+                    }}
+                    onClick={() =>
+                      navigate("/events", {
+                        state: {
+                          events: tomorrow,
+                          type: "tomorrow",
+                        },
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
+
+            {tomorrow?.data?.map((aa: any, i: any) => {
+              return (
+                <div key={i}>
+                  <GameCard id={i} data={aa} />
+                </div>
+              );
             })}
           </div>
         </div>

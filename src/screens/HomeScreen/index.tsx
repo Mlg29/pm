@@ -39,14 +39,12 @@ function HomeScreen() {
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const footballEvents = useAppSelector(footballEventState) as any;
-  // const footballFixtures = useAppSelector(footballFixtureState) as any
+  
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
-  const sliderArr = [slider, slider2, slider3];
+
   const [loader, setLoader] = useState(false);
   const url = `${BaseUrl}/football`;
 
@@ -86,18 +84,24 @@ function HomeScreen() {
     const payloadUpcoming = {
       status: "UPCOMING",
     };
+    const payloadLive = {
+      status: "LIVE",
+    };
     const payloadToday = {
-      startTime: moment(new Date()).format("YYYY-MM-DD"),
+      date: moment(new Date()).format("YYYY-MM-DD"),
     };
     const payloadTomorrow = {
-      startTime: tomorrowDate.format("YYYY-MM-DD"),
+     date: tomorrowDate.format("YYYY-MM-DD"),
     };
-    // dispatch(getFootballFixtures(payloadToday)).then(dd => {
-    //   setToday(dd?.payload?.data)
-    // })
-    // dispatch(getFootballFixtures(payloadTomorrow)).then(dd => {
-    //   setTomorrow(dd?.payload?.data)
-    // })
+    dispatch(getFootballFixtures(payloadLive)).then(dd => {
+      setLive(dd?.payload?.data)
+    })
+    dispatch(getFootballFixtures(payloadToday)).then(dd => {
+      setToday(dd?.payload)
+    })
+    dispatch(getFootballFixtures(payloadTomorrow)).then(dd => {
+      setTomorrow(dd?.payload)
+    })
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
     });
@@ -405,21 +409,83 @@ function HomeScreen() {
         <GameCard id={i} data={aa} />
       </div>
       })}
-      {/* <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-        TODAY
-      </p>
 
-      {today?.map((aa: any, i: any) => {
-        return <GameCard key={i} data={aa} />;
-      })} */}
+{today?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            TODAY
+          </p>
+          {today?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() => navigate("/events", {
+                state: {
+                  events: today,
+                  type: "today",
+                }
+              })}
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
 
-      {/* <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-        TOMORROW
-      </p>
+      {today?.data?.map((aa: any, i: any) => {
+        return <div key={i}>
+        <GameCard id={i} data={aa} />
+      </div>
+      })}
 
-      {tomorrow?.map((aa: any, i: any) => {
-        return <GameCard key={i} data={aa} />;
-      })} */}
+{tomorrow?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            TOMORROW
+          </p>
+          {tomorrow?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() => navigate("/events", {
+                state: {
+                  events: tomorrow,
+                  type: "tomorrow",
+                }
+              })}
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+
+      {tomorrow?.data?.map((aa: any, i: any) => {
+        return <div key={i}>
+        <GameCard id={i} data={aa} />
+      </div>
+      })}
+   
 
       {getToken && <BottomTabs />}
     </div>

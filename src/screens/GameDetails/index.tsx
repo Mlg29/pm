@@ -15,6 +15,9 @@ import { useMediaQuery } from "react-responsive";
 import EmptyState from "../../components/EmptyState";
 import { BaseUrl } from "../../https";
 import { io } from "socket.io-client";
+import { ToastContainer, toast } from "react-toastify";
+
+
 
 const styles = {
   container: {
@@ -79,7 +82,7 @@ const styles = {
   },
   mob: {
     display: "flex",
-   // zIndex: 11,
+    // zIndex: 11,
     flexDirection: "column" as FlexDirection,
     // flex: 2,
     justifyContent: "flex-start",
@@ -98,9 +101,9 @@ const styles = {
     flex: 1,
     overflowY: "auto" as OverflowY,
     height: "300px",
-    backgroundColor: "red"
+    backgroundColor: "red",
   },
-  fixed:{
+  fixed: {
     position: "absolute" as Position,
     top: 0,
     right: 0,
@@ -109,8 +112,8 @@ const styles = {
   },
   btt: {
     height: "200px",
-    overflowY: "scroll" as OverflowY
-  }
+    overflowY: "scroll" as OverflowY,
+  },
 };
 
 function GameDetails() {
@@ -119,12 +122,13 @@ function GameDetails() {
   const [selected, setSelected] = useState("");
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const location = useLocation();
-  const game = location?.state?.data
-  const [gameInfo, setGameInfo] = useState(null)
+  const game = location?.state?.data;
+  const [gameInfo, setGameInfo] = useState(null);
   const url = `${BaseUrl}/football`;
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    setGameInfo(game)
+    setGameInfo(game);
     const socket = io(url);
 
     socket.on("connect", () => {
@@ -138,7 +142,7 @@ function GameDetails() {
     socket.on("footballEventUpdate", (message) => {
       const mes = message;
       if (mes.id === game?.id) {
-        setGameInfo(mes)
+        setGameInfo(mes);
       }
     });
 
@@ -148,29 +152,47 @@ function GameDetails() {
   }, []);
 
   const handleRoute = (route: string) => {
-    setSelected(route);
-    const payload = {
-      userType: route === gameInfo?.localTeamName ? "W1" : route === gameInfo?.visitorTeamName ? "W2" : "D" ,
-      sportEventId: gameInfo?.sportEventId,
-      sportId: gameInfo?.id
+    if (token) {
+      setSelected(route);
+      const payload = {
+        userType:
+          route === gameInfo?.localTeamName
+            ? "W1"
+            : route === gameInfo?.visitorTeamName
+            ? "W2"
+            : "DRAW",
+        sportEventId: gameInfo?.sportEventId,
+        sportId: gameInfo?.id,
+      };
+
+      localStorage.setItem("userBetSelection", JSON.stringify(payload));
+
+      setTimeout(() => {
+        navigate(`/open-bets`, {
+          state: { userSelection: payload, game: gameInfo },
+        });
+      }, 1000);
     }
-
-    localStorage.setItem("userBetSelection", JSON.stringify(payload))
-
- 
-    setTimeout(() => {
-      navigate(`/open-bets`, {
-        state: {userSelection: payload, game: gameInfo}
+    else {
+      toast.error("You need to be logged in to proceed", {
+        position: "bottom-center",
       });
-    }, 1000);
+    }
   };
 
-// console.log({gameInfo})
+  console.log({ gameInfo });
 
   return (
     <div style={{ ...styles.container }}>
       <Header text="Game Details" />
-      <div style={{ ...styles.btt, display: "flex", flexDirection: "column", flex: 1 }}>
+      <div
+        style={{
+          ...styles.btt,
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+        }}
+      >
         <GameDetailCardHeader data={gameInfo} />
 
         <div style={{ ...styles.tabs }}>
@@ -207,129 +229,150 @@ function GameDetails() {
           </div>
         </div>
 
-
-          {
-            gameInfo?.statsAvailable ?
-             <div>
-           {active === "stat" && (
+        {gameInfo?.statsAvailable ? (
           <div>
-            <CardList header="Ball Possession" homeText="50" awayText="50" />
-            <CardList header="Goal Attempts" homeText="50" awayText="50" />
-            <CardList header="Short on Goal" homeText="50" awayText="50" />
-            <CardList header="Pass Accuracy" homeText="50" awayText="50" />
-            <CardList header="Foul" homeText="50" awayText="50" />
-            <CardList header="Yellow" homeText="50" awayText="50" />
-            <CardList header="Red" homeText="50" awayText="50" />
+            {active === "stat" && (
+              <div>
+                <CardList
+                  header="Ball Possession"
+                  homeText="50"
+                  awayText="50"
+                />
+                <CardList header="Goal Attempts" homeText="50" awayText="50" />
+                <CardList header="Short on Goal" homeText="50" awayText="50" />
+                <CardList header="Pass Accuracy" homeText="50" awayText="50" />
+                <CardList header="Foul" homeText="50" awayText="50" />
+                <CardList header="Yellow" homeText="50" awayText="50" />
+                <CardList header="Red" homeText="50" awayText="50" />
+              </div>
+            )}
+
+            {active === "lineup" && (
+              <div style={{ backgroundColor: "#F3F3F3", marginTop: 10 }}>
+                <Formation />
+              </div>
+            )}
+
+            {active === "h2h" && (
+              <div>
+                <div>
+                  <h3
+                    style={{
+                      ...FONTS.h6,
+                      textAlign: "center",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    Last 5 Games
+                  </h3>
+                  <div style={{ ...styles.row }}>
+                    <div>
+                      <h3 style={{ ...FONTS.h5, color: COLORS.green }}>1</h3>
+                      <p style={{ ...FONTS.body6, color: COLORS.green }}>
+                        Millan
+                      </p>
+                    </div>
+                    <div>
+                      <h3
+                        style={{
+                          ...FONTS.h5,
+                          color: COLORS.gray,
+                          textAlign: "center",
+                        }}
+                      >
+                        1
+                      </h3>
+                      <p
+                        style={{
+                          ...FONTS.body6,
+                          color: COLORS.gray,
+                          textAlign: "center",
+                        }}
+                      >
+                        Draw
+                      </p>
+                    </div>
+                    <div>
+                      <h3
+                        style={{
+                          ...FONTS.h5,
+                          color: COLORS.red,
+                          textAlign: "right",
+                        }}
+                      >
+                        3
+                      </h3>
+                      <p style={{ ...FONTS.body6, color: COLORS.red }}>
+                        AS Roma
+                      </p>
+                    </div>
+                  </div>
+                  <div style={{ ...styles.row2 }}>
+                    <div
+                      style={{
+                        width: "20%",
+                        height: 5,
+                        backgroundColor: COLORS.green,
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "20%",
+                        height: 5,
+                        backgroundColor: COLORS.gray,
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "60%",
+                        height: 5,
+                        backgroundColor: COLORS.red,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+                <h3
+                  style={{
+                    ...FONTS.h6,
+                    textAlign: "center",
+                    marginTop: "1rem",
+                  }}
+                >
+                  All last 5 games
+                </h3>
+                <AllTime
+                  homeTeam="Milan"
+                  awayTeam="As Roma"
+                  homeImage={milan}
+                  awayImage={roma}
+                  homeLastFive={["W", "W", "D", "W", "W"]}
+                  awayLastFive={["L", "W", "D", "W", "L"]}
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div style={{ paddingTop: 50 }}>
+            <EmptyState height="100%" header="No Stat Available" />
           </div>
         )}
-
-        {active === "lineup" && <div style={{backgroundColor: "#F3F3F3", marginTop: 10}}>
-        <Formation />
-            </div>}
-
-        {active === "h2h" && (
-          <div>
-            <div>
-              <h3
-                style={{ ...FONTS.h6, textAlign: "center", marginTop: "1rem" }}
-              >
-                Last 5 Games
-              </h3>
-              <div style={{ ...styles.row }}>
-                <div>
-                  <h3 style={{ ...FONTS.h5, color: COLORS.green }}>1</h3>
-                  <p style={{ ...FONTS.body6, color: COLORS.green }}>Millan</p>
-                </div>
-                <div>
-                  <h3
-                    style={{
-                      ...FONTS.h5,
-                      color: COLORS.gray,
-                      textAlign: "center",
-                    }}
-                  >
-                    1
-                  </h3>
-                  <p
-                    style={{
-                      ...FONTS.body6,
-                      color: COLORS.gray,
-                      textAlign: "center",
-                    }}
-                  >
-                    Draw
-                  </p>
-                </div>
-                <div>
-                  <h3
-                    style={{
-                      ...FONTS.h5,
-                      color: COLORS.red,
-                      textAlign: "right",
-                    }}
-                  >
-                    3
-                  </h3>
-                  <p style={{ ...FONTS.body6, color: COLORS.red }}>AS Roma</p>
-                </div>
-              </div>
-              <div style={{ ...styles.row2 }}>
-                <div
-                  style={{
-                    width: "20%",
-                    height: 5,
-                    backgroundColor: COLORS.green,
-                  }}
-                ></div>
-                <div
-                  style={{
-                    width: "20%",
-                    height: 5,
-                    backgroundColor: COLORS.gray,
-                  }}
-                ></div>
-                <div
-                  style={{
-                    width: "60%",
-                    height: 5,
-                    backgroundColor: COLORS.red,
-                  }}
-                ></div>
-              </div>
-            </div>
-            <h3 style={{ ...FONTS.h6, textAlign: "center", marginTop: "1rem" }}>
-              All last 5 games
-            </h3>
-            <AllTime
-              homeTeam="Milan"
-              awayTeam="As Roma"
-              homeImage={milan}
-              awayImage={roma}
-              homeLastFive={["W", "W", "D", "W", "W"]}
-              awayLastFive={["L", "W", "D", "W", "L"]}
-            />
-          </div>
-        )} 
-        </div>
-        :
-        <div style={{paddingTop: 50}}>
-          <EmptyState height="100%" header="No Stat Available" />
-        </div>
-          }
-       
-      
       </div>
 
       {isMobile ? (
-        <div style={{...styles.mob}}>
+        <div style={{ ...styles.mob }}>
           <div style={{ width: "100%" }}>
             <Button
               text={`${gameInfo?.localTeamName} Win`}
               propStyle={{
                 width: "100%",
                 backgroundColor:
-                  selected === gameInfo?.localTeamName ? COLORS.primary : COLORS.cream,
-                color: selected === gameInfo?.localTeamName ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.localTeamName
+                    ? COLORS.primary
+                    : COLORS.cream,
+                color:
+                  selected === gameInfo?.localTeamName
+                    ? COLORS.cream
+                    : COLORS.primary,
               }}
               handlePress={() => handleRoute(gameInfo?.localTeamName)}
             />
@@ -340,8 +383,13 @@ function GameDetails() {
               propStyle={{
                 width: "100%",
                 backgroundColor:
-                  selected === gameInfo?.visitorTeamName ? COLORS.primary : COLORS.cream,
-                color: selected === gameInfo?.visitorTeamName ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.visitorTeamName
+                    ? COLORS.primary
+                    : COLORS.cream,
+                color:
+                  selected === gameInfo?.visitorTeamName
+                    ? COLORS.cream
+                    : COLORS.primary,
               }}
               // handlePress={() => navigate('/home')}
               handlePress={() => handleRoute(gameInfo?.visitorTeamName)}
@@ -369,8 +417,13 @@ function GameDetails() {
               propStyle={{
                 width: "90%",
                 backgroundColor:
-                  selected === gameInfo?.localTeamName ? COLORS.primary : COLORS.cream,
-                color: selected === gameInfo?.localTeamName ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.localTeamName
+                    ? COLORS.primary
+                    : COLORS.cream,
+                color:
+                  selected === gameInfo?.localTeamName
+                    ? COLORS.cream
+                    : COLORS.primary,
                 fontSize: 15,
               }}
               // handlePress={() => navigate('/home')}
@@ -383,8 +436,13 @@ function GameDetails() {
               propStyle={{
                 width: "90%",
                 backgroundColor:
-                  selected === gameInfo?.visitorTeamName ? COLORS.primary : COLORS.cream,
-                color: selected === gameInfo?.visitorTeamName ? COLORS.cream : COLORS.primary,
+                  selected === gameInfo?.visitorTeamName
+                    ? COLORS.primary
+                    : COLORS.cream,
+                color:
+                  selected === gameInfo?.visitorTeamName
+                    ? COLORS.cream
+                    : COLORS.primary,
                 fontSize: 15,
               }}
               // handlePress={() => navigate('/home')}
@@ -407,6 +465,8 @@ function GameDetails() {
           </div>
         </div>
       )}
+
+      <ToastContainer />
     </div>
   );
 }

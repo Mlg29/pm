@@ -97,7 +97,7 @@ export const updateRequest =  async (url: string, payload?: any) => {
 export const updateRequestWithNoPayload =  async (url: string) => {
   const token =  await localStorage.getItem('token')
 
-  var res = await axios.put(url, {
+  var res = await axios.patch(url, null,{
     headers: {
       authorization: `Bearer ${token}`,
     }
@@ -107,7 +107,19 @@ export const updateRequestWithNoPayload =  async (url: string) => {
   }
   
 }
+export const updateRequestWithPayload =  async (url: string, payload: any) => {
+  const token =  await localStorage.getItem('token')
 
+  var res = await axios.patch(url, payload,{
+    headers: {
+      authorization: `Bearer ${token}`,
+    }
+  })
+  if(res?.status === 200 || res?.status === 201){
+    return res
+  }
+  
+}
 export const deleteRequest = (url: string, payload?: any) => {
   return axios.delete(url, payload)
 }

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
+import { formatCurrency } from "../../utils/helper";
 
 const styles = {
   row: {
@@ -33,7 +34,7 @@ function Options() {
 const dispatch = useAppDispatch()
 const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
 
-
+console.log({userFee})
   const fetchUserInfo = async () => {
     setLoader(true);
     const response = await dispatch(getUserData());
@@ -43,7 +44,6 @@ const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
     }
   };
 
-  console.log({userData})
 
   useEffect(() => {
     fetchUserInfo();
@@ -51,13 +51,21 @@ const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
 
 
   const goToPin = () => {
-    // if(userFee?.amount > userData?.walletBalance) {
-    //   toast.error("Insufficient Balance", {
-    //     position: "bottom-center",
-    //   });
-    //   return
-    // }
-    navigate("/wallet-pin")
+    if((userFee?.adjustedBetAmount) > userData?.walletBalance) {
+      console.log("true")
+      toast.error("Insufficient Balance", {
+        position: "bottom-center",
+      });
+      return
+    }
+    if(userFee?.amount > userData?.walletBalance) {
+      console.log("true")
+      toast.error("Insufficient Balance", {
+        position: "bottom-center",
+      });
+      return
+    }
+     navigate("/wallet-pin")
   }
 
 
@@ -79,7 +87,7 @@ const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           Debit amount for this game
         </p>
-        <h3 style={{ ...FONTS.h6 }}>₦{userFee?.amount}</h3>
+        <h3 style={{ ...FONTS.h6 }}>₦{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
       </div>
 
       <div style={{...styles.rowBtn}}>
@@ -89,7 +97,7 @@ const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
             </div>
             <div>
                 <h3 style={{...FONTS.body6}}>Wallet</h3>
-                <p style={{...FONTS.body7}}>Balance: ₦{userData?.walletBalance}</p>
+                <p style={{...FONTS.body7}}>Balance: ₦{formatCurrency(userData?.walletBalance)}</p>
             </div>
         </div>
         <FaChevronRight />

@@ -9,6 +9,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../redux/hooks'
 import { getOpenBet } from '../../redux/slices/BetSlice'
 import EmptyState from '../../components/EmptyState'
+import { getUserData } from '../../redux/slices/AuthSlice'
+import { formatCurrency } from '../../utils/helper'
 
 
 
@@ -43,9 +45,24 @@ function OpenBet() {
     const game = location?.state?.game
     const dispatch = useAppDispatch()
     const [openBets, setOpenBets] = useState([])
+    const [userData, setUserData] = useState(null);
 
 
-    console.log({game, openBets})
+    // console.log({game, openBets, userSelection})
+
+    const fetchUserInfo = async () => {
+        const response = await dispatch(getUserData());
+        if (getUserData.fulfilled.match(response)) {
+          setUserData(response?.payload);
+        }
+        else {
+
+        }
+      };
+    
+      useEffect(() => {
+        fetchUserInfo();
+      }, []);
 
 
     useEffect(() => {
@@ -79,8 +96,18 @@ function OpenBet() {
     }
 
     const handleAdjust = (data) => {
+        const payload = {
+            invitedUser: null,
+            amount: data?.betAmount,
+            opponentUsername: data?.user?.userName,
+            isAdjustBet: true,
+            betId: data?.id
+          };
+          localStorage.setItem("inviteeInfo", JSON.stringify(payload));
         navigate("/adjust-bet")
     }
+
+    const filterData = openBets?.filter((a, i) => a?.userId !== userData?.id && a?.prediction !== userSelection?.userType)
 
     return (
         <div className='top-container' style={{ backgroundColor: "white" }}>
@@ -92,9 +119,9 @@ function OpenBet() {
 
 
          {
-            openBets?.length > 0 &&    <div>
+            filterData?.length > 0 &&    <div>
             {
-                openBets?.map((data, i) => {
+                filterData?.map((data, i) => {
                     return <div key={i} style={{ ...styles.contain }}>
                         <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>{game?.leagueName}</p>
 
@@ -105,7 +132,7 @@ function OpenBet() {
                             </div>
                             <div style={{ ...styles.center }}>
                                 <p style={{ ...FONTS.body7, marginTop: "10px" }}>{game?.status}</p>
-                                <h3 style={{ ...FONTS.h6, marginTop: "5px" }}>{data?.betCurrency === "NGN" ? "₦" : "$"}{data?.betAmount}</h3>
+                                <h3 style={{ ...FONTS.h6, marginTop: "5px" }}>{data?.betCurrency === "NGN" ? "₦" : "$"}{formatCurrency(data?.betAmount)}</h3>
                             </div>
                             <div style={{ ...styles.center }}>
                                 <img src={roma} />
@@ -115,12 +142,12 @@ function OpenBet() {
 
                         <div style={{ ...styles.row, paddingBottom: "1rem" }}>
                             <div>
-                                <p style={{ ...FONTS.body7, marginTop: "10px" }}>@JohnDdon</p>
-                                <p style={{ ...FONTS.body7 }}>Milan Win</p>
+                                <p style={{ ...FONTS.body7, marginTop: "10px" }}>@{data?.user?.userName}</p>
+                                <p style={{ ...FONTS.body7 }}>{data?.prediction === "W1" ? `${game?.localTeamName} WIN` : data?.prediction === "W2" ? `${game?.visitorTeamName} WIN` : "DRAW"}</p>
                             </div>
                             <div>
-                                <p style={{ ...FONTS.body7, marginTop: "10px", textAlign: "right" }}>@{data?.user?.userName}</p>
-                                <p style={{ ...FONTS.body7 }}>{data?.prediction === "W1" ? `${game?.localTeamName} WIN` : data?.prediction === "W2" ? `${game?.visitorTeamName} WIN` : "DRAW"}</p>
+                                <p style={{ ...FONTS.body7, marginTop: "10px", textAlign: "right" }}>You</p>
+                                <p style={{ ...FONTS.body7 }}>{userSelection?.userType === "W1" ? `${game?.localTeamName} WIN` : userSelection?.userType === "W2" ? `${game?.visitorTeamName} WIN` : "DRAW"}</p>
                             </div>
                         </div>
 
@@ -140,7 +167,7 @@ function OpenBet() {
         </div>
          }
          {
-            !openBets || openBets.length < 1 && <div>
+            !filterData || filterData?.length < 1 && <div>
                 <EmptyState 
                     header="No Open bets available for your selection"
                 />
