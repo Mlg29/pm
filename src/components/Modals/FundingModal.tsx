@@ -68,6 +68,7 @@ const FundingModal = ({ show, handleClose }) => {
       <SuccessModal
         show={showSuccess}
         handleClose={() => setShowSuccess(false)}
+        responseText={""}
       />
     </>
   );
