@@ -52,6 +52,7 @@ import ForgetPasswordVerify from './VerifyScreen/ForgetPasswordVerify.js';
 import TermsAndConditions from './TermsAndConditions.js';
 import PinSuccess from './SuccessScreen/PinSuccess.js';
 import GameEventData from './HomeScreen/GameEventData.js';
+import BetAmount from './InviteFriend/BetAmount.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -95,7 +96,7 @@ function DesktopRouters() {
       <Route path="/notification-preference" element={<DashboardLayout><Preference /></DashboardLayout>} />
       <Route path="/language" element={<DashboardLayout><Language /></DashboardLayout>} />
       <Route path="/biometrics" element={<DashboardLayout><Biometric /></DashboardLayout>} />
-      {/* <Route path="/open-bets" element={<DashboardLayout><OpenBet /></DashboardLayout>} /> */}
+      <Route path="/open-bets" element={<DashboardLayout><OpenBet /></DashboardLayout>} />
       <Route path="/options" element={<DashboardLayout><Options /></DashboardLayout>} />
       <Route path="/opponent-detail" element={<SubLayout><OpponentDetail /></SubLayout>} />
       <Route path="/bet-success" element={<DashboardLayout><BetSuccess /></DashboardLayout>} />
@@ -104,7 +105,8 @@ function DesktopRouters() {
       <Route path="/challenge-detail" element={<DashboardLayout><ChallengeDetail /></DashboardLayout>} />
       <Route path="/adjust-bet" element={<DashboardLayout><AdjustBet /></DashboardLayout>} />
       <Route path="/events" element={<DashboardLayout><GameEventData /></DashboardLayout>} />
-
+      <Route path="/amount" element={<DashboardLayout><BetAmount /></DashboardLayout>} />
+      
     </Routes>
   </Router>
   )

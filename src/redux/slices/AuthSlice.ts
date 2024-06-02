@@ -299,6 +299,7 @@ export const AuthSlice = createSlice({
         getUserData.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
+          state.userInfo = action?.payload
      
         }
       );

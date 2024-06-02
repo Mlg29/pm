@@ -166,7 +166,7 @@ function GameDetails() {
       };
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
-
+     
       setTimeout(() => {
         navigate(`/open-bets`, {
           state: { userSelection: payload, game: gameInfo },
@@ -180,7 +180,7 @@ function GameDetails() {
     }
   };
 
-  console.log({ gameInfo });
+  
 
   return (
     <div style={{ ...styles.container }}>
@@ -426,7 +426,6 @@ function GameDetails() {
                     : COLORS.primary,
                 fontSize: 15,
               }}
-              // handlePress={() => navigate('/home')}
               handlePress={() => handleRoute(gameInfo?.localTeamName)}
             />
           </div>

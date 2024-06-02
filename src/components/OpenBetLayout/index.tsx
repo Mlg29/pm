@@ -98,7 +98,7 @@ const OpenBetLayout = () => {
     <>
       <LargeScreen>
         <div style={{ ...styles.box3 }}>
-          <div style={{ ...styles.mini }}>
+          {/* <div style={{ ...styles.mini }}>
             <h3
               style={{
                 ...FONTS.h5,
@@ -171,14 +171,16 @@ const OpenBetLayout = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
+           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           <img src={ads} style={{ width: "100%" }} />
         </div>
       </LargeScreen>
 
       <Desktop>
         <div style={{ ...styles.box3 }}>
-          <div style={{ ...styles.mini }}>
+          {/* <div style={{ ...styles.mini }}>
             <h3
               style={{
                 ...FONTS.h5,
@@ -245,14 +247,16 @@ const OpenBetLayout = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
+           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           <img src={ads} style={{ width: "100%" }} />
         </div>
       </Desktop>
 
       <Tablet>
         <div style={{ ...styles.box3 }}>
-          <div style={{ ...styles.mini }}>
+          {/* <div style={{ ...styles.mini }}>
             <h3
               style={{
                 ...FONTS.h6,
@@ -319,7 +323,9 @@ const OpenBetLayout = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
+           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           <img src={ads} style={{ width: "100%" }} />
         </div>
       </Tablet>

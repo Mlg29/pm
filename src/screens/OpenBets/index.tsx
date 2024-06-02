@@ -48,7 +48,7 @@ function OpenBet() {
     const [userData, setUserData] = useState(null);
 
 
-    // console.log({game, openBets, userSelection})
+     console.log({game, openBets, userSelection})
 
     const fetchUserInfo = async () => {
         const response = await dispatch(getUserData());
@@ -75,7 +75,7 @@ function OpenBet() {
         dispatch(getOpenBet(payload)).then(pp => {
             setOpenBets(pp?.payload?.data)
         })
-    }, [])
+    }, [userSelection?.sportEventId])
 
     const handleCreate = () => {
        return navigate('/create-bet', {
@@ -135,7 +135,7 @@ function OpenBet() {
                                 <h3 style={{ ...FONTS.h6, marginTop: "5px" }}>{data?.betCurrency === "NGN" ? "₦" : "$"}{formatCurrency(data?.betAmount)}</h3>
                             </div>
                             <div style={{ ...styles.center }}>
-                                <img src={roma} />
+                            <img src={game?.visitorTeamLogo} alt="" style={{width: "20px"}} />
                                 <h3 style={{ ...FONTS.h6, marginTop: "10px" }}>{game?.visitorTeamName}</h3>
                             </div>
                         </div>
