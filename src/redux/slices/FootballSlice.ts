@@ -36,6 +36,8 @@ export const getFootballFixtures= createAsyncThunk("football/getFootballFixtures
         if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
       
         const queryString = queryParams.join('&');
+
+
         return `${BaseUrl}/football/fixtures?${queryString}`;
       };
 
