@@ -89,7 +89,8 @@ function OpenBet() {
             invitedUser: null,
             amount: data?.betAmount,
             isAcceptBet: true,
-            betId: data?.id
+            betId: data?.id,
+            prediction: userSelection?.userType,
           };
           localStorage.setItem("inviteeInfo", JSON.stringify(payload));
           return navigate("/options");

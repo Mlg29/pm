@@ -13,8 +13,6 @@ import { BaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import GameDetailCardHeader from "../../components/GameDetailCardHeader";
 
-
-
 const styles = {
   contain: {
     padding: 15,
@@ -41,20 +39,20 @@ const styles = {
     backgroundColor: COLORS.cream,
     marginBottom: 20,
     padding: "15px 20px",
-    borderRadius: 15
-  }
+    borderRadius: 15,
+  },
 };
 
 function CreateBet() {
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
 
-  const game = location?.state?.game
-  const [gameInfo, setGameInfo] = useState(null)
+  const game = location?.state?.game;
+  const [gameInfo, setGameInfo] = useState(null);
   const url = `${BaseUrl}/football`;
 
   useEffect(() => {
-    setGameInfo(game)
+    setGameInfo(game);
     const socket = io(url);
 
     socket.on("connect", () => {
@@ -68,7 +66,7 @@ function CreateBet() {
     socket.on("footballEventUpdate", (message) => {
       const mes = message;
       if (mes.id === game?.id) {
-        setGameInfo(mes)
+        setGameInfo(mes);
       }
     });
 
@@ -85,13 +83,16 @@ function CreateBet() {
 
       <div>
         <h3 style={{ ...FONTS.h6 }}>Bet Option</h3>
-        <p style={{ ...FONTS.body7, marginBottom: 20 }}>Select the option that best suit you</p>
+        <p style={{ ...FONTS.body7, marginBottom: 20 }}>
+          Select the option that best suit you
+        </p>
+
       </div>
 
       <div style={{ ...styles.rowBtn }}>
         <div
           style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-         onClick={() => navigate("/invite")}
+          onClick={() => navigate("/invite")}
         >
           <div>
             <IoIosPeople
@@ -119,7 +120,7 @@ function CreateBet() {
           onClick={() => navigate("/amount")}
         >
           <div>
-          <RiFileList3Fill
+            <RiFileList3Fill
               color={COLORS.white}
               size={45}
               style={{

@@ -47,7 +47,11 @@ function Language() {
         },
         {
             id: 5,
-            name: "Hindi",
+            name: "Portuguese",
+        },
+        {
+            id: 6,
+            name: "Spanish",
         }
     ]
 

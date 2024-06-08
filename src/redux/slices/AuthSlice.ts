@@ -63,6 +63,24 @@ export const createNewPassword = createAsyncThunk(
   }
 );
 
+
+export const verifyTransactionPin = createAsyncThunk(
+  "auth/verifyTransactionPin",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await postRequest(
+        `${BaseUrl}/users/validate/transaction-pin`,
+        payload
+      );
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
 export const verifySignupData = createAsyncThunk(
   "auth/verifySignupData",
   async (payload: any, { rejectWithValue }) => {
@@ -277,6 +295,16 @@ export const AuthSlice = createSlice({
         // state.userInfo = action.payload
       });
     builder.addCase(login.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(verifyTransactionPin.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(verifyTransactionPin.fulfilled, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        // state.userInfo = action.payload
+      });
+    builder.addCase(verifyTransactionPin.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(forgetPassword.pending, (state, action) => {

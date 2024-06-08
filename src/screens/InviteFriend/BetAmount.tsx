@@ -16,8 +16,11 @@ const BetAmount = () => {
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
 
+  const [allowCurrency, setAllowCurrency] = useState(false);
 
-
+  const checkHandler = () => {
+    setAllowCurrency(!allowCurrency);
+  };
 
   const handleRoute = async () => {
     if (!amount) {
@@ -29,12 +32,11 @@ const BetAmount = () => {
     const payload = {
       invitedUser: null,
       amount: amount,
+      allowOtherCurrency: allowCurrency
     };
     localStorage.setItem("inviteeInfo", JSON.stringify(payload));
     return navigate("/options");
   };
-
-
 
   return (
     <div className="top-container">
@@ -50,6 +52,21 @@ const BetAmount = () => {
             setAmount(val);
           }}
         />
+
+        <div>
+          <div
+            style={{ display: "flex", alignItems: "center", marginBottom: 30 }}
+          >
+            <div style={{ width: "30px" }}>
+              <input
+                type="checkbox"
+                onChange={checkHandler}
+                checked={allowCurrency}
+              />
+            </div>
+            <p>Allow Other Currency</p>
+          </div>
+        </div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>

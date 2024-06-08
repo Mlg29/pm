@@ -53,12 +53,12 @@ const TransferModal = ({ show, handleClose }) => {
       </Modal.Body>
     </Modal>
 
-    <PinModal 
+    {/* <PinModal 
       show={showOtp}
       handleClose={() => setShowOtp(false)}
       handleAction={() => {}}
       responseText={""}
-    />
+    /> */}
     </>
 
   );

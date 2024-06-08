@@ -38,6 +38,20 @@ export const getBetById = createAsyncThunk(
   }
 );
 
+
+export const getBetHistory = createAsyncThunk(
+  "bet/getBetHistory",
+  async (payload: any) => {
+
+    var response = await getRequest(`${BaseUrl}/bet/history?status=${payload?.status}`)
+
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
+
+
 export const getOpenBet = createAsyncThunk(
   "bet/getOpenBet",
   async (payload: any) => {
@@ -80,9 +94,14 @@ export const updateBetById = createAsyncThunk(
 export const acceptBet = createAsyncThunk(
   "bet/acceptBet",
   async (payload: any, { rejectWithValue }) => {
+    const adPayload = {
+      betAmount: payload?.betAmount,
+      prediction: payload?.prediction
+    }
+
     try {
-      const response = await updateRequestWithNoPayload(
-        `${BaseUrl}/bet/${payload?.id}/accept`);
+      const response = await updateRequestWithPayload(
+        `${BaseUrl}/bet/${payload?.id}/accept`, adPayload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -151,6 +170,18 @@ export const BetSlice = createSlice({
         }
       );
     builder.addCase(getBetById.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getBetHistory.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getBetHistory.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(getBetHistory.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(getOpenBet.pending, (state, action) => {

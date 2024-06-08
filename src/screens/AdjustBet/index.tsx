@@ -27,9 +27,12 @@ const AdjustBet = () => {
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
+ const [allowCurrency, setAllowCurrency] = useState(false)
 
 
-
+ const checkHandler = () => {
+  setAllowCurrency(!allowCurrency)
+}
 
 
   const handleRoute = () => {
@@ -39,8 +42,10 @@ const AdjustBet = () => {
       opponentUsername: userFee?.opponentUsername,
       adjustedBetAmount: parseInt(amount),
       isAdjustBet: true,
-      betId: userFee?.betId
+      betId: userFee?.betId,
+      allowOtherCurrency: allowCurrency
     };
+
     localStorage.setItem("inviteeInfo", JSON.stringify(payload));
     return navigate("/options");
   }
@@ -66,6 +71,15 @@ const AdjustBet = () => {
         </p>
         <h3 style={{ ...FONTS.h6 }}>₦{formatCurrency(userFee?.amount)}</h3>
       </div>
+
+     <div>
+     <div style={{display: "flex", alignItems: "center"}}>
+      <div style={{width: "30px"}} >
+         <input type="checkbox" onChange={checkHandler} checked={allowCurrency}  />
+      </div>
+        <p>Allow Other Currency</p>
+      </div>
+     </div>
 
       <div>
    

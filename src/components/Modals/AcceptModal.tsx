@@ -92,12 +92,12 @@ const AcceptModal = ({ show, handleClose }) => {
       </Modal.Body>
     </Modal>
 
-    <PinModal 
+    {/* <PinModal 
       show={showSuccess}
       handleClose={() => setShowSuccess(false)}
       handleAction={() => {}}
       responseText={""}
-    />
+    /> */}
     </>
  
   );

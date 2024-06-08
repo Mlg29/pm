@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useAppDispatch } from "../../redux/hooks";
 import { acceptBet, adjustBet, createBet } from "../../redux/slices/BetSlice";
+import { verifyTransactionPin } from "../../redux/slices/AuthSlice";
 
 function WalletPin() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function WalletPin() {
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"));
   const getUserBet = JSON.parse(localStorage.getItem("userBetSelection"));
 
-  console.log({ userFee });
+  // console.log({ userFee });
 
   const handleSubmit = async () => {
     if (otp?.length < 6) {
@@ -33,6 +34,7 @@ function WalletPin() {
       betCurrency: "NGN",
       prediction: getUserBet?.userType,
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
+      allowOtherCurrency: userFee?.allowOtherCurrency
     };
 
     const adjustPayload = {
@@ -43,50 +45,71 @@ function WalletPin() {
       betCurrency: "NGN",
       prediction: getUserBet?.userType,
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
+      allowOtherCurrency: userFee?.allowOtherCurrency
     }
     const acceptPayload = {
-      id: userFee?.betId
+      id: userFee?.betId,
+      prediction: userFee?.prediction,
+      betAmount: parseInt(userFee?.amount),
+    }
+
+    const transactionPayload = {
+      transactionPin: otp
     }
 
     setLoader(true);
-    if (userFee?.isAdjustBet) {
-      const response = await dispatch(adjustBet(adjustPayload))
-      if (adjustBet.fulfilled.match(response)) {
-        setLoader(false);
-        return navigate("/bet-success");
+
+    const verifyResponse = await dispatch(verifyTransactionPin(transactionPayload))
+    if(verifyTransactionPin.fulfilled.match(verifyResponse)) {
+      if (userFee?.isAdjustBet) {
+        const response = await dispatch(adjustBet(adjustPayload))
+        if (adjustBet.fulfilled.match(response)) {
+          setLoader(false);
+          return navigate("/bet-success");
+        } else {
+          var errMsg = response?.payload as string;
+          setLoader(false);
+          toast.error(errMsg, {
+            position: "bottom-center",
+          });
+        }
+      }
+      else if (userFee?.isAcceptBet) {
+        const response = await dispatch(acceptBet(acceptPayload))
+        if (acceptBet.fulfilled.match(response)) {
+          setLoader(false);
+          return navigate("/bet-success");
+        } else {
+          var errMsg = response?.payload as string;
+          setLoader(false);
+          toast.error(errMsg, {
+            position: "bottom-center",
+          });
+        }
       } else {
-        var errMsg = response?.payload as string;
-        setLoader(false);
-        toast.error(errMsg, {
-          position: "bottom-center",
-        });
+        const response = await dispatch(createBet(payload));
+        if (createBet.fulfilled.match(response)) {
+          setLoader(false);
+          return navigate("/bet-success");
+        } else {
+          var errMsg = response?.payload as string;
+          setLoader(false);
+          toast.error(errMsg, {
+            position: "bottom-center",
+          });
+        }
       }
     }
-    else if (userFee?.isAcceptBet) {
-      const response = await dispatch(acceptBet(acceptPayload))
-      if (acceptBet.fulfilled.match(response)) {
-        setLoader(false);
-        return navigate("/bet-success");
-      } else {
-        var errMsg = response?.payload as string;
-        setLoader(false);
-        toast.error(errMsg, {
-          position: "bottom-center",
-        });
-      }
-    } else {
-      const response = await dispatch(createBet(payload));
-      if (createBet.fulfilled.match(response)) {
-        setLoader(false);
-        return navigate("/bet-success");
-      } else {
-        var errMsg = response?.payload as string;
-        setLoader(false);
-        toast.error(errMsg, {
-          position: "bottom-center",
-        });
-      }
+    else {
+      var errMsg = verifyResponse?.payload as string
+      setLoader(false);
+      toast.error(errMsg, {
+        position: "bottom-center",
+      });
     }
+
+
+   
   };
 
   return (

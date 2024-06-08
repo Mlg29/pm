@@ -6,6 +6,10 @@ import { FONTS } from "../../utils/fonts"
 import user from "../../assets/images/user.svg"
 import notification from "../../assets/images/notification.svg"
 import { useMediaQuery } from "react-responsive"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useAppDispatch } from "../../redux/hooks"
+import { useEffect, useState } from "react"
+import { getBetById } from "../../redux/slices/BetSlice"
 
 const styles = {
     div: {
@@ -26,6 +30,20 @@ const styles = {
 
 function BetDetail() {
     const isMobile = useMediaQuery({ maxWidth: 767 })
+    const location = useLocation()
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+    const betInfo = location?.state?.betInfo
+    const [betData, setBetData] = useState<any>()
+
+    console.log({betData})
+
+    useEffect(() => {
+        dispatch(getBetById(betInfo?.id)).then(pp => {
+            setBetData(pp?.payload)
+        })
+    }, [betInfo?.id])
+
 
     return (
         <div className="top-container">
