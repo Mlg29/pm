@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FONTS } from "../../utils/fonts";
 
@@ -50,8 +50,9 @@ export const styles = {
 function BetSuccess() {
     const [step, setStep] = useState(4)
     const navigate = useNavigate();
+    const location = useLocation()
     const [answer, setAnswer] = useState("")
-
+    const betId = location?.state?.betId
 
 
 
@@ -83,7 +84,9 @@ function BetSuccess() {
                          <Button
                             text="View Bet Slip"
                             propStyle={{ width: "100%", backgroundColor: COLORS.cream, color: COLORS.primary }}
-                            handlePress={() => navigate('/bet-detail')}
+                            handlePress={() => navigate("/bet-detail", {
+                                state: {betInfo: betId}
+                            })}
                         />
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FONTS } from "../../utils/fonts";
 
 import { MdArrowBackIos } from "react-icons/md";
@@ -12,7 +12,7 @@ import { FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useAppDispatch } from "../../redux/hooks";
 import { ToastContainer, toast } from 'react-toastify';
-import { verifyEmailOtp } from "../../redux/slices/AuthSlice";
+import { forgetPassword, verifyEmailOtp } from "../../redux/slices/AuthSlice";
 
 
 
@@ -59,66 +59,43 @@ function ForgetPasswordVerify() {
   const getPendingData = JSON.parse(localStorage.getItem("pendingData"))
   const dispatch = useAppDispatch()
   const [loader, setLoader] = useState(false)
+  const [time, setTime] = useState(60);
+  const [isActive, setIsActive] = useState(false);
 
-  const stepLevel = () => {
-    if (step === 0) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      )
+  useEffect(() => {
+    let timer;
+    if (isActive && time > 0) {
+      timer = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+    } else if (time === 0) {
+      setIsActive(false);
     }
-    else if (step === 1) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      )
-    }
-    else if (step === 2) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      )
-    }
-    else if (step === 3) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.active }}></div>
-          <div style={{ ...styles.inactive }}></div>
-        </div>
-      )
-    }
-    else if (step === 4) {
-      return (
-        <div style={{ ...styles.line }}>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.inactive }}></div>
-          <div style={{ ...styles.active }}></div>
-        </div>
-      )
-    }
-    else {
 
-    }
+    return () => clearInterval(timer);
+  }, [isActive, time]);
+
+  const handleResendToken = async () => {
+    setTime(60);
+    setIsActive(true);
+    const payload = {
+      email: location?.state?.email,
+    };
+
+    try {
+      var response = await dispatch(forgetPassword(payload));
+      if (forgetPassword.fulfilled.match(response)) {
+        toast.success(response?.payload?.data?.message, {
+          position: "bottom-center"
+        });
+
+      } else {
+        var errMsg = response?.payload as string;
+        toast.error(errMsg, {
+          position: "bottom-center",
+        });
+      }
+    } catch (err) {}
   }
 
   const MaskedEmail = ({ email }) => {
@@ -190,7 +167,7 @@ function ForgetPasswordVerify() {
 
         <div style={{display: "flex", alignItems: "center", justifyContent: "center", margin: "20px 0px 40px 0px"}}>
             <p style={{...FONTS.body6}}>Didn’t get OTP?</p>
-            <p style={{...FONTS.h6, margin: "0px 0px 0px 3px"}}>Resend in 1:36s</p>
+            <p style={{...FONTS.h6, margin: "0px 0px 0px 3px", cursor: "pointer"}} onClick={() => isActive ? () => {} : handleResendToken()}>Resend {isActive && `in ${time}s`}</p>
         </div>
 
         <div style={{margin: "0px 0px 30px 0px"}}>

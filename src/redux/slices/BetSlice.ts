@@ -27,11 +27,7 @@ const initialState = {
 export const getBetById = createAsyncThunk(
   "bet/getBetById",
   async (payload: any) => {
-    const buildUrl = (payload) => {
-      return `${BaseUrl}/bet/$${payload}`;
-    };
-
-    var response = await getRequest(buildUrl(payload));
+    var response = await getRequest(`${BaseUrl}/bet/${payload}`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }

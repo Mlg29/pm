@@ -10,6 +10,8 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../redux/hooks"
 import { useEffect, useState } from "react"
 import { getBetById } from "../../redux/slices/BetSlice"
+import { formatCurrency } from "../../utils/helper"
+import moment from "moment"
 
 const styles = {
     div: {
@@ -36,13 +38,12 @@ function BetDetail() {
     const betInfo = location?.state?.betInfo
     const [betData, setBetData] = useState<any>()
 
-    console.log({betData})
 
     useEffect(() => {
-        dispatch(getBetById(betInfo?.id)).then(pp => {
+        dispatch(getBetById(betInfo)).then(pp => {
             setBetData(pp?.payload)
         })
-    }, [betInfo?.id])
+    }, [betInfo])
 
 
     return (
@@ -54,10 +55,10 @@ function BetDetail() {
             }
            
 
-            <h3 style={{ ...FONTS.h5, textAlign: 'center' }}>Congratulations.</h3>
+            <h3 style={{ ...FONTS.h5, textAlign: 'center' }}>{betData?.status}</h3>
 
             <p style={{ ...FONTS.body7, textAlign: 'center', margin: "2rem 0px 10px 0px" }}>You've won</p>
-            <h3 style={{ ...FONTS.h2, textAlign: 'center', color: COLORS.green, margin: "0px 0px 1rem 0px" }}>₦ 20,000</h3>
+            <h3 style={{ ...FONTS.h2, textAlign: 'center', color: COLORS.green, margin: "0px 0px 1rem 0px" }}>₦{formatCurrency(betData?.betAmount)}</h3>
 
             <GameDetailCardHeader
                 propStyle={{ backgroundColor: COLORS.semiGray, padding: "20px 20px" }}
@@ -67,14 +68,14 @@ function BetDetail() {
             <div style={{ ...styles.div }}>
                 <div style={{ ...styles.cardDiv }}>
                     <p style={{ ...FONTS.body7 }}>Bet ID</p>
-                    <h3 style={{ ...FONTS.h6 }}>98dG12UB</h3>
+                    <h3 style={{ ...FONTS.h6 }}>{betData?.id}</h3>
                 </div>
                 <div style={{ ...styles.cardDiv }}>
                     <p style={{ ...FONTS.body7 }}>Date & Time</p>
-                    <h3 style={{ ...FONTS.h6 }}>01 Feb, 2024   10:39 PM</h3>
+                    <h3 style={{ ...FONTS.h6 }}>{moment(betData?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</h3>
                 </div> <div style={{ ...styles.cardDiv }}>
                     <p style={{ ...FONTS.body7 }}>Stake</p>
-                    <h3 style={{ ...FONTS.h6 }}>₦ 10,000</h3>
+                    <h3 style={{ ...FONTS.h6 }}>₦ {formatCurrency(betData?.betAmount)}</h3>
                 </div>
                 <div style={{ ...styles.cardDiv }}>
                     <p style={{ ...FONTS.body7 }}>Opponent</p>

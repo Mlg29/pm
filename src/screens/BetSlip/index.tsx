@@ -35,7 +35,6 @@ function BetSlip() {
     };
 
     dispatch(getBetHistory(payload)).then((pp) => {
-      console.log({pp})
       setBetList(pp?.payload);
     });
 
@@ -53,6 +52,7 @@ function BetSlip() {
   };
 
   const groupedData = groupByDate(betList);
+
 
 
   return (

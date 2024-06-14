@@ -39,7 +39,7 @@ function HomeScreen() {
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
-  
+
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
@@ -75,8 +75,6 @@ function HomeScreen() {
     };
   }, []);
 
-
-
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
@@ -91,17 +89,17 @@ function HomeScreen() {
       date: moment(new Date()).format("YYYY-MM-DD"),
     };
     const payloadTomorrow = {
-     date: tomorrowDate.format("YYYY-MM-DD"),
+      date: tomorrowDate.format("YYYY-MM-DD"),
     };
-    dispatch(getFootballFixtures(payloadLive)).then(dd => {
-      setLive(dd?.payload?.data)
-    })
-    dispatch(getFootballFixtures(payloadToday)).then(dd => {
-      setToday(dd?.payload)
-    })
-    dispatch(getFootballFixtures(payloadTomorrow)).then(dd => {
-      setTomorrow(dd?.payload)
-    })
+    dispatch(getFootballFixtures(payloadLive)).then((dd) => {
+      setLive(dd?.payload?.data);
+    });
+    dispatch(getFootballFixtures(payloadToday)).then((dd) => {
+      setToday(dd?.payload);
+    });
+    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+      setTomorrow(dd?.payload);
+    });
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
     });
@@ -212,8 +210,7 @@ function HomeScreen() {
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
       setLoader(false);
-    }
-    else {
+    } else {
       setLoader(false);
     }
   };
@@ -238,7 +235,6 @@ function HomeScreen() {
       </div>
     );
   }
-
 
   return (
     <div className="top-container">
@@ -281,7 +277,9 @@ function HomeScreen() {
 
       <SearchComponent placeholder="Search by event, sport, club or game" />
 
-      <SliderComponent />
+      <div style={{height: 150}}>
+        <SliderComponent />
+      </div>
 
       <div
         style={{
@@ -352,12 +350,14 @@ function HomeScreen() {
                 cursor: "pointer",
                 margin: "15px 0px",
               }}
-              onClick={() => navigate("/events", {
-                state: {
-                  events: live,
-                  type: "live"
-                }
-              })}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: live,
+                    type: "live",
+                  },
+                })
+              }
             >
               View more
             </p>
@@ -368,11 +368,13 @@ function HomeScreen() {
       {live
         ?.filter((a, i) => i < 10)
         .map((aa: any, i: any) => {
-          return <div key={i}>
-            <GameCard id={i} data={aa} />
-          </div>
+          return (
+            <div key={i}>
+              <GameCard id={i} data={aa} />
+            </div>
+          );
         })}
-     {upcoming?.data?.length > 0 && (
+      {upcoming?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -391,12 +393,14 @@ function HomeScreen() {
                 cursor: "pointer",
                 margin: "15px 0px",
               }}
-              onClick={() => navigate("/events", {
-                state: {
-                  events: upcoming,
-                  type: "upcoming",
-                }
-              })}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                  },
+                })
+              }
             >
               View more
             </p>
@@ -405,12 +409,14 @@ function HomeScreen() {
       )}
 
       {upcoming?.data?.map((aa: any, i: any) => {
-        return <div key={i}>
-        <GameCard id={i} data={aa} />
-      </div>
+        return (
+          <div key={i}>
+            <GameCard id={i} data={aa} />
+          </div>
+        );
       })}
 
-{today?.data?.length > 0 && (
+      {today?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -429,12 +435,14 @@ function HomeScreen() {
                 cursor: "pointer",
                 margin: "15px 0px",
               }}
-              onClick={() => navigate("/events", {
-                state: {
-                  events: today,
-                  type: "today",
-                }
-              })}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: today,
+                    type: "today",
+                  },
+                })
+              }
             >
               View more
             </p>
@@ -443,12 +451,14 @@ function HomeScreen() {
       )}
 
       {today?.data?.map((aa: any, i: any) => {
-        return <div key={i}>
-        <GameCard id={i} data={aa} />
-      </div>
+        return (
+          <div key={i}>
+            <GameCard id={i} data={aa} />
+          </div>
+        );
       })}
 
-{tomorrow?.data?.length > 0 && (
+      {tomorrow?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -467,12 +477,14 @@ function HomeScreen() {
                 cursor: "pointer",
                 margin: "15px 0px",
               }}
-              onClick={() => navigate("/events", {
-                state: {
-                  events: tomorrow,
-                  type: "tomorrow",
-                }
-              })}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: tomorrow,
+                    type: "tomorrow",
+                  },
+                })
+              }
             >
               View more
             </p>
@@ -481,11 +493,12 @@ function HomeScreen() {
       )}
 
       {tomorrow?.data?.map((aa: any, i: any) => {
-        return <div key={i}>
-        <GameCard id={i} data={aa} />
-      </div>
+        return (
+          <div key={i}>
+            <GameCard id={i} data={aa} />
+          </div>
+        );
       })}
-   
 
       {getToken && <BottomTabs />}
     </div>

@@ -62,14 +62,16 @@ function SignupScreen() {
   const dispatch = useAppDispatch()
   const [dob, setDob] = useState(new Date());
   const [loader, setLoader] = useState(false)
+  
+  const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"))
 
 
   const initialValues: CreateAccountFormDataUi = {
-    email: '',
-    userName: '',
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
+    email: getPendingRegFromStorage?.email ? getPendingRegFromStorage?.email : '',
+    userName: getPendingRegFromStorage?.userName ? getPendingRegFromStorage?.userName : '',
+    firstName: getPendingRegFromStorage?.firstName ? getPendingRegFromStorage?.firstName : '',
+    lastName: getPendingRegFromStorage?.lastName ? getPendingRegFromStorage?.lastName : '',
+    phoneNumber: getPendingRegFromStorage?.phoneNumber ? getPendingRegFromStorage?.phoneNumber : '',
   };
 
 
@@ -143,10 +145,7 @@ function SignupScreen() {
     }
   }
 
-
- 
-
-  const handleSubmitData = async (data) => {
+ const handleSubmitData = async (data) => {
     
     const payload = {
       firstName: data?.firstName,
@@ -167,6 +166,7 @@ function SignupScreen() {
     var response =  await dispatch(verifySignupData(verifyPayload));
     if(verifySignupData.fulfilled.match(response)){
      
+      localStorage.removeItem("userreg")
       localStorage.setItem("pendingData", JSON.stringify(payload))
       toast.success(response?.payload?.data?.message, {
         position: "bottom-center"
@@ -191,6 +191,13 @@ function SignupScreen() {
   }
     
   }
+  const handleTerms = () => {
+    localStorage.setItem("userreg", JSON.stringify(values))
+    navigate("/terms-and-conditions")
+  }
+ 
+
+ 
 
   return (
     <div style={{ ...styles.container }}>
@@ -263,7 +270,7 @@ function SignupScreen() {
             terms ? <MdCheckBox size={20} onClick={() => setTerms(!terms)} style={{cursor: "pointer"}} />
               : <MdCheckBoxOutlineBlank onClick={() => setTerms(!terms)} size={20} style={{cursor: "pointer"}} />
           }
-          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px", cursor: "pointer", color: COLORS.gray}} onClick={() => navigate("/terms-and-conditions")}>I agree to the <span style={{color: COLORS.primary}}>Terms</span> and <span style={{color: COLORS.primary}}>Conditions</span>.</p>
+          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px", cursor: "pointer", color: COLORS.gray}} onClick={() => handleTerms()}>I agree to the <span style={{color: COLORS.primary}}>Terms</span> and <span style={{color: COLORS.primary}}>Conditions</span>.</p>
         </div>
 
         <div style={{ ...styles.bottom }}>

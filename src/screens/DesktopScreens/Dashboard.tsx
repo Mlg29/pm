@@ -36,7 +36,7 @@ const styles = {
 
 function Dashboard() {
   const dispatch = useAppDispatch() as any;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const url = `${BaseUrl}/football`;
   const [live, setLive] = useState<any>([]);
@@ -137,39 +137,49 @@ function Dashboard() {
     <div style={{ ...styles.container }}>
       <DashboardLayout>
         <div>
-          <SliderComponent />
+          <div style={{ height: 220 }}>
+            <SliderComponent />
+          </div>
           <div style={{ ...styles.div }}>
-          {live?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            LIVE
-          </p>
-          {live?.length > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() => navigate("/events", {
-                state: {
-                  events: live,
-                  type: "live"
-                }
-              })}
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
+            {live?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: "15px 0px",
+                  }}
+                >
+                  LIVE
+                </p>
+                {live?.length > 10 && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: "pointer",
+                      margin: "15px 0px",
+                    }}
+                    onClick={() =>
+                      navigate("/events", {
+                        state: {
+                          events: live,
+                          type: "live",
+                        },
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
             {live
               ?.filter((a, i) => i < 10)
               .map((aa: any, i: any) => {
