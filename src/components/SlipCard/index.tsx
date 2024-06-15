@@ -81,7 +81,7 @@ function SlipCard(props: any) {
               {awayName}
             </h3>
             <h3 style={{ ...FONTS.h6, textAlign: "center" }}>
-              {awayScore ? awayScore : "-"}
+              {(awayScore || awayScore === 0) ? awayScore : "-"}
             </h3>
           </div>
         </div>

@@ -128,7 +128,7 @@ function ForgetPasswordVerify() {
   
         setTimeout(() => { 
           setLoader(false)
-          navigate('/create-new-password')
+          navigate('/set-forgot-password')
         }, 1000)
   
       }

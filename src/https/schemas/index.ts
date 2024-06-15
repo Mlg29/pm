@@ -21,6 +21,18 @@ export const LoginSchema = yup.object().shape({
     .min(6, ({ min }) => `Password must be at least ${min} characters`)
     .required("Password is required"),
 });
+
+export const ComingSoonSchema = yup.object().shape({
+  email: yup.string()
+  .required("Email is required")
+  .test(
+    'Must be a valid email',
+    function (value) {
+      const isValidEmail = yup.string().email().isValidSync(value);
+      return isValidEmail;
+    }
+  )
+});
 export const PhoneSchema = yup.object().shape({
   phone: yup
     .string()

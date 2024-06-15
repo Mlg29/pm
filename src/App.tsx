@@ -12,6 +12,7 @@ import { store } from './redux/store';
 import { useMediaQuery } from 'react-responsive'
 import DesktopRouters from './screens/DesktopRouter';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
 
 function App() {
@@ -28,8 +29,28 @@ function App() {
     return isMobile ? children : null
   }
 
+  // const googleTranslateElementInit = () => {
+  //   new window.google.translate.TranslateElement(
+  //     {
+  //       pageLanguage: "en",
+  //       autoDisplay: false
+  //     },
+  //     "google_translate_element"
+  //   );
+  // };
+  // useEffect(() => {
+  //   var addScript = document.createElement("script");
+  //   addScript.setAttribute(
+  //     "src",
+  //     "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+  //   );
+  //   document.body.appendChild(addScript);
+  //   window.googleTranslateElementInit = googleTranslateElementInit;
+  // }, []);
+
   return (
     <Provider store={store}>
+       {/* <div id="google_translate_element"></div> */}
       <Desktop>
         <DesktopRouters />
       </Desktop>

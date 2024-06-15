@@ -60,6 +60,8 @@ function GameDetailCardHeader(props: any) {
     ? data?.events?.event
     : [data?.events?.event];
 
+
+
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>

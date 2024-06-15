@@ -53,6 +53,8 @@ import TermsAndConditions from './TermsAndConditions.js';
 import PinSuccess from './SuccessScreen/PinSuccess.js';
 import GameEventData from './HomeScreen/GameEventData.js';
 import BetAmount from './InviteFriend/BetAmount.js';
+import ForgotCreatePasswordNew from './PasswordScreen/ForgotCreatePassword.js';
+import ComingSoon from './ComingSoon/ComingSoon.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -60,12 +62,14 @@ function DesktopRouters() {
   return (
     <Router>
     <Routes>
-      <Route path="/"  element={<Dashboard />} />
+    <Route path="/" element={<Layout><ComingSoon /></Layout>} />
+      {/* <Route path="/"  element={<Dashboard />} /> */}
       <Route path="/onboarding" element={<Layout><OnboardScreen /></Layout>} />
       <Route path="/login" element={<Layout><Login /></Layout>} />
       <Route path="/sign-up" element={<Layout><SignupScreen /></Layout>} />
       <Route path="/verify" element={<Layout><VerifyScreen /></Layout>} />
       <Route path="/create-password" element={<Layout><PasswordScreen /></Layout>} />
+      <Route path="/set-forgot-password" element={<Layout><ForgotCreatePasswordNew /></Layout>} />
       <Route path="/pin" element={<Layout><TransactionPin /></Layout>} />
       <Route path="/secret-question" element={<Layout><SecretQuestion /></Layout>} />
       <Route path="/auth-success" element={<Layout><AuthSuccess /></Layout>} />

@@ -21,9 +21,6 @@ import { BaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import {
-  footballEventState,
-  footballFixtureState,
-  getFootballEvents,
   getFootballFixtures,
 } from "../../redux/slices/FootballSlice";
 
@@ -31,6 +28,11 @@ import io from "socket.io-client";
 import moment from "moment";
 import Loader from "../../components/Loader";
 import SliderComponent from "../../components/Slider";
+
+
+
+
+
 
 function HomeScreen() {
   const navigate = useNavigate();
@@ -342,6 +344,7 @@ function HomeScreen() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
             LIVE
           </p>
+
           {live?.length > 10 && (
             <p
               style={{

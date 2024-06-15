@@ -45,6 +45,7 @@ function BetDetail() {
         })
     }, [betInfo])
 
+ 
 
     return (
         <div className="top-container">
@@ -55,12 +56,15 @@ function BetDetail() {
             }
            
 
-            <h3 style={{ ...FONTS.h5, textAlign: 'center' }}>{betData?.status}</h3>
+            <h3 style={{ ...FONTS.h5, textAlign: 'center',margin: "0rem 0px 2rem 0px" }}>{betData?.status}</h3>
 
-            <p style={{ ...FONTS.body7, textAlign: 'center', margin: "2rem 0px 10px 0px" }}>You've won</p>
-            <h3 style={{ ...FONTS.h2, textAlign: 'center', color: COLORS.green, margin: "0px 0px 1rem 0px" }}>₦{formatCurrency(betData?.betAmount)}</h3>
+            {
+                betData?.opponent ?             <p style={{ ...FONTS.body7, textAlign: 'center', margin: "0rem 0px 2rem 0px" }}>You've won</p> : null
+            }
+            <h3 style={{ ...FONTS.h2, textAlign: 'center', color: COLORS.gray, margin: "0px 0px 1rem 0px" }}>₦{formatCurrency(betData?.betAmount)}</h3>
 
             <GameDetailCardHeader
+                data={betData?.sportEvent?.FootballEvent}
                 propStyle={{ backgroundColor: COLORS.semiGray, padding: "20px 20px" }}
             />
 
@@ -79,13 +83,17 @@ function BetDetail() {
                 </div>
                 <div style={{ ...styles.cardDiv }}>
                     <p style={{ ...FONTS.body7 }}>Opponent</p>
+                  {
+                    betData?.opponent ?
                     <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                        <div style={{ ...styles.row }}>
-                            <img src={user} width={20} />
-                            <h3 style={{ ...FONTS.h6, margin: "0px 0px 0px 5px" }}>@JohnDdon</h3>
-                        </div>
-                        <img src={notification} />
+                    <div style={{ ...styles.row }}>
+                        <img src={betData?.opponent?.profileImage} style={{width: 20, height: 20, borderRadius: 20}} />
+                        <h3 style={{ ...FONTS.h6, margin: "0px 0px 0px 5px" }}>@{betData?.opponent?.userName}</h3>
                     </div>
+                    <img src={notification} />
+                </div>
+                :  <h3 style={{ ...FONTS.h6, margin: "0px" }}>No opponent</h3>
+                  }
               
                 </div>
             </div>

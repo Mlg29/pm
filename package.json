@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@girishsawant999/react-translate-with-google-api": "^1.0.9",
     "@reduxjs/toolkit": "^2.2.1",
     "@szhsin/react-menu": "^4.1.0",
     "axios": "^1.6.8",

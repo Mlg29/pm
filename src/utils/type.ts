@@ -25,6 +25,10 @@ export type ButtonType = {
     email: string;
     password: string;
   };
+  export type ComingSoonData = {
+    email: string;
+  };
+
   export type CompanyVerificationFormData = {
     CACNumber: string;
     registeredName: string;
