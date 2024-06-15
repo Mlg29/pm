@@ -137,7 +137,7 @@ function Dashboard() {
     <div style={{ ...styles.container }}>
       <DashboardLayout>
         <div>
-          <div style={{ height: 220 }}>
+          <div>
             <SliderComponent />
           </div>
           <div style={{ ...styles.div }}>

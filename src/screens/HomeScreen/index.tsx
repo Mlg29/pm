@@ -279,7 +279,7 @@ function HomeScreen() {
 
       <SearchComponent placeholder="Search by event, sport, club or game" />
 
-      <div style={{height: 150}}>
+      <div>
         <SliderComponent />
       </div>
 
