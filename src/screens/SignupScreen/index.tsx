@@ -1,7 +1,5 @@
-
-
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FONTS } from "../../utils/fonts";
 import TextInput from "../../components/TextInput";
 import { MdArrowBackIos } from "react-icons/md";
@@ -15,74 +13,98 @@ import { CreateAccountFormDataUi, FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useAppDispatch } from "../../redux/hooks";
 import { createUser, verifySignupData } from "../../redux/slices/AuthSlice";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import {useFormik} from 'formik';
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import { useFormik } from "formik";
 import { CreateAccountSchema } from "../../https/schemas";
-import { ToastContainer, toast } from 'react-toastify';
-
+import { ToastContainer, toast } from "react-toastify";
+import CountryPhone from "../../components/CountryPhone";
+import { getCountryListMap } from "country-flags-dial-code";
 
 export const styles = {
   container: {
-      padding: "0px 20px"
+    padding: "0px 20px",
   },
   line: {
-      display: "flex",
-      flexDirection: "row" as FlexDirection,
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "30px 20px 0px 20px"
+    display: "flex",
+    flexDirection: "row" as FlexDirection,
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "30px 20px 0px 20px",
   },
   active: {
-      backgroundColor: COLORS.primary,
-      width: 60,
-      height: 5,
-      borderRadius: 10
+    backgroundColor: COLORS.primary,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
   },
   inactive: {
-      backgroundColor: COLORS.semiGray,
-      width: 60,
-      height: 5,
-      borderRadius: 10
+    backgroundColor: COLORS.semiGray,
+    width: 60,
+    height: 5,
+    borderRadius: 10,
   },
   bottom: {
-      display: 'flex',
-      flexDirection: "column" as FlexDirection,
-      justifyContent: 'center',
-      alignItems: "center",
-      margin: "0px 0px 10px 0px"
-  }
-}
-
-
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0px 0px 10px 0px",
+  },
+};
 
 function SignupScreen() {
-  const [step, setStep] = useState(0)
-  const [terms, setTerms] = useState(false)
+  const [step, setStep] = useState(0);
+  const [terms, setTerms] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch()
-  const [dob, setDob] = useState(new Date());
-  const [loader, setLoader] = useState(false)
-  
-  const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"))
+  const dispatch = useAppDispatch();
+  const calculateDefaultDate = () => {
+    const today = new Date();
+    return new Date(today.setFullYear(today.getFullYear() - 18));
+  };
+  const [dob, setDob] = useState(calculateDefaultDate());
+  const [loader, setLoader] = useState(false);
+  const [country, setCountry] = useState("");
+  const [countryNumber, setCountryNumber] = useState("");
 
+  const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"));
+  const [countryList, setCountryList] = useState([]);
+
+  useEffect(() => {
+    const countries1 = getCountryListMap();
+    // console.log(countries1);
+    let x = Array.from(Object.values(countries1));
+    // console.log(x[0], "x");
+    setCountryList(x);
+  }, []);
 
   const initialValues: CreateAccountFormDataUi = {
-    email: getPendingRegFromStorage?.email ? getPendingRegFromStorage?.email : '',
-    userName: getPendingRegFromStorage?.userName ? getPendingRegFromStorage?.userName : '',
-    firstName: getPendingRegFromStorage?.firstName ? getPendingRegFromStorage?.firstName : '',
-    lastName: getPendingRegFromStorage?.lastName ? getPendingRegFromStorage?.lastName : '',
-    phoneNumber: getPendingRegFromStorage?.phoneNumber ? getPendingRegFromStorage?.phoneNumber : '',
+    email: getPendingRegFromStorage?.email
+      ? getPendingRegFromStorage?.email
+      : "",
+    userName: getPendingRegFromStorage?.userName
+      ? getPendingRegFromStorage?.userName
+      : "",
+    firstName: getPendingRegFromStorage?.firstName
+      ? getPendingRegFromStorage?.firstName
+      : "",
+    lastName: getPendingRegFromStorage?.lastName
+      ? getPendingRegFromStorage?.lastName
+      : "",
+    phoneNumber: getPendingRegFromStorage?.phoneNumber
+      ? getPendingRegFromStorage?.phoneNumber
+      : "",
   };
 
-
-  const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
-  useFormik({
-    initialValues,
-    validationSchema: CreateAccountSchema,
-    onSubmit: (data: CreateAccountFormDataUi) => handleSubmitData(data),
-    enableReinitialize: true,
-  });
-
+  const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
+    useFormik({
+      initialValues,
+      validationSchema: CreateAccountSchema,
+      onSubmit: (data: CreateAccountFormDataUi) => handleSubmitData(data),
+      enableReinitialize: true,
+    });
 
   const stepLevel = () => {
     if (step === 0) {
@@ -94,9 +116,8 @@ function SignupScreen() {
           <div style={{ ...styles.inactive }}></div>
           <div style={{ ...styles.inactive }}></div>
         </div>
-      )
-    }
-    else if (step === 1) {
+      );
+    } else if (step === 1) {
       return (
         <div style={{ ...styles.line }}>
           <div style={{ ...styles.inactive }}></div>
@@ -105,9 +126,8 @@ function SignupScreen() {
           <div style={{ ...styles.inactive }}></div>
           <div style={{ ...styles.inactive }}></div>
         </div>
-      )
-    }
-    else if (step === 2) {
+      );
+    } else if (step === 2) {
       return (
         <div style={{ ...styles.line }}>
           <div style={{ ...styles.inactive }}></div>
@@ -116,9 +136,8 @@ function SignupScreen() {
           <div style={{ ...styles.inactive }}></div>
           <div style={{ ...styles.inactive }}></div>
         </div>
-      )
-    }
-    else if (step === 3) {
+      );
+    } else if (step === 3) {
       return (
         <div style={{ ...styles.line }}>
           <div style={{ ...styles.inactive }}></div>
@@ -127,9 +146,8 @@ function SignupScreen() {
           <div style={{ ...styles.active }}></div>
           <div style={{ ...styles.inactive }}></div>
         </div>
-      )
-    }
-    else if (step === 4) {
+      );
+    } else if (step === 4) {
       return (
         <div style={{ ...styles.line }}>
           <div style={{ ...styles.inactive }}></div>
@@ -138,15 +156,12 @@ function SignupScreen() {
           <div style={{ ...styles.inactive }}></div>
           <div style={{ ...styles.active }}></div>
         </div>
-      )
+      );
+    } else {
     }
-    else {
+  };
 
-    }
-  }
-
- const handleSubmitData = async (data) => {
-    
+  const handleSubmitData = async (data) => {
     const payload = {
       firstName: data?.firstName,
       lastName: data?.lastName,
@@ -154,61 +169,66 @@ function SignupScreen() {
       phoneNumber: data?.phoneNumber,
       userName: data?.userName,
       dob: dob?.toISOString().slice(0, 10),
-    }
+    };
     const verifyPayload = {
       email: data?.email,
       phoneNumber: data?.phoneNumber,
       userName: data?.userName,
-    }
+    };
 
-    setLoader(true)
-  try {
-    var response =  await dispatch(verifySignupData(verifyPayload));
-    if(verifySignupData.fulfilled.match(response)){
-     
-      localStorage.removeItem("userreg")
-      localStorage.setItem("pendingData", JSON.stringify(payload))
-      toast.success(response?.payload?.data?.message, {
-        position: "bottom-center"
-      });
+    setLoader(true);
+    try {
+      var response = await dispatch(verifySignupData(verifyPayload));
+      if (verifySignupData.fulfilled.match(response)) {
+        localStorage.removeItem("userreg");
+        localStorage.setItem("pendingData", JSON.stringify(payload));
+        toast.success(response?.payload?.data?.message, {
+          position: "bottom-center",
+        });
 
-      setTimeout(() => { 
-        setLoader(false)
-        navigate('/verify')
-      }, 1000)
-
-    }
-    else {
-      var errMsg = response?.payload as string;
-      setLoader(false)
-      toast.error(errMsg, {
-        position: "bottom-center"
-      });
-    }
-  }
-  catch(err){
-
-  }
-    
-  }
+        setTimeout(() => {
+          setLoader(false);
+          navigate("/verify");
+        }, 1000);
+      } else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        toast.error(errMsg, {
+          position: "bottom-center",
+        });
+      }
+    } catch (err) {}
+  };
   const handleTerms = () => {
-    localStorage.setItem("userreg", JSON.stringify(values))
-    navigate("/terms-and-conditions")
-  }
- 
+    localStorage.setItem("userreg", JSON.stringify(values));
+    navigate("/terms-and-conditions");
+  };
 
- 
+  const countryListCode = countryList?.find((dd) => dd?.country === country)
+
 
   return (
     <div style={{ ...styles.container }}>
       <div style={{ marginTop: 10 }}>
-       <BackButton />
+        <BackButton />
       </div>
       {stepLevel()}
 
       <div>
-        <h3 style={{ ...FONTS.h2, fontWeight: 'bold', textAlign: 'center', margin: "10px 0px" }}>Personal Information</h3>
-        <p style={{ ...FONTS.body5, textAlign: 'center', fontWeight: '400' }}>Let's get to know you better! Please fill in your personal details to complete your registration.</p>
+        <h3
+          style={{
+            ...FONTS.h2,
+            fontWeight: "bold",
+            textAlign: "center",
+            margin: "10px 0px",
+          }}
+        >
+          Personal Information
+        </h3>
+        <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
+          Let's get to know you better! Please fill in your personal details to
+          complete your registration.
+        </p>
       </div>
 
       <div style={{ marginTop: 20 }}>
@@ -217,7 +237,7 @@ function SignupScreen() {
           placeholder="Enter your first name"
           required
           value={values.firstName}
-          onChangeText={handleChange('firstName')}
+          onChangeText={handleChange("firstName")}
           errorMsg={touched.firstName ? errors.firstName : undefined}
         />
         <TextInput
@@ -225,7 +245,7 @@ function SignupScreen() {
           placeholder="Enter your last name"
           required
           value={values.lastName}
-          onChangeText={handleChange('lastName')}
+          onChangeText={handleChange("lastName")}
           errorMsg={touched.lastName ? errors.lastName : undefined}
         />
         <TextInput
@@ -233,7 +253,7 @@ function SignupScreen() {
           placeholder="Enter your email address"
           required
           value={values.email}
-          onChangeText={handleChange('email')}
+          onChangeText={handleChange("email")}
           errorMsg={touched.email ? errors.email : undefined}
         />
         <TextInput
@@ -242,10 +262,10 @@ function SignupScreen() {
           required
           type="username"
           value={values.userName}
-          onChangeText={handleChange('userName')}
+          onChangeText={handleChange("userName")}
           errorMsg={touched.userName ? errors.userName : undefined}
         />
-        <div style={{ width: "100%" }}>
+        {/* <div style={{ width: "100%" }}>
           <PhoneInputComponent
             label="Phone Number"
             required
@@ -253,24 +273,58 @@ function SignupScreen() {
             onChangeText={handleChange('phoneNumber')}
             errorMsg={touched.phoneNumber ? errors.phoneNumber : undefined}
           />
+        </div> */}
+
+        <div style={{ width: "100%" }}>
+          <CountryPhone
+            countryList={countryList}
+            country={country}
+            setCountry={setCountry}
+            countryNumber={countryNumber}
+            setCountryNumber={setCountryNumber}
+            countryListCode={countryListCode}
+          />
         </div>
+
         <div style={{ width: "100%" }}>
           <DatePickerComponent
             label="Date of Birth"
             propStyle={{ width: "100%" }}
             required
-             value={dob}
-             onChangeDate={(date) => setDob(date)}
-           
+            value={dob}
+            calculateDefaultDate={calculateDefaultDate}
+            onChangeDate={(date) => setDob(date)}
           />
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", margin: "20px 0px" }}>
-          {
-            terms ? <MdCheckBox size={20} onClick={() => setTerms(!terms)} style={{cursor: "pointer"}} />
-              : <MdCheckBoxOutlineBlank onClick={() => setTerms(!terms)} size={20} style={{cursor: "pointer"}} />
-          }
-          <p style={{ ...FONTS.h6, margin: "0px 0px 0px 4px", cursor: "pointer", color: COLORS.gray}} onClick={() => handleTerms()}>I agree to the <span style={{color: COLORS.primary}}>Terms</span> and <span style={{color: COLORS.primary}}>Conditions</span>.</p>
+        <div
+          style={{ display: "flex", alignItems: "center", margin: "20px 0px" }}
+        >
+          {terms ? (
+            <MdCheckBox
+              size={20}
+              onClick={() => setTerms(!terms)}
+              style={{ cursor: "pointer" }}
+            />
+          ) : (
+            <MdCheckBoxOutlineBlank
+              onClick={() => setTerms(!terms)}
+              size={20}
+              style={{ cursor: "pointer" }}
+            />
+          )}
+          <p
+            style={{
+              ...FONTS.h6,
+              margin: "0px 0px 0px 4px",
+              cursor: "pointer",
+              color: COLORS.gray,
+            }}
+            onClick={() => handleTerms()}
+          >
+            I agree to the <span style={{ color: COLORS.primary }}>Terms</span>{" "}
+            and <span style={{ color: COLORS.primary }}>Conditions</span>.
+          </p>
         </div>
 
         <div style={{ ...styles.bottom }}>
@@ -280,16 +334,15 @@ function SignupScreen() {
               disabled={!terms}
               propStyle={{ width: "100%" }}
               isLoading={loader}
-            // handlePress={() => navigate('/verify')}
+              // handlePress={() => navigate('/verify')}
               handlePress={() => handleSubmit()}
             />
           </div>
         </div>
-
       </div>
       <ToastContainer />
     </div>
-  )
+  );
 }
 
-export default SignupScreen
+export default SignupScreen;

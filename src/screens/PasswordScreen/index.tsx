@@ -223,7 +223,7 @@ function PasswordScreen() {
             </h3>
           )}
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
-            Create a secure 6-Digits PIN to secure your account.
+            Create a new password for your account.
           </p>
         </div>
 
