@@ -64,7 +64,7 @@ function SignupScreen() {
     const today = new Date();
     return new Date(today.setFullYear(today.getFullYear() - 18));
   };
-  const [dob, setDob] = useState(calculateDefaultDate());
+  const [dob, setDob] = useState<any>();
   const [loader, setLoader] = useState(false);
   const [country, setCountry] = useState("");
   const [countryNumber, setCountryNumber] = useState("");
@@ -72,7 +72,7 @@ function SignupScreen() {
   const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"));
   const [countryList, setCountryList] = useState([]);
 
-  console.log("====",calculateDefaultDate() > dob)
+
 
   useEffect(() => {
     const countries1 = getCountryListMap();
