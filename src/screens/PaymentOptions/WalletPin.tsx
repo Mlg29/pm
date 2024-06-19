@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useAppDispatch } from "../../redux/hooks";
 import { acceptBet, adjustBet, createBet } from "../../redux/slices/BetSlice";
-import { verifyTransactionPin } from "../../redux/slices/AuthSlice";
+import { getUserData, verifyTransactionPin } from "../../redux/slices/AuthSlice";
 
 function WalletPin() {
   const navigate = useNavigate();
@@ -17,8 +17,20 @@ function WalletPin() {
   const dispatch = useAppDispatch();
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"));
   const getUserBet = JSON.parse(localStorage.getItem("userBetSelection"));
+  const [userData, setUserData] = useState(null);
 
-  // console.log({ userFee });
+
+  const fetchUserInfo = async () => {
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
+    } else {
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   const handleSubmit = async () => {
     if (otp?.length < 6) {
@@ -30,7 +42,7 @@ function WalletPin() {
     const payload = {
       opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
       sportEventId: getUserBet?.sportEventId,
-      betAmount: parseInt(userFee?.amount),
+      betAmount: parseFloat(userFee?.amount),
       betCurrency: "NGN",
       prediction: getUserBet?.userType,
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
@@ -38,19 +50,25 @@ function WalletPin() {
     };
 
     const adjustPayload = {
-      id: userFee?.betId,
-      opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
-      sportEventId: getUserBet?.sportEventId,
-      betAmount: parseInt(userFee?.adjustedBetAmount),
-      betCurrency: "NGN",
-      prediction: getUserBet?.userType,
-      betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
-      allowOtherCurrency: userFee?.allowOtherCurrency
+      // id: userFee?.betId,
+      // opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
+      // sportEventId: getUserBet?.sportEventId,
+      // betAmount: parseFloat(userFee?.adjustedBetAmount),
+      // betCurrency: "NGN",
+      // prediction: getUserBet?.userType,
+      // betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
+      // allowOtherCurrency: userFee?.allowOtherCurrency
+      betId: userFee?.betId,
+      userId: userData?.id,
+      requestedAmount: parseFloat(userFee?.adjustedBetAmount),
+      requestedPrediction: getUserBet?.userType,
+
     }
+  
     const acceptPayload = {
       id: userFee?.betId,
       prediction: userFee?.prediction,
-      betAmount: parseInt(userFee?.amount),
+      betAmount: parseFloat(userFee?.amount),
     }
 
     const transactionPayload = {

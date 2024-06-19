@@ -89,10 +89,10 @@ function CreateBet() {
 
       </div>
 
-      <div style={{ ...styles.rowBtn }}>
+      <div style={{ ...styles.rowBtn, cursor: "pointer"  }}  onClick={() => navigate("/invite")}>
         <div
-          style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-          onClick={() => navigate("/invite")}
+          style={{ display: "flex", alignItems: "center"}}
+         
         >
           <div>
             <IoIosPeople
@@ -114,10 +114,9 @@ function CreateBet() {
         <FaChevronRight />
       </div>
 
-      <div style={{ ...styles.rowBtn }}>
+      <div style={{ ...styles.rowBtn,cursor: "pointer"  }} onClick={() => navigate("/amount")}>
         <div
-          style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-          onClick={() => navigate("/amount")}
+          style={{ display: "flex", alignItems: "center" }} 
         >
           <div>
             <RiFileList3Fill

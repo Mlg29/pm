@@ -110,8 +110,13 @@ export const acceptBet = createAsyncThunk(
 export const adjustBet = createAsyncThunk(
   "bet/adjustBet",
   async (payload: any, { rejectWithValue }) => {
+    const pp = {
+      betId: payload?.betId,
+      requestedAmount: payload?.requestedAmount,
+      requestedPrediction: payload?.requestedPrediction,
+    }
     try {
-      const response = await updateRequestWithPayload(`${BaseUrl}/bet/${payload?.id}`, payload);
+      const response = await updateRequestWithPayload(`${BaseUrl}/bet/${payload?.userId}`, pp);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }

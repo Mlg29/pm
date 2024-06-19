@@ -109,6 +109,12 @@ button:focus {
 input:focus, input:active {
   background: transparent;
 }
+/* CustomCheckbox.css */
+.form-check-input:checked[type=checkbox] {
+  background-color: #2D0D02 !important;
+  border-color: #2D0D02 !important;
+}
+
 .loader {
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */

@@ -2,13 +2,15 @@ import { configureStore } from '@reduxjs/toolkit'
 import AuthReducer from './slices/AuthSlice'
 import FootballReducer from './slices/FootballSlice'
 import BetReducer from './slices/BetSlice'
+import TransactionReducer from "./slices/TransactionSlice"
 
 
 export const store = configureStore({
   reducer: {
    auth: AuthReducer,
    football: FootballReducer,
-   bet: BetReducer
+   bet: BetReducer,
+   transaction: TransactionReducer
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

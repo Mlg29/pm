@@ -128,7 +128,6 @@ function Preference() {
                 {
                     dataList?.map((data: any) => {
                         return <div key={data?.id} style={{ ...styles.row }}>
-                            {/* <img src={data?.image} onClick={data?.handleRoute} /> */}
                             <div style={{ margin: "0px 10px", width: "100%" }}>
                                 <h3 style={{ ...FONTS.body6, margin: "0px" }}>{data?.name}</h3>
                             </div>
@@ -138,8 +137,10 @@ function Preference() {
                                 key={data.id}
                                 id={data.id}
                                 label={data.label}
+                                disabled={data?.id === "maintenance" || data?.id === "announcements"}
                                 checked={checkedItems[data.id] || false}
                                 onChange={handleChange}
+                                className="custom-checkbox"
                             />
 
                         </div>

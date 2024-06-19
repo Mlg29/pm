@@ -40,7 +40,7 @@ const AdjustBet = () => {
       invitedUser: null,
       amount: userFee?.amount,
       opponentUsername: userFee?.opponentUsername,
-      adjustedBetAmount: parseInt(amount),
+      adjustedBetAmount: parseFloat(amount),
       isAdjustBet: true,
       betId: userFee?.betId,
       allowOtherCurrency: allowCurrency

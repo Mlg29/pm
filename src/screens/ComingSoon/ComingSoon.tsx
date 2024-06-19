@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import { ComingSoonSchema } from "../../https/schemas";
 import Button from "../../components/Button";
 import { ToastContainer, toast } from "react-toastify";
+import { emailWaitList } from "../../redux/slices/AuthSlice";
 
 export const styles = {
   container: {
@@ -69,6 +70,21 @@ const ComingSoon = () => {
     const payload = {
       email: data?.email,
     };
+    setLoader(true)
+    const response = await dispatch(emailWaitList(payload))
+    if(emailWaitList.fulfilled.match(response)){
+      setLoader(false)
+      toast.success("Congratulations, we will have you updated", {
+        position: "bottom-center"
+      });
+    }
+    else {
+      var errMsg = response?.payload as string;
+      setLoader(false);
+      toast.error(errMsg, {
+        position: "bottom-center",
+      });
+    }
   };
 
 

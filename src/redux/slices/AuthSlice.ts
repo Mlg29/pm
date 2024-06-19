@@ -1,3 +1,4 @@
+
 /* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unreachable */
@@ -63,6 +64,23 @@ export const createNewPassword = createAsyncThunk(
   }
 );
 
+
+export const emailWaitList = createAsyncThunk(
+  "auth/emailWaitList",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await postRequestNoToken(
+        `${BaseUrl}/email-waitlist`,
+        payload
+      );
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
 
 export const verifyTransactionPin = createAsyncThunk(
   "auth/verifyTransactionPin",
@@ -358,6 +376,19 @@ export const AuthSlice = createSlice({
         }
       );
     builder.addCase(updateUserData.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(emailWaitList.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        emailWaitList.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          // state.userInfo = action.payload
+        }
+      );
+    builder.addCase(emailWaitList.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(updateTransactionPin.pending, (state, action) => {

@@ -91,9 +91,9 @@ function DashboardLayout({ children }) {
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
               <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
-              {Leagues?.map((data: any) => {
+              {Leagues?.map((data: any, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <p
                       style={{
                         ...FONTS.body6,
@@ -110,9 +110,9 @@ function DashboardLayout({ children }) {
             <div style={{ ...styles.subBox }}>
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
               <SearchInput placeholder="Search by club or country" />
-              {Countries?.map((data: any) => {
+              {Countries?.map((data: any, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <p
                       style={{
                         ...FONTS.body6,
@@ -137,9 +137,9 @@ function DashboardLayout({ children }) {
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
               <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
-              {Leagues?.map((data: any) => {
+              {Leagues?.map((data: any, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <p style={{ ...FONTS.body6, margin: "15px 0px" }}>
                       {data?.name}
                     </p>
@@ -150,9 +150,9 @@ function DashboardLayout({ children }) {
             <div style={{ ...styles.subBox }}>
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
               <SearchInput placeholder="Search by club or country" />
-              {Countries?.map((data: any) => {
+              {Countries?.map((data: any, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <p style={{ ...FONTS.body6, margin: "15px 0px" }}>
                       {data?.name}
                     </p>
@@ -171,9 +171,9 @@ function DashboardLayout({ children }) {
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
               <h3 style={{ ...FONTS.h7 }}>Top Leagus</h3>
-              {Leagues?.map((data: any) => {
+              {Leagues?.map((data: any, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <p style={{ ...FONTS.body7, margin: "15px 0px" }}>
                       {data?.name}
                     </p>
@@ -184,9 +184,9 @@ function DashboardLayout({ children }) {
             <div style={{ ...styles.subBox }}>
               <h3 style={{ ...FONTS.h7 }}>A - Z</h3>
               <SearchInput placeholder="Search by club or country" />
-              {Countries?.map((data: any) => {
+              {Countries?.map((data: any, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <p style={{ ...FONTS.body7, margin: "15px 0px" }}>
                       {data?.name}
                     </p>

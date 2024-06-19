@@ -20,6 +20,7 @@ import DepositModal from '../../components/Modals/DepositModal';
 import { useAppDispatch } from '../../redux/hooks';
 import { getUserData } from '../../redux/slices/AuthSlice';
 import { formatCurrency } from '../../utils/helper';
+import { getTransactions } from '../../redux/slices/TransactionSlice';
 
 
 const styles = {
@@ -82,6 +83,9 @@ function Transaction() {
   const [loader, setLoader] = useState(false);
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
+  const [transactions, setTransactions] = useState(null);
+
+
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -90,9 +94,19 @@ function Transaction() {
     }
   };
 
+  const fetchTransactions = async () => {
+    const response = await dispatch(getTransactions());
+    if (getTransactions.fulfilled.match(response)) {
+      setTransactions(response?.payload);
+    }
+  };
+
+  console.log({transactions})
+
 
   useEffect(() => {
     fetchUserInfo();
+    fetchTransactions()
   }, []);
 
 

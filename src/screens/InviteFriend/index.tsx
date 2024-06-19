@@ -26,7 +26,7 @@ const InviteFriend = () => {
 
   const checkUser = async () => {
     setCheckLoader(true);
-    setSelectedUser("");
+    // setSelectedUser("");
     const response = await dispatch(getSingleUser(email));
     if (getSingleUser.fulfilled.match(response)) {
       setCheckLoader(false);
@@ -40,7 +40,10 @@ const InviteFriend = () => {
     }
   };
   useEffect(() => {
-    if (email?.length > 0) {
+    if(email?.length === 0) {
+      setUsers([])
+    }
+    if (email?.length > 2) {
       checkUser();
     }
   }, [email]);
@@ -67,9 +70,10 @@ const InviteFriend = () => {
     return navigate("/options");
   };
 
-  const handleSelect = (data) => {
+  const handleSelect = (data) => { 
+     setEmail(data?.userName);
     setSelectedUser(data?.id);
-    setEmail(data?.userName);
+  
   };
 
   return (
@@ -84,15 +88,19 @@ const InviteFriend = () => {
           value={email}
           type="email"
           onChangeText={(val: string) => {
+            if(selectedUser){
+              setSelectedUser('')
+            }
             setEmail(val);
           }}
         />
         {users?.length > 0 && !selectedUser && (
           <div>
             <p style={{ ...FONTS.h7 }}>Select User</p>
-            {users?.map((data) => {
+            {users?.map((data, i) => {
               return (
                 <div
+                key={i}
                   style={{
                     padding: 8,
                     border: `1px solid ${COLORS.orange}`,

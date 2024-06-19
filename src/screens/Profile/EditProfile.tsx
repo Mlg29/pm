@@ -24,6 +24,8 @@ import { ToastContainer, toast } from "react-toastify";
 import CustomFileInput from "../../components/FileInput";
 import axios from "axios";
 import PinModal from "../../components/Modals/PinModal";
+import CountryPhone from "../../components/CountryPhone";
+import { getCountryListMap } from "country-flags-dial-code";
 
 const styles = {
   container: {
@@ -68,6 +70,21 @@ function EditProfile() {
   const [imageLoader, setImageLoader] = useState(false);
   const [show, setShow] = useState(false)
   const [storePayload, setStorePayload] = useState(null)
+  const [country, setCountry] = useState("");
+  const [countryNumber, setCountryNumber] = useState("");
+
+
+  const [countryList, setCountryList] = useState([]);
+  const countryListCode = countryList?.find((dd) => dd?.country === country)
+
+
+  useEffect(() => {
+    const countries1 = getCountryListMap();
+    // console.log(countries1);
+    let x = Array.from(Object.values(countries1));
+    // console.log(x[0], "x");
+    setCountryList(x);
+  }, []);
 
 
   const handleClose = () => {
@@ -223,13 +240,21 @@ function EditProfile() {
             />
           </div>
           <div style={{ ...styles.row }}>
-            <PhoneInputComponent
+          <CountryPhone
+            countryList={countryList}
+            country={country}
+            setCountry={setCountry}
+            countryNumber={countryNumber}
+            setCountryNumber={setCountryNumber}
+            countryListCode={countryListCode}
+          />
+            {/* <PhoneInputComponent
               label="Phone Number"
               required
               value={values.phoneNumber}
               onChangeText={handleChange("phoneNumber")}
               errorMsg={touched.phoneNumber ? errors.phoneNumber : undefined}
-            />
+            /> */}
           </div>
           {/* <div style={{ ...styles.row }}>
                         <DatePickerComponent

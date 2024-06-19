@@ -100,11 +100,8 @@ function CustomeKeyboard(props: any) {
                     </div>
                 </div>
                 <div style={{...styles.row}}>
-                    <div style={{...styles.box2}}>
-                        {
-                            isFaceId ? <TbFaceIdError  size={70} color={COLORS.gray} /> : null
-                        }
-                        {/* <MdOutlineCancel size={30} />  */}
+                    <div style={{...styles.box}} onClick={() => setValue(value + ".")}>
+                       <p style={{width: 10, height: 10, backgroundColor: 'black', borderRadius: 10}}></p>
                     </div>
                     <div style={{...styles.box}} onClick={() => setValue(value + "0")}>
                         <PiNumberZeroBold size={30} />

@@ -34,7 +34,8 @@ function Options() {
 const dispatch = useAppDispatch()
 const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
 
-console.log({userFee})
+
+
   const fetchUserInfo = async () => {
     setLoader(true);
     const response = await dispatch(getUserData());
@@ -90,8 +91,8 @@ console.log({userFee})
         <h3 style={{ ...FONTS.h6 }}>₦{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
       </div>
 
-      <div style={{...styles.rowBtn}}>
-        <div style={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => goToPin()}>
+      <div style={{...styles.rowBtn,  cursor: "pointer"}} onClick={() => goToPin()}>
+        <div style={{display: "flex", alignItems: "center"}} >
             <div>
             <TbCalculatorFilled color={COLORS.white} size={30} style={{backgroundColor: COLORS.primary, padding: 5, borderRadius: "100%", marginRight: 15}} />
             </div>

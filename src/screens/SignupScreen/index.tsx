@@ -72,6 +72,8 @@ function SignupScreen() {
   const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"));
   const [countryList, setCountryList] = useState([]);
 
+  console.log("====",calculateDefaultDate() > dob)
+
   useEffect(() => {
     const countries1 = getCountryListMap();
     // console.log(countries1);
@@ -162,6 +164,14 @@ function SignupScreen() {
   };
 
   const handleSubmitData = async (data) => {
+
+    if(calculateDefaultDate() < dob) {
+      toast.error("Date must be above 18years old", {
+        position: "bottom-center",
+      });
+      return;
+    }
+
     const payload = {
       firstName: data?.firstName,
       lastName: data?.lastName,

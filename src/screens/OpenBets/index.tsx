@@ -48,7 +48,7 @@ function OpenBet() {
     const [userData, setUserData] = useState(null);
 
 
-     console.log({game, openBets, userSelection})
+
 
     const fetchUserInfo = async () => {
         const response = await dispatch(getUserData());
@@ -129,15 +129,15 @@ function OpenBet() {
                         <div style={{ ...styles.row }}>
                             <div style={{ ...styles.center }}>
                                 <img src={game?.localTeamLogo} alt="" style={{width: "20px"}} />
-                                <h3 style={{ ...FONTS.h6, marginTop: "10px" }}>{game?.localTeamName}</h3>
+                                <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>{game?.localTeamName}</h3>
                             </div>
                             <div style={{ ...styles.center }}>
                                 <p style={{ ...FONTS.body7, marginTop: "10px" }}>{game?.status}</p>
-                                <h3 style={{ ...FONTS.h6, marginTop: "5px" }}>{data?.betCurrency === "NGN" ? "₦" : "$"}{formatCurrency(data?.betAmount)}</h3>
+                                <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>{data?.betCurrency === "NGN" ? "₦" : "$"}{formatCurrency(data?.betAmount)}</h3>
                             </div>
                             <div style={{ ...styles.center }}>
                             <img src={game?.visitorTeamLogo} alt="" style={{width: "20px"}} />
-                                <h3 style={{ ...FONTS.h6, marginTop: "10px" }}>{game?.visitorTeamName}</h3>
+                                <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>{game?.visitorTeamName}</h3>
                             </div>
                         </div>
 

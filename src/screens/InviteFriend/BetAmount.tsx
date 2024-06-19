@@ -21,6 +21,7 @@ const BetAmount = () => {
   const checkHandler = () => {
     setAllowCurrency(!allowCurrency);
   };
+  
 
   const handleRoute = async () => {
     if (!amount) {
@@ -32,11 +33,13 @@ const BetAmount = () => {
     const payload = {
       invitedUser: null,
       amount: amount,
-      allowOtherCurrency: allowCurrency
+      allowOtherCurrency: allowCurrency,
     };
     localStorage.setItem("inviteeInfo", JSON.stringify(payload));
     return navigate("/options");
   };
+
+
 
   return (
     <div className="top-container">

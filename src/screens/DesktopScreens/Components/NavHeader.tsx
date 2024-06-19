@@ -11,7 +11,7 @@ import { FlexDirection } from "../../../utils/type";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import user from "../../../assets/images/user.svg";
+import profile from "../../../assets/images/profile1.png";
 import { IoIosArrowDown } from "react-icons/io";
 import { Menu, MenuItem, MenuButton, SubMenu } from "@szhsin/react-menu";
 import logout from "../../../assets/images/logout.svg";
@@ -100,6 +100,7 @@ function NavHeader() {
     return isTablet ? children : null;
   };
   const navigate = useNavigate();
+
   const itemList = [
     {
       id: 1,
@@ -197,6 +198,14 @@ function NavHeader() {
       image: more,
     },
   ];
+
+  const handleSelection = (info) => {
+    setSelected(info)
+    navigate('/home')
+  }
+
+
+
   return (
     <div>
       <LargScreen>
@@ -276,7 +285,7 @@ function NavHeader() {
                         />
                       ) : (
                         <img
-                          src={user}
+                          src={profile}
                           style={{
                             width: "40px",
                             height: "40px",
@@ -294,9 +303,11 @@ function NavHeader() {
                           @{userData?.userName}
                         </p>
                       </div>
+                      <IoIosArrowDown />
                     </div>
                   }
                 >
+                  
                   <div style={{ backgroundColor: "white", width: 200 }}>
                     <div
                       style={{
@@ -325,7 +336,7 @@ function NavHeader() {
                   </div>
                 </Menu>
 
-                <IoIosArrowDown />
+               
               </div>
             ) : (
               <>
@@ -392,7 +403,7 @@ function NavHeader() {
                     margin: "0 5px",
                     cursor: "pointer",
                   }}
-                  onClick={() => setSelected(info?.name)}
+                  onClick={() => handleSelection(info?.name)}
                 >
                   <div
                     style={{
@@ -508,7 +519,7 @@ function NavHeader() {
                         />
                       ) : (
                         <img
-                          src={user}
+                          src={profile}
                           style={{
                             width: "40px",
                             height: "40px",
@@ -525,6 +536,7 @@ function NavHeader() {
                           @{userData?.userName}
                         </p>
                       </div>
+                      <IoIosArrowDown />
                     </div>
                   }
                 >
@@ -556,7 +568,6 @@ function NavHeader() {
                   </div>
                 </Menu>
 
-                <IoIosArrowDown />
               </div>
             ) : (
               <>
@@ -623,7 +634,7 @@ function NavHeader() {
                     margin: "0 5px",
                     cursor: "pointer",
                   }}
-                  onClick={() => setSelected(info?.name)}
+                  onClick={() => handleSelection(info?.name)}
                 >
                   <div
                     style={{
@@ -738,7 +749,7 @@ function NavHeader() {
                         />
                       ) : (
                         <img
-                          src={user}
+                          src={profile}
                           style={{
                             width: "40px",
                             height: "40px",
@@ -755,6 +766,7 @@ function NavHeader() {
                           @{userData?.userName}
                         </p>
                       </div>
+                      <IoIosArrowDown />
                     </div>
                   }
                 >
@@ -786,7 +798,6 @@ function NavHeader() {
                   </div>
                 </Menu>
 
-                <IoIosArrowDown />
               </div>
             ) : (
               <>
@@ -852,7 +863,7 @@ function NavHeader() {
                     margin: "0 5px",
                     cursor: "pointer",
                   }}
-                  onClick={() => setSelected(info?.name)}
+                  onClick={() => handleSelection(info?.name)}
                 >
                   <div
                     style={{
