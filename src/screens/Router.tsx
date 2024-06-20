@@ -62,8 +62,8 @@ function Routers() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<ComingSoon />} />
-        {/* <Route path="/"  element={<HomeScreen />} /> */}
+      {/* <Route path="/" element={<ComingSoon />} /> */}
+        <Route path="/"  element={<HomeScreen />} />
         <Route path="/coming-soon-success" element={<ComingSoonSuccess />} />
         <Route path="/onboarding" element={<OnboardScreen />} />
         <Route path="/login" element={<Login />} />
