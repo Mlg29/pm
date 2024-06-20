@@ -71,7 +71,6 @@ export type ButtonType = {
     email: string;
     userName: string;
     firstName: string;
-    phoneNumber?: string;
     lastName: string;
   };
 
@@ -79,7 +78,6 @@ export type ButtonType = {
     email: string;
     userName: string;
     firstName: string;
-    phoneNumber?: string;
     lastName: string;
   };
 

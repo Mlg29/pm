@@ -21,6 +21,21 @@ const initialState = {
   transactions: [],
 };
 
+export const createTransaction = createAsyncThunk(
+  "transaction/createTransaction",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await postRequest(`${BaseUrl}/transactions`, payload);
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
+
 export const getTransactions = createAsyncThunk(
   "transaction/getTransactions",
   async () => {
@@ -47,6 +62,18 @@ export const TransactionSlice = createSlice({
         }
       );
     builder.addCase(getTransactions.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(createTransaction.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        createTransaction.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(createTransaction.rejected, (state, action) => {
       // state.error = action.error.message
     });
   },

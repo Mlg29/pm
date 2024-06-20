@@ -84,7 +84,7 @@ export const CreateAccountSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   userName: yup.string().required("Username is required"),
-  phoneNumber: yup.string().required("Phone number is required"),
+  // phoneNumber: yup.string().required("Phone number is required"),
   email: yup.string().email().required("Email is required"),
 });
 
@@ -93,7 +93,6 @@ export const AccountSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   userName: yup.string().required("Username is required"),
-  phoneNumber: yup.string().required("Phone number is required"),
   email: yup.string().email().required("Email is required"),
 });
 

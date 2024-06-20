@@ -22,10 +22,10 @@ const styles = {
 }
 };
 
-const TextInputWithCode = ({ countryListCode, value, setValue }) => {
+const TextInputWithCode = ({ countryListCode, value, setValue, isPhoneRequired }) => {
   return (
     <div style={{ marginBottom: 10, display: "flex", flexDirection: "column" }}>
-      <label style={{ ...FONTS.body7 }}>Phone Number</label>
+      <label style={{ ...FONTS.body7 }}>Phone Number <span>{isPhoneRequired && <span style={{color: 'red'}}>*</span>  }</span></label>
       <div style={{ ...styles.row}}>
         <div style={{padding: '0px 5px'}}>
           <p>{countryListCode?.dialCode}</p>

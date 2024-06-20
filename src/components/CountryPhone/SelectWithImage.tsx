@@ -18,7 +18,7 @@ export const styles = {
   },
 };
 
-const SelectWithImage = ({countryList, value, setValue}) => {
+const SelectWithImage = ({countryList, value, setValue, isCountryRequired}) => {
 
     const handleSelectChange = (e) => {
         const value = e.target.value;
@@ -28,7 +28,7 @@ const SelectWithImage = ({countryList, value, setValue}) => {
 
   return (
     <div style={{ marginBottom: 10, display: "flex", flexDirection: "column" }}>
-      <label style={{ ...FONTS.body7 }}>Select Country</label>
+      <label style={{ ...FONTS.body7 }}>Select Country <span>{isCountryRequired && <span style={{color: 'red'}}>*</span>  }</span></label>
 
       <select style={{ ...styles.select }}
         onChange={(e) => handleSelectChange(e)}

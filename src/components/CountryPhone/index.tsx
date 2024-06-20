@@ -10,6 +10,8 @@ const CountryPhone = ({
   countryListCode,
   countryNumber,
   setCountryNumber,
+  isCountryRequired,
+  isPhoneRequired,
 }) => {
   return (
     <div>
@@ -17,6 +19,7 @@ const CountryPhone = ({
         countryList={countryList}
         value={country}
         setValue={setCountry}
+        isCountryRequired
       />
 
       {country ? (
@@ -24,6 +27,7 @@ const CountryPhone = ({
           countryListCode={countryListCode}
           value={countryNumber}
           setValue={setCountryNumber}
+          isPhoneRequired
         />
       ) : null}
     </div>

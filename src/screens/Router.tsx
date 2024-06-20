@@ -53,6 +53,8 @@ import BetAmount from "./InviteFriend/BetAmount.tsx";
 import GameEventData from "./HomeScreen/GameEventData.tsx";
 import ForgotCreatePasswordNew from "./PasswordScreen/ForgotCreatePassword.tsx";
 import ComingSoon from "./ComingSoon/ComingSoon.tsx";
+import DepositSuccess from "./SuccessScreen/DepositSuccess.tsx";
+import ComingSoonSuccess from "./SuccessScreen/ComingSoonSuccess.tsx";
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -60,8 +62,9 @@ function Routers() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<ComingSoon />} /> */}
-        <Route path="/"  element={<HomeScreen />} />
+        <Route path="/" element={<ComingSoon />} />
+        {/* <Route path="/"  element={<HomeScreen />} /> */}
+        <Route path="/coming-soon-success" element={<ComingSoonSuccess />} />
         <Route path="/onboarding" element={<OnboardScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignupScreen />} />
@@ -80,6 +83,7 @@ function Routers() {
         <Route path="/create-new-password" element={<CreatePasswordNew />} />
         <Route path="/password-success" element={<PasswordSuccess />} />
         <Route path="/pin-success" element={<PinSuccess />} />
+        <Route path="/deposit-success" element={<DepositSuccess />} />
         <Route
           path="/forget-password-verify"
           element={<ForgetPasswordVerify />}

@@ -1,8 +1,10 @@
 
+import moment from "moment";
 import colorSend1 from "../../assets/images/color-send1.svg"
 import colorSend2 from "../../assets/images/color-send2.svg"
 import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
+import { formatCurrency, trimString } from "../../utils/helper";
 
 type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 
@@ -45,22 +47,23 @@ const styles = {
 
 
 function TransactionCard(props: any) {
-    const { text, amount, date, incoming } = props
+    const { text, amount, date, type } = props
     return (
         <div style={{ ...styles.container }}>
             {
-                incoming ?
+                type === "DEPOSIT" ?
                     <div style={{ ...styles.box }}>
                         <img src={colorSend1} />
                     </div>
                     : <div style={{ ...styles.boxSend }}>
                         <img src={colorSend2} />
                     </div>
+                    
             }
-            <h3 style={{ ...FONTS.h6, width: "50%", color: incoming ? COLORS.green : COLORS.red }}>{text}</h3>
+            <h3 style={{ ...FONTS.h6, width: "50%", color: type === "DEPOSIT" ? COLORS.green : COLORS.red, textTransform: 'capitalize' }}>{trimString(text, 25)}</h3>
             <div style={{ ...styles.box2 }}>
-                <h3 style={{ ...FONTS.h6, color: incoming ? COLORS.green : COLORS.red  }}>{amount}</h3>
-                <p style={{ ...FONTS.body7, color: COLORS.gray,textAlign: "right", margin: "5px 0px 0px 0px", fontSize: "10px" }}>{date}</p>
+                <h3 style={{ ...FONTS.h6, color: type === "DEPOSIT" ? COLORS.green : COLORS.red  }}>₦{formatCurrency(amount)}</h3>
+                <p style={{ ...FONTS.body7, color: COLORS.gray,textAlign: "right", margin: "5px 0px 0px 0px", fontSize: "10px" }}>{moment(date).format('LL')}</p>
             </div>
         </div>
     )

@@ -74,9 +74,10 @@ const ComingSoon = () => {
     const response = await dispatch(emailWaitList(payload))
     if(emailWaitList.fulfilled.match(response)){
       setLoader(false)
-      toast.success("Congratulations, we will have you updated", {
-        position: "bottom-center"
-      });
+      navigate('/coming-soon-success')
+      // toast.success("Congratulations, we will have you updated", {
+      //   position: "bottom-center"
+      // });
     }
     else {
       var errMsg = response?.payload as string;

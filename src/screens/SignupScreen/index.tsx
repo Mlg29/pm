@@ -22,6 +22,7 @@ import { CreateAccountSchema } from "../../https/schemas";
 import { ToastContainer, toast } from "react-toastify";
 import CountryPhone from "../../components/CountryPhone";
 import { getCountryListMap } from "country-flags-dial-code";
+import axios from "axios";
 
 export const styles = {
   container: {
@@ -60,19 +61,26 @@ function SignupScreen() {
   const [terms, setTerms] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [ip, setIP] = useState<any>();
   const calculateDefaultDate = () => {
     const today = new Date();
     return new Date(today.setFullYear(today.getFullYear() - 18));
   };
   const [dob, setDob] = useState<any>();
   const [loader, setLoader] = useState(false);
-  const [country, setCountry] = useState("");
-  const [countryNumber, setCountryNumber] = useState("");
+  const [country, setCountry] = useState("Nigeria");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"));
   const [countryList, setCountryList] = useState([]);
 
 
+  const getData = async () => {
+    // const res = await axios.get("https://api.ipify.org/?format=json");
+    const res = await axios.get("https://geolocation-db.com/json/");
+    // console.log(res);
+    setIP(res.data);
+  };
 
   useEffect(() => {
     const countries1 = getCountryListMap();
@@ -80,7 +88,10 @@ function SignupScreen() {
     let x = Array.from(Object.values(countries1));
     // console.log(x[0], "x");
     setCountryList(x);
+    getData()
   }, []);
+
+
 
   const initialValues: CreateAccountFormDataUi = {
     email: getPendingRegFromStorage?.email
@@ -94,9 +105,6 @@ function SignupScreen() {
       : "",
     lastName: getPendingRegFromStorage?.lastName
       ? getPendingRegFromStorage?.lastName
-      : "",
-    phoneNumber: getPendingRegFromStorage?.phoneNumber
-      ? getPendingRegFromStorage?.phoneNumber
       : "",
   };
 
@@ -164,6 +172,24 @@ function SignupScreen() {
   };
 
   const handleSubmitData = async (data) => {
+    if(ip?.country_code === "US"){
+      toast.error("Registration is restricted for this country", {
+        position: "bottom-center",
+      });
+      return
+    }
+       if(!country || country?.length < 1){
+      toast.error("Country is required", {
+        position: "bottom-center",
+      });
+      return
+    }
+       if(!phoneNumber || phoneNumber?.length < 1){
+      toast.error("Phone number is required", {
+        position: "bottom-center",
+      });
+      return
+    }
 
     if(calculateDefaultDate() < dob) {
       toast.error("Date must be above 18years old", {
@@ -176,13 +202,14 @@ function SignupScreen() {
       firstName: data?.firstName,
       lastName: data?.lastName,
       email: data?.email,
-      phoneNumber: data?.phoneNumber,
+      phoneNumber: phoneNumber,
+      country: country,
       userName: data?.userName,
       dob: dob?.toISOString().slice(0, 10),
     };
     const verifyPayload = {
       email: data?.email,
-      phoneNumber: data?.phoneNumber,
+      phoneNumber: phoneNumber,
       userName: data?.userName,
     };
 
@@ -290,8 +317,10 @@ function SignupScreen() {
             countryList={countryList}
             country={country}
             setCountry={setCountry}
-            countryNumber={countryNumber}
-            setCountryNumber={setCountryNumber}
+            countryNumber={phoneNumber}
+            isCountryRequired
+            isPhoneRequired
+            setCountryNumber={setPhoneNumber}
             countryListCode={countryListCode}
           />
         </div>

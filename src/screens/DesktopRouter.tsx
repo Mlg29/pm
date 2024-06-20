@@ -55,6 +55,8 @@ import GameEventData from './HomeScreen/GameEventData.js';
 import BetAmount from './InviteFriend/BetAmount.js';
 import ForgotCreatePasswordNew from './PasswordScreen/ForgotCreatePassword.js';
 import ComingSoon from './ComingSoon/ComingSoon.js';
+import DepositSuccess from './SuccessScreen/DepositSuccess.js';
+import ComingSoonSuccess from './SuccessScreen/ComingSoonSuccess.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,6 +67,7 @@ function DesktopRouters() {
     {/* <Route path="/" element={<Layout><ComingSoon /></Layout>} /> */}
       <Route path="/"  element={<Dashboard />} />
       <Route path="/onboarding" element={<Layout><OnboardScreen /></Layout>} />
+      <Route path="/coming-soon-success" element={<Layout><ComingSoonSuccess /></Layout>} />
       <Route path="/login" element={<Layout><Login /></Layout>} />
       <Route path="/sign-up" element={<Layout><SignupScreen /></Layout>} />
       <Route path="/verify" element={<Layout><VerifyScreen /></Layout>} />
@@ -77,6 +80,7 @@ function DesktopRouters() {
       <Route path="/forget-password" element={<Layout><ForgetPassword /></Layout>} />
       <Route path="/create-new-password" element={<Layout><CreatePasswordNew /></Layout>} />
       <Route path="/password-success" element={<Layout><PasswordSuccess /></Layout>} />
+      <Route path="/deposit-success" element={<Layout><DepositSuccess /></Layout>} />
       <Route path="/forget-password-verify" element={<Layout><ForgetPasswordVerify /></Layout>} />
       <Route path="/terms-and-conditions" element={<Layout><TermsAndConditions /></Layout>} />
       <Route path="/pin-success" element={<Layout><PinSuccess /></Layout>} />

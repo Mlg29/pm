@@ -70,8 +70,8 @@ function EditProfile() {
   const [imageLoader, setImageLoader] = useState(false);
   const [show, setShow] = useState(false)
   const [storePayload, setStorePayload] = useState(null)
-  const [country, setCountry] = useState("");
-  const [countryNumber, setCountryNumber] = useState("");
+  const [country, setCountry] = useState("Nigeria");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
 
   const [countryList, setCountryList] = useState([]);
@@ -138,7 +138,6 @@ function EditProfile() {
     userName: userData?.userName ? userData?.userName : "",
     firstName: userData?.firstName ? userData?.firstName : "",
     lastName: userData?.lastName ? userData?.lastName : "",
-    phoneNumber: userData?.phoneNumber ? userData?.phoneNumber : "",
   };
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
@@ -153,7 +152,7 @@ function EditProfile() {
     const payload = {
       // ...data,
       profileImage: fileUrl ? fileUrl : "",
-      phoneNumber: data?.phoneNumber,
+      phoneNumber: phoneNumber,
       //  dob: dob?.toISOString().slice(0, 10),
     };
 
@@ -244,9 +243,11 @@ function EditProfile() {
             countryList={countryList}
             country={country}
             setCountry={setCountry}
-            countryNumber={countryNumber}
-            setCountryNumber={setCountryNumber}
+            countryNumber={phoneNumber}
+            setCountryNumber={setPhoneNumber}
             countryListCode={countryListCode}
+            isCountryRequired={false}
+            isPhoneRequired={false}
           />
             {/* <PhoneInputComponent
               label="Phone Number"

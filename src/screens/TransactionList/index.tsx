@@ -10,13 +10,19 @@ import { COLORS } from "../../utils/colors";
 import DatePickerComponent from "../../components/DatePickerComponent";
 import Button from "../../components/Button";
 import { useMediaQuery } from "react-responsive";
+import { useLocation } from "react-router-dom";
+import EmptyState from "../../components/EmptyState";
 
 function TransactionList() {
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState<any>([]);
-  const isMobile = useMediaQuery({ maxWidth: 767 })
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [value, setValue] = useState('')
+  const location = useLocation();
+  const transactions = location.state.transactions;
 
-  
+
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -32,6 +38,10 @@ function TransactionList() {
       setSelected([...selected, val]);
     }
   };
+
+  const handleChange = (event) => {
+    setValue(event)
+  }
 
   const types = [
     {
@@ -84,69 +94,46 @@ function TransactionList() {
     },
   ];
 
+
+  const filterSearch = transactions?.filter((a) => a?.amount.toString().includes(value) || a?.id?.toLowerCase().includes(value))
+
+
+
   return (
     <div className="top-container">
-      {
-        isMobile && <Header text="Transactions" />
-      }
-     
+      {isMobile && <Header text="Transactions" />}
+
       <SearchComponent
         placeholder="Search transactions by amount and id"
         allowFilter
+        value={value}
+        handleChange={(e) => handleChange(e)}
         handleFilterClick={handleFilterClick}
       />
 
-      <TransactionCard
-        text="Deposit - 2DE3I2k..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-        incoming
-      />
-      <TransactionCard
-        text="Withdrawal - NI2..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-      />
-      <TransactionCard
-        text="Win Credit - 2DE2k..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-        incoming
-      />
-      <TransactionCard
-        text="Deposit - 2DE3I2k..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-        incoming
-      />
-      <TransactionCard
-        text="Withdrawal - NI2..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-      />
-      <TransactionCard
-        text="Win Credit - 2DE2k..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-        incoming
-      />
-      <TransactionCard
-        text="Deposit - 2DE3I2k..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-        incoming
-      />
-      <TransactionCard
-        text="Withdrawal - NI2..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-      />
-      <TransactionCard
-        text="Win Credit - 2DE2k..."
-        amount="₦ 20,000"
-        date="24 July, 2022. 10:40pm"
-        incoming
-      />
+      {filterSearch
+        ?.filter((a, b) => b < 4)
+        ?.map((data, i) => {
+          return (
+            <div key={i}>
+              <TransactionCard
+                text={`${data?.type} - ${data?.id}`}
+                amount={data?.amount}
+                date={data?.createdAt}
+                type={data?.type}
+              />
+            </div>
+          );
+        })}
+
+{
+          filterSearch?.length < 1 && <div style={{marginTop: "-8rem"}}>
+            <EmptyState 
+            header={"No Transaction Available"}
+          />
+          </div>
+
+        }
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
