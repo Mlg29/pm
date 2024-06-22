@@ -179,7 +179,8 @@ function Transaction() {
               cursor: "pointer",
             }}
             onClick={() =>
-              isMobile ? navigate("/withdrawal") : setShowTransfer(true)
+              //isMobile ? navigate("/withdrawal") : setShowTransfer(true)
+              navigate("/withdrawal")
             }
           >
             <img src={send2} />
@@ -193,7 +194,10 @@ function Transaction() {
               backgroundColor: COLORS.lightOrange,
               cursor: "pointer",
             }}
-            onClick={() => (isMobile ? navigate("/deposit") : setDeposit(true))}
+            onClick={() => 
+              // isMobile ? navigate("/deposit") : setDeposit(true))
+              navigate("/deposit") 
+            }
           >
             <img src={send1} />
             <p style={{ ...FONTS.h6, margin: "0px 0px 0px 10px" }}>Deposit</p>

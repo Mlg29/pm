@@ -73,6 +73,7 @@ function NavHeader() {
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
 
+
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
@@ -258,10 +259,13 @@ function NavHeader() {
                   alignItems: "center",
                 }}
               >
-                <IoIosNotificationsOutline
+               <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
+               <IoIosNotificationsOutline
                   size={20}
                   style={{ cursor: "pointer" }}
                 />
+               </div>
+
                 <Menu
                   menuButton={
                     <div
@@ -492,10 +496,12 @@ function NavHeader() {
                   alignItems: "center",
                 }}
               >
+                 <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
                 <IoIosNotificationsOutline
                   size={20}
                   style={{ cursor: "pointer" }}
                 />
+                </div>
                 <Menu
                   menuButton={
                     <div
@@ -721,10 +727,12 @@ function NavHeader() {
                   alignItems: "center",
                 }}
               >
+                 <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
                 <IoIosNotificationsOutline
                   size={20}
                   style={{ cursor: "pointer" }}
                 />
+                </div>
 
                 <Menu
                   menuButton={

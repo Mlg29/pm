@@ -46,6 +46,7 @@ function BetDetail() {
     }, [betInfo])
 
  
+    console.log({betData, betInfo})
 
     return (
         <div className="top-container">
@@ -59,7 +60,7 @@ function BetDetail() {
             <h3 style={{ ...FONTS.h5, textAlign: 'center',margin: "0rem 0px 2rem 0px" }}>{betData?.status}</h3>
 
             {
-                betData?.opponent ?             <p style={{ ...FONTS.body7, textAlign: 'center', margin: "0rem 0px 2rem 0px" }}>You've won</p> : null
+                betData?.Winner ? <p style={{ ...FONTS.body7, textAlign: 'center', margin: "0rem 0px 2rem 0px" }}>You've won</p> : null
             }
             <h3 style={{ ...FONTS.h2, textAlign: 'center', color: COLORS.gray, margin: "0px 0px 1rem 0px" }}>₦{formatCurrency(betData?.betAmount)}</h3>
 

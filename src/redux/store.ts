@@ -3,14 +3,15 @@ import AuthReducer from './slices/AuthSlice'
 import FootballReducer from './slices/FootballSlice'
 import BetReducer from './slices/BetSlice'
 import TransactionReducer from "./slices/TransactionSlice"
-
+import NotificationReducer from './slices/NotificationSlice'
 
 export const store = configureStore({
   reducer: {
    auth: AuthReducer,
    football: FootballReducer,
    bet: BetReducer,
-   transaction: TransactionReducer
+   transaction: TransactionReducer,
+   notification: NotificationReducer
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

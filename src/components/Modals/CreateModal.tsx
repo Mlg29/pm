@@ -162,6 +162,7 @@ const CreateModal = ({ show, handleClose }) => {
         show={showSuccess}
         handleClose={() => setShowSuccess(false)}
         responseText={""}
+        type=""
     />
 
 <InviteModal

@@ -274,6 +274,7 @@ function NumberOfGames() {
         handleClose={handleClose}
         handleAction={handleAction}
         responseText="Password Updated Successfully"
+        type=""
       />
 
       <ToastContainer />

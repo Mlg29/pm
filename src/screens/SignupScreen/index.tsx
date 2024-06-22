@@ -202,14 +202,14 @@ function SignupScreen() {
       firstName: data?.firstName,
       lastName: data?.lastName,
       email: data?.email,
-      phoneNumber: phoneNumber,
+      phoneNumber: countryListCode?.dialCode +phoneNumber,
       country: country,
       userName: data?.userName,
       dob: dob?.toISOString().slice(0, 10),
     };
     const verifyPayload = {
       email: data?.email,
-      phoneNumber: phoneNumber,
+      phoneNumber: countryListCode?.dialCode + phoneNumber,
       userName: data?.userName,
     };
 

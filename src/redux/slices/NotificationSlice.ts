@@ -8,24 +8,20 @@ import type { RootState } from "../store";
 
 import {
   getRequest,
-  postRequest,
-  getRequestNoToken,
-  postRequestNoToken,
-  updateRequest,
-  postImageRequest,
+  updateRequestWithNoPayload,
 } from "../../https/server";
 import { BaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
-  transactions: [],
+  notifications: [],
 };
 
-export const createTransaction = createAsyncThunk(
-  "transaction/createTransaction",
+export const updateNotifications = createAsyncThunk(
+  "notification/updateNotifications",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${BaseUrl}/transactions`, payload);
+      const response = await updateRequestWithNoPayload(`${BaseUrl}/notifications/${payload?.id}/read`);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -36,48 +32,48 @@ export const createTransaction = createAsyncThunk(
 );
 
 
-export const getTransactions = createAsyncThunk(
-  "transaction/getTransactions",
+export const getNotifications= createAsyncThunk(
+  "notification/getNotifications",
   async () => {
-    var response = await getRequest(`${BaseUrl}/transactions/history`);
+    var response = await getRequest(`${BaseUrl}/notifications`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
   }
 );
 
-export const TransactionSlice = createSlice({
-  name: "transaction",
+export const NotificationSlice = createSlice({
+  name: "notification",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getTransactions.pending, (state, action) => {
+    builder.addCase(getNotifications.pending, (state, action) => {
       state.loading = true;
     }),
       builder.addCase(
-        getTransactions.fulfilled,
+        getNotifications.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.transactions = action.payload;
+          state.notifications = action.payload;
         }
       );
-    builder.addCase(getTransactions.rejected, (state, action) => {
+    builder.addCase(getNotifications.rejected, (state, action) => {
       // state.error = action.error.message
     });
-    builder.addCase(createTransaction.pending, (state, action) => {
+    builder.addCase(updateNotifications.pending, (state, action) => {
       state.loading = true;
     }),
       builder.addCase(
-        createTransaction.fulfilled,
+        updateNotifications.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
         }
       );
-    builder.addCase(createTransaction.rejected, (state, action) => {
+    builder.addCase(updateNotifications.rejected, (state, action) => {
       // state.error = action.error.message
     });
   },
 });
 
 
-export default TransactionSlice.reducer;
+export default NotificationSlice.reducer;

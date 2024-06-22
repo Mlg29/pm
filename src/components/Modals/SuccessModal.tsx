@@ -5,6 +5,7 @@ import success from "../../assets/images/success.svg"
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import { FlexDirection } from "../../utils/type";
+import { MdSmsFailed } from "react-icons/md";
 
 export const styles = {
     container: {
@@ -43,7 +44,7 @@ export const styles = {
 }
 
 
-const SuccessModal = ({ show, handleClose, responseText }) => {
+const SuccessModal = ({ show, handleClose,type, responseText }) => {
     const navigate = useNavigate()
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -61,8 +62,11 @@ const SuccessModal = ({ show, handleClose, responseText }) => {
                 flex: 1,
               }}
             >
-              <img src={success} style={{ marginBottom: "3rem" }} />
+             {
+              type === "success" ?  <img src={success} style={{ marginBottom: "3rem" }} />
+:  <MdSmsFailed color="red" size={70} />
 
+             }
               <div>
                 <h3
                   style={{

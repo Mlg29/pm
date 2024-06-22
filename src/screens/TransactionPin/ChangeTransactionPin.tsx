@@ -223,6 +223,7 @@ function ChangeTransactionPin() {
         handleClose={handleClose}
         handleAction={handleAction}
         responseText="Pin Updated Successfully"
+        type=""
       
       />
       <ToastContainer />

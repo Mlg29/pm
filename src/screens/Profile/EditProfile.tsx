@@ -72,7 +72,8 @@ function EditProfile() {
   const [storePayload, setStorePayload] = useState(null)
   const [country, setCountry] = useState("Nigeria");
   const [phoneNumber, setPhoneNumber] = useState("");
-
+  const [message, setMessage] = useState("")
+  const [messageType, setMessageType] = useState("")
 
   const [countryList, setCountryList] = useState([]);
   const countryListCode = countryList?.find((dd) => dd?.country === country)
@@ -149,10 +150,23 @@ function EditProfile() {
     });
 
   const handleSubmitData = async (data) => {
+    if(!country || country?.length < 1){
+      toast.error("Country is required", {
+        position: "bottom-center",
+      });
+      return
+    }
+       if(!phoneNumber || phoneNumber?.length < 1){
+      toast.error("Phone number is required", {
+        position: "bottom-center",
+      });
+      return
+    }
     const payload = {
       // ...data,
       profileImage: fileUrl ? fileUrl : "",
-      phoneNumber: phoneNumber,
+      phoneNumber: countryListCode?.dialCode + phoneNumber,
+    //  country: country,
       //  dob: dob?.toISOString().slice(0, 10),
     };
 
@@ -167,7 +181,10 @@ function EditProfile() {
     setLoader(true);
     try {
       var response = await dispatch(updateUserData(storePayload));
-
+      if(response?.error?.message === "Rejected") {
+        setMessage(response?.payload)
+        setMessageType("Rejected")
+      }
       if (updateUserData.fulfilled.match(response)) {
         setLoader(false);
         fetchUserInfo();
@@ -297,7 +314,8 @@ function EditProfile() {
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
-        responseText="Profile Updated Successfully"
+        type={messageType ? "failed" : "success"}
+        responseText={message ? message : "Password Updated Successfully"}
       
       />
 

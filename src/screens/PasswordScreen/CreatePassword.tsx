@@ -64,7 +64,8 @@ function CreatePasswordNew() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
-
+  const [message, setMessage] = useState("")
+  const [messageType, setMessageType] = useState("")
   const [show, setShow] = useState(false)
   const [storePayload, setStorePayload] = useState(null)
 
@@ -102,8 +103,13 @@ function CreatePasswordNew() {
   const handleAction = async () => {
     setLoader(true);
     try {
-      var response = await dispatch(createNewPassword(storePayload));
+      var response = await dispatch(createNewPassword(storePayload)) as any;
+      if(response?.error?.message === "Rejected") {
+        setMessage(response?.payload)
+        setMessageType("Rejected")
+      }
       if (createNewPassword.fulfilled.match(response)) {
+       
         toast.success(response?.payload?.data?.message, {
           position: "bottom-center",
         });
@@ -175,7 +181,7 @@ function CreatePasswordNew() {
             </h3>
           )}
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
-            Create a secure 6-Digits PIN to secure your account.
+            Create a new password to secure your account.
           </p>
         </div>
 
@@ -269,7 +275,8 @@ function CreatePasswordNew() {
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
-        responseText="Password Updated Successfully"
+        type={messageType ? "failed" : "success"}
+        responseText={message ? message : "Password Updated Successfully"}
       
       />
 

@@ -210,6 +210,7 @@ function Maximum() {
         handleClose={handleClose}
         handleAction={handleAction}
         responseText="Password Updated Successfully"
+        type=""
       />
 
       <ToastContainer />

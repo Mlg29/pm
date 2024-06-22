@@ -76,11 +76,11 @@ function DesktopRouters() {
       <Route path="/pin" element={<Layout><TransactionPin /></Layout>} />
       <Route path="/secret-question" element={<Layout><SecretQuestion /></Layout>} />
       <Route path="/auth-success" element={<Layout><AuthSuccess /></Layout>} />
-      <Route path="/notification" element={<NotificationScreen />} />
+      <Route path="/notification" element={<SubLayout><NotificationScreen /></SubLayout>} />
       <Route path="/forget-password" element={<Layout><ForgetPassword /></Layout>} />
       <Route path="/create-new-password" element={<Layout><CreatePasswordNew /></Layout>} />
       <Route path="/password-success" element={<Layout><PasswordSuccess /></Layout>} />
-      <Route path="/deposit-success" element={<Layout><DepositSuccess /></Layout>} />
+      <Route path="/deposit-success" element={<SubLayout><DepositSuccess /></SubLayout>} />
       <Route path="/forget-password-verify" element={<Layout><ForgetPasswordVerify /></Layout>} />
       <Route path="/terms-and-conditions" element={<Layout><TermsAndConditions /></Layout>} />
       <Route path="/pin-success" element={<Layout><PinSuccess /></Layout>} />

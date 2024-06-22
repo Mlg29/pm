@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 
 
-const PinModal = ({ show, handleClose, handleAction, responseText }) => {
+const PinModal = ({ show, handleClose, handleAction,type, responseText }) => {
   const [otp, setOtp] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -45,11 +45,13 @@ const PinModal = ({ show, handleClose, handleAction, responseText }) => {
     if (verifyTransactionPin.fulfilled.match(verifyResponse)) {
       await handleAction().then((aa) => {
         handleSuccessShow();
+        setOtp("")
+        setLoader(false);
       });
     } else {
       var errMsg = verifyResponse?.payload as string
       setLoader(false);
-      toast.error(errMsg, {
+      toast?.error(errMsg, {
         position: "bottom-center",
       });
     }
@@ -102,6 +104,7 @@ const PinModal = ({ show, handleClose, handleAction, responseText }) => {
       <SuccessModal
         show={showSuccess}
         handleClose={() => setShowSuccess(false)}
+        type={type}
         responseText={responseText}
       />
 

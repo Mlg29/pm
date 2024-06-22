@@ -66,6 +66,7 @@ const BankModal = ({ show, handleClose }) => {
         show={showSuccess}
         handleClose={() => setShowSuccess(false)}
         responseText={""}
+        type=""
     />
   
     </>

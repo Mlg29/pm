@@ -216,7 +216,10 @@ function ProfileDetail() {
 
       <EditProfileModal
         show={showEdit}
-        handleClose={() => setShowEdit(false)}
+        handleClose={() => {
+          fetchUserInfo();
+          setShowEdit(false)
+        }}
       />
     </div>
   );
