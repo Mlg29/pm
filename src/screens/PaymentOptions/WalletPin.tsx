@@ -83,6 +83,7 @@ function WalletPin() {
         const response = await dispatch(adjustBet(adjustPayload))
         if (adjustBet.fulfilled.match(response)) {
           setLoader(false);
+         
           return navigate("/bet-success", {
             state: {betId: response?.payload?.data?.id}
           });

@@ -116,7 +116,7 @@ export const adjustBet = createAsyncThunk(
       requestedPrediction: payload?.requestedPrediction,
     }
     try {
-      const response = await updateRequestWithPayload(`${BaseUrl}/bet/${payload?.userId}`, pp);
+      const response = await postRequest(`${BaseUrl}/bet/adjust`, pp);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
