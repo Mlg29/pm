@@ -151,6 +151,8 @@ function GameDetails() {
     };
   }, []);
 
+
+
   const handleRoute = (route: string) => {
     if (token) {
       setSelected(route);

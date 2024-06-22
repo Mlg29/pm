@@ -13,6 +13,8 @@ function NotificationScreen() {
   const [updateLoader, setUpdateLoader] = useState(false)
 
 
+  console.log({notifications})
+
 
   const getNotification = async () => {
     await dispatch(getNotifications()).then(pp => {
