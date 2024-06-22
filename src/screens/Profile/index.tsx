@@ -112,7 +112,7 @@ function Profile() {
     <div className="top-container">
       <div style={{ ...styles.container }}>
         <h3 style={{ ...FONTS.h4, color: COLORS.primary }}>Profile</h3>
-        <div>
+        <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
           <IoIosNotificationsOutline
             size={45}
             color={COLORS.primary}

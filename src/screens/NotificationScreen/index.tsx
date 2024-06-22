@@ -5,6 +5,8 @@ import { useAppDispatch } from "../../redux/hooks";
 import { useEffect, useState } from "react";
 import { getNotifications, updateNotifications } from "../../redux/slices/NotificationSlice";
 import { ToastContainer, toast } from "react-toastify";
+import Loader from "../../components/Loader";
+import EmptyState from "../../components/EmptyState";
 
 function NotificationScreen() {
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ function NotificationScreen() {
   const [updateLoader, setUpdateLoader] = useState(false)
 
 
-  console.log({notifications})
+ // console.log({notifications})
 
 
   const getNotification = async () => {
@@ -22,13 +24,19 @@ function NotificationScreen() {
     })
   }
 
-  const markAsRead = async () => {
+  const markAsRead = async (id) => {
     const payload = {
-      id: ""
+      id: id
     }
+    setUpdateLoader(true);
     var response = await dispatch(updateNotifications(payload))
     if(updateNotifications.fulfilled.match(response)){
-
+      console.log({response})
+      setUpdateLoader(false);
+      getNotification()
+      // toast.error(response?.payload?.data?.message, {
+      //   position: "bottom-center",
+      // });
     }
     else {
       var errMsg = response?.payload as string;
@@ -52,34 +60,30 @@ function NotificationScreen() {
   return (
     <div className="top-container">
       <Header text="Notifications" />
+      {
+        updateLoader && <div style={{height: 30}}>
+          <Loader />
+        </div>
+      }
       <div style={{ margin: "20px 0px 0px 0px" }}>
-        <NotificationCard
-          date="11 Jan, 2024  10:04"
-          header="Bet Challenge"
-          message="Daniel Joseph has invited to join the bet challenge with him on Milan vs AS Roma game for ₦ 20,000. "
-          showBtn
-        />
-        <NotificationCard
-          date="11 Jan, 2024  10:04"
-          header="Bet Challenge"
-          message="Daniel Joseph has invited to join the bet challenge with him on Milan vs AS Roma game for ₦ 20,000. "
-          showBtn
-        />
-        <NotificationCard
-          date="11 Jan, 2024  10:04"
-          header="Bet Challenge"
-          message="Daniel Joseph has invited to join the bet challenge with him on Milan vs AS Roma game for ₦ 20,000. "
-        />
-        <NotificationCard
-          date="11 Jan, 2024  10:04"
-          header="Bet Challenge"
-          message="Daniel Joseph has invited to join the bet challenge with him on Milan vs AS Roma game for ₦ 20,000. "
-        />
-        <NotificationCard
-          date="11 Jan, 2024  10:04"
-          header="Bet Challenge"
-          message="Daniel Joseph has invited to join the bet challenge with him on Milan vs AS Roma game for ₦ 20,000. "
-        />
+        {
+          notifications?.map((data, i) => {
+            return <div key={i}>
+                 <NotificationCard
+                    data={data}
+                    handleRead={(id) => markAsRead(id)}
+              />
+            </div>
+          }) 
+        }
+       {
+          notifications?.length < 1 && <div style={{marginTop: "-8rem"}}>
+            <EmptyState 
+            header={"No Notification Available"}
+          />
+          </div>
+
+        }
       </div>
 
       <ToastContainer />
