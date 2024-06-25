@@ -7,13 +7,16 @@ import { getNotifications, updateNotifications } from "../../redux/slices/Notifi
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import EmptyState from "../../components/EmptyState";
+import { updateBetAdjust } from "../../redux/slices/BetSlice";
+import { useMediaQuery } from "react-responsive";
 
 function NotificationScreen() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [notifications, setNotifications] = useState([])
   const [updateLoader, setUpdateLoader] = useState(false)
-
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [loader, setLoader] = useState(false)
 
  // console.log({notifications})
 
@@ -21,6 +24,7 @@ function NotificationScreen() {
   const getNotification = async () => {
     await dispatch(getNotifications()).then(pp => {
       setNotifications(pp?.payload?.data)
+      setLoader(false)
     })
   }
 
@@ -48,18 +52,63 @@ function NotificationScreen() {
   }
 
 
+  const decideOnBet = async (data) => {
+    const payload = {
+      requestId: data?.id,
+      status: data?.status
+    }
+    setUpdateLoader(true);
+    var response = await dispatch(updateBetAdjust(payload))
+    if(updateNotifications.fulfilled.match(response)){
+      console.log({response})
+      setUpdateLoader(false);
+      getNotification()
+      // toast.error(response?.payload?.data?.message, {
+      //   position: "bottom-center",
+      // });
+    }
+    else {
+      var errMsg = response?.payload as string;
+      setUpdateLoader(false);
+      toast.error(errMsg, {
+        position: "bottom-center",
+      });
+    }
+  }
+
+
 
 
   useEffect(() => {
+    setLoader(true)
     getNotification()
   }, [])
 
 
+  //console.log({notifications})
 
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="top-container">
-      <Header text="Notifications" />
+         <Header text="Notifications" />
+
+      {/* <Header text="Notifications" /> */}
       {
         updateLoader && <div style={{height: 30}}>
           <Loader />
@@ -72,12 +121,13 @@ function NotificationScreen() {
                  <NotificationCard
                     data={data}
                     handleRead={(id) => markAsRead(id)}
+                    decideOnBet={(data) => decideOnBet(data)}
               />
             </div>
           }) 
         }
        {
-          notifications?.length < 1 && <div style={{marginTop: "-8rem"}}>
+          notifications?.length < 1 && <div style={{marginTop: "-3rem"}}>
             <EmptyState 
             header={"No Notification Available"}
           />

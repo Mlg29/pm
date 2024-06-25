@@ -14,6 +14,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import moment from "moment";
 import { MdPrivacyTip } from "react-icons/md";
+import Loader from "../../components/Loader";
 
 const styles = {
   container: {
@@ -53,21 +54,43 @@ function ProfileDetail() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
+  const [loader, setLoader] = useState(false)
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
+      setLoader(false)
     }
   };
 
   useEffect(() => {
+    setLoader(true)
     fetchUserInfo();
   }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleShowEdit = () => setShowEdit(true);
+
+
+   
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div style={{ ...styles.container }}>

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { useAppDispatch } from "../../redux/hooks"
 import { getUserData, updateUserData } from "../../redux/slices/AuthSlice"
 import { ToastContainer, toast } from "react-toastify";
+import Loader from "../../components/Loader"
 
 
 
@@ -27,6 +28,7 @@ const styles = {
 function Preference() {
     const navigate = useNavigate()
     const isMobile = useMediaQuery({ maxWidth: 767 })
+    const [loaderBtn, setLoaderBtn] = useState(false);
     const [loader, setLoader] = useState(false);
     const dispatch = useAppDispatch() as any;
 
@@ -53,9 +55,11 @@ function Preference() {
             announcements: response?.payload?.announcements
           })
         }
+        setLoader(false)
       };
     
       useEffect(() => {
+        setLoader(true)
         fetchUserInfo();
       }, []);
 
@@ -94,25 +98,44 @@ function Preference() {
             return;
         }
     
-        setLoader(true);
+        setLoaderBtn(true);
         try {
           var response = await dispatch(updateUserData(checkedItems));
     
           if (updateUserData.fulfilled.match(response)) {
-            setLoader(false);
+            setLoaderBtn(false);
             fetchUserInfo();
             toast.success("Notification Updated Successfully", {
               position: "bottom-center",
             });
           } else {
             var errMsg = response?.payload as string;
-            setLoader(false);
+            setLoaderBtn(false);
             toast.error(errMsg, {
               position: "bottom-center",
             });
           }
         } catch (err) {}
       };
+
+
+       
+    if (loader) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            flex: 1,
+            height: "50vh",
+          }}
+        >
+          <Loader />
+        </div>
+      );
+    }
 
     return (
         <div className='top-container'>
@@ -156,7 +179,7 @@ function Preference() {
                    {
                     isMobile ?  <Button
                     text="Save"
-                    isLoading={loader}
+                    isLoading={loaderBtn}
                     propStyle={{ width: "100%" }}
                     handlePress={() => handleSubmit()}
                    // handlePress={() => navigate('/secret-question')}
@@ -164,7 +187,7 @@ function Preference() {
                 :
                 <Button
                 text="Save"
-                isLoading={loader}
+                isLoading={loaderBtn}
                 propStyle={{ width: "100%" }}
                 handlePress={() => handleSubmit()}
               //  handlePress={() => navigate('/secret-question')}

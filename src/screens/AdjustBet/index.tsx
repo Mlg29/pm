@@ -72,14 +72,14 @@ const AdjustBet = () => {
         <h3 style={{ ...FONTS.h6 }}>₦{formatCurrency(userFee?.amount)}</h3>
       </div>
 
-     <div>
+     {/* <div>
      <div style={{display: "flex", alignItems: "center"}}>
       <div style={{width: "30px"}} >
          <input type="checkbox" onChange={checkHandler} checked={allowCurrency}  />
       </div>
         <p>Allow Other Currency</p>
       </div>
-     </div>
+     </div> */}
 
       <div>
    

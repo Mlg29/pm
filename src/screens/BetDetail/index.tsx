@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { getBetById } from "../../redux/slices/BetSlice"
 import { formatCurrency } from "../../utils/helper"
 import moment from "moment"
+import Loader from "../../components/Loader"
 
 const styles = {
     div: {
@@ -37,16 +38,36 @@ function BetDetail() {
     const dispatch = useAppDispatch()
     const betInfo = location?.state?.betInfo
     const [betData, setBetData] = useState<any>()
+    const id = location?.search?.replace('?', '');
+    const [loader, setLoader] = useState(false)
 
 
     useEffect(() => {
-        dispatch(getBetById(betInfo)).then(pp => {
+        setLoader(true)
+        dispatch(getBetById(id)).then(pp => {
             setBetData(pp?.payload)
+            setLoader(false)
         })
-    }, [betInfo])
+    }, [id])
 
  
-    console.log({betData, betInfo})
+    if (loader) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+              height: "50vh",
+            }}
+          >
+            <Loader />
+          </div>
+        );
+      }
+  
 
     return (
         <div className="top-container">

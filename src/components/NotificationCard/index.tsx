@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function NotificationCard(props: any) {
   const navigate = useNavigate();
-  const { header, message, date, showBtn, data, handleRead } = props;
+  const { header, message, date, showBtn, data, handleRead, decideOnBet } = props;
   return (
     <div style={{ ...styles.container }}>
       <div

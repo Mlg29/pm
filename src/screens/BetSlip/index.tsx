@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getBetHistory } from "../../redux/slices/BetSlice";
 import moment from "moment";
 import { getUserData, loginState, userState } from "../../redux/slices/AuthSlice";
+import Loader from "../../components/Loader";
 
 function BetSlip() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function BetSlip() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userState)
   const [betList, setBetList] = useState<any>([]);
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     dispatch(getUserData())
@@ -33,12 +35,16 @@ function BetSlip() {
     const payload = {
       status: active === "ACTIVE" ? "PENDING" : active,
     };
+    setLoader(true)
 
     dispatch(getBetHistory(payload)).then((pp) => {
       setBetList(pp?.payload);
+      setLoader(false)
     });
 
   }, [active]);
+
+
 
   const groupByDate = (data) => {
     return data?.reduce((acc, item) => {
@@ -54,13 +60,30 @@ function BetSlip() {
   const groupedData = groupByDate(betList);
 
 
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
+
 
   return (
     <div className="top-container">
       <div style={{ ...styles.container }}>
         <h3>Bet Slip</h3>
         {isMobile && (
-          <img src={notification} onClick={() => navigate("/notification")} />
+          <img src={notification} onClick={() => navigate("/notification")} style={{cursor: "pointer"}} />
         )}
       </div>
       <div style={{ ...styles.tabs }}>
@@ -264,7 +287,7 @@ function BetSlip() {
           })}
         </div>
       )} */}
-      {betList?.length < 1 && (
+      {betList?.length < 1 || !betList && (
         <div>
           <EmptyState
             header={`No ${active} bet`}

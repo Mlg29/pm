@@ -55,7 +55,7 @@ function SlipCard(props: any) {
     <div
     style={{ ...styles.container, cursor: "pointer" }}
       onClick={() =>
-        navigate("/bet-detail", {
+        navigate(`/bet-detail?${data?.id}`, {
           state: { betInfo: data?.id },
         })
       }

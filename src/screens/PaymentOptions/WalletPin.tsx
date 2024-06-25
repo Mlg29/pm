@@ -83,9 +83,9 @@ function WalletPin() {
         const response = await dispatch(adjustBet(adjustPayload))
         if (adjustBet.fulfilled.match(response)) {
           setLoader(false);
-          console.log({adjustPayload, response})
+          // console.log({adjustPayload, response})
           return navigate("/bet-success", {
-            state: {betId: response?.payload?.data?.id}
+            state: {betId: response?.payload?.data?.id, type: "adjust"}
           });
         } else {
           var errMsg = response?.payload as string;
@@ -101,7 +101,7 @@ function WalletPin() {
           setLoader(false);
      
           return navigate("/bet-success", {
-            state: {betId: response?.payload?.data?.id}
+            state: {betId: response?.payload?.data?.id, type: "accept"}
           });
         } else {
           var errMsg = response?.payload as string;
@@ -115,7 +115,7 @@ function WalletPin() {
         if (createBet.fulfilled.match(response)) {
           setLoader(false);
           return navigate("/bet-success", {
-            state: {betId: response?.payload?.data?.id}
+            state: {betId: response?.payload?.data?.id, type: "created"}
           });
         } else {
           var errMsg = response?.payload as string;

@@ -69,7 +69,8 @@ function OpenBet() {
         const payload = {
             page: 1,
             pageSize: 20,
-            id: userSelection?.sportEventId
+            id: userSelection?.sportEventId,
+            outcome: userSelection?.userType
         }
 
         dispatch(getOpenBet(payload)).then(pp => {

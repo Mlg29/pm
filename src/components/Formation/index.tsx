@@ -35,152 +35,50 @@ const styles = {
   },
 };
 
-const Formation = () => {
-  const homeTeam = {
-    squad: {
-      gk: {
-        // name: "Ola",
-        number: 1,
-        color: "#FDDC02",
-        numberColor: "10",
-      },
-      df: [
-        {
-          number: 2,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-        {
-          number: 29,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-        {
-          number: 6,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-        {
-          number: 3,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-      ],
-      cdm: [
-        {
-          number: 4,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-        {
-          number: 8,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-      ],
-      cam: [
-        {
-          number: 11,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-        {
-          number: 7,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-        {
-          number: 29,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-      ],
-      fw: [
-        {
-          number: 2,
-          color: "#FDDC02",
-          numberColor: "10",
-        },
-      ],
-      style: {
-        color: "red",
-        numberColor: "blue",
-      },
-    },
-  };
+const Formation = ({gameInfo, homeTeamInfo, awayTeamInfo}) => {
 
-  const awayTeam = {
-    squad: {
-      gk: {
-        // name: "Ola",
-        number: 1,
-        color: "#4285F4",
+  const transformPlayers = (players, color) => {
+    return players?.reduce((team, player) => {
+      const position = player["@pos"];
+      const playerData = {
+        number: player["@number"],
+        color: color,
         numberColor: "10",
+      };
+  
+      if (position === "G") {
+        team.squad.gk = playerData;
+      } else if (position === "D") {
+        team.squad.df.push(playerData);
+      } else if (position === "M") {
+        if (player["@formation_pos"] <= 7) {
+          team.squad.cdm.push(playerData);
+        } else {
+          team.squad.cam.push(playerData);
+        }
+      } else if (position === "F") {
+        team.squad.fw.push(playerData);
+      }
+  
+      return team;
+    }, {
+      squad: {
+        gk: {},
+        df: [],
+        cdm: [],
+        cam: [],
+        fw: [],
+        style: {
+          color: "red",
+          numberColor: "blue",
+        },
       },
-      df: [
-        {
-          number: 2,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-        {
-          number: 6,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-        {
-          number: 3,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-      ],
-      cdm: [
-        {
-          number: 4,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-        {
-          number: 8,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-      ],
-      cam: [
-        {
-          number: 11,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-        {
-          number: 7,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-        {
-          number: 10,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-        {
-          number: 29,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-      ],
-      fw: [
-        {
-          number: 2,
-          color: "#4285F4",
-          numberColor: "10",
-        },
-      ],
-      style: {
-        color: "red",
-        numberColor: "blue",
-      },
-    },
+    });
   };
+  
+  const homeTeam = transformPlayers(homeTeamInfo?.player,"#FDDC02");
+  const awayTeam = transformPlayers(awayTeamInfo?.player,"#4285F4");
+
 
   return (
     <div style={{ ...styles.rotate }}>
@@ -193,14 +91,14 @@ const Formation = () => {
               alignItems: "center",
             }}
           >
-            <img src={milan} />
-            <p style={{ ...FONTS.body6 }}>Milan</p>
+            <img src={gameInfo?.localTeamLogo} style={{width: 30, height: 30}} />
+            <p style={{ ...FONTS.body6, marginLeft: 4 }}>{gameInfo?.localTeamName}</p>
           </div>
-          <h3 style={{ ...FONTS.body7, marginLeft: 10, marginTop: 5 }}>
+          {/* <h3 style={{ ...FONTS.body7, marginLeft: 10, marginTop: 5 }}>
             M. Arteta
-          </h3>
+          </h3> */}
         </div>
-        <p style={{ ...FONTS.body6 }}>4-2-3-1</p>
+        <p style={{ ...FONTS.body6 }}>{homeTeamInfo["@formation"]}</p>
       </div>
       <SoccerLineUp
         size={"responsive"}
@@ -218,35 +116,48 @@ const Formation = () => {
               alignItems: "center",
             }}
           >
-            <img src={roma} />
-            <p style={{ ...FONTS.body6 }}>Roma</p>
+            <img src={gameInfo?.visitorTeamLogo} style={{width: 30, height: 30}}  />
+            <p style={{ ...FONTS.body6, marginLeft: 4 }}>{gameInfo?.visitorTeamName}</p>
           </div>
-          <h3 style={{ ...FONTS.body7, marginLeft: 10, marginTop: 5 }}>
+          {/* <h3 style={{ ...FONTS.body7, marginLeft: 10, marginTop: 5 }}>
             M. Arteta
-          </h3>
+          </h3> */}
         </div>
-        <p style={{ ...FONTS.body6 }}>3-2-4-1</p>
+        <p style={{ ...FONTS.body6 }}>{awayTeamInfo["@formation"]}</p>
       </div>
 
       <div style={{backgroundColor: "white"}}>
         <p style={{ ...FONTS.body5,textAlign: "center", marginTop: 5 }}>SUBSTITUTES</p>
-          <div>
+          <div style={{display: "flex", justifyContent: "space-between"}}>
+            <div style={{width: "49%"}}>
             {
-              ["","","","","","",""]?.map(dd => {
+              gameInfo?.substitutes?.localteam?.player?.map(dd => {
                 return (
-                  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", padding: 10}}>
+                  <div style={{padding: 10}}>
                     <div style={{display: "flex", alignItems: "center"}}>
-                      <p style={{ ...FONTS.body7, marginRight: 5}}>32</p>
-                      <p style={{ ...FONTS.body7, marginRight: 5 }}>John Tijani</p>
-                    </div>
-                    <div style={{display: "flex", alignItems: "center"}}>
-                      <p style={{ ...FONTS.body7, marginRight: 5}}>32</p>
-                      <p style={{ ...FONTS.body7,marginRight: 5 }}>John Tijani</p>
+                      <p style={{ ...FONTS.body7, marginRight: 5}}>{dd["@number"]}</p>
+                      <p style={{ ...FONTS.body7, marginRight: 5 }}>{dd["@name"]}</p>
                     </div>
                   </div>
                 )
               })
             }
+            </div>
+            <div style={{width: "49%", display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+            {
+              gameInfo?.substitutes?.visitorteam?.player?.map(dd => {
+                return (
+                  <div style={{padding: 10}}>
+                    <div style={{display: "flex", alignItems: "center"}}>
+                      <p style={{ ...FONTS.body7, marginRight: 5}}>{dd["@number"]}</p>
+                      <p style={{ ...FONTS.body7,marginRight: 5 }}>{dd["@name"]}</p>
+                    </div>
+                  </div>
+                )
+              })
+            }
+            </div>
+            
             
           </div>
      

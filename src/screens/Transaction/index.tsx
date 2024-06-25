@@ -21,6 +21,7 @@ import { getUserData } from "../../redux/slices/AuthSlice";
 import { formatCurrency } from "../../utils/helper";
 import { getTransactions } from "../../redux/slices/TransactionSlice";
 import EmptyState from "../../components/EmptyState";
+import Loader from "../../components/Loader";
 
 const styles = {
   div: {
@@ -91,15 +92,36 @@ function Transaction() {
     const response = await dispatch(getTransactions());
     if (getTransactions.fulfilled.match(response)) {
       setTransactions(response?.payload);
+      setLoader(false)
     }
   };
 
 
 
   useEffect(() => {
+    setLoader(true)
     fetchUserInfo();
     fetchTransactions();
+  
   }, []);
+
+
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div>

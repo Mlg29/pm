@@ -55,7 +55,8 @@ export const getOpenBet = createAsyncThunk(
       let queryParams = [];
       if (payload?.page) queryParams.push(`page=${payload?.page}`);
       if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
-      if (payload?.id) queryParams.push(`id=${payload.id}`);
+      if (payload?.id) queryParams.push(`sportEventId=${payload.id}`);
+      if (payload?.outcome) queryParams.push(`outcome=${payload.outcome}`);
       const queryString = queryParams.join("&");
       return `${BaseUrl}/bet/open?${queryString}`;
     };
@@ -66,6 +67,24 @@ export const getOpenBet = createAsyncThunk(
     );
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
+    }
+  }
+);
+
+export const updateBetAdjust = createAsyncThunk(
+  "bet/updateBetAdjust",
+  async (payload: any, { rejectWithValue }) => {
+   const pp = {
+    status: payload?.status
+   }
+
+    try {
+      const response = await updateRequestWithPayload(`${BaseUrl}/bet/adjust/${payload?.requestId}`, pp);
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
     }
   }
 );
@@ -207,6 +226,18 @@ export const BetSlice = createSlice({
         }
       );
     builder.addCase(updateBetById.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(updateBetAdjust.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        updateBetAdjust.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(updateBetAdjust.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(acceptBet.pending, (state, action) => {

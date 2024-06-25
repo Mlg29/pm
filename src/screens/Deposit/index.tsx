@@ -58,7 +58,7 @@ function Deposit() {
     <div className="top-container">
       <Header text="Fund Wallet" />
 
-      <p style={{ ...FONTS.body6, margin: "2rem 0px" }}>
+      <p style={{ ...FONTS.body6, margin: "1rem 0px" }}>
         Please specify the amount you wish to top up into your wallet.
       </p>
 
@@ -82,6 +82,8 @@ function Deposit() {
           handlePress={() => handleNext()}
         />
       </div>
+
+      <ToastContainer />
     </div>
   );
 }
