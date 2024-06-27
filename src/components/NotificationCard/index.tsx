@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function NotificationCard(props: any) {
   const navigate = useNavigate();
-  const { header, message, date, showBtn, data, handleRead, decideOnBet } = props;
+  const { header, message, date, showBtn, data, handleRead } = props;
   return (
     <div style={{ ...styles.container }}>
       <div
@@ -32,6 +32,13 @@ function NotificationCard(props: any) {
       </div>
       : null
     } */}
+   {
+    data?.type === "BET_ADJUSTED_BR" ?
+    <div style={{cursor: "pointer", marginTop: 10}}>
+    <p style={{...FONTS.body7, color: COLORS.orange, textDecoration: 'underline'}} onClick={() => navigate(`/bet-adjust?${data?.content?.adjustmentId}`)}>View Detail</p>
+  </div>
+  : null
+   }
     </div>
   );
 }

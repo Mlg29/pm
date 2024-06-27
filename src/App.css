@@ -125,6 +125,12 @@ input:focus, input:active {
   margin: auto;
 }
 
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+  background-color: #2D0D02;
+  color: white;
+  outline: none;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

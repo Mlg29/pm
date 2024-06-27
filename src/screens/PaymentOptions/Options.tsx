@@ -13,6 +13,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { formatCurrency } from "../../utils/helper";
+import Loader from "../../components/Loader";
 
 const styles = {
   row: {
@@ -69,6 +70,22 @@ const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
      navigate("/wallet-pin")
   }
 
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="top-container">

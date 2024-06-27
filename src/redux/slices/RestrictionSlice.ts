@@ -8,20 +8,35 @@ import type { RootState } from "../store";
 
 import {
   getRequest,
+  updateRequest,
   updateRequestWithNoPayload,
 } from "../../https/server";
 import { BaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
-  notifications: [],
+
 };
 
-export const updateNotifications = createAsyncThunk(
-  "notification/updateNotifications",
+export const updateBetRestriction = createAsyncThunk(
+  "restriction/updateBetRestriction",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await updateRequestWithNoPayload(`${BaseUrl}/notifications/${payload?.id}/read`);
+      const response = await updateRequest(`${BaseUrl}/bet/max-bet-amount-restriction`, payload);
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
+export const updateBetFrequency = createAsyncThunk(
+  "restriction/updateBetFrequency",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await updateRequest(`${BaseUrl}/bet/frequency-restriction`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -32,49 +47,39 @@ export const updateNotifications = createAsyncThunk(
 );
 
 
-export const getNotifications= createAsyncThunk(
-  "notification/getNotifications",
-  async () => {
-    var response = await getRequest(`${BaseUrl}/notifications`);
-    if (response?.status === 200 || response?.status === 201) {
-      return response?.data;
-    }
-  }
-);
 
-export const NotificationSlice = createSlice({
-  name: "notification",
+
+export const RestrictionSlice = createSlice({
+  name: "restriction",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getNotifications.pending, (state, action) => {
+    builder.addCase(updateBetRestriction.pending, (state, action) => {
       state.loading = true;
     }),
       builder.addCase(
-        getNotifications.fulfilled,
+        updateBetRestriction.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.notifications = action.payload;
         }
       );
-    builder.addCase(getNotifications.rejected, (state, action) => {
+    builder.addCase(updateBetRestriction.rejected, (state, action) => {
       // state.error = action.error.message
     });
-    builder.addCase(updateNotifications.pending, (state, action) => {
+    builder.addCase(updateBetFrequency.pending, (state, action) => {
       state.loading = true;
     }),
       builder.addCase(
-        updateNotifications.fulfilled,
+        updateBetFrequency.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
         }
       );
-    builder.addCase(updateNotifications.rejected, (state, action) => {
+    builder.addCase(updateBetFrequency.rejected, (state, action) => {
       // state.error = action.error.message
     });
   },
 });
 
-export const notificationState = (state: RootState) => state.notification.notifications;
 
-export default NotificationSlice.reducer;
+export default RestrictionSlice.reducer;

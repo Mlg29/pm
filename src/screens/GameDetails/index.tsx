@@ -18,6 +18,7 @@ import { io } from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
 
 import { TbRectangleVerticalFilled } from "react-icons/tb";
+import Loader from "../../components/Loader";
 
 const styles = {
   container: {
@@ -126,9 +127,14 @@ function GameDetails() {
   const [gameInfo, setGameInfo] = useState(null);
   const url = `${BaseUrl}/football`;
   const token = localStorage.getItem("token");
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
+    setLoader(true)
     setGameInfo(game);
+    setTimeout(() => {
+      setLoader(false)
+    }, 1000)
     const socket = io(url);
 
     socket.on("connect", () => {
@@ -183,6 +189,23 @@ function GameDetails() {
   };
 
   
+  if (loader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
+
 
   return (
     <div style={{ ...styles.container }}>
@@ -237,14 +260,14 @@ function GameDetails() {
               <div>
                 <CardList
                   header="Ball Possession"
-                  homeText={gameInfo?.stats?.localteam?.possestiontime["@total"]}
-                  awayText={gameInfo?.stats?.visitorteam?.possestiontime["@total"]}
+                  homeText={gameInfo?.stats?.localteam?.possestiontime["@total"] ? gameInfo?.stats?.localteam?.possestiontime["@total"] : 0}
+                  awayText={gameInfo?.stats?.visitorteam?.possestiontime["@total"] ? gameInfo?.stats?.visitorteam?.possestiontime["@total"] : 0}
                 />
-                <CardList header="Off sides" homeText={gameInfo?.stats?.localteam?.offsides["@total"]} awayText={gameInfo?.stats?.visitorteam?.offsides["@total"]} />
-                <CardList header="Shots" homeText={gameInfo?.stats?.localteam?.shots["@total"]} awayText={gameInfo?.stats?.visitorteam?.shots["@total"]} />
-                <CardList header="Passes" homeText={gameInfo?.stats?.localteam?.passes["@total"]} awayText={gameInfo?.stats?.visitorteam?.passes["@total"]} />
-                <CardList header="Fouls" homeText={gameInfo?.stats?.localteam?.fouls["@total"]} awayText={gameInfo?.stats?.visitorteam?.fouls["@total"]} />
-                <CardList header={<TbRectangleVerticalFilled color="#FFC15E" />} homeText={gameInfo?.stats?.localteam?.yellowcards["@total"]} awayText={gameInfo?.stats?.visitorteam?.yellowcards["@total"]} />
+                <CardList header="Off sides" homeText={gameInfo?.stats?.localteam?.offsides["@total"] ? gameInfo?.stats?.localteam?.offsides["@total"] : 0} awayText={gameInfo?.stats?.visitorteam?.offsides["@total"] ? gameInfo?.stats?.visitorteam?.offsides["@total"] : 0} />
+                <CardList header="Shots" homeText={gameInfo?.stats?.localteam?.shots["@total"] ? gameInfo?.stats?.localteam?.shots["@total"] : 0} awayText={gameInfo?.stats?.visitorteam?.shots["@total"] ? gameInfo?.stats?.visitorteam?.shots["@total"] : 0} />
+                <CardList header="Passes" homeText={gameInfo?.stats?.localteam?.passes["@total"] ? gameInfo?.stats?.localteam?.passes["@total"] : 0} awayText={gameInfo?.stats?.visitorteam?.passes["@total"] ? gameInfo?.stats?.visitorteam?.passes["@total"] : 0} />
+                <CardList header="Fouls" homeText={gameInfo?.stats?.localteam?.fouls["@total"] ? gameInfo?.stats?.localteam?.fouls["@total"] : 0}  awayText={gameInfo?.stats?.visitorteam?.fouls["@total"] ? gameInfo?.stats?.visitorteam?.fouls["@total"] : 0} />
+                <CardList header={<TbRectangleVerticalFilled color="#FFC15E" />} homeText={gameInfo?.stats?.localteam?.yellowcards["@total"] ? gameInfo?.stats?.localteam?.yellowcards["@total"] : 0} awayText={gameInfo?.stats?.visitorteam?.yellowcards["@total"]} />
                 <CardList header={<TbRectangleVerticalFilled color="red" />} homeText={gameInfo?.stats?.localteam?.redcards["@total"] ? gameInfo?.stats?.localteam?.redcards["@total"] : 0} awayText={gameInfo?.stats?.visitorteam?.redcards["@total"] ? gameInfo?.stats?.visitorteam?.redcards["@total"] : 0} />
                 <CardList header="Corners" homeText={gameInfo?.stats?.localteam?.corners["@total"] ? gameInfo?.stats?.localteam?.corners["@total"] : 0} awayText={gameInfo?.stats?.visitorteam?.corners["@total"] ? gameInfo?.stats?.visitorteam?.corners["@total"] : 0} />
                 <CardList header="Saves" homeText={gameInfo?.stats?.localteam?.saves["@total"] ? gameInfo?.stats?.localteam?.saves["@total"] : 0} awayText={gameInfo?.stats?.visitorteam?.saves["@total"] ? gameInfo?.stats?.visitorteam?.saves["@total"] : 0} />

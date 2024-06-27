@@ -8,6 +8,7 @@ import { getSingleUser } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
+import NumberInput from "../../components/NumberInput";
 
 const BetAmount = () => {
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ const BetAmount = () => {
   const checkHandler = () => {
     setAllowCurrency(!allowCurrency);
   };
-  
 
   const handleRoute = async () => {
     if (!amount) {
@@ -39,21 +39,18 @@ const BetAmount = () => {
     return navigate("/options");
   };
 
-
-
   return (
     <div className="top-container">
       <Header text={"Bet Amount"} />
 
       <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
-        <TextInput
+
+        <NumberInput
           label="Amount"
           placeholder="Enter Amount"
           required
           value={amount}
-          onChangeText={(val: string) => {
-            setAmount(val);
-          }}
+          setValue={(val) => setAmount(val)}
         />
 
         <div>

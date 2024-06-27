@@ -11,6 +11,7 @@ import { getOpenBet } from '../../redux/slices/BetSlice'
 import EmptyState from '../../components/EmptyState'
 import { getUserData } from '../../redux/slices/AuthSlice'
 import { formatCurrency } from '../../utils/helper'
+import Loader from '../../components/Loader'
 
 
 
@@ -46,7 +47,7 @@ function OpenBet() {
     const dispatch = useAppDispatch()
     const [openBets, setOpenBets] = useState([])
     const [userData, setUserData] = useState(null);
-
+    const [loader, setLoader] = useState(false)
 
 
 
@@ -72,9 +73,10 @@ function OpenBet() {
             id: userSelection?.sportEventId,
             outcome: userSelection?.userType
         }
-
+        setLoader(true)
         dispatch(getOpenBet(payload)).then(pp => {
             setOpenBets(pp?.payload?.data)
+            setLoader(false)
         })
     }, [userSelection?.sportEventId])
 
@@ -109,8 +111,27 @@ function OpenBet() {
         navigate("/adjust-bet")
     }
 
-    const filterData = openBets?.filter((a, i) => a?.userId !== userData?.id && a?.prediction !== userSelection?.userType)
+    const filterData = openBets?.filter((a, i) => a?.sportEventId === userSelection?.sportEventId && a?.prediction !== userSelection?.userType)
 
+
+    if (loader) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+              height: "50vh",
+            }}
+          >
+            <Loader />
+          </div>
+        );
+      }
+    
+ 
     return (
         <div className='top-container' style={{ backgroundColor: "white" }}>
             <Header

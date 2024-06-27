@@ -55,6 +55,8 @@ import ForgotCreatePasswordNew from "./PasswordScreen/ForgotCreatePassword.tsx";
 import ComingSoon from "./ComingSoon/ComingSoon.tsx";
 import DepositSuccess from "./SuccessScreen/DepositSuccess.tsx";
 import ComingSoonSuccess from "./SuccessScreen/ComingSoonSuccess.tsx";
+import BetAdjust from "./AdjustBet/BetAdjust.tsx";
+import AdjustSuccess from "./SuccessScreen/AdjustSuccess.tsx";
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -82,6 +84,7 @@ function Routers() {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/create-new-password" element={<CreatePasswordNew />} />
         <Route path="/password-success" element={<PasswordSuccess />} />
+        <Route path="/adjust-success" element={<AdjustSuccess />} />
         <Route path="/pin-success" element={<PinSuccess />} />
         <Route path="/deposit-success" element={<DepositSuccess />} />
         <Route
@@ -99,6 +102,7 @@ function Routers() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/game-details" element={<GameDetails />} />
         <Route path="/bet-detail" element={<BetDetail />} />
+        <Route path="/bet-adjust" element={<BetAdjust />} />
         <Route path="/transaction-list" element={<TransactionList />} />
         <Route path="/deposit" element={<Deposit />} />
         <Route path="/withdrawal" element={<Withdrawal />} />

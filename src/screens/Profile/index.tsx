@@ -15,8 +15,12 @@ import { Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import LogOut from "../../components/Modals/LogOut";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
+import { getNotifications, notificationState } from "../../redux/slices/NotificationSlice";
+import { Badge } from "primereact/badge";
+
+
 
 const styles = {
   container: {
@@ -45,9 +49,14 @@ const styles = {
 function Profile() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-
+  const notifications = useAppSelector(notificationState) as any
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
+
+  const getNotification = async () => {
+    await dispatch(getNotifications())
+  }
+
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -58,6 +67,7 @@ function Profile() {
 
   useEffect(() => {
     fetchUserInfo();
+    getNotification()
   }, []);
 
 
@@ -122,6 +132,7 @@ function Profile() {
               padding: 5,
             }}
           />
+           <Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:15, bottom: 5}}></Badge>
         </div>
       </div>
 

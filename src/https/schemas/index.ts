@@ -81,8 +81,8 @@ export const resetPasswordSchema = yup.object().shape({
 });
 
 export const CreateAccountSchema = yup.object().shape({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
+  firstName: yup.string().matches(/^[a-zA-Z]+$/, "First name must contain only letters").required("First name is required"),
+  lastName: yup.string().matches(/^[a-zA-Z]+$/, "Last name must contain only letters").required("Last name is required"),
   userName: yup.string().required("Username is required"),
   // phoneNumber: yup.string().required("Phone number is required"),
   email: yup.string().email().required("Email is required"),
@@ -90,8 +90,8 @@ export const CreateAccountSchema = yup.object().shape({
 
 
 export const AccountSchema = yup.object().shape({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
+  firstName: yup.string().matches(/^[a-zA-Z]+$/, "First name must contain only letters").required("First name is required"),
+  lastName: yup.string().matches(/^[a-zA-Z]+$/, "Last name must contain only letters").required("Last name is required"),
   userName: yup.string().required("Username is required"),
   email: yup.string().email().required("Email is required"),
 });

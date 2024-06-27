@@ -51,7 +51,7 @@ function TransactionCard(props: any) {
     return (
         <div style={{ ...styles.container }}>
             {
-                type === "DEPOSIT" ?
+                (type === "DEPOSIT" || type === "BET_CREDIT") ?
                     <div style={{ ...styles.box }}>
                         <img src={colorSend1} />
                     </div>
@@ -60,9 +60,9 @@ function TransactionCard(props: any) {
                     </div>
                     
             }
-            <h3 style={{ ...FONTS.h6, width: "50%", color: type === "DEPOSIT" ? COLORS.green : COLORS.red, textTransform: 'capitalize' }}>{trimString(text, 25)}</h3>
+            <h3 style={{ ...FONTS.h7, width: "50%", color: (type === "DEPOSIT" || type === "BET_CREDIT") ? COLORS.green : COLORS.red, textTransform: 'capitalize' }}>{trimString(text, 30)}</h3>
             <div style={{ ...styles.box2 }}>
-                <h3 style={{ ...FONTS.h6, color: type === "DEPOSIT" ? COLORS.green : COLORS.red  }}>₦{formatCurrency(amount)}</h3>
+                <h3 style={{ ...FONTS.h6, color: (type === "DEPOSIT" || type === "BET_CREDIT") ? COLORS.green : COLORS.red  }}>₦{formatCurrency(amount)}</h3>
                 <p style={{ ...FONTS.body7, color: COLORS.gray,textAlign: "right", margin: "5px 0px 0px 0px", fontSize: "10px" }}>{moment(date).format('LL')}</p>
             </div>
         </div>

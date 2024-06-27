@@ -52,29 +52,6 @@ function NotificationScreen() {
   }
 
 
-  const decideOnBet = async (data) => {
-    const payload = {
-      requestId: data?.id,
-      status: data?.status
-    }
-    setUpdateLoader(true);
-    var response = await dispatch(updateBetAdjust(payload))
-    if(updateNotifications.fulfilled.match(response)){
-      console.log({response})
-      setUpdateLoader(false);
-      getNotification()
-      // toast.error(response?.payload?.data?.message, {
-      //   position: "bottom-center",
-      // });
-    }
-    else {
-      var errMsg = response?.payload as string;
-      setUpdateLoader(false);
-      toast.error(errMsg, {
-        position: "bottom-center",
-      });
-    }
-  }
 
 
 
@@ -85,7 +62,6 @@ function NotificationScreen() {
   }, [])
 
 
-  //console.log({notifications})
 
   if (loader) {
     return (
@@ -121,7 +97,6 @@ function NotificationScreen() {
                  <NotificationCard
                     data={data}
                     handleRead={(id) => markAsRead(id)}
-                    decideOnBet={(data) => decideOnBet(data)}
               />
             </div>
           }) 

@@ -9,6 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { useAppDispatch } from "../../redux/hooks";
 import { acceptBet, adjustBet, createBet } from "../../redux/slices/BetSlice";
 import { getUserData, verifyTransactionPin } from "../../redux/slices/AuthSlice";
+import { useMediaQuery } from "react-responsive";
+
 
 function WalletPin() {
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ function WalletPin() {
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"));
   const getUserBet = JSON.parse(localStorage.getItem("userBetSelection"));
   const [userData, setUserData] = useState(null);
-
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -175,7 +177,9 @@ function WalletPin() {
           >
             Enter your 6-Digit Transaction PIN to place this bet.
           </p>
-          <OtpComponent otp={otp} setOtp={setOtp} />
+         <div style={{width: isMobile ? "90%" : "70%"}}>
+         <OtpComponent otp={otp} setOtp={setOtp} />
+         </div>
         </div>
       </div>
 

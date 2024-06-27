@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../utils/helper";
 import { FaUserCircle } from "react-icons/fa";
 import { FlexDirection } from "../../utils/type";
+import noLogo from "../../assets/images/no.jpg";
 
 const styles = {
   container: {
@@ -51,9 +52,10 @@ function SlipCard(props: any) {
   const navigate = useNavigate();
 
 
+
   return (
     <div
-    style={{ ...styles.container, cursor: "pointer" }}
+      style={{ ...styles.container, cursor: "pointer" }}
       onClick={() =>
         navigate(`/bet-detail?${data?.id}`, {
           state: { betInfo: data?.id },
@@ -63,42 +65,45 @@ function SlipCard(props: any) {
       <div style={{ ...styles.container2, cursor: "pointer" }}>
         <div>
           <div style={{ ...styles.row }}>
-            <img src={homeImage} width={20} />
+            <img src={homeImage ? homeImage : noLogo} width={20} />
             <h3
               style={{ ...FONTS.body7, width: 150, margin: "0px 0px 0px 5px" }}
             >
               {homeName}
             </h3>
             <h3 style={{ ...FONTS.h6, textAlign: "center" }}>
-              {homeScore ? homeScore : "-"}
+              {homeScore || homeScore === 0 ? homeScore : "-"}
             </h3>
           </div>
           <div style={{ ...styles.row }}>
-            <img src={awayImage} width={20} />
+            <img src={awayImage ? awayImage : noLogo} width={20} />
             <h3
               style={{ ...FONTS.body7, width: 150, margin: "0px 0px 0px 5px" }}
             >
               {awayName}
             </h3>
             <h3 style={{ ...FONTS.h6, textAlign: "center" }}>
-              {(awayScore || awayScore === 0) ? awayScore : "-"}
+              {awayScore || awayScore === 0 ? awayScore : "-"}
             </h3>
           </div>
         </div>
-        <h3
-          style={{
-            ...FONTS.h5,
-            color:
-              isWin === isUser?._id
-                ? COLORS.green
-                : !isWin
-                ? COLORS.gray
-                : COLORS.red,
-          }}
-        >
-          {isWin === isUser?._id ? "+" : !isWin ? "" : "-"}
-          {betCurrency === "NGN" ? "₦" : "$"} {formatCurrency(amount)}
-        </h3>
+        <div>
+          <h3
+            style={{
+              ...FONTS.h5,
+              color:
+                isWin === isUser?.id
+                  ? COLORS.green
+                  : !isWin
+                  ? COLORS.gray
+                  : COLORS.red,
+            }}
+          >
+            {isWin === isUser?.id ? "+" : !isWin ? "" : "-"}
+            {betCurrency === "NGN" ? "₦" : "$"} {formatCurrency(amount)}
+          </h3>
+          <h3></h3>
+        </div>
       </div>
 
       <div>
@@ -119,8 +124,22 @@ function SlipCard(props: any) {
               </h3>
             </div>
             <div>
-              <p style={{ ...FONTS.h7, margin: "0px 0px 0px 5px" }}>Your Prediction</p>
-              <p style={{ ...FONTS.h7, margin: "0px 0px 0px 5px", textAlign: 'end' }}>{data?.prediction === "W1" ? "Home Win" : data?.prediction === "W2" ? "Away Win" : "DRAW" }</p>
+              <p style={{ ...FONTS.h7, margin: "0px 0px 0px 5px" }}>
+                Your Prediction
+              </p>
+              <p
+                style={{
+                  ...FONTS.h7,
+                  margin: "0px 0px 0px 5px",
+                  textAlign: "end",
+                }}
+              >
+                {data?.prediction === "W1"
+                  ? "Home Win"
+                  : data?.prediction === "W2"
+                  ? "Away Win"
+                  : "DRAW"}
+              </p>
             </div>
           </div>
         ) : null}

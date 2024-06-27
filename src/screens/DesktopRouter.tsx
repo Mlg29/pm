@@ -57,6 +57,8 @@ import ForgotCreatePasswordNew from './PasswordScreen/ForgotCreatePassword.js';
 import ComingSoon from './ComingSoon/ComingSoon.js';
 import DepositSuccess from './SuccessScreen/DepositSuccess.js';
 import ComingSoonSuccess from './SuccessScreen/ComingSoonSuccess.js';
+import BetAdjust from './AdjustBet/BetAdjust.js';
+import AdjustSuccess from './SuccessScreen/AdjustSuccess.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -90,6 +92,7 @@ function DesktopRouters() {
       <Route path="/profile" element={<ProfileScreen />} />
       <Route path="/game-details" element={<DashboardLayout><GameDetails /></DashboardLayout>} />
       <Route path="/bet-detail" element={<SubLayout><BetDetail /></SubLayout>} />
+      <Route path="/bet-adjust" element={<SubLayout><BetAdjust /></SubLayout>} />
       <Route path="/transaction-list" element={<SubLayout><TransactionList /></SubLayout>} />
       <Route path="/deposit" element={<DashboardLayout><Deposit /></DashboardLayout>} />
       <Route path="/withdrawal" element={<DashboardLayout><Withdrawal /></DashboardLayout>} />
@@ -108,7 +111,8 @@ function DesktopRouters() {
       <Route path="/options" element={<DashboardLayout><Options /></DashboardLayout>} />
       <Route path="/opponent-detail" element={<SubLayout><OpponentDetail /></SubLayout>} />
       <Route path="/bet-success" element={<DashboardLayout><BetSuccess /></DashboardLayout>} />
-      <Route path="/create-bet" element={<DashboardLayout><CreateBet/></DashboardLayout>} />
+      <Route path="/adjust-success" element={<DashboardLayout><AdjustSuccess /></DashboardLayout>} />
+     <Route path="/create-bet" element={<DashboardLayout><CreateBet/></DashboardLayout>} />
       <Route path="/invite" element={<DashboardLayout><InviteFriend/></DashboardLayout>} />
       <Route path="/challenge-detail" element={<DashboardLayout><ChallengeDetail /></DashboardLayout>} />
       <Route path="/adjust-bet" element={<DashboardLayout><AdjustBet /></DashboardLayout>} />

@@ -16,12 +16,17 @@ import { FlexDirection } from "../../utils/type";
 import { useMediaQuery } from "react-responsive";
 import WithdrawalModal from "../../components/Modals/WithdrawaModal";
 import DepositModal from "../../components/Modals/DepositModal";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { formatCurrency } from "../../utils/helper";
 import { getTransactions } from "../../redux/slices/TransactionSlice";
 import EmptyState from "../../components/EmptyState";
 import Loader from "../../components/Loader";
+import { getNotifications, notificationState } from "../../redux/slices/NotificationSlice";
+import { Badge } from "primereact/badge";
+
+
+
 
 const styles = {
   div: {
@@ -80,6 +85,12 @@ function Transaction() {
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
   const [transactions, setTransactions] = useState(null);
+  const notifications = useAppSelector(notificationState) as any
+
+  const getNotification = async () => {
+    await dispatch(getNotifications())
+  }
+
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -102,6 +113,7 @@ function Transaction() {
     setLoader(true)
     fetchUserInfo();
     fetchTransactions();
+    getNotification()
   
   }, []);
 
@@ -123,6 +135,8 @@ function Transaction() {
     );
   }
 
+ 
+
   return (
     <div>
       <div style={{ ...styles.div }}>
@@ -142,6 +156,7 @@ function Transaction() {
                   padding: 5,
                 }}
               />
+               <Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:8, bottom: 5}}></Badge>
             </div>
           </div>
         )}

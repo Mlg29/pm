@@ -1,28 +1,22 @@
 import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { COLORS } from '../../utils/colors';
-
+import { InputOtp } from 'primereact/inputotp';
 
 function OtpComponent({otp, setOtp}: any) {
   
 
 
-  const handlePaste: React.ClipboardEventHandler = (event) => {
-    const data = event.clipboardData.getData('text');
-    console.log(data)
-  };
 
 
   return (
-    <OtpInput
-      value={otp}
-      onChange={setOtp}
-      numInputs={6}
-      onPaste={handlePaste}
-      renderSeparator={<span style={{width: 10}}></span>}
-      renderInput={(props) => <input {...props} /> }
-      inputStyle={{width: "38px", height: "38px", borderRadius: 7, backgroundColor: COLORS.white, color: COLORS.primary, border: `1px solid ${COLORS.gray}`}}
+    <InputOtp 
+      value={otp} 
+      onChange={(e) => setOtp(e.value)} 
+      mask
+      length={6}
     />
+
   );
 }
 

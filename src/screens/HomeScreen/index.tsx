@@ -28,7 +28,8 @@ import io from "socket.io-client";
 import moment from "moment";
 import Loader from "../../components/Loader";
 import SliderComponent from "../../components/Slider";
-
+import { getNotifications, notificationState } from "../../redux/slices/NotificationSlice";
+import { Badge } from "primereact/badge";
 
 
 
@@ -46,11 +47,17 @@ function HomeScreen() {
   const [upcoming, setUpcoming] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
-
+  const notifications = useAppSelector(notificationState) as any
   const [loader, setLoader] = useState(false);
   const url = `${BaseUrl}/football`;
 
+  const getNotification = async () => {
+    await dispatch(getNotifications())
+  }
+
+
   useEffect(() => {
+    getNotification()
     const socket = io(url);
 
     socket.on("connect", () => {
@@ -263,11 +270,16 @@ function HomeScreen() {
         )}
 
         {getToken ? (
-          <img
+          <div>
+             <img
             src={notification}
             style={{ cursor: "pointer" }}
             onClick={() => navigate("/notification")}
           />
+            <Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:8, bottom: 5}}></Badge>
+          </div>
+
+         
         ) : (
           <RxAvatar
             size={50}

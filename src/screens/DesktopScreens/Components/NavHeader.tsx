@@ -17,8 +17,10 @@ import { Menu, MenuItem, MenuButton, SubMenu } from "@szhsin/react-menu";
 import logout from "../../../assets/images/logout.svg";
 import user1 from "../../../assets/images/user1.svg";
 import LogOut from "../../../components/Modals/LogOut";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getUserData } from "../../../redux/slices/AuthSlice";
+import { Badge } from "primereact/badge";
+import { getNotifications, notificationState } from "../../../redux/slices/NotificationSlice";
 
 const styles = {
   rowBtw: {
@@ -72,7 +74,7 @@ function NavHeader() {
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
-
+  const notifications = useAppSelector(notificationState) as any
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -80,9 +82,14 @@ function NavHeader() {
       setUserData(response?.payload);
     }
   };
+  const getNotification = async () => {
+    await dispatch(getNotifications())
+  }
+
 
   useEffect(() => {
     fetchUserInfo();
+  getNotification()
   }, []);
 
   const handleClose = () => setShow(false);
@@ -201,11 +208,9 @@ function NavHeader() {
   ];
 
   const handleSelection = (info) => {
-    setSelected(info)
-    navigate('/home')
-  }
-
-
+    setSelected(info);
+    navigate("/home");
+  };
 
   return (
     <div>
@@ -259,12 +264,16 @@ function NavHeader() {
                   alignItems: "center",
                 }}
               >
-               <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
-               <IoIosNotificationsOutline
-                  size={20}
+                <div
                   style={{ cursor: "pointer" }}
-                />
-               </div>
+                  onClick={() => navigate("/notification")}
+                >
+                  
+                   <IoIosNotificationsOutline
+                      size={20}
+                      style={{ cursor: "pointer" }}
+                    /><Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:5, bottom: 5}}></Badge>
+                </div>
 
                 <Menu
                   menuButton={
@@ -311,7 +320,6 @@ function NavHeader() {
                     </div>
                   }
                 >
-                  
                   <div style={{ backgroundColor: "white", width: 200 }}>
                     <div
                       style={{
@@ -339,8 +347,6 @@ function NavHeader() {
                     </div>
                   </div>
                 </Menu>
-
-               
               </div>
             ) : (
               <>
@@ -496,11 +502,14 @@ function NavHeader() {
                   alignItems: "center",
                 }}
               >
-                 <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
-                <IoIosNotificationsOutline
-                  size={20}
+                <div
                   style={{ cursor: "pointer" }}
-                />
+                  onClick={() => navigate("/notification")}
+                >
+                   <IoIosNotificationsOutline
+                      size={20}
+                      style={{ cursor: "pointer" }}
+                    /><Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:5, bottom: 5}}></Badge>
                 </div>
                 <Menu
                   menuButton={
@@ -513,7 +522,7 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                       {userData?.profileImage ? (
+                      {userData?.profileImage ? (
                         <img
                           src={userData?.profileImage}
                           style={{
@@ -573,7 +582,6 @@ function NavHeader() {
                     </div>
                   </div>
                 </Menu>
-
               </div>
             ) : (
               <>
@@ -727,11 +735,14 @@ function NavHeader() {
                   alignItems: "center",
                 }}
               >
-                 <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
-                <IoIosNotificationsOutline
-                  size={20}
+                <div
                   style={{ cursor: "pointer" }}
-                />
+                  onClick={() => navigate("/notification")}
+                >
+                     <IoIosNotificationsOutline
+                      size={20}
+                      style={{ cursor: "pointer" }}
+                    /><Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:5, bottom: 5}}></Badge>
                 </div>
 
                 <Menu
@@ -745,7 +756,7 @@ function NavHeader() {
                         margin: "0px 1rem",
                       }}
                     >
-                       {userData?.profileImage ? (
+                      {userData?.profileImage ? (
                         <img
                           src={userData?.profileImage}
                           style={{
@@ -805,7 +816,6 @@ function NavHeader() {
                     </div>
                   </div>
                 </Menu>
-
               </div>
             ) : (
               <>

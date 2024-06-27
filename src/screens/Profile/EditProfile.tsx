@@ -188,15 +188,19 @@ function EditProfile() {
       if (updateUserData.fulfilled.match(response)) {
         setLoader(false);
         fetchUserInfo();
-        toast.success("Profile Updated Successfully", {
-          position: "bottom-center",
-        });
+        // toast.success("Profile Updated Successfully", {
+        //   position: "bottom-center",
+        // });
+        setMessage("Profile Updated Successfully")
+        setMessageType("Success")
       } else {
         var errMsg = response?.payload as string;
         setLoader(false);
-        toast.error(errMsg, {
-          position: "bottom-center",
-        });
+        // toast.error(errMsg, {
+        //   position: "bottom-center",
+        // });
+        setMessage(errMsg)
+        setMessageType("Rejected")
       }
     } catch (err) {}
   }
@@ -314,7 +318,7 @@ function EditProfile() {
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
-        type={messageType ? "failed" : "success"}
+        type={messageType === "Rejected" ? "failed" : "success"}
         responseText={message ? message : "Password Updated Successfully"}
       
       />

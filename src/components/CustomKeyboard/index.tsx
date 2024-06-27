@@ -58,8 +58,13 @@ function CustomeKeyboard(props: any) {
 
     const cancel = () => {
         const newStr = value?.slice(0, -1);
+
         setValue(newStr)
 
+    }
+
+    const handleValue = (num) => {
+        setValue(value + num)
     }
 
 
@@ -67,43 +72,43 @@ function CustomeKeyboard(props: any) {
         <div>
             <div>
                 <div style={{...styles.row}}>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "1")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("1")}>
                         <PiNumberOneBold size={30} />
                     </div>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "2")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("2")}>
                         <PiNumberTwoBold  size={30}/>
                     </div>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "3")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("3")}>
                         <PiNumberThreeBold size={30} />
                     </div>
                 </div>
                 <div style={{...styles.row}}>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "4")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("4")}>
                         <PiNumberFourBold size={30} />
                     </div>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "5")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("5")}>
                         <PiNumberFiveBold size={30} />
                     </div>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "6")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("6")}>
                         <PiNumberSixBold size={30} />
                     </div>
                 </div>
                 <div style={{...styles.row}}>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "7")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("7")}>
                         <PiNumberSevenBold size={30} />
                     </div>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "8")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("8")}>
                         <PiNumberEightBold size={30} />
                     </div>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "9")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("9")}>
                         <PiNumberNineBold size={30} />
                     </div>
                 </div>
                 <div style={{...styles.row}}>
-                    <div style={{...styles.box}} onClick={() => setValue(value + ".")}>
-                       <p style={{width: 10, height: 10, backgroundColor: 'black', borderRadius: 10}}></p>
+                    <div style={{...styles.box}}>
+                       {/* <p style={{width: 10, height: 10, backgroundColor: 'black', borderRadius: 10}}></p> */}
                     </div>
-                    <div style={{...styles.box}} onClick={() => setValue(value + "0")}>
+                    <div style={{...styles.box}} onClick={() => handleValue("0")}>
                         <PiNumberZeroBold size={30} />
                     </div>
                     <div style={{...styles.box}} onClick={() => cancel()}>

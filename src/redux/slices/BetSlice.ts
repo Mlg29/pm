@@ -34,6 +34,16 @@ export const getBetById = createAsyncThunk(
   }
 );
 
+export const getAdjustBet = createAsyncThunk(
+  "bet/getAdjustBet",
+  async (payload: any) => {
+    var response = await getRequest(`${BaseUrl}/bet/adjustment/${payload}`);
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
+
 
 export const getBetHistory = createAsyncThunk(
   "bet/getBetHistory",
@@ -226,6 +236,18 @@ export const BetSlice = createSlice({
         }
       );
     builder.addCase(updateBetById.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getAdjustBet.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getAdjustBet.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(getAdjustBet.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(updateBetAdjust.pending, (state, action) => {

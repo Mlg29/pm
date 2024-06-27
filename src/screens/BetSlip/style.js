@@ -14,7 +14,7 @@ export const styles = {
         alignItems: "center",
         backgroundColor: COLORS.semiGray,
         borderRadius: "5px",
-        margin: "1rem 0px"
+        margin: "1rem 0px",
     },
     tb: {
         width: "31%",

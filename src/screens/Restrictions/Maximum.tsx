@@ -10,7 +10,12 @@ import OtpComponent from "../../components/OtpComponent";
 import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { FaCircleExclamation } from "react-icons/fa6";
-import { FlexDirection, MaxAmount, PasswordCreation } from "../../utils/type";
+import {
+  FlexDirection,
+  MaxAmount,
+  PasswordCreation,
+  TextAlign,
+} from "../../utils/type";
 
 import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
@@ -20,6 +25,9 @@ import { ToastContainer, toast } from "react-toastify";
 import PinModal from "../../components/Modals/PinModal";
 import Header from "../../components/Header";
 import { Form } from "react-bootstrap";
+import { InputNumber } from "primereact/inputnumber";
+import NumberInput from "../../components/NumberInput";
+import { updateBetRestriction } from "../../redux/slices/RestrictionSlice";
 
 export const styles = {
   row: {
@@ -60,6 +68,16 @@ export const styles = {
     alignItems: "center",
     margin: "1rem 0px 10px 0px",
   },
+  inputs: {
+    width: "100%",
+    padding: 13,
+    // border: "none",
+    outline: "none",
+    fontWight: "600",
+    fontFamily: "Poppins",
+    color: "black",
+    backgroundColor: "red",
+  },
 };
 
 function Maximum() {
@@ -68,63 +86,64 @@ function Maximum() {
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
 
-  const [show, setShow] = useState(false);
-  const [storePayload, setStorePayload] = useState(null);
+  const [restrictBet, setRestrictBet] = useState(false);
+  const [amount, setAmount] = useState<any>("");
+  const [show, setShow] = useState(false)
+  const [message, setMessage] = useState("")
+  const [messageType, setMessageType] = useState("")
 
   const handleClose = () => {
-    setShow(false);
-  };
+    setShow(false)
+  }
 
-  const initialValues: MaxAmount = {
-    amount: "",
-  };
+  const handleSubmit = () => {
+    if (!amount) {
+      toast.error("Amount is required", {
+        position: "bottom-center",
+      });
+      return;
+    }
 
-  const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
-    useFormik({
-      initialValues,
-      validationSchema: MaxAmountSchema,
-      onSubmit: (data: MaxAmount) => handleSubmitData(data),
-      enableReinitialize: true,
-    });
+        setShow(true)
+    return;
+  }
 
-  const handleSubmitData = async (data) => {
+  const handleSubmitData = async () => { 
     const payload = {
-      password: data?.password,
+      maxBetAmount: amount,
+      useRestrictions: restrictBet,
     };
 
-    setStorePayload(payload);
-    setShow(true);
-
-    return;
-  };
-
-  const handleAction = async () => {
     setLoader(true);
-    // try {
-    //   var response = await dispatch(createNewPassword(storePayload));
-    //   if (createNewPassword.fulfilled.match(response)) {
-    //     toast.success(response?.payload?.data?.message, {
-    //       position: "bottom-center",
-    //     });
-    //     setLoader(false);
-    //     setTimeout(() => {
-    //       setLoader(false);
-    //       localStorage.clear();
-    //       navigate("/login");
-    //     }, 1000);
-    //   } else {
-    //     var errMsg = response?.payload as string;
-    //     setLoader(false);
-    //     toast.error(errMsg, {
-    //       position: "bottom-center",
-    //     });
-    //   }
-    // } catch (err) {}
+      try {
+      var response = await dispatch(updateBetRestriction(payload)) as any
+      if(response?.error?.message === "Rejected") {
+        setMessage(response?.payload)
+        setMessageType("Rejected")
+      }
+      if (updateBetRestriction.fulfilled.match(response)) {
+        setMessage("Congratulations, you have successfully set your bet restriction")
+        setMessageType("Success")
+        setTimeout(() => {
+          setLoader(false);
+          navigate(-1);
+        }, 2000);
+      } else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        setMessage(errMsg)
+        setMessageType("Rejected")
+      }
+    } catch (err) {}
   };
+
 
   const onChange = (e) => {
     const { id, checked } = e.target;
+    setRestrictBet(checked)
   };
+
+
 
   return (
     <div style={{ ...styles.container }}>
@@ -147,15 +166,13 @@ function Maximum() {
           />
         </div>
 
-        <div style={{ marginTop: 20 }}>
-          <TextInput
-            label=" Maximum Transaction Amount per Bet"
-            placeholder="0.00"
+        <div style={{ marginTop: 20, width: "100%" }}>
+          <NumberInput
+            label="Maximum Transaction Amount per Bet"
+            placeholder="Enter Amount"
             required
-            type="amount"
-            value={values.amount}
-            onChangeText={handleChange("amount")}
-            errorMsg={touched.amount ? errors.amount : undefined}
+            value={amount}
+            setValue={(val) => setAmount(val)}
           />
         </div>
       </div>
@@ -178,9 +195,12 @@ function Maximum() {
               marginBottom: "10px",
             }}
           >
-            <FaCircleExclamation size={20} style={{ paddingRight: "5px", color: COLORS.red }} />
+            <FaCircleExclamation
+              size={20}
+              style={{ paddingRight: "5px", color: COLORS.red }}
+            />
             <p style={{ ...FONTS.body7 }}>
-            Setting can’t be change within the first 3 months of the change.
+              Setting can’t be change within the first 3 months of the change.
             </p>
           </div>
           <div style={{ width: "100%" }}>
@@ -205,12 +225,13 @@ function Maximum() {
         </div>
       </div>
 
-      <PinModal
+      <PinModal 
         show={show}
         handleClose={handleClose}
-        handleAction={handleAction}
-        responseText="Password Updated Successfully"
-        type=""
+        handleAction={handleSubmitData}
+        type={messageType === "Rejected" ? "failed" : "success"}
+        responseText={message ? message : "Update Successful"}
+      
       />
 
       <ToastContainer />

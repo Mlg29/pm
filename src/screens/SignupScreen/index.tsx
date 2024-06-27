@@ -23,6 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 import CountryPhone from "../../components/CountryPhone";
 import { getCountryListMap } from "country-flags-dial-code";
 import axios from "axios";
+import moment from "moment";
 
 export const styles = {
   container: {
@@ -190,6 +191,12 @@ function SignupScreen() {
       });
       return
     }
+    if(!dob){
+      toast.error("Date of birth is required", {
+        position: "bottom-center",
+      });
+      return;
+    }
 
     if(calculateDefaultDate() < dob) {
       toast.error("Date must be above 18years old", {
@@ -198,6 +205,7 @@ function SignupScreen() {
       return;
     }
 
+    console.log("der=", calculateDefaultDate())
     const payload = {
       firstName: data?.firstName,
       lastName: data?.lastName,
@@ -205,13 +213,14 @@ function SignupScreen() {
       phoneNumber: countryListCode?.dialCode +phoneNumber,
       country: country,
       userName: data?.userName,
-      dob: dob?.toISOString().slice(0, 10),
+      dob: moment(dob).format("YYYY-MM-DD"),
     };
     const verifyPayload = {
       email: data?.email,
       phoneNumber: countryListCode?.dialCode + phoneNumber,
       userName: data?.userName,
     };
+
 
     setLoader(true);
     try {
@@ -242,6 +251,7 @@ function SignupScreen() {
   };
 
   const countryListCode = countryList?.find((dd) => dd?.country === country)
+
 
 
   return (

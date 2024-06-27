@@ -68,16 +68,30 @@ const SuccessModal = ({ show, handleClose,type, responseText }) => {
 
              }
               <div>
+              {
+                type === "success" ?
                 <h3
-                  style={{
-                    ...FONTS.h4,
-                    fontWeight: "600",
-                    textAlign: "center",
-                    margin: "10px 0px",
-                  }}
-                >
-                  Success
-                </h3>
+                style={{
+                  ...FONTS.h4,
+                  fontWeight: "600",
+                  textAlign: "center",
+                  margin: "10px 0px",
+                }}
+              >
+                Success
+              </h3>
+              :
+              <h3
+              style={{
+                ...FONTS.h4,
+                fontWeight: "600",
+                textAlign: "center",
+                margin: "10px 0px",
+              }}
+            >
+              Error
+            </h3>
+              }
                 <p
                   style={{
                     ...FONTS.body6,

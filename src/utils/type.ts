@@ -5,6 +5,8 @@ export type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 
 export type TextAlign = "left" | "right" | "center"
 
+export type OverflowX = "scroll" | "visible" | "hidden" | "auto"
+
 export type ObjectFit = "contain" | "cover"
 
 export type Position = "absolute" | "relative"

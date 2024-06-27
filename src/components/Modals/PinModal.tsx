@@ -51,9 +51,9 @@ const PinModal = ({ show, handleClose, handleAction,type, responseText }) => {
     } else {
       var errMsg = verifyResponse?.payload as string
       setLoader(false);
-      toast?.error(errMsg, {
-        position: "bottom-center",
-      });
+      // toast?.error(errMsg, {
+      //   position: "bottom-center",
+      // });
     }
   };
 

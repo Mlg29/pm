@@ -110,9 +110,11 @@ function CreatePasswordNew() {
       }
       if (createNewPassword.fulfilled.match(response)) {
        
-        toast.success(response?.payload?.data?.message, {
-          position: "bottom-center",
-        });
+        // toast.success(response?.payload?.data?.message, {
+        //   position: "bottom-center",
+        // });
+        setMessage(response?.payload?.data?.message)
+        setMessageType("Success")
         setLoader(false);
         setTimeout(() => {
           setLoader(false);
@@ -122,9 +124,11 @@ function CreatePasswordNew() {
       } else {
         var errMsg = response?.payload as string;
         setLoader(false);
-        toast.error(errMsg, {
-          position: "bottom-center",
-        });
+        // toast.error(errMsg, {
+        //   position: "bottom-center",
+        // });
+        setMessage(errMsg)
+        setMessageType("Rejected")
       }
     } catch (err) {}
   }
@@ -275,7 +279,7 @@ function CreatePasswordNew() {
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
-        type={messageType ? "failed" : "success"}
+        type={messageType === "Rejected" ? "failed" : "success"}
         responseText={message ? message : "Password Updated Successfully"}
       
       />

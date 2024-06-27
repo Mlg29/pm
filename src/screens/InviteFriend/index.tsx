@@ -8,6 +8,8 @@ import { getSingleUser } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
+import NumberInput from "../../components/NumberInput";
+
 
 const InviteFriend = () => {
   const navigate = useNavigate();
@@ -76,6 +78,7 @@ const InviteFriend = () => {
   
   };
 
+
   return (
     <div className="top-container">
       <Header text={"Invite Friend"} />
@@ -117,14 +120,13 @@ const InviteFriend = () => {
             })}
           </div>
         )}
-        <TextInput
+
+        <NumberInput 
           label="Amount"
           placeholder="Enter Amount"
           required
           value={amount}
-          onChangeText={(val: string) => {
-            setAmount(val);
-          }}
+          setValue={(val) => setAmount(val)}
         />
 
         <div>

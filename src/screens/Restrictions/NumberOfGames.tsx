@@ -22,6 +22,7 @@ import Header from "../../components/Header";
 import { Form } from "react-bootstrap";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { FaRegCircle } from "react-icons/fa";
+import { updateBetFrequency } from "../../redux/slices/RestrictionSlice";
 
 export const styles = {
   container: {
@@ -71,13 +72,26 @@ function NumberOfGames() {
   const [loader, setLoader] = useState(false);
   const [value, setValue] = useState("1");
   const [selected, setSelected] = useState("");
-
-  const [show, setShow] = useState(false);
-  const [storePayload, setStorePayload] = useState(null);
+  const [restrictBet, setRestrictBet] = useState(false);
+  const [show, setShow] = useState(false)
+  const [message, setMessage] = useState("")
+  const [messageType, setMessageType] = useState("")
 
   const handleClose = () => {
-    setShow(false);
-  };
+    setShow(false)
+  }
+
+  const handleSubmit = () => {
+    if (!selected) {
+      toast.error("Frequency is required", {
+        position: "bottom-center",
+      });
+      return;
+    }
+
+    setShow(true)
+    return;
+  }
 
   const increment = () => {
     const aa = parseInt(value) + 1;
@@ -98,55 +112,40 @@ function NumberOfGames() {
     }
   };
 
-  const initialValues: MaxAmount = {
-    amount: "",
-  };
-
-  const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
-    useFormik({
-      initialValues,
-      validationSchema: MaxAmountSchema,
-      onSubmit: (data: MaxAmount) => handleSubmitData(data),
-      enableReinitialize: true,
-    });
-
-  const handleSubmitData = async (data) => {
+  const handleSubmitData = async () => {
+    
     const payload = {
-      password: data?.password,
+      frequency: selected?.toUpperCase(),
+      numberOfGames: parseInt(value),
+      useRestrictions: restrictBet,
     };
-
-    setStorePayload(payload);
-    setShow(true);
-
-    return;
-  };
-
-  const handleAction = async () => {
     setLoader(true);
-    // try {
-    //   var response = await dispatch(createNewPassword(storePayload));
-    //   if (createNewPassword.fulfilled.match(response)) {
-    //     toast.success(response?.payload?.data?.message, {
-    //       position: "bottom-center",
-    //     });
-    //     setLoader(false);
-    //     setTimeout(() => {
-    //       setLoader(false);
-    //       localStorage.clear();
-    //       navigate("/login");
-    //     }, 1000);
-    //   } else {
-    //     var errMsg = response?.payload as string;
-    //     setLoader(false);
-    //     toast.error(errMsg, {
-    //       position: "bottom-center",
-    //     });
-    //   }
-    // } catch (err) {}
+    try {
+      var response = await dispatch(updateBetFrequency(payload)) as any;
+      if(response?.error?.message === "Rejected") {
+        setMessage(response?.payload)
+        setMessageType("Rejected")
+      }
+      if (updateBetFrequency.fulfilled.match(response)) {
+
+        setMessage("Congratulations, you have successfully set your bet restriction")
+        setMessageType("Success")
+        setTimeout(() => {
+          setLoader(false);
+          navigate(-1);
+        }, 2000);
+      } else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        setMessage(errMsg)
+        setMessageType("Rejected")
+      }
+    } catch (err) {}
   };
 
   const onChange = (e) => {
     const { id, checked } = e.target;
+    setRestrictBet(checked);
   };
 
   return (
@@ -170,7 +169,9 @@ function NumberOfGames() {
           />
         </div>
         <div style={{ marginTop: 20 }}>
-          <p>Number of Games <span style={{color: "red"}}>*</span></p>
+          <p>
+            Number of Games <span style={{ color: "red" }}>*</span>
+          </p>
           <div
             style={{
               display: "flex",
@@ -183,8 +184,8 @@ function NumberOfGames() {
             }}
           >
             <LuMinusCircle
-              size={30}
-              style={{ marginRight: "45px" }}
+              size={50}
+              style={{ marginRight: "45px", cursor: "pointer" }}
               onClick={decrement}
             />
             <input
@@ -193,27 +194,37 @@ function NumberOfGames() {
                 border: "none",
                 outline: "none",
                 backgroundColor: "white",
-                textAlign: "center"
+                textAlign: "center",
               }}
               value={value}
               onChange={(e) => setValue(e?.target.value)}
             />
             <LuPlusCircle
-              size={30}
-              style={{ marginLeft: "45px" }}
+              size={50}
+              style={{ marginLeft: "45px", cursor: "pointer" }}
               onClick={increment}
             />
           </div>
         </div>
 
         <div style={{ marginTop: 20 }}>
-          <p>Frequency <span style={{color: "red"}}>*</span></p>
+          <p>
+            Frequency <span style={{ color: "red" }}>*</span>
+          </p>
           <div>
             {["Daily", "Weekly", "Monthly"]?.map((dd) => {
               return (
-                <div style={{display: "flex", alignItems: "center", cursor: "pointer", padding: "7px 0px"}} onClick={() => setSelected(dd)}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    padding: "7px 0px",
+                  }}
+                  onClick={() => setSelected(dd)}
+                >
                   {selected === dd ? <FaRegCheckCircle /> : <FaRegCircle />}
-                  <p style={{marginLeft: "10px"}}>{dd}</p>
+                  <p style={{ marginLeft: "10px" }}>{dd}</p>
                 </div>
               );
             })}
@@ -269,12 +280,13 @@ function NumberOfGames() {
         </div>
       </div>
 
-      <PinModal
+      <PinModal 
         show={show}
         handleClose={handleClose}
-        handleAction={handleAction}
-        responseText="Password Updated Successfully"
-        type=""
+        handleAction={handleSubmitData}
+        type={messageType === "Rejected" ? "failed" : "success"}
+        responseText={message ? message : "Update Successful"}
+      
       />
 
       <ToastContainer />

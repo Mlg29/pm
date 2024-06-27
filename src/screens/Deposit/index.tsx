@@ -5,10 +5,14 @@ import Header from "../../components/Header";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import { TextAlign } from "../../utils/type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { createTransaction } from "../../redux/slices/TransactionSlice";
 import { ToastContainer, toast } from "react-toastify";
+import { InputNumber } from 'primereact/inputnumber';
+import Loader from "../../components/Loader";
+
+
 
 const styles = {
   inputs: {
@@ -27,9 +31,18 @@ const styles = {
 
 function Deposit() {
   const navigate = useNavigate();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<any>("");
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
+  const [loaderD, setLoaderD] = useState(false);
+
+
+  useEffect(() => {
+    setLoaderD(true)
+    setTimeout(() => {
+      setLoaderD(false)
+    }, 1000)
+  }, [])
 
   const handleNext = async () => {
     const payload = {
@@ -54,6 +67,29 @@ function Deposit() {
     }
   };
 
+  const handleAmount = (val) => {
+    // console.log({val})
+     // setAmount(val)
+   }
+
+   if (loaderD) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
+
+
   return (
     <div className="top-container">
       <Header text="Fund Wallet" />
@@ -64,11 +100,18 @@ function Deposit() {
 
       <div>
         <input
-          style={{ ...styles.inputs }}
+          style={{ ...styles.inputs,display: 'none' }}
           value={value}
           onChange={(e) => setValue(e?.target?.value)}
           placeholder="0.00"
         />
+         <InputNumber 
+          value={value} 
+          onValueChange={(e) => handleAmount(e.value)} 
+          minFractionDigits={2} 
+          inputStyle={{ ...styles.inputs }}
+          placeholder="0.00"
+          />
       </div>
 
       <CustomeKeyboard value={value} setValue={setValue} />
