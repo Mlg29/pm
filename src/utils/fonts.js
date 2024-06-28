@@ -26,21 +26,21 @@ const SIZES = {
 };
 
 export const FONTS = {
-    largeTitle: {fontSize: SIZES.largeTitle, fontFamily: "Poppins"},
-    h1: {  fontWeight: '600', fontSize: SIZES.h1, fontFamily: "Poppins"},
-    h2: { fontWeight: '600', fontSize: SIZES.h2, fontFamily: "Poppins"},
-    h3: {  fontWeight: '600', fontSize: SIZES.h3, fontFamily: "Poppins"},
-    h4: { fontWeight: '600', fontSize: SIZES.h4, fontFamily: "Poppins"},
-    h5: { fontWeight: '600', fontSize: SIZES.h5, fontFamily: "Poppins"},
-    h6: { fontWeight: '600', fontSize: SIZES.h6, fontFamily: "Poppins"},
-    h7: { fontWeight: '600', fontSize: SIZES.h7, fontFamily: "Poppins"},
-    body1: { fontWeight: '400', fontSize: SIZES.body1, fontFamily: "Poppins"},
-    body2: { fontWeight: '400',lineHeight: 36, fontSize: SIZES.body2, fontFamily: "Poppins"},
-    body3: { fontWeight: '400', fontSize: SIZES.body3, fontFamily: "Poppins"},
-    body4: { fontWeight: '400', fontSize: SIZES.body4, fontFamily: "Poppins"},
-    body5: { fontWeight: '400', fontSize: SIZES.body5, fontFamily: "Poppins"},
-    body6: { fontWeight: '400', fontSize: SIZES.body6, fontFamily: "Poppins"},
-    body7: { fontWeight: '400', fontSize: SIZES.body7,fontFamily: "Poppins"},
+    largeTitle: {fontSize: SIZES.largeTitle, },
+    h1: {  fontWeight: '600', fontSize: SIZES.h1, },
+    h2: { fontWeight: '600', fontSize: SIZES.h2, },
+    h3: {  fontWeight: '600', fontSize: SIZES.h3, },
+    h4: { fontWeight: '600', fontSize: SIZES.h4, },
+    h5: { fontWeight: '600', fontSize: SIZES.h5, },
+    h6: { fontWeight: '600', fontSize: SIZES.h6, },
+    h7: { fontWeight: '600', fontSize: SIZES.h7, },
+    body1: { fontWeight: '400', fontSize: SIZES.body1, },
+    body2: { fontWeight: '400',lineHeight: 36, fontSize: SIZES.body2, },
+    body3: { fontWeight: '400', fontSize: SIZES.body3, },
+    body4: { fontWeight: '400', fontSize: SIZES.body4, },
+    body5: { fontWeight: '400', fontSize: SIZES.body5, },
+    body6: { fontWeight: '400', fontSize: SIZES.body6, },
+    body7: { fontWeight: '400', fontSize: SIZES.body7,},
 };
 
 
