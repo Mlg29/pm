@@ -15,7 +15,7 @@ import { MdSportsRugby } from "react-icons/md";
 import { COLORS } from "../../utils/colors";
 import GameCard from "../../components/GameCard";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import heading from "../../assets/images/heading.svg";
 import { BaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -26,6 +26,7 @@ import {
   getFootballEvents,
   getFootballFixtures,
 } from "../../redux/slices/FootballSlice";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import io from "socket.io-client";
 import moment from "moment";
@@ -38,7 +39,7 @@ function GameEventData(props: any) {
   const location = useLocation();
   const events = location.state.events;
   const eventType = location.state.type;
-  const isMobile = useMediaQuery({ maxWidth: 767 })
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
@@ -46,10 +47,52 @@ function GameEventData(props: any) {
   const footballEvents = useAppSelector(footballEventState) as any;
   // const footballFixtures = useAppSelector(footballFixtureState) as any
   const [live, setLive] = useState<any>([]);
-  const [upcoming, setUpcoming] = useState<any>([]);
+  const [data, setData] = useState<any>([]);
   const sliderArr = [slider, slider2, slider3];
   const [loader, setLoader] = useState(false);
   const url = `${BaseUrl}/football`;
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [total, setTotal] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+
+
+  let createdDate = moment(new Date()).utc().format();
+  let tomorrowDate = moment(createdDate).add(1, "d");
+
+  const fetchData = async (page) => {
+    const payloadUpcoming = {
+      status: "UPCOMING",
+      page: page,
+      pageSize: pageSize,
+    };
+    const payloadToday = {
+      startTime: moment(new Date()).format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+    const payloadTomorrow = {
+      startTime: tomorrowDate.format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "today" ? payloadToday : eventType === "tomorrow" ? payloadTomorrow : ""
+    setLoading(true);
+    dispatch(getFootballFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
 
   useEffect(() => {
     if (eventType === "live") {
@@ -82,30 +125,8 @@ function GameEventData(props: any) {
     };
   }, []);
 
-  let createdDate = moment(new Date()).utc().format();
-  let tomorrowDate = moment(createdDate).add(1, "d");
 
-  useEffect(() => {
-    const payloadUpcoming = {
-      status: "UPCOMING",
-    };
-    const payloadToday = {
-      startTime: moment(new Date()).format("YYYY-MM-DD"),
-    };
-    const payloadTomorrow = {
-      startTime: tomorrowDate.format("YYYY-MM-DD"),
-    };
-    // dispatch(getFootballFixtures(payloadToday)).then(dd => {
-    //   setToday(dd?.payload?.data)
-    // })
-    // dispatch(getFootballFixtures(payloadTomorrow)).then(dd => {
-    //   setTomorrow(dd?.payload?.data)
-    // })
-    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload);
-    });
-    // dispatch(getFootballEvents())
-  }, []);
+
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -121,6 +142,11 @@ function GameEventData(props: any) {
   useEffect(() => {
     fetchUserInfo();
   }, []);
+
+  const fetchMoreData = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
 
   if (loader) {
     return (
@@ -141,44 +167,44 @@ function GameEventData(props: any) {
 
   return (
     <div className="top-container">
-     {
-      isMobile &&  <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      {getToken ? (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <RxAvatar size={50} />
-          <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>
-            Hi {userData?.firstName}
-          </h3>
-        </div>
-      ) : (
-        <img
-          style={{ cursor: "pointer" }}
-          src={heading}
-          onClick={() => navigate("/home")}
-        />
-      )}
+      {isMobile && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {getToken ? (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <RxAvatar size={50} />
+              <h3 style={{ ...FONTS.h5, margin: "0px 5px" }}>
+                Hi {userData?.firstName}
+              </h3>
+            </div>
+          ) : (
+            <img
+              style={{ cursor: "pointer" }}
+              src={heading}
+              onClick={() => navigate("/home")}
+            />
+          )}
 
-      {getToken ? (
-        <img
-          src={notification}
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate("/notification")}
-        />
-      ) : (
-        <RxAvatar
-          size={50}
-          onClick={() => navigate("/login")}
-          style={{ cursor: "pointer" }}
-        />
+          {getToken ? (
+            <img
+              src={notification}
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/notification")}
+            />
+          ) : (
+            <RxAvatar
+              size={50}
+              onClick={() => navigate("/login")}
+              style={{ cursor: "pointer" }}
+            />
+          )}
+        </div>
       )}
-    </div>
-     }
 
       {eventType === "live" && (
         <div>
@@ -198,7 +224,7 @@ function GameEventData(props: any) {
                   textTransform: "uppercase",
                 }}
               >
-                {eventType}
+                {eventType} Games
               </p>
             </div>
           )}
@@ -213,9 +239,10 @@ function GameEventData(props: any) {
         </div>
       )}
 
-      {eventType === "upcoming" && (
-        <div>
-          {upcoming?.data?.length > 0 && (
+      {eventType !== "live" && (
+        <>
+          <div>
+          {data?.length > 0 && (
             <div
               style={{
                 display: "flex",
@@ -228,24 +255,33 @@ function GameEventData(props: any) {
                   ...FONTS.body6,
                   color: COLORS.gray,
                   margin: "15px 0px",
-                  textTransform: "uppercase"
+                  textTransform: "uppercase",
                 }}
               >
-                {eventType}
+                {eventType} Games
               </p>
             </div>
           )}
-
-          {upcoming?.data?.map((aa: any, i: any) => {
-            return (
-              <div key={i}>
-                <GameCard id={i} data={aa} />
-              </div>
-            );
-          })}
         </div>
+          <InfiniteScroll
+        dataLength={data?.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={<p>No more data to load</p>}
+      >
+        {data?.map((aa: any, i: any) => {
+          return (
+            <div key={i}>
+              <GameCard id={i} data={aa} />
+            </div>
+          );
+        })}
+      </InfiniteScroll>
+        </>
+      
       )}
-
+    
       {getToken && <BottomTabs />}
     </div>
   );

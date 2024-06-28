@@ -22,6 +22,8 @@ function WalletPin() {
   const [userData, setUserData] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
+
+
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
@@ -41,6 +43,12 @@ function WalletPin() {
       });
       return;
     }
+    if ((parseFloat(userData?.maxBetAmountRestriction?.maxBetAmount) < parseFloat(userFee?.amount)) && userData?.maxBetAmountRestriction?.useRestrictions) {
+      toast.error("Maximum Bet Amount Exceeded", {
+        position: "bottom-center",
+      });
+      return;
+    }
     const payload = {
       opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
       sportEventId: getUserBet?.sportEventId,
@@ -52,14 +60,6 @@ function WalletPin() {
     };
 
     const adjustPayload = {
-      // id: userFee?.betId,
-      // opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
-      // sportEventId: getUserBet?.sportEventId,
-      // betAmount: parseFloat(userFee?.adjustedBetAmount),
-      // betCurrency: "NGN",
-      // prediction: getUserBet?.userType,
-      // betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
-      // allowOtherCurrency: userFee?.allowOtherCurrency
       betId: userFee?.betId,
       userId: userData?.id,
       requestedAmount: parseFloat(userFee?.adjustedBetAmount),

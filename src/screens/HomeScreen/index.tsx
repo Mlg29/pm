@@ -55,6 +55,7 @@ function HomeScreen() {
     await dispatch(getNotifications())
   }
 
+ 
 
   useEffect(() => {
     getNotification()

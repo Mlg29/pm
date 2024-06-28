@@ -60,7 +60,8 @@ function App() {
           <DesktopRouters />
         </Desktop>
         <Tablet>
-          <DesktopRouters />
+          {/* <DesktopRouters /> */}
+          <Routers />
         </Tablet>
         <Mobile>
           <Routers />
