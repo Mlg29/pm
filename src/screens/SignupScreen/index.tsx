@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { FONTS } from "../../utils/fonts";
 import TextInput from "../../components/TextInput";
 import { MdArrowBackIos } from "react-icons/md";
@@ -13,10 +13,6 @@ import { CreateAccountFormDataUi, FlexDirection } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useAppDispatch } from "../../redux/hooks";
 import { createUser, verifySignupData } from "../../redux/slices/AuthSlice";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
 import { useFormik } from "formik";
 import { CreateAccountSchema } from "../../https/schemas";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,6 +20,7 @@ import CountryPhone from "../../components/CountryPhone";
 import { getCountryListMap } from "country-flags-dial-code";
 import axios from "axios";
 import moment from "moment";
+import {IPInfoContext} from "ip-info-react"
 
 export const styles = {
   container: {
@@ -74,14 +71,17 @@ function SignupScreen() {
 
   const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"));
   const [countryList, setCountryList] = useState([]);
+  const userIp = useContext(IPInfoContext);
+
+  // console.log({userIp})
 
 
-  const getData = async () => {
-    // const res = await axios.get("https://api.ipify.org/?format=json");
-    const res = await axios.get("https://geolocation-db.com/json/");
-    // console.log(res);
-    setIP(res.data);
-  };
+  // const getData = async () => {
+  //   // const res = await axios.get("https://api.ipify.org/?format=json");
+  //   const res = await axios.get("https://geolocation-db.com/json/");
+  //   // console.log(res);
+  //   setIP(res.data);
+  // };
 
   useEffect(() => {
     const countries1 = getCountryListMap();
@@ -89,7 +89,7 @@ function SignupScreen() {
     let x = Array.from(Object.values(countries1));
     // console.log(x[0], "x");
     setCountryList(x);
-    getData()
+    // getData()
   }, []);
 
 
@@ -173,7 +173,7 @@ function SignupScreen() {
   };
 
   const handleSubmitData = async (data) => {
-    if(ip?.country_code === "US"){
+    if(userIp?.country_code === "US"){
       toast.error("Registration is restricted for this country", {
         position: "bottom-center",
       });

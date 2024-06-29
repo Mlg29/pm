@@ -4,12 +4,11 @@ import "./App.css";
   /* The following line can be included in your src/index.js or App.js file */
 }
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'react-toastify/dist/ReactToastify.css';
-import 'primereact/resources/themes/lara-light-indigo/theme.css'; //theme
-import 'primereact/resources/primereact.min.css'; //core css
+import "react-toastify/dist/ReactToastify.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
 
-
-
+import IPInfo from "ip-info-react";
 import Routers from "./screens/Router";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
@@ -55,18 +54,20 @@ function App() {
   return (
     <Provider store={store}>
       {/* <div id="google_translate_element"></div> */}
-      <PrimeReactProvider>
-        <Desktop>
-          <DesktopRouters />
-        </Desktop>
-        <Tablet>
-          {/* <DesktopRouters /> */}
-          <Routers />
-        </Tablet>
-        <Mobile>
-          <Routers />
-        </Mobile>
-      </PrimeReactProvider>
+      <IPInfo>
+        <PrimeReactProvider>
+          <Desktop>
+            <DesktopRouters />
+          </Desktop>
+          <Tablet>
+            {/* <DesktopRouters /> */}
+            <Routers />
+          </Tablet>
+          <Mobile>
+            <Routers />
+          </Mobile>
+        </PrimeReactProvider>
+      </IPInfo>
     </Provider>
   );
 }
