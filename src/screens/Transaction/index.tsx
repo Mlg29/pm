@@ -231,9 +231,8 @@ function Transaction() {
               backgroundColor: COLORS.lightOrange,
               cursor: "pointer",
             }}
-            onClick={() => 
+            onClick={() => navigate("/deposit") 
               // isMobile ? navigate("/deposit") : setDeposit(true))
-              navigate("/deposit") 
             }
           >
             <img src={send1} />
@@ -260,7 +259,7 @@ function Transaction() {
           })}
 
         {
-          transactions?.length < 1 && <div style={{marginTop: "-8rem"}}>
+          transactions?.length < 1 && <div style={{marginTop: "-3rem"}}>
             <EmptyState 
             header={"No Transaction Available"}
           />
