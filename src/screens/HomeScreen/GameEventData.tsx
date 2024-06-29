@@ -99,7 +99,7 @@ function GameEventData(props: any) {
       setLive(events);
     }
 
-    const socket = io(url);
+    const socket = io(url) as any;
 
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
