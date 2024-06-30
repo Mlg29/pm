@@ -205,7 +205,7 @@ function SignupScreen() {
       return;
     }
 
-    console.log("der=", calculateDefaultDate())
+
     const payload = {
       firstName: data?.firstName,
       lastName: data?.lastName,

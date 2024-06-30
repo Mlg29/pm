@@ -53,6 +53,7 @@ function LoginScreen() {
 
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
+  const betInviteId = localStorage.getItem('bet-invite-id')
 
   const initialValues: LoginFormData = {
     email: "",
@@ -85,7 +86,13 @@ function LoginScreen() {
 
         setTimeout(() => {
           setLoader(false)
-          navigate('/home')
+          if(betInviteId){
+            navigate(`/bet-invite-detail?${betInviteId}`)
+            return
+          }
+          else {
+            navigate('/home')
+          }
         }, 1000)
       } else {
         var errMsg = response?.payload as string;

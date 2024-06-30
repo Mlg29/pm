@@ -51,7 +51,7 @@ const InviteFriend = () => {
   }, [email]);
 
   const handleRoute = async () => {
-    if (!selectedUser) {
+    if (!selectedUser && !email) {
       toast.error("Invalid user selected", {
         position: "bottom-center",
       });
@@ -64,13 +64,15 @@ const InviteFriend = () => {
       return;
     }
     const payload = {
-      invitedUser: selectedUser,
+      invitedUser: selectedUser || email,
       amount: amount,
       allowOtherCurrency: allowCurrency
     };
+    console.log({payload})
     localStorage.setItem("inviteeInfo", JSON.stringify(payload));
     return navigate("/options");
   };
+
 
   const handleSelect = (data) => { 
      setEmail(data?.userName);

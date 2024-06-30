@@ -59,6 +59,7 @@ import DepositSuccess from './SuccessScreen/DepositSuccess.js';
 import ComingSoonSuccess from './SuccessScreen/ComingSoonSuccess.js';
 import BetAdjust from './AdjustBet/BetAdjust.js';
 import AdjustSuccess from './SuccessScreen/AdjustSuccess.js';
+import BetInviteDetail from './BetDetail/BetInviteDetail.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -92,6 +93,7 @@ function DesktopRouters() {
       <Route path="/profile" element={<ProfileScreen />} />
       <Route path="/game-details" element={<DashboardLayout><GameDetails /></DashboardLayout>} />
       <Route path="/bet-detail" element={<SubLayout><BetDetail /></SubLayout>} />
+      <Route path="/bet-invite-detail" element={<SubLayout><BetInviteDetail /></SubLayout>} />
       <Route path="/bet-adjust" element={<SubLayout><BetAdjust /></SubLayout>} />
       <Route path="/transaction-list" element={<SubLayout><TransactionList /></SubLayout>} />
       <Route path="/deposit" element={<DashboardLayout><Deposit /></DashboardLayout>} />

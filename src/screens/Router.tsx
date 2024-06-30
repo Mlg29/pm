@@ -57,6 +57,7 @@ import DepositSuccess from "./SuccessScreen/DepositSuccess.tsx";
 import ComingSoonSuccess from "./SuccessScreen/ComingSoonSuccess.tsx";
 import BetAdjust from "./AdjustBet/BetAdjust.tsx";
 import AdjustSuccess from "./SuccessScreen/AdjustSuccess.tsx";
+import BetInviteDetail from "./BetDetail/BetInviteDetail.tsx";
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -102,6 +103,7 @@ function Routers() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/game-details" element={<GameDetails />} />
         <Route path="/bet-detail" element={<BetDetail />} />
+        <Route path="/bet-invite-detail" element={<BetInviteDetail />} />
         <Route path="/bet-adjust" element={<BetAdjust />} />
         <Route path="/transaction-list" element={<TransactionList />} />
         <Route path="/deposit" element={<Deposit />} />
