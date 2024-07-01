@@ -20,18 +20,54 @@ import heading from "../../assets/images/heading.svg";
 import { BaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
-import {
-  getFootballFixtures,
-} from "../../redux/slices/FootballSlice";
+import { getFootballFixtures } from "../../redux/slices/FootballSlice";
 
 import io from "socket.io-client";
 import moment from "moment";
 import Loader from "../../components/Loader";
 import SliderComponent from "../../components/Slider";
-import { getNotifications, notificationState } from "../../redux/slices/NotificationSlice";
+import {
+  getNotifications,
+  notificationState,
+} from "../../redux/slices/NotificationSlice";
+
+import { Sidebar } from 'primereact/sidebar';
+        
 import { Badge } from "primereact/badge";
 import Football from "../Games/Football";
 import Basketball from "../Games/Basketball";
+import asoccer from "../../assets/images/asoccer.svg"
+import insoccer from "../../assets/images/insoccer.svg"
+import abasketball from "../../assets/images/basketball.svg"
+import inbasketball from "../../assets/images/inbasketball.svg"
+import atennis from "../../assets/images/tennis.svg"
+import intennis from "../../assets/images/intennis.svg"
+import acricket from "../../assets/images/cricket2.svg"
+import incricket from "../../assets/images/incricket2.svg"
+import rugby from "../../assets/images/rugby.svg"
+import avolleyball from "../../assets/images/volleyball.svg"
+import involleyball from "../../assets/images/involleyball.svg"
+import formula from "../../assets/images/formula.svg"
+import abaseball from "../../assets/images/baseball.svg"
+import inbaseball from "../../assets/images/inbaseball.svg"
+import agolf from "../../assets/images/golf.svg"
+import ingolf from "../../assets/images/ingolf.svg"
+import ahorse from "../../assets/images/horse.svg"
+import inhorse from "../../assets/images/inhorse.svg"
+import ahockey from "../../assets/images/hockey.svg"
+import inhockey from "../../assets/images/inhockey.svg"
+import aussie from "../../assets/images/aussie.svg"
+import handball from "../../assets/images/handball.svg"
+import hockey from "../../assets/images/icehockey.svg"
+import nascar from "../../assets/images/nascar.svg"
+import futsol from "../../assets/images/futsol.svg"
+import boxing from "../../assets/images/boxing.svg"
+import ufc from "../../assets/images/ufc.svg"
+import dart from "../../assets/images/dart.svg"
+import snooker from "../../assets/images/snooker.svg"
+import easport from "../../assets/images/easport.svg"
+import tabletennis from "../../assets/images/tabletennis.svg"
+
 
 
 
@@ -49,18 +85,17 @@ function HomeScreen() {
   const [upcoming, setUpcoming] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
-  const notifications = useAppSelector(notificationState) as any
+  const notifications = useAppSelector(notificationState) as any;
   const [loader, setLoader] = useState(false);
   const url = `${BaseUrl}/football`;
+  const [visible, setVisible] = useState(false);
 
   const getNotification = async () => {
-    await dispatch(getNotifications())
-  }
-
- 
+    await dispatch(getNotifications());
+  };
 
   useEffect(() => {
-    getNotification()
+    getNotification();
     const socket = io(url) as any;
 
     socket.on("connect", () => {
@@ -122,92 +157,47 @@ function HomeScreen() {
     {
       id: 1,
       name: "Soccer",
-      image: (
-        <IoMdFootball
-          size={20}
-          color={selected === "Soccer" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      image: selected === "Soccer" ? asoccer : insoccer,
     },
     {
       id: 2,
       name: "Basketball",
-      image: (
-        <FaBasketballBall
-          size={20}
-          color={selected === "Basketball" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      image: selected === "Basketball" ? abasketball : inbasketball
     },
     {
       id: 3,
       name: "Tennis",
-      image: (
-        <IoIosTennisball
-          size={20}
-          color={selected === "Tennis" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      image:selected === "Tennis" ? atennis : intennis
     },
     {
       id: 4,
       name: "Cricket",
-      image: (
-        <MdSportsCricket
-          size={20}
-          color={selected === "Cricket" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      image: selected === "Cricket" ? acricket : incricket
     },
     {
       id: 5,
-      name: "Rugby",
-      image: (
-        <MdSportsRugby
-          size={20}
-          color={selected === "Rugby" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      name: "Baseball",
+      image: selected === "Baseball" ? abaseball : inbaseball
     },
     {
       id: 6,
       name: "Volleyball",
-      image: (
-        <MdSportsRugby
-          size={20}
-          color={selected === "Volleyball" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      image: selected === "Volleyball" ? avolleyball : involleyball
     },
     {
       id: 7,
-      name: "Formula 1",
-      image: (
-        <MdSportsRugby
-          size={20}
-          color={selected === "Formula 1" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      name: "Golf",
+      image: selected === "Golf" ? agolf : ingolf
     },
     {
       id: 8,
-      name: "Dog Race",
-      image: (
-        <MdSportsRugby
-          size={20}
-          color={selected === "Dog Race" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      name: "Horse Racing",
+      image: selected === "Horse Racing" ? ahorse : inhorse
     },
     {
       id: 9,
-      name: "Horse Race",
-      image: (
-        <MdSportsRugby
-          size={20}
-          color={selected === "Horse Race" ? COLORS.white : COLORS.primary}
-        />
-      ),
+      name: "Hockey",
+      image: selected === "Hockey" ? ahockey : inhockey
     },
     {
       id: 10,
@@ -215,6 +205,74 @@ function HomeScreen() {
       image: more,
     },
   ];
+
+  const otherItemList = [
+    {
+      id: 1,
+      name: "Formula 1",
+      image: formula,
+    },
+    {
+      id: 2,
+      name: "American Football (Rugby)",
+      image: rugby,
+    },
+    {
+      id: 3,
+      name: "Handball",
+      image: handball,
+    },
+    {
+      id: 4,
+      name: "Ice Hockey",
+      image: hockey,
+    },
+    {
+      id: 5,
+      name: "NASCAR",
+      image: nascar,
+    },
+    {
+      id: 6,
+      name: "Futsol",
+      image: futsol,
+    },
+    {
+      id: 7,
+      name: "Boxing",
+      image: boxing,
+    },
+    {
+      id: 8,
+      name: "MMA/UFC",
+      image: ufc,
+    },
+    {
+      id: 9,
+      name: "Darts",
+      image: dart,
+    },
+    {
+      id: 10,
+      name: "Snooker",
+      image: snooker,
+    },
+    {
+      id: 11,
+      name: "Easport",
+      image: easport,
+    },
+    {
+      id: 12,
+      name: "Table Tennis",
+      image: tabletennis,
+    },
+    {
+      id: 13,
+      name: "Aussie Rules",
+      image: aussie,
+    },
+  ]
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -230,6 +288,11 @@ function HomeScreen() {
   useEffect(() => {
     fetchUserInfo();
   }, []);
+
+  const handleMoreSelect = (data) => {
+    setSelected(data)
+    setVisible(false)
+  }
 
   if (loader) {
     return (
@@ -249,7 +312,7 @@ function HomeScreen() {
   }
 
 
-  console.log({selected})
+
 
   return (
     <div className="top-container">
@@ -277,15 +340,17 @@ function HomeScreen() {
 
         {getToken ? (
           <div>
-             <img
-            src={notification}
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/notification")}
-          />
-            <Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:8, bottom: 5}}></Badge>
+            <img
+              src={notification}
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/notification")}
+            />
+            <Badge
+              value={notifications?.unreadCount}
+              severity="danger"
+              style={{ position: "relative", right: 8, bottom: 5 }}
+            ></Badge>
           </div>
-
-         
         ) : (
           <RxAvatar
             size={50}
@@ -319,7 +384,7 @@ function HomeScreen() {
                 margin: "0 5px",
                 cursor: "pointer",
               }}
-              onClick={() => setSelected(info?.name)}
+              onClick={() => info?.name === "More" ? setVisible(true) : setSelected(info?.name)}
             >
               <div
                 style={{
@@ -331,11 +396,7 @@ function HomeScreen() {
                   border: `1px solid ${COLORS.semiGray}`,
                 }}
               >
-                {info?.name === "More" ? (
-                  <img src={info?.image} />
-                ) : (
-                  info?.image
-                )}
+                 <img src={info?.image} />
                 <p
                   style={{
                     ...FONTS.h6,
@@ -351,16 +412,51 @@ function HomeScreen() {
           );
         })}
       </div>
+      <Sidebar visible={visible} onHide={() => setVisible(false)}>
+      {otherItemList?.map((info: any) => {
+          return (
+            <div
+              key={info?.id}
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => handleMoreSelect(info?.name)}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  padding: "15px 0px",
+                
+                  borderBottom: `1px solid ${COLORS.semiGray}`,
+                }}
+              >
+                 <img src={info?.image} />
+                <p
+                  style={{
+                    ...FONTS.h6,
+                    color: COLORS.primary,
+                    margin: "0px 5px",
+                  }}
+                >
+                  {info?.name}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+    </Sidebar>
 
-{
-  selected === "Soccer" &&       <div>
-  <Football live={live} today={today} upcoming={upcoming} tomorrow={tomorrow} />
-</div>
-}
-{
-  selected === "Basketball" && <Basketball />
-}
-    
+      {selected === "Soccer" && (
+        <div>
+          <Football
+            live={live}
+            today={today}
+            upcoming={upcoming}
+            tomorrow={tomorrow}
+          />
+        </div>
+      )}
+      {selected === "Basketball" && <Basketball />}
 
       {getToken && <BottomTabs />}
     </div>
