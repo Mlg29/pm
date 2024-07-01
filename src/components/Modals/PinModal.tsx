@@ -22,8 +22,9 @@ const PinModal = ({ show, handleClose, handleAction,type, responseText }) => {
   const [loader, setLoader] = useState(false)
 
   const handleSuccessShow = () => {
-    handleClose();
     setShowSuccess(true);
+    handleClose();
+   
   };
 
   useEffect(() => {

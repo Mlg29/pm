@@ -30,6 +30,8 @@ import Loader from "../../components/Loader";
 import SliderComponent from "../../components/Slider";
 import { getNotifications, notificationState } from "../../redux/slices/NotificationSlice";
 import { Badge } from "primereact/badge";
+import Football from "../Games/Football";
+import Basketball from "../Games/Basketball";
 
 
 
@@ -246,6 +248,9 @@ function HomeScreen() {
     );
   }
 
+
+  console.log({selected})
+
   return (
     <div className="top-container">
       <div
@@ -346,175 +351,16 @@ function HomeScreen() {
           );
         })}
       </div>
-      {live?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            LIVE
-          </p>
 
-          {live?.length > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: live,
-                    type: "live",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
-
-      {live
-        ?.filter((a, i) => i < 10)
-        .map((aa: any, i: any) => {
-          return (
-            <div key={i}>
-              <GameCard id={i} data={aa} />
-            </div>
-          );
-        })}
-      {upcoming?.data?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            UPCOMING
-          </p>
-          {upcoming?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: upcoming,
-                    type: "upcoming",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
-
-      {upcoming?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <GameCard id={i} data={aa} />
-          </div>
-        );
-      })}
-
-      {today?.data?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            TODAY
-          </p>
-          {today?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: today,
-                    type: "today",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
-
-      {today?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <GameCard id={i} data={aa} />
-          </div>
-        );
-      })}
-
-      {tomorrow?.data?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            TOMORROW
-          </p>
-          {tomorrow?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: tomorrow,
-                    type: "tomorrow",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
-
-      {tomorrow?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <GameCard id={i} data={aa} />
-          </div>
-        );
-      })}
+{
+  selected === "Soccer" &&       <div>
+  <Football live={live} today={today} upcoming={upcoming} tomorrow={tomorrow} />
+</div>
+}
+{
+  selected === "Basketball" && <Basketball />
+}
+    
 
       {getToken && <BottomTabs />}
     </div>

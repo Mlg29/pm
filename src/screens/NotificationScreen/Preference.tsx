@@ -108,6 +108,9 @@ function Preference() {
             toast.success("Notification Updated Successfully", {
               position: "bottom-center",
             });
+            setTimeout(() => {
+              navigate(-1)
+            }, 1000)
           } else {
             var errMsg = response?.payload as string;
             setLoaderBtn(false);

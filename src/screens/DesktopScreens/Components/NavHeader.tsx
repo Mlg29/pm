@@ -209,6 +209,7 @@ function NavHeader() {
 
   const handleSelection = (info) => {
     setSelected(info);
+    localStorage.setItem("sport", info)
     navigate("/home");
   };
 

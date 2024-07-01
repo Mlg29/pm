@@ -71,12 +71,15 @@ function EditProfile() {
   const [show, setShow] = useState(false)
   const [storePayload, setStorePayload] = useState(null)
   const [country, setCountry] = useState("Nigeria");
-  const [phoneNumber, setPhoneNumber] = useState("");
+ 
   const [message, setMessage] = useState("")
   const [messageType, setMessageType] = useState("")
 
   const [countryList, setCountryList] = useState([]);
   const countryListCode = countryList?.find((dd) => dd?.country === country)
+  const phone = userData?.phoneNumber?.slice(countryListCode?.dialCode?.length)
+
+ const [phoneNumber, setPhoneNumber] = useState("");
 
 
   useEffect(() => {
@@ -85,11 +88,15 @@ function EditProfile() {
     let x = Array.from(Object.values(countries1));
     // console.log(x[0], "x");
     setCountryList(x);
-  }, []);
+    setPhoneNumber(phone)
+  }, [phone]);
 
 
   const handleClose = () => {
     setShow(false)
+    if(isMobile) {
+      navigate(-1)
+    }
   }
 
 
@@ -140,6 +147,7 @@ function EditProfile() {
     firstName: userData?.firstName ? userData?.firstName : "",
     lastName: userData?.lastName ? userData?.lastName : "",
   };
+
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
     useFormik({
@@ -316,7 +324,7 @@ function EditProfile() {
 
       <PinModal 
         show={show}
-        handleClose={handleClose}
+        handleClose={() => handleClose()}
         handleAction={handleAction}
         type={messageType === "Rejected" ? "failed" : "success"}
         responseText={message ? message : "Password Updated Successfully"}
