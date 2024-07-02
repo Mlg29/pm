@@ -5,6 +5,7 @@ import BetReducer from './slices/BetSlice'
 import TransactionReducer from "./slices/TransactionSlice"
 import NotificationReducer from './slices/NotificationSlice'
 import RestrictionReducer from './slices/RestrictionSlice'
+import TennisReducer from './slices/TennisSlice'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
    bet: BetReducer,
    transaction: TransactionReducer,
    notification: NotificationReducer,
-   restriction: RestrictionReducer
+   restriction: RestrictionReducer,
+   tennis: TennisReducer
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

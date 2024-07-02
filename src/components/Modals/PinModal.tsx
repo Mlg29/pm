@@ -43,6 +43,7 @@ const PinModal = ({ show, handleClose, handleAction,type, responseText }) => {
     const verifyResponse = await dispatch(
       verifyTransactionPin(transactionPayload)
     );
+  
     if (verifyTransactionPin.fulfilled.match(verifyResponse)) {
       await handleAction().then((aa) => {
         handleSuccessShow();
@@ -51,6 +52,7 @@ const PinModal = ({ show, handleClose, handleAction,type, responseText }) => {
       });
     } else {
       var errMsg = verifyResponse?.payload as string
+      alert(errMsg)
       setLoader(false);
       // toast?.error(errMsg, {
       //   position: "bottom-center",

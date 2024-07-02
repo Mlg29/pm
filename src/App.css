@@ -36,6 +36,12 @@ h1, h2, h3, h4, h5, h6, p {
   will-change: filter;
   transition: filter 300ms; */
 }
+/* [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+  background-color: transparent !important;
+} */
+.btn-close {
+  background-color: transparent !important;
+}
 button:focus {
   outline-color: none; /* Change the color to match your design */
 }

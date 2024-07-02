@@ -45,12 +45,6 @@ function Security() {
   };
 
   const dataList = [
-    // {
-    //   id: 1,
-    //   name: "Create Secret Question",
-    //   image: scan,
-    //   handleRoute: isMobile ? () => navigate("/secret-question") : () => handleQuestChange(),
-    // }, 
     {
       id: 2,
       name: "Change Password",
