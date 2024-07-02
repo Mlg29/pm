@@ -1,7 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import milan from "../../assets/images/millan.svg";
-import yellowcard from "../../assets/images/yellow.svg";
-import balls from "../../assets/images/balls.svg";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import noLogo from "../../assets/images/no.jpg";

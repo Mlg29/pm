@@ -76,7 +76,7 @@ function WalletPin() {
     const transactionPayload = {
       transactionPin: otp
     }
-
+    console.log({payload})
     setLoader(true);
 
     const verifyResponse = await dispatch(verifyTransactionPin(transactionPayload))

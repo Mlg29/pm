@@ -12,6 +12,7 @@ import { RiFileList3Fill } from "react-icons/ri";
 import { BaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import GameDetailCardHeader from "../../components/GameDetailCardHeader";
+import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 
 const styles = {
   contain: {
@@ -48,6 +49,7 @@ function CreateBet() {
   const location = useLocation();
 
   const game = location?.state?.game;
+  const gameType = location?.state?.gameType;
   const [gameInfo, setGameInfo] = useState(null);
   const url = `${BaseUrl}/football`;
 
@@ -75,11 +77,17 @@ function CreateBet() {
     };
   }, []);
 
+
   return (
     <div className="top-container" style={{ backgroundColor: "white" }}>
       <Header text="Create Bet" />
-
-      <GameDetailCardHeader data={gameInfo} />
+      {
+        gameType === "Soccer" &&  <GameDetailCardHeader data={gameInfo} />
+      }
+     
+     {
+      gameType === "Tennis" && <TennisCard data={gameInfo} />
+     }
 
       <div>
         <h3 style={{ ...FONTS.h6 }}>Bet Option</h3>

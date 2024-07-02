@@ -87,6 +87,8 @@ function BetSlip() {
     );
   }
 
+  console.log({groupedData})
+
   return (
     <div className="top-container">
       <div style={{ ...styles.container }}>

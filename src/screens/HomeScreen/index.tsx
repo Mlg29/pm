@@ -67,6 +67,8 @@ import dart from "../../assets/images/dart.svg"
 import snooker from "../../assets/images/snooker.svg"
 import easport from "../../assets/images/easport.svg"
 import tabletennis from "../../assets/images/tabletennis.svg"
+import Tennis from "../Games/Tennis";
+import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 
 
 
@@ -83,6 +85,7 @@ function HomeScreen() {
 
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
+  const [upcomingTennis, setUpcomingTennis] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
   const notifications = useAppSelector(notificationState) as any;
@@ -115,6 +118,9 @@ function HomeScreen() {
         return [...updatedMessages, message];
       });
     });
+    socket.on("tennisEventUpdate", (message) => {
+      console.log("tennis==", {message})
+    });
 
     // Cleanup on component unmount
     return () => {
@@ -138,20 +144,33 @@ function HomeScreen() {
     const payloadTomorrow = {
       date: tomorrowDate.format("YYYY-MM-DD"),
     };
-    dispatch(getFootballFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.data);
-    });
-    dispatch(getFootballFixtures(payloadToday)).then((dd) => {
-      setToday(dd?.payload);
-    });
-    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-      setTomorrow(dd?.payload);
-    });
-    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload);
-    });
-    // dispatch(getFootballEvents())
-  }, []);
+    const notYetPayloadUpcoming = {
+      status: "Not Started"
+    }
+
+if(selected === "Soccer"){
+  dispatch(getFootballFixtures(payloadLive)).then((dd) => {
+    setLive(dd?.payload?.data);
+  });
+  dispatch(getFootballFixtures(payloadToday)).then((dd) => {
+    setToday(dd?.payload);
+  });
+  dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+    setTomorrow(dd?.payload);
+  });
+  dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
+    setUpcoming(dd?.payload);
+  });
+  return;
+}
+    if(selected === "Tennis"){
+      dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
+        setUpcomingTennis(dd?.payload);
+       });
+       return
+    }
+    
+  }, [selected]);
 
   const itemList = [
     {
@@ -457,6 +476,8 @@ function HomeScreen() {
         </div>
       )}
       {selected === "Basketball" && <Basketball />}
+
+      {selected === "Tennis" && <Tennis upcoming={upcomingTennis} />}
 
       {getToken && <BottomTabs />}
     </div>

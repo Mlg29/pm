@@ -18,6 +18,8 @@ import { getUserData } from "../../redux/slices/AuthSlice";
 import SliderComponent from "../../components/Slider";
 import { useNavigate } from "react-router-dom";
 import Football from "../Games/Football";
+import Tennis from "../Games/Tennis";
+import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 
 const styles = {
   container: {
@@ -42,6 +44,7 @@ function Dashboard() {
   const url = `${BaseUrl}/football`;
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
+  const [upcomingTennis, setUpcomingTennis] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
   const sportEvents = localStorage.getItem("sport") || "Soccer"
@@ -79,6 +82,9 @@ function Dashboard() {
         );
         return [...updatedMessages, message];
       });
+      socket.on("tennisEventUpdate", (message) => {
+        console.log("tennis==", {message})
+      });
     });
 
     // Cleanup on component unmount
@@ -103,6 +109,11 @@ function Dashboard() {
     const payloadTomorrow = {
       date: tomorrowDate.format("YYYY-MM-DD"),
     };
+    const notYetPayloadUpcoming = {
+      status: "Not Started"
+    }
+
+    if(sportEvents === "Soccer"){
     dispatch(getFootballFixtures(payloadLive)).then((dd) => {
       setLive(dd?.payload?.data);
     });
@@ -115,8 +126,14 @@ function Dashboard() {
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
     });
-    // dispatch(getFootballEvents())
-  }, []);
+  }
+    if(sportEvents === "Tennis"){
+      dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
+        setUpcomingTennis(dd?.payload);
+       });
+       return
+    }
+  }, [sportEvents]);
 
   if (loader) {
     return (
@@ -145,6 +162,11 @@ function Dashboard() {
           {
             sportEvents && sportEvents === "Soccer" && <div style={{ ...styles.div }}>
               <Football live={live} today={today} upcoming={upcoming} tomorrow={tomorrow} />
+          </div>
+          }
+          {
+             sportEvents === "Tennis" && <div style={{ ...styles.div }}>
+              <Tennis upcoming={upcomingTennis} />
           </div>
           }
         </div>

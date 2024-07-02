@@ -44,6 +44,7 @@ function OpenBet() {
     const location = useLocation()
     const userSelection = location?.state?.userSelection
     const game = location?.state?.game
+    const gameType = location?.state?.gameType
     const dispatch = useAppDispatch()
     const [openBets, setOpenBets] = useState([])
     const [userData, setUserData] = useState(null);
@@ -82,7 +83,7 @@ function OpenBet() {
 
     const handleCreate = () => {
        return navigate('/create-bet', {
-        state: {game: game}
+        state: {game: game, gameType: gameType}
        })
     }
 
@@ -96,7 +97,7 @@ function OpenBet() {
             prediction: userSelection?.userType,
           };
           localStorage.setItem("inviteeInfo", JSON.stringify(payload));
-          return navigate("/options");
+          return navigate("/options", {state: {gameType: gameType}});
     }
 
     const handleAdjust = (data) => {
@@ -108,7 +109,7 @@ function OpenBet() {
             betId: data?.id
           };
           localStorage.setItem("inviteeInfo", JSON.stringify(payload));
-        navigate("/adjust-bet")
+        navigate("/adjust-bet", {state: {gameType: gameType}})
     }
 
     const filterData = openBets?.filter((a, i) => a?.sportEventId === userSelection?.sportEventId && a?.prediction !== userSelection?.userType)

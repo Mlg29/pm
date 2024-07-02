@@ -51,6 +51,9 @@ function BetDetail() {
     });
   }, [id]);
 
+
+  const sportType = betData?.sportEvent?.sport
+
   if (loader) {
     return (
       <div
@@ -68,7 +71,7 @@ function BetDetail() {
     );
   }
 
- console.log({betData})
+ console.log({betData,sportType})
 
   return (
     <div className="top-container">
