@@ -9,6 +9,7 @@ import Loader from "../../components/Loader";
 import EmptyState from "../../components/EmptyState";
 import { updateBetAdjust } from "../../redux/slices/BetSlice";
 import { useMediaQuery } from "react-responsive";
+import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 
 function NotificationScreen() {
   const navigate = useNavigate();
@@ -81,6 +82,10 @@ function NotificationScreen() {
   }
 
   return (
+    <div className="top-container" style={{backgroundColor: 'transparent'}}>
+    {
+      !isMobile && <DesktopBackButton />
+    }
     <div className="top-container">
          <Header text="Notifications" />
 
@@ -112,6 +117,7 @@ function NotificationScreen() {
       </div>
 
       <ToastContainer />
+    </div>
     </div>
   );
 }

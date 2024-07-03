@@ -33,12 +33,15 @@ import moment from "moment";
 import Loader from "../../components/Loader";
 import SliderComponent from "../../components/Slider";
 import { useMediaQuery } from "react-responsive";
+import { getTennisFixtures } from "../../redux/slices/TennisSlice";
+import TennisGameCard from "../../components/GameCard/TennisGameCard";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
   const location = useLocation();
   const events = location.state.events;
   const eventType = location.state.type;
+  const gameType = location.state.gameType;
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
@@ -47,6 +50,7 @@ function GameEventData(props: any) {
   const footballEvents = useAppSelector(footballEventState) as any;
   // const footballFixtures = useAppSelector(footballFixtureState) as any
   const [live, setLive] = useState<any>([]);
+  const [liveTennis, setLiveTennis] = useState<any>([]);
   const [data, setData] = useState<any>([]);
   const sliderArr = [slider, slider2, slider3];
   const [loader, setLoader] = useState(false);
@@ -56,7 +60,6 @@ function GameEventData(props: any) {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
@@ -77,7 +80,14 @@ function GameEventData(props: any) {
       page: page,
       pageSize: pageSize,
     };
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "today" ? payloadToday : eventType === "tomorrow" ? payloadTomorrow : ""
+    const actualPayload =
+      eventType === "upcoming"
+        ? payloadUpcoming
+        : eventType === "today"
+        ? payloadToday
+        : eventType === "tomorrow"
+        ? payloadTomorrow
+        : "";
     setLoading(true);
     dispatch(getFootballFixtures(actualPayload)).then((dd) => {
       setData((prev) => [...prev, ...dd?.payload?.data]);
@@ -89,15 +99,67 @@ function GameEventData(props: any) {
       }
     });
   };
+  const fetchTennisData = async (page) => {
+    const payloadUpcoming = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+    const payloadLive = {
+      status: "Live",
+      page: page,
+      pageSize: pageSize,
+    };
+    const payloadToday = {
+      startTime: moment(new Date()).format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+    const payloadTomorrow = {
+      startTime: tomorrowDate.format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+    const actualPayload =
+      eventType === "upcoming"
+        ? payloadUpcoming
+        : eventType === "live" ? payloadLive
+        : eventType === "today"
+        ? payloadToday
+        : eventType === "tomorrow"
+        ? payloadTomorrow
+        : "";
+    setLoading(true);
+    dispatch(getTennisFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+    });
+  };
 
   useEffect(() => {
-    fetchData(page);
+    if (gameType === "Soccer") {
+      fetchData(page);
+      return;
+    }
+    if (gameType === "Tennis") {
+      fetchTennisData(page);
+      return;
+    }
   }, [page]);
 
+
   useEffect(() => {
-    if (eventType === "live") {
+    if (eventType === "live" && gameType === "Soccer") {
       setLive(events);
     }
+    // if (eventType === "live" && gameType === "Tennis") {
+    //   setLiveTennis(events);
+    // }
 
     const socket = io(url) as any;
 
@@ -112,11 +174,14 @@ function GameEventData(props: any) {
     // Handle incoming messages
     socket.on("footballEventUpdate", (message) => {
       setLive((prevMessages) => {
-        const updatedMessages = prevMessages.filter(
+        const updatedMessages = prevMessages?.filter(
           (msg) => msg.id !== message.id
         );
         return [...updatedMessages, message];
       });
+    });
+    socket.on("tennisEventUpdate", (message) => {
+      console.log("tennis==", { message });
     });
 
     // Cleanup on component unmount
@@ -124,9 +189,6 @@ function GameEventData(props: any) {
       socket.disconnect();
     };
   }, []);
-
-
-
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -146,7 +208,6 @@ function GameEventData(props: any) {
   const fetchMoreData = () => {
     setPage((prevPage) => prevPage + 1);
   };
-
 
   if (loader) {
     return (
@@ -206,7 +267,7 @@ function GameEventData(props: any) {
         </div>
       )}
 
-      {eventType === "live" && (
+      {eventType === "live" && gameType === "Soccer" && (
         <div>
           {live?.length > 0 && (
             <div
@@ -239,9 +300,8 @@ function GameEventData(props: any) {
         </div>
       )}
 
-      {eventType !== "live" && (
-        <>
-          <div>
+      {eventType === "live" && gameType === "Tennis" && (
+        <div>
           {data?.length > 0 && (
             <div
               style={{
@@ -262,27 +322,62 @@ function GameEventData(props: any) {
               </p>
             </div>
           )}
+
+          {data?.map((aa: any, i: any) => {
+            return (
+              <div key={i}>
+                <TennisGameCard id={i} data={aa} />
+              </div>
+            );
+          })}
         </div>
-          <InfiniteScroll
-        dataLength={data?.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
-        endMessage={<p>No more data to load</p>}
-      >
-        {data?.map((aa: any, i: any) => {
-          return (
-            <div key={i}>
-              <GameCard id={i} data={aa} />
-            </div>
-          );
-        })}
-      </InfiniteScroll>
-        </>
-      
       )}
-    
-      {getToken && <BottomTabs />}
+
+      {eventType !== "live" && (
+        <>
+          <div>
+            {data?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: "15px 0px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {eventType} Games
+                </p>
+              </div>
+            )}
+          </div>
+          <InfiniteScroll
+            dataLength={data?.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={<p>No more data to load</p>}
+          >
+            {data?.map((aa: any, i: any) => {
+              return (
+                <div key={i}>
+                  {gameType === "Soccer" && <GameCard id={i} data={aa} />}
+
+                  {gameType === "Tennis" && <TennisGameCard id={i} data={aa} />}
+                </div>
+              );
+            })}
+          </InfiniteScroll>
+        </>
+      )}
+
+      {/* {getToken && <BottomTabs />} */}
     </div>
   );
 }

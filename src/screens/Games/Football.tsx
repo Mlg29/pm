@@ -33,6 +33,7 @@ function Football({live, upcoming, today, tomorrow}) {
                   state: {
                     events: live,
                     type: "live",
+                    gameType: "Soccer"
                   },
                 })
               }
@@ -76,6 +77,7 @@ function Football({live, upcoming, today, tomorrow}) {
                   state: {
                     events: upcoming,
                     type: "upcoming",
+                    gameType: "Soccer"
                   },
                 })
               }
@@ -118,6 +120,7 @@ function Football({live, upcoming, today, tomorrow}) {
                   state: {
                     events: today,
                     type: "today",
+                    gameType: "Soccer"
                   },
                 })
               }
@@ -160,6 +163,7 @@ function Football({live, upcoming, today, tomorrow}) {
                   state: {
                     events: tomorrow,
                     type: "tomorrow",
+                    gameType: "Soccer"
                   },
                 })
               }

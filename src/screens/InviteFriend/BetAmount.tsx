@@ -9,10 +9,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 import NumberInput from "../../components/NumberInput";
+import { useMediaQuery } from "react-responsive";
+import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 
 const BetAmount = () => {
   const navigate = useNavigate();
-
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const [amount, setAmount] = useState("");
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
@@ -40,7 +42,11 @@ const BetAmount = () => {
   };
 
   return (
-    <div className="top-container">
+    <div className="top-container" style={{backgroundColor: 'transparent'}}>
+         {
+        !isMobile && <DesktopBackButton />
+      }
+      <div className="top-container">
       <Header text={"Bet Amount"} />
 
       <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
@@ -79,7 +85,9 @@ const BetAmount = () => {
       </div>
 
       <ToastContainer />
+    </div> 
     </div>
+   
   );
 };
 

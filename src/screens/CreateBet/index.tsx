@@ -13,6 +13,8 @@ import { BaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import GameDetailCardHeader from "../../components/GameDetailCardHeader";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
+import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
+import { useMediaQuery } from "react-responsive";
 
 const styles = {
   contain: {
@@ -47,7 +49,7 @@ const styles = {
 function CreateBet() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const game = location?.state?.game;
   const gameType = location?.state?.gameType;
   const [gameInfo, setGameInfo] = useState(null);
@@ -79,7 +81,11 @@ function CreateBet() {
 
 
   return (
-    <div className="top-container" style={{ backgroundColor: "white" }}>
+  <div>
+    {
+        !isMobile && <DesktopBackButton />
+      }
+      <div className="top-container" style={{ backgroundColor: "white" }}>
       <Header text="Create Bet" />
       {
         gameType === "Soccer" &&  <GameDetailCardHeader data={gameInfo} />
@@ -146,6 +152,7 @@ function CreateBet() {
         <FaChevronRight />
       </div>
     </div>
+  </div>
   );
 }
 

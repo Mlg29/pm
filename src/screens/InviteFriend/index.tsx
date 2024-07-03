@@ -9,6 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 import NumberInput from "../../components/NumberInput";
+import { useMediaQuery } from "react-responsive";
+import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 
 
 const InviteFriend = () => {
@@ -21,7 +23,8 @@ const InviteFriend = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [allowCurrency, setAllowCurrency] = useState(false);
-
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  
   const checkHandler = () => {
     setAllowCurrency(!allowCurrency);
   };
@@ -82,7 +85,11 @@ const InviteFriend = () => {
 
 
   return (
-    <div className="top-container">
+    <div className="top-container" style={{backgroundColor: 'transparent'}}>
+         {
+        !isMobile && <DesktopBackButton />
+      }
+      <div className="top-container">
       <Header text={"Invite Friend"} />
 
       <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
@@ -157,7 +164,9 @@ const InviteFriend = () => {
       </div>
 
       <ToastContainer />
+    </div> 
     </div>
+   
   );
 };
 

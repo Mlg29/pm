@@ -14,6 +14,8 @@ import { getUserData } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { formatCurrency } from "../../utils/helper";
 import Loader from "../../components/Loader";
+import { useMediaQuery } from "react-responsive";
+import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 
 const styles = {
   row: {
@@ -35,7 +37,7 @@ function Options() {
 const dispatch = useAppDispatch()
 const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
 
-
+const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -88,6 +90,10 @@ const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
   }
 
   return (
+    <div className="top-container" style={{backgroundColor: 'transparent'}}>
+    {
+      !isMobile && <DesktopBackButton />
+    }
     <div className="top-container">
       <Header text="Payment Option" />
       <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
@@ -122,6 +128,7 @@ const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
       </div>
 
       <ToastContainer />
+    </div>
     </div>
   );
 }

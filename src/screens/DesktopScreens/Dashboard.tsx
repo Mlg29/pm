@@ -45,6 +45,7 @@ function Dashboard() {
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
   const [upcomingTennis, setUpcomingTennis] = useState<any>([]);
+  const [liveTennis, setLiveTennis] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
   const sportEvents = localStorage.getItem("sport") || "Soccer"
@@ -82,7 +83,7 @@ function Dashboard() {
         );
         return [...updatedMessages, message];
       });
-      socket.on("tennisEventUpdate", (message) => {
+      socket.on("TennisEventUpdate", (message) => {
         console.log("tennis==", {message})
       });
     });
@@ -112,6 +113,9 @@ function Dashboard() {
     const notYetPayloadUpcoming = {
       status: "Not Started"
     }
+    const tennisPayloadLive = {
+      status: "Live"
+    }
 
     if(sportEvents === "Soccer"){
     dispatch(getFootballFixtures(payloadLive)).then((dd) => {
@@ -130,6 +134,9 @@ function Dashboard() {
     if(sportEvents === "Tennis"){
       dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
         setUpcomingTennis(dd?.payload);
+       });
+       dispatch(getTennisFixtures(tennisPayloadLive)).then((dd) => {
+        setLiveTennis(dd?.payload);
        });
        return
     }
@@ -166,7 +173,7 @@ function Dashboard() {
           }
           {
              sportEvents === "Tennis" && <div style={{ ...styles.div }}>
-              <Tennis upcoming={upcomingTennis} />
+              <Tennis live={liveTennis}  upcoming={upcomingTennis} />
           </div>
           }
         </div>

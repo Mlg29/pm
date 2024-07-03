@@ -10,6 +10,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { acceptBet, adjustBet, createBet } from "../../redux/slices/BetSlice";
 import { getUserData, verifyTransactionPin } from "../../redux/slices/AuthSlice";
 import { useMediaQuery } from "react-responsive";
+import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 
 
 function WalletPin() {
@@ -141,6 +142,10 @@ function WalletPin() {
   };
 
   return (
+    <div className="top-container" style={{backgroundColor: 'transparent'}}>
+    {
+      !isMobile && <DesktopBackButton />
+    }
     <div
       className="top-container"
       style={{
@@ -198,6 +203,7 @@ function WalletPin() {
       </div>
 
       <ToastContainer />
+    </div>
     </div>
   );
 }

@@ -86,6 +86,7 @@ function HomeScreen() {
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
   const [upcomingTennis, setUpcomingTennis] = useState<any>([]);
+  const [liveTennis, setLiveTennis] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
   const notifications = useAppSelector(notificationState) as any;
@@ -112,13 +113,13 @@ function HomeScreen() {
     // Handle incoming messages
     socket.on("footballEventUpdate", (message) => {
       setLive((prevMessages) => {
-        const updatedMessages = prevMessages.filter(
+        const updatedMessages = prevMessages?.filter(
           (msg) => msg.id !== message.id
         );
         return [...updatedMessages, message];
       });
     });
-    socket.on("tennisEventUpdate", (message) => {
+    socket.on("TennisEventUpdate", (message) => {
       console.log("tennis==", {message})
     });
 
@@ -147,6 +148,9 @@ function HomeScreen() {
     const notYetPayloadUpcoming = {
       status: "Not Started"
     }
+    const tennisPayloadLive = {
+      status: "Live"
+    }
 
 if(selected === "Soccer"){
   dispatch(getFootballFixtures(payloadLive)).then((dd) => {
@@ -166,6 +170,9 @@ if(selected === "Soccer"){
     if(selected === "Tennis"){
       dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
         setUpcomingTennis(dd?.payload);
+       });
+       dispatch(getTennisFixtures(tennisPayloadLive)).then((dd) => {
+        setLiveTennis(dd?.payload);
        });
        return
     }
@@ -477,7 +484,7 @@ if(selected === "Soccer"){
       )}
       {selected === "Basketball" && <Basketball />}
 
-      {selected === "Tennis" && <Tennis upcoming={upcomingTennis} />}
+      {selected === "Tennis" && <Tennis  live={liveTennis} upcoming={upcomingTennis} />}
 
       {getToken && <BottomTabs />}
     </div>
