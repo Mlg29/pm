@@ -541,7 +541,7 @@ function GameDetails() {
               <div style={{ ...styles.mob }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.localTeamName} Win`}
+                    text={`${gameInfo?.localTeamName?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -558,7 +558,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.visitorTeamName} Win`}
+                    text={`${gameInfo?.visitorTeamName?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -593,7 +593,7 @@ function GameDetails() {
               <div style={{ ...styles.desk }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.localTeamName} Win`}
+                    text={`${gameInfo?.localTeamName?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -611,7 +611,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.visitorTeamName} Win`}
+                    text={`${gameInfo?.visitorTeamName?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -664,7 +664,7 @@ function GameDetails() {
               <div style={{ ...styles.mob }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.player[0]["@name"]} Win`}
+                    text={`${gameInfo?.player[0]["@name"]?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -683,7 +683,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.player[1]["@name"]} Win`}
+                    text={`${gameInfo?.player[1]["@name"]?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -706,7 +706,7 @@ function GameDetails() {
               <div style={{ ...styles.desk }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.player[0]["@name"]} Win`}
+                    text={`${gameInfo?.player[0]["@name"]?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -726,7 +726,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.player[1]["@name"]} Win`}
+                    text={`${gameInfo?.player[1]["@name"]?.slice(0, 6)} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:

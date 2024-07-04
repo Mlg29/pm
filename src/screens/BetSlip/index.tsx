@@ -87,7 +87,6 @@ function BetSlip() {
     );
   }
 
-  console.log({groupedData})
 
   return (
     <div className="top-container">
@@ -186,32 +185,74 @@ function BetSlip() {
                       {groupedData[date]?.reverse()?.map((item, i) => {
                         return (
                           <div key={i}>
-                            <SlipCard
-                              homeName={
-                                item?.sportEvent?.FootballEvent?.localTeamName
-                              }
-                              awayName={
-                                item?.sportEvent?.FootballEvent?.visitorTeamName
-                              }
-                              homeScore={
-                                item?.sportEvent?.FootballEvent?.localTeamGoals
-                              }
-                              awayScore={
-                                item?.sportEvent?.FootballEvent
-                                  ?.visitorTeamGoals
-                              }
-                              homeImage={
-                                item?.sportEvent?.FootballEvent?.localTeamLogo
-                              }
-                              awayImage={
-                                item?.sportEvent?.FootballEvent?.visitorTeamLogo
-                              }
-                              isWin={item?.winnerId}
-                              amount={item?.betAmount}
-                              isUser={userData}
-                              betCurrency={item?.betCurrency}
-                              data={item}
-                            />
+                            {item?.sportEvent?.sport === "FOOTBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.FootballEvent?.localTeamName
+                                }
+                                awayName={
+                                  item?.sportEvent?.FootballEvent
+                                    ?.visitorTeamName
+                                }
+                                homeScore={
+                                  item?.sportEvent?.FootballEvent
+                                    ?.localTeamGoals
+                                }
+                                awayScore={
+                                  item?.sportEvent?.FootballEvent
+                                    ?.visitorTeamGoals
+                                }
+                                // homeImage={
+                                //   item?.sportEvent?.FootballEvent?.localTeamLogo
+                                // }
+                                // awayImage={
+                                //   item?.sportEvent?.FootballEvent
+                                //     ?.visitorTeamLogo
+                                // }
+                                isWin={item?.winnerId}
+                                amount={item?.betAmount}
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+
+                            {item?.sportEvent?.sport === "TENNIS" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.TennisEvent?.player[0][
+                                    "@name"
+                                  ]
+                                }
+                                awayName={
+                                  item?.sportEvent?.TennisEvent?.player[1][
+                                    "@name"
+                                  ]
+                                }
+                                homeScore={
+                                  item?.sportEvent?.TennisEvent?.player[0][
+                                    "@totalscore"
+                                  ]
+                                }
+                                awayScore={
+                                  item?.sportEvent?.TennisEvent?.player[1][
+                                    "@totalscore"
+                                  ]
+                                }
+                                // homeImage={
+                                //   item?.sportEvent?.FootballEvent?.localTeamLogo
+                                // }
+                                // awayImage={
+                                //   item?.sportEvent?.FootballEvent
+                                //     ?.visitorTeamLogo
+                                // }
+                                isWin={item?.winnerId}
+                                amount={item?.betAmount}
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                           </div>
                         );
                       })}
@@ -239,31 +280,69 @@ function BetSlip() {
                     {groupedData[date]?.reverse()?.map((item, i) => {
                       return (
                         <div key={i}>
-                          <SlipCard
-                            homeName={
-                              item?.sportEvent?.FootballEvent?.localTeamName
-                            }
-                            awayName={
-                              item?.sportEvent?.FootballEvent?.visitorTeamName
-                            }
-                            homeScore={
-                              item?.sportEvent?.FootballEvent?.localTeamGoals
-                            }
-                            awayScore={
-                              item?.sportEvent?.FootballEvent?.visitorTeamGoals
-                            }
-                            homeImage={
-                              item?.sportEvent?.FootballEvent?.localTeamLogo
-                            }
-                            awayImage={
-                              item?.sportEvent?.FootballEvent?.visitorTeamLogo
-                            }
-                            isWin={item?.winnerId}
-                            amount={item?.betAmount}
-                            isUser={userData}
-                            betCurrency={item?.betCurrency}
-                            data={item}
-                          />
+                        {
+                          item?.sportEvent?.sport === "FOOTBALL" &&   <SlipCard
+                          homeName={
+                            item?.sportEvent?.FootballEvent?.localTeamName
+                          }
+                          awayName={
+                            item?.sportEvent?.FootballEvent?.visitorTeamName
+                          }
+                          homeScore={
+                            item?.sportEvent?.FootballEvent?.localTeamGoals
+                          }
+                          awayScore={
+                            item?.sportEvent?.FootballEvent?.visitorTeamGoals
+                          }
+                          // homeImage={
+                          //   item?.sportEvent?.FootballEvent?.localTeamLogo
+                          // }
+                          // awayImage={
+                          //   item?.sportEvent?.FootballEvent?.visitorTeamLogo
+                          // }
+                          isWin={item?.winnerId}
+                          amount={item?.betAmount}
+                          isUser={userData}
+                          betCurrency={item?.betCurrency}
+                          data={item}
+                        />
+                        }
+                               {item?.sportEvent?.sport === "TENNIS" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.TennisEvent?.player[0][
+                                    "@name"
+                                  ]
+                                }
+                                awayName={
+                                  item?.sportEvent?.TennisEvent?.player[1][
+                                    "@name"
+                                  ]
+                                }
+                                homeScore={
+                                  item?.sportEvent?.TennisEvent?.player[0][
+                                    "@totalscore"
+                                  ]
+                                }
+                                awayScore={
+                                  item?.sportEvent?.TennisEvent?.player[1][
+                                    "@totalscore"
+                                  ]
+                                }
+                                // homeImage={
+                                //   item?.sportEvent?.FootballEvent?.localTeamLogo
+                                // }
+                                // awayImage={
+                                //   item?.sportEvent?.FootballEvent
+                                //     ?.visitorTeamLogo
+                                // }
+                                isWin={item?.winnerId}
+                                amount={item?.betAmount}
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                         </div>
                       );
                     })}

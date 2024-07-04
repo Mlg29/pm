@@ -16,7 +16,6 @@ const SliderComponent = () => {
     return () => clearInterval(interval);
   }, []);
 
-
   
   return (
     <div>

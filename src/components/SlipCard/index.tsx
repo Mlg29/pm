@@ -65,7 +65,7 @@ function SlipCard(props: any) {
       <div style={{ ...styles.container2, cursor: "pointer" }}>
         <div>
           <div style={{ ...styles.row }}>
-            <img src={homeImage ? homeImage : noLogo} width={20} />
+            {/* <img src={homeImage ? homeImage : noLogo} width={20} /> */}
             <h3
               style={{ ...FONTS.body7, width: 150, margin: "0px 0px 0px 5px" }}
             >
@@ -76,7 +76,7 @@ function SlipCard(props: any) {
             </h3>
           </div>
           <div style={{ ...styles.row }}>
-            <img src={awayImage ? awayImage : noLogo} width={20} />
+            {/* <img src={awayImage ? awayImage : noLogo} width={20} /> */}
             <h3
               style={{ ...FONTS.body7, width: 150, margin: "0px 0px 0px 5px" }}
             >

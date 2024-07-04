@@ -3,6 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
+import { FaTableTennis } from "react-icons/fa";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -76,11 +77,7 @@ function TennisCard(props) {
           >
             {data?.tournamentName}
           </p>
-          {!data?.player1Url ? (
-            <img src={noLogo} style={{ width: "30px" }} />
-          ) : (
-            <img src={data?.player1Url} style={{ width: "20px" }} />
-          )}
+          <FaTableTennis size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -97,6 +94,7 @@ function TennisCard(props) {
               ...FONTS.h5,
               textAlign: "center",
               margin: "10px 0px 0px 0px",
+              color: COLORS.dimRed
             }}
           >
             {data?.player[0]["@totalscore"]} - {data?.player[1]["@totalscore"]}
@@ -123,11 +121,7 @@ function TennisCard(props) {
           >
             ID: {data?.id}
           </p>
-          {!data?.player2Url ? (
-            <img src={noLogo} style={{ width: "30px" }} />
-          ) : (
-            <img src={data?.player2Url} style={{ width: "20px" }} />
-          )}
+          <FaTableTennis size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -168,11 +162,11 @@ function TennisCard(props) {
                     flexDirection: "row",
                   }}
                 >
-                  <p style={{margin: "0px 5px"}}>{dd["@s1"] ? dd["@s1"] : 0} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s2"] ? dd["@s2"] : 0} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s3"] ? dd["@s3"] : 0} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s4"] ? dd["@s4"] : 0} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s5"] ? dd["@s5"] : 0} </p>
+                  <p style={{margin: "0px 5px"}}>{dd["@s1"] ? dd["@s1"] : ""} </p>
+                  <p style={{margin: "0px 5px"}}>{dd["@s2"] ? dd["@s2"] : ""} </p>
+                  <p style={{margin: "0px 5px"}}>{dd["@s3"] ? dd["@s3"] : ""} </p>
+                  <p style={{margin: "0px 5px"}}>{dd["@s4"] ? dd["@s4"] : ""} </p>
+                  <p style={{margin: "0px 5px"}}>{dd["@s5"] ? dd["@s5"] : ""} </p>
                 </div>
               </div>
             );

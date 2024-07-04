@@ -19,6 +19,8 @@ import moment from "moment";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { RxAvatar } from "react-icons/rx";
 import Loader from "../../components/Loader";
+import TennisGameCard from "../../components/GameCard/TennisGameCard";
+import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 
 const styles = {
   inputs: {
@@ -65,7 +67,9 @@ const BetAdjust = () => {
   const [betData, setBetData] = useState<any>();
   const [updateLoader, setUpdateLoader] = useState(false);
   const [userData, setUserData] = useState(null);
-  const sportEvents = betData?.sportEvent?.FootballEvent;
+  const events = betData?.sportEvent;
+  const sportEvents = events?.FootballEvent
+  const tennisEvent = events?.TennisEvent
 
   const user = betInfo?.bet?.userId === userData?.id;
 
@@ -135,65 +139,127 @@ const BetAdjust = () => {
     );
   }
 
+  console.log({sportEvents})
 
   return (
     <div className="top-container">
       <Header text="Challenge Details" />
 
-      <div style={styles.card}>
-        <p style={{ ...FONTS.body7 }}>{sportEvents?.leagueName}</p>
-        <div style={styles.row}>
-          <div
-            style={{
-              width: "35%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <img
-              src={
-                sportEvents?.localTeamLogo ? sportEvents?.localTeamLogo : noLogo
-              }
-              style={{ width: 40, height: 40 }}
-            />
-            <h3 style={{ ...FONTS.h7 }}>{sportEvents?.localTeamName}</h3>
-            <p style={{ ...FONTS.body7, textAlign: "center" }}>
-              {user ? "(You)" : `@${betInfo?.requester?.userName}`}
-            </p>
-          </div>
-          <div>
-            <p style={{ ...FONTS.body7, textAlign: "center" }}>
-              {moment(sportEvents?.startTime).format("MMMM Do YYYY, h:mm a")}
-            </p>
-            <h3 style={{ ...FONTS.h7, textAlign: "center" }}>
-              {formatCurrency(betData?.betAmount)}
-            </h3>
-          </div>
+     {
+      sportEvents?.sport === "FOOTBALL" &&  <div style={styles.card}>
+      <p style={{ ...FONTS.body7 }}>{sportEvents?.leagueName}</p>
+      <div style={styles.row}>
+        <div
+          style={{
+            width: "35%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={
+              sportEvents?.localTeamLogo ? sportEvents?.localTeamLogo : noLogo
+            }
+            style={{ width: 40, height: 40 }}
+          />
+          <h3 style={{ ...FONTS.h7 }}>{sportEvents?.localTeamName}</h3>
+          <p style={{ ...FONTS.body7, textAlign: "center" }}>
+            {user ? "(You)" : `@${betInfo?.requester?.userName}`}
+          </p>
+        </div>
+        <div>
+          <p style={{ ...FONTS.body7, textAlign: "center" }}>
+            {moment(sportEvents?.startTime).format("MMMM Do YYYY, h:mm a")}
+          </p>
+          <h3 style={{ ...FONTS.h7, textAlign: "center" }}>
+            {formatCurrency(betData?.betAmount)}
+          </h3>
+        </div>
 
-          <div
-            style={{
-              width: "35%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <img
-              src={
-                sportEvents?.visitorTeamLogo
-                  ? sportEvents?.visitorTeamLogo
-                  : noLogo
-              }
-              style={{ width: 40, height: 40 }}
-            />
-            <h3 style={{ ...FONTS.h7 }}>{sportEvents?.visitorTeamName}</h3>
-            <p style={{ ...FONTS.body7, textAlign: "center" }}>
-              {!user ? "(You)" : `@${betInfo?.requester?.userName}`}
-            </p>
-          </div>
+        <div
+          style={{
+            width: "35%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={
+              sportEvents?.visitorTeamLogo
+                ? sportEvents?.visitorTeamLogo
+                : noLogo
+            }
+            style={{ width: 40, height: 40 }}
+          />
+          <h3 style={{ ...FONTS.h7 }}>{sportEvents?.visitorTeamName}</h3>
+          <p style={{ ...FONTS.body7, textAlign: "center" }}>
+            {!user ? "(You)" : `@${betInfo?.requester?.userName}`}
+          </p>
         </div>
       </div>
+    </div>
+     }
+
+{
+      tennisEvent?.sport === "TENNIS" &&  
+    //   <div style={styles.card}>
+    //   <p style={{ ...FONTS.body7 }}>{tennisEvent?.tournamentName}</p>
+    //   <div style={styles.row}>
+    //     <div
+    //       style={{
+    //         width: "35%",
+    //         display: "flex",
+    //         flexDirection: "column",
+    //         alignItems: "center",
+    //       }}
+    //     >
+    //       <img
+    //         src={
+    //           sportEvents?.localTeamLogo ? sportEvents?.localTeamLogo : noLogo
+    //         }
+    //         style={{ width: 40, height: 40 }}
+    //       />
+    //       <h3 style={{ ...FONTS.h7 }}>{sportEvents?.localTeamName}</h3>
+    //       <p style={{ ...FONTS.body7, textAlign: "center" }}>
+    //         {user ? "(You)" : `@${betInfo?.requester?.userName}`}
+    //       </p>
+    //     </div>
+    //     <div>
+    //       <p style={{ ...FONTS.body7, textAlign: "center" }}>
+    //         {moment(sportEvents?.startTime).format("MMMM Do YYYY, h:mm a")}
+    //       </p>
+    //       <h3 style={{ ...FONTS.h7, textAlign: "center" }}>
+    //         {formatCurrency(betData?.betAmount)}
+    //       </h3>
+    //     </div>
+
+    //     <div
+    //       style={{
+    //         width: "35%",
+    //         display: "flex",
+    //         flexDirection: "column",
+    //         alignItems: "center",
+    //       }}
+    //     >
+    //       <img
+    //         src={
+    //           sportEvents?.visitorTeamLogo
+    //             ? sportEvents?.visitorTeamLogo
+    //             : noLogo
+    //         }
+    //         style={{ width: 40, height: 40 }}
+    //       />
+    //       <h3 style={{ ...FONTS.h7 }}>{sportEvents?.visitorTeamName}</h3>
+    //       <p style={{ ...FONTS.body7, textAlign: "center" }}>
+    //         {!user ? "(You)" : `@${betInfo?.requester?.userName}`}
+    //       </p>
+    //     </div>
+    //   </div>
+    // </div>
+    <TennisCard data={tennisEvent} />
+     }
 
       <div style={{ ...styles.div }}>
         <div style={{ ...styles.cardDiv }}>
