@@ -11,13 +11,15 @@ const styles = {
     borderRadius: 10,
     margin: "5px 0px 0px 0px",
     padding: '0px 10px',
-    border: `0.1px solid ${COLORS.gray}`
+    border: `0.1px solid ${COLORS.gray}`,
+
   },
   rowDiv: {
     display: "flex",
     flexDirection: "row" as FlexDirection,
     alignItems: "center",
     padding: "15px 5px",
+    border: 'none'
    
 }
 };
@@ -32,6 +34,7 @@ const TextInputWithCode = ({ countryListCode, value, setValue, isPhoneRequired }
         </div>
         <input 
           style={{...styles.rowDiv}}
+          className="inputs-d"
           value={value}
           onChange={(e) => setValue(e?.target.value)}
         />

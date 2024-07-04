@@ -89,7 +89,7 @@ const InviteFriend = () => {
          {
         !isMobile && <DesktopBackButton />
       }
-      <div className="top-container">
+      <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
       <Header text={"Invite Friend"} />
 
       <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>

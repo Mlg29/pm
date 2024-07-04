@@ -68,8 +68,8 @@ const BetAdjust = () => {
   const [updateLoader, setUpdateLoader] = useState(false);
   const [userData, setUserData] = useState(null);
   const events = betData?.sportEvent;
-  const sportEvents = events?.FootballEvent
-  const tennisEvent = events?.TennisEvent
+  const sportEvents = events;
+  const tennisEvent = events;
 
   const user = betInfo?.bet?.userId === userData?.id;
 
@@ -93,7 +93,6 @@ const BetAdjust = () => {
     fetchUserInfo();
   }, [id]);
 
-
   const decideOnBet = async (status) => {
     const payload = {
       requestId: id,
@@ -102,16 +101,16 @@ const BetAdjust = () => {
     setUpdateLoader(true);
     var response = await dispatch(updateBetAdjust(payload));
     if (updateBetAdjust.fulfilled.match(response)) {
-      setUpdateLoader(false)
+      setUpdateLoader(false);
       // toast.success("Bet adjusted successfully", {
       //   position: "bottom-center",
       // });
-      navigate('/adjust-success', {
-        state: {betId: response?.payload?.data?.betId, type: status}
-      })
+      navigate("/adjust-success", {
+        state: { betId: response?.payload?.data?.betId, type: status },
+      });
       setTimeout(() => {
-        return navigate(-1)
-      }, 1000)
+        return navigate('/home');
+      }, 1000);
     } else {
       var errMsg = response?.payload as string;
       setUpdateLoader(false);
@@ -120,7 +119,6 @@ const BetAdjust = () => {
       });
     }
   };
-
 
   if (loader) {
     return (
@@ -139,127 +137,82 @@ const BetAdjust = () => {
     );
   }
 
-  console.log({sportEvents})
+
 
   return (
     <div className="top-container">
       <Header text="Challenge Details" />
 
-     {
-      sportEvents?.sport === "FOOTBALL" &&  <div style={styles.card}>
-      <p style={{ ...FONTS.body7 }}>{sportEvents?.leagueName}</p>
-      <div style={styles.row}>
-        <div
-          style={{
-            width: "35%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src={
-              sportEvents?.localTeamLogo ? sportEvents?.localTeamLogo : noLogo
-            }
-            style={{ width: 40, height: 40 }}
-          />
-          <h3 style={{ ...FONTS.h7 }}>{sportEvents?.localTeamName}</h3>
-          <p style={{ ...FONTS.body7, textAlign: "center" }}>
-            {user ? "(You)" : `@${betInfo?.requester?.userName}`}
+      {sportEvents?.sport === "FOOTBALL" && (
+        <div style={styles.card}>
+          <p style={{ ...FONTS.body7 }}>
+            {sportEvents?.FootballEvent?.leagueName}
           </p>
-        </div>
-        <div>
-          <p style={{ ...FONTS.body7, textAlign: "center" }}>
-            {moment(sportEvents?.startTime).format("MMMM Do YYYY, h:mm a")}
-          </p>
-          <h3 style={{ ...FONTS.h7, textAlign: "center" }}>
-            {formatCurrency(betData?.betAmount)}
-          </h3>
-        </div>
+          <div style={styles.row}>
+            <div
+              style={{
+                width: "35%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={
+                  sportEvents?.FootballEvent?.localTeamLogo
+                    ? sportEvents?.FootballEvent?.localTeamLogo
+                    : noLogo
+                }
+                style={{ width: 40, height: 40 }}
+              />
+              <h3 style={{ ...FONTS.h7 }}>
+                {sportEvents?.FootballEvent?.localTeamName}
+              </h3>
+              <p style={{ ...FONTS.body7, textAlign: "center" }}>
+                {user ? "(You)" : `@${betInfo?.requester?.userName}`}
+              </p>
+            </div>
+            <div>
+              <p style={{ ...FONTS.body7, textAlign: "center" }}>
+                {moment(sportEvents?.FootballEvent?.startTime).format(
+                  "MMMM Do YYYY, h:mm a"
+                )}
+              </p>
+              <h3 style={{ ...FONTS.h7, textAlign: "center" }}>
+                {formatCurrency(betData?.betAmount)}
+              </h3>
+            </div>
 
-        <div
-          style={{
-            width: "35%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src={
-              sportEvents?.visitorTeamLogo
-                ? sportEvents?.visitorTeamLogo
-                : noLogo
-            }
-            style={{ width: 40, height: 40 }}
-          />
-          <h3 style={{ ...FONTS.h7 }}>{sportEvents?.visitorTeamName}</h3>
-          <p style={{ ...FONTS.body7, textAlign: "center" }}>
-            {!user ? "(You)" : `@${betInfo?.requester?.userName}`}
-          </p>
+            <div
+              style={{
+                width: "35%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={
+                  sportEvents?.FootballEvent?.visitorTeamLogo
+                    ? sportEvents?.FootballEvent?.visitorTeamLogo
+                    : noLogo
+                }
+                style={{ width: 40, height: 40 }}
+              />
+              <h3 style={{ ...FONTS.h7 }}>
+                {sportEvents?.FootballEvent?.visitorTeamName}
+              </h3>
+              <p style={{ ...FONTS.body7, textAlign: "center" }}>
+                {!user ? "(You)" : `@${betInfo?.requester?.userName}`}
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-     }
+      )}
 
-{
-      tennisEvent?.sport === "TENNIS" &&  
-    //   <div style={styles.card}>
-    //   <p style={{ ...FONTS.body7 }}>{tennisEvent?.tournamentName}</p>
-    //   <div style={styles.row}>
-    //     <div
-    //       style={{
-    //         width: "35%",
-    //         display: "flex",
-    //         flexDirection: "column",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       <img
-    //         src={
-    //           sportEvents?.localTeamLogo ? sportEvents?.localTeamLogo : noLogo
-    //         }
-    //         style={{ width: 40, height: 40 }}
-    //       />
-    //       <h3 style={{ ...FONTS.h7 }}>{sportEvents?.localTeamName}</h3>
-    //       <p style={{ ...FONTS.body7, textAlign: "center" }}>
-    //         {user ? "(You)" : `@${betInfo?.requester?.userName}`}
-    //       </p>
-    //     </div>
-    //     <div>
-    //       <p style={{ ...FONTS.body7, textAlign: "center" }}>
-    //         {moment(sportEvents?.startTime).format("MMMM Do YYYY, h:mm a")}
-    //       </p>
-    //       <h3 style={{ ...FONTS.h7, textAlign: "center" }}>
-    //         {formatCurrency(betData?.betAmount)}
-    //       </h3>
-    //     </div>
-
-    //     <div
-    //       style={{
-    //         width: "35%",
-    //         display: "flex",
-    //         flexDirection: "column",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       <img
-    //         src={
-    //           sportEvents?.visitorTeamLogo
-    //             ? sportEvents?.visitorTeamLogo
-    //             : noLogo
-    //         }
-    //         style={{ width: 40, height: 40 }}
-    //       />
-    //       <h3 style={{ ...FONTS.h7 }}>{sportEvents?.visitorTeamName}</h3>
-    //       <p style={{ ...FONTS.body7, textAlign: "center" }}>
-    //         {!user ? "(You)" : `@${betInfo?.requester?.userName}`}
-    //       </p>
-    //     </div>
-    //   </div>
-    // </div>
-    <TennisCard data={tennisEvent} />
-     }
+      {tennisEvent?.sport === "TENNIS" && (
+        <TennisCard data={tennisEvent?.TennisEvent} />
+      )}
 
       <div style={{ ...styles.div }}>
         <div style={{ ...styles.cardDiv }}>
@@ -311,11 +264,16 @@ const BetAdjust = () => {
           isLoading={updateLoader}
           handlePress={() => decideOnBet("ACCEPTED")}
         />
-        <div style={{height: 20}} />
-         <Button
+        <div style={{ height: 20 }} />
+        <Button
           text="Reject Stake"
           isLoading={updateLoader}
-          propStyle={{ width: "100%",color: COLORS.primary, backgroundColor: COLORS.white, border: `1px solid ${COLORS.primary}`}}
+          propStyle={{
+            width: "100%",
+            color: COLORS.primary,
+            backgroundColor: COLORS.white,
+            border: `1px solid ${COLORS.primary}`,
+          }}
           handlePress={() => decideOnBet("REJECTED")}
         />
       </div>

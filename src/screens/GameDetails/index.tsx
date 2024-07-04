@@ -212,7 +212,7 @@ function GameDetails() {
       {
         !isMobile && <DesktopBackButton />
       }
-      <div style={{ ...styles.container, paddingTop: !isMobile ? 10 : 0 }}>
+      <div style={{display: 'flex', flexDirection: 'column', flex: 1, paddingTop: !isMobile ? 10 : 0 }}>
         <Header text="Game Details" /> 
         {gameType === "Soccer" && (
           <>
@@ -651,7 +651,7 @@ function GameDetails() {
 
         
         {gameType === "Tennis" && (
-          <div>
+          <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
             <div
               style={{
                 ...styles.btt,

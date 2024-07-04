@@ -147,7 +147,6 @@ function WalletPin() {
       !isMobile && <DesktopBackButton />
     }
     <div
-      className="top-container"
       style={{
         display: "flex",
         flexDirection: "column",

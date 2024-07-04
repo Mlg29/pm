@@ -39,6 +39,35 @@ h1, h2, h3, h4, h5, h6, p {
 /* [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
   background-color: transparent !important;
 } */
+input:focus {
+  border-color: #2D0D02 !important; 
+  box-shadow: 0 0 2px #2D0D02 !important; /* Add shadow effect on focus */
+}
+.inputs {
+  border-color: none !important;
+}
+.inputs-d:focus {
+  border-color: #2D0D02 !important; 
+  box-shadow: 0 0 2px #2D0D02 !important;
+}
+.inputs-d:hover {
+  border: none !important;
+}
+.btns:focus {
+  border-color: none !important;
+}
+.btns:hover {
+  border: none !important;
+ }
+.inputs:hover {
+ border: none !important;
+}
+.inputs:focus {
+  border: none !important;
+ }
+input:hover {
+  border-color: #2D0D02 !important; 
+}
 .btn-close {
   background-color: transparent !important;
 }

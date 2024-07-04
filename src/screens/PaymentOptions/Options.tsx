@@ -94,7 +94,7 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
     {
       !isMobile && <DesktopBackButton />
     }
-    <div className="top-container">
+    <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
       <Header text="Payment Option" />
       <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
         Select your preferred method for payment.

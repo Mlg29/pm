@@ -14,7 +14,7 @@ export const styles = {
     backgroundColor: "white",
     outline: "none",
     color: COLORS.primary,
-    height: "50px",
+    height: "55px",
   },
 };
 

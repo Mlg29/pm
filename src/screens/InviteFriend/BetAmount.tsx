@@ -42,52 +42,52 @@ const BetAmount = () => {
   };
 
   return (
-    <div className="top-container" style={{backgroundColor: 'transparent'}}>
-         {
-        !isMobile && <DesktopBackButton />
-      }
-      <div className="top-container">
-      <Header text={"Bet Amount"} />
+    <div className="top-container" style={{ backgroundColor: "transparent" }}>
+      {!isMobile && <DesktopBackButton />}
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <Header text={"Bet Amount"} />
 
-      <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
+        <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
+          <NumberInput
+            label="Amount"
+            placeholder="Enter Amount"
+            required
+            value={amount}
+            setValue={(val) => setAmount(val)}
+          />
 
-        <NumberInput
-          label="Amount"
-          placeholder="Enter Amount"
-          required
-          value={amount}
-          setValue={(val) => setAmount(val)}
-        />
-
-        <div>
-          <div
-            style={{ display: "flex", alignItems: "center", marginBottom: 30 }}
-          >
-            <div style={{ width: "30px" }}>
-              <input
-                type="checkbox"
-                onChange={checkHandler}
-                checked={allowCurrency}
-              />
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: 30,
+              }}
+            >
+              <div style={{ width: "30px" }}>
+                <input
+                  type="checkbox"
+                  onChange={checkHandler}
+                  checked={allowCurrency}
+                />
+              </div>
+              <p>Allow Other Currency</p>
             </div>
-            <p>Allow Other Currency</p>
           </div>
         </div>
-      </div>
 
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        <Button
-          text="Place Bet"
-          propStyle={{ width: "100%" }}
-          isLoading={loader}
-          handlePress={() => handleRoute()}
-        />
-      </div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <Button
+            text="Place Bet"
+            propStyle={{ width: "100%" }}
+            isLoading={loader}
+            handlePress={() => handleRoute()}
+          />
+        </div>
 
-      <ToastContainer />
-    </div> 
+        <ToastContainer />
+      </div>
     </div>
-   
   );
 };
 

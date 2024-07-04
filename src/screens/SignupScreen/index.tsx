@@ -267,12 +267,12 @@ function SignupScreen() {
             ...FONTS.h2,
             fontWeight: "bold",
             textAlign: "center",
-            margin: "10px 0px",
+            margin: "20px 0px",
           }}
         >
           Personal Information
         </h3>
-        <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
+        <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400"}}>
           Let's get to know you better! Please fill in your personal details to
           complete your registration.
         </p>
@@ -351,14 +351,14 @@ function SignupScreen() {
         >
           {terms ? (
             <MdCheckBox
-              size={20}
+              size={30}
               onClick={() => setTerms(!terms)}
               style={{ cursor: "pointer" }}
             />
           ) : (
             <MdCheckBoxOutlineBlank
               onClick={() => setTerms(!terms)}
-              size={20}
+              size={30}
               style={{ cursor: "pointer" }}
             />
           )}
