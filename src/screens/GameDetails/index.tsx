@@ -163,18 +163,17 @@ function GameDetails() {
   const handleRoute = (route: string) => {
     if (token) {
       setSelected(route);
+      console.log({gameType})
+      const football = (gameType === "Soccer" && route === gameInfo?.localTeamName )? "W1": (gameType === "Soccer" && route === gameInfo?.visitorTeamName) ? "W2" : "DRAW"
+      const tennis = (gameType === "Tennis" && route === gameInfo?.player[0]["@name"]) ? "W1" : (gameType === "Tennis" && route === gameInfo?.player[1]["@name"]) ? "W2" : null
+      
       const payload = {
-        userType:
-          route === gameInfo?.localTeamName ||
-          route === gameInfo?.player[0]["@name"]
-            ? "W1"
-            : route === gameInfo?.visitorTeamName ||
-              route === gameInfo?.player[1]["@name"]
-            ? "W2"
-            : "DRAW",
+        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : null,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
       };
+
+
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
 
@@ -206,6 +205,7 @@ function GameDetails() {
       </div>
     );
   }
+
 
   return (
     <div className="top-container" style={{backgroundColor: 'transparent'}}>
@@ -648,6 +648,8 @@ function GameDetails() {
             <ToastContainer />
           </>
         )}
+
+        
         {gameType === "Tennis" && (
           <div>
             <div
