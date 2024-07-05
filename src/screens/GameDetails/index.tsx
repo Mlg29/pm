@@ -95,6 +95,7 @@ const styles = {
     flexDirection: "row" as FlexDirection,
     justifyContent: "space-between",
     alignItems: "center",
+    padding: "0px 10px"
   },
   container2: {
     position: "relative" as Position,
@@ -212,7 +213,7 @@ function GameDetails() {
       {
         !isMobile && <DesktopBackButton />
       }
-      <div style={{display: 'flex', flexDirection: 'column', flex: 1, paddingTop: !isMobile ? 10 : 0 }}>
+      <div style={{display: 'flex',backgroundColor: 'white', flexDirection: 'column', flex: 1, paddingTop: !isMobile ? 10 : 0 }}>
         <Header text="Game Details" /> 
         {gameType === "Soccer" && (
           <>
@@ -537,11 +538,12 @@ function GameDetails() {
               )}
             </div>
 
+            <div style={{display: "flex", flexDirection: "column", flex: 1}}>
             {isMobile ? (
               <div style={{ ...styles.mob }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.localTeamName?.slice(0, 6)} Win`}
+                    text={`Bet ${gameInfo?.localTeamName} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -558,7 +560,21 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.visitorTeamName?.slice(0, 6)} Win`}
+                    text="Draw"
+                    propStyle={{
+                      width: "100%",
+                      backgroundColor:
+                        selected === "draw" ? COLORS.primary : COLORS.cream,
+                      color:
+                        selected === "draw" ? COLORS.cream : COLORS.primary,
+                    }}
+                    //  handlePress={() => navigate('/home')}
+                    handlePress={() => handleRoute("draw")}
+                  />
+                </div>
+                <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
+                  <Button
+                    text={`Bet ${gameInfo?.visitorTeamName} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -574,26 +590,13 @@ function GameDetails() {
                     handlePress={() => handleRoute(gameInfo?.visitorTeamName)}
                   />
                 </div>
-                <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
-                  <Button
-                    text="Draw"
-                    propStyle={{
-                      width: "100%",
-                      backgroundColor:
-                        selected === "draw" ? COLORS.primary : COLORS.cream,
-                      color:
-                        selected === "draw" ? COLORS.cream : COLORS.primary,
-                    }}
-                    //  handlePress={() => navigate('/home')}
-                    handlePress={() => handleRoute("draw")}
-                  />
-                </div>
+           
               </div>
             ) : (
               <div style={{ ...styles.desk }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.localTeamName?.slice(0, 6)} Win`}
+                    text={`Bet ${gameInfo?.localTeamName} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -611,7 +614,22 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.visitorTeamName?.slice(0, 6)} Win`}
+                    text="Draw"
+                    propStyle={{
+                      width: "90%",
+                      backgroundColor:
+                        selected === "draw" ? COLORS.primary : COLORS.cream,
+                      color:
+                        selected === "draw" ? COLORS.cream : COLORS.primary,
+                      fontSize: 12,
+                    }}
+                    //  handlePress={() => navigate('/home')}
+                    handlePress={() => handleRoute("draw")}
+                  />
+                </div>
+                <div style={{ width: "100%", margin: "10px 0px" }}>
+                  <Button
+                    text={`Bet ${gameInfo?.visitorTeamName} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -628,23 +646,10 @@ function GameDetails() {
                     handlePress={() => handleRoute(gameInfo?.visitorTeamName)}
                   />
                 </div>
-                <div style={{ width: "100%", margin: "10px 0px" }}>
-                  <Button
-                    text="Draw"
-                    propStyle={{
-                      width: "90%",
-                      backgroundColor:
-                        selected === "draw" ? COLORS.primary : COLORS.cream,
-                      color:
-                        selected === "draw" ? COLORS.cream : COLORS.primary,
-                      fontSize: 12,
-                    }}
-                    //  handlePress={() => navigate('/home')}
-                    handlePress={() => handleRoute("draw")}
-                  />
-                </div>
+               
               </div>
             )}
+            </div>
             <ToastContainer />
           </>
         )}
@@ -662,11 +667,12 @@ function GameDetails() {
             >
               <TennisCard data={gameInfo} />
             </div>
+            <div style={{display: "flex", flexDirection: "column", flex: 1}}>
             {isMobile ? (
               <div style={{ ...styles.mob }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.player[0]["@name"]?.slice(0, 6)} Win`}
+                    text={`Bet ${gameInfo?.player[0]["@name"]} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -685,7 +691,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.player[1]["@name"]?.slice(0, 6)} Win`}
+                    text={`Bet ${gameInfo?.player[1]["@name"]} Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -708,7 +714,7 @@ function GameDetails() {
               <div style={{ ...styles.desk }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`${gameInfo?.player[0]["@name"]?.slice(0, 6)} Win`}
+                    text={`Bet ${gameInfo?.player[0]["@name"]} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -728,7 +734,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`${gameInfo?.player[1]["@name"]?.slice(0, 6)} Win`}
+                    text={`Bet ${gameInfo?.player[1]["@name"]} Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -749,6 +755,7 @@ function GameDetails() {
                 </div>
               </div>
             )}
+            </div>
 
             <ToastContainer />
           </div>
