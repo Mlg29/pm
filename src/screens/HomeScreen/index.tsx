@@ -69,7 +69,7 @@ import easport from "../../assets/images/easport.svg"
 import tabletennis from "../../assets/images/tabletennis.svg"
 import Tennis from "../Games/Tennis";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
-
+import { BsFilterSquareFill } from "react-icons/bs";
 
 
 
@@ -471,7 +471,9 @@ if(selected === "Soccer"){
           );
         })}
     </Sidebar>
-
+<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+<BsFilterSquareFill size={20} />
+</div>
       {selected === "Soccer" && (
         <div>
           <Football

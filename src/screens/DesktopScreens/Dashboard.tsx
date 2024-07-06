@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import Football from "../Games/Football";
 import Tennis from "../Games/Tennis";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
+import { BsFilterSquareFill } from "react-icons/bs";
 
 const styles = {
   container: {
@@ -48,7 +49,7 @@ function Dashboard() {
   const [liveTennis, setLiveTennis] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
-  const sportEvents = localStorage.getItem("sport") || "Soccer"
+  const sportEvents = localStorage.getItem("sport") || "Soccer";
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -84,7 +85,7 @@ function Dashboard() {
         return [...updatedMessages, message];
       });
       socket.on("TennisEventUpdate", (message) => {
-        console.log("tennis==", {message})
+        console.log("tennis==", { message });
       });
     });
 
@@ -111,34 +112,34 @@ function Dashboard() {
       date: tomorrowDate.format("YYYY-MM-DD"),
     };
     const notYetPayloadUpcoming = {
-      status: "Not Started"
-    }
+      status: "Not Started",
+    };
     const tennisPayloadLive = {
-      status: "Live"
-    }
+      status: "Live",
+    };
 
-    if(sportEvents === "Soccer"){
-    dispatch(getFootballFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.data);
-    });
-    dispatch(getFootballFixtures(payloadToday)).then((dd) => {
-      setToday(dd?.payload);
-    });
-    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-      setTomorrow(dd?.payload);
-    });
-    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload);
-    });
-  }
-    if(sportEvents === "Tennis"){
+    if (sportEvents === "Soccer") {
+      dispatch(getFootballFixtures(payloadLive)).then((dd) => {
+        setLive(dd?.payload?.data);
+      });
+      dispatch(getFootballFixtures(payloadToday)).then((dd) => {
+        setToday(dd?.payload);
+      });
+      dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload);
+      });
+      dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
+        setUpcoming(dd?.payload);
+      });
+    }
+    if (sportEvents === "Tennis") {
       dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
         setUpcomingTennis(dd?.payload);
-       });
-       dispatch(getTennisFixtures(tennisPayloadLive)).then((dd) => {
+      });
+      dispatch(getTennisFixtures(tennisPayloadLive)).then((dd) => {
         setLiveTennis(dd?.payload);
-       });
-       return
+      });
+      return;
     }
   }, [sportEvents]);
 
@@ -166,16 +167,23 @@ function Dashboard() {
           <div>
             <SliderComponent />
           </div>
-          {
-            sportEvents && sportEvents === "Soccer" && <div style={{ ...styles.div }}>
-              <Football live={live} today={today} upcoming={upcoming} tomorrow={tomorrow} />
+
+          <div style={{ ...styles.div }}>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <BsFilterSquareFill size={20} />
+            </div>
+            {sportEvents && sportEvents === "Soccer" && (
+              <Football
+                live={live}
+                today={today}
+                upcoming={upcoming}
+                tomorrow={tomorrow}
+              />
+            )}
+            {sportEvents === "Tennis" && (
+              <Tennis live={liveTennis} upcoming={upcomingTennis} />
+            )}
           </div>
-          }
-          {
-             sportEvents === "Tennis" && <div style={{ ...styles.div }}>
-              <Tennis live={liveTennis}  upcoming={upcomingTennis} />
-          </div>
-          }
         </div>
       </DashboardLayout>
     </div>
