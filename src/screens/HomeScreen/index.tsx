@@ -471,7 +471,7 @@ if(selected === "Soccer"){
           );
         })}
     </Sidebar>
-<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+<div style={{display: 'flex', justifyContent: 'flex-end', cursor: 'pointer'}} onClick={() => navigate("/filter")}>
 <BsFilterSquareFill size={20} />
 </div>
       {selected === "Soccer" && (

@@ -45,7 +45,7 @@ export const CompanyVerificationSchema = yup.object().shape({
 });
 
 export const ForgetPasswordSchema = yup.object().shape({
-  email: yup.string().email().required("Email is required"),
+  email: yup.string().required("Email or Phone number is required"),
 });
 
 export const changePasswordSchema = yup.object().shape({

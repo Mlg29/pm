@@ -60,6 +60,7 @@ import ComingSoonSuccess from './SuccessScreen/ComingSoonSuccess.js';
 import BetAdjust from './AdjustBet/BetAdjust.js';
 import AdjustSuccess from './SuccessScreen/AdjustSuccess.js';
 import BetInviteDetail from './BetDetail/BetInviteDetail.js';
+import FilterPage from './FilterPage/index.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -120,7 +121,7 @@ function DesktopRouters() {
       <Route path="/adjust-bet" element={<DashboardLayout><AdjustBet /></DashboardLayout>} />
       <Route path="/events" element={<DashboardLayout><GameEventData /></DashboardLayout>} />
       <Route path="/amount" element={<DashboardLayout><BetAmount /></DashboardLayout>} />
-      
+      <Route path="/filter" element={<DashboardLayout><FilterPage /></DashboardLayout>} />
     </Routes>
   </Router>
   )

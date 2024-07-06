@@ -58,6 +58,7 @@ import ComingSoonSuccess from "./SuccessScreen/ComingSoonSuccess.tsx";
 import BetAdjust from "./AdjustBet/BetAdjust.tsx";
 import AdjustSuccess from "./SuccessScreen/AdjustSuccess.tsx";
 import BetInviteDetail from "./BetDetail/BetInviteDetail.tsx";
+import FilterPage from "./FilterPage/index.tsx";
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -129,6 +130,7 @@ function Routers() {
         <Route path="/adjust-bet" element={<AdjustBet />} />
         <Route path="/amount" element={<BetAmount />} />
         <Route path="/events" element={<GameEventData />} />
+        <Route path="/filter" element={<FilterPage />} />
       </Routes>
     </Router>
   );
