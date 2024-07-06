@@ -118,8 +118,8 @@ function ForgetPassword() {
         <div style={{ marginTop: 20 }}>
 
           <TextInput
-            label="Phone Number/Email Address"
-            placeholder="Enter your Phone Number/Email Address"
+            label="Email Address"
+            placeholder="Enter your Email Address"
             required
             value={values.email}
             onChangeText={handleChange("email")}
