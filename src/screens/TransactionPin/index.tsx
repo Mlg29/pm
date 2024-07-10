@@ -11,12 +11,12 @@ import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { FlexDirection, PinCreation } from "../../utils/type";
+import { FlexDirection, PinCreation, PinCreationAuth } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
-import { CreatePinSchema } from "../../https/schemas";
+import { CreatePinSchema, CreatePinSchemaAuth } from "../../https/schemas";
 import { updateTransactionPin } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { MdPrivacyTip } from "react-icons/md";
@@ -66,7 +66,7 @@ function TransactionPin() {
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
 
-  const initialValues: PinCreation = {
+  const initialValues: PinCreationAuth = {
     pin: "",
     confirmPin: "",
   };
@@ -74,8 +74,8 @@ function TransactionPin() {
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
     useFormik({
       initialValues,
-      validationSchema: CreatePinSchema,
-      onSubmit: (data: PinCreation) => handleSubmitData(data),
+      validationSchema: CreatePinSchemaAuth,
+      onSubmit: (data: PinCreationAuth) => handleSubmitData(data),
       enableReinitialize: true,
     });
 
@@ -197,6 +197,7 @@ function TransactionPin() {
             placeholder="Enter your 6 digit pin"
             required
             type="password"
+            isNumeric
             value={values.pin}
             onChangeText={handleChange("pin")}
             errorMsg={touched.pin ? errors.pin : undefined}
@@ -206,6 +207,7 @@ function TransactionPin() {
             label="Confirm Pin"
             placeholder="Enter your 6 digit pin"
             required
+            isNumeric
             type="password"
             value={values.confirmPin}
             onChangeText={handleChange("confirmPin")}

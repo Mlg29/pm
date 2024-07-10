@@ -18,9 +18,8 @@ import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
 import { CreatePasswordSchema } from "../../https/schemas";
 import { createNewPassword, createUser } from "../../redux/slices/AuthSlice";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import PinModal from "../../components/Modals/PinModal";
-
 
 export const styles = {
   container: {
@@ -59,23 +58,21 @@ export const styles = {
 };
 
 function CreatePasswordNew() {
-
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
-  const [message, setMessage] = useState("")
-  const [messageType, setMessageType] = useState("")
-  const [show, setShow] = useState(false)
-  const [storePayload, setStorePayload] = useState(null)
-
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+  const [show, setShow] = useState(false);
+  const [storePayload, setStorePayload] = useState(null);
 
   const handleClose = () => {
-    setShow(false)
-  }
-
+    setShow(false);
+  };
 
   const initialValues: PasswordCreation = {
+    oldPassword: "",
     password: "",
     confirmPassword: "",
   };
@@ -90,31 +87,30 @@ function CreatePasswordNew() {
 
   const handleSubmitData = async (data) => {
     const payload = {
+      oldPassword: data?.oldPassword,
       password: data?.password,
-    }; 
-    
-    setStorePayload(payload)
-    setShow(true)
-   
+    };
+
+    setStorePayload(payload);
+    setShow(true);
+
     return;
   };
-
 
   const handleAction = async () => {
     setLoader(true);
     try {
-      var response = await dispatch(createNewPassword(storePayload)) as any;
-      if(response?.error?.message === "Rejected") {
-        setMessage(response?.payload)
-        setMessageType("Rejected")
+      var response = (await dispatch(createNewPassword(storePayload))) as any;
+      if (response?.error?.message === "Rejected") {
+        setMessage(response?.payload);
+        setMessageType("Rejected");
       }
       if (createNewPassword.fulfilled.match(response)) {
-       
         // toast.success(response?.payload?.data?.message, {
         //   position: "bottom-center",
         // });
-        setMessage(response?.payload?.data?.message)
-        setMessageType("Success")
+        setMessage(response?.payload?.data?.message);
+        setMessageType("Success");
         setLoader(false);
         setTimeout(() => {
           setLoader(false);
@@ -127,38 +123,34 @@ function CreatePasswordNew() {
         // toast.error(errMsg, {
         //   position: "bottom-center",
         // });
-        setMessage(errMsg)
-        setMessageType("Rejected")
+        setMessage(errMsg);
+        setMessageType("Rejected");
       }
     } catch (err) {}
-  }
-
-
+  };
 
   const requirements = [
     {
       id: 1,
       text: "At least one uppercase",
-      check: (/[A-Z]/.test(values.password)),
+      check: /[A-Z]/.test(values.password),
     },
     {
       id: 2,
       text: "At least one lowercase",
-      check: (/[a-z]/.test(values.password)),
+      check: /[a-z]/.test(values.password),
     },
     {
       id: 3,
       text: "At least one special character",
-      check: (/[!@#$%^&*]/.test(values.password)),
+      check: /[!@#$%^&*]/.test(values.password),
     },
     {
       id: 4,
       text: "At least one number",
-      check: (/\d/.test(values.password)),
+      check: /\d/.test(values.password),
     },
   ];
-
-
 
   return (
     <div style={{ ...styles.container }}>
@@ -191,14 +183,23 @@ function CreatePasswordNew() {
 
         <div style={{ marginTop: 20 }}>
           <TextInput
-            label="Password"
-            placeholder="Enter your password"
+            label="Old Password"
+            placeholder="Enter your old password"
+            required
+            type="password"
+            value={values.oldPassword}
+            onChangeText={handleChange("oldPassword")}
+            errorMsg={touched.oldPassword ? errors.oldPassword : undefined}
+          />
+
+          <TextInput
+            label="New Password"
+            placeholder="Enter your new password"
             required
             type="password"
             value={values.password}
             onChangeText={handleChange("password")}
             errorMsg={touched.password ? errors.password : undefined}
-    
           />
 
           <div style={{ margin: "0px 0px 10px 0px" }}>
@@ -232,13 +233,15 @@ function CreatePasswordNew() {
           </div>
 
           <TextInput
-            label="Confirm Password"
+            label="Confirm New Password"
             placeholder="Enter your password"
             required
             type="password"
             value={values.confirmPassword}
             onChangeText={handleChange("confirmPassword")}
-            errorMsg={touched.confirmPassword ? errors.confirmPassword : undefined}
+            errorMsg={
+              touched.confirmPassword ? errors.confirmPassword : undefined
+            }
           />
         </div>
       </div>
@@ -274,14 +277,12 @@ function CreatePasswordNew() {
         </div>
       </div>
 
-
       <PinModal
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
         type={messageType === "Rejected" ? "failed" : "success"}
         responseText={message ? message : "Password Updated Successfully"}
-      
       />
 
       <ToastContainer />

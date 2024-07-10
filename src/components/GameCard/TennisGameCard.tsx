@@ -72,39 +72,6 @@ function TennisGameCard({ id, data }) {
   const navigate = useNavigate();
 
   return (
-    // <div key={id} style={{...styles.container, cursor: "pointer"}} onClick={() => navigate("/game-details", {state: {data: data, gameType: "Tennis"}})}>
-    //     <div style={{...styles.row}}>
-    //         <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', width: "40%"}}>
-    //             <p style={{...FONTS.body7, fontSize: "8px", margin: "0px 0px 10px 0px"}}>{data?.tournamentName}</p>
-
-    //             {
-    //             !data?.player1Url ? <img src={noLogo} style={{width: '30px'}} /> : <img src={data?.player1Url} style={{width: '20px'}} />
-    //            }
-    //             <p style={{...FONTS.body7,fontSize: "8px", margin: "10px 0px 0px 0px"}}>{data?.player[0]['@name']}</p>
-    //         </div>
-    //         <div>
-    //             {/* <p style={{...FONTS.body7,fontSize: "8px",padding: "2px 5px", backgroundColor: COLORS.red, textAlign: 'center', borderRadius: 10, color: COLORS.white}}>{data?.internalStatus}</p> */}
-    //             <h3 style={{...FONTS.h5,textAlign: "center", margin: "10px 0px 0px 0px"}}>{data?.player[0]['@totalscore']} - {data?.player[1]['@totalscore']}</h3>
-    //             <p style={{...FONTS.body7,fontSize: "8px", textAlign: 'center'}}>{data?.status}</p>
-    //         </div>
-    //         <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: 'center', width: "40%"}}>
-    //             <p style={{...FONTS.body7, fontSize: "8px", margin: "0px 0px 10px 0px"}}>ID: {data?.id}</p>
-    //            {
-    //             !data?.player2Url ? <img src={noLogo} style={{width: '30px'}} /> : <img src={data?.player2Url} style={{width: '20px'}} />
-    //            }
-
-    //             <p style={{...FONTS.body7, fontSize: "8px", margin: "10px 0px 0px 0px"}}>{data?.player[1]['@name']}</p>
-    //         </div>
-
-    //     </div>
-
-    //     <div style={{...styles.row2}}>
-    //         <div style={{...styles.box}}>{data?.player[0]['@name']} Win</div>
-    //         {/* <div style={{...styles.box}}>Draw</div> */}
-    //         <div style={{...styles.box}}>{data?.player[1]['@name']} Win</div>
-    //     </div>
-
-    // </div>
     <div
       style={styles.container}
       key={id}
@@ -124,9 +91,9 @@ function TennisGameCard({ id, data }) {
       <div style={styles.box3}>
         <GiSoccerField />
         <div style={{ marginLeft: 10 }}>
-          {data?.player?.map((dd) => {
+          {data?.player?.map((dd, i) => {
             return (
-              <div style={{display: 'flex', alignItems: 'center'}}>
+              <div key={i} style={{display: 'flex', alignItems: 'center'}}>
                  {/* <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s1"] ? dd["@s1"] : ""} </p>
                  <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s2"] ? dd["@s2"] : ""} </p>
                  <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s3"] ? dd["@s3"] : ""} </p>

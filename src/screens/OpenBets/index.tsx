@@ -16,9 +16,6 @@ import { useMediaQuery } from "react-responsive";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import { FaTableTennis } from "react-icons/fa";
 
-
-
-
 const styles = {
   contain: {
     padding: 15,
@@ -132,7 +129,7 @@ function OpenBet() {
     );
   }
 
-  // console.log({filterData, game});
+  console.log({ filterData, game, openBets });
 
   return (
     <div>
@@ -272,7 +269,7 @@ function OpenBet() {
                     </div>
                   )}
 
-{data?.sportEvent?.sport === "TENNIS" && (
+                  {data?.sportEvent?.sport === "TENNIS" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.tournamentName}
@@ -280,9 +277,9 @@ function OpenBet() {
 
                       <div style={{ ...styles.row }}>
                         <div style={{ ...styles.center }}>
-                        <FaTableTennis size={30} color={COLORS.primary} />
+                          <FaTableTennis size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.player[0]['@name']}
+                            {game?.player[0]["@name"]}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -295,9 +292,9 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                        <FaTableTennis size={30} color={COLORS.primary} />
+                          <FaTableTennis size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.player[1]['@name']}
+                            {game?.player[1]["@name"]}
                           </h3>
                         </div>
                       </div>
@@ -309,9 +306,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.player[0]['@name']} WIN`
+                              ? `${game?.player[0]["@name"]} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.player[1]['@name']} WIN`
+                              ? `${game?.player[1]["@name"]} WIN`
                               : ""}
                           </p>
                         </div>
@@ -327,9 +324,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.player[0]['@name']} WIN`
+                              ? `${game?.player[0]["@name"]} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.player[1]['@name']} WIN`
+                              ? `${game?.player[1]["@name"]} WIN`
                               : ""}
                           </p>
                         </div>
@@ -385,6 +382,120 @@ function OpenBet() {
                       </div>
                     </div>
                   )}
+
+                  {/* {data?.sportEvent?.sport === "TENNIS" && (
+                    <div key={i} style={{ ...styles.contain }}>
+                      <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
+                        {game?.tournamentName}
+                      </p>
+
+                      <div style={{ ...styles.row }}>
+                        <div style={{ ...styles.center }}>
+                          <FaTableTennis size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.player[0]["@name"]}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                            {game?.status}
+                          </p>
+                          <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
+                            {data?.betCurrency === "NGN" ? "₦" : "$"}
+                            {formatCurrency(data?.betAmount)}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <FaTableTennis size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.player[1]["@name"]}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div style={{ ...styles.row, paddingBottom: "1rem" }}>
+                        <div>
+                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                            @{data?.user?.userName}
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {data?.prediction === "W1"
+                              ? `${game?.player[0]["@name"]} WIN`
+                              : data?.prediction === "W2"
+                              ? `${game?.player[1]["@name"]} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              textAlign: "right",
+                            }}
+                          >
+                            You
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {userSelection?.userType === "W1"
+                              ? `${game?.player[0]["@name"]} WIN`
+                              : userSelection?.userType === "W2"
+                              ? `${game?.player[1]["@name"]} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          ...styles.row,
+                          paddingBottom: "0rem",
+                          border: "none",
+                        }}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAccept(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              color: COLORS.white,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Accept Bet
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            backgroundColor: COLORS.cream,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAdjust(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.h7,
+                              color: COLORS.primary,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Adjust Bet
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )} */}
                 </>
               );
             })}

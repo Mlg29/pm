@@ -86,7 +86,7 @@ function NotificationScreen() {
     {
       !isMobile && <DesktopBackButton />
     }
-    <div style={{backgroundColor: 'white'}}>
+    <div style={{backgroundColor: 'white', padding: 16}}>
          <Header text="Notifications" />
 
       {/* <Header text="Notifications" /> */}

@@ -1,11 +1,86 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FONTS } from '../../utils/fonts';
 import { COLORS } from '../../utils/colors';
 import { useNavigate } from 'react-router-dom';
 import GameCard from '../../components/GameCard';
+import { useAppDispatch } from '../../redux/hooks';
+import { BaseUrl } from "../../https";
+import { getFootballFixtures } from '../../redux/slices/FootballSlice';
+import moment from 'moment';
+import { io } from 'socket.io-client';
 
-function Football({live, upcoming, today, tomorrow}) {
+function Football() {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch() as any;
+    const [live, setLive] = useState<any>([]);
+    const [upcoming, setUpcoming] = useState<any>([]);
+    const [today, setToday] = useState<any>([]);
+    const [tomorrow, setTomorrow] = useState<any>([]);
+    const url = `${BaseUrl}/football`;
+
+    
+
+    useEffect(() => {
+      const socket = io(url) as any;
+  
+      socket.on("connect", () => {
+        console.log("Connected to WebSocket server");
+      });
+  
+      socket.on("connect_error", (err) => {
+        console.error("WebSocket connection error:", err);
+      });
+  
+      // Handle incoming messages
+      socket.on("footballEventUpdate", (message) => {
+        setLive((prevMessages) => {
+          const updatedMessages = prevMessages?.filter(
+            (msg) => msg.id !== message.id
+          );
+          return [...updatedMessages, message];
+        });
+      });
+  
+      // Cleanup on component unmount
+      return () => {
+        socket.disconnect();
+      };
+    }, []);
+  
+    let createdDate = moment(new Date()).utc().format();
+    let tomorrowDate = moment(createdDate).add(1, "d");
+  
+    useEffect(() => {
+      const payloadUpcoming = {
+        status: "UPCOMING",
+      };
+      const payloadLive = {
+        status: "LIVE",
+      };
+      const payloadToday = {
+        date: moment(new Date()).format("YYYY-MM-DD"),
+      };
+      const payloadTomorrow = {
+        date: tomorrowDate.format("YYYY-MM-DD"),
+      };
+  
+  
+    dispatch(getFootballFixtures(payloadLive)).then((dd) => {
+      setLive(dd?.payload?.data);
+    });
+    dispatch(getFootballFixtures(payloadToday)).then((dd) => {
+      setToday(dd?.payload);
+    });
+    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+      setTomorrow(dd?.payload);
+    });
+    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload);
+    });
+  
+      
+    }, []);
+    
   return (
     <div>
         {live?.length > 0 && (

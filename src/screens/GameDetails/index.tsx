@@ -21,6 +21,7 @@ import { TbRectangleVerticalFilled } from "react-icons/tb";
 import Loader from "../../components/Loader";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
+import HorseDetails from "./Details/HorseDetails";
 
 const styles = {
   container: {
@@ -129,9 +130,12 @@ function GameDetails() {
   const game = location?.state?.data;
   const gameType = location?.state?.gameType;
   const [gameInfo, setGameInfo] = useState(null);
-  const url = `${BaseUrl}/football`;
+ 
   const token = localStorage.getItem("token");
   const [loader, setLoader] = useState(false);
+
+ const url = gameType === "Tennis" ? `${BaseUrl}/tennis` : gameType === "Horse" ? `${BaseUrl}/horse` :`${BaseUrl}/football`;
+  const events = gameType === "Tennis" ? "tennisEventUpdate" : gameType === "Horse" ? "horseEventUpdate" : "footballEventUpdate";
 
   useEffect(() => {
     setLoader(true);
@@ -149,7 +153,7 @@ function GameDetails() {
       console.error("WebSocket connection error:", err);
     });
 
-    socket.on("footballEventUpdate", (message) => {
+    socket.on(events, (message) => {
       const mes = message;
       if (mes.id === game?.id) {
         setGameInfo(mes);
@@ -160,16 +164,18 @@ function GameDetails() {
       socket.disconnect();
     };
   }, []);
-
-  const handleRoute = (route: string) => {
+// console.log({gameType})
+  const handleRoute = (route: string, selection?: string) => {
     if (token) {
       setSelected(route);
-      console.log({gameType})
+    
       const football = (gameType === "Soccer" && route === gameInfo?.localTeamName )? "W1": (gameType === "Soccer" && route === gameInfo?.visitorTeamName) ? "W2" : "DRAW"
       const tennis = (gameType === "Tennis" && route === gameInfo?.player[0]["@name"]) ? "W1" : (gameType === "Tennis" && route === gameInfo?.player[1]["@name"]) ? "W2" : null
+      const horse = gameType === "Horse" && selection
       
+
       const payload = {
-        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : null,
+        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : gameType === "Horse" ? horse : null,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
       };
@@ -672,7 +678,7 @@ function GameDetails() {
               <div style={{ ...styles.mob }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`Bet ${gameInfo?.player[0]["@name"]} Win`}
+                    text={`Bet ${gameInfo?.player[0]["@name"]} to Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -691,7 +697,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`Bet ${gameInfo?.player[1]["@name"]} Win`}
+                    text={`Bet ${gameInfo?.player[1]["@name"]} to Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
@@ -714,7 +720,7 @@ function GameDetails() {
               <div style={{ ...styles.desk }}>
                 <div style={{ width: "100%" }}>
                   <Button
-                    text={`Bet ${gameInfo?.player[0]["@name"]} Win`}
+                    text={`Bet ${gameInfo?.player[0]["@name"]} to Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -734,7 +740,7 @@ function GameDetails() {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`Bet ${gameInfo?.player[1]["@name"]} Win`}
+                    text={`Bet ${gameInfo?.player[1]["@name"]} to Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
@@ -760,6 +766,10 @@ function GameDetails() {
             <ToastContainer />
           </div>
         )}
+
+        {
+          gameType === "Horse" && <HorseDetails selected={selected} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} />
+        }
       </div>
     </div>
   );

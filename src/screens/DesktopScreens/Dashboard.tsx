@@ -21,6 +21,7 @@ import Football from "../Games/Football";
 import Tennis from "../Games/Tennis";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import { BsFilterSquareFill } from "react-icons/bs";
+import HorseRace from "../Games/HorseRace";
 
 const styles = {
   container: {
@@ -174,15 +175,18 @@ function Dashboard() {
             </div>
             {sportEvents && sportEvents === "Soccer" && (
               <Football
-                live={live}
-                today={today}
-                upcoming={upcoming}
-                tomorrow={tomorrow}
+           
               />
             )}
             {sportEvents === "Tennis" && (
-              <Tennis live={liveTennis} upcoming={upcomingTennis} />
+              <Tennis />
             )}
+
+            {
+              sportEvents === "Horse Racing" && (
+                <HorseRace />
+              )
+            }
           </div>
         </div>
       </DashboardLayout>

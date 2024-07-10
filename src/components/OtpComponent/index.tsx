@@ -14,6 +14,7 @@ function OtpComponent({otp, setOtp}: any) {
       value={otp} 
       onChange={(e) => setOtp(e.value)} 
       mask
+      integerOnly
       length={6}
     />
 

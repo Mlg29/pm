@@ -70,6 +70,7 @@ import tabletennis from "../../assets/images/tabletennis.svg"
 import Tennis from "../Games/Tennis";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import { BsFilterSquareFill } from "react-icons/bs";
+import HorseRace from "../Games/HorseRace";
 
 
 
@@ -83,15 +84,9 @@ function HomeScreen() {
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
 
-  const [live, setLive] = useState<any>([]);
-  const [upcoming, setUpcoming] = useState<any>([]);
-  const [upcomingTennis, setUpcomingTennis] = useState<any>([]);
-  const [liveTennis, setLiveTennis] = useState<any>([]);
-  const [today, setToday] = useState<any>([]);
-  const [tomorrow, setTomorrow] = useState<any>([]);
+ 
   const notifications = useAppSelector(notificationState) as any;
   const [loader, setLoader] = useState(false);
-  const url = `${BaseUrl}/football`;
   const [visible, setVisible] = useState(false);
 
   const getNotification = async () => {
@@ -100,84 +95,9 @@ function HomeScreen() {
 
   useEffect(() => {
     getNotification();
-    const socket = io(url) as any;
-
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
-    });
-
-    socket.on("connect_error", (err) => {
-      console.error("WebSocket connection error:", err);
-    });
-
-    // Handle incoming messages
-    socket.on("footballEventUpdate", (message) => {
-      setLive((prevMessages) => {
-        const updatedMessages = prevMessages?.filter(
-          (msg) => msg.id !== message.id
-        );
-        return [...updatedMessages, message];
-      });
-    });
-    socket.on("TennisEventUpdate", (message) => {
-      console.log("tennis==", {message})
-    });
-
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
-  let createdDate = moment(new Date()).utc().format();
-  let tomorrowDate = moment(createdDate).add(1, "d");
-
-  useEffect(() => {
-    const payloadUpcoming = {
-      status: "UPCOMING",
-    };
-    const payloadLive = {
-      status: "LIVE",
-    };
-    const payloadToday = {
-      date: moment(new Date()).format("YYYY-MM-DD"),
-    };
-    const payloadTomorrow = {
-      date: tomorrowDate.format("YYYY-MM-DD"),
-    };
-    const notYetPayloadUpcoming = {
-      status: "Not Started"
-    }
-    const tennisPayloadLive = {
-      status: "Live"
-    }
-
-if(selected === "Soccer"){
-  dispatch(getFootballFixtures(payloadLive)).then((dd) => {
-    setLive(dd?.payload?.data);
-  });
-  dispatch(getFootballFixtures(payloadToday)).then((dd) => {
-    setToday(dd?.payload);
-  });
-  dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-    setTomorrow(dd?.payload);
-  });
-  dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-    setUpcoming(dd?.payload);
-  });
-  return;
-}
-    if(selected === "Tennis"){
-      dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
-        setUpcomingTennis(dd?.payload);
-       });
-       dispatch(getTennisFixtures(tennisPayloadLive)).then((dd) => {
-        setLiveTennis(dd?.payload);
-       });
-       return
-    }
-    
-  }, [selected]);
+ 
 
   const itemList = [
     {
@@ -477,16 +397,14 @@ if(selected === "Soccer"){
       {selected === "Soccer" && (
         <div>
           <Football
-            live={live}
-            today={today}
-            upcoming={upcoming}
-            tomorrow={tomorrow}
           />
         </div>
       )}
       {selected === "Basketball" && <Basketball />}
 
-      {selected === "Tennis" && <Tennis  live={liveTennis} upcoming={upcomingTennis} />}
+      {selected === "Tennis" && <Tennis  />}
+
+      {selected === "Horse Racing" && <HorseRace /> }
 
       {getToken && <BottomTabs />}
     </div>

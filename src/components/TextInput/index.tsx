@@ -38,8 +38,15 @@ function TextInput(props: any) {
     disabled,
     onChangeText,
     errorMsg,
+    isNumeric
   } = props;
   const [show, setShow] = useState(false);
+
+
+  const preventAlphabetAndSpace = (e) => {
+     const input = e.target;
+     input.value = input.value.replace(/[^0-9]/g, '')
+  }
 
   return (
     <div style={{ marginBottom: 10 }}>
@@ -81,6 +88,7 @@ function TextInput(props: any) {
             ...styles.container,
             color: disabled ? COLORS.gray : COLORS.black,
           }}
+          onInput={(event) => isNumeric ? preventAlphabetAndSpace(event): () => {}}
           disabled={disabled}
           type={show ? "text" : type === "password" ? "password" : "text"}
           placeholder={placeholder}

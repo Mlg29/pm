@@ -11,6 +11,8 @@ export type ObjectFit = "contain" | "cover"
 
 export type Position = "absolute" | "relative"
 
+export type Wrap = "wrap" | 'no-wrap'
+
 export type OverflowY = "scroll" | "visible" | "hidden" | "auto"
 
 /* eslint-disable prettier/prettier */
@@ -84,6 +86,11 @@ export type ButtonType = {
   };
 
   export type PasswordCreation = {
+    oldPassword: string;
+    password: string;
+    confirmPassword: string;
+  };
+  export type PasswordCreationAuth = {
     password: string;
     confirmPassword: string;
   };
@@ -98,9 +105,16 @@ export type ButtonType = {
   };
 
   export type PinCreation = {
+    oldPin: string;
     pin: string;
     confirmPin: string;
   };
+
+  export type PinCreationAuth = {
+    pin: string;
+    confirmPin: string;
+  };
+
 
   export type ForgetPasswordFormData = {
     email: string;

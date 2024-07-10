@@ -77,6 +77,7 @@ function ChangeTransactionPin() {
 
 
   const initialValues: PinCreation = {
+    oldPin: "",
     pin: "",
     confirmPin: "",
   };
@@ -152,10 +153,22 @@ function ChangeTransactionPin() {
         </div>
 
         <div style={{ marginTop: 20 }}>
-          <TextInput
-            label="Pin"
-            placeholder="Enter your 6 digit pin"
+        <TextInput
+            label="Old Pin"
+            placeholder="Enter your old 6 digit  pin"
             required
+            isNumeric
+            type="password"
+            value={values.oldPin}
+            onChangeText={handleChange("oldPin")}
+            errorMsg={touched.oldPin ? errors.oldPin : undefined}
+          />
+
+          <TextInput
+            label="New Pin"
+            placeholder="Enter your new 6 digit pin"
+            required
+            isNumeric
             type="password"
             value={values.pin}
             onChangeText={handleChange("pin")}
@@ -166,6 +179,7 @@ function ChangeTransactionPin() {
             label="Confirm Pin"
             placeholder="Enter your 6 digit pin"
             required
+            isNumeric
             type="password"
             value={values.confirmPin}
             onChangeText={handleChange("confirmPin")}

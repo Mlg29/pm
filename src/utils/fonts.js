@@ -16,6 +16,7 @@ const SIZES = {
     h5: 18,
     h6: 15,
     h7: 12,
+    h8: 10,
     body1: 40,
     body2: 33,
     body3: 28,
@@ -23,6 +24,7 @@ const SIZES = {
     body5: 18,
     body6: 15,
     body7: 12,
+    body8: 10,
 };
 
 export const FONTS = {
@@ -34,6 +36,7 @@ export const FONTS = {
     h5: { fontWeight: '600', fontSize: SIZES.h5, },
     h6: { fontWeight: '600', fontSize: SIZES.h6, },
     h7: { fontWeight: '600', fontSize: SIZES.h7, },
+    h8: { fontWeight: '600', fontSize: SIZES.h8,},
     body1: { fontWeight: '400', fontSize: SIZES.body1, },
     body2: { fontWeight: '400',lineHeight: 36, fontSize: SIZES.body2, },
     body3: { fontWeight: '400', fontSize: SIZES.body3, },
@@ -41,6 +44,7 @@ export const FONTS = {
     body5: { fontWeight: '400', fontSize: SIZES.body5, },
     body6: { fontWeight: '400', fontSize: SIZES.body6, },
     body7: { fontWeight: '400', fontSize: SIZES.body7,},
+    body8: { fontWeight: '400', fontSize: SIZES.body8,},
 };
 
 

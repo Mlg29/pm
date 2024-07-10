@@ -103,10 +103,25 @@ export const SecretQuestionSchema = yup.object().shape({
 });
 
 export const CreatePasswordSchema = yup.object().shape({
+  oldPassword: yup
+    .string()
+    .min(6, ({ min }) => `Password must be at least ${min} characters`)
+    .required("Old password is required"),
   password: yup
     .string()
     .min(6, ({ min }) => `Password must be at least ${min} characters`)
-    .required("password is required"),
+    .required("New password is required"),
+    confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .min(6, ({ min }) => `Confirm new password must be at least ${min} characters`)
+    .required('Password confirmation is required'),
+});
+export const CreatePasswordSchemaAuth = yup.object().shape({
+  password: yup
+    .string()
+    .min(6, ({ min }) => `Password must be at least ${min} characters`)
+    .required("New password is required"),
     confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
@@ -123,10 +138,26 @@ export const MaxAmountSchema = yup.object().shape({
 
 
 export const CreatePinSchema = yup.object().shape({
+  oldPin: yup
+    .string()
+    .length(6,`Old Pin must be 6 characters`)
+    .required("Old pin is required"),
   pin: yup
     .string()
-    .length(6,`Pin must be 6 characters`)
-    .required("pin is required"),
+    .length(6,`New Pin must be 6 characters`)
+    .required("New pin is required"),
+    confirmPin: yup
+    .string()
+    .oneOf([yup.ref('pin'), null], 'Pin must match')
+    .length(6,`Confirm new pin must be 6 characters`)
+    .required('Pin confirmation is required'),
+});
+
+export const CreatePinSchemaAuth = yup.object().shape({
+  pin: yup
+    .string()
+    .length(6,`New Pin must be 6 characters`)
+    .required("New pin is required"),
     confirmPin: yup
     .string()
     .oneOf([yup.ref('pin'), null], 'Pin must match')

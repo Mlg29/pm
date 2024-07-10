@@ -1,14 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 import TennisGameCard from "../../components/GameCard/TennisGameCard";
+import { io } from "socket.io-client";
+import { BaseUrl } from "../../https";
+import moment from "moment";
+import { useAppDispatch } from "../../redux/hooks";
+import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 
-function Tennis({ live, upcoming }) {
+function Tennis() {
   const navigate = useNavigate();
+  const [live, setLive] = useState<any>([]);
+  const [upcoming, setUpcoming] = useState<any>([]);
+  const url = `${BaseUrl}/tennis`;
+  const dispatch = useAppDispatch() as any;
+
+  useEffect(() => {
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server tennis");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+
+    socket.on("TennisEventUpdate", (message) => {
+      setLive((prevMessages) => {
+        const updatedMessages = prevMessages?.filter(
+          (msg) => msg?.id !== message?.id
+        );
+        return [...updatedMessages, message];
+      });
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+
+
+
+  let createdDate = moment(new Date()).utc().format();
+  let tomorrowDate = moment(createdDate).add(1, "d");
+
+  useEffect(() => {
+    const notYetPayloadUpcoming = {
+      status: "Not Started",
+    };
+    const tennisPayloadLive = {
+      status: "Live",
+    };
+
+    dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload);
+    });
+    dispatch(getTennisFixtures(tennisPayloadLive)).then((dd) => {
+      setLive(dd?.payload?.data);
+    });
+  }, []);
+
   return (
     <div>
-       {live?.data?.length > 0 && (
+      {live?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -19,7 +78,7 @@ function Tennis({ live, upcoming }) {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
             LIVE
           </p>
-          {live?.total > 10 && (
+          {live?.length > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -42,14 +101,14 @@ function Tennis({ live, upcoming }) {
           )}
         </div>
       )}
-      {live?.data?.map((aa: any, i: any) => {
+      {live?.filter((a, i) => i < 10)?.map((aa: any, i: any) => {
         return (
           <div key={i}>
             <TennisGameCard id={i} data={aa} />
           </div>
         );
       })}
-        {upcoming?.data?.length > 0 && (
+      {upcoming?.data?.length > 0 && (
         <div
           style={{
             display: "flex",

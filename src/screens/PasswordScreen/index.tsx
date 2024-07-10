@@ -11,12 +11,12 @@ import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { FlexDirection, PasswordCreation } from "../../utils/type";
+import { FlexDirection, PasswordCreation, PasswordCreationAuth } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
-import { CreatePasswordSchema } from "../../https/schemas";
+import { CreatePasswordSchema, CreatePasswordSchemaAuth } from "../../https/schemas";
 import { createUser } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -72,7 +72,7 @@ function PasswordScreen() {
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
 
-  const initialValues: PasswordCreation = {
+  const initialValues: PasswordCreationAuth = {
     password: "",
     confirmPassword: "",
   };
@@ -80,8 +80,8 @@ function PasswordScreen() {
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
     useFormik({
       initialValues,
-      validationSchema: CreatePasswordSchema,
-      onSubmit: (data: PasswordCreation) => handleSubmitData(data),
+      validationSchema: CreatePasswordSchemaAuth,
+      onSubmit: (data: PasswordCreationAuth) => handleSubmitData(data),
       enableReinitialize: true,
     });
 
@@ -210,8 +210,7 @@ function PasswordScreen() {
         )}
 
         <div>
-          {isMobile && (
-            <h3
+           <h3
               style={{
                 ...FONTS.h2,
                 fontWeight: "bold",
@@ -221,7 +220,6 @@ function PasswordScreen() {
             >
               Create Your Log In Password
             </h3>
-          )}
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
             Create a new password for your account.
           </p>
