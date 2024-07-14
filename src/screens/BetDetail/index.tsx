@@ -123,7 +123,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount)}
+            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <GameDetailCardHeader
@@ -148,7 +148,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦ {formatCurrency(betData?.betAmount)}
+                ₦ {formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -269,7 +269,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount)}
+            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <TennisCard data={betData?.sportEvent?.TennisEvent} />
@@ -288,7 +288,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦ {formatCurrency(betData?.betAmount)}
+                ₦ {formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>

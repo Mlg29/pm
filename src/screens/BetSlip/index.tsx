@@ -70,6 +70,8 @@ function BetSlip() {
 
   const groupedData = groupByDate(betList);
 
+  console.log({betList})
+
   if (loader) {
     return (
       <div
@@ -210,7 +212,7 @@ function BetSlip() {
                                 //     ?.visitorTeamLogo
                                 // }
                                 isWin={item?.winnerId}
-                                amount={item?.betAmount}
+                                amount={item?.betAmount || item?.opponentBetAmount}
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
                                 data={item}
@@ -247,7 +249,7 @@ function BetSlip() {
                                 //     ?.visitorTeamLogo
                                 // }
                                 isWin={item?.winnerId}
-                                amount={item?.betAmount}
+                                amount={item?.betAmount || item?.opponentBetAmount}
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
                                 data={item}
@@ -301,7 +303,7 @@ function BetSlip() {
                           //   item?.sportEvent?.FootballEvent?.visitorTeamLogo
                           // }
                           isWin={item?.winnerId}
-                          amount={item?.betAmount}
+                          amount={item?.betAmount || item?.opponentBetAmount}
                           isUser={userData}
                           betCurrency={item?.betCurrency}
                           data={item}
@@ -337,7 +339,7 @@ function BetSlip() {
                                 //     ?.visitorTeamLogo
                                 // }
                                 isWin={item?.winnerId}
-                                amount={item?.betAmount}
+                                amount={item?.betAmount || item?.opponentBetAmount}
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
                                 data={item}
