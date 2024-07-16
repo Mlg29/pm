@@ -338,6 +338,7 @@ function SignupScreen() {
         <div style={{ width: "100%" }}>
           <DatePickerComponent
             label="Date of Birth"
+            placeholder="Date of Birth"
             propStyle={{ width: "100%" }}
             required
             value={dob}

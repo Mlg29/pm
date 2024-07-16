@@ -1,5 +1,5 @@
 
-import emptyState from "../../assets/images/empty.svg"
+import emptyState from "../../assets/images/illustration.svg"
 import { FONTS } from "../../utils/fonts"
 
 

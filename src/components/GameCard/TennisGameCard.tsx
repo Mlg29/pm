@@ -94,11 +94,7 @@ function TennisGameCard({ id, data }) {
           {data?.player?.map((dd, i) => {
             return (
               <div key={i} style={{display: 'flex', alignItems: 'center'}}>
-                 {/* <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s1"] ? dd["@s1"] : ""} </p>
-                 <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s2"] ? dd["@s2"] : ""} </p>
-                 <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s3"] ? dd["@s3"] : ""} </p>
-                 <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s4"] ? dd["@s4"] : ""} </p>
-                 <p style={{ ...FONTS.body7, marginRight: 4 }}>{dd["@s5"] ? dd["@s5"] : ""} </p> */}
+                
                 <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
                   {dd["@totalscore"]}
                 </p>

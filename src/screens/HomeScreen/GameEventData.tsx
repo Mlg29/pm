@@ -35,6 +35,8 @@ import SliderComponent from "../../components/Slider";
 import { useMediaQuery } from "react-responsive";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import TennisGameCard from "../../components/GameCard/TennisGameCard";
+import HorseGameCard from "../../components/GameCard/HorseGameCard";
+import { getHorseFixtures } from "../../redux/slices/horseSlice";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
@@ -97,6 +99,7 @@ function GameEventData(props: any) {
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      setLoading(false);
     });
   };
   const fetchTennisData = async (page) => {
@@ -138,6 +141,30 @@ function GameEventData(props: any) {
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      setLoading(false);
+    });
+  };
+  const fetchHorseData = async (page) => {
+    const payloadUpcoming = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload =
+      eventType === "upcoming"
+        ? payloadUpcoming
+        : "";
+    setLoading(true);
+    dispatch(getHorseFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
     });
   };
 
@@ -148,6 +175,10 @@ function GameEventData(props: any) {
     }
     if (gameType === "Tennis") {
       fetchTennisData(page);
+      return;
+    }
+    if (gameType === "Horse") {
+      fetchHorseData(page);
       return;
     }
   }, [page]);
@@ -361,7 +392,7 @@ function GameEventData(props: any) {
             dataLength={data?.length}
             next={fetchMoreData}
             hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
+            loader={loading && <h4>Loading...</h4>}
             endMessage={<p>No more data to load</p>}
           >
             {data?.map((aa: any, i: any) => {
@@ -370,6 +401,8 @@ function GameEventData(props: any) {
                   {gameType === "Soccer" && <GameCard id={i} data={aa} />}
 
                   {gameType === "Tennis" && <TennisGameCard id={i} data={aa} />}
+                
+                  {gameType === "Horse" && <HorseGameCard id={i} data={aa} />}
                 </div>
               );
             })}

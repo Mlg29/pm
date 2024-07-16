@@ -166,6 +166,7 @@ function GameDetails() {
   }, []);
 // console.log({gameType})
   const handleRoute = (route: string, selection?: string) => {
+   
     if (token) {
       setSelected(route);
     
@@ -763,14 +764,16 @@ function GameDetails() {
             )}
             </div>
 
-            <ToastContainer />
+           
           </div>
         )}
 
         {
           gameType === "Horse" && <HorseDetails selected={selected} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} />
         }
-      </div>
+      </div> 
+      
+      <ToastContainer />
     </div>
   );
 }

@@ -17,6 +17,7 @@ const DatePickerComponent = (props: any) => {
     calculateDefaultDate,
     disabled,
     propStyle,
+    placeholder
   } = props;
   
 
@@ -25,7 +26,7 @@ const DatePickerComponent = (props: any) => {
       <label style={{ ...FONTS.body7 }}>
         {label} {required ? <span style={{ color: "red" }}>*</span> : null}
       </label>
-      <Calendar value={value} onChange={(e) => onChangeDate(e.value)} className="btns" ariaLabel="Date" placeholder="Date of Birth"  showButtonBar style={{height: 60}} />
+      <Calendar value={value} onChange={(e) => onChangeDate(e.value)} className="btns" ariaLabel="Date" placeholder={placeholder}  showButtonBar style={{height: 60}} />
     </div>
   );
 };

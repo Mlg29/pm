@@ -46,6 +46,7 @@ const FundingModal = ({ show, handleClose }) => {
               <div style={{ width: "48%" }}>
                 <DatePickerComponent
                   label="Expiry Date"
+                  placeholder="Expire Date"
                   required
                   propStyle={{ width: "100%" }}
                 />

@@ -118,7 +118,7 @@ function HorseRace() {
                   state: {
                     events: live,
                     type: "live",
-                    gameType: "Tennis",
+                    gameType: "Horse",
                   },
                 })
               }
@@ -159,7 +159,7 @@ function HorseRace() {
                   state: {
                     events: upcoming,
                     type: "upcoming",
-                    gameType: "Tennis",
+                    gameType: "Horse",
                   },
                 })
               }

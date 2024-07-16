@@ -29,6 +29,7 @@ function Tennis() {
 
 
     socket.on("TennisEventUpdate", (message) => {
+      console.log({message})
       setLive((prevMessages) => {
         const updatedMessages = prevMessages?.filter(
           (msg) => msg?.id !== message?.id

@@ -29,18 +29,19 @@ function HorseDetails({ selected, gameInfo, handleRoute }) {
       <HorseCard gameInfo={gameInfo} />
       <div style={styles.div}>
         {gameInfo?.horses?.horse?.map((dd, i) => {
+
           return (
             <div
               style={{
                 ...styles.card,
                 backgroundColor:
-                  selected === dd["@name"] ? COLORS.primary : COLORS.cream,
-                color: selected === dd["@name"] ? COLORS.cream : COLORS.primary,
+                  selected === dd?.name ? COLORS.primary : COLORS.cream,
+                color: selected === dd?.name ? COLORS.cream : COLORS.primary,
               }}
               key={i}
-              onClick={() => handleRoute(dd["name"], `W${i+1}`)}
+              onClick={() => handleRoute(dd?.name, `W${i+1}`)}
             >
-              <p style={{...FONTS.h6}}>Bet {dd["name"]} to win</p>
+              <p style={{...FONTS.h6}}>Bet {dd?.name} to win</p>
               <p style={{...FONTS.body6}}>{dd?.odds?.bookmaker?.odd}</p>
             </div>
           );

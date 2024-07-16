@@ -71,6 +71,7 @@ import Tennis from "../Games/Tennis";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import { BsFilterSquareFill } from "react-icons/bs";
 import HorseRace from "../Games/HorseRace";
+import Boxing from "../Games/Boxing";
 
 
 
@@ -405,6 +406,8 @@ function HomeScreen() {
       {selected === "Tennis" && <Tennis  />}
 
       {selected === "Horse Racing" && <HorseRace /> }
+
+      {selected === "Boxing" && <Boxing />}
 
       {getToken && <BottomTabs />}
     </div>

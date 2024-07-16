@@ -4,7 +4,7 @@ import { FONTS } from "../../utils/fonts";
 import milan from "../../assets/images/millan.svg";
 import roma from "../../assets/images/roma.svg";
 import { COLORS } from "../../utils/colors";
-import { FlexDirection } from "../../utils/type";
+import { FlexDirection, OverflowX } from "../../utils/type";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { getOpenBet } from "../../redux/slices/BetSlice";
@@ -15,6 +15,7 @@ import Loader from "../../components/Loader";
 import { useMediaQuery } from "react-responsive";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import { FaTableTennis } from "react-icons/fa";
+import { FaHorseHead } from "react-icons/fa";
 
 const styles = {
   contain: {
@@ -36,6 +37,13 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
+  horseRow: {
+    display: 'flex',
+    alignItems: "center",
+    overflowX: "auto" as OverflowX,
+    whiteSpace: "nowrap",
+
+  }
 };
 
 function OpenBet() {
@@ -129,7 +137,16 @@ function OpenBet() {
     );
   }
 
-  console.log({ filterData, game, openBets });
+  const getPrediction = (prediction: string) => {
+    const result = game?.horses?.horse
+      .filter((item, i) => prediction === `W${i + 1}`)
+      .map((horse, i) => {
+        return `${horse?.name} WIN`;
+      });
+
+    return result;
+  };
+
 
   return (
     <div>
@@ -165,7 +182,7 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                          <p style={{ ...FONTS.body7, marginTop: "10px",color: COLORS.red }}>
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
@@ -283,7 +300,7 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                          <p style={{ ...FONTS.body7, marginTop: "10px",color: COLORS.red }}>
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
@@ -383,21 +400,16 @@ function OpenBet() {
                     </div>
                   )}
 
-                  {/* {data?.sportEvent?.sport === "TENNIS" && (
+                  {data?.sportEvent?.sport === "HORSE_RACING" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.tournamentName}
                       </p>
 
                       <div style={{ ...styles.row }}>
+                        <div />
                         <div style={{ ...styles.center }}>
-                          <FaTableTennis size={30} color={COLORS.primary} />
-                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.player[0]["@name"]}
-                          </h3>
-                        </div>
-                        <div style={{ ...styles.center }}>
-                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                          <p style={{ ...FONTS.body7, marginTop: "10px", color: COLORS.red }}>
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
@@ -405,12 +417,17 @@ function OpenBet() {
                             {formatCurrency(data?.betAmount)}
                           </h3>
                         </div>
-                        <div style={{ ...styles.center }}>
-                          <FaTableTennis size={30} color={COLORS.primary} />
-                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.player[1]["@name"]}
-                          </h3>
-                        </div>
+                        <div />
+                     
+                      </div>
+                      <div style={{...styles.horseRow, scrollbarWidth: "none"}}>
+                        {
+                          game?.horses?.horse?.map(gm => {
+                            return <div style={{margin: '10px 10px', paddingBottom: 10}} >
+                             <p style={{...FONTS.body7, backgroundColor: COLORS.cream, padding: 10, borderRadius: 5}}>{gm?.name}</p>
+                            </div>
+                          })
+                        }
                       </div>
 
                       <div style={{ ...styles.row, paddingBottom: "1rem" }}>
@@ -419,11 +436,7 @@ function OpenBet() {
                             @{data?.user?.userName}
                           </p>
                           <p style={{ ...FONTS.body7 }}>
-                            {data?.prediction === "W1"
-                              ? `${game?.player[0]["@name"]} WIN`
-                              : data?.prediction === "W2"
-                              ? `${game?.player[1]["@name"]} WIN`
-                              : ""}
+                            {getPrediction(data?.prediction)}
                           </p>
                         </div>
                         <div>
@@ -437,11 +450,7 @@ function OpenBet() {
                             You
                           </p>
                           <p style={{ ...FONTS.body7 }}>
-                            {userSelection?.userType === "W1"
-                              ? `${game?.player[0]["@name"]} WIN`
-                              : userSelection?.userType === "W2"
-                              ? `${game?.player[1]["@name"]} WIN`
-                              : ""}
+                               {getPrediction(userSelection?.userType)}
                           </p>
                         </div>
                       </div>
@@ -495,7 +504,7 @@ function OpenBet() {
                         </div>
                       </div>
                     </div>
-                  )} */}
+                  )}
                 </>
               );
             })}

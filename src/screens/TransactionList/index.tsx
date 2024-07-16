@@ -168,6 +168,7 @@ function TransactionList() {
           <div style={{ marginTop: "20px" }}>
             <DatePickerComponent
               label="Transaction Date Range"
+              placeholder="Transaction Date"
               propStyle={{ width: "100%" }}
             />
             <div style={{ width: "100%", marginTop: "20px" }}>

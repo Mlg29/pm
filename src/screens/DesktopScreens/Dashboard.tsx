@@ -22,6 +22,7 @@ import Tennis from "../Games/Tennis";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import { BsFilterSquareFill } from "react-icons/bs";
 import HorseRace from "../Games/HorseRace";
+import Boxing from "../Games/Boxing";
 
 const styles = {
   container: {
@@ -170,23 +171,22 @@ function Dashboard() {
           </div>
 
           <div style={{ ...styles.div }}>
-            <div style={{ display: "flex", justifyContent: "flex-end", cursor: 'pointer' }} onClick={() => navigate("/filter")}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                cursor: "pointer",
+              }}
+              onClick={() => navigate("/filter")}
+            >
               <BsFilterSquareFill size={20} />
             </div>
-            {sportEvents && sportEvents === "Soccer" && (
-              <Football
-           
-              />
-            )}
-            {sportEvents === "Tennis" && (
-              <Tennis />
-            )}
+            {sportEvents && sportEvents === "Soccer" && <Football />}
+            {sportEvents === "Tennis" && <Tennis />}
 
-            {
-              sportEvents === "Horse Racing" && (
-                <HorseRace />
-              )
-            }
+            {sportEvents === "Horse Racing" && <HorseRace />}
+
+            {sportEvents === "Boxing" && <Boxing />}
           </div>
         </div>
       </DashboardLayout>

@@ -1,5 +1,5 @@
 import React from "react";
-import { FlexDirection, Wrap } from "../../utils/type";
+import { FlexDirection, OverflowX, Wrap } from "../../utils/type";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 
@@ -21,6 +21,8 @@ const styles = {
     display: "flex",
     flexDirection: 'row' as FlexDirection,
     alignItems: "center",
+    overflowX: 'auto' as OverflowX,
+    whiteSpace: "nowrap"
 
   },
   card: {
@@ -44,7 +46,7 @@ function HorseCard({ gameInfo }) {
       <div style={styles.center}>
         <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
         <p style={{...FONTS.h7,textAlign: 'right',  margin: '5px 1rem', width: '50%'}}>Status: </p>
-        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%'}}>{gameInfo?.status}</p>
+        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%', color: 'red'}}>{gameInfo?.status}</p>
         </div>
         <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
         <p style={{...FONTS.h7,textAlign: 'right',  margin: '5px 1rem', width: '50%'}}>Time: </p>
@@ -52,16 +54,16 @@ function HorseCard({ gameInfo }) {
         </div>
         <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
         <p style={{...FONTS.h7,textAlign: 'right', margin: '5px 1rem', width: '50%'}}>Distace: </p>
-        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%'}}>{gameInfo?.distance}</p>
+        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%', color: 'green'}}>{gameInfo?.distance}</p>
         </div>
         <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
-        <p style={{...FONTS.h7,textAlign: 'right', margin: '5px 1rem', width: '50%'}}> </p>
-        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%'}}>{gameInfo?.name}</p>
+        {/* <p style={{...FONTS.h7,textAlign: 'right', margin: '5px 1rem', width: '50%'}}> </p> */}
+        <p style={{...FONTS.h7, margin: '5px 0px', width: '100%', textAlign: 'center', color: COLORS.orange}}>{gameInfo?.name}</p>
         </div>
       
       </div>
 
-      <div style={{...styles.div, flexWrap: 'wrap'}}>
+      <div style={{...styles.div}}>
         {gameInfo?.horses?.horse?.map((dd, i) => {
           return (
             <div
@@ -73,8 +75,8 @@ function HorseCard({ gameInfo }) {
               }}
               key={i}
             >
-              <p style={{...FONTS.h6}}>{dd["name"]}</p>
-              <p style={{...FONTS.body6}}>{dd?.odds?.bookmaker?.odd}</p>
+              <p style={{...FONTS.h7}}>{dd["name"]}</p>
+              <p style={{...FONTS.body7}}>{dd?.odds?.bookmaker?.odd}</p>
             </div>
           );
         })}
