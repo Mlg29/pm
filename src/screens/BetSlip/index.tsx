@@ -70,7 +70,6 @@ function BetSlip() {
 
   const groupedData = groupByDate(betList);
 
-  console.log({ betList });
 
   if (loader) {
     return (
@@ -247,26 +246,7 @@ function BetSlip() {
 
 {item?.sportEvent?.sport === "HORSE_RACING" && (
                             <SlipCard
-                              homeName={
-                                item?.sportEvent?.HorseEvent?.player[0][
-                                  "@name"
-                                ]
-                              }
-                              awayName={
-                                item?.sportEvent?.HorseEvent?.player[1][
-                                  "@name"
-                                ]
-                              }
-                              homeScore={
-                                item?.sportEvent?.HorseEvent?.player[0][
-                                  "@totalscore"
-                                ]
-                              }
-                              awayScore={
-                                item?.sportEvent?.HorseEvent?.player[1][
-                                  "@totalscore"
-                                ]
-                              }
+                            multipleEntry
                               isWin={item?.winnerId}
                               amount={
                                 item?.betAmount || item?.opponentBetAmount
@@ -360,26 +340,7 @@ function BetSlip() {
                           )}
                             {item?.sportEvent?.sport === "HORSE_RACING" && (
                             <SlipCard
-                              homeName={
-                                item?.sportEvent?.HorseEvent?.player[0][
-                                  "@name"
-                                ]
-                              }
-                              awayName={
-                                item?.sportEvent?.HorseEvent?.player[1][
-                                  "@name"
-                                ]
-                              }
-                              homeScore={
-                                item?.sportEvent?.HorseEvent?.player[0][
-                                  "@totalscore"
-                                ]
-                              }
-                              awayScore={
-                                item?.sportEvent?.HorseEvent?.player[1][
-                                  "@totalscore"
-                                ]
-                              }
+                              multipleEntry
                               isWin={item?.winnerId}
                               amount={
                                 item?.betAmount || item?.opponentBetAmount

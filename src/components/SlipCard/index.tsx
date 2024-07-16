@@ -41,6 +41,7 @@ function SlipCard(props: any) {
     homeImage,
     awayImage,
     homeScore,
+    multipleEntry,
     awayScore,
     homeName,
     awayName,
@@ -51,6 +52,15 @@ function SlipCard(props: any) {
   } = props;
   const navigate = useNavigate();
 
+  const getPrediction = (prediction: string) => {
+    const result = data?.sportEvent?.HorseEvent?.horses?.horse
+      .filter((item, i) => prediction === `W${i + 1}`)
+      .map((horse, i) => {
+        return `${horse?.name} WIN`;
+      });
+
+    return result;
+  };
 
 
   return (
@@ -63,30 +73,45 @@ function SlipCard(props: any) {
       }
     >
       <div style={{ ...styles.container2, cursor: "pointer" }}>
-        <div>
-          <div style={{ ...styles.row }}>
-            {/* <img src={homeImage ? homeImage : noLogo} width={20} /> */}
-            <h3
-              style={{ ...FONTS.body7, width: 150, margin: "0px 0px 0px 5px" }}
-            >
-              {homeName}
-            </h3>
-            <h3 style={{ ...FONTS.h6, textAlign: "center" }}>
-              {homeScore || homeScore === 0 ? homeScore : "-"}
-            </h3>
+        {multipleEntry ? (
+          <div>
+            <p style={{
+                  ...FONTS.body7,
+                }}>A multiple entry bet</p>
           </div>
-          <div style={{ ...styles.row }}>
-            {/* <img src={awayImage ? awayImage : noLogo} width={20} /> */}
-            <h3
-              style={{ ...FONTS.body7, width: 150, margin: "0px 0px 0px 5px" }}
-            >
-              {awayName}
-            </h3>
-            <h3 style={{ ...FONTS.h6, textAlign: "center" }}>
-              {awayScore || awayScore === 0 ? awayScore : "-"}
-            </h3>
+        ) : (
+          <div>
+            <div style={{ ...styles.row }}>
+              <h3
+                style={{
+                  ...FONTS.body7,
+                  width: 150,
+                  margin: "0px 0px 0px 5px",
+                }}
+              >
+                {homeName}
+              </h3>
+              <h3 style={{ ...FONTS.h6, textAlign: "center" }}>
+                {homeScore || homeScore === 0 ? homeScore : "-"}
+              </h3>
+            </div>
+            <div style={{ ...styles.row }}>
+              <h3
+                style={{
+                  ...FONTS.body7,
+                  width: 150,
+                  margin: "0px 0px 0px 5px",
+                }}
+              >
+                {awayName}
+              </h3>
+              <h3 style={{ ...FONTS.h6, textAlign: "center" }}>
+                {awayScore || awayScore === 0 ? awayScore : "-"}
+              </h3>
+            </div>
           </div>
-        </div>
+        )}
+
         <div>
           <h3
             style={{
@@ -124,22 +149,32 @@ function SlipCard(props: any) {
               </h3>
             </div>
             <div>
-              <p style={{ ...FONTS.h7, margin: "0px 0px 0px 5px" }}>
+              <p style={{ ...FONTS.h7, margin: "0px 0px 0px 5px", textAlign: 'right' }}>
                 Your Prediction
               </p>
-              <p
-                style={{
+              {multipleEntry ? (
+                <p  style={{
                   ...FONTS.h7,
                   margin: "0px 0px 0px 5px",
-                  textAlign: "end",
-                }}
-              >
-                {data?.prediction === "W1"
-                  ? "Home Win"
-                  : data?.prediction === "W2"
-                  ? "Away Win"
-                  : "DRAW"}
-              </p>
+                  textAlign: "right",
+                  color: COLORS.orange
+                }}>{getPrediction(data?.prediction)}</p>
+              ) : (
+                <p
+                  style={{
+                    ...FONTS.h7,
+                    margin: "0px 0px 0px 5px",
+                    textAlign: "right",
+                    color: COLORS.orange
+                  }}
+                >
+                  {data?.prediction === "W1"
+                    ? `${homeName} Win`
+                    : data?.prediction === "W2"
+                    ? `${awayName} Win`
+                    : "DRAW"}
+                </p>
+              )}
             </div>
           </div>
         ) : null}

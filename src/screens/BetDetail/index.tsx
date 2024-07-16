@@ -72,7 +72,16 @@ function BetDetail() {
     );
   }
 
-  console.log({ betData, sportType });
+  // console.log({ betData, sportType });
+  const getPrediction = (prediction: string) => {
+    const result = betData?.sportEvent?.HorseEvent?.horses?.horse
+      .filter((item, i) => prediction === `W${i + 1}`)
+      .map((horse, i) => {
+        return `${horse?.name} WIN`;
+      });
+
+    return result;
+  };
 
   return (
     <div className="top-container">
@@ -444,11 +453,7 @@ function BetDetail() {
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
                   <p>
-                    {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
-                      : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
-                      : "N/A"}
+                    {getPrediction(betData?.prediction)}
                   </p>
                 ) : (
                   ""
@@ -461,11 +466,7 @@ function BetDetail() {
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
                     <p>
-                      {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
-                        : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
-                        : "N/A"}
+                      {getPrediction(betData?.opponentPrediction)}
                     </p>
                   ) : (
                     ""

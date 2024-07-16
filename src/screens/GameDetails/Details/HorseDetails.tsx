@@ -29,7 +29,6 @@ function HorseDetails({ selected, gameInfo, handleRoute }) {
       <HorseCard gameInfo={gameInfo} />
       <div style={styles.div}>
         {gameInfo?.horses?.horse?.map((dd, i) => {
-
           return (
             <div
               style={{

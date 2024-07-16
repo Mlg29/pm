@@ -61,12 +61,14 @@ import BetAdjust from './AdjustBet/BetAdjust.js';
 import AdjustSuccess from './SuccessScreen/AdjustSuccess.js';
 import BetInviteDetail from './BetDetail/BetInviteDetail.js';
 import FilterPage from './FilterPage/index.js';
+import ScrollToTop from '../components/ScrollToTop.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <Router>
+      <ScrollToTop />
     <Routes>
     {/* <Route path="/" element={<Layout><ComingSoon /></Layout>} /> */}
       <Route path="/"  element={<Dashboard />} />
@@ -117,7 +119,7 @@ function DesktopRouters() {
       <Route path="/adjust-success" element={<DashboardLayout><AdjustSuccess /></DashboardLayout>} />
      <Route path="/create-bet" element={<DashboardLayout><CreateBet/></DashboardLayout>} />
       <Route path="/invite" element={<DashboardLayout><InviteFriend/></DashboardLayout>} />
-      <Route path="/challenge-detail" element={<DashboardLayout><ChallengeDetail /></DashboardLayout>} />
+      {/* <Route path="/challenge-detail" element={<DashboardLayout><ChallengeDetail /></DashboardLayout>} /> */}
       <Route path="/adjust-bet" element={<DashboardLayout><AdjustBet /></DashboardLayout>} />
       <Route path="/events" element={<DashboardLayout><GameEventData /></DashboardLayout>} />
       <Route path="/amount" element={<DashboardLayout><BetAmount /></DashboardLayout>} />

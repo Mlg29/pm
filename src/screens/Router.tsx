@@ -59,12 +59,14 @@ import BetAdjust from "./AdjustBet/BetAdjust.tsx";
 import AdjustSuccess from "./SuccessScreen/AdjustSuccess.tsx";
 import BetInviteDetail from "./BetDetail/BetInviteDetail.tsx";
 import FilterPage from "./FilterPage/index.tsx";
+import ScrollToTop from "../components/ScrollToTop.tsx";
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
       {/* <Route path="/" element={<ComingSoon />} /> */}
         <Route path="/"  element={<HomeScreen />} />
@@ -126,7 +128,7 @@ function Routers() {
         <Route path="/bet-success" element={<BetSuccess />} />
         <Route path="/create-bet" element={<CreateBet />} />
         <Route path="/invite" element={<InviteFriend />} />
-        <Route path="/challenge-detail" element={<ChallengeDetail />} />
+        {/* <Route path="/challenge-detail" element={<ChallengeDetail />} /> */}
         <Route path="/adjust-bet" element={<AdjustBet />} />
         <Route path="/amount" element={<BetAmount />} />
         <Route path="/events" element={<GameEventData />} />

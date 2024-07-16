@@ -21,6 +21,7 @@ import { RxAvatar } from "react-icons/rx";
 import Loader from "../../components/Loader";
 import TennisGameCard from "../../components/GameCard/TennisGameCard";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
+import HorseCard from "../../components/GameDetailCardHeader/HorseCard";
 
 const styles = {
   inputs: {
@@ -69,7 +70,7 @@ const BetAdjust = () => {
   const [userData, setUserData] = useState(null);
   const events = betData?.sportEvent;
   const sportEvents = events;
-  const tennisEvent = events;
+
 
   const user = betInfo?.bet?.userId === userData?.id;
 
@@ -210,8 +211,12 @@ const BetAdjust = () => {
         </div>
       )}
 
-      {tennisEvent?.sport === "TENNIS" && (
-        <TennisCard data={tennisEvent?.TennisEvent} />
+      {sportEvents?.sport === "TENNIS" && (
+        <TennisCard data={sportEvents?.TennisEvent} />
+      )}
+
+{sportEvents?.sport === "HORSE_RACING" && (
+        <HorseCard gameInfo={sportEvents?.HorseEvent} />
       )}
 
       <div style={{ ...styles.div }}>
