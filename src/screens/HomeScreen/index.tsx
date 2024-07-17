@@ -31,51 +31,64 @@ import {
   notificationState,
 } from "../../redux/slices/NotificationSlice";
 
-import { Sidebar } from 'primereact/sidebar';
-        
+import { Sidebar } from "primereact/sidebar";
+
 import { Badge } from "primereact/badge";
 import Football from "../Games/Football";
 import Basketball from "../Games/Basketball";
-import asoccer from "../../assets/images/asoccer.svg"
-import insoccer from "../../assets/images/insoccer.svg"
-import abasketball from "../../assets/images/basketball.svg"
-import inbasketball from "../../assets/images/inbasketball.svg"
-import atennis from "../../assets/images/tennis.svg"
-import intennis from "../../assets/images/intennis.svg"
-import acricket from "../../assets/images/cricket2.svg"
-import incricket from "../../assets/images/incricket2.svg"
-import rugby from "../../assets/images/rugby.svg"
-import avolleyball from "../../assets/images/volleyball.svg"
-import involleyball from "../../assets/images/involleyball.svg"
-import formula from "../../assets/images/formula.svg"
-import abaseball from "../../assets/images/baseball.svg"
-import inbaseball from "../../assets/images/inbaseball.svg"
-import agolf from "../../assets/images/golf.svg"
-import ingolf from "../../assets/images/ingolf.svg"
-import ahorse from "../../assets/images/horse.svg"
-import inhorse from "../../assets/images/inhorse.svg"
-import ahockey from "../../assets/images/hockey.svg"
-import inhockey from "../../assets/images/inhockey.svg"
-import aussie from "../../assets/images/aussie.svg"
-import handball from "../../assets/images/handball.svg"
-import hockey from "../../assets/images/icehockey.svg"
-import nascar from "../../assets/images/nascar.svg"
-import futsol from "../../assets/images/futsol.svg"
-import boxing from "../../assets/images/boxing.svg"
-import ufc from "../../assets/images/ufc.svg"
-import dart from "../../assets/images/dart.svg"
-import snooker from "../../assets/images/snooker.svg"
-import easport from "../../assets/images/easport.svg"
-import tabletennis from "../../assets/images/tabletennis.svg"
+import asoccer from "../../assets/images/asoccer.svg";
+import insoccer from "../../assets/images/insoccer.svg";
+import abasketball from "../../assets/images/basketball.svg";
+import inbasketball from "../../assets/images/inbasketball.svg";
+import atennis from "../../assets/images/tennis.svg";
+import intennis from "../../assets/images/intennis.svg";
+import acricket from "../../assets/images/cricket2.svg";
+import incricket from "../../assets/images/incricket2.svg";
+import rugby from "../../assets/images/rugby.svg";
+import avolleyball from "../../assets/images/volleyball.svg";
+import involleyball from "../../assets/images/involleyball.svg";
+import formula from "../../assets/images/formula.svg";
+import abaseball from "../../assets/images/baseball.svg";
+import inbaseball from "../../assets/images/inbaseball.svg";
+import agolf from "../../assets/images/golf.svg";
+import ingolf from "../../assets/images/ingolf.svg";
+import ahorse from "../../assets/images/horse.svg";
+import inhorse from "../../assets/images/inhorse.svg";
+import ahockey from "../../assets/images/hockey.svg";
+import inhockey from "../../assets/images/inhockey.svg";
+import aussie from "../../assets/images/aussie.svg";
+import handball from "../../assets/images/handball.svg";
+import hockey from "../../assets/images/icehockey.svg";
+import nascar from "../../assets/images/nascar.svg";
+import futsol from "../../assets/images/futsol.svg";
+import boxing from "../../assets/images/boxing.svg";
+import ufc from "../../assets/images/ufc.svg";
+import dart from "../../assets/images/dart.svg";
+import snooker from "../../assets/images/snooker.svg";
+import easport from "../../assets/images/easport.svg";
+import tabletennis from "../../assets/images/tabletennis.svg";
 import Tennis from "../Games/Tennis";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import { BsFilterSquareFill } from "react-icons/bs";
 import HorseRace from "../Games/HorseRace";
 import Boxing from "../Games/Boxing";
-
-
-
-
+import Cricket from "../Games/Cricket";
+import Baseball from "../Games/BaseBall";
+import Volleyball from "../Games/Volleyball";
+import Golf from "../Games/Golf";
+import Hockey from "../Games/Hockey";
+import Formula1 from "../Games/Formula1";
+import Rugby from "../Games/Rugby";
+import Handball from "../Games/Handball";
+import IceHockey from "../Games/IceHockey";
+import Futsol from "../Games/Futsol";
+import Nascar from "../Games/Nascar";
+import Mma from "../Games/Mma";
+import Darts from "../Games/Darts";
+import Snooker from "../Games/Snooker";
+import Easport from "../Games/Easport";
+import TableTennis from "../Games/TableTennis";
+import AussieRules from "../Games/AussieRules";
 
 function HomeScreen() {
   const navigate = useNavigate();
@@ -85,7 +98,6 @@ function HomeScreen() {
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
 
- 
   const notifications = useAppSelector(notificationState) as any;
   const [loader, setLoader] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -98,8 +110,6 @@ function HomeScreen() {
     getNotification();
   }, []);
 
- 
-
   const itemList = [
     {
       id: 1,
@@ -109,42 +119,42 @@ function HomeScreen() {
     {
       id: 2,
       name: "Basketball",
-      image: selected === "Basketball" ? abasketball : inbasketball
+      image: selected === "Basketball" ? abasketball : inbasketball,
     },
     {
       id: 3,
       name: "Tennis",
-      image:selected === "Tennis" ? atennis : intennis
+      image: selected === "Tennis" ? atennis : intennis,
     },
     {
       id: 4,
       name: "Cricket",
-      image: selected === "Cricket" ? acricket : incricket
+      image: selected === "Cricket" ? acricket : incricket,
     },
     {
       id: 5,
       name: "Baseball",
-      image: selected === "Baseball" ? abaseball : inbaseball
+      image: selected === "Baseball" ? abaseball : inbaseball,
     },
     {
       id: 6,
       name: "Volleyball",
-      image: selected === "Volleyball" ? avolleyball : involleyball
+      image: selected === "Volleyball" ? avolleyball : involleyball,
     },
     {
       id: 7,
       name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf
+      image: selected === "Golf" ? agolf : ingolf,
     },
     {
       id: 8,
       name: "Horse Racing",
-      image: selected === "Horse Racing" ? ahorse : inhorse
+      image: selected === "Horse Racing" ? ahorse : inhorse,
     },
     {
       id: 9,
       name: "Hockey",
-      image: selected === "Hockey" ? ahockey : inhockey
+      image: selected === "Hockey" ? ahockey : inhockey,
     },
     {
       id: 10,
@@ -219,7 +229,7 @@ function HomeScreen() {
       name: "Aussie Rules",
       image: aussie,
     },
-  ]
+  ];
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -237,9 +247,9 @@ function HomeScreen() {
   }, []);
 
   const handleMoreSelect = (data) => {
-    setSelected(data)
-    setVisible(false)
-  }
+    setSelected(data);
+    setVisible(false);
+  };
 
   if (loader) {
     return (
@@ -257,9 +267,6 @@ function HomeScreen() {
       </div>
     );
   }
-
-
-
 
   return (
     <div className="top-container">
@@ -331,7 +338,11 @@ function HomeScreen() {
                 margin: "0 5px",
                 cursor: "pointer",
               }}
-              onClick={() => info?.name === "More" ? setVisible(true) : setSelected(info?.name)}
+              onClick={() =>
+                info?.name === "More"
+                  ? setVisible(true)
+                  : setSelected(info?.name)
+              }
             >
               <div
                 style={{
@@ -343,7 +354,7 @@ function HomeScreen() {
                   border: `1px solid ${COLORS.semiGray}`,
                 }}
               >
-                 <img src={info?.image} />
+                <img src={info?.image} />
                 <p
                   style={{
                     ...FONTS.h6,
@@ -360,12 +371,16 @@ function HomeScreen() {
         })}
       </div>
       <Sidebar visible={visible} onHide={() => setVisible(false)}>
-      {otherItemList?.map((info: any) => {
+        {otherItemList?.map((info: any) => {
           return (
             <div
               key={info?.id}
               style={{
                 cursor: "pointer",
+                backgroundColor:
+                  info?.name === selected ? COLORS.cream : "transparent",
+                borderRadius: "10px",
+                padding: "0px 5px",
               }}
               onClick={() => handleMoreSelect(info?.name)}
             >
@@ -373,11 +388,11 @@ function HomeScreen() {
                 style={{
                   display: "flex",
                   padding: "15px 0px",
-                
+
                   borderBottom: `1px solid ${COLORS.semiGray}`,
                 }}
               >
-                 <img src={info?.image} />
+                <img src={info?.image} />
                 <p
                   style={{
                     ...FONTS.h6,
@@ -391,23 +406,46 @@ function HomeScreen() {
             </div>
           );
         })}
-    </Sidebar>
-<div style={{display: 'flex', justifyContent: 'flex-end', cursor: 'pointer'}} onClick={() => navigate("/filter")}>
-<BsFilterSquareFill size={20} />
-</div>
+      </Sidebar>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          cursor: "pointer",
+        }}
+        onClick={() => navigate("/filter")}
+      >
+        <BsFilterSquareFill size={20} />
+      </div>
       {selected === "Soccer" && (
         <div>
-          <Football
-          />
+          <Football />
         </div>
       )}
       {selected === "Basketball" && <Basketball />}
 
-      {selected === "Tennis" && <Tennis  />}
+      {selected === "Tennis" && <Tennis />}
 
-      {selected === "Horse Racing" && <HorseRace /> }
+      {selected === "Horse Racing" && <HorseRace />}
 
       {selected === "Boxing" && <Boxing />}
+      {selected === "Cricket" && <Cricket />}
+      {selected === "Baseball" && <Baseball />}
+      {selected === "Volleyball" && <Volleyball />}
+      {selected === "Golf" && <Golf />}
+      {selected === "Hockey" && <Hockey />}
+      {selected === "Formula 1" && <Formula1 />}
+      {selected === "American Football (Rugby)" && <Rugby />}
+      {selected === "Handball" && <Handball />}
+      {selected === "Ice Hockey" && <IceHockey />}
+      {selected === "NASCAR" && <Nascar />}
+      {selected === "Futsol" && <Futsol />}
+      {selected === "MMA/UFC" && <Mma />}
+      {selected === "Darts" && <Darts />}
+      {selected === "Snooker" && <Snooker />}
+      {selected === "Easport" && <Easport />}
+      {selected === "Table Tennis" && <TableTennis />}
+      {selected === "Aussie Rules" && <AussieRules />}
 
       {getToken && <BottomTabs />}
     </div>

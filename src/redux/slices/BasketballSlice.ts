@@ -1,3 +1,4 @@
+
 /* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unreachable */
@@ -18,11 +19,11 @@ import { BaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
-  horseFixtures: [],
+  basketballFixtures: [],
 };
 
-export const getHorseFixtures = createAsyncThunk(
-  "horse/getHorseFixtures",
+export const getBasketballFixtures = createAsyncThunk(
+  "basketball/getBasketballFixtures",
   async (payload: any) => {
     const buildUrl = (payload) => {
       let queryParams = [];
@@ -37,7 +38,7 @@ export const getHorseFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/horse/fixtures?${queryString}`;
+      return `${BaseUrl}/basketball/fixtures?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -47,54 +48,31 @@ export const getHorseFixtures = createAsyncThunk(
   }
 );
 
-export const getHorseRace = createAsyncThunk(
-  "horse/getHorseRace",
-  async (payload: any) => {
-    var response = await getRequest(`${BaseUrl}/horse/race/${payload?.tourId}`);
-    if (response?.status === 200 || response?.status === 201) {
-      return response?.data;
-    }
-  }
-);
 
 
-
-export const HorseSlice = createSlice({
-  name: "horse",
+export const BasketballSlice = createSlice({
+  name: "basketball",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getHorseFixtures.pending, (state, action) => {
+    builder.addCase(getBasketballFixtures.pending, (state, action) => {
       state.loading = true;
     }),
       builder.addCase(
-        getHorseFixtures.fulfilled,
+        getBasketballFixtures.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.horseFixtures = action.payload;
+          state.basketballFixtures = action.payload;
         }
       );
-    builder.addCase(getHorseFixtures.rejected, (state, action) => {
-      // state.error = action.error.message
-    });
-
-    builder.addCase(getHorseRace.pending, (state, action) => {
-      state.loading = true;
-    }),
-      builder.addCase(
-        getHorseRace.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-        }
-      );
-    builder.addCase(getHorseRace.rejected, (state, action) => {
+    builder.addCase(getBasketballFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
    
   },
 });
 
-export const horseFixtureState = (state: RootState) =>
-  state.horse.horseFixtures
+export const BasketballFixtureState = (state: RootState) =>
+  state.basketball.basketballFixtures
 
-export default HorseSlice.reducer;
+export default BasketballSlice.reducer;

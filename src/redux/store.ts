@@ -8,6 +8,7 @@ import RestrictionReducer from './slices/RestrictionSlice'
 import TennisReducer from './slices/TennisSlice'
 import HorseReducer from './slices/horseSlice'
 import BoxingReducer from './slices/BoxingSlice'
+import BasketballSlice from './slices/BasketballSlice'
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
    restriction: RestrictionReducer,
    tennis: TennisReducer,
    horse: HorseReducer,
-   boxing: BoxingReducer
+   boxing: BoxingReducer,
+   basketball: BasketballSlice
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

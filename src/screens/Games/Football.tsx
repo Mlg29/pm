@@ -8,6 +8,7 @@ import { BaseUrl } from "../../https";
 import { getFootballFixtures } from '../../redux/slices/FootballSlice';
 import moment from 'moment';
 import { io } from 'socket.io-client';
+import EmptyState from '../../components/EmptyState';
 
 function Football() {
     const navigate = useNavigate()
@@ -256,6 +257,17 @@ function Football() {
           </div>
         );
       })}
+
+{
+        live?.length < 1 && upcoming?.data?.length < 1 && today?.data?.length < 1 && tomorrow?.data?.length < 1 ?
+        <EmptyState 
+          header="No Game Available for Football"
+          height="30vh"
+        />
+        :
+        null
+      }
+      
     </div>
   )
 }

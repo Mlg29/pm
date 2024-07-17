@@ -23,6 +23,24 @@ import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import { BsFilterSquareFill } from "react-icons/bs";
 import HorseRace from "../Games/HorseRace";
 import Boxing from "../Games/Boxing";
+import Basketball from "../Games/Basketball";
+import Baseball from "../Games/BaseBall";
+import Volleyball from "../Games/Volleyball";
+import Golf from "../Games/Golf";
+import Hockey from "../Games/Hockey";
+import Formula1 from "../Games/Formula1";
+import Rugby from "../Games/Rugby";
+import Handball from "../Games/Handball";
+import IceHockey from "../Games/IceHockey";
+import Nascar from "../Games/Nascar";
+import Futsol from "../Games/Futsol";
+import Mma from "../Games/Mma";
+import Darts from "../Games/Darts";
+import Snooker from "../Games/Snooker";
+import Easport from "../Games/Easport";
+import TableTennis from "../Games/TableTennis";
+import AussieRules from "../Games/AussieRules";
+import Cricket from "../Games/Cricket";
 
 const styles = {
   container: {
@@ -51,7 +69,7 @@ function Dashboard() {
   const [liveTennis, setLiveTennis] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
-  const sportEvents = localStorage.getItem("sport") || "Soccer";
+  const [sportEvents, setSportEvents] = useState(localStorage.getItem("sport") || "Soccer") 
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -67,83 +85,52 @@ function Dashboard() {
     fetchUserInfo();
   }, []);
 
-  useEffect(() => {
-    const socket = io(url) as any;
+  // useEffect(() => {
+  //   const socket = io(url) as any;
 
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
-    });
+  //   socket.on("connect", () => {
+  //     console.log("Connected to WebSocket server");
+  //   });
 
-    socket.on("connect_error", (err) => {
-      console.error("WebSocket connection error:", err);
-    });
+  //   socket.on("connect_error", (err) => {
+  //     console.error("WebSocket connection error:", err);
+  //   });
 
-    // Handle incoming messages
-    socket.on("footballEventUpdate", (message) => {
-      setLive((prevMessages) => {
-        const updatedMessages = prevMessages.filter(
-          (msg) => msg.id !== message.id
-        );
-        return [...updatedMessages, message];
-      });
-      socket.on("TennisEventUpdate", (message) => {
-        console.log("tennis==", { message });
-      });
-    });
+  //   // Handle incoming messages
+  //   socket.on("footballEventUpdate", (message) => {
+  //     setLive((prevMessages) => {
+  //       const updatedMessages = prevMessages.filter(
+  //         (msg) => msg.id !== message.id
+  //       );
+  //       return [...updatedMessages, message];
+  //     });
+  //     socket.on("TennisEventUpdate", (message) => {
+  //       console.log("tennis==", { message });
+  //     });
+  //   });
 
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   // Cleanup on component unmount
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
+  console.log({sportEvents})
+
   useEffect(() => {
-    const payloadUpcoming = {
-      status: "UPCOMING",
-    };
-    const payloadLive = {
-      status: "LIVE",
-    };
-    const payloadToday = {
-      date: moment(new Date()).format("YYYY-MM-DD"),
-    };
-    const payloadTomorrow = {
-      date: tomorrowDate.format("YYYY-MM-DD"),
-    };
-    const notYetPayloadUpcoming = {
-      status: "Not Started",
-    };
-    const tennisPayloadLive = {
-      status: "Live",
+    const handleStorageChange = () => {
+      setSportEvents(localStorage.getItem('sport'));
     };
 
-    if (sportEvents === "Soccer") {
-      dispatch(getFootballFixtures(payloadLive)).then((dd) => {
-        setLive(dd?.payload?.data);
-      });
-      dispatch(getFootballFixtures(payloadToday)).then((dd) => {
-        setToday(dd?.payload);
-      });
-      dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-        setTomorrow(dd?.payload);
-      });
-      dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-        setUpcoming(dd?.payload);
-      });
-    }
-    if (sportEvents === "Tennis") {
-      dispatch(getTennisFixtures(notYetPayloadUpcoming)).then((dd) => {
-        setUpcomingTennis(dd?.payload);
-      });
-      dispatch(getTennisFixtures(tennisPayloadLive)).then((dd) => {
-        setLiveTennis(dd?.payload);
-      });
-      return;
-    }
-  }, [sportEvents]);
+    window.addEventListener('localStorageUpdated', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('localStorageUpdated', handleStorageChange);
+    };
+  }, []);
 
   if (loader) {
     return (
@@ -182,11 +169,30 @@ function Dashboard() {
               <BsFilterSquareFill size={20} />
             </div>
             {sportEvents && sportEvents === "Soccer" && <Football />}
+
+            {sportEvents === "Basketball" && <Basketball />}
+
             {sportEvents === "Tennis" && <Tennis />}
 
             {sportEvents === "Horse Racing" && <HorseRace />}
-
+            {sportEvents === "Cricket" && <Cricket />}
             {sportEvents === "Boxing" && <Boxing />}
+            {sportEvents === "Baseball" && <Baseball />}
+            {sportEvents === "Volleyball" && <Volleyball />}
+            {sportEvents === "Golf" && <Golf />}
+            {sportEvents === "Hockey" && <Hockey />}
+            {sportEvents === "Formula 1" && <Formula1 />}
+            {sportEvents === "American Football (Rugby)" && <Rugby />}
+            {sportEvents === "Handball" && <Handball />}
+            {sportEvents === "Ice Hockey" && <IceHockey />}
+            {sportEvents === "NASCAR" && <Nascar />}
+            {sportEvents === "Futsol" && <Futsol />}
+            {sportEvents === "MMA/UFC" && <Mma />}
+            {sportEvents === "Darts" && <Darts />}
+            {sportEvents === "Snooker" && <Snooker />}
+            {sportEvents === "Easport" && <Easport />}
+            {sportEvents === "Table Tennis" && <TableTennis />}
+            {sportEvents === "Aussie Rules" && <AussieRules />}
           </div>
         </div>
       </DashboardLayout>

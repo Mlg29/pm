@@ -11,7 +11,7 @@ import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
 
 
-function Formula1() {
+function Handball() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
@@ -73,7 +73,7 @@ function Formula1() {
        {
         finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
         <EmptyState 
-          header="No Game Available for Formula1"
+          header="No Game Available for Handball"
           height="30vh"
         />
         :
@@ -83,4 +83,4 @@ function Formula1() {
   )
 }
 
-export default Formula1
+export default Handball

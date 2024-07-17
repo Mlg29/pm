@@ -94,7 +94,7 @@ export const BoxingSlice = createSlice({
   },
 });
 
-export const tennisFixtureState = (state: RootState) =>
+export const boxingFixtureState = (state: RootState) =>
   state.boxing.boxingFixtures
 
 export default BoxingSlice.reducer;

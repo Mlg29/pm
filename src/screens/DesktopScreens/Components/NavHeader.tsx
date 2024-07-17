@@ -268,6 +268,7 @@ function NavHeader() {
 
   const handleMoreSelect = (data) => {
     localStorage.setItem("sport", data);
+    window.dispatchEvent(new Event('localStorageUpdated'));
     setSelected(data);
     setVisible(false);
   };
@@ -275,6 +276,7 @@ function NavHeader() {
   const handleSelection = (info) => {
     setSelected(info);
     localStorage.setItem("sport", info);
+    window.dispatchEvent(new Event('localStorageUpdated'));
     navigate("/home");
   };
 

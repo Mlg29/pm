@@ -8,6 +8,7 @@ import { BaseUrl } from "../../https";
 import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
+import EmptyState from "../../components/EmptyState";
 
 function Tennis() {
   const navigate = useNavigate();
@@ -151,6 +152,16 @@ function Tennis() {
           </div>
         );
       })}
+
+{
+        live?.length < 1 && upcoming?.data?.length < 1 ?
+        <EmptyState 
+          header="No Game Available for Tennis"
+          height="30vh"
+        />
+        :
+        null
+      }
     </div>
   );
 }

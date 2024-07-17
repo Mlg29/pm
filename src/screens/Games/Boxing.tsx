@@ -8,6 +8,7 @@ import { BaseUrl } from "../../https";
 import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
+import EmptyState from "../../components/EmptyState";
 
 
 function Boxing() {
@@ -17,32 +18,32 @@ function Boxing() {
   const url = `${BaseUrl}/boxing`;
   const dispatch = useAppDispatch() as any;
 
-  useEffect(() => {
-    const socket = io(url) as any;
+  // useEffect(() => {
+  //   const socket = io(url) as any;
 
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server tennis");
-    });
+  //   socket.on("connect", () => {
+  //     console.log("Connected to WebSocket server tennis");
+  //   });
 
-    socket.on("connect_error", (err) => {
-      console.error("WebSocket connection error:", err);
-    });
+  //   socket.on("connect_error", (err) => {
+  //     console.error("WebSocket connection error:", err);
+  //   });
 
 
-    socket.on("BoxingEventUpdate", (message) => {
-    //   setLive((prevMessages) => {
-    //     const updatedMessages = prevMessages?.filter(
-    //       (msg) => msg?.id !== message?.id
-    //     );
-    //     return [...updatedMessages, message];
-    //   });
-    });
+  //   socket.on("BoxingEventUpdate", (message) => {
+  //   //   setLive((prevMessages) => {
+  //   //     const updatedMessages = prevMessages?.filter(
+  //   //       (msg) => msg?.id !== message?.id
+  //   //     );
+  //   //     return [...updatedMessages, message];
+  //   //   });
+  //   });
 
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   // Cleanup on component unmount
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
@@ -69,7 +70,15 @@ function Boxing() {
 
   return (
     <div>
-      
+       {
+        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
+        <EmptyState 
+          header="No Game Available for Boxing"
+          height="30vh"
+        />
+        :
+        null
+      }
     </div>
   )
 }

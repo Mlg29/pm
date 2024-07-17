@@ -73,7 +73,6 @@ function HorseRace() {
     return;
   }, []);
 
-  console.log({ live, upcoming });
 
   if (loader) {
     return (
