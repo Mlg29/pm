@@ -11,7 +11,7 @@ import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
 import { MdCancel } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { FlexDirection, PasswordCreation } from "../../utils/type";
+import { FlexDirection, PasswordCreation, PasswordCreationAuth } from "../../utils/type";
 import BackButton from "../../components/BackButton";
 import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
@@ -74,7 +74,7 @@ function ForgotCreatePasswordNew() {
   }
 
 
-  const initialValues: PasswordCreation = {
+  const initialValues: PasswordCreationAuth = {
     password: "",
     confirmPassword: "",
   };
@@ -83,7 +83,7 @@ function ForgotCreatePasswordNew() {
     useFormik({
       initialValues,
       validationSchema: CreatePasswordSchema,
-      onSubmit: (data: PasswordCreation) => handleSubmitData(data),
+      onSubmit: (data: PasswordCreationAuth) => handleSubmitData(data),
       enableReinitialize: true,
     });
 
