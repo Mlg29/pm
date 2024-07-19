@@ -38,11 +38,11 @@ import Layout from '../components/Layout/index.js';
 import Dashboard from './DesktopScreens/Dashboard.js';
 import DashboardLayout from './DesktopScreens/Components/DashboardLayout.js';
 import Options from './PaymentOptions/Options.js';
-import OpponentDetail from './OpponentDetail/index.js';
+
 import BetSuccess from './SuccessScreen/BetSuccess.js';
 import CreateBet from './CreateBet/index.js';
 import InviteFriend from './InviteFriend/index.js';
-import ChallengeDetail from './ChallengeDetail/index.js';
+
 import AdjustBet from './AdjustBet/index.js';
 import SubLayout from './DesktopScreens/Components/SubLayout.js';
 import ProfileScreen from './DesktopScreens/ProileScreen.js';
@@ -114,7 +114,7 @@ function DesktopRouters() {
       <Route path="/biometrics" element={<DashboardLayout><Biometric /></DashboardLayout>} />
       <Route path="/open-bets" element={<DashboardLayout><OpenBet /></DashboardLayout>} />
       <Route path="/options" element={<DashboardLayout><Options /></DashboardLayout>} />
-      <Route path="/opponent-detail" element={<SubLayout><OpponentDetail /></SubLayout>} />
+      {/* <Route path="/opponent-detail" element={<SubLayout><OpponentDetail /></SubLayout>} /> */}
       <Route path="/bet-success" element={<DashboardLayout><BetSuccess /></DashboardLayout>} />
       <Route path="/adjust-success" element={<DashboardLayout><AdjustSuccess /></DashboardLayout>} />
      <Route path="/create-bet" element={<DashboardLayout><CreateBet/></DashboardLayout>} />

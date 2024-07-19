@@ -22,6 +22,7 @@ import Loader from "../../components/Loader";
 import TennisGameCard from "../../components/GameCard/TennisGameCard";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 import HorseCard from "../../components/GameDetailCardHeader/HorseCard";
+import BoxingCard from "../../components/GameDetailCardHeader/BoxingCard";
 
 const styles = {
   inputs: {
@@ -213,6 +214,10 @@ const BetAdjust = () => {
 
       {sportEvents?.sport === "TENNIS" && (
         <TennisCard data={sportEvents?.TennisEvent} />
+      )}
+
+{sportEvents?.sport === "BOXING" && (
+        <BoxingCard data={sportEvents?.BoxingEvent} />
       )}
 
 {sportEvents?.sport === "HORSE_RACING" && (

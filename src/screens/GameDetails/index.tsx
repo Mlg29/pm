@@ -22,6 +22,7 @@ import Loader from "../../components/Loader";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import HorseDetails from "./Details/HorseDetails";
+import BoxingDetails from "./Details/BoxingDetails";
 
 const styles = {
   container: {
@@ -166,17 +167,18 @@ function GameDetails() {
   }, []);
 // console.log({gameType})
   const handleRoute = (route: string, selection?: string) => {
-   
+
     if (token) {
       setSelected(route);
     
       const football = (gameType === "Soccer" && route === gameInfo?.localTeamName )? "W1": (gameType === "Soccer" && route === gameInfo?.visitorTeamName) ? "W2" : "DRAW"
       const tennis = (gameType === "Tennis" && route === gameInfo?.player[0]["@name"]) ? "W1" : (gameType === "Tennis" && route === gameInfo?.player[1]["@name"]) ? "W2" : null
       const horse = gameType === "Horse" && selection
+      const boxing = gameType === "Boxing" && selection
       
 
       const payload = {
-        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : gameType === "Horse" ? horse : null,
+        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : gameType === "Horse" ? horse : gameType === "Boxing" ? boxing : null,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
       };
@@ -562,7 +564,7 @@ function GameDetails() {
                           ? COLORS.cream
                           : COLORS.primary,
                     }}
-                    handlePress={() => handleRoute(gameInfo?.localTeamName)}
+                    handlePress={() => handleRoute(gameInfo?.localTeamName, 'W1')}
                   />
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
@@ -576,7 +578,7 @@ function GameDetails() {
                         selected === "draw" ? COLORS.cream : COLORS.primary,
                     }}
                     //  handlePress={() => navigate('/home')}
-                    handlePress={() => handleRoute("draw")}
+                    handlePress={() => handleRoute("draw", 'DRAW')}
                   />
                 </div>
                 <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
@@ -594,7 +596,7 @@ function GameDetails() {
                           : COLORS.primary,
                     }}
                     // handlePress={() => navigate('/home')}
-                    handlePress={() => handleRoute(gameInfo?.visitorTeamName)}
+                    handlePress={() => handleRoute(gameInfo?.visitorTeamName, 'W2')}
                   />
                 </div>
            
@@ -616,7 +618,7 @@ function GameDetails() {
                           : COLORS.primary,
                       fontSize: 12,
                     }}
-                    handlePress={() => handleRoute(gameInfo?.localTeamName)}
+                    handlePress={() => handleRoute(gameInfo?.localTeamName, 'W1')}
                   />
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
@@ -631,7 +633,7 @@ function GameDetails() {
                       fontSize: 12,
                     }}
                     //  handlePress={() => navigate('/home')}
-                    handlePress={() => handleRoute("draw")}
+                    handlePress={() => handleRoute("draw", 'DRAW')}
                   />
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
@@ -650,7 +652,7 @@ function GameDetails() {
                       fontSize: 12,
                     }}
                     // handlePress={() => navigate('/home')}
-                    handlePress={() => handleRoute(gameInfo?.visitorTeamName)}
+                    handlePress={() => handleRoute(gameInfo?.visitorTeamName, 'W2')}
                   />
                 </div>
                
@@ -692,7 +694,7 @@ function GameDetails() {
                           : COLORS.primary,
                     }}
                     handlePress={() =>
-                      handleRoute(gameInfo?.player[0]["@name"])
+                      handleRoute(gameInfo?.player[0]["@name"], 'W1')
                     }
                   />
                 </div>
@@ -712,7 +714,7 @@ function GameDetails() {
                     }}
                     // handlePress={() => navigate('/home')}
                     handlePress={() =>
-                      handleRoute(gameInfo?.player[1]["@name"])
+                      handleRoute(gameInfo?.player[1]["@name"], 'W2')
                     }
                   />
                 </div>
@@ -735,7 +737,7 @@ function GameDetails() {
                       fontSize: 12,
                     }}
                     handlePress={() =>
-                      handleRoute(gameInfo?.player[0]["@name"])
+                      handleRoute(gameInfo?.player[0]["@name"], 'W1')
                     }
                   />
                 </div>
@@ -756,7 +758,7 @@ function GameDetails() {
                     }}
                     // handlePress={() => navigate('/home')}
                     handlePress={() =>
-                      handleRoute(gameInfo?.player[1]["@name"])
+                      handleRoute(gameInfo?.player[1]["@name"], 'W2')
                     }
                   />
                 </div>
@@ -770,6 +772,10 @@ function GameDetails() {
 
         {
           gameType === "Horse" && <HorseDetails selected={selected} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} />
+        }
+
+{
+          gameType === "Boxing" && <BoxingDetails selected={selected} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} isMobile={isMobile} />
         }
       </div> 
       

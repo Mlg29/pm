@@ -55,6 +55,9 @@ function CreateBet() {
   const [gameInfo, setGameInfo] = useState(null);
   const url = `${BaseUrl}/football`;
 
+
+  console.log({game, gameType, gameInfo})
+
   useEffect(() => {
     setGameInfo(game);
     const socket = io(url) as any;

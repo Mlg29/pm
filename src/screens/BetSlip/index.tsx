@@ -70,7 +70,6 @@ function BetSlip() {
 
   const groupedData = groupByDate(betList);
 
-
   if (loader) {
     return (
       <div
@@ -87,6 +86,8 @@ function BetSlip() {
       </div>
     );
   }
+
+  console.log({ betList });
 
   return (
     <div className="top-container">
@@ -244,18 +245,41 @@ function BetSlip() {
                               />
                             )}
 
-{item?.sportEvent?.sport === "HORSE_RACING" && (
-                            <SlipCard
-                            multipleEntry
-                              isWin={item?.winnerId}
-                              amount={
-                                item?.betAmount || item?.opponentBetAmount
+                            {item?.sportEvent?.sport === "HORSE_RACING" && (
+                              <SlipCard
+                                multipleEntry
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+                             {item?.sportEvent?.sport === "BOXING" && (
+                              <SlipCard
+                              homeName={
+                                item?.sportEvent?.BoxingEvent?.localteam?.name
                               }
-                              isUser={userData}
-                              betCurrency={item?.betCurrency}
-                              data={item}
-                            />
-                          )}
+                              awayName={
+                                item?.sportEvent?.BoxingEvent?.awayteam?.name
+                              }
+                              homeScore={
+                                item?.sportEvent?.BoxingEvent?.localteam?.round ? item?.sportEvent?.BoxingEvent?.localteam?.round : "0"
+                              }
+                              awayScore={
+                                item?.sportEvent?.BoxingEvent?.awayteam?.round ? item?.sportEvent?.BoxingEvent?.awayteam?.round : "0"
+                              }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                           </div>
                         );
                       })}
@@ -338,7 +362,7 @@ function BetSlip() {
                               data={item}
                             />
                           )}
-                            {item?.sportEvent?.sport === "HORSE_RACING" && (
+                          {item?.sportEvent?.sport === "HORSE_RACING" && (
                             <SlipCard
                               multipleEntry
                               isWin={item?.winnerId}
@@ -350,6 +374,29 @@ function BetSlip() {
                               data={item}
                             />
                           )}
+                           {item?.sportEvent?.sport === "BOXING" && (
+                              <SlipCard
+                              homeName={
+                                item?.sportEvent?.BoxingEvent?.localteam?.name
+                              }
+                              awayName={
+                                item?.sportEvent?.BoxingEvent?.awayteam?.name
+                              }
+                              homeScore={
+                                item?.sportEvent?.BoxingEvent?.localteam?.round ? item?.sportEvent?.BoxingEvent?.localteam?.round : "0"
+                              }
+                              awayScore={
+                                item?.sportEvent?.BoxingEvent?.awayteam?.round ? item?.sportEvent?.BoxingEvent?.awayteam?.round : "0"
+                              }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                         </div>
                       );
                     })}
