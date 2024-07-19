@@ -23,6 +23,7 @@ import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import HorseDetails from "./Details/HorseDetails";
 import BoxingDetails from "./Details/BoxingDetails";
+import MmaDetails from "./Details/MmaDetails";
 
 const styles = {
   container: {
@@ -175,10 +176,10 @@ function GameDetails() {
       const tennis = (gameType === "Tennis" && route === gameInfo?.player[0]["@name"]) ? "W1" : (gameType === "Tennis" && route === gameInfo?.player[1]["@name"]) ? "W2" : null
       const horse = gameType === "Horse" && selection
       const boxing = gameType === "Boxing" && selection
-      
+      const mma = gameType === "Mma/Ufc" && selection
 
       const payload = {
-        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : gameType === "Horse" ? horse : gameType === "Boxing" ? boxing : null,
+        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : gameType === "Horse" ? horse : gameType === "Boxing" ? boxing : gameType === "Mma/Ufc" ? mma : null,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
       };
@@ -776,6 +777,10 @@ function GameDetails() {
 
 {
           gameType === "Boxing" && <BoxingDetails selected={selected} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} isMobile={isMobile} />
+        }
+
+{
+          gameType === "Mma/Ufc" && <MmaDetails selected={selected} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} isMobile={isMobile} />
         }
       </div> 
       

@@ -33,13 +33,13 @@ import Preference from "./NotificationScreen/Preference.js";
 import Language from "./NotificationScreen/Language.js";
 import Biometric from "./Security/Biometric.js";
 import OpenBet from "./OpenBets/index.js";
-import OpponentDetail from "./OpponentDetail/index.js";
+// import OpponentDetail from "./OpponentDetail/index.js";
 import Options from "./PaymentOptions/Options.js";
 import BetSuccess from "./SuccessScreen/BetSuccess.js";
 import CreateBet from "./CreateBet/index.js";
 import InviteFriend from "./InviteFriend/index.js";
 import AdjustBet from "./AdjustBet/index.js";
-import ChallengeDetail from "./ChallengeDetail/index.js";
+// import ChallengeDetail from "./ChallengeDetail/index.js";
 import ForgetPasswordVerify from "./VerifyScreen/ForgetPasswordVerify.tsx";
 import CreatePasswordNew from "./PasswordScreen/CreatePassword.tsx";
 import PasswordSuccess from "./SuccessScreen/PasswordSuccess.tsx";
@@ -124,7 +124,7 @@ function Routers() {
         <Route path="/biometrics" element={<Biometric />} />
         <Route path="/open-bets" element={<OpenBet />} />
         <Route path="/options" element={<Options />} />
-        <Route path="/opponent-detail" element={<OpponentDetail />} />
+        {/* <Route path="/opponent-detail" element={<OpponentDetail />} /> */}
         <Route path="/bet-success" element={<BetSuccess />} />
         <Route path="/create-bet" element={<CreateBet />} />
         <Route path="/invite" element={<InviteFriend />} />

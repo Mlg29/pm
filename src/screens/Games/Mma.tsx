@@ -9,13 +9,15 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
+import { getMmaFixtures } from "../../redux/slices/MmaSlice";
+import MmaGameCard from "../../components/GameCard/MmaGameCard";
 
 
 function Mma() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
-  const url = `${BaseUrl}/boxing`;
+  const url = `${BaseUrl}/mma`;
   const dispatch = useAppDispatch() as any;
 
   // useEffect(() => {
@@ -53,25 +55,66 @@ function Mma() {
       status: "Not Started",
     };
     const payloadFinished = {
-        status: "Finished",
+        status: "Final",
       };
 
-    dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
+    dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
     });
 
-    dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
+    dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
         setFinished(dd?.payload);
       });
 
   }, []);
 
-  console.log({upcoming, finished})
+
 
   return (
     <div>
+       {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                    gameType: "Boxing",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+      {upcoming?.data?.map((aa: any, i: any) => {
+        return (
+          <div key={i}>
+            <MmaGameCard id={i} data={aa} />
+          </div>
+        );
+      })}
        {
-        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
+        upcoming?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for MMA/UFC"
           height="30vh"

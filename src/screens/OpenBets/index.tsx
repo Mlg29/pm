@@ -17,6 +17,7 @@ import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import { FaTableTennis } from "react-icons/fa";
 import { FaHorseHead } from "react-icons/fa";
 import { GiBoxingGlove } from "react-icons/gi";
+import { SiUfc } from "react-icons/si";
 
 
 
@@ -42,12 +43,11 @@ const styles = {
     alignItems: "center",
   },
   horseRow: {
-    display: 'flex',
+    display: "flex",
     alignItems: "center",
     overflowX: "auto" as OverflowX,
     whiteSpace: "nowrap",
-
-  }
+  },
 };
 
 function OpenBet() {
@@ -94,7 +94,6 @@ function OpenBet() {
     });
   };
 
-  console.log({userSelection})
 
   const handleAccept = (data) => {
     const payload = {
@@ -153,8 +152,6 @@ function OpenBet() {
     return result;
   };
 
-  console.log({filterData})
-
   return (
     <div>
       {!isMobile && <DesktopBackButton />}
@@ -189,7 +186,13 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                          <p style={{ ...FONTS.body7, marginTop: "10px",color: COLORS.red }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
@@ -307,7 +310,13 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                          <p style={{ ...FONTS.body7, marginTop: "10px",color: COLORS.red }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
@@ -407,7 +416,7 @@ function OpenBet() {
                     </div>
                   )}
 
-{data?.sportEvent?.sport === "BOXING" && (
+                  {data?.sportEvent?.sport === "BOXING" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.name}
@@ -421,7 +430,13 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                          <p style={{ ...FONTS.body7, marginTop: "10px",color: COLORS.red }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
@@ -521,6 +536,126 @@ function OpenBet() {
                     </div>
                   )}
 
+{data?.sportEvent?.sport === "MMA" && (
+                    <div key={i} style={{ ...styles.contain }}>
+                      <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
+                        {game?.name}
+                      </p>
+
+                      <div style={{ ...styles.row }}>
+                        <div style={{ ...styles.center }}>
+                          <SiUfc size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.localteam?.name}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
+                            {game?.status}
+                          </p>
+                          <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
+                            {data?.betCurrency === "NGN" ? "₦" : "$"}
+                            {formatCurrency(data?.betAmount)}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <SiUfc size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.awayteam?.name}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div style={{ ...styles.row, paddingBottom: "1rem" }}>
+                        <div>
+                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                            @{data?.user?.userName}
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {data?.prediction === "W1"
+                              ? `${game?.localteam?.name} WIN`
+                              : data?.prediction === "W2"
+                              ? `${game?.awayteam?.name} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              textAlign: "right",
+                            }}
+                          >
+                            You
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {userSelection?.userType === "W1"
+                              ? `${game?.localteam?.name} WIN`
+                              : userSelection?.userType === "W2"
+                              ? `${game?.awayteam?.name} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          ...styles.row,
+                          paddingBottom: "0rem",
+                          border: "none",
+                        }}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAccept(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              color: COLORS.white,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Accept Bet
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            backgroundColor: COLORS.cream,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAdjust(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.h7,
+                              color: COLORS.primary,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Adjust Bet
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {data?.sportEvent?.sport === "HORSE_RACING" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
@@ -530,7 +665,13 @@ function OpenBet() {
                       <div style={{ ...styles.row }}>
                         <div />
                         <div style={{ ...styles.center }}>
-                          <p style={{ ...FONTS.body7, marginTop: "10px", color: COLORS.red }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
@@ -539,16 +680,28 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div />
-                     
                       </div>
-                      <div style={{...styles.horseRow, scrollbarWidth: "none"}}>
-                        {
-                          game?.horses?.horse?.map(gm => {
-                            return <div style={{margin: '10px 10px', paddingBottom: 10}} >
-                             <p style={{...FONTS.body7, backgroundColor: COLORS.cream, padding: 10, borderRadius: 5}}>{gm?.name}</p>
+                      <div
+                        style={{ ...styles.horseRow, scrollbarWidth: "none" }}
+                      >
+                        {game?.horses?.horse?.map((gm) => {
+                          return (
+                            <div
+                              style={{ margin: "10px 10px", paddingBottom: 10 }}
+                            >
+                              <p
+                                style={{
+                                  ...FONTS.body7,
+                                  backgroundColor: COLORS.cream,
+                                  padding: 10,
+                                  borderRadius: 5,
+                                }}
+                              >
+                                {gm?.name}
+                              </p>
                             </div>
-                          })
-                        }
+                          );
+                        })}
                       </div>
 
                       <div style={{ ...styles.row, paddingBottom: "1rem" }}>
@@ -571,7 +724,7 @@ function OpenBet() {
                             You
                           </p>
                           <p style={{ ...FONTS.body7 }}>
-                               {getPrediction(userSelection?.userType)}
+                            {getPrediction(userSelection?.userType)}
                           </p>
                         </div>
                       </div>

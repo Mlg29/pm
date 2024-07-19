@@ -3,6 +3,7 @@ import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 
 import { useNavigate } from "react-router-dom";
+import { OverflowX } from "../../utils/type";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -27,7 +28,11 @@ export const styles = {
   box3: {
     display: "flex",
     alignItems: "center",
-    marginRight: 10,
+    overflowX: "auto" as OverflowX,
+    whiteSpace: "nowrap",
+    margin: "10px 0px",
+   // scrollbarWidth: "none",
+   // marginRight: 10,
     // width: "45%",
   },
 };
@@ -57,7 +62,7 @@ function HorseGameCard({ id, data }) {
       <div style={styles.box3}>
         {data?.horses?.horse?.map((dd, i) => {
           return (
-            <div key={i} style={{ width: 200,  display: "flex",flexDirection: 'column',
+            <div key={i} style={{ width: 200,  display: "inline-block",flexDirection: 'column',
             justifyContent: "center",
             alignItems: "center", }}>
               <p

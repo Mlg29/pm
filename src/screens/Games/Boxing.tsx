@@ -64,7 +64,7 @@ function Boxing() {
     });
   }, []);
 
-  console.log({ upcoming, finished });
+
 
   return (
     <div>
@@ -109,7 +109,7 @@ function Boxing() {
           </div>
         );
       })}
-      {finished?.data?.length > 0 && (
+      {/* {finished?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -149,8 +149,8 @@ function Boxing() {
             <BoxingGameCard id={i} data={aa} />
           </div>
         );
-      })}
-      {finished?.data?.length < 1 && upcoming?.data?.length < 1 ? (
+      })} */}
+      {upcoming?.data?.length < 1 ? (
         <EmptyState header="No Game Available for Boxing" height="30vh" />
       ) : null}
     </div>

@@ -24,6 +24,7 @@ function WalletPin() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
 
+  console.log({getUserBet})
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
