@@ -16,6 +16,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import HorseGameCard from "../../components/GameCard/HorseGameCard";
 import { getHorseFixtures } from "../../redux/slices/horseSlice";
 import EmptyState from "../../components/EmptyState";
+import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
+import { getMmaFixtures } from "../../redux/slices/MmaSlice";
+import { getBasketballFixtures } from "../../redux/slices/BasketballSlice";
+import BasketballGameCard from "../../components/GameCard/BasketballGameCard";
+import BoxingGameCard from "../../components/GameCard/BoxingGameCard";
+import MmaGameCard from "../../components/GameCard/MmaGameCard";
 
 const styles = {
   row: {
@@ -231,6 +237,73 @@ function FilterPage() {
       setLoader(false);
     });
   };
+  const fetchBoxingData = async (page) => {
+    setData([])
+    const payload = {
+      date: moment(dateRange).format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getBoxingFixtures(payload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
+  const fetchMmaData = async (page) => {
+    setData([])
+    const payload = {
+      date: moment(dateRange).format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+    setLoading(true);
+    setLoader(true);
+    dispatch(getMmaFixtures(payload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+      setLoader(false);
+    });
+  };
+
+  const fetchBasketballData = async (page) => {
+    setData([])
+    const payload = {
+      date: moment(dateRange).format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+    setLoading(true);
+    setLoader(true);
+    dispatch(getBasketballFixtures(payload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+      setLoader(false);
+    });
+  };
 
 
   useEffect(() => {
@@ -244,6 +317,18 @@ function FilterPage() {
     }
     if (game === "Horse") {
       fetchHorseData(page);
+      return;
+    }
+    if (game === "Mma/Ufc") {
+      fetchMmaData(page);
+      return;
+    }
+    if (game === "Basketball") {
+      fetchBasketballData(page);
+      return;
+    }
+    if (game === "Boxing") {
+      fetchBoxingData(page);
       return;
     }
   }, [page, dateRange, game]);
@@ -331,6 +416,9 @@ function FilterPage() {
                   {game === "Tennis" && <TennisGameCard id={i} data={aa} />}
 
                   {game === "Horse" && <HorseGameCard id={i} data={aa} />}
+                  {game === "Basketball" && <BasketballGameCard id={i} data={aa} />}
+                  {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
+                  {game === "Mma/Ufc" && <MmaGameCard id={i} data={aa} />}
                 </div>
               );
             })}

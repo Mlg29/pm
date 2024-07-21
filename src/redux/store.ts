@@ -10,6 +10,7 @@ import HorseReducer from './slices/horseSlice'
 import BoxingReducer from './slices/BoxingSlice'
 import BasketballSlice from './slices/BasketballSlice'
 import MmaSlice from './slices/MmaSlice'
+import GolfSlice from './slices/GolfSlice'
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ export const store = configureStore({
    horse: HorseReducer,
    boxing: BoxingReducer,
    basketball: BasketballSlice,
-   mma: MmaSlice
+   mma: MmaSlice,
+   golf: GolfSlice
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

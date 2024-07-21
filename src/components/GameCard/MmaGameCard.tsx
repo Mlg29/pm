@@ -4,6 +4,7 @@ import { COLORS } from "../../utils/colors";
 import noLogo from "../../assets/images/no.jpg";
 import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
+import moment from "moment";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -43,7 +44,17 @@ function MmaGameCard({ id, data }) {
   const navigate = useNavigate();
 
   return (
-    <div
+    <div>
+        <div style={{display: 'flex', alignItems: 'center', marginBottom: 5}}> 
+        <p style={{ ...FONTS.body7, color: COLORS.black, marginRight: 10 }}>
+          {data?.name}
+        </p>
+        <p style={{ ...FONTS.body8, color: COLORS.black }}>
+         ( {moment(data?.startTime).format("DD-MM-YYYY")})
+        </p>
+      </div>
+
+        <div
       style={styles.container}
       key={id}
       onClick={() =>
@@ -77,6 +88,8 @@ function MmaGameCard({ id, data }) {
         </p>
       </div>
     </div>
+    </div>
+  
   );
 }
 

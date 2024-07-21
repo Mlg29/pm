@@ -9,13 +9,14 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
+import { getGolfFixtures } from "../../redux/slices/GolfSlice";
 
 
 function Golf() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
-  const url = `${BaseUrl}/boxing`;
+  const url = `${BaseUrl}/golf`;
   const dispatch = useAppDispatch() as any;
 
   // useEffect(() => {
@@ -56,11 +57,11 @@ function Golf() {
         status: "Finished",
       };
 
-    dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
+    dispatch(getGolfFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
     });
 
-    dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
+    dispatch(getGolfFixtures(payloadFinished)).then((dd) => {
         setFinished(dd?.payload);
       });
 

@@ -10,6 +10,7 @@ import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import { getBasketballFixtures } from "../../redux/slices/BasketballSlice";
 import EmptyState from "../../components/EmptyState";
+import BasketballGameCard from "../../components/GameCard/BasketballGameCard";
 
 
 
@@ -25,31 +26,31 @@ function Basketball() {
 
 
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
+  useEffect(() => {
+    const socket = io(url) as any;
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server basketball");
-  //   });
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server basketball");
+    });
 
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
 
-  //   socket.on("BasketEventUpdate", (message) => {
-  //     setLive((prevMessages) => {
-  //       const updatedMessages = prevMessages?.filter(
-  //         (msg) => msg?.id !== message?.id
-  //       );
-  //       return [...updatedMessages, message];
-  //     });
-  //   });
+    socket.on("BasketEventUpdate", (message) => {
+      setLive((prevMessages) => {
+        const updatedMessages = prevMessages?.filter(
+          (msg) => msg?.id !== message?.id
+        );
+        return [...updatedMessages, message];
+      });
+    });
 
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    // Cleanup on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
@@ -84,6 +85,88 @@ function Basketball() {
 
   return (
     <div>
+        {live?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            LIVE
+          </p>
+          {live?.length > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: live,
+                    type: "live",
+                    gameType: "Basketball",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+      {live?.map((aa: any, i: any) => {
+        return (
+          <div key={i}>
+            <BasketballGameCard id={i} data={aa} />
+          </div>
+        );
+      })}
+        {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                    gameType: "Basketball",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+      {upcoming?.data?.map((aa: any, i: any) => {
+        return (
+          <div key={i}>
+            <BasketballGameCard id={i} data={aa} />
+          </div>
+        );
+      })}
       {
         live?.length < 1 && upcoming?.data?.length < 1 ?
         <EmptyState 

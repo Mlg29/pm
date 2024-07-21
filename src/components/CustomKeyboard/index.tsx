@@ -64,6 +64,9 @@ function CustomeKeyboard(props: any) {
     }
 
     const handleValue = (num) => {
+        if(value?.length === 6){
+            return;
+          }
         setValue(value + num)
     }
 

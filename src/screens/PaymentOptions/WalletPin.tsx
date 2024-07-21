@@ -24,8 +24,6 @@ function WalletPin() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
 
-  console.log({getUserBet})
-
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
@@ -37,6 +35,8 @@ function WalletPin() {
   useEffect(() => {
     fetchUserInfo();
   }, []);
+
+ 
 
   const handleSubmit = async () => {
     if (otp?.length < 6) {

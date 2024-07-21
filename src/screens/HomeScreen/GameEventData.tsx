@@ -37,6 +37,12 @@ import { getTennisFixtures } from "../../redux/slices/TennisSlice";
 import TennisGameCard from "../../components/GameCard/TennisGameCard";
 import HorseGameCard from "../../components/GameCard/HorseGameCard";
 import { getHorseFixtures } from "../../redux/slices/horseSlice";
+import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
+import { getMmaFixtures } from "../../redux/slices/MmaSlice";
+import { getBasketballFixtures } from "../../redux/slices/BasketballSlice";
+import BasketballGameCard from "../../components/GameCard/BasketballGameCard";
+import BoxingGameCard from "../../components/GameCard/BoxingGameCard";
+import MmaGameCard from "../../components/GameCard/MmaGameCard";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
@@ -56,7 +62,6 @@ function GameEventData(props: any) {
   const [data, setData] = useState<any>([]);
   const sliderArr = [slider, slider2, slider3];
   const [loader, setLoader] = useState(false);
-  const url = `${BaseUrl}/football`;
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [pageSize, setPageSize] = useState(10);
@@ -168,6 +173,78 @@ function GameEventData(props: any) {
     });
   };
 
+  const fetchBoxingData = async (page) => {
+    const payloadUpcoming = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload =
+      eventType === "upcoming"
+        ? payloadUpcoming
+        : "";
+    setLoading(true);
+    dispatch(getBoxingFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    });
+  };
+
+  const fetchMmaData = async (page) => {
+    const payloadUpcoming = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload =
+      eventType === "upcoming"
+        ? payloadUpcoming
+        : "";
+    setLoading(true);
+    dispatch(getMmaFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    });
+  };
+
+  const fetchBasketballData = async (page) => {
+    const payloadUpcoming = {
+      status: "UPCOMING",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload =
+      eventType === "upcoming"
+        ? payloadUpcoming 
+        : "";
+    setLoading(true);
+    dispatch(getBasketballFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    });
+  };
+
   useEffect(() => {
     if (gameType === "Soccer") {
       fetchData(page);
@@ -181,6 +258,18 @@ function GameEventData(props: any) {
       fetchHorseData(page);
       return;
     }
+    if (gameType === "Mma/Ufc") {
+      fetchMmaData(page);
+      return;
+    }
+    if (gameType === "Basketball") {
+      fetchBasketballData(page);
+      return;
+    }
+    if (gameType === "Boxing") {
+      fetchBoxingData(page);
+      return;
+    }
   }, [page]);
 
 
@@ -188,14 +277,19 @@ function GameEventData(props: any) {
     if (eventType === "live" && gameType === "Soccer") {
       setLive(events);
     }
-    // if (eventType === "live" && gameType === "Tennis") {
-    //   setLiveTennis(events);
-    // }
+    if (eventType === "live" && gameType === "Basketball") {
+      setLive(events);
+    }
+    if (eventType === "live" && gameType === "Tennis") {
+      setLive(events);
+    }
+    const url =  gameType === "Soccer" ? `${BaseUrl}/football` : gameType === "Basketball" ? `${BaseUrl}/basketball` : gameType === "Tennis" ? `${BaseUrl}/tennis` : ''  ;
+    const socketEvents =  gameType === "Soccer" ? "footballEventUpdate" : gameType === "Basketball" ? "basketballEventUpdate" : gameType === "Tennis" ? "tennisEventUpdate" : ''  ;
 
     const socket = io(url) as any;
 
     socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
+      console.log(`Connected to WebSocket server ${gameType}`);
     });
 
     socket.on("connect_error", (err) => {
@@ -203,7 +297,7 @@ function GameEventData(props: any) {
     });
 
     // Handle incoming messages
-    socket.on("footballEventUpdate", (message) => {
+    socket.on(socketEvents, (message) => {
       setLive((prevMessages) => {
         const updatedMessages = prevMessages?.filter(
           (msg) => msg.id !== message.id
@@ -211,9 +305,7 @@ function GameEventData(props: any) {
         return [...updatedMessages, message];
       });
     });
-    socket.on("tennisEventUpdate", (message) => {
-      console.log("tennis==", { message });
-    });
+
 
     // Cleanup on component unmount
     return () => {
@@ -364,6 +456,39 @@ function GameEventData(props: any) {
         </div>
       )}
 
+{eventType === "live" && gameType === "Basketball" && (
+        <div>
+          {data?.length > 0 && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <p
+                style={{
+                  ...FONTS.body6,
+                  color: COLORS.gray,
+                  margin: "15px 0px",
+                  textTransform: "uppercase",
+                }}
+              >
+                {eventType} Games
+              </p>
+            </div>
+          )}
+
+          {data?.map((aa: any, i: any) => {
+            return (
+              <div key={i}>
+                <BasketballGameCard id={i} data={aa} />
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {eventType !== "live" && (
         <>
           <div>
@@ -403,6 +528,9 @@ function GameEventData(props: any) {
                   {gameType === "Tennis" && <TennisGameCard id={i} data={aa} />}
                 
                   {gameType === "Horse" && <HorseGameCard id={i} data={aa} />}
+                  {gameType === "Basketball" && <BasketballGameCard id={i} data={aa} />}
+                  {gameType === "Boxing" && <BoxingGameCard id={i} data={aa} />}
+                  {gameType === "Mma/Ufc" && <MmaGameCard id={i} data={aa} />}
                 </div>
               );
             })}

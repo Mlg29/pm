@@ -56,13 +56,13 @@ function Handball() {
         status: "Finished",
       };
 
-    dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload);
-    });
+    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload);
+    // });
 
-    dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-        setFinished(dd?.payload);
-      });
+    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
+    //     setFinished(dd?.payload);
+    //   });
 
   }, []);
 

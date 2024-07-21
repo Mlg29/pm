@@ -212,6 +212,29 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
+                               {item?.sportEvent?.sport === "BASKETBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.BasketballEvent?.localTeamName
+                                }
+                                awayName={
+                                  item?.sportEvent?.BasketballEvent?.visitorTeamName
+                                }
+                                homeScore={
+                                  item?.sportEvent?.BasketballEvent?.localTeamScores?.total
+                                }
+                                awayScore={
+                                  item?.sportEvent?.BasketballEvent?.visitorTeamScores?.total
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
 
                             {item?.sportEvent?.sport === "TENNIS" && (
                               <SlipCard
@@ -354,6 +377,29 @@ function BetSlip() {
                               data={item}
                             />
                           )}
+                           {item?.sportEvent?.sport === "BASKETBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.BasketballEvent?.localTeamName
+                                }
+                                awayName={
+                                  item?.sportEvent?.BasketballEvent?.visitorTeamName
+                                }
+                                homeScore={
+                                  item?.sportEvent?.BasketballEvent?.localTeamScores?.total
+                                }
+                                awayScore={
+                                  item?.sportEvent?.BasketballEvent?.visitorTeamScores?.total
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                           {item?.sportEvent?.sport === "TENNIS" && (
                             <SlipCard
                               homeName={

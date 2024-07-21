@@ -24,6 +24,7 @@ import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import HorseDetails from "./Details/HorseDetails";
 import BoxingDetails from "./Details/BoxingDetails";
 import MmaDetails from "./Details/MmaDetails";
+import BasketballDetails from "./Details/BasketballDetails";
 
 const styles = {
   container: {
@@ -177,9 +178,10 @@ function GameDetails() {
       const horse = gameType === "Horse" && selection
       const boxing = gameType === "Boxing" && selection
       const mma = gameType === "Mma/Ufc" && selection
+      const basketball = gameType === "Basketball" && selection
 
       const payload = {
-        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : gameType === "Horse" ? horse : gameType === "Boxing" ? boxing : gameType === "Mma/Ufc" ? mma : null,
+        userType: gameType === "Soccer" ? football : gameType === "Tennis" ? tennis : gameType === "Horse" ? horse : gameType === "Boxing" ? boxing : gameType === "Mma/Ufc" ? mma : gameType === "Basketball" ? basketball :null,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
       };
@@ -770,6 +772,8 @@ function GameDetails() {
            
           </div>
         )}
+
+{gameType === "Basketball" && <BasketballDetails selected={selected} isMobile={isMobile} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} /> }
 
         {
           gameType === "Horse" && <HorseDetails selected={selected} gameInfo={gameInfo} handleRoute={(event, selection) => handleRoute(event, selection)} />

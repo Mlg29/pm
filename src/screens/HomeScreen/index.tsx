@@ -128,33 +128,33 @@ function HomeScreen() {
     },
     {
       id: 4,
-      name: "Cricket",
-      image: selected === "Cricket" ? acricket : incricket,
-    },
-    {
-      id: 5,
-      name: "Baseball",
-      image: selected === "Baseball" ? abaseball : inbaseball,
-    },
-    {
-      id: 6,
-      name: "Volleyball",
-      image: selected === "Volleyball" ? avolleyball : involleyball,
-    },
-    {
-      id: 7,
-      name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf,
-    },
-    {
-      id: 8,
       name: "Horse Racing",
       image: selected === "Horse Racing" ? ahorse : inhorse,
     },
     {
-      id: 9,
-      name: "Hockey",
-      image: selected === "Hockey" ? ahockey : inhockey,
+      id: 5,
+      name: "Boxing",
+      image: boxing,
+    },
+    {
+      id: 6,
+      name: "MMA/UFC",
+      image: ufc,
+    },
+    {
+      id: 10,
+      name: "Golf",
+      image: selected === "Golf" ? agolf : ingolf,
+    },
+    {
+      id: 7,
+      name: "Cricket",
+      image: selected === "Cricket" ? acricket : incricket,
+    },
+    {
+      id: 8,
+      name: "Baseball",
+      image: selected === "Baseball" ? abaseball : inbaseball,
     },
     {
       id: 10,
@@ -196,13 +196,13 @@ function HomeScreen() {
     },
     {
       id: 7,
-      name: "Boxing",
-      image: boxing,
+      name: "Hockey",
+      image: selected === "Hockey" ? ahockey : inhockey,
     },
     {
       id: 8,
-      name: "MMA/UFC",
-      image: ufc,
+      name: "Volleyball",
+      image: selected === "Volleyball" ? avolleyball : involleyball,
     },
     {
       id: 9,
@@ -230,6 +230,128 @@ function HomeScreen() {
       image: aussie,
     },
   ];
+
+
+  // const itemList = [
+  //   {
+  //     id: 1,
+  //     name: "Soccer",
+  //     image: selected === "Soccer" ? asoccer : insoccer,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Basketball",
+  //     image: selected === "Basketball" ? abasketball : inbasketball,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Tennis",
+  //     image: selected === "Tennis" ? atennis : intennis,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Cricket",
+  //     image: selected === "Cricket" ? acricket : incricket,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Baseball",
+  //     image: selected === "Baseball" ? abaseball : inbaseball,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Volleyball",
+  //     image: selected === "Volleyball" ? avolleyball : involleyball,
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Golf",
+  //     image: selected === "Golf" ? agolf : ingolf,
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Horse Racing",
+  //     image: selected === "Horse Racing" ? ahorse : inhorse,
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Hockey",
+  //     image: selected === "Hockey" ? ahockey : inhockey,
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "More",
+  //     image: more,
+  //   },
+  // ];
+
+  // const otherItemList = [
+  //   {
+  //     id: 1,
+  //     name: "Formula 1",
+  //     image: formula,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "American Football (Rugby)",
+  //     image: rugby,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Handball",
+  //     image: handball,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Ice Hockey",
+  //     image: hockey,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "NASCAR",
+  //     image: nascar,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Futsol",
+  //     image: futsol,
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Boxing",
+  //     image: boxing,
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "MMA/UFC",
+  //     image: ufc,
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Darts",
+  //     image: dart,
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Snooker",
+  //     image: snooker,
+  //   },
+  //   {
+  //     id: 11,
+  //     name: "Easport",
+  //     image: easport,
+  //   },
+  //   {
+  //     id: 12,
+  //     name: "Table Tennis",
+  //     image: tabletennis,
+  //   },
+  //   {
+  //     id: 13,
+  //     name: "Aussie Rules",
+  //     image: aussie,
+  //   },
+  // ];
 
   const fetchUserInfo = async () => {
     setLoader(true);

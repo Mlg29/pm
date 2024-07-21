@@ -6,7 +6,6 @@ import { InputOtp } from 'primereact/inputotp';
 function OtpComponent({otp, setOtp}: any) {
   
 
-
   const handleOtpChange = (val) => {
     if(otp?.length === 6){
       return;

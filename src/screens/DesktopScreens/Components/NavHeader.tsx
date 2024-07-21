@@ -163,33 +163,33 @@ function NavHeader() {
     },
     {
       id: 4,
-      name: "Cricket",
-      image: selected === "Cricket" ? acricket : incricket,
-    },
-    {
-      id: 5,
-      name: "Baseball",
-      image: selected === "Baseball" ? abaseball : inbaseball,
-    },
-    {
-      id: 6,
-      name: "Volleyball",
-      image: selected === "Volleyball" ? avolleyball : involleyball,
-    },
-    {
-      id: 7,
-      name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf,
-    },
-    {
-      id: 8,
       name: "Horse Racing",
       image: selected === "Horse Racing" ? ahorse : inhorse,
     },
     {
-      id: 9,
-      name: "Hockey",
-      image: selected === "Hockey" ? ahockey : inhockey,
+      id: 5,
+      name: "Boxing",
+      image: boxing,
+    },
+    {
+      id: 6,
+      name: "MMA/UFC",
+      image: ufc,
+    },
+    {
+      id: 10,
+      name: "Golf",
+      image: selected === "Golf" ? agolf : ingolf,
+    },
+    {
+      id: 7,
+      name: "Cricket",
+      image: selected === "Cricket" ? acricket : incricket,
+    },
+    {
+      id: 8,
+      name: "Baseball",
+      image: selected === "Baseball" ? abaseball : inbaseball,
     },
     {
       id: 10,
@@ -231,13 +231,13 @@ function NavHeader() {
     },
     {
       id: 7,
-      name: "Boxing",
-      image: boxing,
+      name: "Hockey",
+      image: selected === "Hockey" ? ahockey : inhockey,
     },
     {
       id: 8,
-      name: "MMA/UFC",
-      image: ufc,
+      name: "Volleyball",
+      image: selected === "Volleyball" ? avolleyball : involleyball,
     },
     {
       id: 9,

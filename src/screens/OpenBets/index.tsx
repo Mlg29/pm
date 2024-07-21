@@ -415,6 +415,125 @@ function OpenBet() {
                       </div>
                     </div>
                   )}
+                  {data?.sportEvent?.sport === "BASKETBALL" && (
+                    <div key={i} style={{ ...styles.contain }}>
+                      <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
+                        {game?.leagueName}
+                      </p>
+
+                      <div style={{ ...styles.row }}>
+                        <div style={{ ...styles.center }}>
+                          <FaTableTennis size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.localTeamName}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
+                            {game?.status}
+                          </p>
+                          <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
+                            {data?.betCurrency === "NGN" ? "₦" : "$"}
+                            {formatCurrency(data?.betAmount)}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <FaTableTennis size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.visitorTeamName}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div style={{ ...styles.row, paddingBottom: "1rem" }}>
+                        <div>
+                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                            @{data?.user?.userName}
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {data?.prediction === "W1"
+                              ? `${game?.localTeamName} WIN`
+                              : data?.prediction === "W2"
+                              ? `${game?.visitorTeamName} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              textAlign: "right",
+                            }}
+                          >
+                            You
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {userSelection?.userType === "W1"
+                              ? `${game?.localTeamName} WIN`
+                              : userSelection?.userType === "W2"
+                              ? `${game?.visitorTeamName} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          ...styles.row,
+                          paddingBottom: "0rem",
+                          border: "none",
+                        }}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAccept(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              color: COLORS.white,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Accept Bet
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            backgroundColor: COLORS.cream,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAdjust(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.h7,
+                              color: COLORS.primary,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Adjust Bet
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {data?.sportEvent?.sport === "BOXING" && (
                     <div key={i} style={{ ...styles.contain }}>

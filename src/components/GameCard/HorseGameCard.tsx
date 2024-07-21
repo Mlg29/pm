@@ -4,6 +4,7 @@ import { COLORS } from "../../utils/colors";
 
 import { useNavigate } from "react-router-dom";
 import { OverflowX } from "../../utils/type";
+import moment from "moment";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -23,6 +24,9 @@ export const styles = {
   },
   box2: {
     marginRight: 10,
+    display: 'flex',
+    alignItems: 'center',
+
     // width: "45%",
   },
   box3: {
@@ -56,6 +60,9 @@ function HorseGameCard({ id, data }) {
         </div>
         <div style={styles.box2}>
           <p style={{ ...FONTS.body7 }}>{data?.name}</p>
+          <p style={{ ...FONTS.body8, color: COLORS.black, marginLeft: 10 }}>
+         ( {moment(data?.startTime).format("DD-MM-YYYY")})
+        </p>
         </div>
       </div>
 

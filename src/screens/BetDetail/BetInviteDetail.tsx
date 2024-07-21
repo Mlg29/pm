@@ -21,6 +21,7 @@ import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 import HorseCard from "../../components/GameDetailCardHeader/HorseCard";
 import BoxingCard from "../../components/GameDetailCardHeader/BoxingCard";
 import MmaCard from "../../components/GameDetailCardHeader/MmaCard";
+import BasketballCard from "../../components/GameDetailCardHeader/BasketballCard";
 
 const styles = {
   div: {
@@ -171,6 +172,9 @@ function BetInviteDetail() {
           propStyle={{ backgroundColor: COLORS.semiGray, padding: "20px 20px" }}
         />
       )}
+      {betData?.sportEvent?.sport === "BASKETBALL" && (
+        <BasketballCard data={betData?.sportEvent?.BasketballEvent} />
+      )}
       {betData?.sportEvent?.sport === "TENNIS" && (
         <TennisCard data={betData?.sportEvent?.TennisEvent} />
       )}
@@ -211,6 +215,20 @@ function BetInviteDetail() {
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.opponentId !== userData?.id ? (
                   <p>{getPrediction(betData?.opponentPrediction)} WIN</p>
+                ) : (
+                  ""
+                )}
+              </h3>
+            ): betData?.sportEvent?.sport === "BASKETBALL" ? (
+              <h3 style={{ ...FONTS.h6 }}>
+                {betData?.opponentId !== userData?.id ? (
+                  <p>
+                    {betData?.opponentPrediction === "W1"
+                      ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
+                      : betData?.opponentPrediction === "W2"
+                      ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
+                      : "DRAW"}
+                  </p>
                 ) : (
                   ""
                 )}
@@ -387,6 +405,64 @@ function BetInviteDetail() {
                 handlePress={() =>
                   handleRoute(
                     betData?.sportEvent?.TennisEvent?.player[1]["@name"],
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+        {betData?.sportEvent?.sport === "BASKETBALL" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== "W1" && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.BasketballEvent?.localTeamName
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.BasketballEvent?.localTeamName
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.BasketballEvent?.localTeamName,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== "W2" && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.BasketballEvent?.visitorTeamName
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.BasketballEvent?.visitorTeamName
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.BasketballEvent?.visitorTeamName,
                     "W2"
                   )
                 }

@@ -1,43 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import noLogo from "../../assets/images/no.jpg";
-import { COLORS } from "../../utils/colors";
+import React from "react";
 import { FONTS } from "../../utils/fonts";
+import { COLORS } from "../../utils/colors";
+import noLogo from "../../assets/images/no.jpg";
+import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
-
-// export const styles = {
-//     container: {
-//         border: `1px solid ${COLORS.semiGray}`,
-//         borderRadius: 10,
-//         padding: 10,
-//         margin: "0px 0px 20px 0px"
-//     },
-//     row: {
-//         display: "flex",
-//         flexDirection: "row" as FlexDirection,
-//         alignItems: "center",
-//         justifyContent: "space-between",
-
-//     },
-//     row2: {
-//         display: "flex",
-//         flexDirection: "row" as FlexDirection,
-//         justifyContent: "space-between",
-//         alignItems: "center",
-//         margin: "20px 0px 5px 0px"
-//     },
-//     box: {
-//         backgroundColor: COLORS.cream,
-//         width: "30%",
-//         padding: 5,
-//         display: "flex",
-//         justifyContent: "center",
-//         fontSize: "8px",
-//         fontWeight: 600
-//     }
-// }
 
 export const styles = {
   container: {
@@ -60,25 +29,28 @@ export const styles = {
     display: "flex",
     alignItems: "center",
     marginRight: 10,
-    width: "15%",
+    width: "10%",
   },
   box4: {
     marginRight: 10,
-    width: "20%",
+    width: "30%",
+    display: "flex",
+    flexDirection: "column" as FlexDirection,
+    alignItems: "flex-end",
   },
 };
 
-function GameCard({ data, id }) {
+function BasketballGameCard({ id, data }) {
   const navigate = useNavigate();
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", marginBottom: 5 }}>
+      <div style={{display: 'flex', alignItems: 'center', marginBottom: 5}}> 
         <p style={{ ...FONTS.body7, color: COLORS.black, marginRight: 10 }}>
           {data?.leagueName}
         </p>
         <p style={{ ...FONTS.body8, color: COLORS.black }}>
-          ( {moment(data?.startTime).format("DD-MM-YYYY")})
+         ( {moment(data?.startTime).format("DD-MM-YYYY")})
         </p>
       </div>
       <div
@@ -86,7 +58,7 @@ function GameCard({ data, id }) {
         key={id}
         onClick={() =>
           navigate("/game-details", {
-            state: { data: data, gameType: "Soccer" },
+            state: { data: data, gameType: "Basketball" },
           })
         }
       >
@@ -100,35 +72,30 @@ function GameCard({ data, id }) {
           <p style={{ ...FONTS.body7 }}>{data?.visitorTeamName}</p>
         </div>
         <div style={styles.box3}>
-          <GiSoccerField />
+          {/* <GiSoccerField /> */}
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.localTeamGoals}
+              {data?.localTeamScores?.total
+                ? data?.localTeamScores?.total
+                : "-"}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.visitorTeamGoals}
+              {data?.visitorTeamScores?.total
+                ? data?.visitorTeamScores?.total
+                : "-"}
             </p>
           </div>
         </div>
         <div style={styles.box4}>
           <p
-            style={{ ...FONTS.body7, textAlign: "center", color: COLORS.green }}
+            style={{ ...FONTS.body8, textAlign: "center", color: COLORS.green }}
           >
-            {data?.localTeamName?.slice(0, 4)} Win
+            {data?.localTeamName} Win
           </p>
           <p
-            style={{
-              ...FONTS.body7,
-              textAlign: "center",
-              color: COLORS.orange,
-            }}
+            style={{ ...FONTS.body8, textAlign: "center", color: COLORS.green }}
           >
-            Draw
-          </p>
-          <p
-            style={{ ...FONTS.body7, textAlign: "center", color: COLORS.green }}
-          >
-            {data?.visitorTeamName?.slice(0, 4)} Win
+            {data?.visitorTeamName} Win
           </p>
         </div>
       </div>
@@ -136,4 +103,4 @@ function GameCard({ data, id }) {
   );
 }
 
-export default GameCard;
+export default BasketballGameCard;
