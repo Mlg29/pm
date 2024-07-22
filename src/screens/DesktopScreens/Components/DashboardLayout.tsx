@@ -83,6 +83,12 @@ function DashboardLayout({ children }) {
     return isTablet ? children : null;
   };
 
+  const handleLeague = (name) => {
+    navigate("/league", {
+      state: {data: name}
+    })
+  }
+
   return (
     <div>
       <NavHeader />
@@ -93,7 +99,7 @@ function DashboardLayout({ children }) {
               <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
               {Leagues?.map((data: any, i) => {
                 return (
-                  <div key={i}>
+                  <div key={i} onClick={() => handleLeague(data?.name)}>
                     <p
                       style={{
                         ...FONTS.body6,
@@ -139,8 +145,8 @@ function DashboardLayout({ children }) {
               <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
               {Leagues?.map((data: any, i) => {
                 return (
-                  <div key={i}>
-                    <p style={{ ...FONTS.body6, margin: "15px 0px" }}>
+                  <div key={i} onClick={() => handleLeague(data?.name)}>
+                    <p style={{ ...FONTS.body6, margin: "15px 0px", cursor: 'pointer' }}>
                       {data?.name}
                     </p>
                   </div>
@@ -173,8 +179,8 @@ function DashboardLayout({ children }) {
               <h3 style={{ ...FONTS.h7 }}>Top Leagus</h3>
               {Leagues?.map((data: any, i) => {
                 return (
-                  <div key={i}>
-                    <p style={{ ...FONTS.body7, margin: "15px 0px" }}>
+                  <div key={i} onClick={() => handleLeague(data?.name)}>
+                    <p style={{ ...FONTS.body7, margin: "15px 0px", cursor: 'pointer' }}>
                       {data?.name}
                     </p>
                   </div>
