@@ -14,7 +14,13 @@ input {
   color: black;
   width: 100%;
   background: transparent;
+  border: none !important;
 }
+/* input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #000 !important;
+} */
 h1, h2, h3, h4, h5, h6, p {
   margin: 0px
 }
@@ -44,14 +50,26 @@ input:focus {
   box-shadow: 0 0 2px #2D0D02 !important; /* Add shadow effect on focus */
 }
 .inputs {
-  border-color: none !important;
+  border: none !important;
+  background-color: transparent !important;
 }
+.input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #000 !important;
+}
+.inputs:focus {
+  background-color: white !important;
+  border: none !important;
+}
+.inputs
 .inputs-d:focus {
-  border-color: #2D0D02 !important; 
-  box-shadow: 0 0 2px #2D0D02 !important;
+  /* border-color: #2D0D02 !important;  */
+  /* box-shadow: 0 0 2px #2D0D02 !important; */
 }
 .inputs-d:hover {
   border: none !important;
+  background-color: transparent !important;
 }
 .btns:focus {
   border-color: none !important;

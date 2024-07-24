@@ -16,7 +16,7 @@ import BackButton from "../../components/BackButton";
 import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
-import { CreatePasswordSchema } from "../../https/schemas";
+import { CreatePasswordSchema, CreatePasswordSchemaAuth } from "../../https/schemas";
 import { createNewPassword, createUser } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import PinModal from "../../components/Modals/PinModal";
@@ -82,7 +82,7 @@ function ForgotCreatePasswordNew() {
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
     useFormik({
       initialValues,
-      validationSchema: CreatePasswordSchema,
+      validationSchema: CreatePasswordSchemaAuth,
       onSubmit: (data: PasswordCreationAuth) => handleSubmitData(data),
       enableReinitialize: true,
     });
@@ -149,17 +149,14 @@ function ForgotCreatePasswordNew() {
   return (
     <div style={{ ...styles.container }}>
       <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
-        {isMobile && (
-          <>
+         <>
             <div style={{ marginTop: 10 }}>
               <BackButton />
             </div>
           </>
-        )}
 
         <div>
-          {isMobile && (
-            <h3
+        <h3
               style={{
                 ...FONTS.h2,
                 fontWeight: "bold",
@@ -169,9 +166,8 @@ function ForgotCreatePasswordNew() {
             >
               Change Your Log In Password
             </h3>
-          )}
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
-            Create a secure 6-Digits PIN to secure your account.
+            Create a new password to secure your account.
           </p>
         </div>
 

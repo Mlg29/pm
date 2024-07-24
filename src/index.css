@@ -14,12 +14,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-input:-internal-autofill-selected {
-    -webkit-box-shadow: 0 0 0px 1000px white inset !important; /* Change the color to match your background */
+input {
+  background-color: transparent !important;
+  border: 1px solid white !important;
+  outline: none !important;
 }
+input:hover {
+  background-color: transparent !important;
+  border: 1px solid white !important;
+  outline: none !important;
+}
+
+input:active {
+    background-color: transparent !important;
+    border: 1px solid white !important;
+    outline: none !important;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #000 !important;
+  border: none !important;
+}
+
 
 a {
   font-weight: 500;
