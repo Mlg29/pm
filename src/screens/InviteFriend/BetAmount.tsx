@@ -44,10 +44,10 @@ const BetAmount = () => {
   return (
     <div className="top-container" style={{ backgroundColor: "transparent" }}>
       {!isMobile && <DesktopBackButton />}
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <div style={{ display: "flex", flexDirection: "column", padding: "20px 10px 40px 10px",borderRadius: 10, backgroundColor: 'white' }}>
         <Header text={"Bet Amount"} />
 
-        <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
+        <div style={{ display: "flex", flexDirection: "column", }}>
           <NumberInput
             label="Amount"
             placeholder="Enter Amount"

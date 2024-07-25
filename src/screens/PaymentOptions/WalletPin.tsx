@@ -151,8 +151,10 @@ function WalletPin() {
       style={{
         display: "flex",
         flexDirection: "column",
-        flex: 1,
-        height: "100%",
+        // flex: 1,
+        // height: "100%",
+        padding: "20px 10px 40px 10px",borderRadius: 10,
+        backgroundColor: 'white'
       }}
     >
       <Header text="Wallet Pin" />
@@ -161,7 +163,7 @@ function WalletPin() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          flex: 1,
+          // flex: 1,
         }}
       >
         <div
@@ -188,7 +190,7 @@ function WalletPin() {
         </div>
       </div>
 
-      <div style={{ display: "flex", flex: 3 }}>
+      <div style={{ display: "flex"}}>
         <div style={{ width: "100%" }}>
           <CustomeKeyboard value={otp} setValue={setOtp} />
           <div style={{ width: "100%", margin: "3rem 0px" }}>

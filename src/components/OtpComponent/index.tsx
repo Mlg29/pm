@@ -21,6 +21,8 @@ function OtpComponent({otp, setOtp}: any) {
       mask
       integerOnly
       length={6}
+      variant='filled'
+ 
     />
 
   );

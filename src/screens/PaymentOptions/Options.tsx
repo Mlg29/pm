@@ -72,6 +72,7 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
      navigate("/wallet-pin")
   }
 
+
   if (loader) {
     return (
       <div
@@ -94,7 +95,7 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
     {
       !isMobile && <DesktopBackButton />
     }
-    <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+    <div style={{display: 'flex', flexDirection: 'column',padding: "20px 10px 40px 10px",borderRadius: 10,backgroundColor: 'white'}}>
       <Header text="Payment Option" />
       <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
         Select your preferred method for payment.
