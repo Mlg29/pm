@@ -33,7 +33,6 @@ import {
 
 import { Sidebar } from "primereact/sidebar";
 
-import { Badge } from "primereact/badge";
 import Football from "../Games/Football";
 import Basketball from "../Games/Basketball";
 import asoccer from "../../assets/images/asoccer.svg";
@@ -416,16 +415,14 @@ function HomeScreen() {
 
         {getToken ? (
           <div>
+               <div style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center',width: 15, height: 15, borderRadius: 100, position: 'absolute'}}>
+                    <p style={{fontSize: 8, color: 'white'}}>{notifications?.unreadCount}</p>
+                  </div>
             <img
               src={notification}
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/notification")}
             />
-            <Badge
-              value={notifications?.unreadCount}
-              severity="danger"
-              style={{ position: "relative", right: 8, bottom: 5 }}
-            ></Badge>
           </div>
         ) : (
           <RxAvatar

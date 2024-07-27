@@ -24,7 +24,7 @@ import {
   getNotifications,
   notificationState,
 } from "../../redux/slices/NotificationSlice";
-import { Badge } from "primereact/badge";
+
 
 function BetSlip() {
   const navigate = useNavigate();
@@ -95,16 +95,27 @@ function BetSlip() {
         <h3>Bet Slip</h3>
         {isMobile && (
           <div>
+            <div
+              style={{
+                backgroundColor: "red",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: 15,
+                height: 15,
+                borderRadius: 100,
+                position: "absolute",
+              }}
+            >
+              <p style={{ fontSize: 8, color: "white" }}>
+                {notifications?.unreadCount}
+              </p>
+            </div>
             <img
               src={notification}
               onClick={() => navigate("/notification")}
               style={{ cursor: "pointer" }}
             />
-            <Badge
-              value={notifications?.unreadCount}
-              severity="danger"
-              style={{ position: "relative", right: 8, bottom: 5 }}
-            ></Badge>
           </div>
         )}
       </div>
@@ -212,19 +223,23 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
-                               {item?.sportEvent?.sport === "BASKETBALL" && (
+                            {item?.sportEvent?.sport === "BASKETBALL" && (
                               <SlipCard
                                 homeName={
-                                  item?.sportEvent?.BasketballEvent?.localTeamName
+                                  item?.sportEvent?.BasketballEvent
+                                    ?.localTeamName
                                 }
                                 awayName={
-                                  item?.sportEvent?.BasketballEvent?.visitorTeamName
+                                  item?.sportEvent?.BasketballEvent
+                                    ?.visitorTeamName
                                 }
                                 homeScore={
-                                  item?.sportEvent?.BasketballEvent?.localTeamScores?.total
+                                  item?.sportEvent?.BasketballEvent
+                                    ?.localTeamScores?.total
                                 }
                                 awayScore={
-                                  item?.sportEvent?.BasketballEvent?.visitorTeamScores?.total
+                                  item?.sportEvent?.BasketballEvent
+                                    ?.visitorTeamScores?.total
                                 }
                                 isWin={item?.winnerId}
                                 amount={
@@ -280,20 +295,27 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
-                             {item?.sportEvent?.sport === "BOXING" && (
+                            {item?.sportEvent?.sport === "BOXING" && (
                               <SlipCard
-                              homeName={
-                                item?.sportEvent?.BoxingEvent?.localteam?.name
-                              }
-                              awayName={
-                                item?.sportEvent?.BoxingEvent?.awayteam?.name
-                              }
-                              homeScore={
-                                item?.sportEvent?.BoxingEvent?.localteam?.round ? item?.sportEvent?.BoxingEvent?.localteam?.round : "0"
-                              }
-                              awayScore={
-                                item?.sportEvent?.BoxingEvent?.awayteam?.round ? item?.sportEvent?.BoxingEvent?.awayteam?.round : "0"
-                              }
+                                homeName={
+                                  item?.sportEvent?.BoxingEvent?.localteam?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.BoxingEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.BoxingEvent?.localteam
+                                    ?.round
+                                    ? item?.sportEvent?.BoxingEvent?.localteam
+                                        ?.round
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.BoxingEvent?.awayteam?.round
+                                    ? item?.sportEvent?.BoxingEvent?.awayteam
+                                        ?.round
+                                    : "0"
+                                }
                                 isWin={item?.winnerId}
                                 amount={
                                   item?.betAmount || item?.opponentBetAmount
@@ -303,20 +325,26 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
-                              {item?.sportEvent?.sport === "MMA" && (
+                            {item?.sportEvent?.sport === "MMA" && (
                               <SlipCard
-                              homeName={
-                                item?.sportEvent?.MmaEvent?.localteam?.name
-                              }
-                              awayName={
-                                item?.sportEvent?.MmaEvent?.awayteam?.name
-                              }
-                              homeScore={
-                                item?.sportEvent?.MmaEvent?.localteam?.round ? item?.sportEvent?.MmaEvent?.localteam?.round : "0"
-                              }
-                              awayScore={
-                                item?.sportEvent?.MmaEvent?.awayteam?.round ? item?.sportEvent?.MmaEvent?.awayteam?.round : "0"
-                              }
+                                homeName={
+                                  item?.sportEvent?.MmaEvent?.localteam?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.MmaEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.MmaEvent?.localteam?.round
+                                    ? item?.sportEvent?.MmaEvent?.localteam
+                                        ?.round
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.MmaEvent?.awayteam?.round
+                                    ? item?.sportEvent?.MmaEvent?.awayteam
+                                        ?.round
+                                    : "0"
+                                }
                                 isWin={item?.winnerId}
                                 amount={
                                   item?.betAmount || item?.opponentBetAmount
@@ -377,29 +405,32 @@ function BetSlip() {
                               data={item}
                             />
                           )}
-                           {item?.sportEvent?.sport === "BASKETBALL" && (
-                              <SlipCard
-                                homeName={
-                                  item?.sportEvent?.BasketballEvent?.localTeamName
-                                }
-                                awayName={
-                                  item?.sportEvent?.BasketballEvent?.visitorTeamName
-                                }
-                                homeScore={
-                                  item?.sportEvent?.BasketballEvent?.localTeamScores?.total
-                                }
-                                awayScore={
-                                  item?.sportEvent?.BasketballEvent?.visitorTeamScores?.total
-                                }
-                                isWin={item?.winnerId}
-                                amount={
-                                  item?.betAmount || item?.opponentBetAmount
-                                }
-                                isUser={userData}
-                                betCurrency={item?.betCurrency}
-                                data={item}
-                              />
-                            )}
+                          {item?.sportEvent?.sport === "BASKETBALL" && (
+                            <SlipCard
+                              homeName={
+                                item?.sportEvent?.BasketballEvent?.localTeamName
+                              }
+                              awayName={
+                                item?.sportEvent?.BasketballEvent
+                                  ?.visitorTeamName
+                              }
+                              homeScore={
+                                item?.sportEvent?.BasketballEvent
+                                  ?.localTeamScores?.total
+                              }
+                              awayScore={
+                                item?.sportEvent?.BasketballEvent
+                                  ?.visitorTeamScores?.total
+                              }
+                              isWin={item?.winnerId}
+                              amount={
+                                item?.betAmount || item?.opponentBetAmount
+                              }
+                              isUser={userData}
+                              betCurrency={item?.betCurrency}
+                              data={item}
+                            />
+                          )}
                           {item?.sportEvent?.sport === "TENNIS" && (
                             <SlipCard
                               homeName={
@@ -443,8 +474,8 @@ function BetSlip() {
                               data={item}
                             />
                           )}
-                           {item?.sportEvent?.sport === "BOXING" && (
-                              <SlipCard
+                          {item?.sportEvent?.sport === "BOXING" && (
+                            <SlipCard
                               homeName={
                                 item?.sportEvent?.BoxingEvent?.localteam?.name
                               }
@@ -452,22 +483,28 @@ function BetSlip() {
                                 item?.sportEvent?.BoxingEvent?.awayteam?.name
                               }
                               homeScore={
-                                item?.sportEvent?.BoxingEvent?.localteam?.round ? item?.sportEvent?.BoxingEvent?.localteam?.round : "0"
+                                item?.sportEvent?.BoxingEvent?.localteam?.round
+                                  ? item?.sportEvent?.BoxingEvent?.localteam
+                                      ?.round
+                                  : "0"
                               }
                               awayScore={
-                                item?.sportEvent?.BoxingEvent?.awayteam?.round ? item?.sportEvent?.BoxingEvent?.awayteam?.round : "0"
+                                item?.sportEvent?.BoxingEvent?.awayteam?.round
+                                  ? item?.sportEvent?.BoxingEvent?.awayteam
+                                      ?.round
+                                  : "0"
                               }
-                                isWin={item?.winnerId}
-                                amount={
-                                  item?.betAmount || item?.opponentBetAmount
-                                }
-                                isUser={userData}
-                                betCurrency={item?.betCurrency}
-                                data={item}
-                              />
-                            )}
-                              {item?.sportEvent?.sport === "MMA" && (
-                              <SlipCard
+                              isWin={item?.winnerId}
+                              amount={
+                                item?.betAmount || item?.opponentBetAmount
+                              }
+                              isUser={userData}
+                              betCurrency={item?.betCurrency}
+                              data={item}
+                            />
+                          )}
+                          {item?.sportEvent?.sport === "MMA" && (
+                            <SlipCard
                               homeName={
                                 item?.sportEvent?.MmaEvent?.localteam?.name
                               }
@@ -475,20 +512,24 @@ function BetSlip() {
                                 item?.sportEvent?.MmaEvent?.awayteam?.name
                               }
                               homeScore={
-                                item?.sportEvent?.MmaEvent?.localteam?.round ? item?.sportEvent?.MmaEvent?.localteam?.round : "0"
+                                item?.sportEvent?.MmaEvent?.localteam?.round
+                                  ? item?.sportEvent?.MmaEvent?.localteam?.round
+                                  : "0"
                               }
                               awayScore={
-                                item?.sportEvent?.MmaEvent?.awayteam?.round ? item?.sportEvent?.MmaEvent?.awayteam?.round : "0"
+                                item?.sportEvent?.MmaEvent?.awayteam?.round
+                                  ? item?.sportEvent?.MmaEvent?.awayteam?.round
+                                  : "0"
                               }
-                                isWin={item?.winnerId}
-                                amount={
-                                  item?.betAmount || item?.opponentBetAmount
-                                }
-                                isUser={userData}
-                                betCurrency={item?.betCurrency}
-                                data={item}
-                              />
-                            )}
+                              isWin={item?.winnerId}
+                              amount={
+                                item?.betAmount || item?.opponentBetAmount
+                              }
+                              isUser={userData}
+                              betCurrency={item?.betCurrency}
+                              data={item}
+                            />
+                          )}
                         </div>
                       );
                     })}

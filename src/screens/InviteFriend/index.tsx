@@ -67,7 +67,7 @@ const InviteFriend = () => {
       return;
     }
     const payload = {
-      invitedUser: selectedUser || email,
+      invitedUser: email,
       amount: amount,
       allowOtherCurrency: allowCurrency
     };
@@ -78,7 +78,7 @@ const InviteFriend = () => {
 
 
   const handleSelect = (data) => { 
-     setEmail(data?.userName);
+     setEmail(data?.email);
     setSelectedUser(data?.id);
   
   };
@@ -89,13 +89,13 @@ const InviteFriend = () => {
          {
         !isMobile && <DesktopBackButton />
       }
-      <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+      <div style={{display: 'flex', flexDirection: 'column', padding: "20px 10px 40px 10px",borderRadius: 10, backgroundColor: 'white'}}>
       <Header text={"Invite Friend"} />
 
       <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
         <TextInput
-          label="Username or Email Address"
-          placeholder="Enter your friend username or email"
+          label="Email Address"
+          placeholder="Enter your friend email"
           required
           value={email}
           type="email"

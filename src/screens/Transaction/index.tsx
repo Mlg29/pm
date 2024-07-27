@@ -22,11 +22,10 @@ import { formatCurrency } from "../../utils/helper";
 import { getTransactions } from "../../redux/slices/TransactionSlice";
 import EmptyState from "../../components/EmptyState";
 import Loader from "../../components/Loader";
-import { getNotifications, notificationState } from "../../redux/slices/NotificationSlice";
-import { Badge } from "primereact/badge";
-
-
-
+import {
+  getNotifications,
+  notificationState,
+} from "../../redux/slices/NotificationSlice";
 
 const styles = {
   div: {
@@ -85,12 +84,11 @@ function Transaction() {
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
   const [transactions, setTransactions] = useState(null);
-  const notifications = useAppSelector(notificationState) as any
+  const notifications = useAppSelector(notificationState) as any;
 
   const getNotification = async () => {
-    await dispatch(getNotifications())
-  }
-
+    await dispatch(getNotifications());
+  };
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -103,20 +101,16 @@ function Transaction() {
     const response = await dispatch(getTransactions());
     if (getTransactions.fulfilled.match(response)) {
       setTransactions(response?.payload);
-      setLoader(false)
+      setLoader(false);
     }
   };
 
-
-
   useEffect(() => {
-    setLoader(true)
+    setLoader(true);
     fetchUserInfo();
     fetchTransactions();
-    getNotification()
-  
+    getNotification();
   }, []);
-
 
   if (loader) {
     return (
@@ -135,8 +129,6 @@ function Transaction() {
     );
   }
 
- 
-
   return (
     <div>
       <div style={{ ...styles.div }}>
@@ -147,6 +139,22 @@ function Transaction() {
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/notification")}
             >
+              <div
+                style={{
+                  backgroundColor: "red",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 15,
+                  height: 15,
+                  borderRadius: 100,
+                  position: "absolute",
+                }}
+              >
+                <p style={{ fontSize: 8, color: "white" }}>
+                  {notifications?.unreadCount}
+                </p>
+              </div>
               <IoIosNotificationsOutline
                 size={35}
                 color={COLORS.white}
@@ -156,7 +164,6 @@ function Transaction() {
                   padding: 5,
                 }}
               />
-               <Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:8, bottom: 5}}></Badge>
             </div>
           </div>
         )}
@@ -231,7 +238,8 @@ function Transaction() {
               backgroundColor: COLORS.lightOrange,
               cursor: "pointer",
             }}
-            onClick={() => navigate("/deposit") 
+            onClick={
+              () => navigate("/deposit")
               // isMobile ? navigate("/deposit") : setDeposit(true))
             }
           >
@@ -258,23 +266,22 @@ function Transaction() {
             );
           })}
 
-        {
-          transactions?.length < 1 && <div style={{marginTop: "-3rem"}}>
-            <EmptyState 
-            header={"No Transaction Available"}
-          />
+        {transactions?.length < 1 && (
+          <div style={{ marginTop: "-3rem" }}>
+            <EmptyState header={"No Transaction Available"} />
           </div>
-
-        }
+        )}
 
         {transactions?.length > 3 ? (
           <div
-            style={{ ...styles.btn2, cursor: 'pointer' }}
-            onClick={() => navigate("/transaction-list", {
-              state: {
-                transactions: transactions
-              }
-            })}
+            style={{ ...styles.btn2, cursor: "pointer" }}
+            onClick={() =>
+              navigate("/transaction-list", {
+                state: {
+                  transactions: transactions,
+                },
+              })
+            }
           >
             <h3 style={{ ...FONTS.h7 }}>View All</h3>
           </div>

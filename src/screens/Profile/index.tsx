@@ -17,10 +17,10 @@ import Button from "../../components/Button";
 import LogOut from "../../components/Modals/LogOut";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
-import { getNotifications, notificationState } from "../../redux/slices/NotificationSlice";
-import { Badge } from "primereact/badge";
-
-
+import {
+  getNotifications,
+  notificationState,
+} from "../../redux/slices/NotificationSlice";
 
 const styles = {
   container: {
@@ -49,14 +49,13 @@ const styles = {
 function Profile() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const notifications = useAppSelector(notificationState) as any
+  const notifications = useAppSelector(notificationState) as any;
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
 
   const getNotification = async () => {
-    await dispatch(getNotifications())
-  }
-
+    await dispatch(getNotifications());
+  };
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -67,10 +66,8 @@ function Profile() {
 
   useEffect(() => {
     fetchUserInfo();
-    getNotification()
+    getNotification();
   }, []);
-
-
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -122,7 +119,26 @@ function Profile() {
     <div className="top-container">
       <div style={{ ...styles.container }}>
         <h3 style={{ ...FONTS.h4, color: COLORS.primary }}>Profile</h3>
-        <div style={{cursor: "pointer"}} onClick={() => navigate("/notification")}>
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/notification")}
+        >
+          <div
+            style={{
+              backgroundColor: "red",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: 15,
+              height: 15,
+              borderRadius: 100,
+              position: "absolute",
+            }}
+          >
+            <p style={{ fontSize: 8, color: "white" }}>
+              {notifications?.unreadCount}
+            </p>
+          </div>
           <IoIosNotificationsOutline
             size={45}
             color={COLORS.primary}
@@ -132,7 +148,6 @@ function Profile() {
               padding: 5,
             }}
           />
-           <Badge value={notifications?.unreadCount} severity="danger" style={{position: "relative", right:15, bottom: 5}}></Badge>
         </div>
       </div>
 

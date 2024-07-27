@@ -19,7 +19,7 @@ import user1 from "../../../assets/images/user1.svg";
 import LogOut from "../../../components/Modals/LogOut";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getUserData } from "../../../redux/slices/AuthSlice";
-import { Badge } from "primereact/badge";
+
 import {
   getNotifications,
   notificationState,
@@ -268,7 +268,7 @@ function NavHeader() {
 
   const handleMoreSelect = (data) => {
     localStorage.setItem("sport", data);
-    window.dispatchEvent(new Event('localStorageUpdated'));
+    window.dispatchEvent(new Event("localStorageUpdated"));
     setSelected(data);
     setVisible(false);
   };
@@ -276,7 +276,7 @@ function NavHeader() {
   const handleSelection = (info) => {
     setSelected(info);
     localStorage.setItem("sport", info);
-    window.dispatchEvent(new Event('localStorageUpdated'));
+    window.dispatchEvent(new Event("localStorageUpdated"));
     navigate("/home");
   };
 
@@ -336,15 +336,26 @@ function NavHeader() {
                   style={{ cursor: "pointer" }}
                   onClick={() => navigate("/notification")}
                 >
+                  <div
+                    style={{
+                      backgroundColor: "red",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 15,
+                      height: 15,
+                      borderRadius: 100,
+                      position: "absolute",
+                    }}
+                  >
+                    <p style={{ fontSize: 8, color: "white" }}>
+                      {notifications?.unreadCount}
+                    </p>
+                  </div>
                   <IoIosNotificationsOutline
                     size={20}
                     style={{ cursor: "pointer" }}
                   />
-                  <Badge
-                    value={notifications?.unreadCount}
-                    severity="danger"
-                    style={{ position: "relative", right: 5, bottom: 5 }}
-                  ></Badge>
                 </div>
 
                 <Menu
@@ -530,11 +541,9 @@ function NavHeader() {
                   style={{
                     cursor: "pointer",
                     backgroundColor:
-                    info?.name === selected
-                      ? COLORS.cream
-                      : "transparent",
-                  borderRadius: "10px",
-                  padding: '0px 5px',
+                      info?.name === selected ? COLORS.cream : "transparent",
+                    borderRadius: "10px",
+                    padding: "0px 5px",
                   }}
                   onClick={() => handleMoreSelect(info?.name)}
                 >
@@ -618,15 +627,26 @@ function NavHeader() {
                   style={{ cursor: "pointer" }}
                   onClick={() => navigate("/notification")}
                 >
+                  <div
+                    style={{
+                      backgroundColor: "red",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 15,
+                      height: 15,
+                      borderRadius: 100,
+                      position: "absolute",
+                    }}
+                  >
+                    <p style={{ fontSize: 8, color: "white" }}>
+                      {notifications?.unreadCount}
+                    </p>
+                  </div>
                   <IoIosNotificationsOutline
                     size={20}
                     style={{ cursor: "pointer" }}
                   />
-                  <Badge
-                    value={notifications?.unreadCount}
-                    severity="danger"
-                    style={{ position: "relative", right: 5, bottom: 5 }}
-                  ></Badge>
                 </div>
                 <Menu
                   menuButton={
@@ -810,11 +830,9 @@ function NavHeader() {
                   style={{
                     cursor: "pointer",
                     backgroundColor:
-                    info?.name === selected
-                      ? COLORS.cream
-                      : "transparent",
-                  borderRadius: "10px",
-                  padding: '0px 5px',
+                      info?.name === selected ? COLORS.cream : "transparent",
+                    borderRadius: "10px",
+                    padding: "0px 5px",
                   }}
                   onClick={() => handleMoreSelect(info?.name)}
                 >
@@ -896,15 +914,26 @@ function NavHeader() {
                   style={{ cursor: "pointer" }}
                   onClick={() => navigate("/notification")}
                 >
+                  <div
+                    style={{
+                      backgroundColor: "red",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 15,
+                      height: 15,
+                      borderRadius: 100,
+                      position: "absolute",
+                    }}
+                  >
+                    <p style={{ fontSize: 8, color: "white" }}>
+                      {notifications?.unreadCount}
+                    </p>
+                  </div>
                   <IoIosNotificationsOutline
                     size={20}
                     style={{ cursor: "pointer" }}
                   />
-                  <Badge
-                    value={notifications?.unreadCount}
-                    severity="danger"
-                    style={{ position: "relative", right: 5, bottom: 5 }}
-                  ></Badge>
                 </div>
 
                 <Menu
@@ -1088,11 +1117,9 @@ function NavHeader() {
                   style={{
                     cursor: "pointer",
                     backgroundColor:
-                    info?.name === selected
-                      ? COLORS.cream
-                      : "transparent",
-                  borderRadius: "10px",
-                  padding: '0px 5px',
+                      info?.name === selected ? COLORS.cream : "transparent",
+                    borderRadius: "10px",
+                    padding: "0px 5px",
                   }}
                   onClick={() => handleMoreSelect(info?.name)}
                 >
