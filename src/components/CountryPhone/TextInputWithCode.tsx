@@ -19,7 +19,9 @@ const styles = {
     flexDirection: "row" as FlexDirection,
     alignItems: "center",
     padding: "15px 5px",
-    border: 'none'
+    border: 'none',
+    backgroundColor: 'transparent',
+    outline: 'none',
    
 }
 };

@@ -157,7 +157,7 @@ function FilterPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(100);
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [data, setData] = useState<any>([]);
@@ -339,7 +339,7 @@ function FilterPage() {
   };
 
   const fetchMoreData = () => {
-    setPage((prevPage) => prevPage + 1);
+    //setPage((prevPage) => prevPage + 1);
   };
 
 

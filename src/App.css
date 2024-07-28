@@ -58,8 +58,9 @@ h1, h2, h3, h4, h5, h6, p {
   box-shadow: 0 0 0px 1000px white inset;
   -webkit-text-fill-color: #000 !important;
 }
-.p-component {
+.p-inputnumber {
   width: 100% !important;
+  outline: none !important;
 }
 .inputs:focus {
   background-color: white !important;

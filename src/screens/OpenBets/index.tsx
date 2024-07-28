@@ -906,7 +906,7 @@ function OpenBet() {
         {!filterData ||
           (filterData?.length < 1 && (
             <div>
-              <EmptyState header="No Open bets available for your selection" />
+              <EmptyState header="No Open bets available for your selection" height="30vh" />
             </div>
           ))}
 
