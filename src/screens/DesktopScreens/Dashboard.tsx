@@ -164,7 +164,11 @@ function Dashboard() {
                 justifyContent: "flex-end",
                 cursor: "pointer",
               }}
-              onClick={() => navigate("/filter")}
+              onClick={() => navigate("/filter", {
+                state: {
+                  gameName: sportEvents
+                },
+              })}
             >
               <BsFilterSquareFill size={20} />
             </div>
