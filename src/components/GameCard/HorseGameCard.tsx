@@ -60,9 +60,9 @@ function HorseGameCard({ id, data }) {
         </div>
         <div style={styles.box2}>
           <p style={{ ...FONTS.body7 }}>{data?.name}</p>
-          <p style={{ ...FONTS.body8, color: COLORS.black, marginLeft: 10 }}>
+          {/* <p style={{ ...FONTS.body8, color: COLORS.black, marginLeft: 10 }}>
          ( {moment(data?.startTime).format("DD-MM-YYYY")})
-        </p>
+        </p> */}
         </div>
       </div>
 

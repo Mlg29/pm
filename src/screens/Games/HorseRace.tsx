@@ -91,6 +91,9 @@ function HorseRace() {
     );
   }
 
+  console.log({upcoming})
+
+
   return (
     <div>
       {live?.length > 0 && (

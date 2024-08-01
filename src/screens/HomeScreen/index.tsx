@@ -532,7 +532,11 @@ function HomeScreen() {
           justifyContent: "flex-end",
           cursor: "pointer",
         }}
-        onClick={() => navigate("/filter")}
+        onClick={() => navigate("/filter", {
+          state: {
+            gameName: selected
+          },
+        })}
       >
         <BsFilterSquareFill size={20} />
       </div>

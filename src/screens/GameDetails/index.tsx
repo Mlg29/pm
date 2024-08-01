@@ -262,118 +262,7 @@ function GameDetails() {
         }}
       >
         <Header text="Game Details" />
-        <div style={{ display: "flex", flexDirection: "column", marginBottom: '2rem'}}>
-          {isMobile ? (
-            <div style={{ ...styles.mob }}>
-              <div style={{ width: "100%" }}>
-                <Button
-                  text={`Bet ${gameInfo?.localTeamName} Win`}
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                  }}
-                  handlePress={() => handleRoute(gameInfo?.localTeamName, "W1")}
-                />
-              </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text="Draw"
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === "draw" ? COLORS.primary : COLORS.cream,
-                    color: selected === "draw" ? COLORS.cream : COLORS.primary,
-                  }}
-                  //  handlePress={() => navigate('/home')}
-                  handlePress={() => handleRoute("draw", "DRAW")}
-                />
-              </div>
-              <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
-                <Button
-                  text={`Bet ${gameInfo?.visitorTeamName} Win`}
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                  }}
-                  // handlePress={() => navigate('/home')}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.visitorTeamName, "W2")
-                  }
-                />
-              </div>
-            </div>
-          ) : (
-            <div style={{ ...styles.desk }}>
-              <div style={{ width: "100%" }}>
-                <Button
-                  text={`Bet ${gameInfo?.localTeamName} Win`}
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  handlePress={() => handleRoute(gameInfo?.localTeamName, "W1")}
-                />
-              </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text="Draw"
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === "draw" ? COLORS.primary : COLORS.cream,
-                    color: selected === "draw" ? COLORS.cream : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  //  handlePress={() => navigate('/home')}
-                  handlePress={() => handleRoute("draw", "DRAW")}
-                />
-              </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text={`Bet ${gameInfo?.visitorTeamName} Win`}
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  // handlePress={() => navigate('/home')}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.visitorTeamName, "W2")
-                  }
-                />
-              </div>
-            </div>
-          )}
-        </div>
+   
         {gameType === "Soccer" && (
           <>
             <div
@@ -699,6 +588,120 @@ function GameDetails() {
                   <EmptyState height="100%" header="No Stat Available" />
                 </div>
               )}
+
+
+<div style={{ display: "flex", flexDirection: "column", marginBottom: '2rem'}}>
+          {isMobile ? (
+            <div style={{ ...styles.mob }}>
+              <div style={{ width: "100%" }}>
+                <Button
+                  text={`Bet ${gameInfo?.localTeamName} Win`}
+                  propStyle={{
+                    width: "100%",
+                    backgroundColor:
+                      selected === gameInfo?.localTeamName
+                        ? COLORS.primary
+                        : COLORS.cream,
+                    color:
+                      selected === gameInfo?.localTeamName
+                        ? COLORS.cream
+                        : COLORS.primary,
+                  }}
+                  handlePress={() => handleRoute(gameInfo?.localTeamName, "W1")}
+                />
+              </div>
+              <div style={{ width: "100%", margin: "10px 0px" }}>
+                <Button
+                  text="Draw"
+                  propStyle={{
+                    width: "100%",
+                    backgroundColor:
+                      selected === "draw" ? COLORS.primary : COLORS.cream,
+                    color: selected === "draw" ? COLORS.cream : COLORS.primary,
+                  }}
+                  //  handlePress={() => navigate('/home')}
+                  handlePress={() => handleRoute("draw", "DRAW")}
+                />
+              </div>
+              <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
+                <Button
+                  text={`Bet ${gameInfo?.visitorTeamName} Win`}
+                  propStyle={{
+                    width: "100%",
+                    backgroundColor:
+                      selected === gameInfo?.visitorTeamName
+                        ? COLORS.primary
+                        : COLORS.cream,
+                    color:
+                      selected === gameInfo?.visitorTeamName
+                        ? COLORS.cream
+                        : COLORS.primary,
+                  }}
+                  // handlePress={() => navigate('/home')}
+                  handlePress={() =>
+                    handleRoute(gameInfo?.visitorTeamName, "W2")
+                  }
+                />
+              </div>
+            </div>
+          ) : (
+            <div style={{ ...styles.desk }}>
+              <div style={{ width: "100%" }}>
+                <Button
+                  text={`Bet ${gameInfo?.localTeamName} Win`}
+                  propStyle={{
+                    width: "90%",
+                    backgroundColor:
+                      selected === gameInfo?.localTeamName
+                        ? COLORS.primary
+                        : COLORS.cream,
+                    color:
+                      selected === gameInfo?.localTeamName
+                        ? COLORS.cream
+                        : COLORS.primary,
+                    fontSize: 12,
+                  }}
+                  handlePress={() => handleRoute(gameInfo?.localTeamName, "W1")}
+                />
+              </div>
+              <div style={{ width: "100%", margin: "10px 0px" }}>
+                <Button
+                  text="Draw"
+                  propStyle={{
+                    width: "90%",
+                    backgroundColor:
+                      selected === "draw" ? COLORS.primary : COLORS.cream,
+                    color: selected === "draw" ? COLORS.cream : COLORS.primary,
+                    fontSize: 12,
+                  }}
+                  //  handlePress={() => navigate('/home')}
+                  handlePress={() => handleRoute("draw", "DRAW")}
+                />
+              </div>
+              <div style={{ width: "100%", margin: "10px 0px" }}>
+                <Button
+                  text={`Bet ${gameInfo?.visitorTeamName} Win`}
+                  propStyle={{
+                    width: "90%",
+                    backgroundColor:
+                      selected === gameInfo?.visitorTeamName
+                        ? COLORS.primary
+                        : COLORS.cream,
+                    color:
+                      selected === gameInfo?.visitorTeamName
+                        ? COLORS.cream
+                        : COLORS.primary,
+                    fontSize: 12,
+                  }}
+                  // handlePress={() => navigate('/home')}
+                  handlePress={() =>
+                    handleRoute(gameInfo?.visitorTeamName, "W2")
+                  }
+                />
+              </div>
+            </div>
+          )}
+        </div>
             </div>
 
             <ToastContainer />
@@ -843,6 +846,8 @@ function GameDetails() {
             isMobile={isMobile}
           />
         )}
+
+        
       </div>
 
       <ToastContainer />

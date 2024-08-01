@@ -50,7 +50,7 @@ function MmaGameCard({ id, data }) {
           {data?.name}
         </p>
         <p style={{ ...FONTS.body8, color: COLORS.black }}>
-         ( {moment(data?.startTime).format("DD-MM-YYYY")})
+        ({data?.fightDate})
         </p>
       </div>
 

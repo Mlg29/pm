@@ -4,7 +4,7 @@ import { COLORS } from "../../utils/colors";
 import { FlexDirection } from "../../utils/type";
 import { FONTS } from "../../utils/fonts";
 import DatePickerComponent from "../../components/DatePickerComponent";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getFootballFixtures } from "../../redux/slices/FootballSlice";
@@ -152,6 +152,8 @@ const itemList = [
 ];
 
 function FilterPage() {
+  const location = useLocation()
+  const getName = location?.state?.gameName
   const [game, setGame] = useState("");
   const [dateRange, setDateRange] = useState();
   const navigate = useNavigate();
@@ -166,7 +168,7 @@ function FilterPage() {
 
 
 
- 
+
 
   const fetchData = async (page) => {
     setData([])
@@ -175,7 +177,7 @@ function FilterPage() {
       page: page,
       pageSize: pageSize,
     };
-
+    console.log({payload})
     setLoading(true);
     setLoader(true);
     dispatch(getFootballFixtures(payload)).then((dd) => {
@@ -203,7 +205,7 @@ function FilterPage() {
     setLoader(true);
     dispatch(getTennisFixtures(payload)).then((dd) => {
       // setData((prev) => [...prev, ...dd?.payload?.data]);
-      setData(dd?.payload?.data || []);
+      setData(dd?.payload?.data || [])
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
@@ -226,7 +228,7 @@ function FilterPage() {
     setLoading(true);
     setLoader(true);
     dispatch(getHorseFixtures(payload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setData(dd?.payload?.data || []);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
@@ -237,6 +239,7 @@ function FilterPage() {
       setLoader(false);
     });
   };
+
   const fetchBoxingData = async (page) => {
     setData([])
     const payload = {
@@ -249,7 +252,7 @@ function FilterPage() {
     setLoading(true);
     setLoader(true);
     dispatch(getBoxingFixtures(payload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setData(dd?.payload?.data || []);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
@@ -271,7 +274,7 @@ function FilterPage() {
     setLoading(true);
     setLoader(true);
     dispatch(getMmaFixtures(payload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setData(dd?.payload?.data || []);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
@@ -293,7 +296,7 @@ function FilterPage() {
     setLoading(true);
     setLoader(true);
     dispatch(getBasketballFixtures(payload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setData(dd?.payload?.data || []);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
@@ -305,6 +308,9 @@ function FilterPage() {
     });
   };
 
+  useEffect(() => {
+    setGame(getName)
+  }, [getName]),
 
   useEffect(() => {
     if (game === "Soccer") {
@@ -315,11 +321,11 @@ function FilterPage() {
       fetchTennisData(page);
       return;
     }
-    if (game === "Horse") {
+    if (game === "Horse Racing") {
       fetchHorseData(page);
       return;
     }
-    if (game === "Mma/Ufc") {
+    if (game === "MMA/UFC") {
       fetchMmaData(page);
       return;
     }
@@ -344,7 +350,7 @@ function FilterPage() {
 
 
 
-
+console.log({data})
 
   return (
     <div className="top-container">
@@ -415,10 +421,10 @@ function FilterPage() {
 
                   {game === "Tennis" && <TennisGameCard id={i} data={aa} />}
 
-                  {game === "Horse" && <HorseGameCard id={i} data={aa} />}
+                  {game === "Horse Racing" && <HorseGameCard id={i} data={aa} />}
                   {game === "Basketball" && <BasketballGameCard id={i} data={aa} />}
                   {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
-                  {game === "Mma/Ufc" && <MmaGameCard id={i} data={aa} />}
+                  {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
                 </div>
               );
             })}

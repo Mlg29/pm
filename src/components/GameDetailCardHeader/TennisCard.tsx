@@ -3,7 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
-import { FaTableTennis } from "react-icons/fa";
+import { GiTennisBall } from "react-icons/gi";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -77,7 +77,7 @@ function TennisCard(props) {
           >
             {data?.tournamentName}
           </p>
-          <FaTableTennis size={30} color={COLORS.primary} />
+          <GiTennisBall  size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -121,7 +121,7 @@ function TennisCard(props) {
           >
             ID: {data?.id}
           </p>
-          <FaTableTennis size={30} color={COLORS.primary} />
+          <GiTennisBall  size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,

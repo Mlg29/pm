@@ -80,7 +80,7 @@ function TennisGameCard({ id, data }) {
           {data?.tournamentName}
         </p>
         <p style={{ ...FONTS.body8, color: COLORS.black }}>
-         ( {moment(data?.startTime).format("DD-MM-YYYY")})
+         ({data?.gameDate})
         </p>
       </div>
 
@@ -97,8 +97,8 @@ function TennisGameCard({ id, data }) {
         </p>
       </div>
       <div style={styles.box2}>
-        <p style={{ ...FONTS.body7 }}>{data?.player[0]["@name"]}</p>
-        <p style={{ ...FONTS.body7 }}>{data?.player[1]["@name"]}</p>
+        <p style={{ ...FONTS.body7 }}>{data?.player && data?.player[0]["@name"]}</p>
+        <p style={{ ...FONTS.body7 }}>{data?.player && data?.player[1]["@name"]}</p>
       </div>
       <div style={styles.box3}>
         <GiSoccerField />
@@ -127,6 +127,7 @@ function TennisGameCard({ id, data }) {
       </div>
     </div>
     </div>
+
    
   );
 }
