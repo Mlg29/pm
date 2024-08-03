@@ -25,6 +25,7 @@ import HorseDetails from "./Details/HorseDetails";
 import BoxingDetails from "./Details/BoxingDetails";
 import MmaDetails from "./Details/MmaDetails";
 import BasketballDetails from "./Details/BasketballDetails";
+import EsportDetails from "./Details/EsportDetail";
 
 const styles = {
   container: {
@@ -196,6 +197,7 @@ function GameDetails() {
           : null;
       const horse = gameType === "Horse" && selection;
       const boxing = gameType === "Boxing" && selection;
+      const esport = gameType === "Esport" && selection;
       const mma = gameType === "Mma/Ufc" && selection;
       const basketball = gameType === "Basketball" && selection;
 
@@ -213,6 +215,8 @@ function GameDetails() {
             ? mma
             : gameType === "Basketball"
             ? basketball
+            : gameType === "Esport"
+            ? esport
             : null,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
@@ -231,6 +235,7 @@ function GameDetails() {
       });
     }
   };
+
 
   if (loader) {
     return (
@@ -840,6 +845,16 @@ function GameDetails() {
 
         {gameType === "Mma/Ufc" && (
           <MmaDetails
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
+
+{gameType === "Esport" && (
+          <EsportDetails
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

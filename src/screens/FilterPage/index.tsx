@@ -22,6 +22,8 @@ import { getBasketballFixtures } from "../../redux/slices/BasketballSlice";
 import BasketballGameCard from "../../components/GameCard/BasketballGameCard";
 import BoxingGameCard from "../../components/GameCard/BoxingGameCard";
 import MmaGameCard from "../../components/GameCard/MmaGameCard";
+import { getEasportFixtures } from "../../redux/slices/Easport";
+import EsportGameCard from "../../components/GameCard/EsportGameCard";
 
 const styles = {
   row: {
@@ -139,7 +141,7 @@ const itemList = [
   },
   {
     id: 21,
-    name: "Easport",
+    name: "Esport",
   },
   {
     id: 22,
@@ -264,6 +266,30 @@ function FilterPage() {
     });
   };
 
+  const fetchEsportData = async (page) => {
+    setData([])
+    const payload = {
+      date: moment(dateRange).format("YYYY-MM-DD"),
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getEasportFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
   const fetchMmaData = async (page) => {
     setData([])
     const payload = {
@@ -337,6 +363,10 @@ function FilterPage() {
       fetchBoxingData(page);
       return;
     }
+    if (game === "Esport") {
+      fetchEsportData(page);
+      return;
+    }
   }, [page, dateRange, game]);
 
   const handleSelectChange = (e) => {
@@ -350,7 +380,7 @@ function FilterPage() {
 
 
 
-console.log({data})
+
 
   return (
     <div className="top-container">
@@ -425,6 +455,7 @@ console.log({data})
                   {game === "Basketball" && <BasketballGameCard id={i} data={aa} />}
                   {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
                   {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
+                  {game === "Esport" && <EsportGameCard id={i} data={aa} />}
                 </div>
               );
             })}

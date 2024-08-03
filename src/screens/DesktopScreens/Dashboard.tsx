@@ -194,7 +194,7 @@ function Dashboard() {
             {sportEvents === "MMA/UFC" && <Mma />}
             {sportEvents === "Darts" && <Darts />}
             {sportEvents === "Snooker" && <Snooker />}
-            {sportEvents === "Easport" && <Easport />}
+            {sportEvents === "Esport" && <Easport />}
             {sportEvents === "Table Tennis" && <TableTennis />}
             {sportEvents === "Aussie Rules" && <AussieRules />}
           </div>

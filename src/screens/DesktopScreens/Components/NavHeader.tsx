@@ -177,14 +177,14 @@ function NavHeader() {
       image: ufc,
     },
     {
+      id: 7,
+      name: "Esport",
+      image: easport,
+    },
+    {
       id: 10,
       name: "Golf",
       image: selected === "Golf" ? agolf : ingolf,
-    },
-    {
-      id: 7,
-      name: "Cricket",
-      image: selected === "Cricket" ? acricket : incricket,
     },
     {
       id: 8,
@@ -192,7 +192,7 @@ function NavHeader() {
       image: selected === "Baseball" ? abaseball : inbaseball,
     },
     {
-      id: 10,
+      id: 11,
       name: "More",
       image: more,
     },
@@ -251,8 +251,8 @@ function NavHeader() {
     },
     {
       id: 11,
-      name: "Easport",
-      image: easport,
+      name: "Cricket",
+      image: selected === "Cricket" ? acricket : incricket,
     },
     {
       id: 12,

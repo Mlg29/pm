@@ -9,12 +9,14 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
+import { getEasportFixtures } from "../../redux/slices/Easport";
+import EsportGameCard from "../../components/GameCard/EsportGameCard";
 
 
 function Easport() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
-  const [finished, setFinished] = useState<any>([]);
+  const [live, setLive] = useState<any>([]);
   const url = `${BaseUrl}/boxing`;
   const dispatch = useAppDispatch() as any;
 
@@ -52,26 +54,109 @@ function Easport() {
     const payloadUpcoming = {
       status: "Not Started",
     };
-    const payloadFinished = {
-        status: "Finished",
+    const payloadLive = {
+        status: "Started",
       };
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
+    dispatch(getEasportFixtures(payloadUpcoming)).then((dd) => {
+      console.log({dd})
+      setUpcoming(dd?.payload);
+    });
 
-    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-    //     setFinished(dd?.payload);
-    //   });
+    dispatch(getEasportFixtures(payloadLive)).then((dd) => {
+        setLive(dd?.payload);
+      });
 
   }, []);
 
-  console.log({upcoming, finished})
+
 
   return (
     <div>
+        {live?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            LIVE
+          </p>
+          {live?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: live,
+                    type: "live",
+                    gameType: "Esport",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+      {live?.data?.map((aa: any, i: any) => {
+        return (
+          <div key={i}>
+            <EsportGameCard id={i} data={aa} />
+          </div>
+        );
+      })}
+        {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                    gameType: "Esport",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+      {upcoming?.data?.map((aa: any, i: any) => {
+        return (
+          <div key={i}>
+            <EsportGameCard id={i} data={aa} />
+          </div>
+        );
+      })}
        {
-        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
+        live?.data?.length < 1 && upcoming?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for Easport"
           height="30vh"
