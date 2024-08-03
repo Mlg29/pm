@@ -43,7 +43,6 @@ function App() {
             <DesktopRouters />
           </Desktop>
           <Tablet>
-            {/* <DesktopRouters /> */}
             <Routers />
           </Tablet>
           <Mobile>

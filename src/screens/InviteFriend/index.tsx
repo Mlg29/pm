@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { COLORS } from "../../utils/colors";
 import NumberInput from "../../components/NumberInput";
 import { useMediaQuery } from "react-responsive";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
+import { IPInfoContext } from "ip-info-react";
 
 
 const InviteFriend = () => {
@@ -24,6 +25,7 @@ const InviteFriend = () => {
   const [selectedUser, setSelectedUser] = useState("");
   const [allowCurrency, setAllowCurrency] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const userIp = useContext(IPInfoContext);
   
   const checkHandler = () => {
     setAllowCurrency(!allowCurrency);
@@ -136,6 +138,7 @@ const InviteFriend = () => {
           required
           value={amount}
           setValue={(val) => setAmount(val)}
+          prefix={userIp?.currency === "NGN" ? "₦" : "$"}
         />
 
         <div>

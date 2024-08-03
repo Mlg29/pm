@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import { TextAlign } from "../../utils/type";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { createTransaction } from "../../redux/slices/TransactionSlice";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,11 +14,12 @@ import Loader from "../../components/Loader";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { publicKey } from "../../https";
 import { getUserData } from "../../redux/slices/AuthSlice";
+import { IPInfoContext } from "ip-info-react";
 
 const styles = {
   inputs: {
     width: "100%",
-    padding: 30,
+    // padding: 30,
     border: "none",
     outline: "none",
     textAlign: "center" as TextAlign,
@@ -37,7 +38,9 @@ function Deposit() {
   const [loader, setLoader] = useState(false);
   const [loaderD, setLoaderD] = useState(false);
   const [userData, setUserData] = useState(null);
+  const userIp = useContext(IPInfoContext);
 
+  
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
@@ -45,7 +48,6 @@ function Deposit() {
     }
   };
 
-  console.log({ userData });
 
   useEffect(() => {
     fetchUserInfo();
@@ -58,11 +60,13 @@ function Deposit() {
     }, 1000);
   }, []);
 
+  const currency = userIp?.currency === "NGN" ? "NGN" : "USD"
+
   const config: any = {
     public_key: publicKey,
     tx_ref: Date.now(),
     amount: parseInt(value),
-    currency: "NGN",
+    currency: currency,
     payment_options: "card,mobilemoney,ussd",
     customer: {
       email: userData?.email,
@@ -70,8 +74,8 @@ function Deposit() {
       name: `${userData?.firstName} ${userData?.lastName}`,
     },
     customizations: {
-      title: "my Payment Title",
-      description: "Payment for items in cart",
+      title: "Fund wallet",
+      description: "Fund wallet",
       logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
   };
@@ -141,10 +145,11 @@ function Deposit() {
         />
         <InputNumber
           value={value}
+         prefix={userIp?.currency === "NGN" ? "₦" : "$"}
           onValueChange={(e) => handleAmount(e.value)}
           minFractionDigits={2}
           inputStyle={{ ...styles.inputs }}
-          placeholder="0.00"
+          placeholder={userIp?.currency === "NGN" ? "₦0.00" : "$0.00"}
         />
       </div>
 
@@ -165,9 +170,7 @@ function Deposit() {
                   handleNext();
                 }
               },
-              onClose: () => {
-                 
-                 }
+              onClose: () => {},
             });
           }}
         />

@@ -73,8 +73,8 @@ function EsportGameCard({ id, data }) {
       <div style={styles.box3}>
         {/* <GiSoccerField /> */}
         <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.round ? data?.localteam?.round : "-"}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.round ? data?.awayteam?.round : "-"}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.score ? data?.localteam?.score : "-"}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.score ? data?.awayteam?.score : "-"}</p>
           
 
         </div>

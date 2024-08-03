@@ -8,7 +8,7 @@ import arrowright from "../../assets/images/arrow-right.svg";
 import { COLORS } from "../../utils/colors";
 import { TbCalculatorFilled } from "react-icons/tb";
 import { FaChevronRight } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,6 +16,7 @@ import { formatCurrency } from "../../utils/helper";
 import Loader from "../../components/Loader";
 import { useMediaQuery } from "react-responsive";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
+import { IPInfoContext } from "ip-info-react";
 
 const styles = {
   row: {
@@ -36,7 +37,7 @@ function Options() {
   const [loader, setLoader] = useState(false);
 const dispatch = useAppDispatch()
 const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
-
+const userIp = useContext(IPInfoContext);
 const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const fetchUserInfo = async () => {
@@ -112,7 +113,7 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           Debit amount for this game
         </p>
-        <h3 style={{ ...FONTS.h6 }}>₦{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
+        <h3 style={{ ...FONTS.h6 }}>{userIp?.currency === "NGN" ? "₦" : "$"}{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
       </div>
 
       <div style={{...styles.rowBtn,  cursor: "pointer"}} onClick={() => goToPin()}>
@@ -122,7 +123,7 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
             </div>
             <div>
                 <h3 style={{...FONTS.body6}}>Wallet</h3>
-                <p style={{...FONTS.body7}}>Balance: ₦{formatCurrency(userData?.walletBalance)}</p>
+                <p style={{...FONTS.body7}}>Balance: {userIp?.currency === "NGN" ? "₦" : "$"}{formatCurrency(userData?.walletBalance)}</p>
             </div>
         </div>
         <FaChevronRight />

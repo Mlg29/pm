@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { COLORS } from "../../utils/colors";
 import NumberInput from "../../components/NumberInput";
 import { useMediaQuery } from "react-responsive";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
+import { IPInfoContext } from "ip-info-react";
 
 const BetAmount = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const BetAmount = () => {
   const [amount, setAmount] = useState("");
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
-
+  const userIp = useContext(IPInfoContext);
   const [allowCurrency, setAllowCurrency] = useState(false);
 
   const checkHandler = () => {
@@ -54,6 +55,7 @@ const BetAmount = () => {
             required
             value={amount}
             setValue={(val) => setAmount(val)}
+            prefix={userIp?.currency === "NGN" ? "₦" : "$"}
           />
 
           <div>

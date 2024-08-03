@@ -56,7 +56,6 @@ function CreateBet() {
   const url = `${BaseUrl}/football`;
 
 
-  console.log({game, gameType, gameInfo})
 
   useEffect(() => {
     setGameInfo(game);

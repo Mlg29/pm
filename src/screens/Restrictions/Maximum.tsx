@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FONTS } from "../../utils/fonts";
 
 import { MdArrowBackIos } from "react-icons/md";
@@ -25,9 +25,10 @@ import { ToastContainer, toast } from "react-toastify";
 import PinModal from "../../components/Modals/PinModal";
 import Header from "../../components/Header";
 import { Form } from "react-bootstrap";
-import { InputNumber } from "primereact/inputnumber";
+
 import NumberInput from "../../components/NumberInput";
 import { updateBetRestriction } from "../../redux/slices/RestrictionSlice";
+import { IPInfoContext } from "ip-info-react";
 
 export const styles = {
   row: {
@@ -91,7 +92,8 @@ function Maximum() {
   const [show, setShow] = useState(false)
   const [message, setMessage] = useState("")
   const [messageType, setMessageType] = useState("")
-
+  const userIp = useContext(IPInfoContext);
+  
   const handleClose = () => {
     setShow(false)
   }
@@ -173,6 +175,7 @@ function Maximum() {
             required
             value={amount}
             setValue={(val) => setAmount(val)}
+            prefix={userIp?.currency === "NGN" ? "₦" : "$"}
           />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CustomeKeyboard from "../../components/CustomKeyboard";
 import Header from "../../components/Header";
 import { COLORS } from "../../utils/colors";
@@ -9,6 +9,7 @@ import { TextAlign } from "../../utils/type";
 import { formatCurrency } from "../../utils/helper";
 import { InputNumber } from 'primereact/inputnumber';
 import Loader from "../../components/Loader";
+import { IPInfoContext } from "ip-info-react";
 
 const styles = {
   inputs: {
@@ -31,6 +32,7 @@ const AdjustBet = () => {
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
  const [allowCurrency, setAllowCurrency] = useState(false)
  const [loader, setLoader] = useState(false)
+ const userIp = useContext(IPInfoContext);
 
 
  const checkHandler = () => {
@@ -124,10 +126,11 @@ useEffect(() => {
         />
         <InputNumber 
           value={amount} 
+          prefix={userIp?.currency === "NGN" ? "₦" : "$"}
           onValueChange={(e) => handleAmount(e.value)} 
           minFractionDigits={2} 
           inputStyle={{ ...styles.inputs }}
-          placeholder="0.00"
+          placeholder={userIp?.currency === "NGN" ? "₦0.00" : "$0.00"}
           />
       </div>
 

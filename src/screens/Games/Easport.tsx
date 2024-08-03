@@ -17,35 +17,35 @@ function Easport() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
   const [live, setLive] = useState<any>([]);
-  const url = `${BaseUrl}/boxing`;
+  const url = `${BaseUrl}/esport`;
   const dispatch = useAppDispatch() as any;
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
+  useEffect(() => {
+    const socket = io(url) as any;
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server esport");
+    });
 
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
 
 
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
+    socket.on("EsportEventUpdate", (message) => {
+      setLive((prevMessages) => {
+        const updatedMessages = prevMessages?.filter(
+          (msg) => msg?.id !== message?.id
+        );
+        return [...updatedMessages, message];
+      });
+    });
 
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    // Cleanup on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
@@ -59,12 +59,11 @@ function Easport() {
       };
 
     dispatch(getEasportFixtures(payloadUpcoming)).then((dd) => {
-      console.log({dd})
       setUpcoming(dd?.payload);
     });
 
     dispatch(getEasportFixtures(payloadLive)).then((dd) => {
-        setLive(dd?.payload);
+        setLive(dd?.payload?.data);
       });
 
   }, []);
@@ -73,7 +72,7 @@ function Easport() {
 
   return (
     <div>
-        {live?.data?.length > 0 && (
+        {live?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -84,7 +83,7 @@ function Easport() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
             LIVE
           </p>
-          {live?.total > 10 && (
+          {live?.length > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -107,7 +106,7 @@ function Easport() {
           )}
         </div>
       )}
-      {live?.data?.map((aa: any, i: any) => {
+      {live?.map((aa: any, i: any) => {
         return (
           <div key={i}>
             <EsportGameCard id={i} data={aa} />
@@ -156,7 +155,7 @@ function Easport() {
         );
       })}
        {
-        live?.data?.length < 1 && upcoming?.data?.length < 1 ?
+        live?.length < 1 && upcoming?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for Easport"
           height="30vh"

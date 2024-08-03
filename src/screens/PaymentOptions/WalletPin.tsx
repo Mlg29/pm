@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import OtpComponent from "../../components/OtpComponent";
 import CustomeKeyboard from "../../components/CustomKeyboard";
 import { FONTS } from "../../utils/fonts";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Button from "../../components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useAppDispatch } from "../../redux/hooks";
@@ -11,6 +11,7 @@ import { acceptBet, adjustBet, createBet } from "../../redux/slices/BetSlice";
 import { getUserData, verifyTransactionPin } from "../../redux/slices/AuthSlice";
 import { useMediaQuery } from "react-responsive";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
+import { IPInfoContext } from "ip-info-react";
 
 
 function WalletPin() {
@@ -22,7 +23,8 @@ function WalletPin() {
   const getUserBet = JSON.parse(localStorage.getItem("userBetSelection"));
   const [userData, setUserData] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
+  const userIp = useContext(IPInfoContext);
+  
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -55,7 +57,7 @@ function WalletPin() {
       opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
       sportEventId: getUserBet?.sportEventId,
       betAmount: parseFloat(userFee?.amount),
-      betCurrency: "NGN",
+      betCurrency: userIp?.currency === "NGN" ? "NGN" : "USD",
       prediction: getUserBet?.userType,
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
       allowOtherCurrency: userFee?.allowOtherCurrency
@@ -78,7 +80,7 @@ function WalletPin() {
     const transactionPayload = {
       transactionPin: otp
     }
-    console.log({payload})
+  
     setLoader(true);
 
     const verifyResponse = await dispatch(verifyTransactionPin(transactionPayload))

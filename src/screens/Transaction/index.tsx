@@ -6,8 +6,8 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaAsterisk } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import {IPInfoContext} from "ip-info-react"
 import send1 from "../../assets/images/send-1.svg";
 import send2 from "../../assets/images/send-2.svg";
 import TransactionCard from "../../components/TransactionCard";
@@ -85,6 +85,9 @@ function Transaction() {
   const [userData, setUserData] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const notifications = useAppSelector(notificationState) as any;
+  const userIp = useContext(IPInfoContext);
+
+ 
 
   const getNotification = async () => {
     await dispatch(getNotifications());
@@ -170,7 +173,7 @@ function Transaction() {
         <div style={{ ...styles.ctn }}>
           <p style={{ ...FONTS.body7, color: COLORS.white }}>Account Balance</p>
           <div style={{ ...styles.rw }}>
-            <p style={{ ...FONTS.body7, color: COLORS.white }}>NGN</p>
+            <p style={{ ...FONTS.body7, color: COLORS.white }}>{userIp?.currency === "NGN" ? "NGN" : "USD"}</p>
             {show ? (
               <div
                 style={{
