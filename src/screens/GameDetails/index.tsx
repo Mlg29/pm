@@ -26,6 +26,7 @@ import BoxingDetails from "./Details/BoxingDetails";
 import MmaDetails from "./Details/MmaDetails";
 import BasketballDetails from "./Details/BasketballDetails";
 import EsportDetails from "./Details/EsportDetail";
+import DartDetails from "./Details/DartDetail";
 
 const styles = {
   container: {
@@ -183,41 +184,8 @@ function GameDetails() {
     if (token) {
       setSelected(route);
 
-      const football =
-        gameType === "Soccer" && route === gameInfo?.localTeamName
-          ? "W1"
-          : gameType === "Soccer" && route === gameInfo?.visitorTeamName
-          ? "W2"
-          : "DRAW";
-      const tennis =
-        gameType === "Tennis" && route === gameInfo?.player[0]["@name"]
-          ? "W1"
-          : gameType === "Tennis" && route === gameInfo?.player[1]["@name"]
-          ? "W2"
-          : null;
-      const horse = gameType === "Horse" && selection;
-      const boxing = gameType === "Boxing" && selection;
-      const esport = gameType === "Esport" && selection;
-      const mma = gameType === "Mma/Ufc" && selection;
-      const basketball = gameType === "Basketball" && selection;
-
       const payload = {
-        userType:
-          gameType === "Soccer"
-            ? football
-            : gameType === "Tennis"
-            ? tennis
-            : gameType === "Horse"
-            ? horse
-            : gameType === "Boxing"
-            ? boxing
-            : gameType === "Mma/Ufc"
-            ? mma
-            : gameType === "Basketball"
-            ? basketball
-            : gameType === "Esport"
-            ? esport
-            : null,
+        userType: selection,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
       };
@@ -855,6 +823,15 @@ function GameDetails() {
 
 {gameType === "Esport" && (
           <EsportDetails
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
+{gameType === "Dart" && (
+          <DartDetails
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

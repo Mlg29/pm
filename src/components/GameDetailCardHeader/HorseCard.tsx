@@ -76,7 +76,6 @@ function HorseCard({ gameInfo }) {
               key={i}
             >
               <p style={{...FONTS.h7}}>{dd["name"]}</p>
-              <p style={{...FONTS.body7}}>{dd?.odds?.bookmaker?.odd}</p>
             </div>
           );
         })}

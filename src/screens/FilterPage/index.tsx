@@ -24,6 +24,8 @@ import BoxingGameCard from "../../components/GameCard/BoxingGameCard";
 import MmaGameCard from "../../components/GameCard/MmaGameCard";
 import { getEasportFixtures } from "../../redux/slices/Easport";
 import EsportGameCard from "../../components/GameCard/EsportGameCard";
+import { getDartFixtures } from "../../redux/slices/Dart";
+import DartGameCard from "../../components/GameCard/DartGameCard";
 
 const styles = {
   row: {
@@ -269,7 +271,7 @@ function FilterPage() {
   const fetchEsportData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      date: moment(dateRange).format("DD-MM-YYYY"),
       page: page,
       pageSize: pageSize,
     };
@@ -278,6 +280,30 @@ function FilterPage() {
     setLoading(true);
     setLoader(true);
     dispatch(getEasportFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
+  const fetchDartData = async (page) => {
+    setData([])
+    const payload = {
+      date: moment(dateRange).format("DD-MM-YYYY"),
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getDartFixtures(payload)).then((dd) => {
       setData(dd?.payload?.data || []);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
@@ -365,6 +391,10 @@ function FilterPage() {
     }
     if (game === "Esport") {
       fetchEsportData(page);
+      return;
+    }
+    if (game === "Darts") {
+      fetchDartData(page);
       return;
     }
   }, [page, dateRange, game]);
@@ -456,6 +486,7 @@ function FilterPage() {
                   {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
                   {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
                   {game === "Esport" && <EsportGameCard id={i} data={aa} />}
+                  {game === "Darts" && <DartGameCard id={i} data={aa} />}
                 </div>
               );
             })}

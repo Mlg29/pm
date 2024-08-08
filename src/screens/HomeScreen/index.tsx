@@ -146,6 +146,11 @@ function HomeScreen() {
       image: easport,
     },
     {
+      id: 9,
+      name: "Darts",
+      image: dart,
+    },
+    {
       id: 10,
       name: "Golf",
       image: selected === "Golf" ? agolf : ingolf,
@@ -204,11 +209,7 @@ function HomeScreen() {
       name: "Volleyball",
       image: selected === "Volleyball" ? avolleyball : involleyball,
     },
-    {
-      id: 9,
-      name: "Darts",
-      image: dart,
-    },
+
     {
       id: 10,
       name: "Snooker",

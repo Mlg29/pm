@@ -19,7 +19,7 @@ import { FaHorseHead } from "react-icons/fa";
 import { GiBoxingGlove } from "react-icons/gi";
 import { SiUfc } from "react-icons/si";
 import { IoGameController } from "react-icons/io5";
-
+import { SiDart } from "react-icons/si";
 
 
 const styles = {
@@ -93,7 +93,6 @@ function OpenBet() {
       state: { game: game, gameType: gameType },
     });
   };
-
 
   const handleAccept = (data) => {
     const payload = {
@@ -655,7 +654,7 @@ function OpenBet() {
                     </div>
                   )}
 
-{data?.sportEvent?.sport === "ESPORT" && (
+                  {data?.sportEvent?.sport === "ESPORT" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.league}
@@ -774,8 +773,127 @@ function OpenBet() {
                       </div>
                     </div>
                   )}
+                  {data?.sportEvent?.sport === "DART" && (
+                    <div key={i} style={{ ...styles.contain }}>
+                      <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
+                        Dart
+                      </p>
 
-{data?.sportEvent?.sport === "MMA" && (
+                      <div style={{ ...styles.row }}>
+                        <div style={{ ...styles.center }}>
+                          <SiDart size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.localteam?.name}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
+                            {game?.status ? `${game?.time}'` : game?.status}
+                          </p>
+                          <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
+                            {data?.betCurrency === "NGN" ? "₦" : "$"}
+                            {formatCurrency(data?.betAmount)}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <SiDart size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.awayteam?.name}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div style={{ ...styles.row, paddingBottom: "1rem" }}>
+                        <div>
+                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                            @{data?.user?.userName}
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {data?.prediction === "W1"
+                              ? `${game?.localteam?.name} WIN`
+                              : data?.prediction === "W2"
+                              ? `${game?.awayteam?.name} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              textAlign: "right",
+                            }}
+                          >
+                            You
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {userSelection?.userType === "W1"
+                              ? `${game?.localteam?.name} WIN`
+                              : userSelection?.userType === "W2"
+                              ? `${game?.awayteam?.name} WIN`
+                              : ""}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          ...styles.row,
+                          paddingBottom: "0rem",
+                          border: "none",
+                        }}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAccept(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              color: COLORS.white,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Accept Bet
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            backgroundColor: COLORS.cream,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAdjust(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.h7,
+                              color: COLORS.primary,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Adjust Bet
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {data?.sportEvent?.sport === "MMA" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.name}
@@ -1026,7 +1144,10 @@ function OpenBet() {
         {!filterData ||
           (filterData?.length < 1 && (
             <div>
-              <EmptyState header="No Open bets available for your selection" height="30vh" />
+              <EmptyState
+                header="No Open bets available for your selection"
+                height="30vh"
+              />
             </div>
           ))}
 

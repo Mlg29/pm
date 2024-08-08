@@ -45,6 +45,8 @@ import BoxingGameCard from "../../components/GameCard/BoxingGameCard";
 import MmaGameCard from "../../components/GameCard/MmaGameCard";
 import { getEasportFixtures } from "../../redux/slices/Easport";
 import EsportGameCard from "../../components/GameCard/EsportGameCard";
+import { getDartFixtures } from "../../redux/slices/Dart";
+import DartGameCard from "../../components/GameCard/DartGameCard";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
@@ -229,6 +231,32 @@ function GameEventData(props: any) {
     });
   };
 
+  const fetchDartData = async (page) => {
+    const payloadUpcoming = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+
+    const actualPayload =
+      eventType === "upcoming"
+        ? payloadUpcoming
+        : "";
+
+    setLoading(true);
+    dispatch(getDartFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    });
+  };
+
   const fetchMmaData = async (page) => {
     const payloadUpcoming = {
       status: "Not Started",
@@ -304,6 +332,10 @@ function GameEventData(props: any) {
     }
     if (gameType === "Esport") {
       fetchEsportData(page);
+      return;
+    }
+    if (gameType === "Dart") {
+      fetchDartData(page);
       return;
     }
   }, [page]);
@@ -604,6 +636,7 @@ function GameEventData(props: any) {
                   {gameType === "Boxing" && <BoxingGameCard id={i} data={aa} />}
                   {gameType === "Mma/Ufc" && <MmaGameCard id={i} data={aa} />}
                   {gameType === "Esport" && <EsportGameCard id={i} data={aa} />}
+                  {gameType === "Dart" && <DartGameCard id={i} data={aa} />}
                 </div>
               );
             })}

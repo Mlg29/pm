@@ -90,25 +90,7 @@ function HorseGameCard({ id, data }) {
               >
                 WIN
               </p>
-              <div
-                style={{
-                  backgroundColor: COLORS.primary,
-                  width: 40,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body8,
-                    color: COLORS.white,
-                    textAlign: "center",
-                  }}
-                >
-                  {dd["odds"]?.bookmaker?.odd}
-                </p>
-              </div>
+            
             </div>
           );
         })}

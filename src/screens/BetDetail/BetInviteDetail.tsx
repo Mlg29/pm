@@ -23,6 +23,7 @@ import BoxingCard from "../../components/GameDetailCardHeader/BoxingCard";
 import MmaCard from "../../components/GameDetailCardHeader/MmaCard";
 import BasketballCard from "../../components/GameDetailCardHeader/BasketballCard";
 import EsportCard from "../../components/GameDetailCardHeader/EsportCard";
+import DartCard from "../../components/GameDetailCardHeader/DartCard";
 
 const styles = {
   div: {
@@ -174,6 +175,10 @@ function BetInviteDetail() {
         <EsportCard gameInfo={betData?.sportEvent?.EsportEvent} />
       )}
 
+{betData?.sportEvent?.sport === "DART" && (
+        <DartCard gameInfo={betData?.sportEvent?.DartEvent} />
+      )}
+
 {betData?.sportEvent?.sport === "MMA" && (
         <MmaCard gameInfo={betData?.sportEvent?.MmaEvent} />
       )}
@@ -270,6 +275,20 @@ function BetInviteDetail() {
                       ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
                       : betData?.opponentPrediction === "W2"
                       ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
+                      : ""}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </h3>
+            ): betData?.sportEvent?.sport === "DART" ? (
+              <h3>
+                {betData?.opponentId !== userData?.id ? (
+                  <p>
+                    {betData?.opponentPrediction === "W1"
+                      ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
+                      : betData?.opponentPrediction === "W2"
+                      ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
                       : ""}
                   </p>
                 ) : (
@@ -583,6 +602,65 @@ function BetInviteDetail() {
                 handlePress={() =>
                   handleRoute(
                     betData?.sportEvent?.EsportEvent?.awayteam?.name,
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+{betData?.sportEvent?.sport === "DART" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== "W1" && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.DartEvent?.localteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.DartEvent?.localteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.DartEvent?.localteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.DartEvent?.localteam?.name,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== "W2" && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.DartEvent?.awayteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.DartEvent?.awayteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.DartEvent?.awayteam?.name,
                     "W2"
                   )
                 }

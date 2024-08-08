@@ -182,6 +182,11 @@ function NavHeader() {
       image: easport,
     },
     {
+      id: 9,
+      name: "Darts",
+      image: dart,
+    },
+    {
       id: 10,
       name: "Golf",
       image: selected === "Golf" ? agolf : ingolf,
@@ -238,11 +243,6 @@ function NavHeader() {
       id: 8,
       name: "Volleyball",
       image: selected === "Volleyball" ? avolleyball : involleyball,
-    },
-    {
-      id: 9,
-      name: "Darts",
-      image: dart,
     },
     {
       id: 10,

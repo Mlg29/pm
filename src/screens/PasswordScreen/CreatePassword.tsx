@@ -183,8 +183,8 @@ function CreatePasswordNew() {
 
         <div style={{ marginTop: 20 }}>
           <TextInput
-            label="Old Password"
-            placeholder="Enter your old password"
+            label="Current Password"
+            placeholder="Enter your current password"
             required
             type="password"
             value={values.oldPassword}

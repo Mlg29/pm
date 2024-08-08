@@ -51,12 +51,12 @@ export const ForgetPasswordSchema = yup.object().shape({
 export const changePasswordSchema = yup.object().shape({
   oldPassword: yup
     .string()
-    .min(6, ({ min }) => `Old password must be at least ${min} characters`)
-    .required("Password is required"),
+    .min(6, ({ min }) => `Current password must be at least ${min} characters`)
+    .required("Current Password is required"),
   newPassword: yup
     .string()
     .min(6, ({ min }) => `New password must be at least ${min} characters`)
-    .required("Password is required"),
+    .required("New Password is required"),
   confirmNewPassword: yup
     .string()
     .min(
@@ -105,8 +105,8 @@ export const SecretQuestionSchema = yup.object().shape({
 export const CreatePasswordSchema = yup.object().shape({
   oldPassword: yup
     .string()
-    .min(6, ({ min }) => `Password must be at least ${min} characters`)
-    .required("Old password is required"),
+    .min(6, ({ min }) => `Current password must be at least ${min} characters`)
+    .required("Current password is required"),
   password: yup
     .string()
     .min(6, ({ min }) => `Password must be at least ${min} characters`)
@@ -140,8 +140,8 @@ export const MaxAmountSchema = yup.object().shape({
 export const CreatePinSchema = yup.object().shape({
   oldPin: yup
     .string()
-    .length(6,`Old Pin must be 6 characters`)
-    .required("Old pin is required"),
+    .length(6,`Current Pin must be 6 characters`)
+    .required("Current pin is required"),
   pin: yup
     .string()
     .length(6,`New Pin must be 6 characters`)

@@ -41,7 +41,6 @@ function HorseDetails({ selected, gameInfo, handleRoute }) {
               onClick={() => handleRoute(dd?.name, `W${i+1}`)}
             >
               <p style={{...FONTS.h6}}>Bet {dd?.name} to win</p>
-              <p style={{...FONTS.body6}}>{dd?.odds?.bookmaker?.odd}</p>
             </div>
           );
         })}

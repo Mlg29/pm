@@ -91,12 +91,13 @@ function ChangeTransactionPin() {
     });
 
   const handleSubmitData = async (data) => {
-    const payload = {
-      transactionPin: data?.pin,
-    };
-    setStorePayload(payload)
-    setShow(true)
-    return;
+    // const payload = {
+    //   transactionPin: data?.pin,
+    // };
+    // setStorePayload(payload)
+    // setShow(true)
+    // return;
+    handleAction()
   };
 
   const handleAction = async() => {
@@ -154,8 +155,8 @@ function ChangeTransactionPin() {
 
         <div style={{ marginTop: 20 }}>
         <TextInput
-            label="Old Pin"
-            placeholder="Enter your old 6 digit  pin"
+            label="Current Pin"
+            placeholder="Enter your current 6 digit  pin"
             required
             isNumeric
             type="password"
@@ -232,14 +233,14 @@ function ChangeTransactionPin() {
         </div>
       </div>
 
-      <PinModal
+      {/* <PinModal
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
         responseText="Pin Updated Successfully"
         type=""
       
-      />
+      /> */}
       <ToastContainer />
     </div>
   );

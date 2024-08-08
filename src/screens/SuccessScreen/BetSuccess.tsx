@@ -41,7 +41,7 @@ export const styles = {
     flexDirection: "column" as FlexDirection,
     justifyContent: "center",
     alignItems: "center",
-    margin: "0px 0px 10px 0px",
+    margin: "-20rem 0px 10px 0px",
   },
 };
 
@@ -55,7 +55,7 @@ function BetSuccess() {
 
   return (
     <div className="top-container" style={{ ...styles.container }}>
-      <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <div
           style={{
             marginTop: 20,
@@ -102,7 +102,7 @@ function BetSuccess() {
         style={{
           display: "flex",
           flexDirection: "column",
-          flex: 1,
+          flex: 2,
           justifyContent: "center",
         }}
       >
