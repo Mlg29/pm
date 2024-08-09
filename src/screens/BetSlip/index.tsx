@@ -355,24 +355,24 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
-                                  {item?.sportEvent?.sport === "DART" && (
+                                 {item?.sportEvent?.sport === "DART" && (
                               <SlipCard
                                 homeName={
-                                  item?.sportEvent?.EsportEvent?.localteam?.name
+                                  item?.sportEvent?.DartEvent?.localteam?.name
                                 }
                                 awayName={
-                                  item?.sportEvent?.EsportEvent?.awayteam?.name
+                                  item?.sportEvent?.DartEvent?.awayteam?.name
                                 }
                                 homeScore={
-                                  item?.sportEvent?.EsportEvent?.localteam
+                                  item?.sportEvent?.DartEvent?.localteam
                                     ?.totalscore
-                                    ? item?.sportEvent?.EsportEvent?.localteam
+                                    ? item?.sportEvent?.DartEvent?.localteam
                                         ?.totalscore
                                     : "0"
                                 }
                                 awayScore={
-                                  item?.sportEvent?.EsportEvent?.awayteam?.totalscore
-                                    ? item?.sportEvent?.EsportEvent?.awayteam
+                                  item?.sportEvent?.DartEvent?.awayteam?.totalscore
+                                    ? item?.sportEvent?.DartEvent?.awayteam
                                         ?.totalscore
                                     : "0"
                                 }
@@ -596,21 +596,21 @@ function BetSlip() {
                               {item?.sportEvent?.sport === "DART" && (
                               <SlipCard
                                 homeName={
-                                  item?.sportEvent?.EsportEvent?.localteam?.name
+                                  item?.sportEvent?.DartEvent?.localteam?.name
                                 }
                                 awayName={
-                                  item?.sportEvent?.EsportEvent?.awayteam?.name
+                                  item?.sportEvent?.DartEvent?.awayteam?.name
                                 }
                                 homeScore={
-                                  item?.sportEvent?.EsportEvent?.localteam
+                                  item?.sportEvent?.DartEvent?.localteam
                                     ?.totalscore
-                                    ? item?.sportEvent?.EsportEvent?.localteam
+                                    ? item?.sportEvent?.DartEvent?.localteam
                                         ?.totalscore
                                     : "0"
                                 }
                                 awayScore={
-                                  item?.sportEvent?.EsportEvent?.awayteam?.totalscore
-                                    ? item?.sportEvent?.EsportEvent?.awayteam
+                                  item?.sportEvent?.DartEvent?.awayteam?.totalscore
+                                    ? item?.sportEvent?.DartEvent?.awayteam
                                         ?.totalscore
                                     : "0"
                                 }
