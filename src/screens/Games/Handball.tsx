@@ -66,7 +66,7 @@ function Handball() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

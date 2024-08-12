@@ -87,7 +87,7 @@ function BetSlip() {
     );
   }
 
-  console.log({ betList });
+
 
   return (
     <div className="top-container">

@@ -73,7 +73,7 @@ const InviteFriend = () => {
       amount: amount,
       allowOtherCurrency: allowCurrency
     };
-    console.log({payload})
+
     localStorage.setItem("inviteeInfo", JSON.stringify(payload));
     return navigate("/options");
   };

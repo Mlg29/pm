@@ -66,7 +66,7 @@ function Volleyball() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

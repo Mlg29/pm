@@ -66,7 +66,7 @@ function TableTennis() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

@@ -152,10 +152,9 @@ function HomeScreen() {
     },
     {
       id: 10,
-      name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf,
+      name: "Snooker",
+      image: snooker,
     },
-   
     {
       id: 8,
       name: "Baseball",
@@ -209,11 +208,10 @@ function HomeScreen() {
       name: "Volleyball",
       image: selected === "Volleyball" ? avolleyball : involleyball,
     },
-
     {
       id: 10,
-      name: "Snooker",
-      image: snooker,
+      name: "Golf",
+      image: selected === "Golf" ? agolf : ingolf,
     },
     {
       id: 11,
@@ -435,7 +433,7 @@ function HomeScreen() {
         )}
       </div>
 
-      <SearchComponent placeholder="Search by event, sport, club or game" />
+      <SearchComponent disabled placeholder="Search by sport, club or game" />
 
       <div>
         <SliderComponent />

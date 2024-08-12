@@ -118,7 +118,7 @@ function Dashboard() {
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
-  console.log({sportEvents})
+
 
   useEffect(() => {
     const handleStorageChange = () => {

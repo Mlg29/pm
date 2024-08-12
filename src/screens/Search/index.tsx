@@ -26,6 +26,7 @@ import { getEasportFixtures } from "../../redux/slices/Easport";
 import EsportGameCard from "../../components/GameCard/EsportGameCard";
 import { getDartFixtures } from "../../redux/slices/DartSlice";
 import DartGameCard from "../../components/GameCard/DartGameCard";
+import SearchInput from "../../components/SearchComponent";
 
 const styles = {
   row: {
@@ -155,11 +156,11 @@ const itemList = [
   },
 ];
 
-function FilterPage() {
-  const location = useLocation()
-  const getName = location?.state?.gameName
+function Search() {
+  const location = useLocation();
+  const getName = location?.state?.gameName;
   const [game, setGame] = useState("");
-  const [dateRange, setDateRange] = useState();
+
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -169,15 +170,12 @@ function FilterPage() {
   const [data, setData] = useState<any>([]);
   const dispatch = useAppDispatch() as any;
   const [loader, setLoader] = useState(false);
-
-
-
-
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
@@ -198,9 +196,9 @@ function FilterPage() {
     });
   };
   const fetchTennisData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
@@ -209,7 +207,7 @@ function FilterPage() {
     setLoader(true);
     dispatch(getTennisFixtures(payload)).then((dd) => {
       // setData((prev) => [...prev, ...dd?.payload?.data]);
-      setData(dd?.payload?.data || [])
+      setData(dd?.payload?.data || []);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
@@ -221,14 +219,13 @@ function FilterPage() {
     });
   };
   const fetchHorseData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
 
-    
     setLoading(true);
     setLoader(true);
     dispatch(getHorseFixtures(payload)).then((dd) => {
@@ -245,14 +242,13 @@ function FilterPage() {
   };
 
   const fetchBoxingData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
 
-   
     setLoading(true);
     setLoader(true);
     dispatch(getBoxingFixtures(payload)).then((dd) => {
@@ -264,19 +260,18 @@ function FilterPage() {
         setHasMore(false);
       }
       setLoading(false);
-    setLoader(false);
+      setLoader(false);
     });
   };
 
   const fetchEsportData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("DD-MM-YYYY"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
 
-   
     setLoading(true);
     setLoader(true);
     dispatch(getEasportFixtures(payload)).then((dd) => {
@@ -288,19 +283,18 @@ function FilterPage() {
         setHasMore(false);
       }
       setLoading(false);
-    setLoader(false);
+      setLoader(false);
     });
   };
 
   const fetchDartData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("DD-MM-YYYY"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
 
-   
     setLoading(true);
     setLoader(true);
     dispatch(getDartFixtures(payload)).then((dd) => {
@@ -312,14 +306,14 @@ function FilterPage() {
         setHasMore(false);
       }
       setLoading(false);
-    setLoader(false);
+      setLoader(false);
     });
   };
 
   const fetchMmaData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
@@ -339,9 +333,9 @@ function FilterPage() {
   };
 
   const fetchBasketballData = async (page) => {
-    setData([])
+    setData([]);
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      searchTerm: searchTerm,
       page: page,
       pageSize: pageSize,
     };
@@ -361,43 +355,42 @@ function FilterPage() {
   };
 
   useEffect(() => {
-    setGame(getName)
+    setGame(getName);
   }, [getName]),
-
-  useEffect(() => {
-    if (game === "Soccer") {
-      fetchData(page);
-      return;
-    }
-    if (game === "Tennis") {
-      fetchTennisData(page);
-      return;
-    }
-    if (game === "Horse Racing") {
-      fetchHorseData(page);
-      return;
-    }
-    if (game === "MMA/UFC") {
-      fetchMmaData(page);
-      return;
-    }
-    if (game === "Basketball") {
-      fetchBasketballData(page);
-      return;
-    }
-    if (game === "Boxing") {
-      fetchBoxingData(page);
-      return;
-    }
-    if (game === "Esport") {
-      fetchEsportData(page);
-      return;
-    }
-    if (game === "Darts") {
-      fetchDartData(page);
-      return;
-    }
-  }, [page, dateRange, game]);
+    useEffect(() => {
+      if (game === "Soccer") {
+        fetchData(page);
+        return;
+      }
+      if (game === "Tennis") {
+        fetchTennisData(page);
+        return;
+      }
+      if (game === "Horse Racing") {
+        fetchHorseData(page);
+        return;
+      }
+      if (game === "MMA/UFC") {
+        fetchMmaData(page);
+        return;
+      }
+      if (game === "Basketball") {
+        fetchBasketballData(page);
+        return;
+      }
+      if (game === "Boxing") {
+        fetchBoxingData(page);
+        return;
+      }
+      if (game === "Esport") {
+        fetchEsportData(page);
+        return;
+      }
+      if (game === "Darts") {
+        fetchDartData(page);
+        return;
+      }
+    }, [page, searchTerm, game]);
 
   const handleSelectChange = (e) => {
     const value = e.target.value;
@@ -408,27 +401,23 @@ function FilterPage() {
     //setPage((prevPage) => prevPage + 1);
   };
 
-
-
-
-
   return (
     <div className="top-container">
       <DesktopBackButton />
 
       <div style={styles.row}>
         <div style={{ ...styles.contain, marginBottom: 10 }}>
-          <label htmlFor={`game`} style={{ ...FONTS.body7 }}>
-            Select Game
+          <label htmlFor={`sport`} style={{ ...FONTS.body7 }}>
+            Select Sport
           </label>
           <select
             style={{ ...styles.select }}
-            id={`game`}
-            name={`game`}
+            id={`sport`}
+            name={`sport`}
             onChange={(e) => handleSelectChange(e)}
             value={game}
           >
-            <option value="">Select a game</option>
+            <option value="">Select a sport</option>
             {itemList?.map((q: any) => {
               return (
                 <option key={q.id} value={q.name}>
@@ -439,73 +428,69 @@ function FilterPage() {
           </select>
         </div>
         <div style={{ width: "48%" }}>
-          <DatePickerComponent
-            label="Date"
-            placeholder="Date"
-            propStyle={{ width: "100%" }}
-            value={dateRange}
-            onChangeDate={(date) => setDateRange(date)}
+          <SearchInput
+            placeholder="Search term for name"
+            value={searchTerm}
+            handleChange={(e) => setSearchTerm(e)}
           />
         </div>
       </div>
 
-          {
-            loader ?  <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+      {loader ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
             //  flex: 1,
-             // height: "50vh",
-            }}
-          >
-            <Loader />
-          </div>
-          :
-            <div>
-        <p>{game}</p>
-
-        <div>
-        <InfiniteScroll
-            dataLength={data?.length || []}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            loader={loading && <h4>Loading...</h4>}
-            endMessage={<p>No more data to load</p>}
-          >
-            {data?.map((aa: any, i: any) => {
-              return (
-                <div key={i}>
-                  {game=== "Soccer" && <GameCard id={i} data={aa} />}
-
-                  {game === "Tennis" && <TennisGameCard id={i} data={aa} />}
-
-                  {game === "Horse Racing" && <HorseGameCard id={i} data={aa} />}
-                  {game === "Basketball" && <BasketballGameCard id={i} data={aa} />}
-                  {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
-                  {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
-                  {game === "Esport" && <EsportGameCard id={i} data={aa} />}
-                  {game === "Darts" && <DartGameCard id={i} data={aa} />}
-                </div>
-              );
-            })}
-          </InfiniteScroll>
-
-          {
-            !data || data?.length < 1 ?
-            <EmptyState  
-              header="No data available"
-              height="50vh"
-            />
-            : null
-          }
+            // height: "50vh",
+          }}
+        >
+          <Loader />
         </div>
-      </div>
-          }
-    
+      ) : (
+        <div>
+          <p>{game}</p>
+
+          <div>
+            <InfiniteScroll
+              dataLength={data?.length || []}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={loading && <h4>Loading...</h4>}
+              endMessage={<p>No more data to load</p>}
+            >
+              {data?.map((aa: any, i: any) => {
+                return (
+                  <div key={i}>
+                    {game === "Soccer" && <GameCard id={i} data={aa} />}
+
+                    {game === "Tennis" && <TennisGameCard id={i} data={aa} />}
+
+                    {game === "Horse Racing" && (
+                      <HorseGameCard id={i} data={aa} />
+                    )}
+                    {game === "Basketball" && (
+                      <BasketballGameCard id={i} data={aa} />
+                    )}
+                    {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
+                    {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
+                    {game === "Esport" && <EsportGameCard id={i} data={aa} />}
+                    {game === "Darts" && <DartGameCard id={i} data={aa} />}
+                  </div>
+                );
+              })}
+            </InfiniteScroll>
+
+            {!data || data?.length < 1 ? (
+              <EmptyState header="No data available" height="50vh" />
+            ) : null}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-export default FilterPage;
+export default Search;

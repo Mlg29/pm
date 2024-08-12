@@ -32,7 +32,7 @@ function HorseRace() {
     });
 
     socket.on("HorseEventUpdate", (message) => {
-      console.log("horse==", { message });
+   
       setLive((prevMessages) => {
         const updatedMessages = prevMessages?.filter(
           (msg) => msg?.id !== message?.id
@@ -91,7 +91,7 @@ function HorseRace() {
     );
   }
 
-  console.log({upcoming})
+
 
 
   return (

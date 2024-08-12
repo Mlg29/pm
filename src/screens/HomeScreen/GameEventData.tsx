@@ -45,7 +45,7 @@ import BoxingGameCard from "../../components/GameCard/BoxingGameCard";
 import MmaGameCard from "../../components/GameCard/MmaGameCard";
 import { getEasportFixtures } from "../../redux/slices/Easport";
 import EsportGameCard from "../../components/GameCard/EsportGameCard";
-import { getDartFixtures } from "../../redux/slices/Dart";
+import { getDartFixtures } from "../../redux/slices/DartSlice";
 import DartGameCard from "../../components/GameCard/DartGameCard";
 
 function GameEventData(props: any) {

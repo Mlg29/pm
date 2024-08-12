@@ -66,7 +66,7 @@ function Rugby() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

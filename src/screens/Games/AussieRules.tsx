@@ -66,7 +66,7 @@ function AussieRules() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

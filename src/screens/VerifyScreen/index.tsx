@@ -176,7 +176,7 @@ function VerifyScreen() {
       otp: parseInt(otp)
     }
 
-    console.log({payload})
+
     setLoader(true)
     try {
       var response =  await dispatch(verifyEmailOtp(payload));

@@ -66,7 +66,7 @@ function Futsol() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

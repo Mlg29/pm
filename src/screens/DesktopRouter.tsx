@@ -63,6 +63,7 @@ import BetInviteDetail from './BetDetail/BetInviteDetail.js';
 import FilterPage from './FilterPage/index.js';
 import ScrollToTop from '../components/ScrollToTop.js';
 import League from './HomeScreen/League.js';
+import Search from './Search/index.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -126,6 +127,7 @@ function DesktopRouters() {
       <Route path="/amount" element={<DashboardLayout><BetAmount /></DashboardLayout>} />
       <Route path="/filter" element={<DashboardLayout><FilterPage /></DashboardLayout>} />
       <Route path="/league" element={<DashboardLayout><League /></DashboardLayout>} />
+      <Route path="/search" element={<DashboardLayout><Search /></DashboardLayout>} />
     </Routes>
   </Router>
   )

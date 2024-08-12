@@ -179,7 +179,7 @@ function GameDetails() {
       socket.disconnect();
     };
   }, []);
-  // console.log({gameType})
+
   const handleRoute = (route: string, selection?: string) => {
     if (token) {
       setSelected(route);

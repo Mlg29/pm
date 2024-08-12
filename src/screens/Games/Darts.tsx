@@ -9,7 +9,7 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
-import { getDartFixtures } from "../../redux/slices/Dart";
+import { getDartFixtures } from "../../redux/slices/DartSlice";
 import DartGameCard from "../../components/GameCard/DartGameCard";
 
 
@@ -69,7 +69,7 @@ function Darts() {
 
   }, []);
 
-  console.log({upcoming, finished})
+  
 
   return (
     <div>

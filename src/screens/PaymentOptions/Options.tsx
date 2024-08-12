@@ -57,14 +57,14 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const goToPin = () => {
     if((userFee?.adjustedBetAmount) > userData?.walletBalance) {
-      console.log("true")
+
       toast.error("Insufficient Balance", {
         position: "bottom-center",
       });
       return
     }
     if(userFee?.amount > userData?.walletBalance) {
-      console.log("true")
+   
       toast.error("Insufficient Balance", {
         position: "bottom-center",
       });

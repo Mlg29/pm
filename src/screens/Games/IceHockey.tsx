@@ -66,7 +66,7 @@ function IceHockey() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

@@ -9,13 +9,14 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
+import { getSnookerFixtures } from "../../redux/slices/SnookerSlice";
 
 
 function Snooker() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
-  const url = `${BaseUrl}/boxing`;
+
   const dispatch = useAppDispatch() as any;
 
   // useEffect(() => {
@@ -56,9 +57,9 @@ function Snooker() {
         status: "Finished",
       };
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
+    dispatch(getSnookerFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload);
+    });
 
     // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
     //     setFinished(dd?.payload);
@@ -66,8 +67,8 @@ function Snooker() {
 
   }, []);
 
-  console.log({upcoming, finished})
-
+ 
+console.log({upcoming})
   return (
     <div>
        {

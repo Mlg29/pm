@@ -66,7 +66,7 @@ function Cricket() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

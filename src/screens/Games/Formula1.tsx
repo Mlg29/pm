@@ -66,7 +66,7 @@ function Formula1() {
 
   }, []);
 
-  console.log({upcoming, finished})
+
 
   return (
     <div>

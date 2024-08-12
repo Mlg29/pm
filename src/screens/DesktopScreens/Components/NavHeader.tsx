@@ -188,8 +188,8 @@ function NavHeader() {
     },
     {
       id: 10,
-      name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf,
+      name: "Snooker",
+      image: snooker,
     },
     {
       id: 8,
@@ -246,8 +246,8 @@ function NavHeader() {
     },
     {
       id: 10,
-      name: "Snooker",
-      image: snooker,
+      name: "Golf",
+      image: selected === "Golf" ? agolf : ingolf,
     },
     {
       id: 11,
@@ -321,7 +321,7 @@ function NavHeader() {
           <div style={{ ...styles.row }}>
             {getToken && <div style={{ width: "10%" }}></div>}
             <div style={{ width: "50%" }}>
-              <SearchInput placeholder="Search by event, sport, club or game" />
+              <SearchInput disabled placeholder="Search by sport, club or game" />
             </div>
 
             {getToken ? (
@@ -612,7 +612,7 @@ function NavHeader() {
           <div style={{ ...styles.rowDes }}>
             {getToken && <div style={{ width: "10%" }}></div>}
             <div style={{ width: "50%" }}>
-              <SearchInput placeholder="Search by event, sport, club or game" />
+              <SearchInput disabled placeholder="Search by sport, club or game" />
             </div>
 
             {getToken ? (
@@ -900,7 +900,7 @@ function NavHeader() {
           )}
           <div style={{ ...styles.rowTab }}>
             <div style={{ width: "30%" }}>
-              <SearchInput placeholder="Search by event, sport, club or game" />
+              <SearchInput disabled placeholder="Search by sport, club or game" />
             </div>
             {getToken ? (
               <div

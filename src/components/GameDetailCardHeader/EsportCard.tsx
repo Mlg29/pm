@@ -49,7 +49,6 @@ function EsportCard(props) {
     return true;
   }
 
-console.log({data})
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>

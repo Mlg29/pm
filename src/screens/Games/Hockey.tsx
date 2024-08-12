@@ -66,7 +66,7 @@ function Hockey() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>

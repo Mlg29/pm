@@ -36,7 +36,7 @@ function NotificationScreen() {
     setUpdateLoader(true);
     var response = await dispatch(updateNotifications(payload))
     if(updateNotifications.fulfilled.match(response)){
-      console.log({response})
+
       setUpdateLoader(false);
       getNotification()
       // toast.error(response?.payload?.data?.message, {

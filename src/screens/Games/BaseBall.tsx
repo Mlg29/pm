@@ -66,7 +66,7 @@ function Baseball() {
 
   }, []);
 
-  console.log({upcoming, finished})
+ 
 
   return (
     <div>
