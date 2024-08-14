@@ -27,6 +27,8 @@ import EsportGameCard from "../../components/GameCard/EsportGameCard";
 import { getDartFixtures } from "../../redux/slices/DartSlice";
 import DartGameCard from "../../components/GameCard/DartGameCard";
 import SearchInput from "../../components/SearchComponent";
+import { getSnookerFixtures } from "../../redux/slices/SnookerSlice";
+import SnookerGameCard from "../../components/GameCard/SnookerGameCard";
 
 const styles = {
   row: {
@@ -310,6 +312,29 @@ function Search() {
     });
   };
 
+  const fetchSnookerData = async (page) => {
+    setData([]);
+    const payload = {
+      searchTerm: searchTerm,
+      page: page,
+      pageSize: pageSize,
+    };
+
+    setLoading(true);
+    setLoader(true);
+    dispatch(getSnookerFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+      setLoader(false);
+    });
+  };
+
   const fetchMmaData = async (page) => {
     setData([]);
     const payload = {
@@ -388,6 +413,10 @@ function Search() {
       }
       if (game === "Darts") {
         fetchDartData(page);
+        return;
+      }
+      if (game === "Snooker") {
+        fetchSnookerData(page);
         return;
       }
     }, [page, searchTerm, game]);
@@ -478,6 +507,7 @@ function Search() {
                     {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
                     {game === "Esport" && <EsportGameCard id={i} data={aa} />}
                     {game === "Darts" && <DartGameCard id={i} data={aa} />}
+                    {game === "Snooker" && <SnookerGameCard id={i} data={aa} />}
                   </div>
                 );
               })}

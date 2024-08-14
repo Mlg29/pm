@@ -24,6 +24,7 @@ import MmaCard from "../../components/GameDetailCardHeader/MmaCard";
 import BasketballCard from "../../components/GameDetailCardHeader/BasketballCard";
 import EsportCard from "../../components/GameDetailCardHeader/EsportCard";
 import DartCard from "../../components/GameDetailCardHeader/DartCard";
+import SnookerCard from "../../components/GameDetailCardHeader/SnookerCard";
 
 const styles = {
   div: {
@@ -177,6 +178,9 @@ function BetInviteDetail() {
 
 {betData?.sportEvent?.sport === "DART" && (
         <DartCard gameInfo={betData?.sportEvent?.DartEvent} />
+      )}
+      {betData?.sportEvent?.sport === "DART" && (
+        <SnookerCard gameInfo={betData?.sportEvent?.SnookerEvent} />
       )}
 
 {betData?.sportEvent?.sport === "MMA" && (
@@ -798,6 +802,65 @@ function BetInviteDetail() {
                 }}
                 // handlePress={() => navigate('/home')}
                 handlePress={() => handleRoute("DRAW", "DRAW")}
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+{betData?.sportEvent?.sport === "SNOOKER" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== "W1" && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.SnookerEvent?.localteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.SnookerEvent?.localteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.SnookerEvent?.localteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.SnookerEvent?.localteam?.name,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== "W2" && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.SnookerEvent?.awayteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.SnookerEvent?.awayteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.SnookerEvent?.awayteam?.name,
+                    "W2"
+                  )
+                }
               />
             </div>
           )}

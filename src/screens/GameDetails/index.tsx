@@ -27,6 +27,7 @@ import MmaDetails from "./Details/MmaDetails";
 import BasketballDetails from "./Details/BasketballDetails";
 import EsportDetails from "./Details/EsportDetail";
 import DartDetails from "./Details/DartDetail";
+import SnookerDetail from "./Details/SnookerDetail";
 
 const styles = {
   container: {
@@ -832,6 +833,15 @@ function GameDetails() {
 
 {gameType === "Dart" && (
           <DartDetails
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
+{gameType === "Snooker" && (
+          <SnookerDetail
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

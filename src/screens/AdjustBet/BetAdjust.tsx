@@ -27,6 +27,7 @@ import MmaCard from "../../components/GameDetailCardHeader/MmaCard";
 import BasketballCard from "../../components/GameDetailCardHeader/BasketballCard";
 import EsportCard from "../../components/GameDetailCardHeader/EsportCard";
 import DartCard from "../../components/GameDetailCardHeader/DartCard";
+import SnookerCard from "../../components/GameDetailCardHeader/SnookerCard";
 
 const styles = {
   inputs: {
@@ -235,7 +236,9 @@ const BetAdjust = () => {
         <DartCard data={sportEvents?.DartEvent} />
       )}
 
-
+{sportEvents?.sport === "SNOOKER" && (
+        <SnookerCard data={sportEvents?.SnookerEvent} />
+      )}
 {sportEvents?.sport === "MMA" && (
         <MmaCard data={sportEvents?.MmaEvent} />
       )}

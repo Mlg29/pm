@@ -12,9 +12,8 @@ import EmptyState from "../../components/EmptyState";
 import { getDartFixtures } from "../../redux/slices/DartSlice";
 import DartGameCard from "../../components/GameCard/DartGameCard";
 
-
 function Darts() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [upcoming, setUpcoming] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
@@ -31,7 +30,6 @@ function Darts() {
   //   socket.on("connect_error", (err) => {
   //     console.error("WebSocket connection error:", err);
   //   });
-
 
   //   socket.on("DartEventUpdate", (message) => {
   //     setLive((prevMessages) => {
@@ -56,8 +54,8 @@ function Darts() {
       status: "Not Started",
     };
     const payloadFinished = {
-        status: "Finished",
-      };
+      status: "Finished",
+    };
 
     dispatch(getDartFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
@@ -66,14 +64,11 @@ function Darts() {
     // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
     //     setFinished(dd?.payload);
     //   });
-
   }, []);
-
-  
 
   return (
     <div>
-           {upcoming?.data?.length > 0 && (
+      {upcoming?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -114,17 +109,11 @@ function Darts() {
           </div>
         );
       })}
-       {
-        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
-        <EmptyState 
-          header="No Game Available for Darts"
-          height="30vh"
-        />
-        :
-        null
-      }
+      {finished?.data?.length < 1 && upcoming?.data?.length < 1 ? (
+        <EmptyState header="No Game Available for Darts" height="30vh" />
+      ) : null}
     </div>
-  )
+  );
 }
 
-export default Darts
+export default Darts;

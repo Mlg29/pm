@@ -10,6 +10,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
 import { getSnookerFixtures } from "../../redux/slices/SnookerSlice";
+import SnookerGameCard from "../../components/GameCard/SnookerGameCard";
 
 
 function Snooker() {
@@ -68,9 +69,50 @@ function Snooker() {
   }, []);
 
  
-console.log({upcoming})
+
   return (
     <div>
+       {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                    gameType: "Snooker",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+      {upcoming?.data?.map((aa: any, i: any) => {
+        return (
+          <div key={i}>
+            <SnookerGameCard id={i} data={aa} />
+          </div>
+        );
+      })}
        {
         finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
         <EmptyState 
