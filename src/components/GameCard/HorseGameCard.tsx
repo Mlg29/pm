@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { OverflowX } from "../../utils/type";
 import moment from "moment";
 
-
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
 export const styles = {
@@ -24,8 +23,8 @@ export const styles = {
   },
   box2: {
     marginRight: 10,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
 
     // width: "45%",
   },
@@ -35,14 +34,16 @@ export const styles = {
     overflowX: "auto" as OverflowX,
     whiteSpace: "nowrap",
     margin: "10px 0px",
-   // scrollbarWidth: "none",
-   // marginRight: 10,
+    // scrollbarWidth: "none",
+    // marginRight: 10,
     // width: "45%",
   },
 };
 
 function HorseGameCard({ id, data }) {
   const navigate = useNavigate();
+
+  console.log({ data });
 
   return (
     <div
@@ -60,41 +61,30 @@ function HorseGameCard({ id, data }) {
         </div>
         <div style={styles.box2}>
           <p style={{ ...FONTS.body7 }}>{data?.name}</p>
-          {/* <p style={{ ...FONTS.body8, color: COLORS.black, marginLeft: 10 }}>
-         ( {moment(data?.startTime).format("DD-MM-YYYY")})
-        </p> */}
         </div>
       </div>
 
-      <div style={styles.box3}>
-        {data?.horses?.horse?.map((dd, i) => {
-          return (
-            <div key={i} style={{ width: 200,  display: "inline-block",flexDirection: 'column',
-            justifyContent: "center",
-            alignItems: "center", }}>
-              <p
-                style={{
-                  ...FONTS.body8,
-                  color: COLORS.primary,
-                //   textAlign: "center",
-                }}
-              >
-                {dd["jockey"].slice(0, 6)}
-              </p>
-              <p
-                style={{
-                  ...FONTS.body8,
-                  color: COLORS.green,
-                //   textAlign: "center",
-                }}
-              >
-                WIN
-              </p>
-            
-            </div>
-          );
-        })}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <p style={{ ...FONTS.body8 }}>
+            <span style={{ color: COLORS.orange }}>Tournament: </span>
+          </p>
+          <p style={{ ...FONTS.body8 }}>{data?.tournamentName}</p>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'end'}}>
+          <p style={{ ...FONTS.body8 }}>
+            <span style={{ color: COLORS.orange }}>Distance: </span>
+          </p>
+          <p style={{ ...FONTS.body8 }}><span>{data?.distance}</span></p>
+        </div>
       </div>
+
     </div>
   );
 }
