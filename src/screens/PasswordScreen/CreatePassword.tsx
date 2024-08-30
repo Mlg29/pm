@@ -87,8 +87,8 @@ function CreatePasswordNew() {
 
   const handleSubmitData = async (data) => {
     const payload = {
-      oldPassword: data?.oldPassword,
-      password: data?.password,
+      currentPassword: data?.oldPassword,
+      newPassword: data?.password,
     };
 
     setStorePayload(payload);

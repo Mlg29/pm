@@ -17,7 +17,7 @@ import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
 import { CreatePinSchema } from "../../https/schemas";
-import { updateTransactionPin } from "../../redux/slices/AuthSlice";
+import { changeTransactionPins } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { MdPrivacyTip } from "react-icons/md";
 import PinModal from "../../components/Modals/PinModal";
@@ -97,14 +97,19 @@ function ChangeTransactionPin() {
     // setStorePayload(payload)
     // setShow(true)
     // return;
-    handleAction()
+    handleAction(data)
   };
 
-  const handleAction = async() => {
+  const handleAction = async(storePayload) => {
+    const payload = {
+      currentPin: storePayload?.oldPin,
+      newPin: storePayload?.pin
+    }
+
     setLoader(true);
     try {
-      var response = await dispatch(updateTransactionPin(storePayload));
-      if (updateTransactionPin.fulfilled.match(response)) {
+      var response = await dispatch(changeTransactionPins(payload));
+      if (changeTransactionPins.fulfilled.match(response)) {
         toast.success(response?.payload?.data?.message, {
           position: "bottom-center",
         });

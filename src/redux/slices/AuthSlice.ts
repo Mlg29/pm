@@ -247,6 +247,23 @@ export const updateTransactionPin = createAsyncThunk(
 );
 
 
+export const changeTransactionPins = createAsyncThunk(
+  "auth/changeTransactionPins",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await updateRequest(
+        `${BaseUrl}/users/change-transaction-pin`,
+        payload
+      );
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
 
 
 export const AuthSlice = createSlice({
@@ -402,6 +419,19 @@ export const AuthSlice = createSlice({
         }
       );
     builder.addCase(updateTransactionPin.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(changeTransactionPins.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        changeTransactionPins.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          // state.userInfo = action.payload
+        }
+      );
+    builder.addCase(changeTransactionPins.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(uploadImage.pending, (state, action) => {

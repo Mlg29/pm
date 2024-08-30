@@ -26,11 +26,12 @@ export const styles = {
 }
 
 function Dropdown(props: any) {
-    const { data, handleSelect, label, placeholder, required } = props
+    const { data, handleSelect,value, label, placeholder, required } = props
+
     return (
         <div style={{ ...styles.container,marginBottom: 10 }}>
            <label style={{ ...FONTS.body7 }}>{label} {required ? <span style={{color: "red"}}>*</span> : null}</label>
-            <select style={{...styles.select}}>
+            <select   onChange={(e) => handleSelect(e)} value={value} style={{...styles.select}}>
                 <option>{placeholder}</option>
                 {
                     data?.map((info: any) => {

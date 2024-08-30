@@ -20,7 +20,8 @@ import CountryPhone from "../../components/CountryPhone";
 import { getCountryListMap } from "country-flags-dial-code";
 import axios from "axios";
 import moment from "moment";
-import {IPInfoContext} from "ip-info-react"
+import { IPInfoContext } from "ip-info-react";
+import Dropdown from "../../components/Dropdown";
 
 export const styles = {
   container: {
@@ -67,6 +68,7 @@ function SignupScreen() {
   const [dob, setDob] = useState<any>();
   const [loader, setLoader] = useState(false);
   const [country, setCountry] = useState("Nigeria");
+  const [gender, setGender] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const getPendingRegFromStorage = JSON.parse(localStorage.getItem("userreg"));
@@ -74,7 +76,6 @@ function SignupScreen() {
   const userIp = useContext(IPInfoContext);
 
   // console.log({userIp})
-
 
   // const getData = async () => {
   //   // const res = await axios.get("https://api.ipify.org/?format=json");
@@ -91,8 +92,6 @@ function SignupScreen() {
     setCountryList(x);
     // getData()
   }, []);
-
-
 
   const initialValues: CreateAccountFormDataUi = {
     email: getPendingRegFromStorage?.email
@@ -172,46 +171,51 @@ function SignupScreen() {
     }
   };
 
+
+  const countryListCode = countryList?.find((dd) => dd?.country === country);
+
+
   const handleSubmitData = async (data) => {
-    if(userIp?.country_code === "US"){
+    if (userIp?.country_code === "US") {
       toast.error("Registration is restricted for this country", {
         position: "bottom-center",
       });
-      return
+      return;
     }
-       if(!country || country?.length < 1){
+    if (!country || country?.length < 1) {
       toast.error("Country is required", {
         position: "bottom-center",
       });
-      return
+      return;
     }
-       if(!phoneNumber || phoneNumber?.length < 1){
+    if (!phoneNumber || phoneNumber?.length < 1) {
       toast.error("Phone number is required", {
         position: "bottom-center",
       });
-      return
+      return;
     }
-    if(!dob){
+    if (!dob) {
       toast.error("Date of birth is required", {
         position: "bottom-center",
       });
       return;
     }
 
-    if(calculateDefaultDate() < dob) {
+    if (calculateDefaultDate() < dob) {
       toast.error("Date must be above 18years old", {
         position: "bottom-center",
       });
       return;
     }
 
-
     const payload = {
       firstName: data?.firstName,
       lastName: data?.lastName,
       email: data?.email,
-      phoneNumber: countryListCode?.dialCode +phoneNumber,
+      phoneNumber: countryListCode?.dialCode + phoneNumber,
       country: country,
+      gender: gender,
+      countryIso: countryListCode?.code,
       userName: data?.userName,
       dob: moment(dob).format("YYYY-MM-DD"),
     };
@@ -220,7 +224,6 @@ function SignupScreen() {
       phoneNumber: countryListCode?.dialCode + phoneNumber,
       userName: data?.userName,
     };
-
 
     setLoader(true);
     try {
@@ -250,10 +253,7 @@ function SignupScreen() {
     navigate("/terms-and-conditions");
   };
 
-  const countryListCode = countryList?.find((dd) => dd?.country === country)
-
-
-
+ 
   return (
     <div style={{ ...styles.container }}>
       <div style={{ marginTop: 10 }}>
@@ -272,7 +272,7 @@ function SignupScreen() {
         >
           Personal Information
         </h3>
-        <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400"}}>
+        <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
           Let's get to know you better! Please fill in your personal details to
           complete your registration.
         </p>
@@ -312,15 +312,17 @@ function SignupScreen() {
           onChangeText={handleChange("userName")}
           errorMsg={touched.userName ? errors.userName : undefined}
         />
-        {/* <div style={{ width: "100%" }}>
-          <PhoneInputComponent
-            label="Phone Number"
+
+        <div style={{ width: "100%" }}>
+          <Dropdown
+            label="Gender"
             required
-            value={values.phoneNumber}
-            onChangeText={handleChange('phoneNumber')}
-            errorMsg={touched.phoneNumber ? errors.phoneNumber : undefined}
+            value={gender}
+            handleSelect={(e) => setGender(e.target.value)}
+            placeholder="Select Gender"
+            data={[{id: "male", value: "Male"},{id: "female", value: "Female"},{id: "others", value: "Others"}]}
           />
-        </div> */}
+        </div>
 
         <div style={{ width: "100%" }}>
           <CountryPhone
