@@ -70,7 +70,7 @@ function LoginScreen() {
 
   const handleSubmitData = async (data) => {
     const payload = {
-      email: data?.email,
+      identifier: data?.email,
       password: data?.password,
     };
 

@@ -4,6 +4,8 @@ import { LuLoader } from "react-icons/lu";
 import profile from "../assets/images/profile1.png";
 import edit from "../assets/images/edit.svg";
 import Loader from "./Loader";
+import male from "../assets/images/male.svg";
+import female from "../assets/images/female.svg";
 
 const styles = {
   center: {
@@ -25,6 +27,7 @@ const CustomFileInput = (props: any) => {
     handleFileChange,
     handleButtonClick,
     imageLoader,
+    userData,
     fileUrl,
   } = props;
 
@@ -50,7 +53,11 @@ const CustomFileInput = (props: any) => {
                 alt=""
               />
             ) : (
-              <img src={profile} />
+              userData?.gender === "male" ? (
+                <img src={male} />
+              ) : (
+                <img src={female} />
+              )
             )}
           </div>
         )}

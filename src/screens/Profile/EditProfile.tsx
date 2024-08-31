@@ -26,6 +26,7 @@ import axios from "axios";
 import PinModal from "../../components/Modals/PinModal";
 import CountryPhone from "../../components/CountryPhone";
 import { getCountryListMap } from "country-flags-dial-code";
+import Dropdown from "../../components/Dropdown";
 
 const styles = {
   container: {
@@ -68,19 +69,19 @@ function EditProfile() {
   const fileInputRef = useRef(null);
   const [fileUrl, setFileUrl] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
-  const [show, setShow] = useState(false)
-  const [storePayload, setStorePayload] = useState(null)
+  const [show, setShow] = useState(false);
+  const [storePayload, setStorePayload] = useState(null);
   const [country, setCountry] = useState("Nigeria");
- 
-  const [message, setMessage] = useState("")
-  const [messageType, setMessageType] = useState("")
+
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   const [countryList, setCountryList] = useState([]);
-  const countryListCode = countryList?.find((dd) => dd?.country === country)
-  const phone = userData?.phoneNumber?.slice(countryListCode?.dialCode?.length)
+  const countryListCode = countryList?.find((dd) => dd?.country === country);
+  const phone = userData?.phoneNumber?.slice(countryListCode?.dialCode?.length);
 
- const [phoneNumber, setPhoneNumber] = useState("");
-
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [gender, setGender] = useState("");
 
   useEffect(() => {
     const countries1 = getCountryListMap();
@@ -88,29 +89,27 @@ function EditProfile() {
     let x = Array.from(Object.values(countries1));
     // console.log(x[0], "x");
     setCountryList(x);
-    setPhoneNumber(phone)
+    setPhoneNumber(phone);
   }, [phone]);
 
-
   const handleClose = () => {
-    setShow(false)
-    if(isMobile) {
-      navigate(-1)
+    setShow(false);
+    if (isMobile) {
+      navigate(-1);
     }
-  }
-
+  };
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (event.target.files.length > 0) {
       try {
-        setImageLoader(true)
+        setImageLoader(true);
         const formData = new FormData();
         formData.append("file", file);
         const response = await dispatch(uploadImage(formData));
         if (uploadImage.fulfilled.match(response)) {
-            setFileUrl(response?.payload?.data?.data?.link);
-            setImageLoader(false)
+          setFileUrl(response?.payload?.data?.data?.link);
+          setImageLoader(false);
         } else {
           var errMsg = response?.payload as string;
           setImageLoader(false);
@@ -119,9 +118,8 @@ function EditProfile() {
           });
         }
       } catch (e) {
-        setImageLoader(false)
+        setImageLoader(false);
       }
-
     }
   };
 
@@ -133,7 +131,10 @@ function EditProfile() {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
-      setFileUrl(response?.payload?.profileImage ? response?.payload?.profileImage : "")
+      setGender(response?.payload?.gender)
+      setFileUrl(
+        response?.payload?.profileImage ? response?.payload?.profileImage : ""
+      );
     }
   };
 
@@ -148,7 +149,6 @@ function EditProfile() {
     lastName: userData?.lastName ? userData?.lastName : "",
   };
 
-
   const { values, errors, touched, handleChange, handleSubmit, handleBlur } =
     useFormik({
       initialValues,
@@ -158,40 +158,47 @@ function EditProfile() {
     });
 
   const handleSubmitData = async (data) => {
-    if(!country || country?.length < 1){
+    if (!country || country?.length < 1) {
       toast.error("Country is required", {
         position: "bottom-center",
       });
-      return
+      return;
     }
-       if(!phoneNumber || phoneNumber?.length < 1){
+    if (!phoneNumber || phoneNumber?.length < 1) {
       toast.error("Phone number is required", {
         position: "bottom-center",
       });
-      return
+      return;
+    }
+    if (!gender || gender?.length < 1) {
+      toast.error("Gender is required", {
+        position: "bottom-center",
+      });
+      return;
     }
     const payload = {
       // ...data,
       profileImage: fileUrl ? fileUrl : "",
       phoneNumber: countryListCode?.dialCode + phoneNumber,
-    //  country: country,
+      gdender: gender,
+      countryIso: countryListCode?.code,
+      //  country: country,
       //  dob: dob?.toISOString().slice(0, 10),
     };
 
-    setStorePayload(payload)
+    setStorePayload(payload);
 
-    setShow(true)
+    setShow(true);
     return;
-
   };
 
   const handleAction = async () => {
     setLoader(true);
     try {
       var response = await dispatch(updateUserData(storePayload));
-      if(response?.error?.message === "Rejected") {
-        setMessage(response?.payload)
-        setMessageType("Rejected")
+      if (response?.error?.message === "Rejected") {
+        setMessage(response?.payload);
+        setMessageType("Rejected");
       }
       if (updateUserData.fulfilled.match(response)) {
         setLoader(false);
@@ -199,19 +206,19 @@ function EditProfile() {
         // toast.success("Profile Updated Successfully", {
         //   position: "bottom-center",
         // });
-        setMessage("Profile Updated Successfully")
-        setMessageType("Success")
+        setMessage("Profile Updated Successfully");
+        setMessageType("Success");
       } else {
         var errMsg = response?.payload as string;
         setLoader(false);
         // toast.error(errMsg, {
         //   position: "bottom-center",
         // });
-        setMessage(errMsg)
-        setMessageType("Rejected")
+        setMessage(errMsg);
+        setMessageType("Rejected");
       }
     } catch (err) {}
-  }
+  };
 
   return (
     <div style={{ ...styles.container }}>
@@ -226,6 +233,7 @@ function EditProfile() {
             handleFileChange={handleFileChange}
             fileInputRef={fileInputRef}
             fileUrl={fileUrl}
+            userData={userData}
             imageLoader={imageLoader}
           />
         </div>
@@ -267,17 +275,31 @@ function EditProfile() {
               disabled
             />
           </div>
+          <div style={{ width: "100%" }}>
+            <Dropdown
+              label="Gender"
+              required
+              value={gender}
+              handleSelect={(e) => setGender(e.target.value)}
+              placeholder="Select Gender"
+              data={[
+                { id: "male", value: "Male" },
+                { id: "female", value: "Female" },
+                { id: "others", value: "Others" },
+              ]}
+            />
+          </div>
           <div style={{ ...styles.row }}>
-          <CountryPhone
-            countryList={countryList}
-            country={country}
-            setCountry={setCountry}
-            countryNumber={phoneNumber}
-            setCountryNumber={setPhoneNumber}
-            countryListCode={countryListCode}
-            isCountryRequired={false}
-            isPhoneRequired={false}
-          />
+            <CountryPhone
+              countryList={countryList}
+              country={country}
+              setCountry={setCountry}
+              countryNumber={phoneNumber}
+              setCountryNumber={setPhoneNumber}
+              countryListCode={countryListCode}
+              isCountryRequired={false}
+              isPhoneRequired={false}
+            />
             {/* <PhoneInputComponent
               label="Phone Number"
               required
@@ -321,14 +343,12 @@ function EditProfile() {
         )}
       </div>
 
-
-      <PinModal 
+      <PinModal
         show={show}
         handleClose={() => handleClose()}
         handleAction={handleAction}
         type={messageType === "Rejected" ? "failed" : "success"}
         responseText={message ? message : "Password Updated Successfully"}
-      
       />
 
       <ToastContainer />

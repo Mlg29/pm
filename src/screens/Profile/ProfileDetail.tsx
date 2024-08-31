@@ -1,6 +1,8 @@
 import Button from "../../components/Button";
 import Header from "../../components/Header";
 import profile from "../../assets/images/profile1.png";
+import male from "../../assets/images/male.svg"
+import female from "../../assets/images/female.svg"
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 import trash from "../../assets/images/trash.svg";
@@ -109,7 +111,8 @@ function ProfileDetail() {
               alt=""
             />
           ) : (
-            <img src={profile} />
+            userData?.gender === "male" ? <img src={male} /> :
+            <img src={female} /> 
           )}
           <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>
             {userData?.firstName} {userData?.lastName}
@@ -148,6 +151,10 @@ function ProfileDetail() {
           <div style={{ ...styles.row }}>
             <p style={{ ...FONTS.body6 }}>Email</p>
             <h3 style={{ ...FONTS.h6 }}>{userData?.email}</h3>
+          </div>
+          <div style={{ ...styles.row }}>
+            <p style={{ ...FONTS.body6 }}>Gender</p>
+            <h3 style={{ ...FONTS.h6 }}>{userData?.gender ? userData?.gender : "N/A"}</h3>
           </div>
         </div>
       </div>
