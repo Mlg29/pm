@@ -21,6 +21,8 @@ import {
   getNotifications,
   notificationState,
 } from "../../redux/slices/NotificationSlice";
+import male from "../../assets/images/male.svg";
+import female from "../../assets/images/female.svg";
 
 const styles = {
   container: {
@@ -163,7 +165,11 @@ function Profile() {
             alt=""
           />
         ) : (
-          <img src={profile} />
+          userData?.gender === "male" ? (
+            <img src={male} />
+          ) : (
+            <img src={female} />
+          )
         )}
         <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>
           {userData?.firstName} {userData?.lastName}
