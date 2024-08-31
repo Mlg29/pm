@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getCountryListMap } from "country-flags-dial-code";
 import { FONTS } from "../../utils/fonts";
 import miniLogo from "../../assets/images/miniLogo.svg";
 import { COLORS } from "../../utils/colors";
@@ -11,6 +12,9 @@ import { useFormik } from "formik";
 import { LoginSchema } from "../../https/schemas";
 import { ToastContainer, toast } from "react-toastify";
 import { login } from "../../redux/slices/AuthSlice";
+import CountryPhone from "../../components/CountryPhone";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 export const styles = {
   container: {
@@ -50,13 +54,31 @@ export const styles = {
 
 function LoginScreen() {
   const navigate = useNavigate();
-
+  const [loginType, setLoginType] = useState("email");
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
-  const betInviteId = localStorage.getItem('bet-invite-id')
+  const betInviteId = localStorage.getItem("bet-invite-id");
+  const [country, setCountry] = useState("Nigeria");
+  const [countryList, setCountryList] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("")
+
+ 
+
+  const countryListCode = countryList?.find((dd) => phoneNumber.includes(dd?.dialCode));
+
+
+
+  useEffect(() => {
+    const countries1 = getCountryListMap();
+    // console.log(countries1);
+    let x = Array.from(Object.values(countries1));
+    // console.log(x[0], "x");
+    setCountryList(x);
+    // getData()
+  }, []);
 
   const initialValues: LoginFormData = {
-    email: "",
     password: "",
   };
 
@@ -69,31 +91,43 @@ function LoginScreen() {
     });
 
   const handleSubmitData = async (data) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+
+    if(!email && !phoneNumber) {
+      alert("Enter a valid email address or phone number")
+      return;
+    }
+    if (email && !emailRegex.test(email)) {
+      alert("Enter a valid email address")
+      return
+    }
+
     const payload = {
-      identifier: data?.email,
+      identifier: loginType === "email" ? email : phoneNumber,
       password: data?.password,
+      countryIso: countryListCode?.code
     };
 
     setLoader(true);
     try {
       var response = await dispatch(login(payload));
       if (login.fulfilled.match(response)) {
-       // localStorage.setItem("userData", JSON.stringify(response?.payload?.data?.user))
-        localStorage.setItem("token", response?.payload?.data?.accessToken)
+        // localStorage.setItem("userData", JSON.stringify(response?.payload?.data?.user))
+        localStorage.setItem("token", response?.payload?.data?.accessToken);
         toast.success(response?.payload?.data?.message, {
-          position: "bottom-center"
+          position: "bottom-center",
         });
 
         setTimeout(() => {
-          setLoader(false)
-          if(betInviteId){
-            navigate(`/bet-invite-detail?${betInviteId}`)
-            return
+          setLoader(false);
+          if (betInviteId) {
+            navigate(`/bet-invite-detail?${betInviteId}`);
+            return;
+          } else {
+            navigate("/home");
           }
-          else {
-            navigate('/home')
-          }
-        }, 1000)
+        }, 1000);
       } else {
         var errMsg = response?.payload as string;
         setLoader(false);
@@ -103,6 +137,7 @@ function LoginScreen() {
       }
     } catch (err) {}
   };
+
 
   return (
     <div style={{ ...styles.container }}>
@@ -134,14 +169,58 @@ function LoginScreen() {
         </div>
 
         <div style={{ marginTop: 20 }}>
-          <TextInput
-            label="Phone Number/Email Address"
-            placeholder="Enter your Phone Number/Email Address"
-            required
-            value={values.email}
-            onChangeText={handleChange("email")}
-            errorMsg={touched.email ? errors.email : undefined}
-          />
+          <div style={{ display: "flex" }}>
+            <h3
+              style={{
+                ...FONTS.body7,
+                cursor: "pointer",
+                color: loginType === "email" ? COLORS.orange : "black",
+              }}
+              onClick={() => setLoginType("email")}
+            >
+              Email Login
+            </h3>
+            <h3
+              style={{
+                ...FONTS.body7,
+                marginLeft: 10,
+                cursor: "pointer",
+                color: loginType === "phone" ? COLORS.orange : "black",
+              }}
+              onClick={() => setLoginType("phone")}
+            >
+              Phone number Login
+            </h3>
+          </div>
+          {loginType === "email" ? (
+            <TextInput
+              label="Email Address"
+              placeholder="Email Address"
+              required
+              value={email}
+              onChangeText={(val) => setEmail(val)}
+            />
+          ) : (
+            <div style={{ width: "100%", marginBottom: 10 }}>
+              <label style={{ ...FONTS.body7 }}>
+                Phone number 
+                 <span style={{ color: "red" }}> *</span>
+              </label>
+              <PhoneInput
+                placeholder="Enter phone number"
+                defaultCountry="NG"
+                value={phoneNumber}
+                onChange={(val) => setPhoneNumber(val)}
+                style={{
+                  width: "100%",
+                  color: "black",
+                  border: `0.5px solid ${COLORS.gray}`,
+                  padding: 15,
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+          )}
 
           <TextInput
             label="Password"

@@ -26,7 +26,6 @@ export type ButtonType = {
   };
   
   export type LoginFormData = {
-    email: string;
     password: string;
   };
   export type ComingSoonData = {

@@ -334,6 +334,7 @@ function SignupScreen() {
             isPhoneRequired
             setCountryNumber={setPhoneNumber}
             countryListCode={countryListCode}
+            isCountryPresent={null}
           />
         </div>
 
