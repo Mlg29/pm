@@ -1,8 +1,8 @@
 import Button from "../../components/Button";
 import Header from "../../components/Header";
 import profile from "../../assets/images/profile1.png";
-import male from "../../assets/images/male.svg"
-import female from "../../assets/images/female.svg"
+import male from "../../assets/images/male.svg";
+import female from "../../assets/images/female.svg";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 import trash from "../../assets/images/trash.svg";
@@ -56,18 +56,18 @@ function ProfileDetail() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
-      setLoader(false)
+      setLoader(false);
     }
   };
 
   useEffect(() => {
-    setLoader(true)
+    setLoader(true);
     fetchUserInfo();
   }, []);
 
@@ -75,8 +75,6 @@ function ProfileDetail() {
   const handleShow = () => setShow(true);
   const handleShowEdit = () => setShowEdit(true);
 
-
-   
   if (loader) {
     return (
       <div
@@ -110,9 +108,10 @@ function ProfileDetail() {
               }}
               alt=""
             />
+          ) : userData?.gender === "male" ? (
+            <img src={male} />
           ) : (
-            userData?.gender === "male" ? <img src={male} /> :
-            <img src={female} /> 
+            <img src={female} />
           )}
           <h3 style={{ ...FONTS.h5, margin: "5px 0px" }}>
             {userData?.firstName} {userData?.lastName}
@@ -154,7 +153,9 @@ function ProfileDetail() {
           </div>
           <div style={{ ...styles.row }}>
             <p style={{ ...FONTS.body6 }}>Gender</p>
-            <h3 style={{ ...FONTS.h6 }}>{userData?.gender ? userData?.gender : "N/A"}</h3>
+            <h3 style={{ ...FONTS.h6 }}>
+              {userData?.gender ? userData?.gender : "N/A"}
+            </h3>
           </div>
         </div>
       </div>
@@ -248,7 +249,7 @@ function ProfileDetail() {
         show={showEdit}
         handleClose={() => {
           fetchUserInfo();
-          setShowEdit(false)
+          setShowEdit(false);
         }}
       />
     </div>
