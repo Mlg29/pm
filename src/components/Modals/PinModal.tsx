@@ -43,6 +43,8 @@ const PinModal = ({ show, handleClose, handleAction,type, responseText }) => {
     const verifyResponse = await dispatch(
       verifyTransactionPin(transactionPayload)
     );
+
+
   
     if (verifyTransactionPin.fulfilled.match(verifyResponse)) {
       await handleAction().then((aa) => {

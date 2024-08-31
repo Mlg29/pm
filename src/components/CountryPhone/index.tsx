@@ -12,6 +12,7 @@ const CountryPhone = ({
   setCountryNumber,
   isCountryRequired,
   isPhoneRequired,
+  isCountryPresent
 }) => {
   return (
     <div>
@@ -20,6 +21,7 @@ const CountryPhone = ({
         value={country}
         setValue={setCountry}
         isCountryRequired
+        disabled={isCountryPresent}
       />
 
       {country ? (

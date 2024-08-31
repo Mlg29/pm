@@ -180,8 +180,8 @@ function EditProfile() {
       // ...data,
       profileImage: fileUrl ? fileUrl : "",
       phoneNumber: countryListCode?.dialCode + phoneNumber,
-      gdender: gender,
-      countryIso: countryListCode?.code,
+      gender: gender,
+     // countryIso: countryListCode?.code,
       //  country: country,
       //  dob: dob?.toISOString().slice(0, 10),
     };
@@ -219,6 +219,8 @@ function EditProfile() {
       }
     } catch (err) {}
   };
+
+
 
   return (
     <div style={{ ...styles.container }}>
@@ -287,6 +289,7 @@ function EditProfile() {
                 { id: "female", value: "Female" },
                 { id: "others", value: "Others" },
               ]}
+              disabled={gender}
             />
           </div>
           <div style={{ ...styles.row }}>
@@ -299,6 +302,7 @@ function EditProfile() {
               countryListCode={countryListCode}
               isCountryRequired={false}
               isPhoneRequired={false}
+              isCountryPresent={userData?.countryISO2}
             />
             {/* <PhoneInputComponent
               label="Phone Number"

@@ -20,22 +20,21 @@ export const styles = {
         border: `0.1px solid ${COLORS.gray}`,
         backgroundColor: "white",
         outline: "none",
-        color: COLORS.primary,
-        height: "50px"
+        height: "55px"
     }
 }
 
 function Dropdown(props: any) {
-    const { data, handleSelect,value, label, placeholder, required } = props
+    const { data, handleSelect,value, label,disabled, placeholder, required } = props
 
     return (
         <div style={{ ...styles.container,marginBottom: 10 }}>
            <label style={{ ...FONTS.body7 }}>{label} {required ? <span style={{color: "red"}}>*</span> : null}</label>
-            <select   onChange={(e) => handleSelect(e)} value={value} style={{...styles.select}}>
+            <select disabled={disabled}  onChange={(e) => handleSelect(e)} value={value} style={{...styles.select, color: disabled ? COLORS.gray : COLORS.primary,}}>
                 <option>{placeholder}</option>
                 {
                     data?.map((info: any) => {
-                        return <option key={info?.id} value={info?.value}>{info?.value}</option>
+                        return <option key={info?.id} value={info?.id}>{info?.value}</option>
                     })
                 }
 

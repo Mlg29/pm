@@ -13,12 +13,11 @@ export const styles = {
     border: `0.1px solid ${COLORS.gray}`,
     backgroundColor: "white",
     outline: "none",
-    color: COLORS.primary,
     height: "55px",
   },
 };
 
-const SelectWithImage = ({countryList, value, setValue, isCountryRequired}) => {
+const SelectWithImage = ({countryList, value,disabled, setValue, isCountryRequired}) => {
 
     const handleSelectChange = (e) => {
         const value = e.target.value;
@@ -30,7 +29,7 @@ const SelectWithImage = ({countryList, value, setValue, isCountryRequired}) => {
     <div style={{ marginBottom: 10, display: "flex", flexDirection: "column" }}>
       <label style={{ ...FONTS.body7 }}>Select Country <span>{isCountryRequired && <span style={{color: 'red'}}>*</span>  }</span></label>
 
-      <select style={{ ...styles.select }}
+      <select disabled={disabled} style={{ ...styles.select, color: disabled ? COLORS.gray : COLORS.primary }}
         onChange={(e) => handleSelectChange(e)}
         value={value}
       >

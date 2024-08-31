@@ -7,7 +7,8 @@ function OtpComponent({otp, setOtp}: any) {
   
 
   const handleOtpChange = (val) => {
-    if(otp?.length === 6){
+
+    if(val?.length === 7){
       return;
     }
     setOtp(val)
