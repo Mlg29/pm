@@ -289,7 +289,7 @@ function EditProfile() {
                 { id: "female", value: "Female" },
                 { id: "others", value: "Others" },
               ]}
-              disabled={gender}
+              disabled={userData?.gender}
             />
           </div>
           <div style={{ ...styles.row }}>
