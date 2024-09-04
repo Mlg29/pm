@@ -137,6 +137,9 @@ function GameDetails() {
   const gameType = location?.state?.gameType;
   const [gameInfo, setGameInfo] = useState(null);
 
+
+
+
   const token = localStorage.getItem("token");
   const [loader, setLoader] = useState(false);
 

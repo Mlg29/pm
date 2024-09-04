@@ -2,9 +2,10 @@ import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { COLORS } from '../../utils/colors';
 import { InputOtp } from 'primereact/inputotp';
+import { useNavigate } from 'react-router-dom';
 
 function OtpComponent({otp, setOtp}: any) {
-  
+  const navigate = useNavigate()
 
   const handleOtpChange = (val) => {
 
@@ -16,7 +17,8 @@ function OtpComponent({otp, setOtp}: any) {
 
 
   return (
-    <InputOtp 
+   <div>
+     <InputOtp 
       value={otp} 
       onChange={(e) => handleOtpChange(e?.value)} 
       mask
@@ -25,6 +27,8 @@ function OtpComponent({otp, setOtp}: any) {
       variant='filled'
  
     />
+    <p style={{textAlign: 'center', marginTop: 30, cursor: 'pointer'}} onClick={() => navigate("/request-pin")}>Forgot Pin?</p>
+   </div>
 
   );
 }

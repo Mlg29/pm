@@ -61,6 +61,7 @@ import BetInviteDetail from "./BetDetail/BetInviteDetail.tsx";
 import FilterPage from "./FilterPage/index.tsx";
 import ScrollToTop from "../components/ScrollToTop.tsx";
 import Search from "./Search/index.tsx";
+import ResetPin from "./ResetPin/index.tsx";
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -135,6 +136,8 @@ function Routers() {
         <Route path="/events" element={<GameEventData />} />
         <Route path="/filter" element={<FilterPage />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/request-pin" element={<ResetPin />} />
+
       </Routes>
     </Router>
   );
