@@ -128,7 +128,7 @@ const styles = {
 
 function BoxingDetails({gameInfo, isMobile, selected, handleRoute}) {
   return (
-    <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+    <div style={{display: 'flex', flexDirection: 'column'}}>
             <div
               style={{
                 ...styles.btt,
@@ -139,7 +139,7 @@ function BoxingDetails({gameInfo, isMobile, selected, handleRoute}) {
             >
               <BoxingCard data={gameInfo} />
             </div>
-            <div style={{display: "flex", flexDirection: "column", flex: 1}}>
+            <div style={{display: "flex", flexDirection: "column"}}>
             {isMobile ? (
               <div style={{ ...styles.mob }}>
                 <div style={{ width: "100%" }}>

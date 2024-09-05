@@ -125,6 +125,13 @@ const styles = {
 
 function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
 
+  const decodeHTMLEntities = (str) => {
+    const tempElement = document.createElement('textarea');
+    tempElement.innerHTML = str;
+    return tempElement.value;
+  };
+
+
 
   return (
     <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
@@ -137,130 +144,7 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
         }}
       >
         <MmaCard data={gameInfo} />
-        <div style={{display: 'flex',padding: "0px 10px", justifyContent: 'space-between'}}>
-          <div>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Name: </p>
-             <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Age: </p>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Gender: </p>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Height: </p>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Nickname:</p>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Reach:</p>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Stance:</p>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Weigthclass:</p>
-            <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Weigth: </p>
-            <div>
-                  <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Win:</p>
-                  <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Draw:</p>
-                  <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Loss:</p>
-                  <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>KO WIN:</p>
-                  <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Total Win:</p>
-                  <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>Sub: </p>
-                  <p style={{
-              ...FONTS.h7,
-              marginBottom: 5
-            }}>KO LOSS:</p>
-                </div>
-          </div>
-          <div>
-            <p style={{
-              ...FONTS.body7,
-              marginBottom: 5
-            }}>{gameInfo?.fighter1?.fighter["@name"]}</p>
-                        <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["age"] ? gameInfo?.fighter1?.fighter["age"] : 'N/A'}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["gender"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["heigth"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["nickname"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["reach"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["stance"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["weightclass"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["weigth"]}</p>
-            {gameInfo?.fighter1?.fighter?.records?.record?.map((pp) => {
-              return (
-                <div>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@win"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@draw"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@loss"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@ko_wins"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@total_wins"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@sub"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@ko_loss"]}</p>
-                </div>
-              );
-            })}
-          </div>
-          <div>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["@name"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["age"] ? gameInfo?.fighter2?.fighter["age"] : 'N/A'}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["gender"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["heigth"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["nickname"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["reach"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["stance"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["weightclass"]}</p>
-            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["weigth"]}</p>
-            {gameInfo?.fighter2?.fighter?.records?.record?.map((pp) => {
-              return (
-                <div>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@win"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@draw"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@loss"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@ko_wins"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@total_wins"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@sub"]}</p>
-                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@ko_loss"]}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <div style={{ display: "flex", flexDirection: "column",marginBottom: 20 }}>
         {isMobile ? (
           <div style={{ ...styles.mob }}>
             <div style={{ width: "100%" }}>
@@ -341,6 +225,130 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
           </div>
         )}
       </div>
+        <div style={{display: 'flex',padding: "0px 10px", justifyContent: 'space-between'}}>
+          <div>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Name: </p>
+             <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Age: </p>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Gender: </p>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Height: </p>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Nickname:</p>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Reach:</p>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Stance:</p>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Weigthclass:</p>
+            <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Weigth: </p>
+            <div>
+                  <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Win:</p>
+                  <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Draw:</p>
+                  <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Loss:</p>
+                  <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>KO WIN:</p>
+                  <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Total Win:</p>
+                  <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>Sub: </p>
+                  <p style={{
+              ...FONTS.h7,
+              marginBottom: 5
+            }}>KO LOSS:</p>
+                </div>
+          </div>
+          <div>
+            <p style={{
+              ...FONTS.body7,
+              marginBottom: 5
+            }}>{gameInfo?.fighter1?.fighter["@name"]}</p>
+                        <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["age"] ? gameInfo?.fighter1?.fighter["age"] : 'N/A'}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["gender"]}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{decodeHTMLEntities(gameInfo?.fighter1?.fighter["heigth"])}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["nickname"] ? gameInfo?.fighter1?.fighter["nickname"] : "N/A"}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{decodeHTMLEntities(gameInfo?.fighter1?.fighter["reach"])}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["stance"]}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{decodeHTMLEntities(gameInfo?.fighter1?.fighter["weightclass"])}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter1?.fighter["weigth"]}</p>
+            {gameInfo?.fighter1?.fighter?.records?.record?.map((pp) => {
+              return (
+                <div>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'green'}}>{pp["@win"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@draw"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'red'}}>{pp["@loss"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'green'}}>{pp["@ko_wins"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'green'}}>{pp["@total_wins"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@sub"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'red'}}>{pp["@ko_loss"]}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["@name"]}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["age"] ? gameInfo?.fighter2?.fighter["age"] : 'N/A'}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["gender"]}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{decodeHTMLEntities(gameInfo?.fighter2?.fighter["heigth"])}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["nickname"] ? gameInfo?.fighter2?.fighter["nickname"] : "N/A"}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{decodeHTMLEntities(gameInfo?.fighter2?.fighter["reach"])}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["stance"]}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{decodeHTMLEntities(gameInfo?.fighter2?.fighter["weightclass"])}</p>
+            <p style={{...FONTS.body7,marginBottom: 5}}>{gameInfo?.fighter2?.fighter["weigth"]}</p>
+            {gameInfo?.fighter2?.fighter?.records?.record?.map((pp) => {
+              return (
+                <div>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'green'}}>{pp["@win"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@draw"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'red'}}>{pp["@loss"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5, color: 'green'}}>{pp["@ko_wins"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5,color: 'green'}}>{pp["@total_wins"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5}}>{pp["@sub"]}</p>
+                  <p style={{...FONTS.body7,marginBottom: 5,color: 'red'}}>{pp["@ko_loss"]}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+  
     </div>
   );
 }

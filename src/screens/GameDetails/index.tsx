@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import { COLORS } from "../../utils/colors";
 import { useEffect, useRef, useState } from "react";
 import { FONTS } from "../../utils/fonts";
-import { FlexDirection, OverflowY, Position } from "../../utils/type";
+import { FlexDirection, OverflowY, Position, Wrap } from "../../utils/type";
 import CardList from "../../components/CardList";
 import AllTime from "../../components/CardList/AllTime";
 import roma from "../../assets/images/roma.svg";
@@ -15,9 +15,12 @@ import { useMediaQuery } from "react-responsive";
 import EmptyState from "../../components/EmptyState";
 import { BaseUrl } from "../../https";
 import { io } from "socket.io-client";
+import { BsFillLightningFill } from "react-icons/bs";
+import { PiSoccerBallBold } from "react-icons/pi";
+import { TbRectangleVerticalFilled } from "react-icons/tb";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
 
-import { TbRectangleVerticalFilled } from "react-icons/tb";
 import Loader from "../../components/Loader";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
@@ -72,7 +75,7 @@ const styles = {
     borderRadius: "5px",
   },
   tb: {
-    width: "31%",
+    width: '30%',
     display: "flex",
     justifyContent: "center",
     padding: 10,
@@ -136,9 +139,6 @@ function GameDetails() {
   const game = location?.state?.data;
   const gameType = location?.state?.gameType;
   const [gameInfo, setGameInfo] = useState(null);
-
-
-
 
   const token = localStorage.getItem("token");
   const [loader, setLoader] = useState(false);
@@ -208,6 +208,18 @@ function GameDetails() {
     }
   };
 
+  function isEmpty(value) {
+    for (let prop in value) {
+      if (value.hasOwnProperty(prop)) return false;
+    }
+    return true;
+  }
+
+  const eventArray = isEmpty(gameInfo?.events)
+    ? []
+    : Array.isArray(gameInfo?.events?.event)
+    ? gameInfo?.events?.event
+    : [gameInfo?.events?.event];
 
   if (loader) {
     return (
@@ -225,6 +237,7 @@ function GameDetails() {
       </div>
     );
   }
+console.log({gameInfo})
 
   return (
     <div className="top-container" style={{ backgroundColor: "transparent" }}>
@@ -239,7 +252,7 @@ function GameDetails() {
         }}
       >
         <Header text="Game Details" />
-   
+
         {gameType === "Soccer" && (
           <>
             <div
@@ -252,7 +265,143 @@ function GameDetails() {
             >
               <GameDetailCardHeader data={gameInfo} />
 
-              <div style={{ ...styles.tabs }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: "2rem",
+                }}
+              >
+                {isMobile ? (
+                  <div style={{ ...styles.mob }}>
+                    <div style={{ width: "100%" }}>
+                      <Button
+                        text={`Bet ${gameInfo?.localTeamName} Win`}
+                        propStyle={{
+                          width: "100%",
+                          backgroundColor:
+                            selected === gameInfo?.localTeamName
+                              ? COLORS.primary
+                              : COLORS.cream,
+                          color:
+                            selected === gameInfo?.localTeamName
+                              ? COLORS.cream
+                              : COLORS.primary,
+                        }}
+                        handlePress={() =>
+                          handleRoute(gameInfo?.localTeamName, "W1")
+                        }
+                      />
+                    </div>
+                    <div style={{ width: "100%", margin: "10px 0px" }}>
+                      <Button
+                        text="Draw"
+                        propStyle={{
+                          width: "100%",
+                          backgroundColor:
+                            selected === "draw" ? COLORS.primary : COLORS.cream,
+                          color:
+                            selected === "draw" ? COLORS.cream : COLORS.primary,
+                        }}
+                        //  handlePress={() => navigate('/home')}
+                        handlePress={() => handleRoute("draw", "DRAW")}
+                      />
+                    </div>
+                    <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
+                      <Button
+                        text={`Bet ${gameInfo?.visitorTeamName} Win`}
+                        propStyle={{
+                          width: "100%",
+                          backgroundColor:
+                            selected === gameInfo?.visitorTeamName
+                              ? COLORS.primary
+                              : COLORS.cream,
+                          color:
+                            selected === gameInfo?.visitorTeamName
+                              ? COLORS.cream
+                              : COLORS.primary,
+                        }}
+                        // handlePress={() => navigate('/home')}
+                        handlePress={() =>
+                          handleRoute(gameInfo?.visitorTeamName, "W2")
+                        }
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ ...styles.desk }}>
+                    <div style={{ width: "100%" }}>
+                      <Button
+                        text={`Bet ${gameInfo?.localTeamName} Win`}
+                        propStyle={{
+                          width: "90%",
+                          backgroundColor:
+                            selected === gameInfo?.localTeamName
+                              ? COLORS.primary
+                              : COLORS.cream,
+                          color:
+                            selected === gameInfo?.localTeamName
+                              ? COLORS.cream
+                              : COLORS.primary,
+                          fontSize: 12,
+                        }}
+                        handlePress={() =>
+                          handleRoute(gameInfo?.localTeamName, "W1")
+                        }
+                      />
+                    </div>
+                    <div style={{ width: "100%", margin: "10px 0px" }}>
+                      <Button
+                        text="Draw"
+                        propStyle={{
+                          width: "90%",
+                          backgroundColor:
+                            selected === "draw" ? COLORS.primary : COLORS.cream,
+                          color:
+                            selected === "draw" ? COLORS.cream : COLORS.primary,
+                          fontSize: 12,
+                        }}
+                        //  handlePress={() => navigate('/home')}
+                        handlePress={() => handleRoute("draw", "DRAW")}
+                      />
+                    </div>
+                    <div style={{ width: "100%", margin: "10px 0px" }}>
+                      <Button
+                        text={`Bet ${gameInfo?.visitorTeamName} Win`}
+                        propStyle={{
+                          width: "90%",
+                          backgroundColor:
+                            selected === gameInfo?.visitorTeamName
+                              ? COLORS.primary
+                              : COLORS.cream,
+                          color:
+                            selected === gameInfo?.visitorTeamName
+                              ? COLORS.cream
+                              : COLORS.primary,
+                          fontSize: 12,
+                        }}
+                        // handlePress={() => navigate('/home')}
+                        handlePress={() =>
+                          handleRoute(gameInfo?.visitorTeamName, "W2")
+                        }
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ ...styles.tabs, flexWrap: 'wrap' }}>
+                <div
+                  style={{
+                    ...styles.tb,
+                    backgroundColor:
+                      active === "match-info" ? COLORS.white : "transparent",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setActive("match-info")}
+                >
+                  <p style={{ ...FONTS.body6 }}>MATCH INFO</p>
+                </div>
                 <div
                   style={{
                     ...styles.tb,
@@ -288,397 +437,411 @@ function GameDetails() {
                 </div>
               </div>
 
-              {gameInfo?.stats && Object.keys(gameInfo?.stats).length !== 0 ? (
-                <div>
-                  {active === "stat" && (
-                    <div>
-                      <CardList
-                        header="Ball Possession"
-                        homeText={
-                          gameInfo?.stats?.localteam?.possestiontime["@total"]
-                            ? gameInfo?.stats?.localteam?.possestiontime[
-                                "@total"
-                              ]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.possestiontime["@total"]
-                            ? gameInfo?.stats?.visitorteam?.possestiontime[
-                                "@total"
-                              ]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header="Off sides"
-                        homeText={
-                          gameInfo?.stats?.localteam?.offsides["@total"]
-                            ? gameInfo?.stats?.localteam?.offsides["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.offsides["@total"]
-                            ? gameInfo?.stats?.visitorteam?.offsides["@total"]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header="Shots"
-                        homeText={
-                          gameInfo?.stats?.localteam?.shots["@total"]
-                            ? gameInfo?.stats?.localteam?.shots["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.shots["@total"]
-                            ? gameInfo?.stats?.visitorteam?.shots["@total"]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header="Passes"
-                        homeText={
-                          gameInfo?.stats?.localteam?.passes["@total"]
-                            ? gameInfo?.stats?.localteam?.passes["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.passes["@total"]
-                            ? gameInfo?.stats?.visitorteam?.passes["@total"]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header="Fouls"
-                        homeText={
-                          gameInfo?.stats?.localteam?.fouls["@total"]
-                            ? gameInfo?.stats?.localteam?.fouls["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.fouls["@total"]
-                            ? gameInfo?.stats?.visitorteam?.fouls["@total"]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header={<TbRectangleVerticalFilled color="#FFC15E" />}
-                        homeText={
-                          gameInfo?.stats?.localteam?.yellowcards["@total"]
-                            ? gameInfo?.stats?.localteam?.yellowcards["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.yellowcards["@total"]
-                            ? gameInfo?.stats?.visitorteam?.yellowcards[
-                                "@total"
-                              ]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header={<TbRectangleVerticalFilled color="red" />}
-                        homeText={
-                          gameInfo?.stats?.localteam?.redcards["@total"]
-                            ? gameInfo?.stats?.localteam?.redcards["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.redcards["@total"]
-                            ? gameInfo?.stats?.visitorteam?.redcards["@total"]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header="Corners"
-                        homeText={
-                          gameInfo?.stats?.localteam?.corners["@total"]
-                            ? gameInfo?.stats?.localteam?.corners["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.corners["@total"]
-                            ? gameInfo?.stats?.visitorteam?.corners["@total"]
-                            : 0
-                        }
-                      />
-                      <CardList
-                        header="Saves"
-                        homeText={
-                          gameInfo?.stats?.localteam?.saves["@total"]
-                            ? gameInfo?.stats?.localteam?.saves["@total"]
-                            : 0
-                        }
-                        awayText={
-                          gameInfo?.stats?.visitorteam?.saves["@total"]
-                            ? gameInfo?.stats?.visitorteam?.saves["@total"]
-                            : 0
-                        }
-                      />
-                    </div>
-                  )}
+              <div>
+                {active === "match-info" && eventArray?.length > 0 ? (
+                  <div>
+                    {eventArray &&
+                      eventArray?.map((dd, i) => {
+                        return (
+                          <div
+                            key={i}
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              marginBottom: 10,
+                            }}
+                          >
+                            <div style={{ width: "48%" }}>
+                              {dd["@team"] === "localteam" ? (
+                                <div style={{ display: "flex" }}>
+                                  {dd["@type"] === "subst" ? (
+                                    <div>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <p
+                                          style={{
+                                            ...FONTS.body7,
+                                            marginRight: 5,
+                                          }}
+                                        >
+                                          {dd["@player"]}
+                                        </p>
+                                        <FaArrowRightArrowLeft
+                                          size={10}
+                                          color={COLORS.orange}
+                                          style={{ marginRight: 10 }}
+                                        />
+                                        <p
+                                          style={{
+                                            ...FONTS.body7,
+                                            fontSize: 8,
+                                            marginRight: 5,
+                                          }}
+                                        >
+                                          {dd["@assist"]}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      <p
+                                        style={{
+                                          ...FONTS.body7,
+                                          marginRight: 5,
+                                        }}
+                                      >
+                                        {dd["@player"]}
+                                      </p>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <p
+                                          style={{
+                                            ...FONTS.body7,
+                                            fontSize: 8,
+                                            marginRight: 5,
+                                          }}
+                                        >
+                                          {dd["@assist"]}
+                                        </p>
+                                        {dd["@assist"] && (
+                                          <BsFillLightningFill
+                                            size={10}
+                                            style={{ marginRight: 10 }}
+                                          />
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
 
-                  {active === "lineup" && (
-                    <div style={{ backgroundColor: "#F3F3F3", marginTop: 10 }}>
-                      <Formation
-                        gameInfo={gameInfo}
-                        homeTeamInfo={gameInfo?.lineup?.localteam}
-                        awayTeamInfo={gameInfo?.lineup?.visitorteam}
-                      />
-                    </div>
-                  )}
+                                  <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                                    {dd["@minute"]}'
+                                  </p>
+                                </div>
+                              ) : null}
+                            </div>
+                            <div>
+                              {dd["@type"] === "goal" ? (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <PiSoccerBallBold color={COLORS.green} />
+                                </div>
+                              ) : dd["@type"] === "yellowcard" ? (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <TbRectangleVerticalFilled color="#FFC15E" />
+                                </div>
+                              ) : dd["@type"] === "redcard" ? (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <TbRectangleVerticalFilled color="red" />
+                                </div>
+                              ) : null}
+                            </div>
 
-                  {active === "info" && (
-                    // <div>
-                    //   <div>
-                    //     <h3
-                    //       style={{
-                    //         ...FONTS.h6,
-                    //         textAlign: "center",
-                    //         marginTop: "1rem",
-                    //       }}
-                    //     >
-                    //       Last 5 Games
-                    //     </h3>
-                    //     <div style={{ ...styles.row }}>
-                    //       <div>
-                    //         <h3 style={{ ...FONTS.h5, color: COLORS.green }}>1</h3>
-                    //         <p style={{ ...FONTS.body6, color: COLORS.green }}>
-                    //           Millan
-                    //         </p>
-                    //       </div>
-                    //       <div>
-                    //         <h3
-                    //           style={{
-                    //             ...FONTS.h5,
-                    //             color: COLORS.gray,
-                    //             textAlign: "center",
-                    //           }}
-                    //         >
-                    //           1
-                    //         </h3>
-                    //         <p
-                    //           style={{
-                    //             ...FONTS.body6,
-                    //             color: COLORS.gray,
-                    //             textAlign: "center",
-                    //           }}
-                    //         >
-                    //           Draw
-                    //         </p>
-                    //       </div>
-                    //       <div>
-                    //         <h3
-                    //           style={{
-                    //             ...FONTS.h5,
-                    //             color: COLORS.red,
-                    //             textAlign: "right",
-                    //           }}
-                    //         >
-                    //           3
-                    //         </h3>
-                    //         <p style={{ ...FONTS.body6, color: COLORS.red }}>
-                    //           AS Roma
-                    //         </p>
-                    //       </div>
-                    //     </div>
-                    //     <div style={{ ...styles.row2 }}>
-                    //       <div
-                    //         style={{
-                    //           width: "20%",
-                    //           height: 5,
-                    //           backgroundColor: COLORS.green,
-                    //         }}
-                    //       ></div>
-                    //       <div
-                    //         style={{
-                    //           width: "20%",
-                    //           height: 5,
-                    //           backgroundColor: COLORS.gray,
-                    //         }}
-                    //       ></div>
-                    //       <div
-                    //         style={{
-                    //           width: "60%",
-                    //           height: 5,
-                    //           backgroundColor: COLORS.red,
-                    //         }}
-                    //       ></div>
-                    //     </div>
-                    //   </div>
-                    //   <h3
-                    //     style={{
-                    //       ...FONTS.h6,
-                    //       textAlign: "center",
-                    //       marginTop: "1rem",
-                    //     }}
-                    //   >
-                    //     All last 5 games
-                    //   </h3>
-                    //   <AllTime
-                    //     homeTeam="Milan"
-                    //     awayTeam="As Roma"
-                    //     homeImage={milan}
-                    //     awayImage={roma}
-                    //     homeLastFive={["W", "W", "D", "W", "W"]}
-                    //     awayLastFive={["L", "W", "D", "W", "L"]}
-                    //   />
-                    // </div>
-                    <div>
-                      <div style={{ marginTop: "1rem" }}>
-                        <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
-                          Attendance
-                        </h1>
-                        <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                          {gameInfo?.matchinfo?.attendance["@name"]}
-                        </p>
+                            <div
+                              style={{
+                                width: "48%",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "flex-end",
+                              }}
+                            >
+                              {dd["@team"] === "visitorteam" ? (
+                                <div style={{ display: "flex" }}>
+                                  <p style={{ ...FONTS.body7, marginRight: 5 }}>
+                                    {dd["@minute"]}'
+                                  </p>
+                                  {dd["@type"] === "subst" ? (
+                                    <div>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <p
+                                          style={{
+                                            ...FONTS.body7,
+                                            marginRight: 5,
+                                          }}
+                                        >
+                                          {dd["@player"]}
+                                        </p>
+                                        <FaArrowRightArrowLeft
+                                          size={10}
+                                          color={COLORS.orange}
+                                          style={{ marginRight: 10 }}
+                                        />
+                                        <p
+                                          style={{
+                                            ...FONTS.body7,
+                                            fontSize: 8,
+                                            marginRight: 5,
+                                          }}
+                                        >
+                                          {dd["@assist"]}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      <p
+                                        style={{
+                                          ...FONTS.body7,
+                                          marginRight: 5,
+                                        }}
+                                      >
+                                        {dd["@player"]}
+                                      </p>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <p
+                                          style={{
+                                            ...FONTS.body7,
+                                            fontSize: 8,
+                                            marginRight: 5,
+                                          }}
+                                        >
+                                          {dd["@assist"]}
+                                        </p>
+                                        {dd["@assist"] && (
+                                          <BsFillLightningFill
+                                            size={10}
+                                            style={{ marginRight: 10 }}
+                                          />
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              ) : null}
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                ) : active === "match-info" && eventArray?.length <= 0 ?  <div style={{ paddingTop: 50 }}>
+                <EmptyState height="100%" header="No Stat Available" />
+              </div> : null
+                }
+                {gameInfo?.stats && active !== "match-info" &&
+                Object.keys(gameInfo?.stats).length !== 0 ? (
+                  <div>
+                    {active === "stat" && (
+                      <div>
+                        <CardList
+                          header="Ball Possession"
+                          homeText={
+                            gameInfo?.stats?.localteam?.possestiontime["@total"]
+                              ? gameInfo?.stats?.localteam?.possestiontime[
+                                  "@total"
+                                ]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.possestiontime[
+                              "@total"
+                            ]
+                              ? gameInfo?.stats?.visitorteam?.possestiontime[
+                                  "@total"
+                                ]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header="Off sides"
+                          homeText={
+                            gameInfo?.stats?.localteam?.offsides["@total"]
+                              ? gameInfo?.stats?.localteam?.offsides["@total"]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.offsides["@total"]
+                              ? gameInfo?.stats?.visitorteam?.offsides["@total"]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header="Shots"
+                          homeText={
+                            gameInfo?.stats?.localteam?.shots["@total"]
+                              ? gameInfo?.stats?.localteam?.shots["@total"]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.shots["@total"]
+                              ? gameInfo?.stats?.visitorteam?.shots["@total"]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header="Passes"
+                          homeText={
+                            gameInfo?.stats?.localteam?.passes["@total"]
+                              ? gameInfo?.stats?.localteam?.passes["@total"]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.passes["@total"]
+                              ? gameInfo?.stats?.visitorteam?.passes["@total"]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header="Fouls"
+                          homeText={
+                            gameInfo?.stats?.localteam?.fouls["@total"]
+                              ? gameInfo?.stats?.localteam?.fouls["@total"]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.fouls["@total"]
+                              ? gameInfo?.stats?.visitorteam?.fouls["@total"]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header={<TbRectangleVerticalFilled color="#FFC15E" />}
+                          homeText={
+                            gameInfo?.stats?.localteam?.yellowcards["@total"]
+                              ? gameInfo?.stats?.localteam?.yellowcards[
+                                  "@total"
+                                ]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.yellowcards["@total"]
+                              ? gameInfo?.stats?.visitorteam?.yellowcards[
+                                  "@total"
+                                ]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header={<TbRectangleVerticalFilled color="red" />}
+                          homeText={
+                            gameInfo?.stats?.localteam?.redcards["@total"]
+                              ? gameInfo?.stats?.localteam?.redcards["@total"]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.redcards["@total"]
+                              ? gameInfo?.stats?.visitorteam?.redcards["@total"]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header="Corners"
+                          homeText={
+                            gameInfo?.stats?.localteam?.corners["@total"]
+                              ? gameInfo?.stats?.localteam?.corners["@total"]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.corners["@total"]
+                              ? gameInfo?.stats?.visitorteam?.corners["@total"]
+                              : 0
+                          }
+                        />
+                        <CardList
+                          header="Saves"
+                          homeText={
+                            gameInfo?.stats?.localteam?.saves["@total"]
+                              ? gameInfo?.stats?.localteam?.saves["@total"]
+                              : 0
+                          }
+                          awayText={
+                            gameInfo?.stats?.visitorteam?.saves["@total"]
+                              ? gameInfo?.stats?.visitorteam?.saves["@total"]
+                              : 0
+                          }
+                        />
                       </div>
-                      <div style={{ marginTop: "1rem" }}>
-                        <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
-                          Referee
-                        </h1>
-                        <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                          {gameInfo?.matchinfo?.referee["@name"]}
-                        </p>
-                      </div>
-                      <div style={{ marginTop: "1rem" }}>
-                        <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
-                          Stadium
-                        </h1>
-                        <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                          {gameInfo?.matchinfo?.stadium["@name"]}
-                        </p>
-                      </div>
-                      <div style={{ marginTop: "1rem" }}>
-                        <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
-                          Time
-                        </h1>
-                        <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                          {gameInfo?.matchinfo?.time["@name"]}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div style={{ paddingTop: 50 }}>
-                  <EmptyState height="100%" header="No Stat Available" />
-                </div>
-              )}
+                    )}
 
+                    {active === "lineup" && (
+                      <div
+                        style={{ backgroundColor: "#F3F3F3", marginTop: 10 }}
+                      >
+                        <Formation
+                          gameInfo={gameInfo}
+                          homeTeamInfo={gameInfo?.lineup?.localteam}
+                          awayTeamInfo={gameInfo?.lineup?.visitorteam}
+                        />
+                      </div>
+                    )}
 
-<div style={{ display: "flex", flexDirection: "column", marginBottom: '2rem'}}>
-          {isMobile ? (
-            <div style={{ ...styles.mob }}>
-              <div style={{ width: "100%" }}>
-                <Button
-                  text={`Bet ${gameInfo?.localTeamName} Win`}
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                  }}
-                  handlePress={() => handleRoute(gameInfo?.localTeamName, "W1")}
-                />
+                    {active === "info" && (
+                      <div>
+                        <div style={{ marginTop: "1rem" }}>
+                          <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
+                            Attendance
+                          </h1>
+                          <p style={{ ...FONTS.body6, textAlign: "center" }}>
+                            {gameInfo?.matchinfo?.attendance["@name"]}
+                          </p>
+                        </div>
+                        <div style={{ marginTop: "1rem" }}>
+                          <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
+                            Referee
+                          </h1>
+                          <p style={{ ...FONTS.body6, textAlign: "center" }}>
+                            {gameInfo?.matchinfo?.referee["@name"]}
+                          </p>
+                        </div>
+                        <div style={{ marginTop: "1rem" }}>
+                          <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
+                            Stadium
+                          </h1>
+                          <p style={{ ...FONTS.body6, textAlign: "center" }}>
+                            {gameInfo?.matchinfo?.stadium["@name"]}
+                          </p>
+                        </div>
+                        <div style={{ marginTop: "1rem" }}>
+                          <h1 style={{ ...FONTS.h6, textAlign: "center" }}>
+                            Time
+                          </h1>
+                          <p style={{ ...FONTS.body6, textAlign: "center" }}>
+                            {gameInfo?.matchinfo?.time["@name"]}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : active === "match-info" ? null : (
+                  <div style={{ paddingTop: 50 }}>
+                    <EmptyState height="100%" header="No Stat Available" />
+                  </div>
+                )}
               </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text="Draw"
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === "draw" ? COLORS.primary : COLORS.cream,
-                    color: selected === "draw" ? COLORS.cream : COLORS.primary,
-                  }}
-                  //  handlePress={() => navigate('/home')}
-                  handlePress={() => handleRoute("draw", "DRAW")}
-                />
-              </div>
-              <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
-                <Button
-                  text={`Bet ${gameInfo?.visitorTeamName} Win`}
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                  }}
-                  // handlePress={() => navigate('/home')}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.visitorTeamName, "W2")
-                  }
-                />
-              </div>
-            </div>
-          ) : (
-            <div style={{ ...styles.desk }}>
-              <div style={{ width: "100%" }}>
-                <Button
-                  text={`Bet ${gameInfo?.localTeamName} Win`}
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.localTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  handlePress={() => handleRoute(gameInfo?.localTeamName, "W1")}
-                />
-              </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text="Draw"
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === "draw" ? COLORS.primary : COLORS.cream,
-                    color: selected === "draw" ? COLORS.cream : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  //  handlePress={() => navigate('/home')}
-                  handlePress={() => handleRoute("draw", "DRAW")}
-                />
-              </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text={`Bet ${gameInfo?.visitorTeamName} Win`}
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.visitorTeamName
-                        ? COLORS.cream
-                        : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  // handlePress={() => navigate('/home')}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.visitorTeamName, "W2")
-                  }
-                />
-              </div>
-            </div>
-          )}
-        </div>
+
+        
             </div>
 
             <ToastContainer />
@@ -692,12 +855,12 @@ function GameDetails() {
                 ...styles.btt,
                 display: "flex",
                 flexDirection: "column",
-                flex: 1,
+                // flex: 1,
               }}
             >
               <TennisCard data={gameInfo} />
             </div>
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div style={{ display: "flex", flexDirection: "column"}}>
               {isMobile ? (
                 <div style={{ ...styles.mob }}>
                   <div style={{ width: "100%" }}>
@@ -824,8 +987,7 @@ function GameDetails() {
           />
         )}
 
-
-{gameType === "Esport" && (
+        {gameType === "Esport" && (
           <EsportDetails
             selected={selected}
             gameInfo={gameInfo}
@@ -834,7 +996,7 @@ function GameDetails() {
           />
         )}
 
-{gameType === "Dart" && (
+        {gameType === "Dart" && (
           <DartDetails
             selected={selected}
             gameInfo={gameInfo}
@@ -843,7 +1005,7 @@ function GameDetails() {
           />
         )}
 
-{gameType === "Snooker" && (
+        {gameType === "Snooker" && (
           <SnookerDetail
             selected={selected}
             gameInfo={gameInfo}
@@ -851,8 +1013,6 @@ function GameDetails() {
             isMobile={isMobile}
           />
         )}
-
-        
       </div>
 
       <ToastContainer />

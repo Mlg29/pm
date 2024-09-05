@@ -111,7 +111,6 @@ const styles = {
 
 function BasketballDetails({selected, gameInfo, handleRoute, isMobile}) {
 
-
   return (
     <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
     <div
@@ -119,12 +118,12 @@ function BasketballDetails({selected, gameInfo, handleRoute, isMobile}) {
         ...styles.btt,
         display: "flex",
         flexDirection: "column",
-        flex: 1,
+        // flex: 1,
       }}
     >
       <BasketballCard data={gameInfo} />
     </div>
-    <div style={{display: "flex", flexDirection: "column", flex: 1}}>
+    <div style={{display: "flex", flexDirection: "column"}}>
     {isMobile ? (
       <div style={{ ...styles.mob }}>
         <div style={{ width: "100%" }}>
