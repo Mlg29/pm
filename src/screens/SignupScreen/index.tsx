@@ -176,12 +176,12 @@ function SignupScreen() {
 
 
   const handleSubmitData = async (data) => {
-    if (userIp?.country_code === "US") {
-      toast.error("Registration is restricted for this country", {
-        position: "bottom-center",
-      });
-      return;
-    }
+    // if (userIp?.country_code === "US") {
+    //   toast.error("Registration is restricted for this country", {
+    //     position: "bottom-center",
+    //   });
+    //   return;
+    // }
     if (!country || country?.length < 1) {
       toast.error("Country is required", {
         position: "bottom-center",

@@ -41,6 +41,12 @@ function WalletPin() {
  
 
   const handleSubmit = async () => {
+     // if (userIp?.country_code === "US") {
+    //   toast.error("Placing of bet is restricted for this country", {
+    //     position: "bottom-center",
+    //   });
+    //   return;
+    // }
     if (otp?.length < 6) {
       toast.error("Transaction Pin is required", {
         position: "bottom-center",

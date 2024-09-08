@@ -91,24 +91,26 @@ function CreatePasswordNew() {
       newPassword: data?.password,
     };
 
-    setStorePayload(payload);
-    setShow(true);
+    // setStorePayload(payload);
+    // setShow(true);
 
-    return;
+    // return;
+
+    handleAction(payload)
   };
 
-  const handleAction = async () => {
+  const handleAction = async (payload) => {
     setLoader(true);
     try {
-      var response = (await dispatch(createNewPassword(storePayload))) as any;
+      var response = (await dispatch(createNewPassword(payload))) as any;
       if (response?.error?.message === "Rejected") {
         setMessage(response?.payload);
         setMessageType("Rejected");
       }
       if (createNewPassword.fulfilled.match(response)) {
-        // toast.success(response?.payload?.data?.message, {
-        //   position: "bottom-center",
-        // });
+        toast.success(response?.payload?.data?.message, {
+          position: "bottom-center",
+        });
         setMessage(response?.payload?.data?.message);
         setMessageType("Success");
         setLoader(false);
@@ -277,13 +279,13 @@ function CreatePasswordNew() {
         </div>
       </div>
 
-      <PinModal
+      {/* <PinModal
         show={show}
         handleClose={handleClose}
         handleAction={handleAction}
         type={messageType === "Rejected" ? "failed" : "success"}
         responseText={message ? message : "Password Updated Successfully"}
-      />
+      /> */}
 
       <ToastContainer />
     </div>

@@ -100,10 +100,10 @@ function ChangeTransactionPin() {
     handleAction(data)
   };
 
-  const handleAction = async(storePayload) => {
+  const handleAction = async(storePayloads) => {
     const payload = {
-      currentPin: storePayload?.oldPin,
-      newPin: storePayload?.pin
+      currentPin: storePayloads?.oldPin,
+      newPin: storePayloads?.pin
     }
 
     setLoader(true);
