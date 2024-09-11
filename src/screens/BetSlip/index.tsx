@@ -469,6 +469,38 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
+                               {item?.sportEvent?.sport === "VOLLYBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.VollyBallEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.VollyBallEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.VollyBallEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.VollyBallEvent?.localteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.VollyBallEvent?.awayteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.VollyBallEvent?.awayteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                           </div>
                         );
                       })}
@@ -727,6 +759,38 @@ function BetSlip() {
                                   item?.sportEvent?.SnookerEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.SnookerEvent?.awayteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+                              {item?.sportEvent?.sport === "VOLLYBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.VollyBallEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.VollyBallEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.VollyBallEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.VollyBallEvent?.localteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.VollyBallEvent?.awayteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.VollyBallEvent?.awayteam
                                         ?.totalscore
                                     : "0"
                                 }

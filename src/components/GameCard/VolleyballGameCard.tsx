@@ -40,18 +40,18 @@ export const styles = {
   },
 };
 
-function EsportGameCard({ id, data }) {
+function VolleyballGameCard({ id, data }) {
   const navigate = useNavigate();
 
   return (
     <div>
-  
+       
 
        <div
       style={styles.container}
       key={id}
       onClick={() =>
-        navigate("/game-details", { state: { data: data, gameType: "Esport" } })
+        navigate("/game-details", { state: { data: data, gameType: "Volleyball" } })
       }
     >
       <div style={styles.box1}>
@@ -69,8 +69,8 @@ function EsportGameCard({ id, data }) {
       <div style={styles.box3}>
         {/* <GiSoccerField /> */}
         <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.score ? data?.localteam?.score : "-"}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.score ? data?.awayteam?.score : "-"}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.totalscore ? data?.localteam?.totalscore : "-"}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : "-"}</p>
           
 
         </div>
@@ -83,4 +83,4 @@ function EsportGameCard({ id, data }) {
 }
 
 
-export default EsportGameCard;
+export default VolleyballGameCard;

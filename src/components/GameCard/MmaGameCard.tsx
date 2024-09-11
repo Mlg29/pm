@@ -19,11 +19,11 @@ export const styles = {
   },
   box1: {
     marginRight: 20,
-    width: "10%",
+    width: "20%",
   },
   box2: {
     marginRight: 10,
-    width: "55%",
+    width: "80%",
   },
   box3: {
     display: "flex",
@@ -45,14 +45,7 @@ function MmaGameCard({ id, data }) {
 
   return (
     <div>
-        <div style={{display: 'flex', alignItems: 'center', marginBottom: 5}}> 
-        <p style={{ ...FONTS.body7, color: COLORS.black, marginRight: 10 }}>
-          {data?.name}
-        </p>
-        <p style={{ ...FONTS.body8, color: COLORS.black }}>
-        ({data?.fightDate})
-        </p>
-      </div>
+ 
 
         <div
       style={styles.container}
@@ -62,6 +55,9 @@ function MmaGameCard({ id, data }) {
       }
     >
       <div style={styles.box1}>
+      <p style={{ ...FONTS.body8, color: COLORS.black }}>
+        ({data?.fightDate})
+        </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
           {data?.status > 0 ? `${data?.status}'` : data?.status}
         </p>
@@ -79,14 +75,7 @@ function MmaGameCard({ id, data }) {
 
         </div>
       </div>
-      <div style={styles.box4}>
-        <p style={{ ...FONTS.body8, textAlign: "center", color: COLORS.green }}>
-          {data?.localteam?.name} Win
-        </p>
-        <p style={{ ...FONTS.body8, textAlign: "center", color: COLORS.green }}>
-          {data?.awayteam?.name} Win
-        </p>
-      </div>
+ 
     </div>
     </div>
   

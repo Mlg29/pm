@@ -28,6 +28,8 @@ import { getDartFixtures } from "../../redux/slices/DartSlice";
 import DartGameCard from "../../components/GameCard/DartGameCard";
 import { getSnookerFixtures } from "../../redux/slices/SnookerSlice";
 import SnookerGameCard from "../../components/GameCard/SnookerGameCard";
+import { getVolleyballFixtures } from "../../redux/slices/VolleyballSlice";
+import VolleyballGameCard from "../../components/GameCard/VolleyballGameCard";
 
 const styles = {
   row: {
@@ -342,6 +344,30 @@ function FilterPage() {
     });
   };
 
+  const fetchVolleyballData = async (page) => {
+    setData([])
+    const payload = {
+      date: moment(dateRange).format("DD-MM-YYYY"),
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getVolleyballFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
   const fetchMmaData = async (page) => {
     setData([])
     const payload = {
@@ -425,6 +451,10 @@ function FilterPage() {
     }
     if (game === "Snooker") {
       fetchSnookerData(page);
+      return;
+    }
+    if (game === "Volleyball") {
+      fetchVolleyballData(page);
       return;
     }
   }, [page, dateRange, game]);
@@ -518,6 +548,7 @@ function FilterPage() {
                   {game === "Esport" && <EsportGameCard id={i} data={aa} />}
                   {game === "Darts" && <DartGameCard id={i} data={aa} />}
                   {game === "Snooker" && <SnookerGameCard id={i} data={aa} />}
+                  {game === "Volleyball" && <VolleyballGameCard id={i} data={aa} />}
                 </div>
               );
             })}

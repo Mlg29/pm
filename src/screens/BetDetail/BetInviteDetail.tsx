@@ -25,6 +25,7 @@ import BasketballCard from "../../components/GameDetailCardHeader/BasketballCard
 import EsportCard from "../../components/GameDetailCardHeader/EsportCard";
 import DartCard from "../../components/GameDetailCardHeader/DartCard";
 import SnookerCard from "../../components/GameDetailCardHeader/SnookerCard";
+import VolleyballCard from "../../components/GameDetailCardHeader/VolleyballCard";
 
 const styles = {
   div: {
@@ -179,9 +180,14 @@ function BetInviteDetail() {
 {betData?.sportEvent?.sport === "DART" && (
         <DartCard gameInfo={betData?.sportEvent?.DartEvent} />
       )}
-      {betData?.sportEvent?.sport === "DART" && (
+      {betData?.sportEvent?.sport === "SNOOKER" && (
         <SnookerCard gameInfo={betData?.sportEvent?.SnookerEvent} />
       )}
+
+{betData?.sportEvent?.sport === "DART" && (
+        <VolleyballCard gameInfo={betData?.sportEvent?.VollyBallEvent} />
+      )}
+
 
 {betData?.sportEvent?.sport === "MMA" && (
         <MmaCard gameInfo={betData?.sportEvent?.MmaEvent} />

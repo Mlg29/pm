@@ -19,14 +19,13 @@ export const styles = {
   },
   box1: {
     marginRight: 20,
-    // width: "30%",
+    width: "20%",
   },
   box2: {
     marginRight: 10,
     display: "flex",
     alignItems: "center",
-
-    // width: "45%",
+     width: "50%",
   },
   box3: {
     display: "flex",
@@ -53,38 +52,41 @@ function HorseGameCard({ id, data }) {
         navigate("/game-details", { state: { data: data, gameType: "Horse" } })
       }
     >
-      <div style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
+      <div
+        style={{ display: "flex", alignItems: "center", marginBottom: 10 }}
+      ></div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+        }}
+      >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status > 0 ? `${data?.status}'` : data?.status}
           </p>
         </div>
-        <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.name}</p>
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <p style={{ ...FONTS.body8 }}>
-            <span style={{ color: COLORS.orange }}>Tournament: </span>
-          </p>
-          <p style={{ ...FONTS.body8 }}>{data?.tournamentName}</p>
-        </div>
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'end'}}>
+          <div style={styles.box2}>
+            <p style={{ ...FONTS.body7 }}>{data?.name}</p>
+          </div>
+          <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "end",
+            width: '30%'
+          }}
+        >
           <p style={{ ...FONTS.body8 }}>
             <span style={{ color: COLORS.orange }}>Distance: </span>
           </p>
-          <p style={{ ...FONTS.body8 }}><span>{data?.distance}</span></p>
+          <p style={{ ...FONTS.body8 }}>
+            <span>{data?.distance}</span>
+          </p>
         </div>
       </div>
-
     </div>
   );
 }

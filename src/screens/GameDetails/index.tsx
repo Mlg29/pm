@@ -31,6 +31,7 @@ import BasketballDetails from "./Details/BasketballDetails";
 import EsportDetails from "./Details/EsportDetail";
 import DartDetails from "./Details/DartDetail";
 import SnookerDetail from "./Details/SnookerDetail";
+import VolleyballDetail from "./Details/VolleyballDetail";
 
 const styles = {
   container: {
@@ -237,7 +238,7 @@ function GameDetails() {
       </div>
     );
   }
-console.log({gameInfo})
+
 
   return (
     <div className="top-container" style={{ backgroundColor: "transparent" }}>
@@ -1013,6 +1014,16 @@ console.log({gameInfo})
             isMobile={isMobile}
           />
         )}
+
+{gameType === "Volleyball" && (
+          <VolleyballDetail
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
       </div>
 
       <ToastContainer />

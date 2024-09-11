@@ -66,6 +66,26 @@ function Darts() {
     //   });
   }, []);
 
+
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league = 'Dart';
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      acc[league].push(current);
+
+      return acc;
+    }, {});
+  };
+
+
+
+  const upcomingOutput = groupedByData(upcoming?.data)
+
+
   return (
     <div>
       {upcoming?.data?.length > 0 && (
@@ -102,13 +122,29 @@ function Darts() {
           )}
         </div>
       )}
-      {upcoming?.data?.map((aa: any, i: any) => {
+      {/* {upcoming?.data?.map((aa: any, i: any) => {
         return (
           <div key={i}>
-            <DartGameCard id={i} data={aa} />
+          
           </div>
         );
-      })}
+      })} */}
+           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {upcomingOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <DartGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
       {finished?.data?.length < 1 && upcoming?.data?.length < 1 ? (
         <EmptyState header="No Game Available for Darts" height="30vh" />
       ) : null}

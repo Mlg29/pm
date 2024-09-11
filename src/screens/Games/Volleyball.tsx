@@ -9,13 +9,15 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
+import { getVolleyballFixtures } from "../../redux/slices/VolleyballSlice";
+import VolleyballGameCard from "../../components/GameCard/VolleyballGameCard";
 
 
 function Volleyball() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
-  const url = `${BaseUrl}/boxing`;
+  const url = `${BaseUrl}/volleyball`;
   const dispatch = useAppDispatch() as any;
 
   // useEffect(() => {
@@ -56,9 +58,9 @@ function Volleyball() {
         status: "Finished",
       };
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
+    dispatch(getVolleyballFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload);
+    });
 
     // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
     //     setFinished(dd?.payload);
@@ -67,6 +69,25 @@ function Volleyball() {
   }, []);
 
  
+
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league =  current?.league || "Volley ball";
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      acc[league].push(current);
+
+      return acc;
+    }, {});
+  };
+
+
+
+  const upcomingOutput = groupedByData(upcoming?.data)
+
 
   return (
     <div>
@@ -79,6 +100,23 @@ function Volleyball() {
         :
         null
       }
+  
+           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {upcomingOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                 <VolleyballGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

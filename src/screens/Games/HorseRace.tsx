@@ -74,6 +74,27 @@ function HorseRace() {
   }, []);
 
 
+
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league = current?.tournamentName;
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      acc[league].push(current);
+
+      return acc;
+    }, {});
+  };
+
+  const liveOutput = groupedByData(live)
+
+  const upcomingOutput = groupedByData(upcoming?.data)
+
+
+
   if (loader) {
     return (
       <div
@@ -130,13 +151,23 @@ function HorseRace() {
           )}
         </div>
       )}
-      {live?.filter((a, i) => i < 10)?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <HorseGameCard id={i} data={aa} />
+
+           {liveOutput && Object.keys(liveOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {liveOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                 <HorseGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      ))}
       {upcoming?.data?.length > 0 && (
         <div
           style={{
@@ -172,13 +203,22 @@ function HorseRace() {
         </div>
       )}
 
-      {upcoming?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <HorseGameCard id={i} data={aa} />
+           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {upcomingOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                 <HorseGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 }

@@ -193,8 +193,8 @@ function NavHeader() {
     },
     {
       id: 8,
-      name: "Baseball",
-      image: selected === "Baseball" ? abaseball : inbaseball,
+      name: "Volleyball",
+      image: selected === "Volleyball" ? avolleyball : involleyball,
     },
     {
       id: 11,
@@ -241,8 +241,8 @@ function NavHeader() {
     },
     {
       id: 8,
-      name: "Volleyball",
-      image: selected === "Volleyball" ? avolleyball : involleyball,
+      name: "Baseball",
+      image: selected === "Baseball" ? abaseball : inbaseball,
     },
     {
       id: 10,

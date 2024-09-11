@@ -1,71 +1,68 @@
-import React, { useEffect, useState } from 'react'
-import { FONTS } from '../../utils/fonts';
-import { COLORS } from '../../utils/colors';
-import { useNavigate } from 'react-router-dom';
-import GameCard from '../../components/GameCard';
-import { useAppDispatch } from '../../redux/hooks';
+import React, { useEffect, useState } from "react";
+import { FONTS } from "../../utils/fonts";
+import { COLORS } from "../../utils/colors";
+import { useNavigate } from "react-router-dom";
+import GameCard from "../../components/GameCard";
+import { useAppDispatch } from "../../redux/hooks";
 import { BaseUrl } from "../../https";
-import { getFootballFixtures } from '../../redux/slices/FootballSlice';
-import moment from 'moment';
-import { io } from 'socket.io-client';
-import EmptyState from '../../components/EmptyState';
+import { getFootballFixtures } from "../../redux/slices/FootballSlice";
+import moment from "moment";
+import { io } from "socket.io-client";
+import EmptyState from "../../components/EmptyState";
 
 function Football() {
-    const navigate = useNavigate()
-    const dispatch = useAppDispatch() as any;
-    const [live, setLive] = useState<any>([]);
-    const [upcoming, setUpcoming] = useState<any>([]);
-    const [today, setToday] = useState<any>([]);
-    const [tomorrow, setTomorrow] = useState<any>([]);
-    const url = `${BaseUrl}/football`;
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch() as any;
+  const [live, setLive] = useState<any>([]);
+  const [upcoming, setUpcoming] = useState<any>([]);
+  const [today, setToday] = useState<any>([]);
+  const [tomorrow, setTomorrow] = useState<any>([]);
+  const url = `${BaseUrl}/football`;
 
-    
+  useEffect(() => {
+    const socket = io(url) as any;
 
-    useEffect(() => {
-      const socket = io(url) as any;
-  
-      socket.on("connect", () => {
-        console.log("Connected to WebSocket server");
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    // Handle incoming messages
+    socket.on("footballEventUpdate", (message) => {
+      setLive((prevMessages) => {
+        const updatedMessages = prevMessages?.filter(
+          (msg) => msg.id !== message.id
+        );
+        return [...updatedMessages, message];
       });
-  
-      socket.on("connect_error", (err) => {
-        console.error("WebSocket connection error:", err);
-      });
-  
-      // Handle incoming messages
-      socket.on("footballEventUpdate", (message) => {
-        setLive((prevMessages) => {
-          const updatedMessages = prevMessages?.filter(
-            (msg) => msg.id !== message.id
-          );
-          return [...updatedMessages, message];
-        });
-      });
-  
-      // Cleanup on component unmount
-      return () => {
-        socket.disconnect();
-      };
-    }, []);
-  
-    let createdDate = moment(new Date()).utc().format();
-    let tomorrowDate = moment(createdDate).add(1, "d");
-  
-    useEffect(() => {
-      const payloadUpcoming = {
-        status: "UPCOMING",
-      };
-      const payloadLive = {
-        status: "LIVE",
-      };
-      const payloadToday = {
-        date: moment(new Date()).format("YYYY-MM-DD"),
-      };
-      const payloadTomorrow = {
-        date: tomorrowDate.format("YYYY-MM-DD"),
-      };
-  
-  
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  let createdDate = moment(new Date()).utc().format();
+  let tomorrowDate = moment(createdDate).add(1, "d");
+
+  useEffect(() => {
+    const payloadUpcoming = {
+      status: "UPCOMING",
+    };
+    const payloadLive = {
+      status: "LIVE",
+    };
+    const payloadToday = {
+      date: moment(new Date()).format("YYYY-MM-DD"),
+    };
+    const payloadTomorrow = {
+      date: tomorrowDate.format("YYYY-MM-DD"),
+    };
+
     dispatch(getFootballFixtures(payloadLive)).then((dd) => {
       setLive(dd?.payload?.data);
     });
@@ -78,13 +75,65 @@ function Football() {
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
     });
-  
-      
-    }, []);
-    
+  }, []);
+
+  const groupedByLeague = live?.filter((a, i) => i < 10).reduce((acc, current) => {
+    const league = current?.leagueName;
+
+    if (!acc[league]) {
+      acc[league] = [];
+    }
+
+    acc[league].push(current);
+
+    return acc;
+  }, {});
+
+
+  const groupedByUpcomingLeague =  upcoming?.data?.reduce((acc, current) => {
+    const league = current?.leagueName;
+
+    if (!acc[league]) {
+      acc[league] = [];
+    }
+
+    acc[league].push(current);
+
+    return acc;
+  }, {});
+
+
+  const groupedByTodayLeague =  today?.data?.reduce((acc, current) => {
+    const league = current?.leagueName;
+
+    if (!acc[league]) {
+      acc[league] = [];
+    }
+
+    acc[league].push(current);
+
+    return acc;
+  }, {});
+
+
+  const groupedByTomorrowLeague = tomorrow?.data?.reduce((acc, current) => {
+    const league = current?.leagueName;
+
+    if (!acc[league]) {
+      acc[league] = [];
+    }
+
+    acc[league].push(current);
+
+    return acc;
+  }, {});
+
+
+
+
   return (
     <div>
-        {live?.length > 0 && (
+      {live?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -109,7 +158,7 @@ function Football() {
                   state: {
                     events: live,
                     type: "live",
-                    gameType: "Soccer"
+                    gameType: "Soccer",
                   },
                 })
               }
@@ -120,15 +169,22 @@ function Football() {
         </div>
       )}
 
-      {live
-        ?.filter((a, i) => i < 10)
-        .map((aa: any, i: any) => {
-          return (
-            <div key={i}>
-              <GameCard id={i} data={aa} />
-            </div>
-          );
-        })}
+      {groupedByLeague && Object.keys(groupedByLeague)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {groupedByLeague[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <GameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
       {upcoming?.data?.length > 0 && (
         <div
           style={{
@@ -153,7 +209,7 @@ function Football() {
                   state: {
                     events: upcoming,
                     type: "upcoming",
-                    gameType: "Soccer"
+                    gameType: "Soccer",
                   },
                 })
               }
@@ -164,13 +220,22 @@ function Football() {
         </div>
       )}
 
-      {upcoming?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <GameCard id={i} data={aa} />
+         {groupedByUpcomingLeague && Object.keys(groupedByUpcomingLeague)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {groupedByUpcomingLeague[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <GameCard id={i} data={aa} />
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      ))}
 
       {today?.data?.length > 0 && (
         <div
@@ -196,7 +261,7 @@ function Football() {
                   state: {
                     events: today,
                     type: "today",
-                    gameType: "Soccer"
+                    gameType: "Soccer",
                   },
                 })
               }
@@ -207,13 +272,22 @@ function Football() {
         </div>
       )}
 
-      {today?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <GameCard id={i} data={aa} />
+         {groupedByTodayLeague && Object.keys(groupedByTodayLeague)?.filter((a, i) => i < 10).map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {groupedByTodayLeague[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <GameCard id={i} data={aa} />
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      ))}
 
       {tomorrow?.data?.length > 0 && (
         <div
@@ -239,7 +313,7 @@ function Football() {
                   state: {
                     events: tomorrow,
                     type: "tomorrow",
-                    gameType: "Soccer"
+                    gameType: "Soccer",
                   },
                 })
               }
@@ -250,26 +324,31 @@ function Football() {
         </div>
       )}
 
-      {tomorrow?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <GameCard id={i} data={aa} />
+        {groupedByTomorrowLeague && Object.keys(groupedByTomorrowLeague)?.filter((a, i) => i < 10).map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {groupedByTomorrowLeague[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <GameCard id={i} data={aa} />
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      ))}
 
-{
-        live?.length < 1 && upcoming?.data?.length < 1 && today?.data?.length < 1 && tomorrow?.data?.length < 1 ?
-        <EmptyState 
-          header="No Game Available for Football"
-          height="30vh"
-        />
-        :
-        null
-      }
-      
+      {live?.length < 1 &&
+      upcoming?.data?.length < 1 &&
+      today?.data?.length < 1 &&
+      tomorrow?.data?.length < 1 ? (
+        <EmptyState header="No Game Available for Football" height="30vh" />
+      ) : null}
     </div>
-  )
+  );
 }
 
-export default Football
+export default Football;

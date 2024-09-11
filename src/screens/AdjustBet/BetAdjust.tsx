@@ -28,6 +28,7 @@ import BasketballCard from "../../components/GameDetailCardHeader/BasketballCard
 import EsportCard from "../../components/GameDetailCardHeader/EsportCard";
 import DartCard from "../../components/GameDetailCardHeader/DartCard";
 import SnookerCard from "../../components/GameDetailCardHeader/SnookerCard";
+import VolleyballCard from "../../components/GameDetailCardHeader/VolleyballCard";
 
 const styles = {
   inputs: {
@@ -238,6 +239,10 @@ const BetAdjust = () => {
 
 {sportEvents?.sport === "SNOOKER" && (
         <SnookerCard data={sportEvents?.SnookerEvent} />
+      )}
+
+{sportEvents?.sport === "VOLLYBALL" && (
+        <VolleyballCard data={sportEvents?.VollyBallEvent} />
       )}
 {sportEvents?.sport === "MMA" && (
         <MmaCard data={sportEvents?.MmaEvent} />

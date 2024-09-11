@@ -8,38 +8,6 @@ import moment from "moment";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
-// export const styles = {
-//     container: {
-//         border: `1px solid ${COLORS.semiGray}`,
-//         borderRadius: 10,
-//         padding: 10,
-//         margin: "0px 0px 20px 0px"
-//     },
-//     row: {
-//         display: "flex",
-//         flexDirection: "row" as FlexDirection,
-//         alignItems: "center",
-//         justifyContent: "space-between",
-
-//     },
-//     row2: {
-//         display: "flex",
-//         flexDirection: "row" as FlexDirection,
-//         justifyContent: "space-between",
-//         alignItems: "center",
-//         margin: "20px 0px 5px 0px"
-//     },
-//     box: {
-//         backgroundColor: COLORS.cream,
-//         width: "45%",
-//         padding: 5,
-//         display: "flex",
-//         justifyContent: "center",
-//         fontSize: "8px",
-//         fontWeight: 600
-//     }
-// }
-
 export const styles = {
   container: {
     display: "flex",
@@ -51,14 +19,15 @@ export const styles = {
   },
   box1: {
     marginRight: 20,
-    width: "10%",
+    width: "20%",
   },
   box2: {
     marginRight: 10,
-    width: "55%",
+    width: "80%",
   },
   box3: {
     display: "flex",
+    justifyContent: 'flex-end',
     alignItems: "center",
     marginRight: 10,
     width: "15%",
@@ -75,14 +44,7 @@ function TennisGameCard({ id, data }) {
 
   return (
     <div>
-          <div style={{display: 'flex', alignItems: 'center', marginBottom: 5}}> 
-        <p style={{ ...FONTS.body7, color: COLORS.black, marginRight: 10 }}>
-          {data?.tournamentName}
-        </p>
-        <p style={{ ...FONTS.body8, color: COLORS.black }}>
-         ({data?.gameDate})
-        </p>
-      </div>
+     
 
        <div
       style={styles.container}
@@ -92,6 +54,9 @@ function TennisGameCard({ id, data }) {
       }
     >
       <div style={styles.box1}>
+      <p style={{ ...FONTS.body8, color: COLORS.black }}>
+         ({data?.gameDate})
+        </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
           {data?.status > 0 ? `${data?.status}'` : data?.status}
         </p>
@@ -101,7 +66,6 @@ function TennisGameCard({ id, data }) {
         <p style={{ ...FONTS.body7 }}>{data?.player && data?.player[1]["@name"]}</p>
       </div>
       <div style={styles.box3}>
-        <GiSoccerField />
         <div style={{ marginLeft: 10 }}>
           {data?.player?.map((dd, i) => {
             return (
@@ -117,14 +81,7 @@ function TennisGameCard({ id, data }) {
 
         </div>
       </div>
-      <div style={styles.box4}>
-        <p style={{ ...FONTS.body7, textAlign: "center", color: COLORS.green }}>
-          {data?.player[0]["@name"]?.slice(0, 4)} Win
-        </p>
-        <p style={{ ...FONTS.body7, textAlign: "center", color: COLORS.green }}>
-          {data?.player[1]["@name"]?.slice(0, 4)} Win
-        </p>
-      </div>
+ 
     </div>
     </div>
 

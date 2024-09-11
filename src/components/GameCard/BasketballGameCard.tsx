@@ -19,14 +19,15 @@ export const styles = {
   },
   box1: {
     marginRight: 20,
-    width: "10%",
+    width: "20%",
   },
   box2: {
     marginRight: 10,
-    width: "55%",
+    width: "80%",
   },
   box3: {
     display: "flex",
+    justifyContent: 'flex-end',
     alignItems: "center",
     marginRight: 10,
     width: "10%",
@@ -45,14 +46,6 @@ function BasketballGameCard({ id, data }) {
 
   return (
     <div>
-      <div style={{display: 'flex', alignItems: 'center', marginBottom: 5}}> 
-        <p style={{ ...FONTS.body7, color: COLORS.black, marginRight: 10 }}>
-          {data?.leagueName}
-        </p>
-        <p style={{ ...FONTS.body8, color: COLORS.black }}>
-         ( {moment(data?.startTime).format("DD-MM-YYYY")})
-        </p>
-      </div>
       <div
         style={styles.container}
         key={id}
@@ -63,6 +56,9 @@ function BasketballGameCard({ id, data }) {
         }
       >
         <div style={styles.box1}>
+        <p style={{ ...FONTS.body8, color: COLORS.black }}>
+         ( {moment(data?.startTime).format("DD-MM-YYYY")})
+        </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status > 0 ? `${data?.status}'` : data?.status}
           </p>
@@ -85,18 +81,6 @@ function BasketballGameCard({ id, data }) {
                 : "-"}
             </p>
           </div>
-        </div>
-        <div style={styles.box4}>
-          <p
-            style={{ ...FONTS.body8, textAlign: "center", color: COLORS.green }}
-          >
-            {data?.localTeamName} Win
-          </p>
-          <p
-            style={{ ...FONTS.body8, textAlign: "center", color: COLORS.green }}
-          >
-            {data?.visitorTeamName} Win
-          </p>
         </div>
       </div>
     </div>

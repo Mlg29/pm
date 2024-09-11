@@ -49,6 +49,8 @@ import { getDartFixtures } from "../../redux/slices/DartSlice";
 import DartGameCard from "../../components/GameCard/DartGameCard";
 import { getSnookerFixtures } from "../../redux/slices/SnookerSlice";
 import SnookerGameCard from "../../components/GameCard/SnookerGameCard";
+import VolleyballCard from "../../components/GameDetailCardHeader/VolleyballCard";
+import { getVolleyballFixtures } from "../../redux/slices/VolleyballSlice";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
@@ -137,7 +139,8 @@ function GameEventData(props: any) {
     const actualPayload =
       eventType === "upcoming"
         ? payloadUpcoming
-        : eventType === "live" ? payloadLive
+        : eventType === "live"
+        ? payloadLive
         : eventType === "today"
         ? payloadToday
         : eventType === "tomorrow"
@@ -162,10 +165,7 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload =
-      eventType === "upcoming"
-        ? payloadUpcoming
-        : "";
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getHorseFixtures(actualPayload)).then((dd) => {
       setData((prev) => [...prev, ...dd?.payload?.data]);
@@ -186,10 +186,7 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload =
-      eventType === "upcoming"
-        ? payloadUpcoming
-        : "";
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getBoxingFixtures(actualPayload)).then((dd) => {
       setData((prev) => [...prev, ...dd?.payload?.data]);
@@ -218,7 +215,9 @@ function GameEventData(props: any) {
     const actualPayload =
       eventType === "upcoming"
         ? payloadUpcoming
-        : eventType === "live" ? payloadLive : "";
+        : eventType === "live"
+        ? payloadLive
+        : "";
 
     setLoading(true);
     dispatch(getEasportFixtures(actualPayload)).then((dd) => {
@@ -240,11 +239,7 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-
-    const actualPayload =
-      eventType === "upcoming"
-        ? payloadUpcoming
-        : "";
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
 
     setLoading(true);
     dispatch(getDartFixtures(actualPayload)).then((dd) => {
@@ -266,11 +261,7 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-
-    const actualPayload =
-      eventType === "upcoming"
-        ? payloadUpcoming
-        : "";
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
 
     setLoading(true);
     dispatch(getSnookerFixtures(actualPayload)).then((dd) => {
@@ -285,6 +276,27 @@ function GameEventData(props: any) {
     });
   };
 
+  const fetchVolleyballData = async (page) => {
+    const payloadUpcoming = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+
+    setLoading(true);
+    dispatch(getVolleyballFixtures(actualPayload)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    });
+  };
 
   const fetchMmaData = async (page) => {
     const payloadUpcoming = {
@@ -293,10 +305,7 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload =
-      eventType === "upcoming"
-        ? payloadUpcoming
-        : "";
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getMmaFixtures(actualPayload)).then((dd) => {
       setData((prev) => [...prev, ...dd?.payload?.data]);
@@ -317,10 +326,7 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload =
-      eventType === "upcoming"
-        ? payloadUpcoming 
-        : "";
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getBasketballFixtures(actualPayload)).then((dd) => {
       setData((prev) => [...prev, ...dd?.payload?.data]);
@@ -371,8 +377,11 @@ function GameEventData(props: any) {
       fetchSnookerData(page);
       return;
     }
+    if (gameType === "Volleyball") {
+      fetchVolleyballData(page);
+      return;
+    }
   }, [page]);
-
 
   useEffect(() => {
     if (eventType === "live" && gameType === "Soccer") {
@@ -387,8 +396,26 @@ function GameEventData(props: any) {
     if (eventType === "live" && gameType === "Esport") {
       setLive(events);
     }
-    const url =  gameType === "Soccer" ? `${BaseUrl}/football` : gameType === "Basketball" ? `${BaseUrl}/basketball` : gameType === "Tennis" ? `${BaseUrl}/tennis` : gameType === "Esport" ? `${BaseUrl}/esport`  : ''  ;
-    const socketEvents =  gameType === "Soccer" ? "footballEventUpdate" : gameType === "Basketball" ? "basketballEventUpdate" : gameType === "Tennis" ? "tennisEventUpdate" : gameType === "Esport" ? "esportEventUpdate" : ''  ;
+    const url =
+      gameType === "Soccer"
+        ? `${BaseUrl}/football`
+        : gameType === "Basketball"
+        ? `${BaseUrl}/basketball`
+        : gameType === "Tennis"
+        ? `${BaseUrl}/tennis`
+        : gameType === "Esport"
+        ? `${BaseUrl}/esport`
+        : "";
+    const socketEvents =
+      gameType === "Soccer"
+        ? "footballEventUpdate"
+        : gameType === "Basketball"
+        ? "basketballEventUpdate"
+        : gameType === "Tennis"
+        ? "tennisEventUpdate"
+        : gameType === "Esport"
+        ? "esportEventUpdate"
+        : "";
 
     const socket = io(url) as any;
 
@@ -409,7 +436,6 @@ function GameEventData(props: any) {
         return [...updatedMessages, message];
       });
     });
-
 
     // Cleanup on component unmount
     return () => {
@@ -436,6 +462,23 @@ function GameEventData(props: any) {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league = current?.leagueName;
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      acc[league].push(current);
+
+      return acc;
+    }, {});
+  };
+
+  const outPut = groupedByData(live);
+
+  const outPutData = groupedByData(data);
 
   if (loader) {
     return (
@@ -518,13 +561,33 @@ function GameEventData(props: any) {
             </div>
           )}
 
-          {live?.map((aa: any, i: any) => {
-            return (
-              <div key={i}>
-                <GameCard id={i} data={aa} />
+          {outPut &&
+            Object.keys(outPut)?.map((leagueName) => (
+              <div key={leagueName}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10,
+                  }}
+                >
+                  {leagueName}
+                </p>
+                <div>
+                  {outPut[leagueName].map((aa, i) => {
+                    return (
+                      <div key={i}>
+                        <GameCard id={i} data={aa} />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            );
-          })}
+            ))}
         </div>
       )}
 
@@ -551,17 +614,37 @@ function GameEventData(props: any) {
             </div>
           )}
 
-          {data?.map((aa: any, i: any) => {
-            return (
-              <div key={i}>
-                <TennisGameCard id={i} data={aa} />
+          {outPutData &&
+            Object.keys(outPutData)?.map((leagueName) => (
+              <div key={leagueName}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10,
+                  }}
+                >
+                  {leagueName}
+                </p>
+                <div>
+                  {outPutData[leagueName].map((aa, i) => {
+                    return (
+                      <div key={i}>
+                        <TennisGameCard id={i} data={aa} />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            );
-          })}
+            ))}
         </div>
       )}
 
-{eventType === "live" && gameType === "Basketball" && (
+      {eventType === "live" && gameType === "Basketball" && (
         <div>
           {data?.length > 0 && (
             <div
@@ -584,13 +667,33 @@ function GameEventData(props: any) {
             </div>
           )}
 
-          {data?.map((aa: any, i: any) => {
-            return (
-              <div key={i}>
-                <BasketballGameCard id={i} data={aa} />
+          {outPutData &&
+            Object.keys(outPutData)?.map((leagueName) => (
+              <div key={leagueName}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10,
+                  }}
+                >
+                  {leagueName}
+                </p>
+                <div>
+                  {outPutData[leagueName].map((aa, i) => {
+                    return (
+                      <div key={i}>
+                        <BasketballGameCard id={i} data={aa} />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            );
-          })}
+            ))}
         </div>
       )}
       {eventType === "live" && gameType === "Esport" && (
@@ -616,13 +719,33 @@ function GameEventData(props: any) {
             </div>
           )}
 
-          {data?.map((aa: any, i: any) => {
-            return (
-              <div key={i}>
-                <EsportGameCard id={i} data={aa} />
+          {outPutData &&
+            Object.keys(outPutData)?.map((leagueName) => (
+              <div key={leagueName}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10,
+                  }}
+                >
+                  {leagueName}
+                </p>
+                <div>
+                  {outPutData[leagueName].map((aa, i) => {
+                    return (
+                      <div key={i}>
+                        <EsportGameCard id={i} data={aa} />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            );
-          })}
+            ))}
         </div>
       )}
 
@@ -657,23 +780,64 @@ function GameEventData(props: any) {
             loader={loading && <h4>Loading...</h4>}
             endMessage={<p>No more data to load</p>}
           >
-            {data?.map((aa: any, i: any) => {
-              return (
-                <div key={i}>
-                  {gameType === "Soccer" && <GameCard id={i} data={aa} />}
+            {outPutData &&
+              Object.keys(outPutData)?.map((leagueName) => (
+                <div key={leagueName}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10,
+                    }}
+                  >
+                    {leagueName}
+                  </p>
+                  <div>
+                    {outPutData[leagueName].map((aa, i) => {
+                      return (
+                        <div key={i}>
+                          {gameType === "Soccer" && (
+                            <GameCard id={i} data={aa} />
+                          )}
 
-                  {gameType === "Tennis" && <TennisGameCard id={i} data={aa} />}
-                
-                  {gameType === "Horse" && <HorseGameCard id={i} data={aa} />}
-                  {gameType === "Basketball" && <BasketballGameCard id={i} data={aa} />}
-                  {gameType === "Boxing" && <BoxingGameCard id={i} data={aa} />}
-                  {gameType === "Mma/Ufc" && <MmaGameCard id={i} data={aa} />}
-                  {gameType === "Esport" && <EsportGameCard id={i} data={aa} />}
-                  {gameType === "Dart" && <DartGameCard id={i} data={aa} />}
-                  {gameType === "Snooker" && <SnookerGameCard id={i} data={aa} />}
+                          {gameType === "Tennis" && (
+                            <TennisGameCard id={i} data={aa} />
+                          )}
+
+                          {gameType === "Horse" && (
+                            <HorseGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Basketball" && (
+                            <BasketballGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Boxing" && (
+                            <BoxingGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Mma/Ufc" && (
+                            <MmaGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Esport" && (
+                            <EsportGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Dart" && (
+                            <DartGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Snooker" && (
+                            <SnookerGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Volleyball" && (
+                            <VolleyballCard id={i} data={aa} />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              );
-            })}
+              ))}
           </InfiniteScroll>
         </>
       )}
