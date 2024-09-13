@@ -94,7 +94,7 @@ const itemList = [
   },
   {
     id: 8,
-    name: "Horse Racing",
+    name: "Horse",
   },
   {
     id: 9,
@@ -391,7 +391,7 @@ function Search() {
         fetchTennisData(page);
         return;
       }
-      if (game === "Horse Racing") {
+      if (game === "Horse") {
         fetchHorseData(page);
         return;
       }
@@ -497,7 +497,7 @@ function Search() {
 
                     {game === "Tennis" && <TennisGameCard id={i} data={aa} />}
 
-                    {game === "Horse Racing" && (
+                    {game === "Horse" && (
                       <HorseGameCard id={i} data={aa} />
                     )}
                     {game === "Basketball" && (

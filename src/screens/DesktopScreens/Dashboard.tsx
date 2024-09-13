@@ -5,7 +5,7 @@ import { FlexDirection } from "../../utils/type";
 import DashboardLayout from "./Components/DashboardLayout";
 import NavHeader from "./Components/NavHeader";
 import slider from "../../assets/images/slider.svg";
-import { useEffect, useMemo, useState } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 import slider2 from "../../assets/images/slider2.svg";
 import slider3 from "../../assets/images/slider3.svg";
 import { BaseUrl } from "../../https";
@@ -42,6 +42,9 @@ import TableTennis from "../Games/TableTennis";
 import AussieRules from "../Games/AussieRules";
 import Cricket from "../Games/Cricket";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 const styles = {
   container: {
     background: COLORS.semiGray,
@@ -69,7 +72,18 @@ function Dashboard() {
   const [liveTennis, setLiveTennis] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
-  const [sportEvents, setSportEvents] = useState(localStorage.getItem("sport") || "Soccer") 
+  const [sportEvents, setSportEvents] = useState(
+    localStorage.getItem("sport") || "Soccer"
+  );
+  const [selectedDate, setSelectedDate] = useState<any>(new Date());
+
+  const ExampleCustomInput = forwardRef(
+    ({ value, onClick, className }: any, ref: any) => (
+      <button style={{fontSize: 10}} className={className} onClick={onClick} ref={ref}>
+        {value}
+      </button>
+    )
+  );
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -79,6 +93,18 @@ function Dashboard() {
     } else {
       setLoader(false);
     }
+  };
+
+  const handleDateChange = (date) => {
+    const customDate = moment(date).format("YYYY-MM-DD");
+    setSelectedDate(date);
+
+    return navigate("/filter", {
+      state: {
+        gameName: sportEvents,
+        customDate: customDate,
+      },
+    });
   };
 
   useEffect(() => {
@@ -118,17 +144,15 @@ function Dashboard() {
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
-
-
   useEffect(() => {
     const handleStorageChange = () => {
-      setSportEvents(localStorage.getItem('sport'));
+      setSportEvents(localStorage.getItem("sport"));
     };
 
-    window.addEventListener('localStorageUpdated', handleStorageChange);
+    window.addEventListener("localStorageUpdated", handleStorageChange);
 
     return () => {
-      window.removeEventListener('localStorageUpdated', handleStorageChange);
+      window.removeEventListener("localStorageUpdated", handleStorageChange);
     };
   }, []);
 
@@ -163,14 +187,16 @@ function Dashboard() {
                 display: "flex",
                 justifyContent: "flex-end",
                 cursor: "pointer",
+                marginBottom: 10,
               }}
-              onClick={() => navigate("/filter", {
-                state: {
-                  gameName: sportEvents
-                },
-              })}
             >
-              <BsFilterSquareFill size={20} />
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => handleDateChange(date)}
+                customInput={
+                  <ExampleCustomInput className="example-custom-input" />
+                }
+              />
             </div>
             {sportEvents && sportEvents === "Soccer" && <Football />}
 
@@ -178,7 +204,7 @@ function Dashboard() {
 
             {sportEvents === "Tennis" && <Tennis />}
 
-            {sportEvents === "Horse Racing" && <HorseRace />}
+            {sportEvents === "Horse" && <HorseRace />}
             {sportEvents === "Cricket" && <Cricket />}
             {sportEvents === "Boxing" && <Boxing />}
             {sportEvents === "Baseball" && <Baseball />}

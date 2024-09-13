@@ -5,7 +5,7 @@ import { FlexDirection } from "../../utils/type";
 import { FONTS } from "../../utils/fonts";
 import DatePickerComponent from "../../components/DatePickerComponent";
 import { useLocation, useNavigate } from "react-router-dom";
-import moment from "moment";
+
 import { useAppDispatch } from "../../redux/hooks";
 import { getFootballFixtures } from "../../redux/slices/FootballSlice";
 import { getTennisFixtures } from "../../redux/slices/TennisSlice";
@@ -95,7 +95,7 @@ const itemList = [
   },
   {
     id: 8,
-    name: "Horse Racing",
+    name: "Horse",
   },
   {
     id: 9,
@@ -162,6 +162,7 @@ const itemList = [
 function FilterPage() {
   const location = useLocation()
   const getName = location?.state?.gameName
+  const getDate = location?.state?.customDate
   const [game, setGame] = useState("");
   const [dateRange, setDateRange] = useState();
   const navigate = useNavigate();
@@ -181,7 +182,7 @@ function FilterPage() {
   const fetchData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -204,7 +205,7 @@ function FilterPage() {
   const fetchTennisData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -227,7 +228,7 @@ function FilterPage() {
   const fetchHorseData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -251,7 +252,7 @@ function FilterPage() {
   const fetchBoxingData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -275,7 +276,7 @@ function FilterPage() {
   const fetchEsportData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("DD-MM-YYYY"),
+      date:getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -299,7 +300,7 @@ function FilterPage() {
   const fetchDartData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("DD-MM-YYYY"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -323,7 +324,7 @@ function FilterPage() {
   const fetchSnookerData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("DD-MM-YYYY"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -347,7 +348,7 @@ function FilterPage() {
   const fetchVolleyballData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("DD-MM-YYYY"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -371,7 +372,7 @@ function FilterPage() {
   const fetchMmaData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -393,7 +394,7 @@ function FilterPage() {
   const fetchBasketballData = async (page) => {
     setData([])
     const payload = {
-      date: moment(dateRange).format("YYYY-MM-DD"),
+      date: getDate,
       page: page,
       pageSize: pageSize,
     };
@@ -425,7 +426,7 @@ function FilterPage() {
       fetchTennisData(page);
       return;
     }
-    if (game === "Horse Racing") {
+    if (game === "Horse") {
       fetchHorseData(page);
       return;
     }
@@ -457,7 +458,7 @@ function FilterPage() {
       fetchVolleyballData(page);
       return;
     }
-  }, [page, dateRange, game]);
+  }, [game]);
 
   const handleSelectChange = (e) => {
     const value = e.target.value;
@@ -470,44 +471,60 @@ function FilterPage() {
 
 
 
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league = current?.leagueName || current?.tournamentName || current?.name || game;
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      const isDuplicate = acc[league].some(
+        (item) => {
+         
+        if (item?.localTeamName || item?.visitorTeamName) {
+          return (
+            item?.localTeamName === current?.localTeamName &&
+            item?.visitorTeamName === current?.visitorTeamName
+          );
+        }
+
+        if(item?.localteam?.name || item?.awayteam?.name){
+          return (
+            item?.localteam?.name === current?.localteam?.name &&
+            item?.awayteam?.name === current?.awayteam?.name
+          );
+        }
+
+        if (item?.player[0]["@name"] || item?.player[1]["@name"]) {
+          return (
+            item?.player[0]["@name"] === current?.player[0]["@name"] &&
+            item?.player[1]["@name"] === current?.player[1]["@name"]
+          );
+        }
+      
+       
+        }
+       
+      );
+
+      if (!isDuplicate) {
+        acc[league].push(current);
+      }
+
+      return acc;
+    }, {});
+  };
+
+  const outPutData = groupedByData(data);
+
+
 
 
   return (
     <div className="top-container">
       <DesktopBackButton />
 
-      <div style={styles.row}>
-        <div style={{ ...styles.contain, marginBottom: 10 }}>
-          <label htmlFor={`game`} style={{ ...FONTS.body7 }}>
-            Select Game
-          </label>
-          <select
-            style={{ ...styles.select }}
-            id={`game`}
-            name={`game`}
-            onChange={(e) => handleSelectChange(e)}
-            value={game}
-          >
-            <option value="">Select a game</option>
-            {itemList?.map((q: any) => {
-              return (
-                <option key={q.id} value={q.name}>
-                  {q?.name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div style={{ width: "48%" }}>
-          <DatePickerComponent
-            label="Date"
-            placeholder="Date"
-            propStyle={{ width: "100%" }}
-            value={dateRange}
-            onChangeDate={(date) => setDateRange(date)}
-          />
-        </div>
-      </div>
 
           {
             loader ?  <div
@@ -534,24 +551,75 @@ function FilterPage() {
             loader={loading && <h4>Loading...</h4>}
             endMessage={<p>No more data to load</p>}
           >
-            {data?.map((aa: any, i: any) => {
-              return (
-                <div key={i}>
-                  {game=== "Soccer" && <GameCard id={i} data={aa} />}
 
-                  {game === "Tennis" && <TennisGameCard id={i} data={aa} />}
-
-                  {game === "Horse Racing" && <HorseGameCard id={i} data={aa} />}
-                  {game === "Basketball" && <BasketballGameCard id={i} data={aa} />}
-                  {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
-                  {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
-                  {game === "Esport" && <EsportGameCard id={i} data={aa} />}
-                  {game === "Darts" && <DartGameCard id={i} data={aa} />}
-                  {game === "Snooker" && <SnookerGameCard id={i} data={aa} />}
-                  {game === "Volleyball" && <VolleyballGameCard id={i} data={aa} />}
+{game === "Horse" ? (
+              <>
+                {data?.map((aa, i) => {
+                  return (
+                    <div key={i}>
+                       <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10,
+                    }}
+                  >
+                    {aa?.tournamentName}
+                  </p>
+                      {game === "Horse" && (
+                        <HorseGameCard id={i} data={aa} />
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            ) : 
+            (
+              outPutData &&
+              Object.keys(outPutData)?.map((leagueName) => (
+                <div key={leagueName}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10,
+                    }}
+                  >
+                    {leagueName}
+                  </p>
+                  <div>
+                    {outPutData[leagueName].map((aa, i) => {
+                      return (
+                        <div key={i}>
+                        {game=== "Soccer" && <GameCard id={i} data={aa} />}
+      
+                        {game === "Tennis" && <TennisGameCard id={i} data={aa} />}
+      
+                        {game === "Horse" && <HorseGameCard id={i} data={aa} />}
+                        {game === "Basketball" && <BasketballGameCard id={i} data={aa} />}
+                        {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
+                        {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
+                        {game === "Esport" && <EsportGameCard id={i} data={aa} />}
+                        {game === "Darts" && <DartGameCard id={i} data={aa} />}
+                        {game === "Snooker" && <SnookerGameCard id={i} data={aa} />}
+                        {game === "Volleyball" && <VolleyballGameCard id={i} data={aa} />}
+                      </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              );
-            })}
+              ))
+            )
+              }
+         
           </InfiniteScroll>
 
           {

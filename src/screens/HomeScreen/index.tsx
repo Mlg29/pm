@@ -15,7 +15,7 @@ import { MdSportsRugby } from "react-icons/md";
 import { COLORS } from "../../utils/colors";
 import GameCard from "../../components/GameCard";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
 import { BaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -88,6 +88,10 @@ import Snooker from "../Games/Snooker";
 import Easport from "../Games/Easport";
 import TableTennis from "../Games/TableTennis";
 import AussieRules from "../Games/AussieRules";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
 
 function HomeScreen() {
   const navigate = useNavigate();
@@ -100,6 +104,29 @@ function HomeScreen() {
   const notifications = useAppSelector(notificationState) as any;
   const [loader, setLoader] = useState(false);
   const [visible, setVisible] = useState(false);
+
+
+  const [selectedDate, setSelectedDate] = useState<any>(new Date());
+
+  const ExampleCustomInput = forwardRef(
+    ({ value, onClick, className }: any, ref: any) => (
+      <button style={{fontSize: 10}} className={className} onClick={onClick} ref={ref}>
+        {value}
+      </button>
+    )
+  );
+
+  const handleDateChange = (date) => {
+    const customDate = moment(date).format("YYYY-MM-DD");
+    setSelectedDate(date);
+
+    return navigate("/filter", {
+      state: {
+        gameName: selected,
+        customDate: customDate,
+      },
+    });
+  };
 
   const getNotification = async () => {
     await dispatch(getNotifications());
@@ -127,8 +154,8 @@ function HomeScreen() {
     },
     {
       id: 4,
-      name: "Horse Racing",
-      image: selected === "Horse Racing" ? ahorse : inhorse,
+      name: "Horse",
+      image: selected === "Horse" ? ahorse : inhorse,
     },
     {
       id: 5,
@@ -270,8 +297,8 @@ function HomeScreen() {
   //   },
   //   {
   //     id: 8,
-  //     name: "Horse Racing",
-  //     image: selected === "Horse Racing" ? ahorse : inhorse,
+  //     name: "Horse",
+  //     image: selected === "Horse" ? ahorse : inhorse,
   //   },
   //   {
   //     id: 9,
@@ -533,13 +560,14 @@ function HomeScreen() {
           justifyContent: "flex-end",
           cursor: "pointer",
         }}
-        onClick={() => navigate("/filter", {
-          state: {
-            gameName: selected
-          },
-        })}
       >
-        <BsFilterSquareFill size={20} />
+  <DatePicker
+                selected={selectedDate}
+                onChange={(date) => handleDateChange(date)}
+                customInput={
+                  <ExampleCustomInput className="example-custom-input" />
+                }
+              />
       </div>
       {selected === "Soccer" && (
         <div>
@@ -550,7 +578,7 @@ function HomeScreen() {
 
       {selected === "Tennis" && <Tennis />}
 
-      {selected === "Horse Racing" && <HorseRace />}
+      {selected === "Horse" && <HorseRace />}
 
       {selected === "Boxing" && <Boxing />}
       {selected === "Cricket" && <Cricket />}

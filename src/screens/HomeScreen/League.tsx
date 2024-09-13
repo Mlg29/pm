@@ -87,7 +87,7 @@ const itemList = [
   },
   {
     id: 8,
-    name: "Horse Racing",
+    name: "Horse",
   },
   {
     id: 9,

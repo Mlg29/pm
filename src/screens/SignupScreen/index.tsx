@@ -342,7 +342,7 @@ function SignupScreen() {
           <DatePickerComponent
             label="Date of Birth"
             placeholder="Date of Birth"
-            propStyle={{ width: "100%" }}
+            propStyle={{ width: "100%"}}
             required
             value={dob}
             calculateDefaultDate={calculateDefaultDate}

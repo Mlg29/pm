@@ -464,13 +464,44 @@ function GameEventData(props: any) {
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
-      const league = current?.leagueName;
+      const league = current?.leagueName || current?.tournamentName || current?.name || gameType;
 
       if (!acc[league]) {
         acc[league] = [];
       }
 
-      acc[league].push(current);
+      const isDuplicate = acc[league].some(
+        (item) => {
+         
+        if (item?.localTeamName || item?.visitorTeamName) {
+          return (
+            item?.localTeamName === current?.localTeamName &&
+            item?.visitorTeamName === current?.visitorTeamName
+          );
+        }
+
+        if(item?.localteam?.name || item?.awayteam?.name){
+          return (
+            item?.localteam?.name === current?.localteam?.name &&
+            item?.awayteam?.name === current?.awayteam?.name
+          );
+        }
+
+        if (item?.player[0]["@name"] || item?.player[1]["@name"]) {
+          return (
+            item?.player[0]["@name"] === current?.player[0]["@name"] &&
+            item?.player[1]["@name"] === current?.player[1]["@name"]
+          );
+        }
+      
+       
+        }
+       
+      );
+
+      if (!isDuplicate) {
+        acc[league].push(current);
+      }
 
       return acc;
     }, {});
@@ -780,7 +811,33 @@ function GameEventData(props: any) {
             loader={loading && <h4>Loading...</h4>}
             endMessage={<p>No more data to load</p>}
           >
-            {outPutData &&
+            {gameType === "Horse" ? (
+              <>
+                {data?.map((aa, i) => {
+                  return (
+                    <div key={i}>
+                       <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10,
+                    }}
+                  >
+                    {aa?.tournamentName}
+                  </p>
+                      {gameType === "Horse" && (
+                        <HorseGameCard id={i} data={aa} />
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              outPutData &&
               Object.keys(outPutData)?.map((leagueName) => (
                 <div key={leagueName}>
                   <p
@@ -837,7 +894,8 @@ function GameEventData(props: any) {
                     })}
                   </div>
                 </div>
-              ))}
+              ))
+            )}
           </InfiniteScroll>
         </>
       )}
