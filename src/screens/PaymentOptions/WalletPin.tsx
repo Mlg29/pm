@@ -193,7 +193,10 @@ function WalletPin() {
             Enter your 6-Digit Transaction PIN to place this bet.
           </p>
          <div style={{width: isMobile ? "90%" : "70%"}}>
+
          <OtpComponent otp={otp} setOtp={setOtp} />
+         
+         <p style={{textAlign: 'center', marginTop: 30, cursor: 'pointer'}} onClick={() => navigate("/request-pin")}>Forgot Pin?</p>
          </div>
         </div>
       </div>

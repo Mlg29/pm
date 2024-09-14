@@ -64,7 +64,7 @@ const styles = {
 function Dashboard() {
   const dispatch = useAppDispatch() as any;
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   const url = `${BaseUrl}/football`;
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);

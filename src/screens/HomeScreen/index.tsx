@@ -102,7 +102,7 @@ function HomeScreen() {
   const [userData, setUserData] = useState(null);
 
   const notifications = useAppSelector(notificationState) as any;
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [visible, setVisible] = useState(false);
 
 

@@ -27,7 +27,7 @@ function OtpComponent({otp, setOtp}: any) {
       variant='filled'
  
     />
-    <p style={{textAlign: 'center', marginTop: 30, cursor: 'pointer'}} onClick={() => navigate("/request-pin")}>Forgot Pin?</p>
+
    </div>
 
   );
