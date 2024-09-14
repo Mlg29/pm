@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import { COLORS } from "../../utils/colors";
 import { FlexDirection } from "../../utils/type";
@@ -22,6 +22,8 @@ import { getBasketballFixtures } from "../../redux/slices/BasketballSlice";
 import BasketballGameCard from "../../components/GameCard/BasketballGameCard";
 import BoxingGameCard from "../../components/GameCard/BoxingGameCard";
 import MmaGameCard from "../../components/GameCard/MmaGameCard";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const styles = {
   row: {
@@ -166,6 +168,29 @@ function League() {
   const dispatch = useAppDispatch() as any;
   const [loader, setLoader] = useState(false);
 
+
+  const [selectedDate, setSelectedDate] = useState<any>(new Date());
+
+  const ExampleCustomInput = forwardRef(
+    ({ value, onClick, className }: any, ref: any) => (
+      <button style={{fontSize: 10}} className={className} onClick={onClick} ref={ref}>
+        {value}
+      </button>
+    )
+  );
+
+  const handleDateChange = (date) => {
+    const customDate = moment(date).format("YYYY-MM-DD");
+    setSelectedDate(date);
+
+    return navigate("/filter", {
+      state: {
+        gameName: "Soccer",
+        customDate: customDate,
+      },
+    });
+  };
+
   const fetchData = async (page) => {
     setData([]);
     const payload = {
@@ -199,6 +224,56 @@ function League() {
     setPage((prevPage) => prevPage + 1);
   };
 
+
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league = current?.leagueName || current?.tournamentName || current?.name || game;
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      const isDuplicate = acc[league].some(
+        (item) => {
+         
+        if (item?.localTeamName || item?.visitorTeamName) {
+          return (
+            item?.localTeamName === current?.localTeamName &&
+            item?.visitorTeamName === current?.visitorTeamName
+          );
+        }
+
+        if(item?.localteam?.name || item?.awayteam?.name){
+          return (
+            item?.localteam?.name === current?.localteam?.name &&
+            item?.awayteam?.name === current?.awayteam?.name
+          );
+        }
+
+        if (item?.player[0]["@name"] || item?.player[1]["@name"]) {
+          return (
+            item?.player[0]["@name"] === current?.player[0]["@name"] &&
+            item?.player[1]["@name"] === current?.player[1]["@name"]
+          );
+        }
+      
+       
+        }
+       
+      );
+
+      if (!isDuplicate) {
+        acc[league].push(current);
+      }
+
+      return acc;
+    }, {});
+  };
+
+
+  const outPutData = groupedByData(data);
+
+
   return (
     <div className="top-container">
       {/* <DesktopBackButton /> */}
@@ -206,14 +281,14 @@ function League() {
       <h3 style={{ ...FONTS.h6 }}>{leagueName}</h3>
 
       <div style={styles.row}>
-        <div style={{ width: "100%", marginTop: 20 }}>
-          <DatePickerComponent
-            label="Date"
-            placeholder="Date"
-            propStyle={{ width: "100%" }}
-            value={dateRange}
-            onChangeDate={(date) => setDateRange(date)}
-          />
+        <div style={{ width: "100%", marginTop: 20, marginBottom: 20 }}>
+        <DatePicker
+                selected={selectedDate}
+                onChange={(date) => handleDateChange(date)}
+                customInput={
+                  <ExampleCustomInput className="example-custom-input" />
+                }
+              />
         </div>
       </div>
 
@@ -240,13 +315,35 @@ function League() {
               loader={loading && <h4>Loading...</h4>}
             //   endMessage={<p>No more data to load</p>}
             >
-              {data?.map((aa: any, i: any) => {
-                return (
-                  <div key={i}>
+      
+              {outPutData &&
+              Object.keys(outPutData)?.map((leagueName) => (
+                <div key={leagueName}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10,
+                    }}
+                  >
+                    {leagueName}
+                  </p>
+                  <div>
+                    {outPutData[leagueName].map((aa, i) => {
+                      return (
+                        <div key={i}>
                     <GameCard id={i} data={aa} />
                   </div>
-                );
-              })}
+                      );
+                    })}
+                  </div>
+                </div>
+              ))
+                  }
             </InfiniteScroll>
 
             {!data || data?.length < 1 ? (
