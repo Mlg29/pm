@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FONTS } from "../../utils/fonts";
 
@@ -17,7 +17,7 @@ import { useMediaQuery } from "react-responsive";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFormik } from "formik";
 import { CreatePasswordSchema, CreatePasswordSchemaAuth } from "../../https/schemas";
-import { createNewPassword, createUser } from "../../redux/slices/AuthSlice";
+import { createForgotPassword, createNewPassword, createUser } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import PinModal from "../../components/Modals/PinModal";
 
@@ -67,6 +67,7 @@ function ForgotCreatePasswordNew() {
 
   const [show, setShow] = useState(false)
   const [storePayload, setStorePayload] = useState(null)
+  const location = useLocation();
 
 
   const handleClose = () => {
@@ -89,13 +90,15 @@ function ForgotCreatePasswordNew() {
 
   const handleSubmitData = async (data) => {
     const payload = {
+      email: location?.state?.email,
+      otp: location?.state?.otp,
       password: data?.password,
     }; 
     
     setLoader(true);
     try {
-      var response = await dispatch(createNewPassword(payload));
-      if (createNewPassword.fulfilled.match(response)) {
+      var response = await dispatch(createForgotPassword(payload));
+      if (createForgotPassword.fulfilled.match(response)) {
         toast.success(response?.payload?.data?.message, {
           position: "bottom-center",
         });

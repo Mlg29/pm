@@ -128,7 +128,12 @@ function ForgetPasswordVerify() {
   
         setTimeout(() => { 
           setLoader(false)
-          navigate('/set-forgot-password')
+          navigate('/set-forgot-password', {
+            state: {
+              email: location?.state?.email,
+              otp: otp
+            }
+          })
         }, 1000)
   
       }

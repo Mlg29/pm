@@ -64,6 +64,23 @@ export const createNewPassword = createAsyncThunk(
   }
 );
 
+export const createForgotPassword = createAsyncThunk(
+  "auth/createForgotPassword",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await postRequest(
+        `${BaseUrl}/auth/reset-password`,
+        payload
+      );
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
 
 export const emailWaitList = createAsyncThunk(
   "auth/emailWaitList",
@@ -294,6 +311,18 @@ export const AuthSlice = createSlice({
         }
       );
     builder.addCase(createNewPassword.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(createForgotPassword.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        createForgotPassword.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(createForgotPassword.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(verifySignupData.pending, (state, action) => {
