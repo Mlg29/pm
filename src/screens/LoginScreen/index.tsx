@@ -66,9 +66,8 @@ function LoginScreen() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("")
   const userIp = useContext(IPInfoContext);
- 
+ const deviceId = localStorage.getItem("deviceId")
 
-  console.log("nav", navigator)
 
   const countryListCode = countryList?.find((dd) => phoneNumber.includes(dd?.dialCode));
 
@@ -114,7 +113,7 @@ function LoginScreen() {
       countryIso: countryListCode?.code,
       device: {
         deviceName: navigator?.userAgent,
-        deviceId: navigator?.userAgent,
+        deviceId: deviceId,
         devicePlatform: navigator?.platform
       }
     };
