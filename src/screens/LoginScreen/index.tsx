@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getCountryListMap } from "country-flags-dial-code";
 import { FONTS } from "../../utils/fonts";
 import miniLogo from "../../assets/images/miniLogo.svg";
@@ -15,6 +15,9 @@ import { login } from "../../redux/slices/AuthSlice";
 import CountryPhone from "../../components/CountryPhone";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+import { IPInfoContext } from "ip-info-react";
+
+
 
 export const styles = {
   container: {
@@ -62,8 +65,10 @@ function LoginScreen() {
   const [countryList, setCountryList] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("")
-
+  const userIp = useContext(IPInfoContext);
  
+
+  console.log("nav", navigator)
 
   const countryListCode = countryList?.find((dd) => phoneNumber.includes(dd?.dialCode));
 
@@ -106,7 +111,12 @@ function LoginScreen() {
     const payload = {
       identifier: loginType === "email" ? email : phoneNumber,
       password: data?.password,
-      countryIso: countryListCode?.code
+      countryIso: countryListCode?.code,
+      device: {
+        deviceName: navigator?.userAgent,
+        deviceId: navigator?.userAgent,
+        devicePlatform: navigator?.platform
+      }
     };
 
     setLoader(true);
