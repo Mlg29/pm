@@ -203,7 +203,7 @@ function HomeScreen() {
     },
     {
       id: 2,
-      name: "American Football (Rugby)",
+      name: "AFL",
       image: rugby,
     },
     {
@@ -398,6 +398,7 @@ function HomeScreen() {
   const handleMoreSelect = (data) => {
     setSelected(data);
     setVisible(false);
+    navigate("/home");
   };
 
   if (loader) {
@@ -587,7 +588,7 @@ function HomeScreen() {
       {selected === "Golf" && <Golf />}
       {selected === "Hockey" && <Hockey />}
       {selected === "Formula 1" && <Formula1 />}
-      {selected === "American Football (Rugby)" && <Rugby />}
+      {selected === "AFL" && <Rugby />}
       {selected === "Handball" && <Handball />}
       {selected === "Ice Hockey" && <IceHockey />}
       {selected === "NASCAR" && <Nascar />}

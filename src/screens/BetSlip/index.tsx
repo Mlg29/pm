@@ -501,6 +501,71 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
+                              {item?.sportEvent?.sport === "HANDBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.HandBallEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.HandBallEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.HandBallEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.HandBallEvent?.localteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.HandBallEvent?.awayteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.HandBallEvent?.awayteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+
+{item?.sportEvent?.sport === "AFL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.AflEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.AflEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.AflEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.AflEvent?.localteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.AflEvent?.awayteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.AflEvent?.awayteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                           </div>
                         );
                       })}
@@ -791,6 +856,71 @@ function BetSlip() {
                                   item?.sportEvent?.VollyBallEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.VollyBallEvent?.awayteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+                               {item?.sportEvent?.sport === "HANDBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.HandBallEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.HandBallEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.HandBallEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.HandBallEvent?.localteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.HandBallEvent?.awayteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.HandBallEvent?.awayteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+
+{item?.sportEvent?.sport === "AFL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.AflEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.AflEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.AflEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.AflEvent?.localteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.AflEvent?.awayteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.AflEvent?.awayteam
                                         ?.totalscore
                                     : "0"
                                 }

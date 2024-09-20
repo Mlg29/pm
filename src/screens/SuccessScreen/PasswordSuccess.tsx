@@ -41,7 +41,7 @@ export const styles = {
     flexDirection: "column" as FlexDirection,
     justifyContent: "center",
     alignItems: "center",
-    margin: "0px 0px 10px 0px",
+    margin: "2rem 0px 10px 0px",
   },
 };
 

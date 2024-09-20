@@ -51,6 +51,10 @@ import { getSnookerFixtures } from "../../redux/slices/SnookerSlice";
 import SnookerGameCard from "../../components/GameCard/SnookerGameCard";
 import VolleyballCard from "../../components/GameDetailCardHeader/VolleyballCard";
 import { getVolleyballFixtures } from "../../redux/slices/VolleyballSlice";
+import { getHandballFixtures } from "../../redux/slices/HandballSlice";
+import { getAflFixtures } from "../../redux/slices/AflSlice";
+import HandballCard from "../../components/GameDetailCardHeader/HandballCard";
+import AflCard from "../../components/GameDetailCardHeader/AflCard";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
@@ -148,13 +152,16 @@ function GameEventData(props: any) {
         : "";
     setLoading(true);
     dispatch(getTennisFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+        setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+    
       setLoading(false);
     });
   };
@@ -168,13 +175,16 @@ function GameEventData(props: any) {
     const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getHorseFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+        setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+    
       setLoading(false);
     });
   };
@@ -189,13 +199,16 @@ function GameEventData(props: any) {
     const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getBoxingFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+     
       setLoading(false);
     });
   };
@@ -221,13 +234,16 @@ function GameEventData(props: any) {
 
     setLoading(true);
     dispatch(getEasportFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+     
       setLoading(false);
     });
   };
@@ -243,13 +259,16 @@ function GameEventData(props: any) {
 
     setLoading(true);
     dispatch(getDartFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+     
       setLoading(false);
     });
   };
@@ -265,13 +284,16 @@ function GameEventData(props: any) {
 
     setLoading(true);
     dispatch(getSnookerFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+     
       setLoading(false);
     });
   };
@@ -287,6 +309,7 @@ function GameEventData(props: any) {
 
     setLoading(true);
     dispatch(getVolleyballFixtures(actualPayload)).then((dd) => {
+      if(dd?.payload){
       setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
@@ -294,6 +317,8 @@ function GameEventData(props: any) {
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+      
       setLoading(false);
     });
   };
@@ -308,13 +333,68 @@ function GameEventData(props: any) {
     const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getMmaFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+     
+      setLoading(false);
+    });
+  };
+
+  const fetchHandballData = async (page) => {
+    setData([])
+    const payload = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getHandballFixtures(payload)).then((dd) => {
+    if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+    }
+     
+      setLoading(false);
+    });
+  };
+
+  const fetchAflData = async (page) => {
+    setData([])
+    const payload = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getAflFixtures(payload)).then((dd) => {
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      }
+     
       setLoading(false);
     });
   };
@@ -329,13 +409,16 @@ function GameEventData(props: any) {
     const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
     setLoading(true);
     dispatch(getBasketballFixtures(actualPayload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data]);
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }
+      }
+     
       setLoading(false);
     });
   };
@@ -379,6 +462,14 @@ function GameEventData(props: any) {
     }
     if (gameType === "Volleyball") {
       fetchVolleyballData(page);
+      return;
+    }
+    if (gameType === "Handball") {
+      fetchHandballData(page);
+      return;
+    }
+    if (gameType === "AFL") {
+      fetchAflData(page);
       return;
     }
   }, [page]);
@@ -888,6 +979,12 @@ function GameEventData(props: any) {
                           )}
                           {gameType === "Volleyball" && (
                             <VolleyballCard id={i} data={aa} />
+                          )}
+                           {gameType === "Handball" && (
+                            <HandballCard id={i} data={aa} />
+                          )}
+                           {gameType === "AFL" && (
+                            <AflCard id={i} data={aa} />
                           )}
                         </div>
                       );

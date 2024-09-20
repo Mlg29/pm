@@ -9,6 +9,8 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
+import { getAflFixtures } from "../../redux/slices/AflSlice";
+import AflGameCard from "../../components/GameCard/AflGameCard";
 
 
 function Rugby() {
@@ -18,32 +20,6 @@ function Rugby() {
   const url = `${BaseUrl}/boxing`;
   const dispatch = useAppDispatch() as any;
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
@@ -56,9 +32,9 @@ function Rugby() {
         status: "Finished",
       };
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
+    dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload);
+    });
 
     // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
     //     setFinished(dd?.payload);
@@ -66,10 +42,81 @@ function Rugby() {
 
   }, []);
 
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league = (current?.season + " " + current?.seasonName) || "AFL";
+
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      acc[league].push(current);
+
+      return acc;
+    }, {});
+  };
+
+
+
+  const upcomingOutput = groupedByData(upcoming?.data)
+
+
  
 
   return (
     <div>
+          {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                    gameType: "AFL",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+
+           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {upcomingOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <AflGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
        {
         finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
         <EmptyState 

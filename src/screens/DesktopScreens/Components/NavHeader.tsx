@@ -211,7 +211,7 @@ function NavHeader() {
     },
     {
       id: 2,
-      name: "American Football (Rugby)",
+      name: "AFL",
       image: rugby,
     },
     {
@@ -271,6 +271,7 @@ function NavHeader() {
     window.dispatchEvent(new Event("localStorageUpdated"));
     setSelected(data);
     setVisible(false);
+    navigate("/home");
   };
 
   const handleSelection = (info) => {

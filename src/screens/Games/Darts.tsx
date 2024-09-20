@@ -122,13 +122,7 @@ function Darts() {
           )}
         </div>
       )}
-      {/* {upcoming?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-          
-          </div>
-        );
-      })} */}
+
            {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
         <div key={leagueName}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>

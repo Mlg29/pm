@@ -32,6 +32,8 @@ import EsportDetails from "./Details/EsportDetail";
 import DartDetails from "./Details/DartDetail";
 import SnookerDetail from "./Details/SnookerDetail";
 import VolleyballDetail from "./Details/VolleyballDetail";
+import HandballDetail from "./Details/HandballDetail";
+import AflDetail from "./Details/AflDetail";
 
 const styles = {
   container: {
@@ -1017,6 +1019,24 @@ function GameDetails() {
 
 {gameType === "Volleyball" && (
           <VolleyballDetail
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
+{gameType === "Handball" && (
+          <HandballDetail
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
+{gameType === "AFL" && (
+          <AflDetail
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

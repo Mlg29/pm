@@ -15,7 +15,8 @@ export const styles = {
     flexDirection: "column" as FlexDirection,
     padding: "0px 20px",
     flex: 1,
-    height: "100%",
+    // height: "50vh",
+    justifyContent: 'center',
   },
   line: {
     display: "flex",
@@ -41,7 +42,7 @@ export const styles = {
     flexDirection: "column" as FlexDirection,
     justifyContent: "center",
     alignItems: "center",
-    margin: "-20rem 0px 10px 0px",
+    margin: "2rem 0px 10px 0px",
   },
 };
 
@@ -55,18 +56,17 @@ function BetSuccess() {
 
   return (
     <div className="top-container" style={{ ...styles.container }}>
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <div style={{ display: "flex", flexDirection: "column" }}>
         <div
           style={{
-            marginTop: 20,
+            marginTop: '2rem',
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            flex: 1,
           }}
         >
-          <img src={success} style={{ marginBottom: "3rem" }} />
+          <img src={success} style={{ marginTop: "3rem" }} />
 
           <div>
             <h3
@@ -95,15 +95,15 @@ function BetSuccess() {
               a bet from your account.
             </p>
           </div>
+
+          
         </div>
       </div>
-
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          flex: 2,
-          justifyContent: "center",
+          flex: 1,
         }}
       >
         <div style={{ ...styles.bottom }}>
@@ -132,6 +132,7 @@ function BetSuccess() {
           </div>
         </div>
       </div>
+    
     </div>
   );
 }

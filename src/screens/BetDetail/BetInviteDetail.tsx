@@ -26,6 +26,8 @@ import EsportCard from "../../components/GameDetailCardHeader/EsportCard";
 import DartCard from "../../components/GameDetailCardHeader/DartCard";
 import SnookerCard from "../../components/GameDetailCardHeader/SnookerCard";
 import VolleyballCard from "../../components/GameDetailCardHeader/VolleyballCard";
+import HandballCard from "../../components/GameDetailCardHeader/HandballCard";
+import AflCard from "../../components/GameDetailCardHeader/AflCard";
 
 const styles = {
   div: {
@@ -184,11 +186,16 @@ function BetInviteDetail() {
         <SnookerCard gameInfo={betData?.sportEvent?.SnookerEvent} />
       )}
 
-{betData?.sportEvent?.sport === "DART" && (
+{betData?.sportEvent?.sport === "VOLLYBALL" && (
         <VolleyballCard gameInfo={betData?.sportEvent?.VollyBallEvent} />
       )}
 
-
+{betData?.sportEvent?.sport === "HANDBALL" && (
+        <HandballCard gameInfo={betData?.sportEvent?.HandBallEvent} />
+      )}
+      {betData?.sportEvent?.sport === "AFL" && (
+        <AflCard gameInfo={betData?.sportEvent?.AflEvent} />
+      )}
 {betData?.sportEvent?.sport === "MMA" && (
         <MmaCard gameInfo={betData?.sportEvent?.MmaEvent} />
       )}
@@ -319,7 +326,49 @@ function BetInviteDetail() {
                 ) : (
                   ""
                 )}
-              </h3>) : null}
+              </h3>) :
+              betData?.sportEvent?.sport === "VOLLYBALL" ? (
+                <h3>
+                  {betData?.opponentId !== userData?.id ? (
+                    <p>
+                      {betData?.opponentPrediction === "W1"
+                        ? `${betData?.sportEvent?.VollyballEvent?.localteam?.name} Win`
+                        : betData?.opponentPrediction === "W2"
+                        ? `${betData?.sportEvent?.VollyballEvent?.awayteam?.name} Win`
+                        : ""}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </h3>) :
+                betData?.sportEvent?.sport === "HANDBALL" ? (
+                  <h3>
+                    {betData?.opponentId !== userData?.id ? (
+                      <p>
+                        {betData?.opponentPrediction === "W1"
+                          ? `${betData?.sportEvent?.HandballEvent?.localteam?.name} Win`
+                          : betData?.opponentPrediction === "W2"
+                          ? `${betData?.sportEvent?.HandballEvent?.awayteam?.name} Win`
+                          : ""}
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </h3>) :
+                  betData?.sportEvent?.sport === "AFL" ? (
+                    <h3>
+                      {betData?.opponentId !== userData?.id ? (
+                        <p>
+                          {betData?.opponentPrediction === "W1"
+                            ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
+                            : betData?.opponentPrediction === "W2"
+                            ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
+                            : ""}
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </h3>) : null}
           </div>
         ) : null}
         <div style={{ ...styles.cardDiv }}>
@@ -864,6 +913,183 @@ function BetInviteDetail() {
                 handlePress={() =>
                   handleRoute(
                     betData?.sportEvent?.SnookerEvent?.awayteam?.name,
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+{betData?.sportEvent?.sport === "VOLLYBALL" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== "W1" && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.VollyballEvent?.localteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.VollyballEvent?.localteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.VollyballEvent?.localteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.VollyballEvent?.localteam?.name,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== "W2" && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.VollyballEvent?.awayteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.VollyballEvent?.awayteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.VollyballEvent?.awayteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.VollyballEvent?.awayteam?.name,
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+{betData?.sportEvent?.sport === "HANDBALL" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== "W1" && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.HandballEvent?.localteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.HandballEvent?.localteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.HandballEvent?.localteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.HandballEvent?.localteam?.name,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== "W2" && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.HandballEvent?.awayteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.HandballEvent?.awayteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.HandballEvent?.awayteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.HandballEvent?.awayteam?.name,
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+{betData?.sportEvent?.sport === "AFL" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== "W1" && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.AflEvent?.localteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.AflEvent?.localteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.AflEvent?.localteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.AflEvent?.localteam?.name,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== "W2" && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.AflEvent?.awayteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.AflEvent?.awayteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.AflEvent?.awayteam?.name,
                     "W2"
                   )
                 }

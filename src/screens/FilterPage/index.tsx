@@ -30,6 +30,10 @@ import { getSnookerFixtures } from "../../redux/slices/SnookerSlice";
 import SnookerGameCard from "../../components/GameCard/SnookerGameCard";
 import { getVolleyballFixtures } from "../../redux/slices/VolleyballSlice";
 import VolleyballGameCard from "../../components/GameCard/VolleyballGameCard";
+import { getHandballFixtures } from "../../redux/slices/HandballSlice";
+import { getAflFixtures } from "../../redux/slices/AflSlice";
+import HandballGameCard from "../../components/GameCard/HandballGameCard";
+import AflGameCard from "../../components/GameCard/AflGameCard";
 
 const styles = {
   row: {
@@ -369,6 +373,54 @@ function FilterPage() {
     });
   };
 
+  const fetchHandballData = async (page) => {
+    setData([])
+    const payload = {
+      date: getDate,
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getHandballFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
+  const fetchAflData = async (page) => {
+    setData([])
+    const payload = {
+      date: getDate,
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getAflFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
   const fetchMmaData = async (page) => {
     setData([])
     const payload = {
@@ -456,6 +508,14 @@ function FilterPage() {
     }
     if (game === "Volleyball") {
       fetchVolleyballData(page);
+      return;
+    }
+    if (game === "Handball") {
+      fetchHandballData(page);
+      return;
+    }
+    if (game === "AFL") {
+      fetchAflData(page);
       return;
     }
   }, [game]);
@@ -611,6 +671,8 @@ function FilterPage() {
                         {game === "Darts" && <DartGameCard id={i} data={aa} />}
                         {game === "Snooker" && <SnookerGameCard id={i} data={aa} />}
                         {game === "Volleyball" && <VolleyballGameCard id={i} data={aa} />}
+                        {game === "Handball" && <HandballGameCard id={i} data={aa} />}
+                        {game === "AFL" && <AflGameCard id={i} data={aa} />}
                       </div>
                       );
                     })}

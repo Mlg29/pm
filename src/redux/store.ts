@@ -15,6 +15,8 @@ import Easport from './slices/Easport'
 import DartSlice  from './slices/DartSlice'
 import SnookerSlice from './slices/SnookerSlice'
 import VolleyballSlice from './slices/VolleyballSlice'
+import HandballSlice from './slices/HandballSlice'
+import AflSlice from './slices/AflSlice'
 
 export const store = configureStore({
   reducer: {
@@ -33,7 +35,9 @@ export const store = configureStore({
    easport: Easport,
    dart: DartSlice,
    snooker: SnookerSlice,
-   volleyball: VolleyballSlice
+   volleyball: VolleyballSlice,
+   handball: HandballSlice,
+   afl: AflSlice
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

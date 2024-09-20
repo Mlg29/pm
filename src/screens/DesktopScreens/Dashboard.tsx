@@ -212,7 +212,7 @@ function Dashboard() {
             {sportEvents === "Golf" && <Golf />}
             {sportEvents === "Hockey" && <Hockey />}
             {sportEvents === "Formula 1" && <Formula1 />}
-            {sportEvents === "American Football (Rugby)" && <Rugby />}
+            {sportEvents === "AFL" && <Rugby />}
             {sportEvents === "Handball" && <Handball />}
             {sportEvents === "Ice Hockey" && <IceHockey />}
             {sportEvents === "NASCAR" && <Nascar />}
