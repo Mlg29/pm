@@ -13,10 +13,12 @@ const LogOut = ({show, handleClose}) => {
 
   const handleLogOut = () => {
     setLoader(true)
+    var getDeviceId = localStorage.getItem("deviceId")
     localStorage.clear()
     setTimeout(() => {
       setLoader(false)
       handleClose()
+      localStorage.setItem("deviceId", getDeviceId)
       navigate("/home")
     }, 1000)
   }

@@ -50,7 +50,14 @@
     <script>
       ThumbmarkJS.getFingerprint().then(
           function(fp) {
-            localStorage.setItem("deviceId", fp)
+            var getDeviceId = localStorage.getItem("deviceId")
+            if(getDeviceId) {
+              return
+            }
+            else {
+              localStorage.setItem("deviceId", fp)
+            }
+            
           }
       );
   </script>

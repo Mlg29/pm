@@ -113,7 +113,7 @@ function LoginScreen() {
       countryIso: countryListCode?.code,
       device: {
         deviceName: navigator?.userAgent,
-        deviceId: deviceId,
+        deviceId: deviceId ? deviceId : "",
         devicePlatform: navigator?.platform
       }
     };
