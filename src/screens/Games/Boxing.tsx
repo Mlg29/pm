@@ -138,47 +138,7 @@ function Boxing() {
           </div>
         </div>
       ))}
-      {/* {finished?.data?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            Finished
-          </p>
-          {finished?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: finished,
-                    type: "upcoming",
-                    gameType: "Boxing",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
-      {finished?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-            <BoxingGameCard id={i} data={aa} />
-          </div>
-        );
-      })} */}
+  
       {upcoming?.data?.length < 1 ? (
         <EmptyState header="No Game Available for Boxing" height="30vh" />
       ) : null}

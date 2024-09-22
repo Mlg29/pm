@@ -63,7 +63,7 @@ function HorseCard({ gameInfo }) {
       
       </div>
 
-      <div style={{...styles.div}}>
+      {/* <div style={{...styles.div}}>
         {gameInfo?.horses?.horse?.map((dd, i) => {
           return (
             <div
@@ -79,7 +79,7 @@ function HorseCard({ gameInfo }) {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 }

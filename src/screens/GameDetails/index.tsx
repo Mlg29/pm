@@ -146,6 +146,8 @@ function GameDetails() {
   const token = localStorage.getItem("token");
   const [loader, setLoader] = useState(false);
 
+
+
   const url =
     gameType === "Tennis"
       ? `${BaseUrl}/tennis`
@@ -188,7 +190,13 @@ function GameDetails() {
   }, []);
 
   const handleRoute = (route: string, selection?: string) => {
-    if (token) {
+    if(gameInfo?.internalStatus === "LIVE") {
+      toast.error("Sorry, the game is in progress, you cant proceed to bet on it", {
+        position: "bottom-center",
+      });
+      return;
+    }
+    else if (token) {
       setSelected(route);
 
       const payload = {
@@ -990,7 +998,7 @@ function GameDetails() {
           />
         )}
 
-        {gameType === "Esport" && (
+        {gameType === "Esports" && (
           <EsportDetails
             selected={selected}
             gameInfo={gameInfo}

@@ -56,8 +56,8 @@ function BasketballGameCard({ id, data }) {
         }
       >
         <div style={styles.box1}>
-        <p style={{ ...FONTS.body8, color: COLORS.black }}>
-         ( {moment(data?.startTime).format("DD-MM-YYYY")})
+        <p style={{ ...FONTS.body8,fontSize: 8, color: COLORS.black }}>
+         ({moment(data?.startTime).format("DD-MM-YYYY")})
         </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status > 0 ? `${data?.status}'` : data?.status}

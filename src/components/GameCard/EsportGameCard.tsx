@@ -51,12 +51,12 @@ function EsportGameCard({ id, data }) {
       style={styles.container}
       key={id}
       onClick={() =>
-        navigate("/game-details", { state: { data: data, gameType: "Esport" } })
+        navigate("/game-details", { state: { data: data, gameType: "Esports" } })
       }
     >
       <div style={styles.box1}>
-      <p style={{ ...FONTS.body8, color: COLORS.black }}>
-         ( {data?.gameDate})
+      <p style={{ ...FONTS.body8,fontSize: 8, color: COLORS.black }}>
+         ({data?.gameDate})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
           {data?.status === "Started" ? `${data?.time}'` : data?.status}

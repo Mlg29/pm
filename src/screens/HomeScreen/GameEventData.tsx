@@ -448,7 +448,7 @@ function GameEventData(props: any) {
       fetchBoxingData(page);
       return;
     }
-    if (gameType === "Esport") {
+    if (gameType === "Esports") {
       fetchEsportData(page);
       return;
     }
@@ -484,7 +484,7 @@ function GameEventData(props: any) {
     if (eventType === "live" && gameType === "Tennis") {
       setLive(events);
     }
-    if (eventType === "live" && gameType === "Esport") {
+    if (eventType === "live" && gameType === "Esports") {
       setLive(events);
     }
     const url =
@@ -494,7 +494,7 @@ function GameEventData(props: any) {
         ? `${BaseUrl}/basketball`
         : gameType === "Tennis"
         ? `${BaseUrl}/tennis`
-        : gameType === "Esport"
+        : gameType === "Esports"
         ? `${BaseUrl}/esport`
         : "";
     const socketEvents =
@@ -504,7 +504,7 @@ function GameEventData(props: any) {
         ? "basketballEventUpdate"
         : gameType === "Tennis"
         ? "tennisEventUpdate"
-        : gameType === "Esport"
+        : gameType === "Esports"
         ? "esportEventUpdate"
         : "";
 
@@ -818,7 +818,7 @@ function GameEventData(props: any) {
             ))}
         </div>
       )}
-      {eventType === "live" && gameType === "Esport" && (
+      {eventType === "live" && gameType === "Esports" && (
         <div>
           {data?.length > 0 && (
             <div
@@ -968,7 +968,7 @@ function GameEventData(props: any) {
                           {gameType === "Mma/Ufc" && (
                             <MmaGameCard id={i} data={aa} />
                           )}
-                          {gameType === "Esport" && (
+                          {gameType === "Esports" && (
                             <EsportGameCard id={i} data={aa} />
                           )}
                           {gameType === "Dart" && (

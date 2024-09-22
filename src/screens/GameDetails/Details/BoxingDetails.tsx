@@ -127,6 +127,8 @@ const styles = {
 
 
 function BoxingDetails({gameInfo, isMobile, selected, handleRoute}) {
+
+  
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
             <div

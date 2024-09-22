@@ -144,7 +144,7 @@ function Handball() {
         </div>
       ))}
        {
-        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
+        upcoming?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for Handball"
           height="30vh"

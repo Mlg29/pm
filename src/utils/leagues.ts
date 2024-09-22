@@ -11,7 +11,7 @@ export const Leagues = [
     },
     {
         id: 3,
-        name: "Premier League"
+        name: "English Premier League"
     },
     {
         id: 4,

@@ -115,7 +115,7 @@ const itemList = [
   },
   {
     id: 12,
-    name: "American Football (Rugby)",
+    name: "AFL",
   },
   {
     id: 13,
@@ -131,7 +131,7 @@ const itemList = [
   },
   {
     id: 16,
-    name: "Futsol",
+    name: "Futsal",
   },
   {
     id: 17,
@@ -151,7 +151,7 @@ const itemList = [
   },
   {
     id: 21,
-    name: "Esport",
+    name: "Esports",
   },
   {
     id: 22,
@@ -494,7 +494,7 @@ function FilterPage() {
       fetchBoxingData(page);
       return;
     }
-    if (game === "Esport") {
+    if (game === "Esports") {
       fetchEsportData(page);
       return;
     }
@@ -667,7 +667,7 @@ function FilterPage() {
                         {game === "Basketball" && <BasketballGameCard id={i} data={aa} />}
                         {game === "Boxing" && <BoxingGameCard id={i} data={aa} />}
                         {game === "MMA/UFC" && <MmaGameCard id={i} data={aa} />}
-                        {game === "Esport" && <EsportGameCard id={i} data={aa} />}
+                        {game === "Esports" && <EsportGameCard id={i} data={aa} />}
                         {game === "Darts" && <DartGameCard id={i} data={aa} />}
                         {game === "Snooker" && <SnookerGameCard id={i} data={aa} />}
                         {game === "Volleyball" && <VolleyballGameCard id={i} data={aa} />}

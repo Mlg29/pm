@@ -116,7 +116,7 @@ function Easport() {
                   state: {
                     events: live,
                     type: "live",
-                    gameType: "Esport",
+                    gameType: "Esports",
                   },
                 })
               }
@@ -167,7 +167,7 @@ function Easport() {
                   state: {
                     events: upcoming,
                     type: "upcoming",
-                    gameType: "Esport",
+                    gameType: "Esports",
                   },
                 })
               }

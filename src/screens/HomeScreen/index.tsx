@@ -169,7 +169,7 @@ function HomeScreen() {
     },
     {
       id: 7,
-      name: "Esport",
+      name: "Esports",
       image: easport,
     },
     {
@@ -223,7 +223,7 @@ function HomeScreen() {
     },
     {
       id: 6,
-      name: "Futsol",
+      name: "Futsal",
       image: futsol,
     },
     {
@@ -320,7 +320,7 @@ function HomeScreen() {
   //   },
   //   {
   //     id: 2,
-  //     name: "American Football (Rugby)",
+  //     name: "AFL",
   //     image: rugby,
   //   },
   //   {
@@ -340,7 +340,7 @@ function HomeScreen() {
   //   },
   //   {
   //     id: 6,
-  //     name: "Futsol",
+  //     name: "Futsal",
   //     image: futsol,
   //   },
   //   {
@@ -592,11 +592,11 @@ function HomeScreen() {
       {selected === "Handball" && <Handball />}
       {selected === "Ice Hockey" && <IceHockey />}
       {selected === "NASCAR" && <Nascar />}
-      {selected === "Futsol" && <Futsol />}
+      {selected === "Futsal" && <Futsol />}
       {selected === "MMA/UFC" && <Mma />}
       {selected === "Darts" && <Darts />}
       {selected === "Snooker" && <Snooker />}
-      {selected === "Esport" && <Easport />}
+      {selected === "Esports" && <Easport />}
       {selected === "Table Tennis" && <TableTennis />}
       {selected === "Aussie Rules" && <AussieRules />}
 

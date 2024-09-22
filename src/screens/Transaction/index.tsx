@@ -87,7 +87,8 @@ function Transaction() {
   const notifications = useAppSelector(notificationState) as any;
   const userIp = useContext(IPInfoContext);
 
- 
+
+
 
   const getNotification = async () => {
     await dispatch(getNotifications());

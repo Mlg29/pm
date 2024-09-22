@@ -141,7 +141,7 @@ function Snooker() {
         </div>
       ))}
        {
-        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
+        upcoming?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for Snooker"
           height="30vh"

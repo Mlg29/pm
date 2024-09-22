@@ -9,6 +9,7 @@ import Loader from "../../components/Loader";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import HorseGameCard from "../../components/GameCard/HorseGameCard";
+import EmptyState from "../../components/EmptyState";
 
 function HorseRace() {
   const dispatch = useAppDispatch() as any;
@@ -219,6 +220,16 @@ function HorseRace() {
           </div>
         </div>
       ))}
+
+{
+       live?.length < 1 && upcoming?.data?.length < 1 ?
+        <EmptyState 
+          header="No Game Available for Horse Race"
+          height="30vh"
+        />
+        :
+        null
+      }
     </div>
   );
 }

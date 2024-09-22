@@ -16,6 +16,7 @@ import ProfileDetail from "../Profile/ProfileDetail";
 import Preference from "../NotificationScreen/Preference";
 import Security from "../Security";
 import Restrictions from "../Restrictions";
+import OpenBetLayout from "../../components/OpenBetLayout";
 
 const styles = {
   contain: {
@@ -132,33 +133,37 @@ function ProfileScreen() {
           </div>
 
           {active === "profile" && (
-            <div>
+            <div style={{display: 'flex'}}>
               <div style={{ width: "40%", margin: "0 auto" }}>
-                <ProfileDetail />
-              </div>
+                <ProfileDetail />    
+              </div> 
+              <OpenBetLayout />
             </div>
           )}
 
           {active === "preference" && (
-            <div>
+            <div style={{display: 'flex'}}> 
               <div style={{ width: "40%", margin: "0 auto" }}>
                 <Preference />
               </div>
+              <OpenBetLayout />
             </div>
           )}
 
           {active === "security" && (
-            <div>
+            <div style={{display: 'flex'}}>
               <div style={{ width: "40%", margin: "0 auto" }}>
                 <Security />
               </div>
+              <OpenBetLayout />
             </div>
           )}
           {active === "restriction" && (
-            <div>
+            <div style={{display: 'flex'}}>
               <div style={{ width: "40%", margin: "0 auto" }}>
                 <Restrictions />
               </div>
+              <OpenBetLayout />
             </div>
           )}
         </div>

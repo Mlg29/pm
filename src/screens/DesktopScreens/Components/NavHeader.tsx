@@ -178,7 +178,7 @@ function NavHeader() {
     },
     {
       id: 7,
-      name: "Esport",
+      name: "Esports",
       image: easport,
     },
     {
@@ -231,7 +231,7 @@ function NavHeader() {
     },
     {
       id: 6,
-      name: "Futsol",
+      name: "Futsal",
       image: futsol,
     },
     {

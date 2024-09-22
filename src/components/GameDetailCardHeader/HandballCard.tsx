@@ -65,7 +65,7 @@ function HandballCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           Volleyball
+           Handball
           </p>
         
           <TbPlayHandball  size={30} color={COLORS.primary} />

@@ -62,6 +62,7 @@ function Rugby() {
   const upcomingOutput = groupedByData(upcoming?.data)
 
 
+
  
 
   return (
@@ -118,7 +119,7 @@ function Rugby() {
         </div>
       ))}
        {
-        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
+         upcoming?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for American Football Rugby"
           height="30vh"

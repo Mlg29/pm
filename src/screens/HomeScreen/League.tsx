@@ -105,7 +105,7 @@ const itemList = [
   },
   {
     id: 12,
-    name: "American Football (Rugby)",
+    name: "AFL",
   },
   {
     id: 13,
@@ -121,7 +121,7 @@ const itemList = [
   },
   {
     id: 16,
-    name: "Futsol",
+    name: "Futsal",
   },
   {
     id: 17,
