@@ -15,7 +15,6 @@ import { useMediaQuery } from "react-responsive";
 import EmptyState from "../../components/EmptyState";
 import { BaseUrl } from "../../https";
 import { io } from "socket.io-client";
-import { BsFillLightningFill } from "react-icons/bs";
 import { PiSoccerBallBold } from "react-icons/pi";
 import { TbRectangleVerticalFilled } from "react-icons/tb";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
@@ -188,6 +187,8 @@ function GameDetails() {
       socket.disconnect();
     };
   }, []);
+
+  // console.log({gameInfo})
 
   const handleRoute = (route: string, selection?: string) => {
     if(gameInfo?.internalStatus === "LIVE") {
@@ -462,6 +463,7 @@ function GameDetails() {
                               justifyContent: "space-between",
                               alignItems: "center",
                               marginBottom: 10,
+                              padding: 5
                             }}
                           >
                             <div style={{ width: "48%" }}>
@@ -481,7 +483,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          {dd["@player"]}
+                                         {dd["@player"]}
                                         </p>
                                         <FaArrowRightArrowLeft
                                           size={10}
@@ -495,7 +497,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          {dd["@assist"]}
+                                          ({dd["@assist"]})
                                         </p>
                                       </div>
                                     </div>
@@ -522,14 +524,9 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          {dd["@assist"]}
+                                          ({dd["@assist"]})
                                         </p>
-                                        {dd["@assist"] && (
-                                          <BsFillLightningFill
-                                            size={10}
-                                            style={{ marginRight: 10 }}
-                                          />
-                                        )}
+                                      
                                       </div>
                                     </div>
                                   )}
@@ -612,7 +609,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          {dd["@assist"]}
+                                          ({dd["@assist"]})
                                         </p>
                                       </div>
                                     </div>
@@ -639,14 +636,9 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          {dd["@assist"]}
+                                          ({dd["@assist"]})
                                         </p>
-                                        {dd["@assist"] && (
-                                          <BsFillLightningFill
-                                            size={10}
-                                            style={{ marginRight: 10 }}
-                                          />
-                                        )}
+                                       
                                       </div>
                                     </div>
                                   )}

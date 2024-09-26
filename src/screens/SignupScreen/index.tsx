@@ -223,6 +223,7 @@ function SignupScreen() {
       email: data?.email,
       phoneNumber: countryListCode?.dialCode + phoneNumber,
       userName: data?.userName,
+      countryIso: countryListCode?.code,
     };
 
     setLoader(true);

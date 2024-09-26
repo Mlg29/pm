@@ -51,6 +51,8 @@ function MmaCard(props) {
 
 
 
+
+
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -86,18 +88,16 @@ function MmaCard(props) {
         <div>
           <h3
             style={{
-              ...FONTS.h5,
+              ...FONTS.h7,
               textAlign: "center",
               margin: "10px 0px 0px 0px",
-              color: COLORS.dimRed
+              color: COLORS.green
             }}
           >
-            {data?.localteam?.round ? data?.localteam?.round : 0} - {data?.awayteam?.round ? data?.awayteam?.round : 0}
+           Winner: {data?.winner}
           </h3>
-          <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            ({data?.localteam?.reason || data?.awayteam?.reason})
-          </p>
-          <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
+         
+          <p style={{ ...FONTS.body7, fontWeight: '600', marginTop: 5, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
           </p>
         </div>
