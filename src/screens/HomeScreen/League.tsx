@@ -227,7 +227,7 @@ function League() {
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
-      const league = current?.leagueName || current?.tournamentName || current?.name || game;
+      const league = current?.leagueName || current?.tournamentName || current?.name || current?.league || game;
 
       if (!acc[league]) {
         acc[league] = [];

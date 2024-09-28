@@ -220,6 +220,16 @@ function NavHeader() {
       image: handball,
     },
     {
+      id: 6,
+      name: "Futsal",
+      image: futsol,
+    },
+    {
+      id: 11,
+      name: "Cricket",
+      image: selected === "Cricket" ? acricket : incricket,
+    },
+    {
       id: 4,
       name: "Ice Hockey",
       image: hockey,
@@ -228,11 +238,6 @@ function NavHeader() {
       id: 5,
       name: "NASCAR",
       image: nascar,
-    },
-    {
-      id: 6,
-      name: "Futsal",
-      image: futsol,
     },
     {
       id: 7,
@@ -248,11 +253,6 @@ function NavHeader() {
       id: 10,
       name: "Golf",
       image: selected === "Golf" ? agolf : ingolf,
-    },
-    {
-      id: 11,
-      name: "Cricket",
-      image: selected === "Cricket" ? acricket : incricket,
     },
     {
       id: 12,

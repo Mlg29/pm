@@ -55,6 +55,11 @@ import { getHandballFixtures } from "../../redux/slices/HandballSlice";
 import { getAflFixtures } from "../../redux/slices/AflSlice";
 import HandballCard from "../../components/GameDetailCardHeader/HandballCard";
 import AflCard from "../../components/GameDetailCardHeader/AflCard";
+import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
+import VolleyballGameCard from "../../components/GameCard/VolleyballGameCard";
+import HandballGameCard from "../../components/GameCard/HandballGameCard";
+import AflGameCard from "../../components/GameCard/AflGameCard";
+import FutsalGameCard from "../../components/GameCard/FutsalGameCard";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
@@ -399,6 +404,32 @@ function GameEventData(props: any) {
     });
   };
 
+  const fetchFutsalData = async (page) => {
+    setData([])
+    const payload = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getFutsalFixtures(payload)).then((dd) => {
+      if(dd?.payload){
+        setData((prev) => [...prev, ...dd?.payload?.data]);
+       setPage(dd?.payload?.page);
+       setPageSize(dd?.payload?.pageSize);
+       setTotal(dd?.payload?.total);
+       if (data?.length === dd?.payload?.total) {
+         setHasMore(false);
+       }
+       }
+      
+       setLoading(false);
+     });
+  };
+
   const fetchBasketballData = async (page) => {
     const payloadUpcoming = {
       status: "UPCOMING",
@@ -470,6 +501,10 @@ function GameEventData(props: any) {
     }
     if (gameType === "AFL") {
       fetchAflData(page);
+      return;
+    }
+    if (gameType === "Futsal") {
+      fetchFutsalData(page);
       return;
     }
   }, [page]);
@@ -555,7 +590,7 @@ function GameEventData(props: any) {
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
-      const league = current?.leagueName || current?.tournamentName || current?.name || gameType;
+      const league = current?.leagueName || current?.tournamentName || current?.name || current?.league || gameType;
 
       if (!acc[league]) {
         acc[league] = [];
@@ -978,13 +1013,16 @@ function GameEventData(props: any) {
                             <SnookerGameCard id={i} data={aa} />
                           )}
                           {gameType === "Volleyball" && (
-                            <VolleyballCard id={i} data={aa} />
+                            <VolleyballGameCard id={i} data={aa} />
                           )}
                            {gameType === "Handball" && (
-                            <HandballCard id={i} data={aa} />
+                            <HandballGameCard id={i} data={aa} />
                           )}
                            {gameType === "AFL" && (
-                            <AflCard id={i} data={aa} />
+                            <AflGameCard id={i} data={aa} />
+                          )}
+                            {gameType === "Futsal" && (
+                            <FutsalGameCard id={i} data={aa} />
                           )}
                         </div>
                       );

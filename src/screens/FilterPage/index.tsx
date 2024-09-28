@@ -34,6 +34,8 @@ import { getHandballFixtures } from "../../redux/slices/HandballSlice";
 import { getAflFixtures } from "../../redux/slices/AflSlice";
 import HandballGameCard from "../../components/GameCard/HandballGameCard";
 import AflGameCard from "../../components/GameCard/AflGameCard";
+import FutsalGameCard from "../../components/GameCard/FutsalGameCard";
+import { getFutsalFixtures } from "../../redux/slices/Futsal";
 
 const styles = {
   row: {
@@ -421,6 +423,30 @@ function FilterPage() {
     });
   };
 
+  const fetchFutsalData = async (page) => {
+    setData([])
+    const payload = {
+      date: getDate,
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getFutsalFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
   const fetchMmaData = async (page) => {
     setData([])
     const payload = {
@@ -518,6 +544,10 @@ function FilterPage() {
       fetchAflData(page);
       return;
     }
+    if (game === "Futsal") {
+      fetchFutsalData(page);
+      return;
+    }
   }, [game]);
 
   const handleSelectChange = (e) => {
@@ -533,7 +563,7 @@ function FilterPage() {
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
-      const league = current?.leagueName || current?.tournamentName || current?.name || game;
+      const league = current?.leagueName || current?.tournamentName || current?.name || current?.league || game;
 
       if (!acc[league]) {
         acc[league] = [];
@@ -673,6 +703,7 @@ function FilterPage() {
                         {game === "Volleyball" && <VolleyballGameCard id={i} data={aa} />}
                         {game === "Handball" && <HandballGameCard id={i} data={aa} />}
                         {game === "AFL" && <AflGameCard id={i} data={aa} />}
+                        {game === "Futsal" && <FutsalGameCard id={i} data={aa} />}
                       </div>
                       );
                     })}

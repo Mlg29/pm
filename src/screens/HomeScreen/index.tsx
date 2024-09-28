@@ -212,6 +212,16 @@ function HomeScreen() {
       image: handball,
     },
     {
+      id: 6,
+      name: "Futsal",
+      image: futsol,
+    },
+    {
+      id: 11,
+      name: "Cricket",
+      image: selected === "Cricket" ? acricket : incricket,
+    },
+    {
       id: 4,
       name: "Ice Hockey",
       image: hockey,
@@ -221,11 +231,7 @@ function HomeScreen() {
       name: "NASCAR",
       image: nascar,
     },
-    {
-      id: 6,
-      name: "Futsal",
-      image: futsol,
-    },
+
     {
       id: 7,
       name: "Hockey",
@@ -241,11 +247,7 @@ function HomeScreen() {
       name: "Golf",
       image: selected === "Golf" ? agolf : ingolf,
     },
-    {
-      id: 11,
-      name: "Cricket",
-      image: selected === "Cricket" ? acricket : incricket,
-    },
+ 
     {
       id: 12,
       name: "Table Tennis",

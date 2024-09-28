@@ -85,12 +85,14 @@ function Deposit() {
   const handleNext = async () => {
     const payload = {
       amount: parseFloat(value),
-      type: "DEPOSIT",
-      status: "SUCCESS",
+      // type: "DEPOSIT",
+      // status: "SUCCESS",
     };
 
     var response = await dispatch(createTransaction(payload));
+
     if (createTransaction.fulfilled.match(response)) {
+   
       setLoader(false);
       closePaymentModal();
       navigate("/deposit-success");
@@ -99,6 +101,7 @@ function Deposit() {
       });
     } else {
       var errMsg = response?.payload as string;
+
       setLoader(false);
       toast.error(errMsg, {
         position: "bottom-center",
@@ -166,7 +169,7 @@ function Deposit() {
             setLoader(true);
             return handleFlutterPayment({
               callback: (response) => {
-                if (response?.status === "successful") {
+                if (response?.status === "successful" || response?.status === "completed") {
                   handleNext();
                 }
               },

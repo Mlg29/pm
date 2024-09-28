@@ -370,7 +370,7 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 marginBottom: 5,
               }}
             >
-              {gameInfo?.fighter1?.fighter["@name"]}
+              {gameInfo?.fighter1?.fighter["@name"] ? gameInfo?.fighter1?.fighter["@name"] : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
               {gameInfo?.fighter1?.fighter["age"]
@@ -378,10 +378,10 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["gender"]}
+              {gameInfo?.fighter1?.fighter["gender"] ? gameInfo?.fighter1?.fighter["gender"] : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter1?.fighter["heigth"])}
+              {gameInfo?.fighter1?.fighter["heigth"] ? decodeHTMLEntities(gameInfo?.fighter1?.fighter["heigth"]) : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
               {gameInfo?.fighter1?.fighter["nickname"]
@@ -389,16 +389,16 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter1?.fighter["reach"])}
+              {gameInfo?.fighter1?.fighter["reach"] ? decodeHTMLEntities(gameInfo?.fighter1?.fighter["reach"]) : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["stance"]}
+              {gameInfo?.fighter1?.fighter["stance"] ? gameInfo?.fighter1?.fighter["stance"] : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter1?.fighter["weightclass"])}
+              {gameInfo?.fighter1?.fighter["weightclass"] ? decodeHTMLEntities(gameInfo?.fighter1?.fighter["weightclass"]) : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["weigth"]}
+              {gameInfo?.fighter1?.fighter["weigth"] ? gameInfo?.fighter1?.fighter["weigth"] : "N/A"}
             </p>
             {gameInfo?.fighter1?.fighter?.records?.record?.map((pp) => {
               return (
@@ -406,7 +406,7 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
                   <p
                     style={{ ...FONTS.body7, marginBottom: 5, color: "green" }}
                   >
-                    {pp["@win"]}
+                    {pp["@win"] ? pp["@win"] : "N/A"}
                   </p>
                   <p style={{ ...FONTS.body7, marginBottom: 5 }}>
                     {pp["@draw"]}
@@ -436,7 +436,7 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
           </div>
           <div>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["@name"]}
+              {gameInfo?.fighter2?.fighter["@name"] ? gameInfo?.fighter2?.fighter["@name"] : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
               {gameInfo?.fighter2?.fighter["age"]
@@ -444,10 +444,10 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["gender"]}
+              {gameInfo?.fighter2?.fighter["gender"] ? gameInfo?.fighter2?.fighter["gender"] : 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter2?.fighter["heigth"])}
+              {gameInfo?.fighter2?.fighter["heigth"] ? decodeHTMLEntities(gameInfo?.fighter2?.fighter["heigth"]) : 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
               {gameInfo?.fighter2?.fighter["nickname"]
@@ -455,16 +455,16 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter2?.fighter["reach"])}
+              {gameInfo?.fighter2?.fighter["reach"] ? decodeHTMLEntities(gameInfo?.fighter2?.fighter["reach"]) : 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["stance"]}
+              {gameInfo?.fighter2?.fighter["stance"] ? gameInfo?.fighter2?.fighter["stance"] : 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter2?.fighter["weightclass"])}
+              {gameInfo?.fighter2?.fighter["weightclass"] ? decodeHTMLEntities(gameInfo?.fighter2?.fighter["weightclass"]) : 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["weigth"]}
+              {gameInfo?.fighter2?.fighter["weigth"] ? gameInfo?.fighter2?.fighter["weigth"] : 'N/A'}
             </p>
             {gameInfo?.fighter2?.fighter?.records?.record?.map((pp) => {
               return (

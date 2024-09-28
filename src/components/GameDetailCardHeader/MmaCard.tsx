@@ -86,7 +86,9 @@ function MmaCard(props) {
           </p>
         </div>
         <div>
-          <h3
+        {
+            data?.localteam?.winner === "True" || data?.awayteam?.winner === "True" ?
+            <h3
             style={{
               ...FONTS.h7,
               textAlign: "center",
@@ -94,8 +96,10 @@ function MmaCard(props) {
               color: COLORS.green
             }}
           >
-           Winner: {data?.winner}
+           Winner: {data?.localteam?.winner === "True" ? data?.localteam?.name : data?.awayteam?.winner === "True" ? data?.awayteam?.name : null}
           </h3>
+          : null
+          }
          
           <p style={{ ...FONTS.body7, fontWeight: '600', marginTop: 5, fontSize: "8px", textAlign: "center" }}>
             {data?.status}

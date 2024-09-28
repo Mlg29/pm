@@ -25,7 +25,7 @@ export const createTransaction = createAsyncThunk(
   "transaction/createTransaction",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${BaseUrl}/transactions`, payload);
+      const response = await postRequest(`${BaseUrl}/transactions/deposit`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -34,6 +34,21 @@ export const createTransaction = createAsyncThunk(
     }
   }
 );
+
+export const withdrawal = createAsyncThunk(
+  "transaction/withdrawal",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await postRequest(`${BaseUrl}/transactions/withdraw`, payload);
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
 
 export const requestNewPin = createAsyncThunk(
   "transaction/requestNewPin",
@@ -101,6 +116,18 @@ export const TransactionSlice = createSlice({
         }
       );
     builder.addCase(createTransaction.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(withdrawal.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        withdrawal.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(withdrawal.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(resetPin.pending, (state, action) => {

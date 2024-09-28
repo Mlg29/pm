@@ -3,7 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
-import { GiBoxingGlove } from "react-icons/gi";
+import futsol from "../../assets/images/futsol.svg";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -38,16 +38,12 @@ export const styles = {
   },
 };
 
-function BoxingCard(props) {
+function FutsalCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
-  function isEmpty(value) {
-    for (let prop in value) {
-      if (value.hasOwnProperty(prop)) return false;
-    }
-    return true;
-  }
+
+console.log({data})
 
 
   return (
@@ -69,9 +65,10 @@ function BoxingCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            {data?.name}
+           {data?.leagueName}
           </p>
-          <GiBoxingGlove  size={30} color={COLORS.primary} />
+        <img src={futsol} />
+          {/* <FaVolleyball size={30} color={COLORS.primary} /> */}
           <p
             style={{
               ...FONTS.body7,
@@ -83,24 +80,19 @@ function BoxingCard(props) {
           </p>
         </div>
         <div>
-          {
-            data?.localteam?.winner === "True" || data?.awayteam?.winner === "True" ?
-            <h3
+          <h3
             style={{
-              ...FONTS.h7,
+              ...FONTS.h5,
               textAlign: "center",
               margin: "10px 0px 0px 0px",
-              color: COLORS.green
+              color: COLORS.dimRed
             }}
           >
-           Winner: {data?.localteam?.winner === "True" ? data?.localteam?.name : data?.awayteam?.winner === "True" ? data?.awayteam?.name : null}
+            {data?.localteam?.goals ? data?.localteam?.goals : 0} - {data?.awayteam?.goals ? data?.awayteam?.goals : 0}
           </h3>
-          : null
-          }
-         
-
-          <p style={{ ...FONTS.body7,fontWeight: '600', marginTop: 5, fontSize: "8px", textAlign: "center" }}>
-            {data?.status}
+        
+          <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
+            {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
         </div>
         <div
@@ -121,7 +113,7 @@ function BoxingCard(props) {
           >
             ID: {data?.id}
           </p>
-          <GiBoxingGlove  size={30} color={COLORS.primary} />
+          <img src={futsol} />
           <p
             style={{
               ...FONTS.body7,
@@ -146,4 +138,4 @@ function BoxingCard(props) {
   );
 }
 
-export default BoxingCard;
+export default FutsalCard;

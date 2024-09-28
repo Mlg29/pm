@@ -566,6 +566,39 @@ function BetSlip() {
                                 data={item}
                               />
                             )}
+
+{item?.sportEvent?.sport === "FUTSAL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.FutsalEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.FutsalEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.FutsalEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.FutsalEvent?.localteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.FutsalEvent?.awayteam
+                                    ?.goals
+                                    ? item?.sportEvent?.FutsalEvent?.awayteam
+                                        ?.goals
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
                           </div>
                         );
                       })}
@@ -921,6 +954,40 @@ function BetSlip() {
                                   item?.sportEvent?.AflEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.AflEvent?.awayteam
+                                        ?.totalscore
+                                    : "0"
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+
+
+{item?.sportEvent?.sport === "FUTSAL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.FutsalEvent?.localteam
+                                    ?.name
+                                }
+                                awayName={
+                                  item?.sportEvent?.FutsalEvent?.awayteam?.name
+                                }
+                                homeScore={
+                                  item?.sportEvent?.FutsalEvent?.localteam
+                                    ?.goals
+                                    ? item?.sportEvent?.FutsalEvent?.localteam
+                                        ?.goals
+                                    : "0"
+                                }
+                                awayScore={
+                                  item?.sportEvent?.FutsalEvent?.awayteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.FutsalEvent?.awayteam
                                         ?.totalscore
                                     : "0"
                                 }
