@@ -60,6 +60,7 @@ import VolleyballGameCard from "../../components/GameCard/VolleyballGameCard";
 import HandballGameCard from "../../components/GameCard/HandballGameCard";
 import AflGameCard from "../../components/GameCard/AflGameCard";
 import FutsalGameCard from "../../components/GameCard/FutsalGameCard";
+import { getFutsalFixtures } from "../../redux/slices/Futsal";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
