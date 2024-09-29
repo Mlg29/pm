@@ -9,6 +9,8 @@ import moment from "moment";
 import { useAppDispatch } from "../../redux/hooks";
 import { getBoxingFixtures } from "../../redux/slices/BoxingSlice";
 import EmptyState from "../../components/EmptyState";
+import { getCricketFixtures } from "../../redux/slices/CricketSlice";
+import CricketGameCard from "../../components/GameCard/CricketGameCard";
 
 
 function Cricket() {
@@ -56,9 +58,9 @@ function Cricket() {
         status: "Finished",
       };
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
+    dispatch(getCricketFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload);
+    });
 
     // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
     //     setFinished(dd?.payload);
@@ -66,12 +68,83 @@ function Cricket() {
 
   }, []);
 
+
+
+  const groupedByData = (collectedData) => {
+    return collectedData?.reduce((acc, current) => {
+      const league = current?.leagueName || "Cricket";
+
+      if (!acc[league]) {
+        acc[league] = [];
+      }
+
+      acc[league].push(current);
+
+      return acc;
+    }, {});
+  };
+
+
+
+  const upcomingOutput = groupedByData(upcoming?.data)
+
  
 
   return (
     <div>
+        {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                    gameType: "Dart",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+
+           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {upcomingOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <CricketGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
        {
-        finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
+      upcoming?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for Cricket"
           height="30vh"

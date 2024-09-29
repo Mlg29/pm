@@ -32,6 +32,7 @@ import VolleyballCard from "../../components/GameDetailCardHeader/VolleyballCard
 import HandballCard from "../../components/GameDetailCardHeader/HandballCard";
 import AflCard from "../../components/GameDetailCardHeader/AflCard";
 import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
+import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
 
 const styles = {
   inputs: {
@@ -81,7 +82,6 @@ const BetAdjust = () => {
   const events = betData?.sportEvent;
   const sportEvents = events;
 
-
   const user = betInfo?.bet?.userId === userData?.id;
 
   const fetchUserInfo = async () => {
@@ -120,7 +120,7 @@ const BetAdjust = () => {
         state: { betId: response?.payload?.data?.betId, type: status },
       });
       setTimeout(() => {
-        return navigate('/home');
+        return navigate("/home");
       }, 1000);
     } else {
       var errMsg = response?.payload as string;
@@ -147,8 +147,6 @@ const BetAdjust = () => {
       </div>
     );
   }
-
-
 
   return (
     <div className="top-container">
@@ -225,43 +223,42 @@ const BetAdjust = () => {
         <TennisCard data={sportEvents?.TennisEvent} />
       )}
 
-{sportEvents?.sport === "BASKETBALL" && (
+      {sportEvents?.sport === "BASKETBALL" && (
         <BasketballCard data={sportEvents?.BasketballEvent} />
       )}
 
-{sportEvents?.sport === "BOXING" && (
+      {sportEvents?.sport === "BOXING" && (
         <BoxingCard data={sportEvents?.BoxingEvent} />
       )}
       {sportEvents?.sport === "ESPORT" && (
         <EsportCard data={sportEvents?.EsportEvent} />
       )}
 
-{sportEvents?.sport === "DART" && (
+      {sportEvents?.sport === "DART" && (
         <DartCard data={sportEvents?.DartEvent} />
       )}
 
-{sportEvents?.sport === "SNOOKER" && (
+      {sportEvents?.sport === "SNOOKER" && (
         <SnookerCard data={sportEvents?.SnookerEvent} />
       )}
 
-{sportEvents?.sport === "VOLLYBALL" && (
+      {sportEvents?.sport === "VOLLYBALL" && (
         <VolleyballCard data={sportEvents?.VollyBallEvent} />
       )}
       {sportEvents?.sport === "HANDBALL" && (
         <HandballCard data={sportEvents?.HandBallEvent} />
       )}
-      {sportEvents?.sport === "AFL" && (
-        <AflCard data={sportEvents?.AflEvent} />
-      )}
-{sportEvents?.sport === "MMA" && (
-        <MmaCard data={sportEvents?.MmaEvent} />
-      )}
+      {sportEvents?.sport === "AFL" && <AflCard data={sportEvents?.AflEvent} />}
+      {sportEvents?.sport === "MMA" && <MmaCard data={sportEvents?.MmaEvent} />}
 
-{sportEvents?.sport === "HORSE_RACING" && (
+      {sportEvents?.sport === "HORSE_RACING" && (
         <HorseCard gameInfo={sportEvents?.HorseEvent} />
       )}
       {sportEvents?.sport === "FUTSAL" && (
         <FutsalCard gameInfo={sportEvents?.FutsalEvent} />
+      )}
+       {sportEvents?.sport === "CRICKET" && (
+        <CricketCard gameInfo={sportEvents?.CricketEvent} />
       )}
 
       <div style={{ ...styles.div }}>

@@ -4,11 +4,37 @@ import TextInput from "../../components/TextInput"
 import DatePickerComponent from "../../components/DatePickerComponent"
 import Button from "../../components/Button"
 import Dropdown from "../../components/Dropdown"
+import { useEffect, useState } from "react"
+import { useAppDispatch } from "../../redux/hooks"
+import { getBankList } from "../../redux/slices/MiscSlice"
 
 
 
 function BankWithdraw() {
     const navigate = useNavigate()
+    const [banks, setBanks] = useState([])
+    const dispatch = useAppDispatch()
+
+
+    const getBanks = () => {
+        dispatch(getBankList()).then(pp => {
+            setBanks(pp?.payload?.data)
+        })
+    }
+
+    useEffect(() => {
+        getBanks()
+    }, [])
+
+
+    const bankList = banks?.map(dd => {
+        return {
+            id: dd?.id,
+            value: dd?.name
+        }
+    })
+
+
     return (
         <div className="top-container" style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%" }}>
             <Header
@@ -20,7 +46,7 @@ function BankWithdraw() {
                     label="Bank Name"
                     required
                     placeholder="Select Bank Name"
-                    data={[]}
+                    data={bankList}
 
                 />
 

@@ -61,6 +61,8 @@ import HandballGameCard from "../../components/GameCard/HandballGameCard";
 import AflGameCard from "../../components/GameCard/AflGameCard";
 import FutsalGameCard from "../../components/GameCard/FutsalGameCard";
 import { getFutsalFixtures } from "../../redux/slices/Futsal";
+import { getCricketFixtures } from "../../redux/slices/CricketSlice";
+import CricketGameCard from "../../components/GameCard/CricketGameCard";
 
 function GameEventData(props: any) {
   const navigate = useNavigate();
@@ -265,6 +267,31 @@ function GameEventData(props: any) {
 
     setLoading(true);
     dispatch(getDartFixtures(actualPayload)).then((dd) => {
+      if(dd?.payload){
+       setData((prev) => [...prev, ...dd?.payload?.data]);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      }
+     
+      setLoading(false);
+    });
+  };
+
+  const fetchCricketData = async (page) => {
+    const payloadUpcoming = {
+      status: "Not Started",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+
+    setLoading(true);
+    dispatch(getCricketFixtures(actualPayload)).then((dd) => {
       if(dd?.payload){
        setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
@@ -506,6 +533,10 @@ function GameEventData(props: any) {
     }
     if (gameType === "Futsal") {
       fetchFutsalData(page);
+      return;
+    }
+    if (gameType === "Cricket") {
+      fetchCricketData(page);
       return;
     }
   }, [page]);
@@ -1024,6 +1055,9 @@ function GameEventData(props: any) {
                           )}
                             {gameType === "Futsal" && (
                             <FutsalGameCard id={i} data={aa} />
+                          )}
+                          {gameType === "Cricket" && (
+                            <CricketGameCard id={i} data={aa} />
                           )}
                         </div>
                       );

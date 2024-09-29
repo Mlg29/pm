@@ -3,7 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
-import futsol from "../../assets/images/futsol.svg";
+import { BiSolidCricketBall } from "react-icons/bi";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -38,10 +38,9 @@ export const styles = {
   },
 };
 
-function FutsalCard(props) {
+function CricketCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
-
 
 
 
@@ -67,7 +66,8 @@ function FutsalCard(props) {
           >
            {data?.leagueName}
           </p>
-        <img src={futsol} />
+          <BiSolidCricketBall size={30} color={COLORS.primary}/>
+       
           {/* <FaVolleyball size={30} color={COLORS.primary} /> */}
           <p
             style={{
@@ -80,7 +80,7 @@ function FutsalCard(props) {
           </p>
         </div>
         <div>
-          <h3
+          {/* <h3
             style={{
               ...FONTS.h5,
               textAlign: "center",
@@ -89,7 +89,7 @@ function FutsalCard(props) {
             }}
           >
             {data?.localteam?.goals ? data?.localteam?.goals : 0} - {data?.awayteam?.goals ? data?.awayteam?.goals : 0}
-          </h3>
+          </h3> */}
         
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
@@ -113,7 +113,8 @@ function FutsalCard(props) {
           >
             ID: {data?.id}
           </p>
-          <img src={futsol} />
+          <BiSolidCricketBall size={30} color={COLORS.primary}/>
+       
           <p
             style={{
               ...FONTS.body7,
@@ -138,4 +139,4 @@ function FutsalCard(props) {
   );
 }
 
-export default FutsalCard;
+export default CricketCard;

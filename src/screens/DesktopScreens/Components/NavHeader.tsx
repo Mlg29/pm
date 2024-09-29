@@ -424,6 +424,18 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                      onClick={() => navigate("/payout")}
+                    >
+                      <img src={user1} />
+                      <p style={{ ...FONTS.body6, marginLeft: 10 }}>Payout Account</p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: 10,
+                        cursor: "pointer",
+                      }}
                       onClick={() => handleShow()}
                     >
                       <img src={logout} />
@@ -713,6 +725,18 @@ function NavHeader() {
                         padding: 10,
                         cursor: "pointer",
                       }}
+                      onClick={() => navigate("/payout")}
+                    >
+                      <img src={user1} />
+                      <p style={{ ...FONTS.body6, marginLeft: 10 }}>Payout Account</p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: 10,
+                        cursor: "pointer",
+                      }}
                       onClick={() => handleShow()}
                     >
                       <img src={logout} />
@@ -993,6 +1017,18 @@ function NavHeader() {
                     >
                       <img src={user1} />
                       <p style={{ ...FONTS.body6, marginLeft: 10 }}>Profile</p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: 10,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => navigate("/payout")}
+                    >
+                      <img src={user1} />
+                      <p style={{ ...FONTS.body6, marginLeft: 10 }}>Payout Account</p>
                     </div>
                     <div
                       style={{

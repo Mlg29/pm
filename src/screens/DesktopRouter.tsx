@@ -65,6 +65,7 @@ import ScrollToTop from '../components/ScrollToTop.js';
 import League from './HomeScreen/League.js';
 import Search from './Search/index.js';
 import ResetPin from './ResetPin/index.js';
+import Payout from './Payout/index.js';
 
 function DesktopRouters() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -130,6 +131,7 @@ function DesktopRouters() {
       <Route path="/league" element={<DashboardLayout><League /></DashboardLayout>} />
       <Route path="/search" element={<DashboardLayout><Search /></DashboardLayout>} />
       <Route path="/request-pin" element={<DashboardLayout><ResetPin /></DashboardLayout>} />
+      <Route path="/payout" element={<DashboardLayout><Payout /></DashboardLayout>} />
 
 
     </Routes>

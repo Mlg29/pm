@@ -62,6 +62,7 @@ import FilterPage from "./FilterPage/index.tsx";
 import ScrollToTop from "../components/ScrollToTop.tsx";
 import Search from "./Search/index.tsx";
 import ResetPin from "./ResetPin/index.tsx";
+import Payout from "./Payout/index.tsx";
 
 function Routers() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -137,7 +138,7 @@ function Routers() {
         <Route path="/filter" element={<FilterPage />} />
         <Route path="/search" element={<Search />} />
         <Route path="/request-pin" element={<ResetPin />} />
-
+        <Route path="/payout" element={<Payout />} />
       </Routes>
     </Router>
   );

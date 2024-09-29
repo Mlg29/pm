@@ -36,6 +36,8 @@ import HandballGameCard from "../../components/GameCard/HandballGameCard";
 import AflGameCard from "../../components/GameCard/AflGameCard";
 import FutsalGameCard from "../../components/GameCard/FutsalGameCard";
 import { getFutsalFixtures } from "../../redux/slices/Futsal";
+import { getCricketFixtures } from "../../redux/slices/CricketSlice";
+import CricketGameCard from "../../components/GameCard/CricketGameCard";
 
 const styles = {
   row: {
@@ -447,6 +449,30 @@ function FilterPage() {
     });
   };
 
+  const fetchCricketData = async (page) => {
+    setData([])
+    const payload = {
+      date: getDate,
+      page: page,
+      pageSize: pageSize,
+    };
+
+   
+    setLoading(true);
+    setLoader(true);
+    dispatch(getCricketFixtures(payload)).then((dd) => {
+      setData(dd?.payload?.data || []);
+      setPage(dd?.payload?.page);
+      setPageSize(dd?.payload?.pageSize);
+      setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.total) {
+        setHasMore(false);
+      }
+      setLoading(false);
+    setLoader(false);
+    });
+  };
+
   const fetchMmaData = async (page) => {
     setData([])
     const payload = {
@@ -546,6 +572,10 @@ function FilterPage() {
     }
     if (game === "Futsal") {
       fetchFutsalData(page);
+      return;
+    }
+    if (game === "Cricket") {
+      fetchCricketData(page);
       return;
     }
   }, [game]);
@@ -704,6 +734,7 @@ function FilterPage() {
                         {game === "Handball" && <HandballGameCard id={i} data={aa} />}
                         {game === "AFL" && <AflGameCard id={i} data={aa} />}
                         {game === "Futsal" && <FutsalGameCard id={i} data={aa} />}
+                        {game === "Cricket" && <CricketGameCard id={i} data={aa} />}
                       </div>
                       );
                     })}

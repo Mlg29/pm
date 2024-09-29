@@ -34,6 +34,7 @@ import VolleyballDetail from "./Details/VolleyballDetail";
 import HandballDetail from "./Details/HandballDetail";
 import AflDetail from "./Details/AflDetail";
 import FutsalDetail from "./Details/FutsalDetail";
+import CricketDetail from "./Details/CricketDetail";
 
 const styles = {
   container: {
@@ -1047,6 +1048,15 @@ function GameDetails() {
 
 {gameType === "Futsal" && (
           <FutsalDetail
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
+{gameType === "Cricket" && (
+          <CricketDetail
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

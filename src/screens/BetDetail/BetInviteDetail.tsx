@@ -29,6 +29,7 @@ import VolleyballCard from "../../components/GameDetailCardHeader/VolleyballCard
 import HandballCard from "../../components/GameDetailCardHeader/HandballCard";
 import AflCard from "../../components/GameDetailCardHeader/AflCard";
 import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
+import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
 
 const styles = {
   div: {
@@ -203,6 +204,10 @@ function BetInviteDetail() {
 
 {betData?.sportEvent?.sport === "FUTSAL" && (
         <FutsalCard gameInfo={betData?.sportEvent?.FutsalEvent} />
+      )}
+
+{betData?.sportEvent?.sport === "CRICKET" && (
+        <CricketCard gameInfo={betData?.sportEvent?.CricketEvent} />
       )}
 
       <div style={{ ...styles.div }}>
@@ -387,7 +392,22 @@ function BetInviteDetail() {
                         ) : (
                           ""
                         )}
-                      </h3>) : null}
+                      </h3>) :
+                       betData?.sportEvent?.sport === "CRICKET" ? (
+                        <h3>
+                          {betData?.opponentId !== userData?.id ? (
+                            <p>
+                              {betData?.opponentPrediction === "W1"
+                                ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
+                                : betData?.opponentPrediction === "W2"
+                                ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
+                                : ""}
+                            </p>
+                          ) : (
+                            ""
+                          )}
+                        </h3>) :
+                       null}
           </div>
         ) : null}
         <div style={{ ...styles.cardDiv }}>
@@ -1168,6 +1188,65 @@ function BetInviteDetail() {
                 handlePress={() =>
                   handleRoute(
                     betData?.sportEvent?.FutsalEvent?.awayteam?.name,
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+{betData?.sportEvent?.sport === "CRICKET" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== "W1" && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.CricketEvent?.localteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.CricketEvent?.localteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.CricketEvent?.localteam?.name,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== "W2" && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                    betData?.sportEvent?.CricketEvent?.awayteam?.name
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                    betData?.sportEvent?.CricketEvent?.awayteam?.name
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.CricketEvent?.awayteam?.name,
                     "W2"
                   )
                 }
