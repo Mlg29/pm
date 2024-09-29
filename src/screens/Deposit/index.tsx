@@ -88,12 +88,14 @@ function Deposit() {
       // type: "DEPOSIT",
       // status: "SUCCESS",
     };
-
+    setLoader(true);
     var response = await dispatch(createTransaction(payload));
 
     if (createTransaction.fulfilled.match(response)) {
    
       setLoader(false);
+    //  console.log({response})
+     // window.open(response?.payload?.data?.data?.paymentLink, '_blank');
       closePaymentModal();
       navigate("/deposit-success");
       toast.success(response?.payload?.data?.message, {
@@ -164,7 +166,7 @@ function Deposit() {
           propStyle={{ width: "100%" }}
           isLoading={loader}
           // handlePress={() => navigate("/payment-options")}
-          // handlePress={() => handleNext()}
+          //handlePress={() => handleNext()}
           handlePress={() => {
             setLoader(true);
             return handleFlutterPayment({
