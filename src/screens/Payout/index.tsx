@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { useAppDispatch } from "../../redux/hooks"
 import { getBankList, verifyBank } from "../../redux/slices/MiscSlice"
 import { ToastContainer, toast } from "react-toastify";
-import { AccountPayout } from "../../redux/slices/AuthSlice"
+import { AccountPayout, getUserPayout } from "../../redux/slices/AuthSlice"
 
 
 function Payout() {
@@ -20,7 +20,14 @@ function Payout() {
     const [verifyLoader, setVerifyLoader] = useState(false)
     const [loader, setLoader] = useState(false)
     const [accountName, setAccountName] = useState("")
+    const [accountDetail, setAccountDetail] = useState(null)
 
+
+    const getUserAccountDetail = () => {
+        dispatch(getUserPayout()).then(pp => {
+            console.log({pp})
+        })
+    }
 
     const bankList = banks?.map(dd => {
         return {
@@ -32,17 +39,16 @@ function Payout() {
     const selectedBank = bankList?.find(aa => aa?.id?.toString() === bankId)
  
 
-
-    const getAccountDetail = async () => {
+    const getAccountDetail = async (num) => {
         setVerifyLoader(true)
         const payload = {
-            accountNumber: accountNumber,
+            accountNumber: num,
             bankCode: selectedBank?.id?.toString(),
         }
         var response = await dispatch(verifyBank(payload))
         if(verifyBank.fulfilled.match(response)){
             setVerifyLoader(false);
-           // setAccountName()
+            setAccountName(response?.payload?.data?.data?.account_name)
         }
         else {
             var errMsg = response?.payload as string;
@@ -63,6 +69,7 @@ function Payout() {
 
     useEffect(() => {
         getBanks()
+        getUserAccountDetail()
     }, [])
 
 
@@ -73,14 +80,20 @@ function Payout() {
             accountNumber: accountNumber,
             accountName: accountName,
             bankName: selectedBank?.value,
-            bankCode: selectedBank?.id,
+            bankCode: selectedBank?.id?.toString(),
             branchCode: ""
           }
           setLoader(true);
           var response = await dispatch(AccountPayout(payload))
           if(AccountPayout.fulfilled.match(response)){
               setLoader(false);
-             // setAccountName()
+              toast.error(response?.payload?.data?.message, {
+                position: "bottom-center",
+              });
+              getUserAccountDetail()
+             setTimeout(() => {
+                navigate("/home")
+             }, 1000);
           }
           else {
               var errMsg = response?.payload as string;
@@ -91,6 +104,7 @@ function Payout() {
           }
     }
 
+   
 
     return (
         <div className="top-container" style={{ display: "flex", flexDirection: "column" }}>
@@ -109,7 +123,7 @@ function Payout() {
                     }}
                     required
                     placeholder="Select Bank Name"
-                    data={bankList}
+                    data={bankList?.filter(bb => bb?.value === "Access Bank")}
 
                 />
 
@@ -120,10 +134,11 @@ function Payout() {
                     disabled={!selectedBank}
                     onChangeText={(e) => {
                         if(e?.length === 10) {
-                            getAccountDetail()
+                            getAccountDetail(e)
                             return setAccountNumber(e)
                         }
                         else {
+                            setAccountName("")
                             return setAccountNumber(e)
                         }
                 
@@ -134,7 +149,7 @@ function Payout() {
 
                 <div>
                     {
-                        verifyLoader ? <div className="loader" /> :
+                        verifyLoader ? <div className="loader2" /> :
                         <h5 style={{color: "green", fontSize: 14}}>{accountName}</h5>
                     }
                 </div>
@@ -146,17 +161,18 @@ function Payout() {
                 /> */}
 
             </div>
-
+            <ToastContainer />
             <div style={{ display: "flex", marginTop: 30 }}>
                 <div style={{ width: "100%" }}>
                     <Button
                         text="Submit"
+                        isLoading={loader}
                         propStyle={{ width: "100%", backgroundColor: accountNumber?.length !== 10 ?  "gray" : "" }}
                         handlePress={accountNumber?.length !== 10 ? () => {} : () => handleSubmit()}
                     />
                 </div>
             </div>
-            <ToastContainer />
+            
         </div>
     )
 }

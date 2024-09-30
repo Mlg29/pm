@@ -317,6 +317,13 @@ export const AccountPayout = createAsyncThunk(
   }
 );
 
+export const getUserPayout = createAsyncThunk("auth/getUserPayout", async () => {
+  var response = await getRequest(`${BaseUrl}/users/payout-account`);
+  if (response?.status === 200 || response?.status === 201) {
+    return response?.data;
+  }
+});
+
 
 export const AuthSlice = createSlice({
   name: "auth",
@@ -536,6 +543,19 @@ export const AuthSlice = createSlice({
         }
       );
     builder.addCase(AccountPayout.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getUserPayout.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getUserPayout.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          // state.userInfo = action.payload
+        }
+      );
+    builder.addCase(getUserPayout.rejected, (state, action) => {
       // state.error = action.error.message
     });
   },
