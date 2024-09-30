@@ -13,10 +13,12 @@ import { Modal } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 import EditProfileModal from "../../components/Modals/EditProfileModal";
 import { useAppDispatch } from "../../redux/hooks";
-import { getUserData } from "../../redux/slices/AuthSlice";
+import { getUserData, terminateAccount } from "../../redux/slices/AuthSlice";
 import moment from "moment";
 import { MdPrivacyTip } from "react-icons/md";
 import Loader from "../../components/Loader";
+import { ToastContainer, toast } from "react-toastify";
+import TextInput from "../../components/TextInput";
 
 const styles = {
   container: {
@@ -57,6 +59,9 @@ function ProfileDetail() {
   const dispatch = useAppDispatch() as any;
   const [userData, setUserData] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [deleteData, setDeleteData] = useState(false)
+  const [password, setPassword] = useState("")
+
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -71,9 +76,42 @@ function ProfileDetail() {
     fetchUserInfo();
   }, []);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setDeleteData(false)
+    setShow(false)
+  };
   const handleShow = () => setShow(true);
   const handleShowEdit = () => setShowEdit(true);
+
+
+  const handleDelete = async () => {
+    if(!password){
+      toast.error("Password is required", {
+        position: "bottom-center",
+      });
+      return
+    }
+   
+    const payload = {
+     password: password,
+    }
+    setLoader(true);
+    var response = await dispatch(terminateAccount(payload))
+    if(terminateAccount.fulfilled.match(response)){
+        setLoader(false);
+        localStorage.clear()
+        setDeleteData(false)
+        navigate("/home")
+
+    }
+    else {
+        var errMsg = response?.payload as string;
+        setLoader(false);
+        toast.error(errMsg, {
+          position: "bottom-center",
+        });
+    }
+  }
 
   if (loader) {
     return (
@@ -218,15 +256,27 @@ function ProfileDetail() {
             account.
           </p>
 
+          <div>
+          <TextInput
+                    label="Password"
+                    placeholder="Enter your password"
+                    value={password}
+                    type="password"
+                    onChangeText={(e) => setPassword(e) }
+                    required
+                />
+          </div>
+
           <div style={{ marginTop: "20px" }}>
             <div style={{ width: "100%", marginTop: "20px" }}>
               <Button
-                text="Yes, Delete my account"
+                text={deleteData ? "Yes, Delete my account" : "Delete"}
                 propStyle={{
                   width: "100%",
                   backgroundColor: COLORS.red,
                   color: COLORS.white,
                 }}
+               handlePress={deleteData ? () => handleDelete() : () => setDeleteData(true)}
               />
             </div>
             <div style={{ width: "100%", margin: "20px 0px" }}>
@@ -252,6 +302,7 @@ function ProfileDetail() {
           setShowEdit(false);
         }}
       />
+         <ToastContainer />
     </div>
   );
 }

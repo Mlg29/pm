@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { useAppDispatch } from "../../redux/hooks"
 import { getBankList, verifyBank } from "../../redux/slices/MiscSlice"
 import { ToastContainer, toast } from "react-toastify";
+import { AccountPayout } from "../../redux/slices/AuthSlice"
 
 
 function Payout() {
@@ -17,6 +18,7 @@ function Payout() {
     const [accountNumber, setAccountNumber] = useState("")
     const dispatch = useAppDispatch()
     const [verifyLoader, setVerifyLoader] = useState(false)
+    const [loader, setLoader] = useState(false)
     const [accountName, setAccountName] = useState("")
 
 
@@ -40,6 +42,7 @@ function Payout() {
         var response = await dispatch(verifyBank(payload))
         if(verifyBank.fulfilled.match(response)){
             setVerifyLoader(false);
+           // setAccountName()
         }
         else {
             var errMsg = response?.payload as string;
@@ -65,8 +68,27 @@ function Payout() {
 
 
 
-    const handleSubmit = () => {
-
+    const handleSubmit = async () => {
+        const payload = {
+            accountNumber: accountNumber,
+            accountName: accountName,
+            bankName: selectedBank?.value,
+            bankCode: selectedBank?.id,
+            branchCode: ""
+          }
+          setLoader(true);
+          var response = await dispatch(AccountPayout(payload))
+          if(AccountPayout.fulfilled.match(response)){
+              setLoader(false);
+             // setAccountName()
+          }
+          else {
+              var errMsg = response?.payload as string;
+              setLoader(false);
+              toast.error(errMsg, {
+                position: "bottom-center",
+              });
+          }
     }
 
 
@@ -110,6 +132,13 @@ function Payout() {
                     required
                 />
 
+                <div>
+                    {
+                        verifyLoader ? <div className="loader" /> :
+                        <h5 style={{color: "green", fontSize: 14}}>{accountName}</h5>
+                    }
+                </div>
+
                 {/* <TextInput
                     label="Amount"
                     placeholder="₦0.00"
@@ -127,6 +156,7 @@ function Payout() {
                     />
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }

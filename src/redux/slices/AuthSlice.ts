@@ -282,6 +282,41 @@ export const changeTransactionPins = createAsyncThunk(
 );
 
 
+export const terminateAccount = createAsyncThunk(
+  "auth/terminateAccount",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await postRequest(
+        `${BaseUrl}/users/account/terminate`,
+        payload
+      );
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
+
+export const AccountPayout = createAsyncThunk(
+  "auth/AccountPayout",
+  async (payload: any, { rejectWithValue }) => {
+    try {
+      const response = await postRequest(
+        `${BaseUrl}/users/payout-account`,
+        payload
+      );
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
 
 export const AuthSlice = createSlice({
   name: "auth",
@@ -476,7 +511,35 @@ export const AuthSlice = createSlice({
     builder.addCase(uploadImage.rejected, (state, action) => {
       // state.error = action.error.message
     });
+
+    builder.addCase(terminateAccount.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        terminateAccount.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          // state.userInfo = action.payload
+        }
+      );
+    builder.addCase(terminateAccount.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(AccountPayout.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        AccountPayout.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          // state.userInfo = action.payload
+        }
+      );
+    builder.addCase(AccountPayout.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
   },
+
 });
 
 export const loginState = (state: RootState) => state.auth.userData;
