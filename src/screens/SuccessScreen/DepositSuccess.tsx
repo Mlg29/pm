@@ -50,7 +50,9 @@ export const styles = {
 function DepositSuccess() {
 
     const navigate = useNavigate();
-
+    const location = useLocation();
+    const message = location.state.message;
+    const type = location.state.type;
 
     return (
         <div className="top-container" style={{ ...styles.container }}>
@@ -62,8 +64,8 @@ function DepositSuccess() {
                     <img src={success} style={{marginBottom: "3rem"}} />
 
                     <div>
-                        <h3 style={{ ...FONTS.h4, fontWeight: '600', textAlign: 'center', margin: "10px 0px" }}>Deposit</h3>
-                        <p style={{ ...FONTS.body6, textAlign: 'center', fontWeight: '400' }}>Hurray! You have successfully funded your account.</p>
+                        <h3 style={{ ...FONTS.h4, fontWeight: '600', textAlign: 'center', margin: "10px 0px" }}>{type}</h3>
+                        <p style={{ ...FONTS.body6, textAlign: 'center', fontWeight: '400' }}>{message}</p>
                     </div>
                 </div>
             </div>

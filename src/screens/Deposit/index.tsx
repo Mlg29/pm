@@ -97,10 +97,15 @@ function Deposit() {
     //  console.log({response})
      // window.open(response?.payload?.data?.data?.paymentLink, '_blank');
       closePaymentModal();
-      navigate("/deposit-success");
-      toast.success(response?.payload?.data?.message, {
-        position: "bottom-center",
+      navigate("/deposit-success", {
+        state: {
+            message: response?.payload?.data?.message,
+            type: "Deposit"
+        }
       });
+      // toast.success(response?.payload?.data?.message, {
+      //   position: "bottom-center",
+      // });
     } else {
       var errMsg = response?.payload as string;
 

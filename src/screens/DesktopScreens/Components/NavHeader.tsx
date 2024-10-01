@@ -9,7 +9,7 @@ import { MdSportsCricket, MdSportsRugby } from "react-icons/md";
 import more from "../../../assets/images/more.svg";
 import { FlexDirection } from "../../../utils/type";
 import { useMediaQuery } from "react-responsive";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import profile from "../../../assets/images/profile1.png";
 import { IoIosArrowDown } from "react-icons/io";
@@ -18,7 +18,7 @@ import logout from "../../../assets/images/logout.svg";
 import user1 from "../../../assets/images/user1.svg";
 import LogOut from "../../../components/Modals/LogOut";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { getUserData } from "../../../redux/slices/AuthSlice";
+import { getUserData, userState } from "../../../redux/slices/AuthSlice";
 
 import {
   getNotifications,
@@ -108,25 +108,17 @@ function NavHeader() {
   const [show, setShow] = useState(false);
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
-  const [userData, setUserData] = useState(null);
+
   const notifications = useAppSelector(notificationState) as any;
   const [visible, setVisible] = useState(false);
-  const fetchUserInfo = async () => {
-    const response = await dispatch(getUserData());
-    if (getUserData.fulfilled.match(response)) {
-      setUserData(response?.payload);
-    }
-  };
-  const getNotification = async () => {
-    await dispatch(getNotifications());
-  };
+  const userData = useAppSelector(userState)
+ 
 
   useEffect(() => {
     var sport = localStorage.getItem("sport") || "Soccer";
-    fetchUserInfo();
-    getNotification();
     setSelected(sport);
   }, []);
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -144,6 +136,7 @@ function NavHeader() {
     return isTablet ? children : null;
   };
   const navigate = useNavigate();
+
 
   const itemList = [
     {

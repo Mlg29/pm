@@ -32,7 +32,7 @@ export const updateNotifications = createAsyncThunk(
 );
 
 
-export const getNotifications= createAsyncThunk(
+export const getNotifications = createAsyncThunk(
   "notification/getNotifications",
   async () => {
     var response = await getRequest(`${BaseUrl}/notifications`);

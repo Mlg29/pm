@@ -26,6 +26,7 @@ import { FaVolleyball } from "react-icons/fa6";
 import { TbPlayHandball } from "react-icons/tb";
 import { MdSportsRugby } from "react-icons/md";
 import { BiSolidCricketBall } from "react-icons/bi";
+import { getFxRate } from "../../redux/slices/MiscSlice";
 
 const styles = {
   contain: {
@@ -75,6 +76,17 @@ function OpenBet() {
     }
   };
 
+  const fetchFxRate = (payload) => {
+    const payloadData = {
+      sourceCurrency: payload?.sourceCurrency,
+      destinationCurrency: payload?.destinationCurrency,
+      amount: payload?.amount
+    }
+    dispatch(getFxRate(payloadData)).then(pp => {
+      return pp?.payload?.data
+    })
+  }
+
   useEffect(() => {
     fetchUserInfo();
   }, []);
@@ -99,10 +111,20 @@ function OpenBet() {
     });
   };
 
-  const handleAccept = (data) => {
+  const handleAccept = async (data) => {
+    const rateData = {
+      sourceCurrency: data?.betCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: data?.betCurrency === "USD" ? "NGN" : "USD",
+      amount: data?.betAmount
+    }
+  const newAmount = await  dispatch(getFxRate(rateData)).then(pp => {
+      return pp?.payload?.data
+    })
+    console.log({newAmount})
+    return;
     const payload = {
       invitedUser: null,
-      amount: data?.betAmount,
+      amount: newAmount,
       isAcceptBet: true,
       betId: data?.id,
       prediction: userSelection?.userType,

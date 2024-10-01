@@ -190,10 +190,10 @@ function GameDetails() {
     };
   }, []);
 
-  // console.log({gameInfo})
+ 
 
   const handleRoute = (route: string, selection?: string) => {
-    if(gameInfo?.internalStatus === "LIVE") {
+    if(gameInfo?.internalStatus === "LIVE" || gameInfo?.status?.includes("Set") || gameInfo?.status === "Started") {
       toast.error("Sorry, the game is in progress, you cant proceed to bet on it", {
         position: "bottom-center",
       });
@@ -492,7 +492,8 @@ function GameDetails() {
                                           color={COLORS.orange}
                                           style={{ marginRight: 10 }}
                                         />
-                                        <p
+                                        {
+                                          dd["@assist"] ?  <p
                                           style={{
                                             ...FONTS.body7,
                                             fontSize: 8,
@@ -501,6 +502,9 @@ function GameDetails() {
                                         >
                                           ({dd["@assist"]})
                                         </p>
+                                        : null
+                                        }
+                                       
                                       </div>
                                     </div>
                                   ) : (
@@ -519,7 +523,10 @@ function GameDetails() {
                                           alignItems: "center",
                                         }}
                                       >
-                                        <p
+                                        {
+                                          dd["@assist"]
+                                          ?
+                                            <p
                                           style={{
                                             ...FONTS.body7,
                                             fontSize: 8,
@@ -528,6 +535,9 @@ function GameDetails() {
                                         >
                                           ({dd["@assist"]})
                                         </p>
+                                        : null
+                                        }
+                                      
                                       
                                       </div>
                                     </div>
@@ -604,7 +614,9 @@ function GameDetails() {
                                           color={COLORS.orange}
                                           style={{ marginRight: 10 }}
                                         />
-                                        <p
+                                        {
+                                          dd["@assist"] 
+                                          ?  <p
                                           style={{
                                             ...FONTS.body7,
                                             fontSize: 8,
@@ -613,6 +625,10 @@ function GameDetails() {
                                         >
                                           ({dd["@assist"]})
                                         </p>
+                                        : null
+
+                                        }
+                                      
                                       </div>
                                     </div>
                                   ) : (
@@ -631,7 +647,9 @@ function GameDetails() {
                                           alignItems: "center",
                                         }}
                                       >
-                                        <p
+                                         {
+                                          dd["@assist"] 
+                                          ?  <p
                                           style={{
                                             ...FONTS.body7,
                                             fontSize: 8,
@@ -640,6 +658,9 @@ function GameDetails() {
                                         >
                                           ({dd["@assist"]})
                                         </p>
+                                        : null
+
+                                        }
                                        
                                       </div>
                                     </div>

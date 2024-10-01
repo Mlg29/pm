@@ -100,6 +100,40 @@ function Volleyball() {
         :
         null
       }
+           {upcoming?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+            UPCOMING
+          </p>
+          {upcoming?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: upcoming,
+                    type: "upcoming",
+                    gameType: "Volleyball",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
   
            {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
         <div key={leagueName}>
