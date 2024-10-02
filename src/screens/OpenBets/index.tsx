@@ -120,8 +120,7 @@ function OpenBet() {
   const newAmount = await  dispatch(getFxRate(rateData)).then(pp => {
       return pp?.payload?.data
     })
-    console.log({newAmount})
-    return;
+
     const payload = {
       invitedUser: null,
       amount: newAmount,

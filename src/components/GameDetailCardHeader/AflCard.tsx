@@ -65,7 +65,7 @@ function AflCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           Volleyball
+           AFL
           </p>
         
           <MdSportsRugby size={30} color={COLORS.primary} />

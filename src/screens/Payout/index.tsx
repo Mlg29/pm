@@ -137,28 +137,27 @@ function Payout() {
         >
           <div
             style={{
-              backgroundColor: COLORS.primary,
-              width: 300,
+              backgroundColor: '#f9f2f1',
+              width: '100%',
               padding: 10,
               borderRadius: 10,
             }}
           >
-            <div style={{ display: "flex" }}>
-              <p style={{ color: "white", width: "50%" }}>Name:</p>
-              <p style={{ color: "white" }}>{accountDetail?.accountName}</p>
+              <div style={{ display: "flex",flexDirection: 'column',paddingBottom: 5, borderBottom: '1px solid #e6e6e6' }}>
+              <p style={{ color: COLORS.primary,fontSize: 12, marginBottom:10 }}>Account Number</p>
+              <p style={{ color: COLORS.primary}}>{accountDetail?.accountNumber}</p>
             </div>
-            <div style={{ display: "flex" }}>
-              <p style={{ color: "white", width: "50%" }}>Account Number:</p>
-              <p style={{ color: "white" }}>{accountDetail?.accountNumber}</p>
+
+            <div style={{ display: "flex", flexDirection: 'column',paddingBottom: 5, borderBottom: '1px solid #e6e6e6', marginTop: 20 }}>
+              <p style={{ color: COLORS.primary,fontSize: 12, marginBottom:10 }}>Account Name:</p>
+              <p style={{ color: COLORS.primary}}>{accountDetail?.accountName}</p>
             </div>
-            <div style={{ display: "flex" }}>
-              <p style={{ color: "white", width: "50%" }}>Bank Name:</p>
-              <p style={{ color: "white" }}>{accountDetail?.bankName}</p>
+          
+            <div style={{ display: "flex",flexDirection: 'column',paddingBottom: 5, marginTop: 20 }}>
+              <p style={{ color: COLORS.primary,fontSize: 12, marginBottom:10 }}>Bank Name:</p>
+              <p style={{ color: COLORS.primary }}>{accountDetail?.bankName}</p>
             </div>
-            <div style={{ display: "flex" }}>
-              <p style={{ color: "white", width: "50%" }}>Currency:</p>
-              <p style={{ color: "white" }}>{accountDetail?.currency}</p>
-            </div>
+         
           </div>
         </div>
       ) : (

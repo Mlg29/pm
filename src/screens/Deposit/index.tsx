@@ -85,8 +85,7 @@ function Deposit() {
   const handleNext = async () => {
     const payload = {
       amount: parseFloat(value),
-      // type: "DEPOSIT",
-      // status: "SUCCESS",
+
     };
     setLoader(true);
     var response = await dispatch(createTransaction(payload));
@@ -99,7 +98,7 @@ function Deposit() {
       closePaymentModal();
       navigate("/deposit-success", {
         state: {
-            message: response?.payload?.data?.message,
+            message: "Deposit successfully completed",
             type: "Deposit"
         }
       });

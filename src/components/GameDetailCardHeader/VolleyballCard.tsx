@@ -65,7 +65,7 @@ function VolleyballCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           Volleyball
+          {data?.league}
           </p>
         
           <FaVolleyball size={30} color={COLORS.primary} />

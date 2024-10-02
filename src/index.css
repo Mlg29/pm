@@ -28,8 +28,10 @@
   right: 10px;
   margin: 10px;
 }
-.VIpgJd-ZVi9od-ORHb-OEVmcd {
-  /* visibility: hidden !important; */
+.wg-default, .wg-default .country-selector {
+  bottom: unset !important;
+  top: 0 !important;
+
 }
 .goog-te-combo {
   background-color: #f1f1f1;

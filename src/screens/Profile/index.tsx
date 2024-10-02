@@ -90,6 +90,13 @@ function Profile() {
       handleClick: () => navigate("/notification-preference"),
     },
     {
+      id: 7,
+      name: "Payout",
+      icon: language,
+      color: "#7154E80D",
+      handleClick: () => navigate("/payout"),
+    },
+    {
       id: 3,
       name: "Restrictions",
       icon: notification,
@@ -103,13 +110,13 @@ function Profile() {
       color: "#E9F7EA",
       handleClick: () => navigate("/security"),
     },
-    {
-      id: 5,
-      name: "App Language",
-      icon: language,
-      color: "#FFEEE3",
-      handleClick: () => navigate("/language"),
-    },
+    // {
+    //   id: 5,
+    //   name: "App Language",
+    //   icon: language,
+    //   color: "#FFEEE3",
+    //   handleClick: () => navigate("/language"),
+    // },
     {
       id: 6,
       name: "Log out",
