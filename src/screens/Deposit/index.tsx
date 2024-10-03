@@ -60,7 +60,7 @@ function Deposit() {
     }, 1000);
   }, []);
 
-  const currency = userIp?.currency === "NGN" ? "NGN" : "USD"
+  const currency = userData?.defaultCurrency === "NGN" ? "NGN" : "USD"
 
   const config: any = {
     public_key: publicKey,
@@ -154,11 +154,11 @@ function Deposit() {
         />
         <InputNumber
           value={value}
-         prefix={userIp?.currency === "NGN" ? "₦" : "$"}
+         prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
           onValueChange={(e) => handleAmount(e.value)}
           minFractionDigits={2}
           inputStyle={{ ...styles.inputs }}
-          placeholder={userIp?.currency === "NGN" ? "₦0.00" : "$0.00"}
+          placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
         />
       </div>
 

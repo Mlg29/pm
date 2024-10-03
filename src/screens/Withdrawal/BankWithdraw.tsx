@@ -5,9 +5,9 @@ import DatePickerComponent from "../../components/DatePickerComponent";
 import Button from "../../components/Button";
 import Dropdown from "../../components/Dropdown";
 import { useContext, useEffect, useState } from "react";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getBankList } from "../../redux/slices/MiscSlice";
-import { getUserPayout } from "../../redux/slices/AuthSlice";
+import { getUserPayout, userState } from "../../redux/slices/AuthSlice";
 import { InputNumber } from "primereact/inputnumber";
 import { TextAlign } from "../../utils/type";
 import { IPInfoContext } from "ip-info-react";
@@ -37,6 +37,7 @@ function BankWithdraw() {
   const [accountDetail, setAccountDetail] = useState(null);
   const userIp = useContext(IPInfoContext);
   const [loader, setLoader] = useState(false);
+  const userData = useAppSelector(userState)
 
   const getUserAccountDetail = () => {
     dispatch(getUserPayout()).then((pp) => {
@@ -104,11 +105,11 @@ function BankWithdraw() {
           />
           <InputNumber
             value={value}
-            prefix={userIp?.currency === "NGN" ? "₦" : "$"}
+            prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
             onValueChange={(e) => handleAmount(e.value)}
             minFractionDigits={2}
             inputStyle={{ ...styles.inputs }}
-            placeholder={userIp?.currency === "NGN" ? "₦0.00" : "$0.00"}
+            placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
           />
         </div>
 

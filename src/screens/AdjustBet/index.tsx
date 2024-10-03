@@ -10,6 +10,8 @@ import { formatCurrency } from "../../utils/helper";
 import { InputNumber } from 'primereact/inputnumber';
 import Loader from "../../components/Loader";
 import { IPInfoContext } from "ip-info-react";
+import { useAppSelector } from "../../redux/hooks";
+import { userState } from "../../redux/slices/AuthSlice";
 
 const styles = {
   inputs: {
@@ -33,7 +35,7 @@ const AdjustBet = () => {
  const [allowCurrency, setAllowCurrency] = useState(false)
  const [loader, setLoader] = useState(false)
  const userIp = useContext(IPInfoContext);
-
+ const userData = useAppSelector(userState)
 
  const checkHandler = () => {
   setAllowCurrency(!allowCurrency)
@@ -126,11 +128,11 @@ useEffect(() => {
         />
         <InputNumber 
           value={amount} 
-          prefix={userIp?.currency === "NGN" ? "₦" : "$"}
+          prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
           onValueChange={(e) => handleAmount(e.value)} 
           minFractionDigits={2} 
           inputStyle={{ ...styles.inputs }}
-          placeholder={userIp?.currency === "NGN" ? "₦0.00" : "$0.00"}
+          placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
           />
       </div>
 

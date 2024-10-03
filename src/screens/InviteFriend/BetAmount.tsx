@@ -3,8 +3,8 @@ import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../../components/TextInput";
-import { useAppDispatch } from "../../redux/hooks";
-import { getSingleUser } from "../../redux/slices/AuthSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getSingleUser, userState } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
@@ -27,6 +27,7 @@ const BetAmount = () => {
   const userIp = useContext(IPInfoContext);
   const [allowCurrency, setAllowCurrency] = useState(false);
   const [exRate, setExRate] = useState(null)
+  const userData = useAppSelector(userState)
 
 
   const checkHandler = () => {

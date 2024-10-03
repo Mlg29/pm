@@ -87,7 +87,7 @@ function Transaction() {
   const notifications = useAppSelector(notificationState) as any;
   const userIp = useContext(IPInfoContext);
 
-
+console.log({userData})
 
 
   const getNotification = async () => {
@@ -174,7 +174,7 @@ function Transaction() {
         <div style={{ ...styles.ctn }}>
           <p style={{ ...FONTS.body7, color: COLORS.white }}>Account Balance</p>
           <div style={{ ...styles.rw }}>
-            <p style={{ ...FONTS.body7, color: COLORS.white }}>{userIp?.currency === "NGN" ? "NGN" : "USD"}</p>
+            <p style={{ ...FONTS.body7, color: COLORS.white }}>{userData?.defaultCurrency === "NGN" ? "NGN" : "USD"}</p>
             {show ? (
               <div
                 style={{
