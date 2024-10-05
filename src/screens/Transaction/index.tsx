@@ -87,7 +87,6 @@ function Transaction() {
   const notifications = useAppSelector(notificationState) as any;
   const userIp = useContext(IPInfoContext);
 
-console.log({userData})
 
 
   const getNotification = async () => {

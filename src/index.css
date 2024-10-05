@@ -31,7 +31,12 @@
 .wg-default, .wg-default .country-selector {
   bottom: unset !important;
   top: 0 !important;
-
+  background-color: #2D0D02 !important;
+  border: none !important;
+  
+}
+.wg-drop.country-selector .wgcurrent a {
+  color: white !important;
 }
 .goog-te-combo {
   background-color: #f1f1f1;

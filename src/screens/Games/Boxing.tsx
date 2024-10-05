@@ -82,12 +82,32 @@ function Boxing() {
 
   const upcomingOutput = groupedByData(upcoming?.data)
 
+  const [selectedStatus, setSelectedStatus] = useState('Upcoming')
 
+  const status = [
+    {
+      id: 2,
+      name: "Upcoming"
+    },
+  ]
 
 
   return (
     <div>
-      {upcoming?.data?.length > 0 && (
+       <div>
+        <p style={{fontSize: 14, fontWeight: '500'}}>Boxing</p>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          {
+            status?.map((aa, i) => {
+              return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
+            })
+          }
+        </div>
+      </div>
+      {
+        selectedStatus === "Upcoming" ?
+        <>
+          {upcoming?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -96,7 +116,7 @@ function Boxing() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            UPCOMING
+           
           </p>
           {upcoming?.total > 10 && (
             <p
@@ -138,6 +158,10 @@ function Boxing() {
           </div>
         </div>
       ))}
+        </>
+        : null
+      }
+    
   
       {upcoming?.data?.length < 1 ? (
         <EmptyState header="No Game Available for Boxing" height="30vh" />

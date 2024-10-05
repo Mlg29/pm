@@ -129,11 +129,44 @@ function Football() {
   }, {});
 
 
+  const [selectedStatus, setSelectedStatus] = useState('Live')
+
+  const status = [
+    {
+      id: 1,
+      name: 'Live',
+    },
+    {
+      id: 2,
+      name: "Upcoming"
+    },
+    {
+      id: 3,
+      name: 'Today',
+    },
+    {
+      id: 2,
+      name: "Tomorrow"
+    }
+  ]
 
 
   return (
     <div>
-      {live?.length > 0 && (
+      <div>
+        <p style={{fontSize: 14, fontWeight: '500'}}>Soccer</p>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          {
+            status?.map((aa, i) => {
+              return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
+            })
+          }
+        </div>
+      </div>
+     {
+      selectedStatus === "Live" ?
+      <>
+       {live?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -142,7 +175,7 @@ function Football() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            LIVE
+            
           </p>
 
           {live?.length > 10 && (
@@ -168,8 +201,7 @@ function Football() {
           )}
         </div>
       )}
-
-      {groupedByLeague && Object.keys(groupedByLeague)?.map((leagueName) => (
+         {groupedByLeague && Object.keys(groupedByLeague)?.map((leagueName) => (
         <div key={leagueName}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
             {leagueName}
@@ -185,6 +217,14 @@ function Football() {
           </div>
         </div>
       ))}
+      </>
+      : null
+     }
+
+     {
+      selectedStatus === "Upcoming" ?
+      <>
+    
       {upcoming?.data?.length > 0 && (
         <div
           style={{
@@ -194,7 +234,7 @@ function Football() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            UPCOMING
+       
           </p>
           {upcoming?.total > 10 && (
             <p
@@ -236,8 +276,13 @@ function Football() {
           </div>
         </div>
       ))}
+      </> : null
+     }
 
-      {today?.data?.length > 0 && (
+     {
+      selectedStatus === "Today" ?
+      <>
+       {today?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -246,7 +291,7 @@ function Football() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            TODAY
+          
           </p>
           {today?.total > 10 && (
             <p
@@ -288,8 +333,13 @@ function Football() {
           </div>
         </div>
       ))}
+      </>: null
+     }
 
-      {tomorrow?.data?.length > 0 && (
+      {
+        selectedStatus === "Tomorrow" ?
+        <>
+          {tomorrow?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -298,7 +348,7 @@ function Football() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            TOMORROW
+        
           </p>
           {tomorrow?.total > 10 && (
             <p
@@ -341,6 +391,9 @@ function Football() {
         </div>
       ))}
 
+        </>
+        : null
+      }
       {live?.length < 1 &&
       upcoming?.data?.length < 1 &&
       today?.data?.length < 1 &&

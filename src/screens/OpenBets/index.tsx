@@ -121,9 +121,13 @@ function OpenBet() {
       return pp?.payload?.data
     })
 
+    const rate = newAmount?.rate * parseInt(data?.betAmount)
+    const rateByCurrency = data?.betCurrency === userData?.defaultCurrency ? data?.betAmount : rate
+
+
     const payload = {
       invitedUser: null,
-      amount: newAmount,
+      amount: rateByCurrency,
       isAcceptBet: true,
       betId: data?.id,
       prediction: userSelection?.userType,
@@ -132,10 +136,22 @@ function OpenBet() {
     return navigate("/options", { state: { gameType: gameType } });
   };
 
-  const handleAdjust = (data) => {
+  const handleAdjust = async (data) => {
+    const rateData = {
+      sourceCurrency: data?.betCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: data?.betCurrency === "USD" ? "NGN" : "USD",
+      amount: data?.betAmount
+    }
+  const newAmount = await  dispatch(getFxRate(rateData)).then(pp => {
+      return pp?.payload?.data
+    })
+
+    const rate = newAmount?.rate * parseInt(data?.betAmount)
+    const rateByCurrency = data?.betCurrency === userData?.defaultCurrency ? data?.betAmount : rate
+
     const payload = {
       invitedUser: null,
-      amount: data?.betAmount,
+      amount: rateByCurrency,
       opponentUsername: data?.user?.userName,
       isAdjustBet: true,
       betId: data?.id,

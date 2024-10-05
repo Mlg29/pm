@@ -84,7 +84,7 @@ const BetAmount = () => {
           />
          {
           exRate ?  <div>
-          <p style={{textAlign: 'right', margin: "10px 0px"}}>{userIp?.currency === "NGN" ? "$" : "₦"}{exRate?.to?.amount}</p>
+          <p style={{textAlign: 'right', margin: "10px 0px"}}>{userIp?.currency === "NGN" ? "$" : "₦"}{exRate?.rate * parseInt(amount)}</p>
         </div>
         : null
          }
@@ -119,7 +119,7 @@ const BetAmount = () => {
             </div>
 
             <div>
-            <p style={{fontSize: 14}}>{userIp?.currency === "NGN" ? "₦":"$"}{amount} = {userIp?.currency === "NGN" ? "$" : "₦"}{exRate?.to?.amount}</p>
+            <p style={{fontSize: 14}}>{userIp?.currency === "NGN" ? "₦":"$"}{amount} = {userIp?.currency === "NGN" ? "$" : "₦"}{exRate?.rate * parseInt(amount)}</p>
             </div>
           </div>
         </div>

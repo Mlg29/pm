@@ -66,10 +66,32 @@ function Formula1() {
 
   }, []);
 
+  const [selectedStatus, setSelectedStatus] = useState('Live')
+
+  const status = [
+    {
+      id: 1,
+      name: 'Live',
+    },
+    {
+      id: 2,
+      name: "Upcoming"
+    }
+  ]
 
 
   return (
     <div>
+       <div>
+        <p style={{fontSize: 14, fontWeight: '500'}}>Formula1</p>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          {
+            status?.map((aa, i) => {
+              return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
+            })
+          }
+        </div>
+      </div>
        {
         finished?.data?.length < 1 && upcoming?.data?.length < 1 ?
         <EmptyState 

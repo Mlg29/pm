@@ -86,10 +86,36 @@ function Tennis() {
 
   const upcomingOutput = groupedByData(upcoming?.data)
 
+  const [selectedStatus, setSelectedStatus] = useState('Live')
+
+  const status = [
+    {
+      id: 1,
+      name: 'Live',
+    },
+    {
+      id: 2,
+      name: "Upcoming"
+    },
+  ]
+
 
   return (
     <div>
-      {live?.length > 0 && (
+       <div>
+        <p style={{fontSize: 14, fontWeight: '500'}}>Tennis</p>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          {
+            status?.map((aa, i) => {
+              return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
+            })
+          }
+        </div>
+      </div>
+   {
+    selectedStatus === "Live" ?
+    <>
+       {live?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -98,7 +124,7 @@ function Tennis() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            LIVE
+       
           </p>
           {live?.length > 10 && (
             <p
@@ -123,13 +149,7 @@ function Tennis() {
           )}
         </div>
       )}
-      {/* {live?.filter((a, i) => i < 10)?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-          
-          </div>
-        );
-      })} */}
+ 
            {liveOutput && Object.keys(liveOutput)?.map((leagueName) => (
         <div key={leagueName}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
@@ -146,7 +166,12 @@ function Tennis() {
           </div>
         </div>
       ))}
-      {upcoming?.data?.length > 0 && (
+    </>: null
+   }
+    {
+      selectedStatus === "Upcoming"?
+      <>
+        {upcoming?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -181,13 +206,6 @@ function Tennis() {
         </div>
       )}
 
-      {/* {upcoming?.data?.map((aa: any, i: any) => {
-        return (
-          <div key={i}>
-           
-          </div>
-        );
-      })} */}
            {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
         <div key={leagueName}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
@@ -204,6 +222,8 @@ function Tennis() {
           </div>
         </div>
       ))}
+      </> : null
+    }
 
 {
         live?.length < 1 && upcoming?.data?.length < 1 ?

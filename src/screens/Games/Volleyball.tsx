@@ -12,9 +12,8 @@ import EmptyState from "../../components/EmptyState";
 import { getVolleyballFixtures } from "../../redux/slices/VolleyballSlice";
 import VolleyballGameCard from "../../components/GameCard/VolleyballGameCard";
 
-
 function Volleyball() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
   const url = `${BaseUrl}/volleyball`;
@@ -30,7 +29,6 @@ function Volleyball() {
   //   socket.on("connect_error", (err) => {
   //     console.error("WebSocket connection error:", err);
   //   });
-
 
   //   socket.on("BoxingEventUpdate", (message) => {
   //   //   setLive((prevMessages) => {
@@ -55,8 +53,8 @@ function Volleyball() {
       status: "Not Started",
     };
     const payloadFinished = {
-        status: "Finished",
-      };
+      status: "Finished",
+    };
 
     dispatch(getVolleyballFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
@@ -65,14 +63,11 @@ function Volleyball() {
     // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
     //     setFinished(dd?.payload);
     //   });
-
   }, []);
-
- 
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
-      const league =  current?.league || "Volley ball";
+      const league = current?.league || "Volley ball";
 
       if (!acc[league]) {
         acc[league] = [];
@@ -84,23 +79,63 @@ function Volleyball() {
     }, {});
   };
 
+  const upcomingOutput = groupedByData(upcoming?.data);
 
+  const [selectedStatus, setSelectedStatus] = useState("Upcoming");
 
-  const upcomingOutput = groupedByData(upcoming?.data)
-
+  const status = [
+    // {
+    //   id: 1,
+    //   name: "Live",
+    // },
+    {
+      id: 2,
+      name: "Upcoming",
+    },
+  ];
 
   return (
     <div>
-       {
-        upcoming?.data?.length < 1 ?
-        <EmptyState 
-          header="No Game Available for Volleyball"
-          height="30vh"
-        />
-        :
-        null
-      }
-           {upcoming?.data?.length > 0 && (
+      <div>
+        <p style={{ fontSize: 14, fontWeight: "500" }}>Vollyball</p>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          {status?.map((aa, i) => {
+            return (
+              <p
+                key={i}
+                onClick={() => setSelectedStatus(aa?.name)}
+                style={{
+                  width: 80,
+                  padding: 3,
+                  cursor: "pointer",
+                  backgroundColor:
+                    selectedStatus === aa?.name ? "#2D0D02" : "gray",
+                  color: selectedStatus === aa?.name ? "white" : "#2d0d02",
+                  marginRight: 4,
+                  textAlign: "center",
+                  fontSize: 12,
+                }}
+              >
+                {aa?.name}
+              </p>
+            );
+          })}
+        </div>
+      </div>
+      {upcoming?.data?.length < 1 ? (
+        <EmptyState header="No Game Available for Volleyball" height="30vh" />
+      ) : null}
+    
+    {
+      selectedStatus === "Upcoming" ?
+      <>
+        {upcoming?.data?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -109,7 +144,7 @@ function Volleyball() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            UPCOMING
+          
           </p>
           {upcoming?.total > 10 && (
             <p
@@ -134,25 +169,39 @@ function Volleyball() {
           )}
         </div>
       )}
-  
-           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
-        <div key={leagueName}>
-          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
-          </p>
-          <div>
-            {upcomingOutput[leagueName].map((aa, i) => {
-              return (
-                <div key={i}>
-                 <VolleyballGameCard id={i} data={aa} />
-                </div>
-              );
-            })}
+
+      {upcomingOutput &&
+        Object.keys(upcomingOutput)?.map((leagueName) => (
+          <div key={leagueName}>
+            <p
+              style={{
+                ...FONTS.body7,
+                backgroundColor: COLORS.lightRed,
+                padding: 5,
+                marginBottom: 10,
+                borderRadius: 5,
+                color: COLORS.black,
+                marginRight: 10,
+              }}
+            >
+              {leagueName}
+            </p>
+            <div>
+              {upcomingOutput[leagueName].map((aa, i) => {
+                return (
+                  <div key={i}>
+                    <VolleyballGameCard id={i} data={aa} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </>
+      : null
+    }
     </div>
-  )
+  );
 }
 
-export default Volleyball
+export default Volleyball;
