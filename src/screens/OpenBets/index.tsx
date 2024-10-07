@@ -27,6 +27,7 @@ import { TbPlayHandball } from "react-icons/tb";
 import { MdSportsRugby } from "react-icons/md";
 import { BiSolidCricketBall } from "react-icons/bi";
 import { getFxRate } from "../../redux/slices/MiscSlice";
+import FilterModal from "../../components/Modals/FilterModal";
 
 const styles = {
   contain: {
@@ -67,6 +68,20 @@ function OpenBet() {
   const [userData, setUserData] = useState(null);
   const [loader, setLoader] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [show, setShow] = useState(false);
+  const [selected, setSelected] = useState("");
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const handleTypeCheck = (val: any) => {
+    if (selected === val) {
+      setSelected("");
+    } else {
+      setSelected(val);
+    }
+  };
+
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -166,6 +181,13 @@ function OpenBet() {
       a?.prediction !== userSelection?.userType
   );
 
+  const sameCurrency = filterData?.filter(bb => bb?.betCurrency === userData?.defaultCurrency)
+  const multiCurrency = filterData?.filter(bb => bb?.betCurrency !== userData?.defaultCurrency)
+
+  const typeCheck = selected === "all" ? filterData : selected === "same" ? sameCurrency : selected === "multi" ? multiCurrency : filterData
+
+
+
   if (loader) {
     return (
       <div
@@ -193,20 +215,24 @@ function OpenBet() {
     return result;
   };
 
+  const handleFilter = () => {
+    handleShow()
+  }
+
   return (
     <div>
       {!isMobile && <DesktopBackButton />}
       <div className="top-container" style={{ backgroundColor: "white" }}>
-        <Header text="Open Bet" />
+        <Header text="Open Bet" filter handleFilter={() => handleFilter()} />
 
         <p style={{ ...FONTS.body6 }}>
           Please select from the available open bets created by other users that
           matches your option.
         </p>
 
-        {filterData?.length > 0 && (
+        {typeCheck?.length > 0 && (
           <div>
-            {filterData?.map((data, i) => {
+            {typeCheck?.map((data, i) => {
               return (
                 <>
                   {data?.sportEvent?.sport === "FOOTBALL" && (
@@ -1903,8 +1929,8 @@ function OpenBet() {
             })}
           </div>
         )}
-        {!filterData ||
-          (filterData?.length < 1 && (
+        {!typeCheck ||
+          (typeCheck?.length < 1 && (
             <div>
               <EmptyState
                 header="No Open bets available for your selection"
@@ -1936,7 +1962,15 @@ function OpenBet() {
             </p>
           </div>
         </div>
+
       </div>
+
+      <FilterModal 
+        show={show}
+        selected={selected}
+        handleTypeCheck={(val) => handleTypeCheck(val)}
+        handleClose={handleClose}
+      />
     </div>
   );
 }

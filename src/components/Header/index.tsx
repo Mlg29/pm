@@ -4,10 +4,10 @@ import { COLORS } from "../../utils/colors"
 import { FONTS } from "../../utils/fonts"
 import arrowleft from "../../assets/images/arrow-left.svg"
 import { useMediaQuery } from "react-responsive"
+import { GoFilter } from "react-icons/go";
 
 
-
-function Header({text}: any) {
+function Header({text, filter, handleFilter}: any) {
     const navigate = useNavigate()
     const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
@@ -21,7 +21,10 @@ function Header({text}: any) {
        : <div />
     }
       <h3 style={{...FONTS.h5, margin: "0px"}}>{text}</h3>
-      <h3></h3>
+      {
+        filter ? <GoFilter size={30} onClick={() => handleFilter()} style={{cursor: 'pointer'}} /> :   <h3></h3>
+      }
+    
       
     </div>
   )

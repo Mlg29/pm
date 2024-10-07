@@ -3,8 +3,8 @@ import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../../components/TextInput";
-import { useAppDispatch } from "../../redux/hooks";
-import { getSingleUser } from "../../redux/slices/AuthSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getSingleUser, getUserData, userState } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
@@ -12,7 +12,7 @@ import NumberInput from "../../components/NumberInput";
 import { useMediaQuery } from "react-responsive";
 import DesktopBackButton from "../../components/BackButton/DesktopBackButton";
 import { IPInfoContext } from "ip-info-react";
-
+import { getFxRate } from "../../redux/slices/MiscSlice";
 
 const InviteFriend = () => {
   const navigate = useNavigate();
@@ -26,7 +26,25 @@ const InviteFriend = () => {
   const [allowCurrency, setAllowCurrency] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const userIp = useContext(IPInfoContext);
-  
+  const [exRate, setExRate] = useState(null);
+  const userData = useAppSelector(userState);
+
+  useEffect(() => {
+    dispatch(getUserData())
+  }, [])
+
+  const handleFxRate = async (amount) => {
+    const rateData = {
+      sourceCurrency: userIp?.currency === "USD" ? "USD" : "NGN",
+      destinationCurrency: userIp?.currency === "USD" ? "NGN" : "USD",
+      amount: amount,
+    };
+
+    await dispatch(getFxRate(rateData)).then((pp) => {
+      setExRate(pp?.payload?.data);
+    });
+  };
+
   const checkHandler = () => {
     setAllowCurrency(!allowCurrency);
   };
@@ -46,9 +64,10 @@ const InviteFriend = () => {
       });
     }
   };
+
   useEffect(() => {
-    if(email?.length === 0) {
-      setUsers([])
+    if (email?.length === 0) {
+      setUsers([]);
     }
     if (email?.length > 2) {
       checkUser();
@@ -71,105 +90,189 @@ const InviteFriend = () => {
     const payload = {
       invitedUser: email,
       amount: amount,
-      allowOtherCurrency: allowCurrency
+      // allowOtherCurrency: allowCurrency,
     };
 
     localStorage.setItem("inviteeInfo", JSON.stringify(payload));
     return navigate("/options");
   };
 
-
-  const handleSelect = (data) => { 
-     setEmail(data?.email);
+  const handleSelect = (data) => {
+    setEmail(data?.email);
     setSelectedUser(data?.id);
-  
   };
+
+  const checkSelectedUserDetail = users?.find((dd) => dd?.id === selectedUser);
 
 
   return (
-    <div className="top-container" style={{backgroundColor: 'transparent'}}>
-         {
-        !isMobile && <DesktopBackButton />
-      }
-      <div style={{display: 'flex', flexDirection: 'column', padding: "20px 10px 40px 10px",borderRadius: 10, backgroundColor: 'white'}}>
-      <Header text={"Invite Friend"} />
+    <div className="top-container" style={{ backgroundColor: "transparent" }}>
+      {!isMobile && <DesktopBackButton />}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "20px 10px 40px 10px",
+          borderRadius: 10,
+          backgroundColor: "white",
+        }}
+      >
+        <Header text={"Invite Friend"} />
 
-      <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
-        <TextInput
-          label="Email Address"
-          placeholder="Enter your friend email"
-          required
-          value={email}
-          type="email"
-          onChangeText={(val: string) => {
-            if(selectedUser){
-              setSelectedUser('')
-            }
-            setEmail(val);
-          }}
-        />
-        {users?.length > 0 && !selectedUser && (
-          <div>
-            <p style={{ ...FONTS.h7 }}>Select User</p>
-            {users?.map((data, i) => {
-              return (
-                <div
-                key={i}
-                  style={{
-                    padding: 8,
-                    border: `1px solid ${COLORS.orange}`,
-                    marginBottom: 5,
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSelect(data)}
-                >
-                  <p style={{ ...FONTS.body7 }}>
-                    {data?.firstName} {data?.lastName}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <NumberInput 
-          label="Amount"
-          placeholder="Enter Amount"
-          required
-          value={amount}
-          setValue={(val) => setAmount(val)}
-          prefix={userIp?.currency === "NGN" ? "₦" : "$"}
-        />
-
-        <div>
-          <div
-            style={{ display: "flex", alignItems: "center", marginBottom: 30 }}
-          >
-            <div style={{ width: "30px" }}>
-              <input
-                type="checkbox"
-                onChange={checkHandler}
-                checked={allowCurrency}
-              />
+        <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
+          <TextInput
+            label="Username or Email Address"
+            placeholder="Enter your friend email"
+            required
+            value={email}
+            type="email"
+            onChangeText={(val: string) => {
+              if (selectedUser) {
+                setSelectedUser("");
+              }
+              setEmail(val);
+            }}
+          />
+          {users?.length > 0 && !selectedUser && (
+            <div>
+              <p style={{ ...FONTS.h7 }}>Select User</p>
+              {users?.map((data, i) => {
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      padding: 8,
+                      border: `1px solid ${COLORS.orange}`,
+                      marginBottom: 5,
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleSelect(data)}
+                  >
+                    <p style={{ ...FONTS.body7 }}>
+                      {data?.firstName} {data?.lastName}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
-            <p>Allow Other Currency</p>
-          </div>
+          )}
+
+          <NumberInput
+            label="Amount"
+            placeholder="Enter Amount"
+            required
+            value={amount}
+            setValue={(val) => {
+              setAmount(val);
+              handleFxRate(val);
+            }}
+            prefix={userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}
+          />
+
+          {/* <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: 30,
+              }}
+            >
+              <div style={{ width: "30px" }}>
+                <input
+                  type="checkbox"
+                  onChange={checkHandler}
+                  checked={allowCurrency}
+                />
+              </div>
+              <p>Allow Other Currency</p>
+            </div>
+          </div> */}
+
+          {(exRate && checkSelectedUserDetail && (checkSelectedUserDetail?.defaultCurrency !== userData?.defaultCurrency )) ? (
+            <div style={{marginTop: 30}}>
+              <p>
+                The invited participant has a {checkSelectedUserDetail?.defaultCurrency} account. {checkSelectedUserDetail?.defaultCurrency} equivalence of
+                your bet amount is: ${exRate?.rate * parseInt(amount)}
+              </p>
+
+              <div
+                style={{
+                  backgroundColor: "#f9f2f1",
+                  padding: 20,
+                  borderRadius: 10,
+                  marginBottom: 30,
+                  marginTop: 20
+                }}
+              >
+                <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"=="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
+                  </div>
+              </div>
+            </div>
+          ) : null}
+
+
+{(exRate && !checkSelectedUserDetail && userData?.defaultCurrency === "NGN") ? (
+            <div style={{marginTop: 30}}>
+              <p>
+                If the invited participant sets up a USD account, the USD equivalence of your bet amount is:  ${exRate?.rate * parseInt(amount)}
+              </p>
+
+              <div
+                style={{
+                  backgroundColor: "#f9f2f1",
+                  padding: 20,
+                  borderRadius: 10,
+                  marginBottom: 30,
+                  marginTop: 20
+                }}
+              >
+                <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"=="} $1</p>
+                  </div>
+              </div>
+            </div>
+          ) : null}
+
+          {(exRate && !checkSelectedUserDetail && userData?.defaultCurrency === "USD") ? (
+            <div style={{marginTop: 30}}>
+              <p>
+               All bets on this platform are primarily placed in USD. However, if your opponent is based in Nigeria, the bet will be processed in Nigerian Naira (NGN). Naira equivalence of your bet amount: ₦{exRate?.rate * parseInt(amount)}
+              </p>
+
+              <div
+                style={{
+                  backgroundColor: "#f9f2f1",
+                  padding: 20,
+                  borderRadius: 10,
+                  marginBottom: 30,
+                  marginTop: 20
+                }}
+              >
+                <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"=="} ₦1</p>
+                    <p style={{ fontSize: 10, fontWeight: '400', marginTop: 5, marginBottom: 5 }}>Incase opponent base currency is different from USD, the bet will be subject to the applicable FX rate.</p>
+                  </div>
+              </div>
+            </div>
+          ) : null}
         </div>
-      </div>
 
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        <Button
-          text="Place Bet"
-          propStyle={{ width: "100%" }}
-          isLoading={loader}
-          handlePress={() => handleRoute()}
-        />
-      </div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1, marginTop: 20 }}>
+          <Button
+            text="Place Bet"
+            propStyle={{ width: "100%" }}
+            isLoading={loader}
+            handlePress={() => handleRoute()}
+          />
+        </div>
 
-      <ToastContainer />
-    </div> 
+        <ToastContainer />
+      </div>
     </div>
-   
   );
 };
 

@@ -35,11 +35,12 @@ function Payout() {
 
   const bankList = banks?.map((dd) => {
     return {
-      id: dd?.id,
+      id: dd?.code,
       value: dd?.name,
     };
   });
 
+  // console.log(">>>>>",{banks})
 
 
   const selectedBank = bankList?.find((aa) => aa?.id?.toString() === bankId);
@@ -50,12 +51,14 @@ function Payout() {
       accountNumber: num,
       bankCode: selectedBank?.id?.toString(),
     };
+    // console.log({payload})
     var response = await dispatch(verifyBank(payload));
     if (verifyBank.fulfilled.match(response)) {
       setVerifyLoader(false);
       setAccountName(response?.payload?.data?.data?.account_name);
     } else {
       var errMsg = response?.payload as string;
+      // console.log({errMsg})
       setVerifyLoader(false);
       toast.error(errMsg, {
         position: "bottom-center",

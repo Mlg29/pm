@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../../components/TextInput";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getSingleUser, userState } from "../../redux/slices/AuthSlice";
+import { getSingleUser, getUserData, userState } from "../../redux/slices/AuthSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
@@ -30,6 +30,11 @@ const BetAmount = () => {
   const userData = useAppSelector(userState)
 
 
+  useEffect(() => {
+    dispatch(getUserData())
+  }, [])
+
+  
   const checkHandler = () => {
     setAllowCurrency(!allowCurrency);
   };
@@ -62,7 +67,7 @@ const BetAmount = () => {
     })
   }
 
-  console.log({exRate})
+
 
   return (
     <div className="top-container" style={{ backgroundColor: "transparent" }}>
@@ -80,11 +85,11 @@ const BetAmount = () => {
               setAmount(val)
               handleFxRate(val)
             }}
-            prefix={userIp?.currency === "NGN" ? "₦" : "$"}
+            prefix={userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""} 
           />
          {
           exRate ?  <div>
-          <p style={{textAlign: 'right', margin: "10px 0px"}}>{userIp?.currency === "NGN" ? "$" : "₦"}{exRate?.rate * parseInt(amount)}</p>
+          <p style={{textAlign: 'right', margin: "10px 0px"}}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{exRate?.rate * parseInt(amount)}</p>
         </div>
         : null
          }
@@ -119,7 +124,7 @@ const BetAmount = () => {
             </div>
 
             <div>
-            <p style={{fontSize: 14}}>{userIp?.currency === "NGN" ? "₦":"$"}{amount} = {userIp?.currency === "NGN" ? "$" : "₦"}{exRate?.rate * parseInt(amount)}</p>
+            <p style={{fontSize: 14}}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{amount} = {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{exRate?.rate * parseInt(amount)}</p>
             </div>
           </div>
         </div>
