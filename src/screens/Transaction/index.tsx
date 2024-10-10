@@ -264,6 +264,7 @@ function Transaction() {
                   amount={data?.amount}
                   date={data?.createdAt}
                   type={data?.type}
+
                 />
               </div>
             );

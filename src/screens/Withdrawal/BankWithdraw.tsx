@@ -1,79 +1,62 @@
+
+
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import TextInput from "../../components/TextInput";
-import DatePickerComponent from "../../components/DatePickerComponent";
 import Button from "../../components/Button";
-import Dropdown from "../../components/Dropdown";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getBankList } from "../../redux/slices/MiscSlice";
-import { getUserPayout, userState } from "../../redux/slices/AuthSlice";
-import { InputNumber } from "primereact/inputnumber";
-import { TextAlign } from "../../utils/type";
-import { IPInfoContext } from "ip-info-react";
-import CustomeKeyboard from "../../components/CustomKeyboard";
+import { ToastContainer, toast } from "react-toastify";
+import {
+  getUserPayout,
+  userState,
+} from "../../redux/slices/AuthSlice";
+import Loader from "../../components/Loader";
+import { COLORS } from "../../utils/colors";
+import { FiEdit } from "react-icons/fi";
 import { withdrawal } from "../../redux/slices/TransactionSlice";
-import { toast, ToastContainer } from "react-toastify";
-
-const styles = {
-  inputs: {
-    width: "100%",
-    // padding: 30,
-    border: "none",
-    outline: "none",
-    textAlign: "center" as TextAlign,
-    fontSize: "40px",
-    fontWight: "600",
-    fontFamily: "Poppins",
-    color: "black",
-    backgroundColor: "transparent",
-  },
-};
+import emptyState from "../../assets/images/illustration.svg"
 
 function BankWithdraw() {
   const navigate = useNavigate();
-  const [value, setValue] = useState<any>("");
+
   const dispatch = useAppDispatch();
-  const [accountDetail, setAccountDetail] = useState(null);
-  const userIp = useContext(IPInfoContext);
   const [loader, setLoader] = useState(false);
-  const userData = useAppSelector(userState)
+  const [load, setLoad] = useState(false);
+  const [accountDetail, setAccountDetail] = useState(null);
+  const [value, setValue] = useState<any>("");
+  const userData = useAppSelector(userState);
 
   const getUserAccountDetail = () => {
+    setLoad(true);
     dispatch(getUserPayout()).then((pp) => {
       setAccountDetail(pp?.payload?.data);
+      setLoad(false);
     });
   };
+
 
   useEffect(() => {
     getUserAccountDetail();
   }, []);
 
-  const handleAmount = (val) => {
-    // console.log({val})
-    // setAmount(val)
-  };
-
-  const handleWithdraw = async () => {
+  const handleSubmit = async () => {
     const payload = {
       amount: parseFloat(value),
-      payoutAccountId: accountDetail?.id
+      payoutAccountId: accountDetail?.id,
     };
 
     setLoader(true);
     var response = await dispatch(withdrawal(payload));
     if (withdrawal.fulfilled.match(response)) {
       setLoader(false);
-
       navigate("/deposit-success", {
         state: {
-            message: response?.payload?.data?.message,
-            type: "Withdrawal"
-        }
+          message: response?.payload?.data?.message,
+          type: "Withdrawal",
+        },
       });
-    //   toast.success(response?.payload?.data?.message, {
-    //     position: "bottom-center",
-    //   });
+
     } else {
       var errMsg = response?.payload as string;
 
@@ -84,50 +67,156 @@ function BankWithdraw() {
     }
   };
 
+  if (load) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          height: "50vh",
+        }}
+      >
+        {" "}
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div
       className="top-container"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flex: 1,
-        height: "100%",
-      }}
+      style={{ display: "flex", flexDirection: "column" }}
     >
-      <Header text="Withdraw" />
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div>
-          <input
-            style={{ ...styles.inputs, display: "none" }}
-            value={value}
-            onChange={(e) => setValue(e?.target?.value)}
-            placeholder="0.00"
-          />
-          <InputNumber
-            value={value}
-            prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
-            onValueChange={(e) => handleAmount(e.value)}
-            minFractionDigits={2}
-            inputStyle={{ ...styles.inputs }}
-            placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
-          />
-        </div>
-
-        <CustomeKeyboard value={value} setValue={setValue} />
-      </div>
-
-      <div style={{ display: "flex", marginTop: 30 }}>
-        <div style={{ width: "100%" }}>
-          <Button
-            text="Withdraw"
-            isLoading={loader}
-            propStyle={{ width: "100%" }}
-            handlePress={() => handleWithdraw()}
-          />
-        </div>
-      </div>
-
       <ToastContainer />
+      <Header text="Bank Withdraw" />
+      {accountDetail ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#f9f2f1",
+              width: "100%",
+              padding: 10,
+              borderRadius: 10,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingBottom: 5,
+                borderBottom: "1px solid #e6e6e6",
+              }}
+            >
+              <p
+                style={{
+                  color: COLORS.primary,
+                  fontSize: 12,
+                  marginBottom: 10,
+                }}
+              >
+                Account Number
+              </p>
+              <p style={{ color: COLORS.primary }}>
+                {accountDetail?.accountNumber}
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingBottom: 5,
+                borderBottom: "1px solid #e6e6e6",
+                marginTop: 20,
+              }}
+            >
+              <p
+                style={{
+                  color: COLORS.primary,
+                  fontSize: 12,
+                  marginBottom: 10,
+                }}
+              >
+                Account Name:
+              </p>
+              <p style={{ color: COLORS.primary }}>
+                {accountDetail?.accountName}
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingBottom: 5,
+                marginTop: 20,
+              }}
+            >
+              <p
+                style={{
+                  color: COLORS.primary,
+                  fontSize: 12,
+                  marginBottom: 10,
+                }}
+              >
+                Bank Name:
+              </p>
+              <p style={{ color: COLORS.primary }}>{accountDetail?.bankName}</p>
+            </div>
+          </div>
+          <div style={{ marginTop: 10 }} />
+          <TextInput
+            label="Amount"
+            placeholder={`${
+              userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"
+            }`}
+            required
+            value={value}
+            onChangeText={(val) => setValue(val)}
+          />
+
+          <div style={{ display: "flex", marginTop: 30 }}>
+            <div style={{ width: "100%" }}>
+              <Button
+                text="Submit"
+                isLoading={loader}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor: "",
+                }}
+                handlePress={() => handleSubmit()}
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div style={{display: 'flex', height: 400,justifyContent: 'center', alignItems: 'center',}}>
+          <div style={{display: 'flex',flexDirection: 'column',justifyContent: 'center', alignItems: 'center'}}>
+          <img src={emptyState} width={200} />
+          <h3 style={{textAlign: 'center', fontSize: 14, width: 250}}>You dont have a payout account yet. Kindly create one to enable withdrawal</h3>
+         
+          <div style={{ width: "100%", marginTop: 30 }}>
+              <Button
+                text="Create a Payout Account"
+                isLoading={loader}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor: "",
+                }}
+                handlePress={() => navigate("/payout")}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

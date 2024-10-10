@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { AccountPayout, getUserPayout } from "../../redux/slices/AuthSlice";
 import Loader from "../../components/Loader";
 import { COLORS } from "../../utils/colors";
+import { FiEdit } from "react-icons/fi";
 
 function Payout() {
   const navigate = useNavigate();
@@ -40,10 +41,9 @@ function Payout() {
     };
   });
 
-  // console.log(">>>>>",{banks})
+  
 
-
-  const selectedBank = bankList?.find((aa) => aa?.id?.toString() === bankId);
+  const selectedBank = bankList?.find((aa) => aa?.value === bankId);
 
   const getAccountDetail = async (num) => {
     setVerifyLoader(true);
@@ -51,14 +51,14 @@ function Payout() {
       accountNumber: num,
       bankCode: selectedBank?.id?.toString(),
     };
-    // console.log({payload})
+
     var response = await dispatch(verifyBank(payload));
     if (verifyBank.fulfilled.match(response)) {
       setVerifyLoader(false);
       setAccountName(response?.payload?.data?.data?.account_name);
     } else {
       var errMsg = response?.payload as string;
-      // console.log({errMsg})
+
       setVerifyLoader(false);
       toast.error(errMsg, {
         position: "bottom-center",
@@ -123,6 +123,8 @@ function Payout() {
     );
   }
 
+
+
   return (
     <div
       className="top-container"
@@ -134,8 +136,7 @@ function Payout() {
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: 'column'
           }}
         >
           <div
@@ -161,6 +162,10 @@ function Payout() {
               <p style={{ color: COLORS.primary }}>{accountDetail?.bankName}</p>
             </div>
          
+           
+          </div>
+          <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 20}}>
+          <FiEdit size={20} style={{cursor: 'pointer'}} />
           </div>
         </div>
       ) : (
@@ -170,13 +175,14 @@ function Payout() {
               label="Bank Name"
               value={bankId}
               handleSelect={(e) => {
+                
                 setBankId("");
                 setAccountNumber("");
-                return setBankId(e?.target?.value);
+                return setBankId(e);
               }}
               required
               placeholder="Select Bank Name"
-              data={bankList?.filter((bb) => bb?.value === "Access Bank")}
+              data={bankList}
             />
 
             <TextInput
@@ -218,10 +224,10 @@ function Payout() {
                 isLoading={loader}
                 propStyle={{
                   width: "100%",
-                  backgroundColor: accountNumber?.length !== 10 ? "gray" : "",
+                  backgroundColor: accountName?.length < 1 ? "gray" : "",
                 }}
                 handlePress={
-                  accountNumber?.length !== 10 ? () => {} : () => handleSubmit()
+                  accountName?.length < 1 ? () => {} : () => handleSubmit()
                 }
               />
             </div>

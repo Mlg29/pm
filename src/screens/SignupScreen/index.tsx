@@ -254,7 +254,7 @@ function SignupScreen() {
     navigate("/terms-and-conditions");
   };
 
- 
+
   return (
     <div style={{ ...styles.container }}>
       <div style={{ marginTop: 10 }}>
@@ -319,7 +319,7 @@ function SignupScreen() {
             label="Gender"
             required
             value={gender}
-            handleSelect={(e) => setGender(e.target.value)}
+            handleSelect={(e) => setGender(e)}
             placeholder="Select Gender"
             data={[{id: "male", value: "Male"},{id: "female", value: "Female"},{id: "others", value: "Others"}]}
           />

@@ -117,6 +117,8 @@ function NavHeader() {
  
 
   useEffect(() => {
+    dispatch(getNotifications())
+    // dispatch(getUserData())
     var sport = localStorage.getItem("sport") || "Soccer";
     setSelected(sport);
   }, []);

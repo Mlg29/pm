@@ -14,7 +14,7 @@ const styles = {
         flexDirection: "row" as FlexDirection,
         justifyContent: "space-between",
         alignItems: "center",
-        margin: "1rem 0px",
+        margin: "0.5rem 0px",
         paddingBottom: "20px",
         borderBottom: `1px solid ${COLORS.semiGray}`,
         cursor: "pointer"

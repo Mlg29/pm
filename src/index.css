@@ -35,9 +35,44 @@
   border: none !important;
   
 }
+
+.ant-select-focused:where(.css-dev-only-do-not-override-vryruh).ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
+  border: none !important;
+  box-shadow: none !important;
+}
+:where(.css-dev-only-do-not-override-vryruh).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+  border: none !important;
+  outline: none !important;
+}
+:where(.css-dev-only-do-not-override-vryruh).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+/* .ant-select-selection-search-input:focus {
+  border: '1px solid red' !important;
+  outline: none !important;
+} */
+
 .wg-drop.country-selector .wgcurrent a {
   color: white !important;
 }
+.weglot-switcher {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.weglot-switcher li {
+  margin-right: 10px;
+}
+
+.weglot-switcher li img {
+  width: 30px; /* Adjust the size of the flag */
+  height: auto;
+}
+
 .goog-te-combo {
   background-color: #f1f1f1;
   color: #000;
