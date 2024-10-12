@@ -75,7 +75,7 @@ function AussieRules() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
   ]
 

@@ -49,7 +49,9 @@ function PasswordSuccess() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
     localStorage.clear();
+    localStorage.setItem("deviceId", getDeviceId)
     setTimeout(() => {
       navigate("/login");
     }, 1000);

@@ -216,9 +216,19 @@ function GameDetails() {
         });
       }, 1000);
     } else {
+      const db = {
+        gameType,
+        game
+      }
+
+      localStorage.setItem("gameDetail",JSON.stringify(db))
+      
       toast.error("You need to be logged in to proceed", {
         position: "bottom-center",
       });
+      setTimeout(() => {
+        navigate("/login")
+      },100)
     }
   };
 

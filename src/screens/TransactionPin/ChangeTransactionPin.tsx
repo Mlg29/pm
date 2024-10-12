@@ -116,7 +116,9 @@ function ChangeTransactionPin() {
     
     setTimeout(() => {
       setLoader(false)
+       var getDeviceId = localStorage.getItem("deviceId")
       localStorage.clear();
+      localStorage.setItem("deviceId", getDeviceId)
       navigate("/login");
     }, 1000);
       } else {

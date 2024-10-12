@@ -26,9 +26,9 @@ function Payout() {
   const [accountDetail, setAccountDetail] = useState(null);
 
 
-  const getUserAccountDetail = () => {
+  const getUserAccountDetail = async () => {
     setLoad(true);
-    dispatch(getUserPayout()).then((pp) => {
+    await dispatch(getUserPayout()).then((pp) => {
       setAccountDetail(pp?.payload?.data);
       setLoad(false);
     });
@@ -122,6 +122,7 @@ function Payout() {
       </div>
     );
   }
+
 
 
 

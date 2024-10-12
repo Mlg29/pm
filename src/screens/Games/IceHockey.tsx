@@ -75,7 +75,7 @@ function IceHockey() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
   ]
 

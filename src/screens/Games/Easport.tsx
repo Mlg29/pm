@@ -97,7 +97,7 @@ function Easport() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
   ]
 
@@ -172,7 +172,7 @@ function Easport() {
       }
      
      {
-        selectedStatus === "Upcoming" ?
+        selectedStatus === "Scheduled" ?
         <>
             {upcoming?.data?.length > 0 && (
         <div

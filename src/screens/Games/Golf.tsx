@@ -72,7 +72,7 @@ function Golf() {
   const status = [
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     }
   ]
 

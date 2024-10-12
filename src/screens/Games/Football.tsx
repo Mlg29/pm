@@ -138,15 +138,15 @@ function Football() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
     {
       id: 3,
-      name: 'Today',
+      name: 'Finished',
     },
     {
       id: 2,
-      name: "Tomorrow"
+      name: "Next Day"
     }
   ]
 
@@ -222,7 +222,7 @@ function Football() {
      }
 
      {
-      selectedStatus === "Upcoming" ?
+      selectedStatus === "Scheduled" ?
       <>
     
       {upcoming?.data?.length > 0 && (
@@ -280,7 +280,7 @@ function Football() {
      }
 
      {
-      selectedStatus === "Today" ?
+      selectedStatus === "Finished" ?
       <>
        {today?.data?.length > 0 && (
         <div
@@ -337,7 +337,7 @@ function Football() {
      }
 
       {
-        selectedStatus === "Tomorrow" ?
+        selectedStatus === "Next Day" ?
         <>
           {tomorrow?.data?.length > 0 && (
         <div

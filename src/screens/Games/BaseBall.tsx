@@ -75,7 +75,7 @@ function Baseball() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
   ]
 

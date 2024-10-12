@@ -52,9 +52,9 @@ function AuthSuccess() {
 
   const handleLogin = () => {
     const exceptValue = localStorage.getItem("bet-invite-id");
-
+    var getDeviceId = localStorage.getItem("deviceId")
     localStorage.clear();
-
+    localStorage.setItem("deviceId", getDeviceId)
     if (exceptValue !== null) {
       localStorage.setItem("bet-invite-id", exceptValue);
     }

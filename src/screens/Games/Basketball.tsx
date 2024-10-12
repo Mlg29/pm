@@ -111,7 +111,7 @@ function Basketball() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     }
   ]
 
@@ -187,7 +187,7 @@ function Basketball() {
       }
 
 {
-        selectedStatus === "Upcoming" ?
+        selectedStatus === "Scheduled" ?
         <>
            {upcoming?.data?.length > 0 && (
         <div

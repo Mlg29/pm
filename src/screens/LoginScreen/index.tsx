@@ -61,6 +61,7 @@ function LoginScreen() {
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
   const betInviteId = localStorage.getItem("bet-invite-id");
+  const gameDetail =  JSON.parse(localStorage.getItem("gameDetail"))
   const [country, setCountry] = useState("Nigeria");
   const [countryList, setCountryList] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -133,7 +134,13 @@ function LoginScreen() {
           if (betInviteId) {
             navigate(`/bet-invite-detail?${betInviteId}`);
             return;
-          } else {
+          }
+          else if(gameDetail){
+            navigate("/game-details", {
+              state: { data: gameDetail?.game, gameType: gameDetail?.gameType },
+            })
+          }
+           else {
             navigate("/home");
           }
         }, 1000);

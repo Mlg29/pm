@@ -94,7 +94,7 @@ function HorseRace() {
 
   const upcomingOutput = groupedByData(upcoming?.data)
 
-  const [selectedStatus, setSelectedStatus] = useState('Upcoming')
+  const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
   const status = [
     // {
@@ -103,26 +103,26 @@ function HorseRace() {
     // },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     }
   ]
 
-  if (loader) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1,
-          height: "100vh",
-        }}
-      >
-        <Loader />
-      </div>
-    );
-  }
+  // if (loader) {
+  //   return (
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         flexDirection: "column",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         flex: 1,
+  //         height: "100vh",
+  //       }}
+  //     >
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
 
 
@@ -197,7 +197,7 @@ function HorseRace() {
         : null
       }
       {
-        selectedStatus === "Upcoming" ?
+        selectedStatus === "Scheduled" ?
         <>
           {upcoming?.data?.length > 0 && (
         <div

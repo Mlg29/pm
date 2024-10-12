@@ -81,7 +81,7 @@ function Volleyball() {
 
   const upcomingOutput = groupedByData(upcoming?.data);
 
-  const [selectedStatus, setSelectedStatus] = useState("Upcoming");
+  const [selectedStatus, setSelectedStatus] = useState("Scheduled");
 
   const status = [
     // {
@@ -90,7 +90,7 @@ function Volleyball() {
     // },
     {
       id: 2,
-      name: "Upcoming",
+      name: "Scheduled",
     },
   ];
 
@@ -133,7 +133,7 @@ function Volleyball() {
       ) : null}
     
     {
-      selectedStatus === "Upcoming" ?
+      selectedStatus === "Scheduled" ?
       <>
         {upcoming?.data?.length > 0 && (
         <div

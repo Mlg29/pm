@@ -75,7 +75,7 @@ function Hockey() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
   ]
 

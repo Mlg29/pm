@@ -75,7 +75,7 @@ function TableTennis() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
   ]
 

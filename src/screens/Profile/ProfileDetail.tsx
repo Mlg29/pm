@@ -99,7 +99,9 @@ function ProfileDetail() {
     var response = await dispatch(terminateAccount(payload))
     if(terminateAccount.fulfilled.match(response)){
         setLoader(false);
+        var getDeviceId = localStorage.getItem("deviceId")
         localStorage.clear()
+        localStorage.setItem("deviceId", getDeviceId)
         setDeleteData(false)
         navigate("/home")
 

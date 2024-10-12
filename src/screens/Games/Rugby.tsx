@@ -61,12 +61,12 @@ function Rugby() {
 
   const upcomingOutput = groupedByData(upcoming?.data)
 
-  const [selectedStatus, setSelectedStatus] = useState('Upcoming')
+  const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
   const status = [
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     }
   ]
 
@@ -85,7 +85,7 @@ function Rugby() {
         </div>
       </div>
       {
-        selectedStatus === "Upcoming" ?
+        selectedStatus === "Scheduled" ?
         <>
             {upcoming?.data?.length > 0 && (
         <div

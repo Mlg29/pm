@@ -95,7 +95,7 @@ function Tennis() {
     },
     {
       id: 2,
-      name: "Upcoming"
+      name: "Scheduled"
     },
   ]
 
@@ -169,7 +169,7 @@ function Tennis() {
     </>: null
    }
     {
-      selectedStatus === "Upcoming"?
+      selectedStatus === "Scheduled"?
       <>
         {upcoming?.data?.length > 0 && (
         <div
