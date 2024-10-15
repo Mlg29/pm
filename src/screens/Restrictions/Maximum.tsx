@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FONTS } from "../../utils/fonts";
 
 import { MdArrowBackIos } from "react-icons/md";
@@ -18,7 +18,7 @@ import {
 } from "../../utils/type";
 
 import { useMediaQuery } from "react-responsive";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useFormik } from "formik";
 import { MaxAmountSchema } from "../../https/schemas";
 import { ToastContainer, toast } from "react-toastify";
@@ -29,6 +29,7 @@ import { Form } from "react-bootstrap";
 import NumberInput from "../../components/NumberInput";
 import { updateBetRestriction } from "../../redux/slices/RestrictionSlice";
 import { IPInfoContext } from "ip-info-react";
+import { getUserData, userState } from "../../redux/slices/AuthSlice";
 
 export const styles = {
   row: {
@@ -92,7 +93,14 @@ function Maximum() {
   const [show, setShow] = useState(false)
   const [message, setMessage] = useState("")
   const [messageType, setMessageType] = useState("")
-  const userIp = useContext(IPInfoContext);
+  const userData = useAppSelector(userState);
+  
+
+  useEffect(() => {
+    dispatch(getUserData())
+  }, [])
+
+
   
   const handleClose = () => {
     setShow(false)
@@ -175,7 +183,7 @@ function Maximum() {
             required
             value={amount}
             setValue={(val) => setAmount(val)}
-            prefix={userIp?.currency === "NGN" ? "₦" : "$"}
+            prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
           />
         </div>
       </div>

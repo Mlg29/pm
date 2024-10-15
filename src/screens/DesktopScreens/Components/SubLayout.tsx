@@ -85,15 +85,15 @@ function SubLayout({ children }) {
   
   const LargScreen = ({ children }: any) => {
     const isLargeScreen = useMediaQuery({ minWidth: 1551 });
-    return isLargeScreen ? children : null;
+    return isLargeScreen ? <div style={{marginTop: 150}}>{children}</div> : null;
   };
   const Desktop = ({ children }: any) => {
     const isDesktop = useMediaQuery({ minWidth: 992, maxWidth: 1550 });
-    return isDesktop ? children : null;
+    return isDesktop ? <div style={{marginTop: 150}}>{children}</div> : null;
   };
   const Tablet = ({ children }: any) => {
     const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
-    return isTablet ? children : null;
+    return isTablet ? <div style={{marginTop: 150}}>{children}</div> : null;
   };
 
   return (

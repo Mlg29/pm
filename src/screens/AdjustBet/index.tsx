@@ -34,7 +34,6 @@ const AdjustBet = () => {
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
  const [allowCurrency, setAllowCurrency] = useState(false)
  const [loader, setLoader] = useState(false)
- const userIp = useContext(IPInfoContext);
  const userData = useAppSelector(userState)
 
  const checkHandler = () => {

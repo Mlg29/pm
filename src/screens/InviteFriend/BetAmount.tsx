@@ -24,7 +24,7 @@ const BetAmount = () => {
   const [amount, setAmount] = useState("");
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
-  const userIp = useContext(IPInfoContext);
+
   const [allowCurrency, setAllowCurrency] = useState(false);
   const [exRate, setExRate] = useState(null)
   const userData = useAppSelector(userState)
@@ -57,8 +57,8 @@ const BetAmount = () => {
 
   const handleFxRate = async (amount) => {
     const rateData = {
-      sourceCurrency: userIp?.currency === "USD" ? "USD" : "NGN",
-      destinationCurrency: userIp?.currency === "USD" ? "NGN" : "USD",
+      sourceCurrency: userData?.defaultCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: userData?.defaultCurrency === "USD" ? "NGN" : "USD",
       amount: amount
     }
 
@@ -66,7 +66,6 @@ const BetAmount = () => {
       setExRate(pp?.payload?.data)
     })
   }
-
 
 
   return (

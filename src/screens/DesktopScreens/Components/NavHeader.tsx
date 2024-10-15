@@ -280,7 +280,7 @@ function NavHeader() {
   };
 
   return (
-    <div>
+    <div style={{position: 'fixed', width: '100%', top: 0, zIndex: 1}}>
       <LargScreen>
         <div style={{ ...styles.rowBtw }}>
           <img

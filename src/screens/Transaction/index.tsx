@@ -85,7 +85,7 @@ function Transaction() {
   const [userData, setUserData] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const notifications = useAppSelector(notificationState) as any;
-  const userIp = useContext(IPInfoContext);
+
 
 
 

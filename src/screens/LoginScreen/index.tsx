@@ -66,7 +66,6 @@ function LoginScreen() {
   const [countryList, setCountryList] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("")
-  const userIp = useContext(IPInfoContext);
  const deviceId = localStorage.getItem("deviceId")
 
 

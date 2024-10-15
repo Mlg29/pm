@@ -1,5 +1,3 @@
-
-
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import TextInput from "../../components/TextInput";
@@ -8,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { ToastContainer, toast } from "react-toastify";
 import {
+  AccountPayout,
+  getUserData,
   getUserPayout,
   userState,
 } from "../../redux/slices/AuthSlice";
@@ -15,34 +15,88 @@ import Loader from "../../components/Loader";
 import { COLORS } from "../../utils/colors";
 import { FiEdit } from "react-icons/fi";
 import { withdrawal } from "../../redux/slices/TransactionSlice";
-import emptyState from "../../assets/images/illustration.svg"
+import emptyState from "../../assets/images/illustration.svg";
+import { getBankList, verifyBank } from "../../redux/slices/MiscSlice";
+import Dropdown from "../../components/Dropdown";
+import CurrencyInput from "../../components/TextInput/CurrencyInput";
 
 function BankWithdraw() {
   const navigate = useNavigate();
-
+  const [banks, setBanks] = useState([]);
+  const [bankId, setBankId] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
   const dispatch = useAppDispatch();
+  const [verifyLoader, setVerifyLoader] = useState(false);
   const [loader, setLoader] = useState(false);
   const [load, setLoad] = useState(false);
+  const [accountName, setAccountName] = useState("");
   const [accountDetail, setAccountDetail] = useState(null);
-  const [value, setValue] = useState<any>("");
   const userData = useAppSelector(userState);
+  const [value, setValue] = useState("");
 
-  const getUserAccountDetail = () => {
+  const getUserAccountDetail = async () => {
     setLoad(true);
-    dispatch(getUserPayout()).then((pp) => {
+    await dispatch(getUserPayout()).then((pp) => {
       setAccountDetail(pp?.payload?.data);
       setLoad(false);
     });
   };
 
+  const bankList = banks?.map((dd) => {
+    return {
+      id: dd?.code,
+      value: dd?.name,
+    };
+  });
+
+  const selectedBank = bankList?.find((aa) => aa?.value === bankId);
+
+  const getAccountDetail = async (num) => {
+    setVerifyLoader(true);
+    const payload = {
+      accountNumber: num,
+      bankCode: selectedBank?.id?.toString(),
+    };
+
+    var response = await dispatch(verifyBank(payload));
+    if (verifyBank.fulfilled.match(response)) {
+      setVerifyLoader(false);
+      setAccountName(response?.payload?.data?.data?.account_name);
+    } else {
+      var errMsg = response?.payload as string;
+
+      setVerifyLoader(false);
+      toast.error(errMsg, {
+        position: "bottom-center",
+      });
+    }
+  };
+
+  const getBanks = () => {
+    dispatch(getBankList()).then((pp) => {
+      setBanks(pp?.payload?.data);
+    });
+  };
 
   useEffect(() => {
+    getBanks();
     getUserAccountDetail();
+    dispatch(getUserData())
   }, []);
 
-  const handleSubmit = async () => {
+
+
+  const handleWithdrawal = async () => {
+   const bb =  value.replace(/,/g, "");
+
+    if(userData?.walletBalance < parseFloat(bb)){
+      toast.error("Insufficient wallet balance", {
+        position: "bottom-center",
+      });
+      return
+    }
     const payload = {
-      amount: parseFloat(value),
+      amount: parseFloat(bb),
       payoutAccountId: accountDetail?.id,
     };
 
@@ -56,7 +110,6 @@ function BankWithdraw() {
           type: "Withdrawal",
         },
       });
-
     } else {
       var errMsg = response?.payload as string;
 
@@ -66,6 +119,36 @@ function BankWithdraw() {
       });
     }
   };
+
+  const handleSubmit = async () => {
+    const payload = {
+      accountNumber: accountNumber,
+      accountName: accountName,
+      bankName: selectedBank?.value,
+      bankCode: selectedBank?.id?.toString(),
+      branchCode: "",
+    };
+    setLoader(true);
+    var response = await dispatch(AccountPayout(payload));
+    if (AccountPayout.fulfilled.match(response)) {
+      setLoader(false);
+      toast.error(response?.payload?.data?.message, {
+        position: "bottom-center",
+      });
+
+      setTimeout(() => {
+        getUserAccountDetail();
+      }, 1000);
+    } else {
+      var errMsg = response?.payload as string;
+      setLoader(false);
+      toast.error(errMsg, {
+        position: "bottom-center",
+      });
+    }
+  };
+
+  
 
   if (load) {
     return (
@@ -173,11 +256,12 @@ function BankWithdraw() {
             </div>
           </div>
           <div style={{ marginTop: 10 }} />
-          <TextInput
+          <CurrencyInput
             label="Amount"
-            placeholder={`${
-              userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"
-            }`}
+            type='amount'
+            isNumeric
+            userData={userData}
+            placeholder={"0.00"}
             required
             value={value}
             onChangeText={(val) => setValue(val)}
@@ -192,26 +276,71 @@ function BankWithdraw() {
                   width: "100%",
                   backgroundColor: "",
                 }}
-                handlePress={() => handleSubmit()}
+                handlePress={() => handleWithdrawal()}
               />
             </div>
           </div>
         </div>
       ) : (
-        <div style={{display: 'flex', height: 400,justifyContent: 'center', alignItems: 'center',}}>
-          <div style={{display: 'flex',flexDirection: 'column',justifyContent: 'center', alignItems: 'center'}}>
-          <img src={emptyState} width={200} />
-          <h3 style={{textAlign: 'center', fontSize: 14, width: 250}}>You dont have a payout account yet. Kindly create one to enable withdrawal</h3>
-         
-          <div style={{ width: "100%", marginTop: 30 }}>
+        <div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Dropdown
+              label="Bank Name"
+              value={bankId}
+              handleSelect={(e) => {
+                setBankId("");
+                setAccountNumber("");
+                return setBankId(e);
+              }}
+              required
+              placeholder="Select Bank Name"
+              data={bankList}
+            />
+
+            <TextInput
+              label="Account Number"
+              placeholder="Enter your account number"
+              value={accountNumber}
+              disabled={!selectedBank}
+              onChangeText={(e) => {
+                if (e?.length === 10) {
+                  getAccountDetail(e);
+                  return setAccountNumber(e);
+                } else {
+                  setAccountName("");
+                  return setAccountNumber(e);
+                }
+              }}
+              required
+            />
+
+            <div>
+              {verifyLoader ? (
+                <div className="loader2" />
+              ) : (
+                <h5 style={{ color: "green", fontSize: 14 }}>{accountName}</h5>
+              )}
+            </div>
+
+            {/* <TextInput
+                  label="Amount"
+                  placeholder="₦0.00"
+                  required
+              /> */}
+          </div>
+
+          <div style={{ display: "flex", marginTop: 30 }}>
+            <div style={{ width: "100%" }}>
               <Button
-                text="Create a Payout Account"
+                text="Submit"
                 isLoading={loader}
                 propStyle={{
                   width: "100%",
-                  backgroundColor: "",
+                  backgroundColor: accountName?.length < 1 ? "gray" : "",
                 }}
-                handlePress={() => navigate("/payout")}
+                handlePress={
+                  accountName?.length < 1 ? () => {} : () => handleSubmit()
+                }
               />
             </div>
           </div>

@@ -38,7 +38,6 @@ function Deposit() {
   const [loader, setLoader] = useState(false);
   const [loaderD, setLoaderD] = useState(false);
   const [userData, setUserData] = useState(null);
-  const userIp = useContext(IPInfoContext);
 
   
   const fetchUserInfo = async () => {

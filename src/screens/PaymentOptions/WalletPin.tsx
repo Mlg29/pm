@@ -63,7 +63,7 @@ function WalletPin() {
       opponentId: userFee?.invitedUser ? userFee?.invitedUser : null,
       sportEventId: getUserBet?.sportEventId,
       betAmount: parseFloat(userFee?.amount),
-      betCurrency: userIp?.currency === "NGN" ? "NGN" : "USD",
+      betCurrency: userData?.defaultCurrency === "NGN" ? "NGN" : "USD",
       prediction: getUserBet?.userType,
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
       allowOtherCurrency: userFee?.allowOtherCurrency

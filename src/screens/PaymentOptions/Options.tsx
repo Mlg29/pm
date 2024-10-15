@@ -37,7 +37,7 @@ function Options() {
   const [loader, setLoader] = useState(false);
 const dispatch = useAppDispatch()
 const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
-const userIp = useContext(IPInfoContext);
+
 const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const fetchUserInfo = async () => {
@@ -113,7 +113,7 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           Debit amount for this game
         </p>
-        <h3 style={{ ...FONTS.h6 }}>{userIp?.currency === "NGN" ? "₦" : "$"}{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
+        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : "$"}{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
       </div>
 
       <div style={{...styles.rowBtn,  cursor: "pointer"}} onClick={() => goToPin()}>
@@ -123,7 +123,7 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
             </div>
             <div>
                 <h3 style={{...FONTS.body6}}>Wallet</h3>
-                <p style={{...FONTS.body7}}>Balance: {userIp?.currency === "NGN" ? "₦" : "$"}{formatCurrency(userData?.walletBalance)}</p>
+                <p style={{...FONTS.body7}}>Balance: {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(userData?.walletBalance)}</p>
             </div>
         </div>
         <FaChevronRight />

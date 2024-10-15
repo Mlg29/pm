@@ -192,7 +192,7 @@ function League() {
   };
 
   const fetchData = async (page) => {
-    setData([]);
+    // setData([]);
     const payload = {
       searchTerm: leagueName,
       date: moment(dateRange).format("YYYY-MM-DD"),
@@ -201,10 +201,10 @@ function League() {
     };
 
     setLoading(true);
-    setLoader(true);
+    // setLoader(true);
     dispatch(getFootballFixtures(payload)).then((dd) => {
-      // setData((prev) => [...prev, ...dd?.payload?.data]);
-      setData(dd?.payload?.data);
+      setData((prev) => [...prev, ...dd?.payload?.data]);
+      //setData(dd?.payload?.data);
       setPage(dd?.payload?.page);
       setPageSize(dd?.payload?.pageSize);
       setTotal(dd?.payload?.total);
@@ -212,13 +212,14 @@ function League() {
         setHasMore(false);
       }
       setLoading(false);
-      setLoader(false);
+      // setLoader(false);
     });
   };
 
   useEffect(() => {
     fetchData(page);
-  }, [page, dateRange, game]);
+  }, [page, dateRange]);
+
 
   const fetchMoreData = () => {
     setPage((prevPage) => prevPage + 1);

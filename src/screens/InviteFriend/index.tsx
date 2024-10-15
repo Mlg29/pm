@@ -25,7 +25,7 @@ const InviteFriend = () => {
   const [selectedUser, setSelectedUser] = useState("");
   const [allowCurrency, setAllowCurrency] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const userIp = useContext(IPInfoContext);
+
   const [exRate, setExRate] = useState(null);
   const userData = useAppSelector(userState);
 
@@ -35,8 +35,8 @@ const InviteFriend = () => {
 
   const handleFxRate = async (amount) => {
     const rateData = {
-      sourceCurrency: userIp?.currency === "USD" ? "USD" : "NGN",
-      destinationCurrency: userIp?.currency === "USD" ? "NGN" : "USD",
+      sourceCurrency: userData?.defaultCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: userData?.defaultCurrency === "USD" ? "NGN" : "USD",
       amount: amount,
     };
 
