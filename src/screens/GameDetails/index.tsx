@@ -199,7 +199,7 @@ function GameDetails() {
       });
       return;
     }
-    if(gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.internalStatus === "Ended") {
+    if(gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" ||gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
       toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
       });
