@@ -60,9 +60,9 @@ function Volleyball() {
       setUpcoming(dd?.payload);
     });
 
-    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-    //     setFinished(dd?.payload);
-    //   });
+    dispatch(getVolleyballFixtures(payloadFinished)).then((dd) => {
+        setFinished(dd?.payload);
+      });
   }, []);
 
   const groupedByData = (collectedData) => {
@@ -81,6 +81,8 @@ function Volleyball() {
 
   const upcomingOutput = groupedByData(upcoming?.data);
 
+  const finishedOutput = groupedByData(finished?.data);
+
   const [selectedStatus, setSelectedStatus] = useState("Scheduled");
 
   const status = [
@@ -91,6 +93,10 @@ function Volleyball() {
     {
       id: 2,
       name: "Scheduled",
+    },
+    {
+      id: 3,
+      name: "Finished",
     },
   ];
 
@@ -128,7 +134,7 @@ function Volleyball() {
           })}
         </div>
       </div>
-      {upcoming?.data?.length < 1 ? (
+      {upcoming?.data?.length < 1 && finished?.data?.length < 1? (
         <EmptyState header="No Game Available for Volleyball" height="30vh" />
       ) : null}
     
@@ -188,6 +194,75 @@ function Volleyball() {
             </p>
             <div>
               {upcomingOutput[leagueName].map((aa, i) => {
+                return (
+                  <div key={i}>
+                    <VolleyballGameCard id={i} data={aa} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </>
+      : null
+    }
+
+{
+      selectedStatus === "Finished" ?
+      <>
+        {finished?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+          
+          </p>
+          {finished?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: finished,
+                    type: "finished",
+                    gameType: "Volleyball",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+
+      {finishedOutput &&
+        Object.keys(finishedOutput)?.map((leagueName) => (
+          <div key={leagueName}>
+            <p
+              style={{
+                ...FONTS.body7,
+                backgroundColor: COLORS.lightRed,
+                padding: 5,
+                marginBottom: 10,
+                borderRadius: 5,
+                color: COLORS.black,
+                marginRight: 10,
+              }}
+            >
+              {leagueName}
+            </p>
+            <div>
+              {finishedOutput[leagueName].map((aa, i) => {
                 return (
                   <div key={i}>
                     <VolleyballGameCard id={i} data={aa} />

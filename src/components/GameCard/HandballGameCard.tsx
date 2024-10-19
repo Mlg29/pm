@@ -56,7 +56,7 @@ function HandballGameCard({ id, data }) {
       }
     >
       <div style={styles.box1}>
-      <p style={{ ...FONTS.body8,fontSize: 8, color: COLORS.black }}>
+      <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
          ({data?.gameDate})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
@@ -68,12 +68,12 @@ function HandballGameCard({ id, data }) {
         <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
       </div>
       <div style={styles.box3}>
-        {/* <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.totalscore ? data?.localteam?.totalscore : "-"}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : "-"}</p>
+        <div style={{ marginLeft: 10 }}>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.totalscore ? data?.localteam?.totalscore : ""}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : ""}</p>
           
 
-        </div> */}
+        </div>
       </div>
 
     </div>

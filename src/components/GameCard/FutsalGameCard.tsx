@@ -55,7 +55,7 @@ function FutsalGameCard({ id, data }) {
       }
     >
       <div style={styles.box1}>
-      <p style={{ ...FONTS.body8,fontSize: 8, color: COLORS.black }}>
+      <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
          ({data?.matchDate})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
@@ -69,8 +69,8 @@ function FutsalGameCard({ id, data }) {
       <div style={styles.box3}>
         {/* <GiSoccerField /> */}
         <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.totalscore ? data?.localteam?.totalscore : "-"}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : "-"}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.goals ? data?.localteam?.goals : ""}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.goals ? data?.awayteam?.goals : ""}</p>
           
 
         </div>

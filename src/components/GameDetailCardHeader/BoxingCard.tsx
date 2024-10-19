@@ -93,7 +93,7 @@ function BoxingCard(props) {
               color: COLORS.green
             }}
           >
-           Winner: {data?.localteam?.winner === "True" ? data?.localteam?.name : data?.awayteam?.winner === "True" ? data?.awayteam?.name : null}
+           Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name} (round ${data?.localteam?.round})` : data?.awayteam?.winner === "True" ?`${data?.awayteam?.name} (round ${data?.awayteam?.round})` : null}
           </h3>
           : null
           }

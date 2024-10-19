@@ -54,8 +54,8 @@ function DartGameCard({ id, data }) {
       }
     >
       <div style={styles.box1}>
-      <p style={{ ...FONTS.body8,fontSize: 8, color: COLORS.black }}>
-         ({data?.gameDate})
+      <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+         ({data?.gameDate || data?.fightDate})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
           {data?.status === "Started" ? `${data?.time}'` : data?.status}
@@ -70,7 +70,7 @@ function DartGameCard({ id, data }) {
         <div style={{ marginLeft: 10 }}>
         <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.totalscore ? data?.localteam?.totalscore : "-"}</p>
         <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : "-"}</p>
-          
+        
 
         </div>
       </div>

@@ -194,7 +194,13 @@ function GameDetails() {
 
   const handleRoute = (route: string, selection?: string) => {
     if(gameInfo?.internalStatus === "LIVE" || gameInfo?.status?.includes("Set") || gameInfo?.status === "Started") {
-      toast.error("Sorry, the game is in progress, you cant proceed to bet on it", {
+      toast.error("Sorry, the game is in progress, you can't proceed to bet on it", {
+        position: "bottom-center",
+      });
+      return;
+    }
+    if(gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.internalStatus === "Ended") {
+      toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
       });
       return;

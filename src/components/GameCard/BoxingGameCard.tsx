@@ -43,6 +43,8 @@ export const styles = {
 function BoxingGameCard({ id, data }) {
   const navigate = useNavigate();
 
+
+
   return (
     <div>
 
@@ -54,7 +56,7 @@ function BoxingGameCard({ id, data }) {
       }
     >
       <div style={styles.box1}>
-      <p style={{ ...FONTS.body8,fontSize: 8, color: COLORS.black }}>
+      <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
          ({data?.fightDate})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
@@ -68,8 +70,8 @@ function BoxingGameCard({ id, data }) {
       <div style={styles.box3}>
         {/* <GiSoccerField /> */}
         <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.round ? data?.localteam?.round : ""}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.round ? data?.awayteam?.round : ""}</p>
+        <p style={{ ...FONTS.body7,color: data?.localteam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.localteam?.winner === "True" ? `Winner` : "-"}</p>
+        <p style={{ ...FONTS.body7,color: data?.localteam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.awayteam?.winner === "True" ? `Winner` : "-"}</p>
           
 
         </div>

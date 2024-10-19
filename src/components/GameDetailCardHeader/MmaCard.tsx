@@ -51,8 +51,6 @@ function MmaCard(props) {
 
 
 
-
-
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -96,7 +94,7 @@ function MmaCard(props) {
               color: COLORS.green
             }}
           >
-           Winner: {data?.localteam?.winner === "True" ? data?.localteam?.name : data?.awayteam?.winner === "True" ? data?.awayteam?.name : null}
+           Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name}` : data?.awayteam?.winner === "True" ?`${data?.awayteam?.name}` : null}
           </h3>
           : null
           }

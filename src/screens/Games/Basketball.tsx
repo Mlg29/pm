@@ -64,7 +64,7 @@ function Basketball() {
       status: "LIVE",
     };
     const payloadOther = {
-      status: "OTHER",
+      status: "ENDED",
     };
     const payloadToday = {
       date: moment(new Date()).format("YYYY-MM-DD"),
@@ -78,6 +78,9 @@ function Basketball() {
     });
     dispatch(getBasketballFixtures(payloadLive)).then((dd) => {
       setLive(dd?.payload?.data);
+    });
+    dispatch(getBasketballFixtures(payloadOther)).then((dd) => {
+      setToday(dd?.payload);
     });
     return;
   }, []);
@@ -100,6 +103,7 @@ function Basketball() {
   const liveOutput = groupedByData(live)
 
   const upcomingOutput = groupedByData(upcoming?.data)
+  const todayOutput = groupedByData(today?.data)
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
@@ -112,6 +116,10 @@ function Basketball() {
     {
       id: 2,
       name: "Scheduled"
+    },
+    {
+      id: 3,
+      name: "Finished"
     }
   ]
 
@@ -243,10 +251,68 @@ function Basketball() {
         </>
         : null
       }
+
+{
+        selectedStatus === "Finished" ?
+        <>
+           {today?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+  
+          </p>
+          {today?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: today,
+                    type: "finished",
+                    gameType: "Basketball",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+
+        {todayOutput && Object.keys(todayOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {todayOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                  <BasketballGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+        </>
+        : null
+      }
        
      
       {
-        live?.length < 1 && upcoming?.data?.length < 1 ?
+        live?.length < 1 && upcoming?.data?.length < 1 && today?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for Basketball"
           height="30vh"

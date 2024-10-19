@@ -17,6 +17,7 @@ function Football() {
   const [upcoming, setUpcoming] = useState<any>([]);
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
+  const [finished, setFinished] = useState<any>([]);
   const url = `${BaseUrl}/football`;
 
   useEffect(() => {
@@ -62,12 +63,18 @@ function Football() {
     const payloadTomorrow = {
       date: tomorrowDate.format("YYYY-MM-DD"),
     };
+    const payloadFinished = {
+      status: "ENDED",
+    };
 
     dispatch(getFootballFixtures(payloadLive)).then((dd) => {
       setLive(dd?.payload?.data);
     });
     dispatch(getFootballFixtures(payloadToday)).then((dd) => {
       setToday(dd?.payload);
+    });
+    dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
+      setFinished(dd?.payload);
     });
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
       setTomorrow(dd?.payload);
@@ -127,6 +134,8 @@ function Football() {
 
     return acc;
   }, {});
+
+
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')

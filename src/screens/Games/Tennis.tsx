@@ -180,7 +180,7 @@ function Tennis() {
           }}
         >
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            UPCOMING
+           
           </p>
           {upcoming?.total > 10 && (
             <p

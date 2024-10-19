@@ -42,7 +42,7 @@ export const styles = {
 function HorseGameCard({ id, data }) {
   const navigate = useNavigate();
 
-  console.log({ data });
+
 
   return (
     <div

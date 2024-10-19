@@ -16,6 +16,7 @@ import EsportGameCard from "../../components/GameCard/EsportGameCard";
 function Easport() {
     const navigate = useNavigate();
   const [upcoming, setUpcoming] = useState<any>([]);
+  const [finished, setFinished] = useState<any>([]);
   const [live, setLive] = useState<any>([]);
   const url = `${BaseUrl}/esport`;
   const dispatch = useAppDispatch() as any;
@@ -58,8 +59,15 @@ function Easport() {
         status: "Started",
       };
 
+      const payloadFinished = {
+        status: "Finished",
+      };
+
     dispatch(getEasportFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
+    });
+    dispatch(getEasportFixtures(payloadFinished)).then((dd) => {
+      setFinished(dd?.payload);
     });
 
     dispatch(getEasportFixtures(payloadLive)).then((dd) => {
@@ -88,6 +96,8 @@ function Easport() {
 
   const upcomingOutput = groupedByData(upcoming?.data)
 
+  const finishedOutput = groupedByData(finished?.data)
+
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
@@ -98,6 +108,10 @@ function Easport() {
     {
       id: 2,
       name: "Scheduled"
+    },
+    {
+      id: 3,
+      name: "Finished"
     },
   ]
 
@@ -228,9 +242,67 @@ function Easport() {
         </>
         : null
       }
+
+{
+        selectedStatus === "Finished" ?
+        <>
+            {finished?.data?.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+          
+          </p>
+          {finished?.total > 10 && (
+            <p
+              style={{
+                ...FONTS.body7,
+                color: COLORS.orange,
+                cursor: "pointer",
+                margin: "15px 0px",
+              }}
+              onClick={() =>
+                navigate("/events", {
+                  state: {
+                    events: finished,
+                    type: "finished",
+                    gameType: "Esports",
+                  },
+                })
+              }
+            >
+              View more
+            </p>
+          )}
+        </div>
+      )}
+    
+           {finishedOutput && Object.keys(finishedOutput)?.map((leagueName) => (
+        <div key={leagueName}>
+          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+            {leagueName}
+          </p>
+          <div>
+            {finishedOutput[leagueName].map((aa, i) => {
+              return (
+                <div key={i}>
+                 <EsportGameCard id={i} data={aa} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+        </>
+        : null
+      }
     
        {
-        live?.length < 1 && upcoming?.data?.length < 1 ?
+        live?.length < 1 && upcoming?.data?.length < 1 && finished?.data?.length < 1 ?
         <EmptyState 
           header="No Game Available for Easport"
           height="30vh"

@@ -180,7 +180,14 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
     setLoading(true);
     dispatch(getHorseFixtures(actualPayload)).then((dd) => {
       if(dd?.payload){
@@ -203,8 +210,14 @@ function GameEventData(props: any) {
       page: page,
       pageSize: pageSize,
     };
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
     setLoading(true);
     dispatch(getBoxingFixtures(actualPayload)).then((dd) => {
       if(dd?.payload){
@@ -232,13 +245,20 @@ function GameEventData(props: any) {
       page: page,
       pageSize: pageSize,
     };
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+ 
 
     const actualPayload =
       eventType === "upcoming"
         ? payloadUpcoming
         : eventType === "live"
-        ? payloadLive
-        : "";
+        ? payloadLive 
+        : eventType === "finished" ? payloadFinished : "";
 
     setLoading(true);
     dispatch(getEasportFixtures(actualPayload)).then((dd) => {
@@ -263,7 +283,14 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
 
     setLoading(true);
     dispatch(getDartFixtures(actualPayload)).then((dd) => {
@@ -288,7 +315,14 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
 
     setLoading(true);
     dispatch(getCricketFixtures(actualPayload)).then((dd) => {
@@ -313,7 +347,14 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
 
     setLoading(true);
     dispatch(getSnookerFixtures(actualPayload)).then((dd) => {
@@ -338,7 +379,14 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
 
     setLoading(true);
     dispatch(getVolleyballFixtures(actualPayload)).then((dd) => {
@@ -363,7 +411,14 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
     setLoading(true);
     dispatch(getMmaFixtures(actualPayload)).then((dd) => {
       if(dd?.payload){
@@ -384,14 +439,21 @@ function GameEventData(props: any) {
     setData([])
     const payload = {
       status: "Not Started",
-      page: page,
-      pageSize: pageSize,
+      // page: page,
+      // pageSize: pageSize,
+    };
+    const payloadFinished = {
+      status: "Finished",
+      // page: page,
+      // pageSize: pageSize,
     };
 
+    const actualPayload = eventType === "upcoming" ? payload : eventType === "finished" ? payloadFinished : "";
+   
    
     setLoading(true);
     setLoader(true);
-    dispatch(getHandballFixtures(payload)).then((dd) => {
+    dispatch(getHandballFixtures(actualPayload)).then((dd) => {
     if(dd?.payload){
        setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
@@ -413,11 +475,18 @@ function GameEventData(props: any) {
       page: page,
       pageSize: pageSize,
     };
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
 
+    const actualPayload = eventType === "upcoming" ? payload : eventType === "finished" ? payloadFinished : "";
+   
    
     setLoading(true);
     setLoader(true);
-    dispatch(getAflFixtures(payload)).then((dd) => {
+    dispatch(getAflFixtures(actualPayload)).then((dd) => {
       if(dd?.payload){
        setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
@@ -439,11 +508,20 @@ function GameEventData(props: any) {
       page: page,
       pageSize: pageSize,
     };
+    const payloadFinished = {
+      status: "FT",
+      // page: page,
+      // pageSize: pageSize,
+    };
 
+    const actualPayload = eventType === "upcoming" ? payload : eventType === "FT" ? payloadFinished : "";
    
+    console.log("i am herr")
+
     setLoading(true);
     setLoader(true);
-    dispatch(getFutsalFixtures(payload)).then((dd) => {
+    dispatch(getFutsalFixtures(actualPayload)).then((dd) => {
+      console.log("i am herr", dd?.payload)
       if(dd?.payload){
         setData((prev) => [...prev, ...dd?.payload?.data]);
        setPage(dd?.payload?.page);
@@ -465,7 +543,14 @@ function GameEventData(props: any) {
       pageSize: pageSize,
     };
 
-    const actualPayload = eventType === "upcoming" ? payloadUpcoming : "";
+    const payloadFinished = {
+      status: "Finished",
+      page: page,
+      pageSize: pageSize,
+    };
+
+    const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
+   
     setLoading(true);
     dispatch(getBasketballFixtures(actualPayload)).then((dd) => {
       if(dd?.payload){
@@ -540,7 +625,7 @@ function GameEventData(props: any) {
       return;
     }
   }, [page]);
-
+ 
   useEffect(() => {
     if (eventType === "live" && gameType === "Soccer") {
       setLive(events);
