@@ -74,6 +74,7 @@ function ProfileScreen() {
       <div
         style={{
           ...styles.contain,
+          marginTop: 150,
           padding: isLargeScreen
             ? "30px 15rem"
             : isDesktop
