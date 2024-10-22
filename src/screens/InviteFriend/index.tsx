@@ -230,7 +230,7 @@ const InviteFriend = () => {
               >
                 <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
                   <div>
-                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"=="} $1</p>
+                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
                   </div>
               </div>
             </div>
@@ -253,7 +253,7 @@ const InviteFriend = () => {
               >
                 <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
                   <div>
-                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"=="} ₦1</p>
+                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
                     <p style={{ fontSize: 10, fontWeight: '400', marginTop: 5, marginBottom: 5 }}>Incase opponent base currency is different from USD, the bet will be subject to the applicable FX rate.</p>
                   </div>
               </div>
