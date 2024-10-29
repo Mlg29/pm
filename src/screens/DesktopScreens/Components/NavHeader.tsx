@@ -56,6 +56,7 @@ import dart from "../../../assets/images/dart.svg";
 import snooker from "../../../assets/images/snooker.svg";
 import easport from "../../../assets/images/easport.svg";
 import tabletennis from "../../../assets/images/tabletennis.svg";
+import WeglotLoader from "../../../components/Weglot";
 
 const styles = {
   rowBtw: {
@@ -288,6 +289,7 @@ function NavHeader() {
             src={heading}
             onClick={() => navigate("/home")}
           />
+
           {getToken && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3
@@ -591,6 +593,7 @@ function NavHeader() {
             src={heading}
             onClick={() => navigate("/home")}
           />
+        
           {getToken && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3

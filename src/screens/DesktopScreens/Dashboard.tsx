@@ -41,7 +41,7 @@ import Easport from "../Games/Easport";
 import TableTennis from "../Games/TableTennis";
 import AussieRules from "../Games/AussieRules";
 import Cricket from "../Games/Cricket";
-
+import { FaCalendarAlt } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -165,7 +165,8 @@ function Dashboard() {
                 selected={selectedDate}
                 onChange={(date) => handleDateChange(date)}
                 customInput={
-                  <ExampleCustomInput className="example-custom-input" />
+                  // <ExampleCustomInput className="example-custom-input" />
+                  <FaCalendarAlt />
                 }
               />
             </div>
