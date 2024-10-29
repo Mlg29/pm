@@ -91,6 +91,8 @@ import AussieRules from "../Games/AussieRules";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { FaCalendarAlt } from "react-icons/fa";
+
 
 
 function HomeScreen() {
@@ -568,7 +570,8 @@ function HomeScreen() {
                 selected={selectedDate}
                 onChange={(date) => handleDateChange(date)}
                 customInput={
-                  <ExampleCustomInput className="example-custom-input" />
+                  // <ExampleCustomInput className="example-custom-input" />
+                  <FaCalendarAlt />
                 }
               />
       </div>
