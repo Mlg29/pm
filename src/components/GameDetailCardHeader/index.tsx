@@ -64,7 +64,7 @@ function GameDetailCardHeader(props: any) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            {data?.leagueName}
+            {data?.league}
           </p>
           {!data?.localTeamLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
@@ -78,7 +78,7 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeam}
           </p>
         </div>
         <div>
@@ -93,7 +93,7 @@ function GameDetailCardHeader(props: any) {
               color: COLORS.white,
             }}
           >
-            {data?.internalStatus}
+            {data?.status}
           </p>
           <h3
             style={{
@@ -102,7 +102,7 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamGoals} - {data?.visitorTeamGoals}
+            {data?.localGoals} - {data?.visitorGoals}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
@@ -138,19 +138,10 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeam}
           </p>
         </div>
       </div>
-{/* 
-      <div
-        style={{
-          height: 1,
-          width: "100%",
-          margin: "10px 0px",
-          backgroundColor: COLORS.gray,
-        }}
-      /> */}
 
     </div>
   );

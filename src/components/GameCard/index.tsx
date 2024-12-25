@@ -18,11 +18,11 @@ export const styles = {
   },
   box1: {
     marginRight: 20,
-    width: "20%",
+    width: "25%",
   },
   box2: {
     marginRight: 10,
-    width: "80%",
+    width: "75%",
   },
   box3: {
     display: "flex",
@@ -53,48 +53,26 @@ function GameCard({ data, id }) {
       >
         <div style={styles.box1}>
         <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-          ({moment(data?.startTime).format("DD-MM-YYYY")})
+          ({data?.formatted_date} - {data?.time})
         </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.status > 0 ? `${data?.status}'` : data?.status}
+            {data?.status}
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.localTeamName}</p>
-          <p style={{ ...FONTS.body7 }}>{data?.visitorTeamName}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.visitorTeam}</p>
         </div>
         <div style={styles.box3}>
-          {/* <GiSoccerField /> */}
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.localTeamGoals}
+              {data?.localGoals}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.visitorTeamGoals}
+              {data?.visitorGoals}
             </p>
           </div>
         </div>
-        {/* <div style={styles.box4}>
-          <p
-            style={{ ...FONTS.body7, textAlign: "center", color: COLORS.green }}
-          >
-            {data?.localTeamName?.slice(0, 4)} Win
-          </p>
-          <p
-            style={{
-              ...FONTS.body7,
-              textAlign: "center",
-              color: COLORS.orange,
-            }}
-          >
-            Draw
-          </p>
-          <p
-            style={{ ...FONTS.body7, textAlign: "center", color: COLORS.green }}
-          >
-            {data?.visitorTeamName?.slice(0, 4)} Win
-          </p>
-        </div> */}
       </div>
     </div>
   );

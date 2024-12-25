@@ -4,7 +4,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import GameCard from "../../components/GameCard";
 import { useAppDispatch } from "../../redux/hooks";
-import { BaseUrl } from "../../https";
+import { BaseUrl,SportBaseUrl } from "../../https";
 import { getFootballFixtures } from "../../redux/slices/FootballSlice";
 import moment from "moment";
 import { io } from "socket.io-client";
@@ -18,34 +18,34 @@ function Football() {
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
   const [finished, setFinished] = useState<any>([]);
-  const url = `${BaseUrl}/football`;
+  const url = `${SportBaseUrl}/soccer`;
 
-  useEffect(() => {
-    const socket = io(url) as any;
+  // useEffect(() => {
+  //   const socket = io(url) as any;
 
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
-    });
+  //   socket.on("connect", () => {
+  //     console.log("Connected to WebSocket server");
+  //   });
 
-    socket.on("connect_error", (err) => {
-      console.error("WebSocket connection error:", err);
-    });
+  //   socket.on("connect_error", (err) => {
+  //     console.error("WebSocket connection error:", err);
+  //   });
 
-    // Handle incoming messages
-    socket.on("footballEventUpdate", (message) => {
-      setLive((prevMessages) => {
-        const updatedMessages = prevMessages?.filter(
-          (msg) => msg.id !== message.id
-        );
-        return [...updatedMessages, message];
-      });
-    });
+ 
+  //   socket.on("footballEventUpdate", (message) => {
+  //     setLive((prevMessages) => {
+  //       const updatedMessages = prevMessages?.filter(
+  //         (msg) => msg.id !== message.id
+  //       );
+  //       return [...updatedMessages, message];
+  //     });
+  //   });
 
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+ 
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
@@ -55,7 +55,7 @@ function Football() {
       status: "UPCOMING",
     };
     const payloadLive = {
-      status: "LIVE",
+      range: "live",
     };
     const payloadToday = {
       date: moment(new Date()).format("YYYY-MM-DD"),
@@ -68,20 +68,20 @@ function Football() {
     };
 
     dispatch(getFootballFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.data);
+      setLive(dd?.payload);
     });
-    dispatch(getFootballFixtures(payloadToday)).then((dd) => {
-      setToday(dd?.payload);
-    });
-    dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload);
-    });
-    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-      setTomorrow(dd?.payload);
-    });
-    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload);
-    });
+    // dispatch(getFootballFixtures(payloadToday)).then((dd) => {
+    //   setToday(dd?.payload);
+    // });
+    // dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload);
+    // });
+    // dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+    //   setTomorrow(dd?.payload);
+    // });
+    // dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload);
+    // });
   }, []);
 
   const groupedByLeague = live?.filter((a, i) => i < 10).reduce((acc, current) => {
@@ -210,16 +210,21 @@ function Football() {
           )}
         </div>
       )}
-         {groupedByLeague && Object.keys(groupedByLeague)?.map((leagueName) => (
-        <div key={leagueName}>
+         {live?.map((item, i) => (
+        <div key={i}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
+            {item?.league}
           </p>
           <div>
-            {groupedByLeague[leagueName].map((aa, i) => {
+            {item?.matches?.map((aa, i) => {
+              const payload = {
+                league: item?.league,
+                country: item?.country,
+                ...aa
+              }
               return (
                 <div key={i}>
-                  <GameCard id={i} data={aa} />
+                  <GameCard id={i} data={payload} />
                 </div>
               );
             })}

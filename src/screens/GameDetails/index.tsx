@@ -247,9 +247,9 @@ function GameDetails() {
 
   const eventArray = isEmpty(gameInfo?.events)
     ? []
-    : Array.isArray(gameInfo?.events?.event)
-    ? gameInfo?.events?.event
-    : [gameInfo?.events?.event];
+    : Array.isArray(gameInfo?.events)
+    ? gameInfo?.events
+    : gameInfo?.events
 
   if (loader) {
     return (
@@ -267,6 +267,8 @@ function GameDetails() {
       </div>
     );
   }
+
+  console.log({gameInfo})
 
 
   return (
@@ -306,20 +308,20 @@ function GameDetails() {
                   <div style={{ ...styles.mob }}>
                     <div style={{ width: "100%" }}>
                       <Button
-                        text={`Bet ${gameInfo?.localTeamName} Win`}
+                        text={`Bet ${gameInfo?.localTeam} Win`}
                         propStyle={{
                           width: "100%",
                           backgroundColor:
-                            selected === gameInfo?.localTeamName
+                            selected === gameInfo?.localTeam
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.localTeamName
+                            selected === gameInfo?.localTeam
                               ? COLORS.cream
                               : COLORS.primary,
                         }}
                         handlePress={() =>
-                          handleRoute(gameInfo?.localTeamName, "W1")
+                          handleRoute(gameInfo?.localTeam, "W1")
                         }
                       />
                     </div>
@@ -339,21 +341,21 @@ function GameDetails() {
                     </div>
                     <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
                       <Button
-                        text={`Bet ${gameInfo?.visitorTeamName} Win`}
+                        text={`Bet ${gameInfo?.visitorTeam} Win`}
                         propStyle={{
                           width: "100%",
                           backgroundColor:
-                            selected === gameInfo?.visitorTeamName
+                            selected === gameInfo?.visitorTeam
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.visitorTeamName
+                            selected === gameInfo?.visitorTeam
                               ? COLORS.cream
                               : COLORS.primary,
                         }}
                         // handlePress={() => navigate('/home')}
                         handlePress={() =>
-                          handleRoute(gameInfo?.visitorTeamName, "W2")
+                          handleRoute(gameInfo?.visitorTeam, "W2")
                         }
                       />
                     </div>
@@ -362,21 +364,21 @@ function GameDetails() {
                   <div style={{ ...styles.desk }}>
                     <div style={{ width: "100%" }}>
                       <Button
-                        text={`Bet ${gameInfo?.localTeamName} Win`}
+                        text={`Bet ${gameInfo?.localTeam} Win`}
                         propStyle={{
                           width: "90%",
                           backgroundColor:
-                            selected === gameInfo?.localTeamName
+                            selected === gameInfo?.localTeam
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.localTeamName
+                            selected === gameInfo?.localTeam
                               ? COLORS.cream
                               : COLORS.primary,
                           fontSize: 12,
                         }}
                         handlePress={() =>
-                          handleRoute(gameInfo?.localTeamName, "W1")
+                          handleRoute(gameInfo?.localTeam, "W1")
                         }
                       />
                     </div>
@@ -397,22 +399,22 @@ function GameDetails() {
                     </div>
                     <div style={{ width: "100%", margin: "10px 0px" }}>
                       <Button
-                        text={`Bet ${gameInfo?.visitorTeamName} Win`}
+                        text={`Bet ${gameInfo?.visitorTeam} Win`}
                         propStyle={{
                           width: "90%",
                           backgroundColor:
-                            selected === gameInfo?.visitorTeamName
+                            selected === gameInfo?.visitorTeam
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.visitorTeamName
+                            selected === gameInfo?.visitorTeam
                               ? COLORS.cream
                               : COLORS.primary,
                           fontSize: 12,
                         }}
                         // handlePress={() => navigate('/home')}
                         handlePress={() =>
-                          handleRoute(gameInfo?.visitorTeamName, "W2")
+                          handleRoute(gameInfo?.visitorTeam, "W2")
                         }
                       />
                     </div>

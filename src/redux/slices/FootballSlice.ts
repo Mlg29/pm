@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { BaseUrl, SportBaseUrl } from "../../https";
 
 const initialState = {
     loading: false,
@@ -27,21 +27,20 @@ export const getFootballFixtures= createAsyncThunk("football/getFootballFixtures
   
     const buildUrl = (payload) => {
         let queryParams = [];
-        if (payload?.searchTerm) queryParams.push(`searchTerm=${payload?.searchTerm}`);
-        if (payload?.status) queryParams.push(`status=${payload?.status}`);
-        if (payload?.startTime) queryParams.push(`startTime=${payload.startTime}`);
-        if (payload?.endTime) queryParams.push(`endTime=${payload.endTime}`);
-        if (payload?.date) queryParams.push(`date=${payload.date}`);
-        if (payload?.page) queryParams.push(`page=${payload?.page}`);
-        if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
+        if (payload?.range) queryParams.push(`range=${payload?.range}`);
+        // if (payload?.status) queryParams.push(`status=${payload?.status}`);
+        // if (payload?.startTime) queryParams.push(`startTime=${payload.startTime}`);
+        // if (payload?.endTime) queryParams.push(`endTime=${payload.endTime}`);
+        // if (payload?.date) queryParams.push(`date=${payload.date}`);
+        // if (payload?.page) queryParams.push(`page=${payload?.page}`);
+        // if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
       
         const queryString = queryParams.join('&');
 
 
-        return `${BaseUrl}/football/fixtures?${queryString}`;
+        return `${SportBaseUrl}/soccer/matches?${queryString}`;
       };
 
-      
     var response = await getRequest(buildUrl(payload));
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
