@@ -44,6 +44,8 @@ export const styles = {
 function BasketballGameCard({ id, data }) {
   const navigate = useNavigate();
 
+
+
   return (
     <div>
       <div
@@ -57,27 +59,27 @@ function BasketballGameCard({ id, data }) {
       >
         <div style={styles.box1}>
         <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-         ({moment(data?.startTime).format("DD-MM-YYYY")})
+         ({data?.date} - {data?.time})
         </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.status > 0 ? `${data?.status}'` : data?.status}
+            {data?.status}
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.localTeamName}</p>
-          <p style={{ ...FONTS.body7 }}>{data?.visitorTeamName}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.name}</p>
         </div>
         <div style={styles.box3}>
-          {/* <GiSoccerField /> */}
+    
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.localTeamScores?.total
-                ? data?.localTeamScores?.total
+              {data?.localTeam?.totalScore
+                ? data?.localTeam?.totalScore
                 : "-"}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.visitorTeamScores?.total
-                ? data?.visitorTeamScores?.total
+              {data?.awayTeam?.totalScore
+                ? data?.awayTeam?.totalScore
                 : "-"}
             </p>
           </div>

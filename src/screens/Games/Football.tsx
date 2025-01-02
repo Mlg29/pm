@@ -57,9 +57,7 @@ function Football() {
     const payloadLive = {
       range: "live",
     };
-    const payloadToday = {
-      date: 'home',
-    };
+  
     const payloadTomorrow = {
       range: 'd2',
     };
@@ -68,15 +66,18 @@ function Football() {
     };
 
     dispatch(getFootballFixtures(payloadLive)).then((dd) => {
+      
       setLive(dd?.payload);
     });
     // dispatch(getFootballFixtures(payloadToday)).then((dd) => {
     //   setToday(dd?.payload);
     // });
     dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
+     
       setFinished(dd?.payload);
     });
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+       
       setTomorrow(dd?.payload);
     });
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
@@ -114,7 +115,7 @@ function Football() {
     <div>
       <div>
         <p style={{fontSize: 14, fontWeight: '500'}}>Soccer</p>
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px'}}>
           {
             status?.map((aa, i) => {
               return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
@@ -133,11 +134,9 @@ function Football() {
             alignItems: "center",
           }}
         >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-            
-          </p>
+        
 
-          {live?.length > 10 && (
+          {/* {live?.length > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -157,7 +156,7 @@ function Football() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
          {live?.map((item, i) => (
@@ -200,7 +199,7 @@ function Football() {
             
           </p>
 
-          {upcoming?.length > 10 && (
+          {/* {upcoming?.length > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -220,7 +219,7 @@ function Football() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
          {upcoming?.map((item, i) => (
@@ -262,7 +261,7 @@ function Football() {
            
          </p>
 
-         {finished?.length > 10 && (
+         {/* {finished?.length > 10 && (
            <p
              style={{
                ...FONTS.body7,
@@ -282,7 +281,7 @@ function Football() {
            >
              View more
            </p>
-         )}
+         )} */}
        </div>
      )}
         {finished?.map((item, i) => (
@@ -324,7 +323,7 @@ function Football() {
             
           </p>
 
-          {tomorrow?.length > 10 && (
+          {/* {tomorrow?.length > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -344,7 +343,7 @@ function Football() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
          {tomorrow?.map((item, i) => (

@@ -33,8 +33,7 @@ export const getFootballFixtures= createAsyncThunk("football/getFootballFixtures
         // if (payload?.endTime) queryParams.push(`endTime=${payload.endTime}`);
         // if (payload?.date) queryParams.push(`date=${payload.date}`);
         // if (payload?.page) queryParams.push(`page=${payload?.page}`);
-        // if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
-      
+
         const queryString = queryParams.join('&');
 
 

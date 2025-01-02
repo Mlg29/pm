@@ -268,7 +268,6 @@ function GameDetails() {
     );
   }
 
-  console.log({gameInfo})
 
 
   return (
@@ -308,20 +307,20 @@ function GameDetails() {
                   <div style={{ ...styles.mob }}>
                     <div style={{ width: "100%" }}>
                       <Button
-                        text={`Bet ${gameInfo?.localTeam} Win`}
+                        text={`Bet ${gameInfo?.localTeam?.name} Win`}
                         propStyle={{
                           width: "100%",
                           backgroundColor:
-                            selected === gameInfo?.localTeam
+                            selected === gameInfo?.localTeam?.name
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.localTeam
+                            selected === gameInfo?.localTeam?.name
                               ? COLORS.cream
                               : COLORS.primary,
                         }}
                         handlePress={() =>
-                          handleRoute(gameInfo?.localTeam, "W1")
+                          handleRoute(gameInfo?.localTeam?.name, "W1")
                         }
                       />
                     </div>
@@ -341,21 +340,21 @@ function GameDetails() {
                     </div>
                     <div style={{ width: "100%", margin: "0px 0px 10px 0px" }}>
                       <Button
-                        text={`Bet ${gameInfo?.visitorTeam} Win`}
+                        text={`Bet ${gameInfo?.visitorTeam?.name} Win`}
                         propStyle={{
                           width: "100%",
                           backgroundColor:
-                            selected === gameInfo?.visitorTeam
+                            selected === gameInfo?.visitorTeam?.name
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.visitorTeam
+                            selected === gameInfo?.visitorTeam?.name
                               ? COLORS.cream
                               : COLORS.primary,
                         }}
                         // handlePress={() => navigate('/home')}
                         handlePress={() =>
-                          handleRoute(gameInfo?.visitorTeam, "W2")
+                          handleRoute(gameInfo?.visitorTeam?.name, "W2")
                         }
                       />
                     </div>
@@ -364,21 +363,21 @@ function GameDetails() {
                   <div style={{ ...styles.desk }}>
                     <div style={{ width: "100%" }}>
                       <Button
-                        text={`Bet ${gameInfo?.localTeam} Win`}
+                        text={`Bet ${gameInfo?.localTeam?.name} Win`}
                         propStyle={{
                           width: "90%",
                           backgroundColor:
-                            selected === gameInfo?.localTeam
+                            selected === gameInfo?.localTeam?.name
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.localTeam
+                            selected === gameInfo?.localTeam?.name
                               ? COLORS.cream
                               : COLORS.primary,
                           fontSize: 12,
                         }}
                         handlePress={() =>
-                          handleRoute(gameInfo?.localTeam, "W1")
+                          handleRoute(gameInfo?.localTeam?.name, "W1")
                         }
                       />
                     </div>
@@ -399,22 +398,22 @@ function GameDetails() {
                     </div>
                     <div style={{ width: "100%", margin: "10px 0px" }}>
                       <Button
-                        text={`Bet ${gameInfo?.visitorTeam} Win`}
+                        text={`Bet ${gameInfo?.visitorTeam?.name} Win`}
                         propStyle={{
                           width: "90%",
                           backgroundColor:
-                            selected === gameInfo?.visitorTeam
+                            selected === gameInfo?.visitorTeam?.name
                               ? COLORS.primary
                               : COLORS.cream,
                           color:
-                            selected === gameInfo?.visitorTeam
+                            selected === gameInfo?.visitorTeam?.name
                               ? COLORS.cream
                               : COLORS.primary,
                           fontSize: 12,
                         }}
                         // handlePress={() => navigate('/home')}
                         handlePress={() =>
-                          handleRoute(gameInfo?.visitorTeam, "W2")
+                          handleRoute(gameInfo?.visitorTeam?.name, "W2")
                         }
                       />
                     </div>
@@ -487,9 +486,9 @@ function GameDetails() {
                             }}
                           >
                             <div style={{ width: "48%" }}>
-                              {dd["@team"] === "localteam" ? (
+                              {dd?.team === "localteam" ? (
                                 <div style={{ display: "flex" }}>
-                                  {dd["@type"] === "subst" ? (
+                                  {dd?.type === "subst" ? (
                                     <div>
                                       <div
                                         style={{
@@ -503,7 +502,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                         {dd["@player"]}
+                                         {dd?.player}
                                         </p>
                                         <FaArrowRightArrowLeft
                                           size={10}
@@ -511,14 +510,14 @@ function GameDetails() {
                                           style={{ marginRight: 10 }}
                                         />
                                         {
-                                          dd["@assist"] ?  <p
+                                          dd?.assist ?  <p
                                           style={{
                                             ...FONTS.body7,
                                             fontSize: 8,
                                             marginRight: 5,
                                           }}
                                         >
-                                          ({dd["@assist"]})
+                                          ({dd?.player})
                                         </p>
                                         : null
                                         }
@@ -533,7 +532,7 @@ function GameDetails() {
                                           marginRight: 5,
                                         }}
                                       >
-                                        {dd["@player"]}
+                                        {dd?.player}
                                       </p>
                                       <div
                                         style={{
@@ -542,7 +541,7 @@ function GameDetails() {
                                         }}
                                       >
                                         {
-                                          dd["@assist"]
+                                          dd?.assist
                                           ?
                                             <p
                                           style={{
@@ -551,7 +550,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          ({dd["@assist"]})
+                                          ({dd?.assist})
                                         </p>
                                         : null
                                         }
@@ -562,13 +561,13 @@ function GameDetails() {
                                   )}
 
                                   <p style={{ ...FONTS.body7, marginRight: 5 }}>
-                                    {dd["@minute"]}'
+                                    {dd?.minute}'
                                   </p>
                                 </div>
                               ) : null}
                             </div>
                             <div>
-                              {dd["@type"] === "goal" ? (
+                              {dd?.type === "goal" ? (
                                 <div
                                   style={{
                                     display: "flex",
@@ -577,7 +576,7 @@ function GameDetails() {
                                 >
                                   <PiSoccerBallBold color={COLORS.green} />
                                 </div>
-                              ) : dd["@type"] === "yellowcard" ? (
+                              ) : dd?.type === "yellowcard" ? (
                                 <div
                                   style={{
                                     display: "flex",
@@ -586,7 +585,7 @@ function GameDetails() {
                                 >
                                   <TbRectangleVerticalFilled color="#FFC15E" />
                                 </div>
-                              ) : dd["@type"] === "redcard" ? (
+                              ) : dd?.type === "redcard" ? (
                                 <div
                                   style={{
                                     display: "flex",
@@ -606,12 +605,12 @@ function GameDetails() {
                                 alignItems: "flex-end",
                               }}
                             >
-                              {dd["@team"] === "visitorteam" ? (
+                              {dd?.team === "visitorteam" ? (
                                 <div style={{ display: "flex" }}>
                                   <p style={{ ...FONTS.body7, marginRight: 5 }}>
-                                    {dd["@minute"]}'
+                                    {dd?.minute}'
                                   </p>
-                                  {dd["@type"] === "subst" ? (
+                                  {dd?.type === "subst" ? (
                                     <div>
                                       <div
                                         style={{
@@ -625,7 +624,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          {dd["@player"]}
+                                          {dd?.player}
                                         </p>
                                         <FaArrowRightArrowLeft
                                           size={10}
@@ -633,7 +632,7 @@ function GameDetails() {
                                           style={{ marginRight: 10 }}
                                         />
                                         {
-                                          dd["@assist"] 
+                                          dd?.assist
                                           ?  <p
                                           style={{
                                             ...FONTS.body7,
@@ -641,7 +640,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          ({dd["@assist"]})
+                                          ({dd?.assist})
                                         </p>
                                         : null
 
@@ -657,7 +656,7 @@ function GameDetails() {
                                           marginRight: 5,
                                         }}
                                       >
-                                        {dd["@player"]}
+                                        {dd?.player}
                                       </p>
                                       <div
                                         style={{
@@ -666,7 +665,7 @@ function GameDetails() {
                                         }}
                                       >
                                          {
-                                          dd["@assist"] 
+                                          dd?.assist
                                           ?  <p
                                           style={{
                                             ...FONTS.body7,
@@ -674,7 +673,7 @@ function GameDetails() {
                                             marginRight: 5,
                                           }}
                                         >
-                                          ({dd["@assist"]})
+                                          ({dd?.assist})
                                         </p>
                                         : null
 

@@ -21,49 +21,45 @@ function HorseRace() {
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
 
-  useEffect(() => {
-    const socket = io(url) as any;
+  // useEffect(() => {
+  //   const socket = io(url) as any;
 
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server horse");
-    });
+  //   socket.on("connect", () => {
+  //     console.log("Connected to WebSocket server horse");
+  //   });
 
-    socket.on("connect_error", (err) => {
-      console.error("WebSocket connection error:", err);
-    });
+  //   socket.on("connect_error", (err) => {
+  //     console.error("WebSocket connection error:", err);
+  //   });
 
-    socket.on("HorseEventUpdate", (message) => {
+  //   socket.on("HorseEventUpdate", (message) => {
    
-      setLive((prevMessages) => {
-        const updatedMessages = prevMessages?.filter(
-          (msg) => msg?.id !== message?.id
-        );
-        return [...updatedMessages, message];
-      });
-    });
+  //     setLive((prevMessages) => {
+  //       const updatedMessages = prevMessages?.filter(
+  //         (msg) => msg?.id !== message?.id
+  //       );
+  //       return [...updatedMessages, message];
+  //     });
+  //   });
 
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   // Cleanup on component unmount
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
   useEffect(() => {
     const payloadUpcoming = {
-      status: "Not Started",
+      range: 'd1'
     };
-    const payloadLive = {
-      status: "Live",
-    };
+
     const payloadToday = {
-      status: 'Finished',
+      status: 'd-1',
     };
-    const payloadTomorrow = {
-      date: tomorrowDate.format("YYYY-MM-DD"),
-    };
+
 
     dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload);
@@ -71,33 +67,12 @@ function HorseRace() {
     dispatch(getHorseFixtures(payloadToday)).then((dd) => {
       setToday(dd?.payload);
     });
-    dispatch(getHorseFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.data);
-    });
+  
     return;
   }, []);
 
 
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league = current?.tournamentName;
-
-      if (!acc[league]) {
-        acc[league] = [];
-      }
-
-      acc[league].push(current);
-
-      return acc;
-    }, {});
-  };
-
-  const liveOutput = groupedByData(live)
-
-  const upcomingOutput = groupedByData(upcoming?.data)
-
-  const todayOutput = groupedByData(today?.data)
 
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
@@ -140,7 +115,7 @@ function HorseRace() {
     <div>
        <div>
         <p style={{fontSize: 14, fontWeight: '500'}}>Horse Race</p>
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px'}}>
           {
             status?.map((aa, i) => {
               return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
@@ -148,7 +123,7 @@ function HorseRace() {
           }
         </div>
       </div>
-      {
+      {/* {
         selectedStatus === "Live" ?
         <>
          {live?.length > 0 && (
@@ -204,11 +179,11 @@ function HorseRace() {
       ))}
         </>
         : null
-      }
+      } */}
       {
         selectedStatus === "Scheduled" ?
         <>
-          {upcoming?.data?.length > 0 && (
+          {upcoming?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -219,7 +194,7 @@ function HorseRace() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
           
           </p>
-          {upcoming?.total > 10 && (
+          {/* {upcoming?.total > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -239,20 +214,25 @@ function HorseRace() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
 
-           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
-        <div key={leagueName}>
+{upcoming?.map((item, i) => (
+        <div key={i}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
+            {item?.name}
           </p>
           <div>
-            {upcomingOutput[leagueName].map((aa, i) => {
+            {item?.match?.map((aa, i) => {
+              const payload = {
+                league: item?.name,
+                country: item?.file_group,
+                ...aa
+              }
               return (
                 <div key={i}>
-                 <HorseGameCard id={i} data={aa} />
+              <HorseGameCard id={i} data={payload} />
                 </div>
               );
             })}
@@ -266,7 +246,7 @@ function HorseRace() {
  {
         selectedStatus === "Finished" ?
         <>
-          {today?.data?.length > 0 && (
+          {today?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -277,7 +257,7 @@ function HorseRace() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
           
           </p>
-          {today?.total > 10 && (
+          {/* {today?.total > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -297,20 +277,25 @@ function HorseRace() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
 
-           {todayOutput && Object.keys(todayOutput)?.map((leagueName) => (
-        <div key={leagueName}>
+{today?.map((item, i) => (
+        <div key={i}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
+            {item?.name}
           </p>
           <div>
-            {todayOutput[leagueName].map((aa, i) => {
+            {item?.match?.map((aa, i) => {
+              const payload = {
+                league: item?.name,
+                country: item?.file_group,
+                ...aa
+              }
               return (
                 <div key={i}>
-                 <HorseGameCard id={i} data={aa} />
+              <HorseGameCard id={i} data={payload} />
                 </div>
               );
             })}
@@ -321,7 +306,7 @@ function HorseRace() {
         : null
       }
 {
-       live?.length < 1 && upcoming?.data?.length < 1 && today?.data?.length < 1 ?
+        upcoming?.length < 1 && today?.length < 1 ?
         <EmptyState 
           header="No Game Available for Horse Race"
           height="30vh"

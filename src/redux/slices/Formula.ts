@@ -18,19 +18,18 @@ import { BaseUrl,SportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
-  horseFixtures: [],
+  formulaFixtures: [],
 };
 
-export const getHorseFixtures = createAsyncThunk(
-  "horse/getHorseFixtures",
+export const getFormulaFixtures = createAsyncThunk(
+  "formula/getFormulaFixtures",
   async (payload: any) => {
     const buildUrl = (payload) => {
       let queryParams = [];
       if (payload?.range) queryParams.push(`range=${payload?.range}`);
-
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/horse/matches?${queryString}`;
+      return `${SportBaseUrl}/motors/f1?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -40,54 +39,35 @@ export const getHorseFixtures = createAsyncThunk(
   }
 );
 
-export const getHorseRace = createAsyncThunk(
-  "horse/getHorseRace",
-  async (payload: any) => {
-    var response = await getRequest(`${BaseUrl}/horse/race/${payload?.tourId}`);
-    if (response?.status === 200 || response?.status === 201) {
-      return response?.data;
-    }
-  }
-);
 
 
 
-export const HorseSlice = createSlice({
-  name: "horse",
+
+export const FormulaSlice = createSlice({
+  name: "formula",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getHorseFixtures.pending, (state, action) => {
+    builder.addCase(getFormulaFixtures.pending, (state, action) => {
       state.loading = true;
     }),
       builder.addCase(
-        getHorseFixtures.fulfilled,
+        getFormulaFixtures.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.horseFixtures = action.payload;
+          state.formulaFixtures = action.payload;
         }
       );
-    builder.addCase(getHorseFixtures.rejected, (state, action) => {
+    builder.addCase(getFormulaFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
 
-    builder.addCase(getHorseRace.pending, (state, action) => {
-      state.loading = true;
-    }),
-      builder.addCase(
-        getHorseRace.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-        }
-      );
-    builder.addCase(getHorseRace.rejected, (state, action) => {
-      // state.error = action.error.message
-    });
+ 
    
   },
 });
 
-export const horseFixtureState = (state: RootState) =>
-  state.horse.horseFixtures
+export const boxingFixtureState = (state: RootState) =>
+  state.formula.formulaFixtures
 
-export default HorseSlice.reducer;
+export default FormulaSlice.reducer;

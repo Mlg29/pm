@@ -27,91 +27,73 @@ function Basketball() {
 
 
 
-  useEffect(() => {
-    const socket = io(url) as any;
+  // useEffect(() => {
+  //   const socket = io(url) as any;
 
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server basketball");
-    });
+  //   socket.on("connect", () => {
+  //     console.log("Connected to WebSocket server basketball");
+  //   });
 
-    socket.on("connect_error", (err) => {
-      console.error("WebSocket connection error:", err);
-    });
+  //   socket.on("connect_error", (err) => {
+  //     console.error("WebSocket connection error:", err);
+  //   });
 
-    socket.on("BasketEventUpdate", (message) => {
-      setLive((prevMessages) => {
-        const updatedMessages = prevMessages?.filter(
-          (msg) => msg?.id !== message?.id
-        );
-        return [...updatedMessages, message];
-      });
-    });
+  //   socket.on("BasketEventUpdate", (message) => {
+  //     setLive((prevMessages) => {
+  //       const updatedMessages = prevMessages?.filter(
+  //         (msg) => msg?.id !== message?.id
+  //       );
+  //       return [...updatedMessages, message];
+  //     });
+  //   });
 
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+   
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
   useEffect(() => {
     const payloadUpcoming = {
-      status: "UPCOMING",
+      range: 'd1'
     };
     const payloadLive = {
-      status: "LIVE",
-    };
-    const payloadOther = {
-      status: "ENDED",
+      range: "live",
     };
     const payloadToday = {
-      date: moment(new Date()).format("YYYY-MM-DD"),
+      range: 'home',
     };
-    const payloadTomorrow = {
-      date: tomorrowDate.format("YYYY-MM-DD"),
+  
+    const payloadFinished = {
+      range: 'd-1'
     };
 
     dispatch(getBasketballFixtures(payloadUpcoming)).then((dd) => {
+
       setUpcoming(dd?.payload);
     });
-    dispatch(getBasketballFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.data);
+    dispatch(getBasketballFixtures(payloadToday)).then((dd) => {
+      setLive(dd?.payload);
     });
-    dispatch(getBasketballFixtures(payloadOther)).then((dd) => {
+    dispatch(getBasketballFixtures(payloadFinished)).then((dd) => {
       setToday(dd?.payload);
     });
     return;
   }, []);
 
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league = current?.leagueName;
-
-      if (!acc[league]) {
-        acc[league] = [];
-      }
-
-      acc[league].push(current);
-
-      return acc;
-    }, {});
-  };
-
-  const liveOutput = groupedByData(live)
-
-  const upcomingOutput = groupedByData(upcoming?.data)
-  const todayOutput = groupedByData(today?.data)
 
 
-  const [selectedStatus, setSelectedStatus] = useState('Live')
+
+  const [selectedStatus, setSelectedStatus] = useState('Today')
 
   const status = [
     {
       id: 1,
-      name: 'Live',
+      name: 'Today',
     },
     {
       id: 2,
@@ -128,7 +110,7 @@ function Basketball() {
     <div>
        <div>
         <p style={{fontSize: 14, fontWeight: '500'}}>Basketball</p>
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px'}}>
           {
             status?.map((aa, i) => {
               return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
@@ -137,7 +119,7 @@ function Basketball() {
         </div>
       </div>
       {
-        selectedStatus === "Live" ?
+        selectedStatus === "Today" ?
         <>
          {live?.length > 0 && (
         <div
@@ -150,7 +132,7 @@ function Basketball() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
           
           </p>
-          {live?.length > 10 && (
+          {/* {live?.length > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -170,20 +152,25 @@ function Basketball() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
      
-       {liveOutput && Object.keys(liveOutput)?.map((leagueName) => (
-        <div key={leagueName}>
+     {live?.map((item, i) => (
+        <div key={i}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
+            {item?.name}
           </p>
           <div>
-            {liveOutput[leagueName].map((aa, i) => {
+            {item?.match?.map((aa, i) => {
+              const payload = {
+                league: item?.name,
+                country: item?.file_group,
+                ...aa
+              }
               return (
                 <div key={i}>
-                  <BasketballGameCard id={i} data={aa} />
+              <BasketballGameCard id={i} data={payload} />
                 </div>
               );
             })}
@@ -197,7 +184,7 @@ function Basketball() {
 {
         selectedStatus === "Scheduled" ?
         <>
-           {upcoming?.data?.length > 0 && (
+           {upcoming?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -208,7 +195,7 @@ function Basketball() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
   
           </p>
-          {upcoming?.total > 10 && (
+          {/* {upcoming?.total > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -228,20 +215,25 @@ function Basketball() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
 
-        {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
-        <div key={leagueName}>
+{upcoming?.map((item, i) => (
+        <div key={i}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
+            {item?.name}
           </p>
           <div>
-            {upcomingOutput[leagueName].map((aa, i) => {
+            {item?.match?.map((aa, i) => {
+              const payload = {
+                league: item?.name,
+                country: item?.file_group,
+                ...aa
+              }
               return (
                 <div key={i}>
-                  <BasketballGameCard id={i} data={aa} />
+              <BasketballGameCard id={i} data={payload} />
                 </div>
               );
             })}
@@ -255,7 +247,7 @@ function Basketball() {
 {
         selectedStatus === "Finished" ?
         <>
-           {today?.data?.length > 0 && (
+           {today?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -266,7 +258,7 @@ function Basketball() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
   
           </p>
-          {today?.total > 10 && (
+          {/* {today?.total > 10 && (
             <p
               style={{
                 ...FONTS.body7,
@@ -286,20 +278,25 @@ function Basketball() {
             >
               View more
             </p>
-          )}
+          )} */}
         </div>
       )}
 
-        {todayOutput && Object.keys(todayOutput)?.map((leagueName) => (
-        <div key={leagueName}>
+{today?.map((item, i) => (
+        <div key={i}>
           <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
+            {item?.name}
           </p>
           <div>
-            {todayOutput[leagueName].map((aa, i) => {
+            {item?.match?.map((aa, i) => {
+              const payload = {
+                league: item?.name,
+                country: item?.file_group,
+                ...aa
+              }
               return (
                 <div key={i}>
-                  <BasketballGameCard id={i} data={aa} />
+              <BasketballGameCard id={i} data={payload} />
                 </div>
               );
             })}
@@ -312,7 +309,7 @@ function Basketball() {
        
      
       {
-        live?.length < 1 && upcoming?.data?.length < 1 && today?.data?.length < 1 ?
+        live?.length < 1 && upcoming?.length < 1 && today?.length < 1 ?
         <EmptyState 
           header="No Game Available for Basketball"
           height="30vh"

@@ -40,6 +40,7 @@ export const styles = {
 function GameCard({ data, id }) {
   const navigate = useNavigate();
 
+
   return (
     <div>
       <div
@@ -60,16 +61,16 @@ function GameCard({ data, id }) {
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.localTeam}</p>
-          <p style={{ ...FONTS.body7 }}>{data?.visitorTeam}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.visitorTeam?.name}</p>
         </div>
         <div style={styles.box3}>
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.localGoals}
+              {data?.localTeam?.goals}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.visitorGoals}
+              {data?.visitorTeam?.goals}
             </p>
           </div>
         </div>

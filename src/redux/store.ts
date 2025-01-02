@@ -20,6 +20,7 @@ import AflSlice from './slices/AflSlice'
 import FutsalSlice  from './slices/Futsal'
 import CricketSlice from './slices/CricketSlice'
 import MiscSlice from './slices/MiscSlice'
+import FormulaSlice from './slices/Formula'
 
 export const store = configureStore({
   reducer: {
@@ -37,6 +38,7 @@ export const store = configureStore({
    golf: GolfSlice,
    easport: Easport,
    dart: DartSlice,
+   formula: FormulaSlice,
    snooker: SnookerSlice,
    volleyball: VolleyballSlice,
    handball: HandballSlice,
