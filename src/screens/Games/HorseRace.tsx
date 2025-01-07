@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { BaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import moment from "moment";
-import { getHorseFixtures } from "../../redux/slices/horseSlice";
+import { getHorseFixtures, getHorseRaceToday, getHorseRaceTomorrow } from "../../redux/slices/horseSlice";
 import Loader from "../../components/Loader";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
@@ -52,25 +52,17 @@ function HorseRace() {
   let tomorrowDate = moment(createdDate).add(1, "d");
 
   useEffect(() => {
-    const payloadUpcoming = {
-      range: 'd1'
-    };
+   
 
-    const payloadToday = {
-      status: 'd-1',
-    };
-
-
-    dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload);
-    });
-    dispatch(getHorseFixtures(payloadToday)).then((dd) => {
+    dispatch(getHorseRaceTomorrow()).then((dd) => {
       setToday(dd?.payload);
+    });
+    dispatch(getHorseRaceToday()).then((dd) => {
+      setUpcoming(dd?.payload);
     });
   
     return;
   }, []);
-
 
 
 
@@ -87,7 +79,7 @@ function HorseRace() {
     },
     {
       id: 3,
-      name: "Finished"
+      name: "Tomorrow"
     }
   ]
 
@@ -107,7 +99,6 @@ function HorseRace() {
   //     </div>
   //   );
   // }
-
 
 
 
@@ -194,27 +185,7 @@ function HorseRace() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
           
           </p>
-          {/* {upcoming?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: upcoming,
-                    type: "upcoming",
-                    gameType: "Horse",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )} */}
+      
         </div>
       )}
 
@@ -224,7 +195,7 @@ function HorseRace() {
             {item?.name}
           </p>
           <div>
-            {item?.match?.map((aa, i) => {
+            {item?.races?.map((aa, i) => {
               const payload = {
                 league: item?.name,
                 country: item?.file_group,
@@ -244,7 +215,7 @@ function HorseRace() {
       }
     
  {
-        selectedStatus === "Finished" ?
+        selectedStatus === "Tomorrow" ?
         <>
           {today?.length > 0 && (
         <div
@@ -257,27 +228,7 @@ function HorseRace() {
           <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
           
           </p>
-          {/* {today?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: today,
-                    type: "finished",
-                    gameType: "Horse",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )} */}
+ 
         </div>
       )}
 
@@ -287,7 +238,7 @@ function HorseRace() {
             {item?.name}
           </p>
           <div>
-            {item?.match?.map((aa, i) => {
+            {item?.races?.map((aa, i) => {
               const payload = {
                 league: item?.name,
                 country: item?.file_group,

@@ -50,6 +50,26 @@ export const getHorseRace = createAsyncThunk(
   }
 );
 
+export const getHorseRaceToday = createAsyncThunk(
+  "horse/getHorseRaceToday",
+  async () => {
+    var response = await getRequest(`${SportBaseUrl}/horse-racing/races`);
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
+
+export const getHorseRaceTomorrow = createAsyncThunk(
+  "horse/getHorseRaceTomorrow",
+  async () => {
+
+    var response = await getRequest(`${SportBaseUrl}/horse-racing/tomorrows`);
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
 
 
 export const HorseSlice = createSlice({
@@ -81,7 +101,35 @@ export const HorseSlice = createSlice({
         }
       );
     builder.addCase(getHorseRace.rejected, (state, action) => {
-      // state.error = action.error.message
+      
+    });
+
+
+    builder.addCase(getHorseRaceToday.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getHorseRaceToday.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(getHorseRaceToday.rejected, (state, action) => {
+      
+    });
+
+
+    builder.addCase(getHorseRaceTomorrow.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getHorseRaceTomorrow.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(getHorseRaceTomorrow.rejected, (state, action) => {
+      
     });
    
   },

@@ -44,6 +44,7 @@ function HorseGameCard({ id, data }) {
 
 
 
+
   return (
     <div
       style={styles.container}
@@ -65,10 +66,11 @@ function HorseGameCard({ id, data }) {
       >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.status > 0 ? `${data?.status}'` : data?.status}
+            {data?.datetime}
           </p>
         </div>
           <div style={styles.box2}>
+            
             <p style={{ ...FONTS.body7 }}>{data?.name}</p>
           </div>
           <div
