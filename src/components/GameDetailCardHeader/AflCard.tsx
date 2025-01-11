@@ -88,7 +88,7 @@ function AflCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localteam?.totalscore ? data?.localteam?.totalscore : 0} - {data?.awayteam?.totalscore ? data?.awayteam?.totalscore : 0}
+            {data?.localteam?.totalscore ? data?.localteam?.totalscore : 0} - {data?.hometeam?.totalscore ? data?.hometeam?.totalscore : 0}
           </h3>
         
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
@@ -121,7 +121,7 @@ function AflCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.awayteam?.name}
+            {data?.hometeam?.name}
           </p>
         </div>
       </div>

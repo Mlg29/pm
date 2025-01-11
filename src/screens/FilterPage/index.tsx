@@ -412,11 +412,11 @@ function FilterPage() {
    
     setLoading(true);
     setLoader(true);
-    dispatch(getAflFixtures(payload)).then((dd) => {
-      setData(dd?.payload?.data || []);
-      setPage(dd?.payload?.page);
-      setPageSize(dd?.payload?.pageSize);
-      setTotal(dd?.payload?.total);
+    dispatch(getAflFixtures(null)).then((dd) => {
+      setData(dd?.payload?.scores || []);
+      // setPage(dd?.payload?.page);
+      // setPageSize(dd?.payload?.pageSize);
+      // setTotal(dd?.payload?.total);
       if (data?.length === dd?.payload?.total) {
         setHasMore(false);
       }

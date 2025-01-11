@@ -23,8 +23,8 @@ const initialState = {
 
 export const getAflFixtures = createAsyncThunk(
   "afl/getAflFixtures",
-  async (payload: any) => {
-    const buildUrl = (payload) => {
+  async (payload?: any) => {
+    const buildUrl = (payload?:any) => {
       let queryParams = [];
       if (payload?.range) queryParams.push(`range=${payload?.range}`);
       // if (payload?.searchTerm)
@@ -38,7 +38,7 @@ export const getAflFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/american-football/nfl?${queryString}`;
+      return `${SportBaseUrl}/american-football/nfl/live?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));

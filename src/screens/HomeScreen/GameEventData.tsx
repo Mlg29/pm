@@ -219,7 +219,7 @@ function GameEventData(props: any) {
     const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
    
     setLoading(true);
-    dispatch(getBoxingFixtures(actualPayload)).then((dd) => {
+    dispatch(getBoxingFixtures()).then((dd) => {
       if(dd?.payload){
        setData((prev) => [...prev, ...dd?.payload?.data]);
       setPage(dd?.payload?.page);
@@ -420,13 +420,13 @@ function GameEventData(props: any) {
     const actualPayload = eventType === "upcoming" ? payloadUpcoming : eventType === "finished" ? payloadFinished : "";
    
     setLoading(true);
-    dispatch(getMmaFixtures(actualPayload)).then((dd) => {
+    dispatch(getMmaFixtures()).then((dd) => {
       if(dd?.payload){
-       setData((prev) => [...prev, ...dd?.payload?.data]);
-      setPage(dd?.payload?.page);
-      setPageSize(dd?.payload?.pageSize);
-      setTotal(dd?.payload?.total);
-      if (data?.length === dd?.payload?.total) {
+       setData((prev) => [...prev, ...dd?.payload?.category]);
+      // setPage(dd?.payload?.page);
+      // setPageSize(dd?.payload?.pageSize);
+      // setTotal(dd?.payload?.total);
+      if (data?.length === dd?.payload?.category?.match?.length) {
         setHasMore(false);
       }
       }
