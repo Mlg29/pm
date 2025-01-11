@@ -41,18 +41,18 @@ function BasketballCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
-//   function isEmpty(value) {
-//     for (let prop in value) {
-//       if (value.hasOwnProperty(prop)) return false;
-//     }
-//     return true;
-//   }
+  //   function isEmpty(value) {
+  //     for (let prop in value) {
+  //       if (value.hasOwnProperty(prop)) return false;
+  //     }
+  //     return true;
+  //   }
 
-//   const eventArray = isEmpty(data?.player)
-//     ? []
-//     : Array.isArray(data?.player)
-//     ? data?.player
-//     : [data?.player];
+  //   const eventArray = isEmpty(data?.player)
+  //     ? []
+  //     : Array.isArray(data?.player)
+  //     ? data?.player
+  //     : [data?.player];
 
 
   return (
@@ -74,7 +74,7 @@ function BasketballCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            {data?.leagueName}
+            {data?.league}
           </p>
           <FaBasketball size={30} color={COLORS.primary} />
           <p
@@ -84,7 +84,7 @@ function BasketballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -96,7 +96,7 @@ function BasketballCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localTeamScores?.total} - {data?.visitorTeamScores?.total}
+            {data?.localTeam?.totalScore} - {data?.awayTeam?.totalScore}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
@@ -128,7 +128,7 @@ function BasketballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.awayTeam?.name}
           </p>
         </div>
       </div>
@@ -141,27 +141,27 @@ function BasketballCard(props) {
         }}
       />
       <div>
-        <div style={{display: 'flex',justifyContent:'space-between'}}>
-            <p>{data?.localTeamName}</p>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                <p style={{margin: "0px 5px"}}>{data?.localTeamScores?.ot}</p>
-                <p style={{margin: "0px 5px"}}>{data?.localTeamScores?.q1}</p>
-                <p style={{margin: "0px 5px"}}>{data?.localTeamScores?.q2}</p>
-                <p style={{margin: "0px 5px"}}>{data?.localTeamScores?.q3}</p>
-                <p style={{margin: "0px 5px"}}>{data?.localTeamScores?.q4}</p>
-                <p style={{margin: "0px 5px", color: 'red'}}>{data?.localTeamScores?.total}</p>
-            </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <p>{data?.localTeam?.name}</p>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.ot ? data?.localTeam?.ot : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q1 ? data?.localTeam?.q1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q2 ? data?.localTeam?.q2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q3 ? data?.localTeam?.q3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q4 ? data?.localTeam?.q4 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.localTeam?.totalScore ? data?.localTeam?.totalScore : "-"}</p>
+          </div>
         </div>
-        <div style={{display: 'flex',justifyContent:'space-between', marginTop: 5}}>
-            <p>{data?.visitorTeamName}</p>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                <p style={{margin: "0px 5px"}}>{data?.visitorTeamScores?.ot}</p>
-                <p style={{margin: "0px 5px"}}>{data?.visitorTeamScores?.q1}</p>
-                <p style={{margin: "0px 5px"}}>{data?.visitorTeamScores?.q2}</p>
-                <p style={{margin: "0px 5px"}}>{data?.visitorTeamScores?.q3}</p>
-                <p style={{margin: "0px 5px"}}>{data?.visitorTeamScores?.q4}</p>
-                <p style={{margin: "0px 5px", color: 'red'}}>{data?.visitorTeamScores?.total}</p>
-            </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 5 }}>
+          <p>{data?.awayTeam?.name}</p>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.ot ? data?.awayTeam?.ot : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q1 ? data?.awayTeam?.q1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q2 ? data?.awayTeam?.q2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q3 ? data?.awayTeam?.q3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q4 ? data?.awayTeam?.q4 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : "-"}</p>
+          </div>
         </div>
       </div>
     </div>

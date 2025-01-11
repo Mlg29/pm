@@ -17,41 +17,55 @@ import {
 import { BaseUrl, SportBaseUrl } from "../../https";
 
 const initialState = {
-    loading: false,
-    footballFixtures: [],
-    footballEvents: []
+  loading: false,
+  footballFixtures: [],
+  footballEvents: []
 };
 
 
-export const getFootballFixtures= createAsyncThunk("football/getFootballFixtures", async (payload: any) => {
-  
-    const buildUrl = (payload) => {
-        let queryParams = [];
-        if (payload?.range) queryParams.push(`range=${payload?.range}`);
-        // if (payload?.status) queryParams.push(`status=${payload?.status}`);
-        // if (payload?.startTime) queryParams.push(`startTime=${payload.startTime}`);
-        // if (payload?.endTime) queryParams.push(`endTime=${payload.endTime}`);
-        // if (payload?.date) queryParams.push(`date=${payload.date}`);
-        // if (payload?.page) queryParams.push(`page=${payload?.page}`);
+export const getFootballFixtures = createAsyncThunk("football/getFootballFixtures", async (payload: any) => {
 
-        const queryString = queryParams.join('&');
+  const buildUrl = (payload) => {
+    let queryParams = [];
+    if (payload?.range) queryParams.push(`range=${payload?.range}`);
+    // if (payload?.status) queryParams.push(`status=${payload?.status}`);
+    // if (payload?.startTime) queryParams.push(`startTime=${payload.startTime}`);
+    // if (payload?.endTime) queryParams.push(`endTime=${payload.endTime}`);
+    // if (payload?.date) queryParams.push(`date=${payload.date}`);
+    // if (payload?.page) queryParams.push(`page=${payload?.page}`);
+
+    const queryString = queryParams.join('&');
 
 
-        return `${SportBaseUrl}/soccer/matches?${queryString}`;
-      };
+    return `${SportBaseUrl}/soccer/matches?${queryString}`;
+  };
 
-    var response = await getRequest(buildUrl(payload));
+  var response = await getRequest(buildUrl(payload));
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
 });
 
-export const getFootballEvents= createAsyncThunk("football/getFootballEvents", async () => {
-    var response = await getRequest(`${BaseUrl}/football/prefill-events`);
-    if (response?.status === 200 || response?.status === 201) {
-      return response?.data;
-    }
-  });
+export const getFootballEvents = createAsyncThunk("football/getFootballEvents", async () => {
+  var response = await getRequest(`${SportBaseUrl}/football/prefill-events`);
+  if (response?.status === 200 || response?.status === 201) {
+    return response?.data;
+  }
+});
+
+export const getLogo = createAsyncThunk("football/getLogo", async (payload: any) => {
+  var response = await getRequest(`${SportBaseUrl}/soccer/logo?teamId=${payload.teamId}`);
+  if (response?.status === 200 || response?.status === 201) {
+    return response?.data;
+  }
+});
+
+export const getStat = createAsyncThunk("football/getStat", async (payload: any) => {
+  var response = await getRequest(`${SportBaseUrl}/soccer/stats?teamId=${payload.teamId}`);
+  if (response?.status === 200 || response?.status === 201) {
+    return response?.data;
+  }
+});
 
 
 export const FootballSlice = createSlice({
@@ -66,7 +80,7 @@ export const FootballSlice = createSlice({
         getFootballFixtures.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-         state.footballFixtures= action.payload
+          state.footballFixtures = action.payload
         }
       );
     builder.addCase(getFootballFixtures.rejected, (state, action) => {
@@ -74,18 +88,44 @@ export const FootballSlice = createSlice({
     });
 
     builder.addCase(getFootballEvents.pending, (state, action) => {
-        state.loading = true;
-      }),
-        builder.addCase(
-          getFootballEvents.fulfilled,
-          (state, action: PayloadAction<any>) => {
-            state.loading = false;
-            state.footballEvents= action.payload
-          }
-        );
-      builder.addCase(getFootballEvents.rejected, (state, action) => {
-        // state.error = action.error.message
-      });
+      state.loading = true;
+    }),
+      builder.addCase(
+        getFootballEvents.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.footballEvents = action.payload
+        }
+      );
+    builder.addCase(getFootballEvents.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getLogo.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getLogo.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+
+        }
+      );
+    builder.addCase(getLogo.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getStat.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getStat.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+
+        }
+      );
+    builder.addCase(getStat.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
 
   },
 });

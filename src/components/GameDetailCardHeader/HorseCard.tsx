@@ -39,28 +39,28 @@ function HorseCard({ gameInfo }) {
   return (
     <div style={styles.container}>
       <div style={styles.row}>
-        <p style={{...FONTS.h7}}>{gameInfo?.tournamentName}</p>
-        <p style={{...FONTS.h7}}>Race ID: {gameInfo?.raceId}</p>
+        <p style={{ ...FONTS.h7 }}>{gameInfo?.league}</p>
+        <p style={{ ...FONTS.h7 }}>Race ID: {gameInfo?.id}</p>
       </div>
 
       <div style={styles.center}>
-        <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
-        <p style={{...FONTS.h7,textAlign: 'right',  margin: '5px 1rem', width: '50%'}}>Status: </p>
-        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%', color: 'red'}}>{gameInfo?.status}</p>
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%', }}>
+          <p style={{ ...FONTS.h7, textAlign: 'right', margin: '5px 1rem', width: '50%' }}>Status: </p>
+          <p style={{ ...FONTS.h7, margin: '5px 0px', width: '50%', color: 'red' }}>{gameInfo?.results}</p>
         </div>
-        <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
-        <p style={{...FONTS.h7,textAlign: 'right',  margin: '5px 1rem', width: '50%'}}>Time: </p>
-        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%'}}>{gameInfo?.time}</p>
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%', }}>
+          <p style={{ ...FONTS.h7, textAlign: 'right', margin: '5px 1rem', width: '50%' }}>Time: </p>
+          <p style={{ ...FONTS.h7, margin: '5px 0px', width: '50%' }}>{gameInfo?.time}</p>
         </div>
-        <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
-        <p style={{...FONTS.h7,textAlign: 'right', margin: '5px 1rem', width: '50%'}}>Distace: </p>
-        <p style={{...FONTS.h7, margin: '5px 0px',width: '50%', color: 'green'}}>{gameInfo?.distance}</p>
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%', }}>
+          <p style={{ ...FONTS.h7, textAlign: 'right', margin: '5px 1rem', width: '50%' }}>Distace: </p>
+          <p style={{ ...FONTS.h7, margin: '5px 0px', width: '50%', color: 'green' }}>{gameInfo?.distance}</p>
         </div>
-        <div style={{display: 'flex', alignItems: 'center', width: '100%',}}>
-        {/* <p style={{...FONTS.h7,textAlign: 'right', margin: '5px 1rem', width: '50%'}}> </p> */}
-        <p style={{...FONTS.h7, margin: '5px 0px', width: '100%', textAlign: 'center', color: COLORS.orange}}>{gameInfo?.name}</p>
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%', }}>
+          {/* <p style={{...FONTS.h7,textAlign: 'right', margin: '5px 1rem', width: '50%'}}> </p> */}
+          <p style={{ ...FONTS.h7, margin: '5px 0px', width: '100%', textAlign: 'center', color: COLORS.orange }}>{gameInfo?.name}</p>
         </div>
-      
+
       </div>
 
       {/* <div style={{...styles.div}}>
