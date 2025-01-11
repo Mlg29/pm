@@ -71,7 +71,7 @@ function BoxingCard(props) {
           >
             {data?.name}
           </p>
-          <GiBoxingGlove  size={30} color={COLORS.primary} />
+          <GiBoxingGlove size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -79,28 +79,28 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localteam?.name}
+            {data?.match?.localteam?.name}
           </p>
         </div>
         <div>
           {
-            data?.localteam?.winner === "True" || data?.awayteam?.winner === "True" ?
-            <h3
-            style={{
-              ...FONTS.h7,
-              textAlign: "center",
-              margin: "10px 0px 0px 0px",
-              color: COLORS.green
-            }}
-          >
-           Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name} (round ${data?.localteam?.round})` : data?.awayteam?.winner === "True" ?`${data?.awayteam?.name} (round ${data?.awayteam?.round})` : null}
-          </h3>
-          : null
+            data?.match?.localteam?.winner === "True" || data?.match.awayteam?.winner === "True" ?
+              <h3
+                style={{
+                  ...FONTS.h7,
+                  textAlign: "center",
+                  margin: "10px 0px 0px 0px",
+                  color: COLORS.green
+                }}
+              >
+                Winner: {data?.match?.localteam?.winner === "True" ? `${data?.match?.localteam?.name} (round ${data?.match?.localteam?.round})` : data?.match?.awayteam?.winner === "True" ? `${data?.match?.awayteam?.name} (round ${data?.match?.awayteam?.round})` : null}
+              </h3>
+              : null
           }
-         
 
-          <p style={{ ...FONTS.body7,fontWeight: '600', marginTop: 5, fontSize: "8px", textAlign: "center" }}>
-            {data?.status}
+
+          <p style={{ ...FONTS.body7, fontWeight: '600', marginTop: 5, fontSize: "8px", textAlign: "center" }}>
+            {data?.match?.status}
           </p>
         </div>
         <div
@@ -121,7 +121,7 @@ function BoxingCard(props) {
           >
             ID: {data?.id}
           </p>
-          <GiBoxingGlove  size={30} color={COLORS.primary} />
+          <GiBoxingGlove size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -129,7 +129,7 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.awayteam?.name}
+            {data?.match?.awayteam?.name}
           </p>
         </div>
       </div>

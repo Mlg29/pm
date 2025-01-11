@@ -21,65 +21,39 @@ function HorseRace() {
   const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server horse");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("HorseEventUpdate", (message) => {
-   
-  //     setLive((prevMessages) => {
-  //       const updatedMessages = prevMessages?.filter(
-  //         (msg) => msg?.id !== message?.id
-  //       );
-  //       return [...updatedMessages, message];
-  //     });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
   let createdDate = moment(new Date()).utc().format();
   let tomorrowDate = moment(createdDate).add(1, "d");
 
   useEffect(() => {
-   
 
-    dispatch(getHorseRaceTomorrow()).then((dd) => {
+
+    dispatch(getHorseRaceToday()).then((dd) => {
       setToday(dd?.payload);
     });
-    dispatch(getHorseRaceToday()).then((dd) => {
-      setUpcoming(dd?.payload);
+    dispatch(getHorseRaceTomorrow()).then((dd) => {
+      setTomorrow(dd?.payload);
     });
-  
+
     return;
   }, []);
 
 
 
-  const [selectedStatus, setSelectedStatus] = useState('Scheduled')
+
+  const [selectedStatus, setSelectedStatus] = useState('Today')
 
   const status = [
-    // {
-    //   id: 1,
-    //   name: 'Live',
-    // },
+    {
+      id: 1,
+      name: "Today"
+    },
     {
       id: 2,
-      name: "Scheduled"
+      name: "Tomorrow"
     },
     {
       id: 3,
-      name: "Tomorrow"
+      name: "Finished"
     }
   ]
 
@@ -104,12 +78,12 @@ function HorseRace() {
 
   return (
     <div>
-       <div>
-        <p style={{fontSize: 14, fontWeight: '500'}}>Horse Race</p>
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px'}}>
+      <div>
+        <p style={{ fontSize: 14, fontWeight: '500' }}>Horse Race</p>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px' }}>
           {
             status?.map((aa, i) => {
-              return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
+              return <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{ width: 80, padding: 3, cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color: selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12 }}>{aa?.name}</p>
             })
           }
         </div>
@@ -172,98 +146,98 @@ function HorseRace() {
         : null
       } */}
       {
-        selectedStatus === "Scheduled" ?
-        <>
-          {upcoming?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-          
-          </p>
-      
-        </div>
-      )}
+        selectedStatus === "Today" ?
+          <>
+            {today?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
 
-{upcoming?.map((item, i) => (
-        <div key={i}>
-          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {item?.name}
-          </p>
-          <div>
-            {item?.races?.map((aa, i) => {
-              const payload = {
-                league: item?.name,
-                country: item?.file_group,
-                ...aa
-              }
-              return (
-                <div key={i}>
-              <HorseGameCard id={i} data={payload} />
+                </p>
+
+              </div>
+            )}
+
+            {today?.map((item, i) => (
+              <div key={i}>
+                <p style={{ ...FONTS.body7, backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.races?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <HorseGameCard id={i} data={payload} />
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-        </>
-        : null
+              </div>
+            ))}
+          </>
+          : null
       }
-    
- {
+
+      {
         selectedStatus === "Tomorrow" ?
-        <>
-          {today?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-          
-          </p>
- 
-        </div>
-      )}
+          <>
+            {tomorrow?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
 
-{today?.map((item, i) => (
-        <div key={i}>
-          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {item?.name}
-          </p>
-          <div>
-            {item?.races?.map((aa, i) => {
-              const payload = {
-                league: item?.name,
-                country: item?.file_group,
-                ...aa
-              }
-              return (
-                <div key={i}>
-              <HorseGameCard id={i} data={payload} />
+                </p>
+
+              </div>
+            )}
+
+            {tomorrow?.map((item, i) => (
+              <div key={i}>
+                <p style={{ ...FONTS.body7, backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.races?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <HorseGameCard id={i} data={payload} />
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-        </>
-        : null
+              </div>
+            ))}
+          </>
+          : null
       }
-{
+      {
         upcoming?.length < 1 && today?.length < 1 ?
-        <EmptyState 
-          header="No Game Available for Horse Race"
-          height="30vh"
-        />
-        :
-        null
+          <EmptyState
+            header="No Game Available for Horse Race"
+            height="30vh"
+          />
+          :
+          null
       }
     </div>
   );

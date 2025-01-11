@@ -23,12 +23,11 @@ function HorseDetails({ selected, gameInfo, handleRoute }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
 
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", flex: 1,padding: '0px 10px' }}>
+    <div style={{ display: "flex", flexDirection: "column", flex: 1, padding: '0px 10px' }}>
       <HorseCard gameInfo={gameInfo} />
       <div style={styles.div}>
-        {gameInfo?.horses?.horse?.map((dd, i) => {
+        {gameInfo?.runners?.map((dd, i) => {
           return (
             <div
               style={{
@@ -38,9 +37,9 @@ function HorseDetails({ selected, gameInfo, handleRoute }) {
                 color: selected === dd?.name ? COLORS.cream : COLORS.primary,
               }}
               key={i}
-              onClick={() => handleRoute(dd?.name, `W${i+1}`)}
+              onClick={() => handleRoute(dd?.name, `W${i + 1}`)}
             >
-              <p style={{...FONTS.h6}}>Bet {dd?.name} to win</p>
+              <p style={{ ...FONTS.h6 }}>Bet {dd?.name} to win</p>
             </div>
           );
         })}

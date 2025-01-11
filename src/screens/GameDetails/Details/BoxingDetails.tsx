@@ -130,7 +130,6 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
     return tempElement.value;
   };
 
-  
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div
@@ -148,37 +147,37 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
           <div style={{ ...styles.mob }}>
             <div style={{ width: "100%" }}>
               <Button
-                text={`Bet ${gameInfo?.localteam?.name} to Win`}
+                text={`Bet ${gameInfo?.match?.localteam?.name} to Win`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
-                    selected === gameInfo?.localteam?.name
+                    selected === gameInfo?.match?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.localteam?.name
+                    selected === gameInfo?.match?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
-                handlePress={() => handleRoute(gameInfo?.localteam?.name, "W1")}
+                handlePress={() => handleRoute(gameInfo?.match?.localteam?.name, "W1")}
               />
             </div>
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
-                text={`Bet ${gameInfo?.awayteam?.name} to Win`}
+                text={`Bet ${gameInfo?.match?.awayteam?.name} to Win`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
-                    selected === gameInfo?.awayteam?.name
+                    selected === gameInfo?.match?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.awayteam?.name
+                    selected === gameInfo?.match?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
                 // handlePress={() => navigate('/home')}
-                handlePress={() => handleRoute(gameInfo?.awayteam?.name, "W2")}
+                handlePress={() => handleRoute(gameInfo?.match?.awayteam?.name, "W2")}
               />
             </div>
           </div>
@@ -186,39 +185,39 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
           <div style={{ ...styles.desk }}>
             <div style={{ width: "100%" }}>
               <Button
-                text={`Bet ${gameInfo?.localteam?.name} to Win`}
+                text={`Bet ${gameInfo?.match?.localteam?.name} to Win`}
                 propStyle={{
                   width: "90%",
                   backgroundColor:
-                    selected === gameInfo?.localteam?.name
+                    selected === gameInfo?.match?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.localteam?.name
+                    selected === gameInfo?.match?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                   fontSize: 12,
                 }}
-                handlePress={() => handleRoute(gameInfo?.localteam?.name, "W1")}
+                handlePress={() => handleRoute(gameInfo?.match?.localteam?.name, "W1")}
               />
             </div>
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
-                text={`Bet ${gameInfo?.awayteam?.name} to Win`}
+                text={`Bet ${gameInfo?.match?.awayteam?.name} to Win`}
                 propStyle={{
                   width: "90%",
                   backgroundColor:
-                    selected === gameInfo?.awayteam?.name
+                    selected === gameInfo?.match?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.awayteam?.name
+                    selected === gameInfo?.match?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                   fontSize: 12,
                 }}
                 // handlePress={() => navigate('/home')}
-                handlePress={() => handleRoute(gameInfo?.awayteam?.name, "W2")}
+                handlePress={() => handleRoute(gameInfo?.match?.awayteam?.name, "W2")}
               />
             </div>
           </div>

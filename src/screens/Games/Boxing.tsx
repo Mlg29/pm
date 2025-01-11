@@ -48,22 +48,24 @@ function Boxing() {
   let tomorrowDate = moment(createdDate).add(1, "d");
 
   useEffect(() => {
-    const payloadUpcoming = {
-      status: "Not Started",
-    };
-    const payloadFinished = {
-      status: "Finished",
-    };
+    // const payloadUpcoming = {
+    //   status: "Not Started",
+    // };
+    // const payloadFinished = {
+    //   status: "Finished",
+    // };
 
-    dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload);
+    dispatch(getBoxingFixtures()).then((dd) => {
+
+      setUpcoming(dd?.payload?.scores?.category);
     });
 
-    dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload);
+    dispatch(getBoxingFixtures()).then((dd) => {
+      setFinished(dd?.payload?.scores?.category);
     });
   }, []);
 
+  console.log({ upcoming })
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
@@ -100,130 +102,106 @@ function Boxing() {
 
   return (
     <div>
-       <div>
-        <p style={{fontSize: 14, fontWeight: '500'}}>Boxing</p>
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+      <div style={{ marginBottom: 10 }}>
+        <p style={{ fontSize: 14, fontWeight: '500' }}>Boxing</p>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           {
             status?.map((aa, i) => {
-              return  <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{width: 80, padding: 3,cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color:selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12}}>{aa?.name}</p>
+              return <p key={i} onClick={() => setSelectedStatus(aa?.name)} style={{ width: 80, padding: 3, cursor: 'pointer', backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray', color: selectedStatus === aa?.name ? 'white' : '#2d0d02', marginRight: 4, textAlign: 'center', fontSize: 12 }}>{aa?.name}</p>
             })
           }
         </div>
       </div>
       {
         selectedStatus === "Scheduled" ?
-        <>
-          {upcoming?.data?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-           
-          </p>
-          {upcoming?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: upcoming,
-                    type: "upcoming",
-                    gameType: "Boxing",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
+          <>
+            {upcoming?.data?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
 
-           {upcomingOutput && Object.keys(upcomingOutput)?.map((leagueName) => (
-        <div key={leagueName}>
-          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
-          </p>
-          <div>
-            {upcomingOutput[leagueName].map((aa, i) => {
-              return (
-                <div key={i}>
-                 <BoxingGameCard id={i} data={aa} />
+                </p>
+
+              </div>
+            )}
+
+            {upcoming?.map((item, i) => (
+              <div key={i}>
+                <p style={{ ...FONTS.body7, backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+                  {item?.name}
+                </p>
+                <div>
+                  <div>
+                    <BoxingGameCard id={i} data={item} />
+                  </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-        </>
-        : null
+              </div>
+            ))}
+          </>
+          : null
       }
-    
-    {
-        selectedStatus === "Finished" ?
-        <>
-          {finished?.data?.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
-           
-          </p>
-          {finished?.total > 10 && (
-            <p
-              style={{
-                ...FONTS.body7,
-                color: COLORS.orange,
-                cursor: "pointer",
-                margin: "15px 0px",
-              }}
-              onClick={() =>
-                navigate("/events", {
-                  state: {
-                    events: finished,
-                    type: "finished",
-                    gameType: "Boxing",
-                  },
-                })
-              }
-            >
-              View more
-            </p>
-          )}
-        </div>
-      )}
 
-           {finishedOutput && Object.keys(finishedOutput)?.map((leagueName) => (
-        <div key={leagueName}>
-          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
-          </p>
-          <div>
-            {finishedOutput[leagueName].map((aa, i) => {
-              return (
-                <div key={i}>
-                 <BoxingGameCard id={i} data={aa} />
+      {
+        selectedStatus === "Finished" ?
+          <>
+            {finished?.data?.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p style={{ ...FONTS.body6, color: COLORS.gray, margin: "15px 0px" }}>
+
+                </p>
+                {finished?.total > 10 && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: "pointer",
+                      margin: "15px 0px",
+                    }}
+                    onClick={() =>
+                      navigate("/events", {
+                        state: {
+                          events: finished,
+                          type: "finished",
+                          gameType: "Boxing",
+                        },
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
+
+            {finishedOutput && Object.keys(finishedOutput)?.map((leagueName) => (
+              <div key={leagueName}>
+                <p style={{ ...FONTS.body7, backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
+                  {leagueName}
+                </p>
+                <div>
+                  {finishedOutput[leagueName].map((aa, i) => {
+                    return (
+                      <div key={i}>
+                        <BoxingGameCard id={i} data={aa} />
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-        </>
-        : null
+              </div>
+            ))}
+          </>
+          : null
       }
       {upcoming?.data?.length < 1 && finished?.data?.length < 1 ? (
         <EmptyState header="No Game Available for Boxing" height="30vh" />

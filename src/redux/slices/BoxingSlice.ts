@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { BaseUrl, SportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -23,24 +23,24 @@ const initialState = {
 
 export const getBoxingFixtures = createAsyncThunk(
   "boxing/getBoxingFixtures",
-  async (payload: any) => {
-    const buildUrl = (payload) => {
+  async () => {
+    const buildUrl = () => {
       let queryParams = [];
-      if (payload?.searchTerm)
-        queryParams.push(`searchTerm=${payload?.searchTerm}`);
-      if (payload?.status) queryParams.push(`status=${payload?.status}`);
-      if (payload?.startTime)
-        queryParams.push(`startTime=${payload.startTime}`);
-      if (payload?.date) queryParams.push(`date=${payload.date}`);
-      if (payload?.page) queryParams.push(`page=${payload?.page}`);
-      if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
+      // if (payload?.searchTerm)
+      //   queryParams.push(`searchTerm=${payload?.searchTerm}`);
+      // if (payload?.status) queryParams.push(`status=${payload?.status}`);
+      // if (payload?.startTime)
+      //   queryParams.push(`startTime=${payload.startTime}`);
+      // if (payload?.date) queryParams.push(`date=${payload.date}`);
+      // if (payload?.page) queryParams.push(`page=${payload?.page}`);
+      // if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/boxing/fixtures?${queryString}`;
+      return `${SportBaseUrl}/boxing/live`;
     };
 
-    var response = await getRequest(buildUrl(payload));
+    var response = await getRequest(buildUrl());
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
@@ -90,7 +90,7 @@ export const BoxingSlice = createSlice({
     builder.addCase(getBoxingMatch.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 
