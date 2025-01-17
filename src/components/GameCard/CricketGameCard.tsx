@@ -56,21 +56,22 @@ function CricketGameCard({ id, data }) {
     >
       <div style={styles.box1}>
       <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-         ({data?.matchDate})
+         ({data?.match?.date})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-          {data?.status === "Started" ? `${data?.time}'` : data?.status}
+        {/* {data?.match?.status === "Started" ? `${data?.match?.time}'` : data?.match?.status} */}
+        {data?.match?.time}
         </p>
       </div>
       <div style={styles.box2}>
-        <p style={{ ...FONTS.body7 }}>{data?.localteam?.name}</p>
-        <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
+        <p style={{ ...FONTS.body7 }}>{data?.match?.localteam?.name}</p>
+        <p style={{ ...FONTS.body7 }}>{data?.match?.awayteam?.name}</p>
       </div>
       <div style={styles.box3}>
         {/* <GiSoccerField /> */}
         <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.totalscore ? data?.localteam?.totalscore : ""}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : ""}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.match?.localteam?.totalscore ? data?.match?.localteam?.totalscore : ""}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.match?.awayteam?.totalscore ? data?.match?.awayteam?.totalscore : ""}</p>
           
 
         </div>

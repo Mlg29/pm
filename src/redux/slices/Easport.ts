@@ -75,5 +75,5 @@ export const EasportSlice = createSlice({
 
 export const easportState = (state: RootState) =>
   state.easport.easport
-
+export const easportStatusState = (state: RootState) => state.easport.loading;
 export default EasportSlice.reducer;

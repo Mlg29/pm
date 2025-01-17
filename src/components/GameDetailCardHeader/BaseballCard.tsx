@@ -3,8 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
-import { BiSolidCricketBall } from "react-icons/bi";
-
+import { FaBaseball } from "react-icons/fa6";
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
 export const styles = {
@@ -38,11 +37,22 @@ export const styles = {
   },
 };
 
-function CricketCard(props) {
+function BaseballCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
+  //   function isEmpty(value) {
+  //     for (let prop in value) {
+  //       if (value.hasOwnProperty(prop)) return false;
+  //     }
+  //     return true;
+  //   }
 
+  //   const eventArray = isEmpty(data?.player)
+  //     ? []
+  //     : Array.isArray(data?.player)
+  //     ? data?.player
+  //     : [data?.player];
 
 
   return (
@@ -64,11 +74,9 @@ function CricketCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           {data?.name}
+            {data?.league}
           </p>
-          <BiSolidCricketBall size={30} color={COLORS.primary}/>
-       
-          {/* <FaVolleyball size={30} color={COLORS.primary} /> */}
+          <FaBaseball size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -76,11 +84,11 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.match?.localteam?.name}
+            {data?.localTeam?.name}
           </p>
         </div>
         <div>
-          {/* <h3
+          <h3
             style={{
               ...FONTS.h5,
               textAlign: "center",
@@ -88,11 +96,10 @@ function CricketCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localteam?.goals ? data?.localteam?.goals : 0} - {data?.awayteam?.goals ? data?.awayteam?.goals : 0}
-          </h3> */}
-        
+            {data?.localTeam?.totalScore} - {data?.awayTeam?.totalScore}
+          </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+            {data?.status}
           </p>
         </div>
         <div
@@ -113,8 +120,7 @@ function CricketCard(props) {
           >
             ID: {data?.id}
           </p>
-          <BiSolidCricketBall size={30} color={COLORS.primary}/>
-       
+          <FaBaseball size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -122,7 +128,7 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.match?.awayteam?.name}
+            {data?.awayTeam?.name}
           </p>
         </div>
       </div>
@@ -134,9 +140,32 @@ function CricketCard(props) {
           backgroundColor: COLORS.gray,
         }}
       />
-
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <p>{data?.localTeam?.name}</p>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.ot ? data?.localTeam?.ot : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q1 ? data?.localTeam?.q1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q2 ? data?.localTeam?.q2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q3 ? data?.localTeam?.q3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q4 ? data?.localTeam?.q4 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.localTeam?.totalScore ? data?.localTeam?.totalScore : "-"}</p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 5 }}>
+          <p>{data?.awayTeam?.name}</p>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.ot ? data?.awayTeam?.ot : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q1 ? data?.awayTeam?.q1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q2 ? data?.awayTeam?.q2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q3 ? data?.awayTeam?.q3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q4 ? data?.awayTeam?.q4 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : "-"}</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default CricketCard;
+export default BaseballCard;

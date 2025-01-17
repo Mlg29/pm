@@ -29,7 +29,7 @@ export const getFormulaFixtures = createAsyncThunk(
       if (payload?.range) queryParams.push(`range=${payload?.range}`);
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/motors/f1?${queryString}`;
+      return `${SportBaseUrl}/f1?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -67,7 +67,9 @@ export const FormulaSlice = createSlice({
   },
 });
 
-export const boxingFixtureState = (state: RootState) =>
+export const formulaFixtureState = (state: RootState) =>
   state.formula.formulaFixtures
+export const formulaFixtureStatusState = (state: RootState) =>
+  state.formula.loading
 
 export default FormulaSlice.reducer;

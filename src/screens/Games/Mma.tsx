@@ -6,19 +6,23 @@ import { COLORS } from '../../utils/colors'
 import { io } from 'socket.io-client'
 import { BaseUrl } from '../../https'
 import moment from 'moment'
-import { useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
-import { getMmaFixtures } from '../../redux/slices/MmaSlice'
+import {
+  getMmaFixtures,
+  mmaFixtureStatusState
+} from '../../redux/slices/MmaSlice'
 import MmaGameCard from '../../components/GameCard/MmaGameCard'
+import { LoadingState } from '../../components/LoadingState'
 
 function Mma() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const maxPageSize = 9
-  const url = `${BaseUrl}/mma`
   const dispatch = useAppDispatch() as any
+  const maxMatchesToDisplay = 5
+  const loading = useAppSelector(mmaFixtureStatusState) as any
 
   // useEffect(() => {
   //   const socket = io(url) as any;
@@ -50,26 +54,20 @@ function Mma() {
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
-    // const payloadUpcoming = {
-    //   status: "Not Started",
-    // };
-    // const payloadFinished = {
-    //     status: "Final",
-    //   };
+    const payloadUpcoming = {
+      range: 'upcoming'
+    }
+    const payloadFinished = {
+      range: 'finished'
+    }
 
-    dispatch(
-      getMmaFixtures(null)
-      // payloadUpcoming
-    ).then((dd) => {
+    dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload?.category)
     })
 
-    // dispatch(
-    //   getMmaFixtures(null)
-    //   // payloadFinished
-    // ).then((dd) => {
-    //   setFinished(dd?.payload?.category)
-    // })
+    dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
+      setFinished(dd?.payload?.category)
+    })
   }, [])
 
   // const groupedByData = (collectedData) => {
@@ -132,139 +130,153 @@ function Mma() {
           })}
         </div>
       </div>
-      {selectedStatus === 'Scheduled' ? (
-        <>
-          {upcoming?.match?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.length > 0 && (
+              <div
                 style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
-              ></p>
-              {upcoming?.match?.length > 10 && (
+              >
                 <p
                   style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
+                    ...FONTS.body6,
+                    color: COLORS.gray,
                     margin: '15px 0px'
                   }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: upcoming,
-                        type: 'upcoming',
-                        gameType: 'Boxing'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-          {upcoming?.match?.map(
-            (league, index) =>
-              index < maxPageSize && (
-                <div key={league?.id}>
-                  {league?.name && (
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {league.name}
-                    </p>
-                  )}
-                  <MmaGameCard id={index} data={league} />
-                </div>
-              )
-          )}
-        </>
-      ) : null}
-      {selectedStatus === 'Finished' ? (
-        <>
-          {finished?.match?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
+                ></p>
+                {upcoming?.length > maxMatchesToDisplay && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: 'pointer',
+                      margin: '15px 0px'
+                    }}
+                    onClick={() =>
+                      navigate('/events', {
+                        state: {
+                          events: upcoming,
+                          type: 'upcoming',
+                          gameType: 'Boxing'
+                        }
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
+            {upcoming?.map(
+              (league, index) =>
+                index < maxMatchesToDisplay && (
+                  <div key={league?.id}>
+                    {league?.name && league?.match?.length > 0 && (
+                      <p
+                        style={{
+                          ...FONTS.body7,
+                          backgroundColor: COLORS.lightRed,
+                          padding: 5,
+                          marginBottom: 10,
+                          borderRadius: 5,
+                          color: COLORS.black,
+                          marginRight: 10
+                        }}
+                      >
+                        {league.name}
+                      </p>
+                    )}
+                    <div>
+                      {league?.match?.map((aa, i) => (
+                        <div key={i}>
+                          <MmaGameCard id={index} data={aa} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+            )}
+          </>
+        ) : null}
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finished?.length > 0 && (
+              <div
                 style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
-              ></p>
-              {finished?.match?.length > 10 && (
+              >
                 <p
                   style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
+                    ...FONTS.body6,
+                    color: COLORS.gray,
                     margin: '15px 0px'
                   }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: finished,
-                        type: 'finished',
-                        gameType: 'Boxing'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-          {finished?.match?.map(
-            (league, index) =>
-              index < maxPageSize && (
-                <div key={league?.id}>
-                  {league?.name && (
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {league?.name}
-                    </p>
-                  )}
-                  <MmaGameCard id={index} data={league} />
-                </div>
-              )
-          )}
-        </>
-      ) : null}
-      {upcoming?.match?.length < 1 && finished?.match?.length < 1 ? (
-        <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
-      ) : null}
+                ></p>
+                {finished?.length > maxMatchesToDisplay && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: 'pointer',
+                      margin: '15px 0px'
+                    }}
+                    onClick={() =>
+                      navigate('/events', {
+                        state: {
+                          events: finished,
+                          type: 'finished',
+                          gameType: 'Boxing'
+                        }
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
+            {finished?.map(
+              (league, index) =>
+                index < maxMatchesToDisplay && (
+                  <div key={league?.id}>
+                    {league?.name && league?.match?.length > 0 && (
+                      <p
+                        style={{
+                          ...FONTS.body7,
+                          backgroundColor: COLORS.lightRed,
+                          padding: 5,
+                          marginBottom: 10,
+                          borderRadius: 5,
+                          color: COLORS.black,
+                          marginRight: 10
+                        }}
+                      >
+                        {league?.name}
+                      </p>
+                    )}
+                    <div>
+                      {league?.match?.map((aa, i) => (
+                        <div key={i}>
+                          <MmaGameCard id={index} data={aa} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+            )}
+          </>
+        ) : null}
+        {upcoming?.length < 1 && finished?.length < 1 ? (
+          <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
+        ) : null}
+      </LoadingState>
     </div>
   )
 }

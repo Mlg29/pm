@@ -301,4 +301,5 @@ export const BetSlice = createSlice({
   },
 });
 
+export const BetStatusState = (state: RootState) => state.bet.loading;
 export default BetSlice.reducer;

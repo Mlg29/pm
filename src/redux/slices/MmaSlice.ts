@@ -40,13 +40,13 @@ export const getMmaFixtures = createAsyncThunk(
       // if (payload?.page) queryParams.push(`page=${payload?.page}`);
       // if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
 
-      // const queryString = queryParams.join("&");
+      const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/mma/fight/live`;
+      return `${SportBaseUrl}/mma/${payload?.range?`matches?${queryString}`:'live'}`;
     };
 
     var response = await getRequest(buildUrl(
-      // payload
+      payload
     ));
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
@@ -103,5 +103,6 @@ export const MmaSlice = createSlice({
 
 export const mmaFixtureState = (state: RootState) =>
   state.mma.mmaFixtures
-
+export const  mmaFixtureStatusState = (state: RootState) =>
+  state.mma.loading
 export default MmaSlice.reducer;

@@ -38,7 +38,7 @@ export const getAflFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/american-football/nfl/live?${queryString}`;
+      return `${SportBaseUrl}/american-football/${payload?.range?`matches?${queryString}`:'live'}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -76,5 +76,7 @@ export const AflSlice = createSlice({
 
 export const aflState = (state: RootState) =>
   state.afl.afl
+export const AflStatusState = (state: RootState) =>
+  state.afl.loading
 
 export default AflSlice.reducer;

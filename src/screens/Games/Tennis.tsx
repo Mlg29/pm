@@ -6,13 +6,16 @@ import TennisGameCard from '../../components/GameCard/TennisGameCard'
 import { io } from 'socket.io-client'
 import { BaseUrl } from '../../https'
 import moment from 'moment'
-import { useAppDispatch } from '../../redux/hooks'
-import { getTennisFixtures } from '../../redux/slices/TennisSlice'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { getTennisFixtures, tennisFixtureStatusState } from '../../redux/slices/TennisSlice'
 import EmptyState from '../../components/EmptyState'
+import { LoadingState } from '../../components/LoadingState'
 
 function Tennis() {
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
+  const maxMatchesToDisplay = 5
+  const loading = useAppSelector(tennisFixtureStatusState) as any
   const [upcoming, setUpcoming] = useState<any>([])
   const url = `${BaseUrl}/tennis`
   const dispatch = useAppDispatch() as any
@@ -48,16 +51,13 @@ function Tennis() {
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
-    // const notYetPayloadUpcoming = {
-    //   status: "Not Started",
-    // };
-    // const tennisPayloadLive = {
-    //   status: "Live",
-    // };
+    const notYetPayloadUpcoming = {
+      range: "d1",
+    };
 
-    // dispatch(getTennisFixtures(null)).then((dd) => {
-    //   setUpcoming(dd?.payload?.scores);
-    // });
+    dispatch(getTennisFixtures(null)).then((dd) => {
+      setUpcoming(dd?.payload?.scores);
+    });
     dispatch(getTennisFixtures(null)).then((dd) => {
       setLive(dd?.payload?.scores)
     })
@@ -128,148 +128,150 @@ function Tennis() {
           })}
         </div>
       </div>
-      {selectedStatus === 'Live' ? (
-        <>
-          {live?.category?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Live' ? (
+          <>
+            {live?.category?.length > 0 && (
+              <div
                 style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
-              ></p>
-              {live?.category?.length > 10 && (
+              >
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: '15px 0px'
+                  }}
+                ></p>
+                {live?.category?.length > maxMatchesToDisplay && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: 'pointer',
+                      margin: '15px 0px'
+                    }}
+                    onClick={() =>
+                      navigate('/events', {
+                        state: {
+                          events: live,
+                          type: 'live',
+                          gameType: 'Tennis'
+                        }
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
+              </div>
+            )}
+
+            {live?.category?.map((league, index) => index < maxMatchesToDisplay && (
+              <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
                   }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: live,
-                        type: 'live',
-                        gameType: 'Tennis'
-                      }
-                    })
-                  }
                 >
-                  View more
+                  {league?.name}
                 </p>
-              )}
-            </div>
-          )}
-
-          {live?.category?.map((league, index) => (
-            <div key={league?.name}>
-              <p
+                <div>
+                  {live?.category[index]?.match?.map((aa, i) => {
+                    return (
+                      <div key={i}>
+                        <TennisGameCard id={i} data={aa} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : null}
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.category?.length > 0 && (
+              <div
                 style={{
-                  ...FONTS.body7,
-                  backgroundColor: COLORS.lightRed,
-                  padding: 5,
-                  marginBottom: 10,
-                  borderRadius: 5,
-                  color: COLORS.black,
-                  marginRight: 10
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
               >
-                {league?.name}
-              </p>
-              <div>
-                {live?.category[index]?.match?.map((aa, i) => {
-                  return (
-                    <div key={i}>
-                      <TennisGameCard id={i} data={aa} />
-                    </div>
-                  )
-                })}
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: '15px 0px'
+                  }}
+                ></p>
+                {upcoming?.category.length > maxMatchesToDisplay && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      color: COLORS.orange,
+                      cursor: 'pointer',
+                      margin: '15px 0px'
+                    }}
+                    onClick={() =>
+                      navigate('/events', {
+                        state: {
+                          events: upcoming,
+                          type: 'upcoming',
+                          gameType: 'Tennis'
+                        }
+                      })
+                    }
+                  >
+                    View more
+                  </p>
+                )}
               </div>
-            </div>
-          ))}
-        </>
-      ) : null}
-      {selectedStatus === 'Scheduled' ? (
-        <>
-          {upcoming?.category?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {upcoming?.category.length > 10 && (
+            )}
+
+            {upcoming?.category?.map((league, index) => index < maxMatchesToDisplay && (
+              <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
                   }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: upcoming,
-                        type: 'upcoming',
-                        gameType: 'Tennis'
-                      }
-                    })
-                  }
                 >
-                  View more
+                  {league?.name}
                 </p>
-              )}
-            </div>
-          )}
-
-          {upcoming?.category?.map((league, index) => (
-            <div key={league?.name}>
-              <p
-                style={{
-                  ...FONTS.body7,
-                  backgroundColor: COLORS.lightRed,
-                  padding: 5,
-                  marginBottom: 10,
-                  borderRadius: 5,
-                  color: COLORS.black,
-                  marginRight: 10
-                }}
-              >
-                {league?.name}
-              </p>
-              <div>
-                {upcoming?.category[index]?.match.map((aa, i) => {
-                  return (
-                    <div key={i}>
-                      <TennisGameCard id={i} data={aa} />
-                    </div>
-                  )
-                })}
+                <div>
+                  {upcoming?.category[index]?.match.map((aa, i) => {
+                    return (
+                      <div key={i}>
+                        <TennisGameCard id={i} data={aa} />
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
-        </>
-      ) : null}
+            ))}
+          </>
+        ) : null}
 
-      {live?.category?.length < 1 && upcoming?.category?.length < 1 ? (
-        <EmptyState header='No Game Available for Tennis' height='30vh' />
-      ) : null}
+        {live?.category?.length < 1 && upcoming?.category?.length < 1 ? (
+          <EmptyState header='No Game Available for Tennis' height='30vh' />
+        ) : null}
+      </LoadingState>
     </div>
   )
 }
