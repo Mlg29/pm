@@ -17,7 +17,7 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
     const [homeStat, setHomeStat] = useState(null)
     const [awayStat, setAwayStat] = useState(null)
     const dispatch = useAppDispatch() as any;
-    console.log("homestats", homeStat)
+
 
     useEffect(() => {
         const homeTeam = {

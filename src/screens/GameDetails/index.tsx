@@ -37,6 +37,7 @@ import FutsalDetail from "./Details/FutsalDetail";
 import CricketDetail from "./Details/CricketDetail";
 import FootballDetail from "./Details/FootballDetail";
 import TennisDetail from "./Details/TennisDetail";
+import Formula1Detail from "./Details/Formula1Detail";
 
 const styles = {
   container: {
@@ -195,14 +196,16 @@ function GameDetails() {
 
 
   const handleRoute = (route: string, selection?: string) => {
-    if (gameInfo?.internalStatus === "LIVE" || gameInfo?.status?.includes("Set") || gameInfo?.status === "Started") {
-      toast.error("Sorry, the game is in progress, you can't proceed to bet on it", {
+    const name = gameInfo?.winner?.name || gameInfo?.winner
+    console.log({ name })
+    if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
+      toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
       });
       return;
     }
-    if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
-      toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
+    if (name !== "Upcoming match") {
+      toast.error("Sorry, the game is in progress, you can't proceed to bet on it", {
         position: "bottom-center",
       });
       return;
@@ -212,7 +215,7 @@ function GameDetails() {
 
       const payload = {
         userType: selection,
-        sportEventId: gameInfo?.sportEventId,
+        sportEventId: gameInfo?.id,
         sportId: gameInfo?.id,
       };
 
@@ -320,6 +323,14 @@ function GameDetails() {
 
         {gameType === "Horse" && (
           <HorseDetails
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+          />
+        )}
+
+        {gameType === "Formula1" && (
+          <Formula1Detail
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

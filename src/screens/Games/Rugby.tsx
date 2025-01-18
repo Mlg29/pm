@@ -9,7 +9,7 @@ import moment from 'moment'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
-import { AflStatusState, getAflFixtures } from '../../redux/slices/AflSlice'
+import { AflStatusState, getAflFixtureLive, getAflFixtures } from '../../redux/slices/AflSlice'
 import AflGameCard from '../../components/GameCard/AflGameCard'
 import { LoadingState } from '../../components/LoadingState'
 
@@ -30,43 +30,28 @@ function Rugby() {
     }
 
     dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.shedules)
+      setUpcoming(dd?.payload?.shedules?.tournament)
     })
 
-    dispatch(getAflFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.shedules)
+    dispatch(getAflFixtureLive()).then((dd) => {
+      setLive(dd?.payload?.scores?.category)
     })
   }, [])
 
-  // const groupedByData = (collectedData) => {
-  //   return collectedData?.reduce((acc, current) => {
-  //     const league = (current?.season + " " + current?.seasonName) || "AFL";
 
-  //     if (!acc[league]) {
-  //       acc[league] = [];
-  //     }
-
-  //     acc[league].push(current);
-
-  //     return acc;
-  //   }, {});
-  // };
-
-  // const upcomingOutput = groupedByData(upcoming?.category?.match)
-  // const LiveOutput = groupedByData(Live?.data)
-
-  const [selectedStatus, setSelectedStatus] = useState('Scheduled')
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
       id: 2,
-      name: 'Scheduled'
+      name: 'Live'
     },
     {
       id: 3,
-      name: 'Live'
+      name: 'Scheduled'
     }
   ]
+
 
   return (
     <div>
@@ -76,7 +61,8 @@ function Rugby() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: 10,
           }}
         >
           {status?.map((aa, i) => {
@@ -103,150 +89,83 @@ function Rugby() {
         </div>
       </div>
       <LoadingState isLoading={loading}>
-        {selectedStatus === 'Scheduled' ? (
-          <>
-            {upcoming?.tournament?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-                {upcoming?.tournament.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: upcoming,
-                          type: 'upcoming',
-                          gameType: 'AFL'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
-              </div>
-            )}
-
-            {upcoming?.tournament?.map(
-              (league, index) =>
-                index < maxMatchesToDisplay && (
-                  <div key={index}>
-                    {league?.name && (
-                      <p
-                        style={{
-                          ...FONTS.body7,
-                          backgroundColor: COLORS.lightRed,
-                          padding: 5,
-                          marginBottom: 10,
-                          borderRadius: 5,
-                          color: COLORS.black,
-                          marginRight: 10
-                        }}
-                      >
-                        {league?.name}
-                      </p>
-                    )}
-                    <div>
-                      {league?.week?.map((aa, i) => (
-                        <div key={i}>
-                          {aa?.matches?.map((afl, index) => (
-                            <AflGameCard key={index} id={index} data={afl} />
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )
-            )}
-          </>
-        ) : null}
-
         {selectedStatus === 'Live' ? (
           <>
-            {Live?.category?.match?.length > 0 && (
-              <div
+            <div>
+              <p
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
+                  ...FONTS.body7,
+                  backgroundColor: COLORS.lightRed,
+                  padding: 5,
+                  marginBottom: 10,
+                  borderRadius: 5,
+                  color: COLORS.black,
+                  marginRight: 10
                 }}
               >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-                {Live?.category?.match.length > maxMatchesToDisplay && (
+                {Live.name}
+              </p>
+              <div>
+                {Live?.match?.map((aa, i) => {
+                  const payload = {
+                    league: Live?.name,
+                    ...aa
+                  }
+                  return (
+                    <div key={i}>
+                      <AflGameCard id={i} data={payload} />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+
+          </>
+        ) : null}
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.map(
+              (item, i) => {
+                return <div key={i}>
                   <p
                     style={{
                       ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
                     }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: Live,
-                          type: 'Full Time',
-                          gameType: 'AFL'
-                        }
-                      })
-                    }
                   >
-                    View more
+                    {item?.name}
                   </p>
-                )}
-              </div>
-            )}
-
-            {Live?.category?.match?.map(
-              (league, index) =>
-                index < maxMatchesToDisplay && (
-                  <div key={index}>
-                    {league?.name && (
-                      <p
-                        style={{
-                          ...FONTS.body7,
-                          backgroundColor: COLORS.lightRed,
-                          padding: 5,
-                          marginBottom: 10,
-                          borderRadius: 5,
-                          color: COLORS.black,
-                          marginRight: 10
-                        }}
-                      >
-                        {league?.name}
-                      </p>
-                    )}
-                    <AflGameCard id={index} data={league} />
+                  <div>
+                    {item?.week?.map((aa, i) => {
+                      const payload = {
+                        league: item?.league,
+                        country: item?.country,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <AflGameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              }
+
             )}
           </>
         ) : null}
 
+
+
         {upcoming?.category?.match?.length < 1 &&
-        Live?.category?.match?.length < 1 ? (
+          Live?.category?.match?.length < 1 ? (
           <EmptyState
             header='No Game Available for American Football Rugby'
             height='30vh'

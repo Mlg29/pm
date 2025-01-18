@@ -21,10 +21,26 @@ const initialState = {
   afl: [],
 };
 
+
+export const getAflFixtureLive = createAsyncThunk(
+  "afl/getAflFixtureLive",
+  async () => {
+    const buildUrl = () => {
+      return `${SportBaseUrl}/american-football/live`;
+    };
+
+    var response = await getRequest(buildUrl());
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
+
+
 export const getAflFixtures = createAsyncThunk(
   "afl/getAflFixtures",
   async (payload?: any) => {
-    const buildUrl = (payload?:any) => {
+    const buildUrl = (payload?: any) => {
       let queryParams = [];
       if (payload?.range) queryParams.push(`range=${payload?.range}`);
       // if (payload?.searchTerm)
@@ -38,7 +54,7 @@ export const getAflFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/american-football/${payload?.range?`matches?${queryString}`:'live'}`;
+      return `${SportBaseUrl}/american-football/matches?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -70,7 +86,19 @@ export const AflSlice = createSlice({
     builder.addCase(getAflFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+    builder.addCase(getAflFixtureLive.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getAflFixtureLive.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.afl = action.payload;
+        }
+      );
+    builder.addCase(getAflFixtureLive.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
   },
 });
 

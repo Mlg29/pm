@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import noLogo from "../../assets/images/no.jpg";
+import { useEffect, useState } from "react";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -42,9 +43,6 @@ function GameDetailCardHeader(props: any) {
   const { propStyle, data } = props;
 
 
-
-
-
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -71,6 +69,7 @@ function GameDetailCardHeader(props: any) {
           ) : (
             <img src={data?.localTeam?.teamLogo} style={{ width: "20px" }} />
           )}
+
           <p
             style={{
               ...FONTS.body7,

@@ -10,9 +10,11 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import EmptyState from '../../components/EmptyState'
 import {
   getFormulaFixtures,
-  formulaFixtureStatusState
+  formulaFixtureStatusState,
+  getFormulaMatchFixtures
 } from '../../redux/slices/Formula'
 import { LoadingState } from '../../components/LoadingState'
+import Formula1Card from '../../components/GameCard/Formula1Card'
 
 function Formula1() {
   const navigate = useNavigate()
@@ -29,24 +31,24 @@ function Formula1() {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'd1'
+      range: 'upcoming'
     }
     const payloadLive = {
       range: 'live'
     }
     const payloadFinished = {
-      range: 'd-1'
+      range: 'finished'
     }
 
-    dispatch(getFormulaFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+    dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload?.scores?.tournament)
     })
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
-      console.log('<>><>>', dd)
+
       setLive(dd?.payload)
     })
-    dispatch(getFormulaFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+    dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
+      setFinished(dd?.payload?.scores?.tournament)
     })
   }, [])
 
@@ -66,6 +68,7 @@ function Formula1() {
       name: 'Finished'
     }
   ]
+
 
   return (
     <div>
@@ -122,36 +125,27 @@ function Formula1() {
               </div>
             )}
 
-            {live?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return <div key={i}></div>
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            {live?.map((item, i) => {
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div key={i}>
+                  <Formula1Card id={i} data={item} />
+                </div>
+              </div>
+
+            })}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
@@ -174,36 +168,27 @@ function Formula1() {
               </div>
             )}
 
-            {upcoming?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return <div key={i}></div>
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            {upcoming?.map((item, i) => {
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div key={i}>
+                  <Formula1Card id={i} data={item} />
+                </div>
+              </div>
+
+            })}
           </>
         ) : null}
 
@@ -226,39 +211,31 @@ function Formula1() {
                 ></p>
               </div>
             )}
+            {finished?.map((item, i) => {
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div key={i}>
+                  <Formula1Card id={i} data={item} />
+                </div>
+              </div>
 
-            {finished?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return <div key={i}></div>
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            })}
+
           </>
-        ) : null}
+        )
+          : null}
         {live?.length < 1 && finished?.length < 1 && upcoming?.length < 1 ? (
           <EmptyState header='No Game Available for Formula1' height='30vh' />
         ) : null}

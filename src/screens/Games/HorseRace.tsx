@@ -137,27 +137,7 @@ function HorseRace() {
                   margin: '15px 0px'
                 }}
               ></p>
-              {today?.length > maxMatchesToDisplay && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: live,
-                        type: 'live',
-                        gameType: 'Horse'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
+
             </div>
           )}
         </>

@@ -146,27 +146,7 @@ function Tennis() {
                     margin: '15px 0px'
                   }}
                 ></p>
-                {live?.category?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: live,
-                          type: 'live',
-                          gameType: 'Tennis'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
+
               </div>
             )}
 
@@ -187,9 +167,13 @@ function Tennis() {
                 </p>
                 <div>
                   {live?.category[index]?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.name,
+                      ...aa
+                    }
                     return (
                       <div key={i}>
-                        <TennisGameCard id={i} data={aa} />
+                        <TennisGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
@@ -215,27 +199,7 @@ function Tennis() {
                     margin: '15px 0px'
                   }}
                 ></p>
-                {upcoming?.category.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: upcoming,
-                          type: 'upcoming',
-                          gameType: 'Tennis'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
+
               </div>
             )}
 
@@ -256,9 +220,13 @@ function Tennis() {
                 </p>
                 <div>
                   {upcoming?.category[index]?.match.map((aa, i) => {
+                    const payload = {
+                      league: league.name,
+                      ...aa
+                    }
                     return (
                       <div key={i}>
-                        <TennisGameCard id={i} data={aa} />
+                        <TennisGameCard id={i} data={payload} />
                       </div>
                     )
                   })}

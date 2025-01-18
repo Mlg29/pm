@@ -154,27 +154,7 @@ function Boxing() {
                     margin: '15px 0px'
                   }}
                 ></p>
-                {upcoming?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: upcoming,
-                          type: 'upcoming',
-                          gameType: 'Boxing'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
+
               </div>
             )}
 
@@ -196,11 +176,15 @@ function Boxing() {
                       {item?.name}
                     </p>
                     <div>
-                      {item?.match?.map((aa, i) => (
-                        <div key={i}>
-                          <BoxingGameCard id={i} data={aa} />
+                      {item?.match?.map((aa, i) => {
+                        const payload = {
+                          name: item?.name,
+                          ...aa
+                        }
+                        return <div key={i}>
+                          <BoxingGameCard id={i} data={payload} />
                         </div>
-                      ))}
+                      })}
                     </div>
                   </div>
                 )
@@ -225,27 +209,7 @@ function Boxing() {
                     margin: '15px 0px'
                   }}
                 ></p>
-                {finished?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: finished,
-                          type: 'finished',
-                          gameType: 'Boxing'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
+
               </div>
             )}
 
@@ -267,11 +231,15 @@ function Boxing() {
                       {item?.name}
                     </p>
                     <div>
-                      {item?.match?.map((aa, i) => (
-                        <div key={i}>
-                          <BoxingGameCard id={i} data={aa} />
+                      {item?.match?.map((aa, i) => {
+                        const payload = {
+                          name: item?.name,
+                          ...aa
+                        }
+                        return <div key={i}>
+                          <BoxingGameCard id={i} data={payload} />
                         </div>
-                      ))}
+                      })}
                     </div>
                   </div>
                 )

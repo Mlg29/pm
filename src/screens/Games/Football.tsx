@@ -116,62 +116,42 @@ function Football() {
                 }}
               >
                 <p></p>
-                {live?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: live,
-                          type: 'live',
-                          gameType: 'Soccer'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
+
               </div>
             )}
             {live?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.league}
-                    </p>
-                    <div>
-                      {item?.matches?.map((aa, i) => {
-                        const payload = {
-                          league: item?.league,
-                          country: item?.country,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <GameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
+              (item, i) => {
+                return <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.league}
+                  </p>
+                  <div>
+                    {item?.matches?.map((aa, i) => {
+                      const payload = {
+                        league: item?.league,
+                        country: item?.country,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <GameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              }
+
             )}
           </>
         ) : null}
@@ -194,63 +174,42 @@ function Football() {
                   }}
                 ></p>
 
-                {upcoming?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: upcoming,
-                          type: 'upcoming',
-                          gameType: 'Soccer'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
+
               </div>
             )}
             {upcoming?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.league}
-                    </p>
-                    <div>
-                      {item?.matches?.map((aa, i) => {
-                        const payload = {
-                          league: item?.league,
-                          country: item?.country,
-                          ...aa
-                        }
-                        if (i < maxMatchesToDisplay)
-                          return (
-                            <div key={i}>
-                              <GameCard id={i} data={payload} />
-                            </div>
-                          )
-                      })}
-                    </div>
+              (item, i) => {
+                return <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.league}
+                  </p>
+                  <div>
+                    {item?.matches?.map((aa, i) => {
+                      const payload = {
+                        league: item?.league,
+                        country: item?.country,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <GameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              }
+
             )}
           </>
         ) : null}
@@ -273,63 +232,42 @@ function Football() {
                   }}
                 ></p>
 
-                {finished?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: finished,
-                          type: 'finished',
-                          gameType: 'Soccer'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
+
               </div>
             )}
             {finished?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.league}
-                    </p>
-                    <div>
-                      {item?.matches?.map((aa, i) => {
-                        const payload = {
-                          league: item?.league,
-                          country: item?.country,
-                          ...aa
-                        }
-                        if (i < maxMatchesToDisplay)
-                          return (
-                            <div key={i}>
-                              <GameCard id={i} data={payload} />
-                            </div>
-                          )
-                      })}
-                    </div>
+              (item, i) => {
+                return <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.league}
+                  </p>
+                  <div>
+                    {item?.matches?.map((aa, i) => {
+                      const payload = {
+                        league: item?.league,
+                        country: item?.country,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <GameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              }
+
             )}
           </>
         ) : null}

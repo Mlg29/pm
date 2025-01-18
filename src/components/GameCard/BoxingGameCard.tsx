@@ -57,18 +57,18 @@ function BoxingGameCard({ id, data }) {
             ({data?.date})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-          {data?.status === "Started" ? `${data?.time}'` : data?.status}
+            {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.localteam?.name}</p>
-          <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.name}</p>
         </div>
         <div style={styles.box3}>
           {/* <GiSoccerField /> */}
           <div style={{ marginLeft: 10 }}>
-            <p style={{ ...FONTS.body7, color: data?.localteam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.localteam?.winner === "True" ? `Winner` : "-"}</p>
-            <p style={{ ...FONTS.body7, color: data?.localteam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.awayteam?.winner === "True" ? `Winner` : "-"}</p>
+            <p style={{ ...FONTS.body7, color: data?.localTeam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.localTeam?.winner === "True" ? `Winner` : "-"}</p>
+            <p style={{ ...FONTS.body7, color: data?.localTeam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.awayTeam?.winner === "True" ? `Winner` : "-"}</p>
 
 
           </div>

@@ -52,8 +52,8 @@ function TennisCard(props) {
   const eventArray = isEmpty(data?.player)
     ? []
     : Array.isArray(data?.player)
-    ? data?.player
-    : [data?.player];
+      ? data?.player
+      : [data?.player];
 
 
   return (
@@ -75,9 +75,9 @@ function TennisCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            {data?.tournamentName}
+            {data?.league}
           </p>
-          <GiTennisBall  size={30} color={COLORS.primary} />
+          <GiTennisBall size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -85,7 +85,7 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.player[0]["@name"]}
+            {data?.player[0]?.name}
           </p>
         </div>
         <div>
@@ -97,7 +97,7 @@ function TennisCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.player[0]["@totalscore"]} - {data?.player[1]["@totalscore"]}
+            {data?.player[0]?.totalscore} - {data?.player[1]?.totalscore}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
@@ -121,7 +121,7 @@ function TennisCard(props) {
           >
             ID: {data?.id}
           </p>
-          <GiTennisBall  size={30} color={COLORS.primary} />
+          <GiTennisBall size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -129,7 +129,7 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.player[1]["@name"]}
+            {data?.player[1]?.name}
           </p>
         </div>
       </div>
@@ -155,18 +155,18 @@ function TennisCard(props) {
                   marginBottom: 10,
                 }}
               >
-                <p>{dd["@name"]} </p>
+                <p>{dd?.name} </p>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
                   }}
                 >
-                  <p style={{margin: "0px 5px"}}>{dd["@s1"] ? dd["@s1"] : ""} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s2"] ? dd["@s2"] : ""} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s3"] ? dd["@s3"] : ""} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s4"] ? dd["@s4"] : ""} </p>
-                  <p style={{margin: "0px 5px"}}>{dd["@s5"] ? dd["@s5"] : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s1 ? dd?.s1 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s2 ? dd?.s2 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s3 ? dd?.s3 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s4 ? dd?.s4 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s5 ? dd?.s5 : ""} </p>
                 </div>
               </div>
             );

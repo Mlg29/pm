@@ -34,7 +34,7 @@ const BetAmount = () => {
     dispatch(getUserData())
   }, [])
 
-  
+
   const checkHandler = () => {
     setAllowCurrency(!allowCurrency);
   };
@@ -62,7 +62,7 @@ const BetAmount = () => {
       amount: amount
     }
 
-    await  dispatch(getFxRate(rateData)).then(pp => {
+    await dispatch(getFxRate(rateData)).then(pp => {
       setExRate(pp?.payload?.data)
     })
   }
@@ -71,7 +71,7 @@ const BetAmount = () => {
   return (
     <div className="top-container" style={{ backgroundColor: "transparent" }}>
       {!isMobile && <DesktopBackButton />}
-      <div style={{ display: "flex", flexDirection: "column", padding: "20px 10px 40px 10px",borderRadius: 10, backgroundColor: 'white' }}>
+      <div style={{ display: "flex", flexDirection: "column", padding: "20px 10px 40px 10px", borderRadius: 10, backgroundColor: 'white' }}>
         <Header text={"Bet Amount"} />
 
         <div style={{ display: "flex", flexDirection: "column", }}>
@@ -84,14 +84,20 @@ const BetAmount = () => {
               setAmount(val)
               handleFxRate(val)
             }}
-            prefix={userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""} 
+            prefix={userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}
           />
-         {
-          exRate ?  <div>
-          <p style={{textAlign: 'right', margin: "10px 0px"}}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{exRate?.rate * parseInt(amount)}</p>
-        </div>
-        : null
-         }
+          {
+            allowCurrency ?
+              <div>
+                {
+                  exRate ? <div>
+                    <p style={{ textAlign: 'right', margin: "10px 0px" }}>{userData?.defaultCurrency === "NGN" ? "$" : userData?.defaultCurrency === "USD" ? "₦" : ""}{exRate?.rate * parseInt(amount)}</p>
+                  </div>
+                    : null
+                }
+              </div>
+              : null
+          }
 
           <div>
             <div
@@ -112,47 +118,57 @@ const BetAmount = () => {
             </div>
           </div>
 
-         {
-          exRate ?
-          <div style={{backgroundColor: '#f9f2f1', padding: 20, borderRadius: 10, marginBottom: 30}}>
-          <p style={{fontSize: 12, marginBottom: 10}}>Current Rate</p>
-          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <div>
-              <p style={{fontSize: 14}}>{exRate?.rate}</p>
+          {
+            allowCurrency ?
+              <div>
+                {
+                  exRate ?
+                    <div style={{ backgroundColor: '#f9f2f1', padding: 20, borderRadius: 10, marginBottom: 30 }}>
+                      <p style={{ fontSize: 12, marginBottom: 10 }}>Current Rate</p>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                          <p style={{ fontSize: 14 }}>{exRate?.rate}</p>
 
-            </div>
+                        </div>
 
-            <div>
-            <p style={{fontSize: 14}}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{amount} = {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{exRate?.rate * parseInt(amount)}</p>
-            </div>
-          </div>
+                        <div>
+                          <p style={{ fontSize: 14 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{amount} = {userData?.defaultCurrency === "NGN" ? "$" : userData?.defaultCurrency === "USD" ? "₦" : ""}{exRate?.rate * parseInt(amount)}</p>
+                        </div>
+                      </div>
+                    </div>
+                    : null
+                }
+              </div>
+              :
+              null
+          }
         </div>
-        : null
-         }
-        </div>
 
-        {/* <div style={{backgroundColor: '#f9f2f1', padding: 20, borderRadius: 10, marginTop: 50, marginBottom: 30}}>
-            <p style={{fontSize: 12, marginBottom: 10}}>Payout will be based on the FX rate at the time of game result.</p>
-           
-          </div> */}
+
+        {
+          allowCurrency ?
+            <div>
               <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          padding: "15px",
-          alignItems: 'center',
-          backgroundColor: COLORS.cream,
-          marginBottom: 20,
-          marginTop: 50,
-    
-        }}
-      >
-        <MdPrivacyTip size={30} style={{ paddingRight: "5px" }} />
-        <p style={{ ...FONTS.body7 }}>
-        Payout will be based on the FX rate at the time of game result.
-        </p>
-      </div>
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  padding: "15px",
+                  alignItems: 'center',
+                  backgroundColor: COLORS.cream,
+                  marginBottom: 20,
+                  marginTop: 50,
 
+                }}
+              >
+                <MdPrivacyTip size={30} style={{ paddingRight: "5px" }} />
+                <p style={{ ...FONTS.body7 }}>
+                  Payout will be based on the FX rate at the time of game result.
+                </p>
+              </div>
+
+            </div>
+            : null
+        }
         <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <Button
             text="Place Bet"
