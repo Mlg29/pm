@@ -141,97 +141,101 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
         }}
       >
         <MmaCard data={gameInfo} />
-        <div
-          style={{ display: "flex", flexDirection: "column", marginBottom: 20 }}
-        >
-          {isMobile ? (
-            <div style={{ ...styles.mob }}>
-              <div style={{ width: "100%" }}>
-                <Button
-                  text={`Bet ${gameInfo?.localteam?.name} to Win`}
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === gameInfo?.localteam?.name
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.localteam?.name
-                        ? COLORS.cream
-                        : COLORS.primary,
-                  }}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.localteam?.name, "W1")
-                  }
-                />
-              </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text={`Bet ${gameInfo?.awayteam?.name} to Win`}
-                  propStyle={{
-                    width: "100%",
-                    backgroundColor:
-                      selected === gameInfo?.awayteam?.name
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.awayteam?.name
-                        ? COLORS.cream
-                        : COLORS.primary,
-                  }}
-                  // handlePress={() => navigate('/home')}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.awayteam?.name, "W2")
-                  }
-                />
-              </div>
+        {
+          gameInfo?.status === "Final" ? null
+            :
+            <div
+              style={{ display: "flex", flexDirection: "column", marginBottom: 20 }}
+            >
+              {isMobile ? (
+                <div style={{ ...styles.mob }}>
+                  <div style={{ width: "100%" }}>
+                    <Button
+                      text={`Bet ${gameInfo?.localteam?.name} to Win`}
+                      propStyle={{
+                        width: "100%",
+                        backgroundColor:
+                          selected === gameInfo?.localteam?.name
+                            ? COLORS.primary
+                            : COLORS.cream,
+                        color:
+                          selected === gameInfo?.localteam?.name
+                            ? COLORS.cream
+                            : COLORS.primary,
+                      }}
+                      handlePress={() =>
+                        handleRoute(gameInfo?.localteam?.name, "W1")
+                      }
+                    />
+                  </div>
+                  <div style={{ width: "100%", margin: "10px 0px" }}>
+                    <Button
+                      text={`Bet ${gameInfo?.awayteamteam?.name} to Win`}
+                      propStyle={{
+                        width: "100%",
+                        backgroundColor:
+                          selected === gameInfo?.awayteamteam?.name
+                            ? COLORS.primary
+                            : COLORS.cream,
+                        color:
+                          selected === gameInfo?.awayteamteam?.name
+                            ? COLORS.cream
+                            : COLORS.primary,
+                      }}
+                      // handlePress={() => navigate('/home')}
+                      handlePress={() =>
+                        handleRoute(gameInfo?.awayteamteam?.name, "W2")
+                      }
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div style={{ ...styles.desk }}>
+                  <div style={{ width: "100%" }}>
+                    <Button
+                      text={`Bet ${gameInfo?.localteam?.name} to Win`}
+                      propStyle={{
+                        width: "90%",
+                        backgroundColor:
+                          selected === gameInfo?.localteam?.name
+                            ? COLORS.primary
+                            : COLORS.cream,
+                        color:
+                          selected === gameInfo?.localteam?.name
+                            ? COLORS.cream
+                            : COLORS.primary,
+                        fontSize: 12,
+                      }}
+                      handlePress={() =>
+                        handleRoute(gameInfo?.localteam?.name, "W1")
+                      }
+                    />
+                  </div>
+                  <div style={{ width: "100%", margin: "10px 0px" }}>
+                    <Button
+                      text={`Bet ${gameInfo?.awayteamteam?.name} to Win`}
+                      propStyle={{
+                        width: "90%",
+                        backgroundColor:
+                          selected === gameInfo?.awayteamteam?.name
+                            ? COLORS.primary
+                            : COLORS.cream,
+                        color:
+                          selected === gameInfo?.awayteamteam?.name
+                            ? COLORS.cream
+                            : COLORS.primary,
+                        fontSize: 12,
+                      }}
+                      // handlePress={() => navigate('/home')}
+                      handlePress={() =>
+                        handleRoute(gameInfo?.awayteamteam?.name, "W2")
+                      }
+                    />
+                  </div>
+                </div>
+              )}
             </div>
-          ) : (
-            <div style={{ ...styles.desk }}>
-              <div style={{ width: "100%" }}>
-                <Button
-                  text={`Bet ${gameInfo?.localteam?.name} to Win`}
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === gameInfo?.localteam?.name
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.localteam?.name
-                        ? COLORS.cream
-                        : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.localteam?.name, "W1")
-                  }
-                />
-              </div>
-              <div style={{ width: "100%", margin: "10px 0px" }}>
-                <Button
-                  text={`Bet ${gameInfo?.awayteam?.name} to Win`}
-                  propStyle={{
-                    width: "90%",
-                    backgroundColor:
-                      selected === gameInfo?.awayteam?.name
-                        ? COLORS.primary
-                        : COLORS.cream,
-                    color:
-                      selected === gameInfo?.awayteam?.name
-                        ? COLORS.cream
-                        : COLORS.primary,
-                    fontSize: 12,
-                  }}
-                  // handlePress={() => navigate('/home')}
-                  handlePress={() =>
-                    handleRoute(gameInfo?.awayteam?.name, "W2")
-                  }
-                />
-              </div>
-            </div>
-          )}
-        </div>
+        }
         <div
           style={{
             display: "flex",
@@ -378,35 +382,33 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 marginBottom: 5,
               }}
             >
-              {gameInfo?.fighter1?.fighter["@name"]}
+              {gameInfo?.localteam?.name}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["age"]
-                ? gameInfo?.fighter1?.fighter["age"]
+              {gameInfo?.localteam?.age
+                ? gameInfo?.localteam?.age
                 : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["gender"]}
+              {gameInfo?.localteam?.gender || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter1?.fighter["heigth"])}
+              {decodeHTMLEntities(gameInfo?.localteam?.height || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["nickname"]
-                ? gameInfo?.fighter1?.fighter["nickname"]
-                : "N/A"}
+              {gameInfo?.localteam?.nickname || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter1?.fighter["reach"])}
+              {decodeHTMLEntities(gameInfo?.localteam?.reach || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["stance"]}
+              {gameInfo?.localteam?.stance || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter1?.fighter["weightclass"])}
+              {decodeHTMLEntities(gameInfo?.localteam?.weightclass || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter1?.fighter["weigth"]}
+              {gameInfo?.localteam?.weigth || 'N/A'}
             </p>
             {gameInfo?.fighter1?.fighter?.records?.record?.map((pp) => {
               return (
@@ -443,36 +445,39 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
             })}
           </div>
           <div>
-            <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["@name"]}
+            <p
+              style={{
+                ...FONTS.body7,
+                marginBottom: 5,
+              }}
+            >
+              {gameInfo?.awayteam?.name}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["age"]
-                ? gameInfo?.fighter2?.fighter["age"]
+              {gameInfo?.awayteam?.age
+                ? gameInfo?.awayteam?.age
                 : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["gender"]}
+              {gameInfo?.awayteam?.gender || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter2?.fighter["heigth"])}
+              {decodeHTMLEntities(gameInfo?.awayteam?.height || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["nickname"]
-                ? gameInfo?.fighter2?.fighter["nickname"]
-                : "N/A"}
+              {gameInfo?.awayteam?.nickname || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter2?.fighter["reach"])}
+              {decodeHTMLEntities(gameInfo?.awayteam?.reach || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["stance"]}
+              {gameInfo?.awayteam?.stance || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.fighter2?.fighter["weightclass"])}
+              {decodeHTMLEntities(gameInfo?.localteam?.weightclass || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.fighter2?.fighter["weigth"]}
+              {gameInfo?.awayteamteam?.weigth || 'N/A'}
             </p>
             {gameInfo?.fighter2?.fighter?.records?.record?.map((pp) => {
               return (

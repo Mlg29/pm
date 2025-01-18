@@ -79,12 +79,12 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.match?.localteam?.name}
+            {data?.localTeam?.name}
           </p>
         </div>
         <div>
           {
-            data?.match?.localteam?.winner === "True" || data?.match.awayteam?.winner === "True" ?
+            data?.localTeam?.winner === "True" || data?.awayTeam?.winner === "True" ?
               <h3
                 style={{
                   ...FONTS.h7,
@@ -93,14 +93,14 @@ function BoxingCard(props) {
                   color: COLORS.green
                 }}
               >
-                Winner: {data?.match?.localteam?.winner === "True" ? `${data?.match?.localteam?.name} (round ${data?.match?.localteam?.round})` : data?.match?.awayteam?.winner === "True" ? `${data?.match?.awayteam?.name} (round ${data?.match?.awayteam?.round})` : null}
+                Winner: {data?.localTeam?.winner === "True" ? `${data?.localTeam?.name} (round ${data?.localTeam?.round})` : data?.awayTeam?.winner === "True" ? `${data?.awayTeam?.name} (round ${data?.awayTeam?.round})` : null}
               </h3>
               : null
           }
 
 
           <p style={{ ...FONTS.body7, fontWeight: '600', marginTop: 5, fontSize: "8px", textAlign: "center" }}>
-            {data?.match?.status}
+            {data?.status}
           </p>
         </div>
         <div
@@ -129,7 +129,7 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.match?.awayteam?.name}
+            {data?.awayTeam?.name}
           </p>
         </div>
       </div>

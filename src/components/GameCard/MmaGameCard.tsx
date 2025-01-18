@@ -56,7 +56,7 @@ function MmaGameCard({ id, data }) {
     >
       <div style={styles.box1}>
       <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-        ({data?.fightDate})
+        ({data?.date})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
           {data?.status > 0 ? `${data?.status}'` : data?.status}

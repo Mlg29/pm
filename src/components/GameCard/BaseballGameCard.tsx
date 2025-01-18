@@ -27,6 +27,7 @@ export const styles = {
   },
   box3: {
     display: "flex",
+    justifyContent: 'flex-end',
     alignItems: "center",
     marginRight: 10,
     width: "10%",
@@ -34,14 +35,16 @@ export const styles = {
   box4: {
     marginRight: 10,
     width: "30%",
-    display: 'flex',
+    display: "flex",
     flexDirection: "column" as FlexDirection,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
 };
 
-function BoxingGameCard({ id, data }) {
+function BaseballGameCard({ id, data }) {
   const navigate = useNavigate();
+
+
 
   return (
     <div>
@@ -49,15 +52,17 @@ function BoxingGameCard({ id, data }) {
         style={styles.container}
         key={id}
         onClick={() =>
-          navigate("/game-details", { state: { data: data, gameType: "Boxing" } })
+          navigate("/game-details", {
+            state: { data: data, gameType: "Baseball" },
+          })
         }
       >
         <div style={styles.box1}>
-          <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-            ({data?.date})
-          </p>
+        <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+         ({data?.date} - {data?.time})
+        </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+            {data?.status}
           </p>
         </div>
         <div style={styles.box2}>
@@ -65,20 +70,23 @@ function BoxingGameCard({ id, data }) {
           <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.name}</p>
         </div>
         <div style={styles.box3}>
-          {/* <GiSoccerField /> */}
+    
           <div style={{ marginLeft: 10 }}>
-            <p style={{ ...FONTS.body7, color: data?.localTeam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.localTeam?.winner === "True" ? `Winner` : "-"}</p>
-            <p style={{ ...FONTS.body7, color: data?.localTeam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.awayTeam?.winner === "True" ? `Winner` : "-"}</p>
-
-
+            <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
+              {data?.localTeam?.totalScore
+                ? data?.localTeam?.totalScore
+                : "-"}
+            </p>
+            <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
+              {data?.awayTeam?.totalScore
+                ? data?.awayTeam?.totalScore
+                : "-"}
+            </p>
           </div>
         </div>
-
       </div>
     </div>
-
   );
 }
 
-
-export default BoxingGameCard;
+export default BaseballGameCard;

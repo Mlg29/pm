@@ -46,7 +46,7 @@ function HorseCard({ gameInfo }) {
       <div style={styles.center}>
         <div style={{ display: 'flex', alignItems: 'center', width: '100%', }}>
           <p style={{ ...FONTS.h7, textAlign: 'right', margin: '5px 1rem', width: '50%' }}>Status: </p>
-          <p style={{ ...FONTS.h7, margin: '5px 0px', width: '50%', color: 'red' }}>{gameInfo?.results}</p>
+          <p style={{ ...FONTS.h7, margin: '5px 0px', width: '50%', color: 'red' }}>{gameInfo?.status}</p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', width: '100%', }}>
           <p style={{ ...FONTS.h7, textAlign: 'right', margin: '5px 1rem', width: '50%' }}>Time: </p>
@@ -63,23 +63,7 @@ function HorseCard({ gameInfo }) {
 
       </div>
 
-      {/* <div style={{...styles.div}}>
-        {gameInfo?.horses?.horse?.map((dd, i) => {
-          return (
-            <div
-              style={{
-                ...styles.card,
-                backgroundColor: COLORS.white,
-                border: `0.5px solid ${COLORS.primary}`,
-                color: COLORS.primary,
-              }}
-              key={i}
-            >
-              <p style={{...FONTS.h7}}>{dd["name"]}</p>
-            </div>
-          );
-        })}
-      </div> */}
+
     </div>
   );
 }
