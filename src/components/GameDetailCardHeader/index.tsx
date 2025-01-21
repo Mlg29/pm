@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import noLogo from "../../assets/images/no.jpg";
+import { useEffect } from "react";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -42,7 +43,24 @@ function GameDetailCardHeader(props: any) {
   const { propStyle, data } = props;
 
 
+  // useEffect(() => {
+  //   const fetchTeamData = async () => {
+  //     const url = "http://data2.goalserve.com:8084/api/v1/logotips/soccer/teams?k=31a4b27821b744ba159608dc5f051e20&ids=21730";
 
+  //     try {
+  //       const response = await fetch(url, {
+  //         method: 'GET',
+  //         mode: 'no-cors' // This tells the browser to bypass CORS restrictions
+  //       });
+  //       // With 'no-cors', you won't be able to access the response body, but you can fetch the resource.
+  //       console.log(response);
+  //     } catch (err) {
+  //       console.error("Failed to fetch data", err);
+  //     }
+  //   };
+
+  //   fetchTeamData();
+  // }, []);
 
 
   return (
@@ -66,6 +84,7 @@ function GameDetailCardHeader(props: any) {
           >
             {data?.league}
           </p>
+          <img src={`data:image/png;base64,${data?.localTeam?.teamLogo}`} alt="Logo" />
           {!data?.localTeam?.teamLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (
