@@ -19,34 +19,7 @@ function Basketball() {
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const [tomorrow, setTomorrow] = useState<any>([])
   const loading = useAppSelector(BasketballFixtureeStatusState) as any
-  const maxMatchesToDisplay = 5
-
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server basketball");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("BasketEventUpdate", (message) => {
-  //     setLive((prevMessages) => {
-  //       const updatedMessages = prevMessages?.filter(
-  //         (msg) => msg?.id !== message?.id
-  //       );
-  //       return [...updatedMessages, message];
-  //     });
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
@@ -97,7 +70,7 @@ function Basketball() {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            marginBottom: 'maxMatchesToDisplaypx'
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -126,157 +99,73 @@ function Basketball() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
+            {live?.map((item, i) => (
+              <div key={i}>
                 <p
                   style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
                   }}
-                ></p>
-                {live?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: live,
-                          type: 'live',
-                          gameType: 'Basketball'
-                        }
-                      })
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
                     }
-                  >
-                    View more
-                  </p>
-                )}
+                    return (
+                      <div key={i}>
+                        <BasketballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            )}
-
-            {live?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: maxMatchesToDisplay,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: maxMatchesToDisplay
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BasketballGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            ))}
           </>
         ) : null}
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
+            {upcoming?.map((item, i) => (
+              <div key={i}>
                 <p
                   style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
                   }}
-                ></p>
-                {upcoming?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: upcoming,
-                          type: 'upcoming',
-                          gameType: 'Basketball'
-                        }
-                      })
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
                     }
-                  >
-                    View more
-                  </p>
-                )}
+                    return (
+                      <div key={i}>
+                        <BasketballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            )}
-
-            {upcoming?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: maxMatchesToDisplay,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: maxMatchesToDisplay
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BasketballGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            ))}
           </>
         ) : null}
 
@@ -297,64 +186,40 @@ function Basketball() {
                     margin: '15px 0px'
                   }}
                 ></p>
-                {finished?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: finished,
-                          type: 'finished',
-                          gameType: 'Basketball'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
               </div>
             )}
 
-            {finished?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: maxMatchesToDisplay,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: maxMatchesToDisplay
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BasketballGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            {finished?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <BasketballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
           </>
         ) : null}
 

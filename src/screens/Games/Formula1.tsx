@@ -22,8 +22,6 @@ function Formula1() {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const loading = useAppSelector(formulaFixtureStatusState) as any
-  const maxMatchesToDisplay = 5
-  const url = `${BaseUrl}/boxing`
   const dispatch = useAppDispatch() as any
 
   let createdDate = moment(new Date()).utc().format()
@@ -78,7 +76,8 @@ function Formula1() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -107,24 +106,6 @@ function Formula1() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
             {live?.map((item, i) => {
               return <div key={i}>
                 <p
@@ -150,24 +131,6 @@ function Formula1() {
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
             {upcoming?.map((item, i) => {
               return <div key={i}>
                 <p
@@ -194,23 +157,6 @@ function Formula1() {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
             {finished?.map((item, i) => {
               return <div key={i}>
                 <p

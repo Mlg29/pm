@@ -20,35 +20,9 @@ function Mma() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
+  const [live, setLive] = useState<any>([])
   const dispatch = useAppDispatch() as any
-  const maxMatchesToDisplay = 5
   const loading = useAppSelector(mmaFixtureStatusState) as any
-
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
@@ -60,6 +34,10 @@ function Mma() {
     const payloadFinished = {
       range: 'finished'
     }
+
+    dispatch(getMmaFixtures(null)).then((dd) => {
+      setLive(dd?.payload?.category)
+    })
 
     dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload?.category)
@@ -87,6 +65,10 @@ function Mma() {
 
   const status = [
     {
+      id: 1,
+      name: 'Live'
+    },
+    {
       id: 2,
       name: 'Scheduled'
     },
@@ -104,7 +86,8 @@ function Mma() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -131,146 +114,95 @@ function Mma() {
         </div>
       </div>
       <LoadingState isLoading={loading}>
-        {selectedStatus === 'Scheduled' ? (
+        {selectedStatus === 'Live' ? (
           <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-                {upcoming?.length > maxMatchesToDisplay && (
+            {live?.map((league, index) => (
+              <div key={league?.id}>
+                {league?.name && league?.match?.length > 0 && (
                   <p
                     style={{
                       ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
                     }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: upcoming,
-                          type: 'upcoming',
-                          gameType: 'Boxing'
-                        }
-                      })
-                    }
                   >
-                    View more
+                    {league.name}
                   </p>
                 )}
-              </div>
-            )}
-            {upcoming?.map(
-              (league, index) =>
-                index < maxMatchesToDisplay && (
-                  <div key={league?.id}>
-                    {league?.name && league?.match?.length > 0 && (
-                      <p
-                        style={{
-                          ...FONTS.body7,
-                          backgroundColor: COLORS.lightRed,
-                          padding: 5,
-                          marginBottom: 10,
-                          borderRadius: 5,
-                          color: COLORS.black,
-                          marginRight: 10
-                        }}
-                      >
-                        {league.name}
-                      </p>
-                    )}
-                    <div>
-                      {league?.match?.map((aa, i) => (
-                        <div key={i}>
-                          <MmaGameCard id={index} data={aa} />
-                        </div>
-                      ))}
+                <div>
+                  {league?.match?.map((aa, i) => (
+                    <div key={i}>
+                      <MmaGameCard id={index} data={aa} />
                     </div>
-                  </div>
-                )
-            )}
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.map((league, index) => (
+              <div key={league?.id}>
+                {league?.name && league?.match?.length > 0 && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {league.name}
+                  </p>
+                )}
+                <div>
+                  {league?.match?.map((aa, i) => (
+                    <div key={i}>
+                      <MmaGameCard id={index} data={aa} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </>
         ) : null}
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-                {finished?.length > maxMatchesToDisplay && (
+            {finished?.map((league, index) => (
+              <div key={league?.id}>
+                {league?.name && league?.match?.length > 0 && (
                   <p
                     style={{
                       ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
                     }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: finished,
-                          type: 'finished',
-                          gameType: 'Boxing'
-                        }
-                      })
-                    }
                   >
-                    View more
+                    {league?.name}
                   </p>
                 )}
-              </div>
-            )}
-            {finished?.map(
-              (league, index) =>
-                index < maxMatchesToDisplay && (
-                  <div key={league?.id}>
-                    {league?.name && league?.match?.length > 0 && (
-                      <p
-                        style={{
-                          ...FONTS.body7,
-                          backgroundColor: COLORS.lightRed,
-                          padding: 5,
-                          marginBottom: 10,
-                          borderRadius: 5,
-                          color: COLORS.black,
-                          marginRight: 10
-                        }}
-                      >
-                        {league?.name}
-                      </p>
-                    )}
-                    <div>
-                      {league?.match?.map((aa, i) => (
-                        <div key={i}>
-                          <MmaGameCard id={index} data={aa} />
-                        </div>
-                      ))}
+                <div>
+                  {league?.match?.map((aa, i) => (
+                    <div key={i}>
+                      <MmaGameCard id={index} data={aa} />
                     </div>
-                  </div>
-                )
-            )}
+                  ))}
+                </div>
+              </div>
+            ))}
           </>
         ) : null}
         {upcoming?.length < 1 && finished?.length < 1 ? (

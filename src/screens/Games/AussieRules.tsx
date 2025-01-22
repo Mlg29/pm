@@ -2,65 +2,46 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
-
-import { io } from 'socket.io-client'
-import { BaseUrl } from '../../https'
 import moment from 'moment'
-import { useAppDispatch } from '../../redux/hooks'
-import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import EmptyState from '../../components/EmptyState'
+import {
+  AussieRuleStatusState,
+  getAussieRuleFixtures
+} from '../../redux/slices/AussieRuleSlice'
+import { LoadingState } from '../../components/LoadingState'
+import AussieRulesGameCard from '../../components/GameCard/AusseiRules'
 
 function AussieRules() {
-  const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
-  const [finished, setFinished] = useState<any>([])
-  const url = `${BaseUrl}/boxing`
+  const [standings, setStandings] = useState<any>([])
+  const [live, setLive] = useState<any>([])
   const dispatch = useAppDispatch() as any
-
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+  const loading = useAppSelector(AussieRuleStatusState)
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
-    const payloadUpcoming = {
-      status: 'Not Started'
+    const payloadLive = {
+      eventType: 'live'
     }
-    const payloadFinished = {
-      status: 'Finished'
+    const payloadSchedule = {
+      eventType: 'schedule'
+    }
+    const payloadStanding = {
+      eventType: 'standings'
     }
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
-
-    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-    //     setFinished(dd?.payload);
-    //   });
+    dispatch(getAussieRuleFixtures(payloadLive)).then((dd) => {
+      setUpcoming(dd?.payload)
+    })
+    dispatch(getAussieRuleFixtures(payloadSchedule)).then((dd) => {
+      setLive(dd?.payload?.results?.tournament)
+    })
+    // dispatch(getAussieRuleFixtures(payloadStanding)).then((dd) => {
+    //   setStandings(dd?.payload?.standings)
+    // })
   }, [])
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
@@ -84,7 +65,8 @@ function AussieRules() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -110,9 +92,86 @@ function AussieRules() {
           })}
         </div>
       </div>
-      {finished?.data?.length < 1 && upcoming?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Aussie Rules' height='30vh' />
-      ) : null}
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Live' ? (
+          <>
+            {live?.map((item, i) => {
+              return (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <AussieRulesGameCard id={i} data={item?.match} />
+                </div>
+              )
+            })}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.round?.map((item, i) => {
+              return (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.week?.map((weekItem, i) => {
+                      const { matches, name: leagueName } = weekItem
+                      return matches?.map((matchInfo, matchIndex) => {
+                        if (matchInfo?.match)
+                          return matchInfo?.match?.map(
+                            (details, detailsIndex) => {
+                              const payload = {
+                                league: leagueName,
+                                ...details
+                              }
+                              return (
+                                <div key={`${i}-${matchIndex}-${detailsIndex}`}>
+                                  <AussieRulesGameCard
+                                    id={matchIndex}
+                                    data={payload}
+                                  />
+                                </div>
+                              )
+                            }
+                          )
+                      })
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+          </>
+        ) : null}
+        {live?.length < 1 && upcoming?.length < 1 ? (
+          <EmptyState
+            header='No Game Available for Aussie Rules'
+            height='30vh'
+          />
+        ) : null}
+      </LoadingState>
     </div>
   )
 }

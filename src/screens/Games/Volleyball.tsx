@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
-
-import { io } from 'socket.io-client'
 import { BaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
-import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
 import { getVolleyballFixtures } from '../../redux/slices/VolleyballSlice'
 import VolleyballGameCard from '../../components/GameCard/VolleyballGameCard'
 
 function Volleyball() {
-  const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const url = `${BaseUrl}/volleyball`
   const dispatch = useAppDispatch() as any
 
   // useEffect(() => {
@@ -108,7 +103,8 @@ function Volleyball() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -140,45 +136,6 @@ function Volleyball() {
 
       {selectedStatus === 'Scheduled' ? (
         <>
-          {upcoming?.data?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {upcoming?.total > 10 && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: upcoming,
-                        type: 'upcoming',
-                        gameType: 'Volleyball'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-
           {upcomingOutput &&
             Object.keys(upcomingOutput)?.map((leagueName) => (
               <div key={leagueName}>
@@ -211,45 +168,6 @@ function Volleyball() {
 
       {selectedStatus === 'Finished' ? (
         <>
-          {finished?.data?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {finished?.total > 10 && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: finished,
-                        type: 'finished',
-                        gameType: 'Volleyball'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-
           {finishedOutput &&
             Object.keys(finishedOutput)?.map((leagueName) => (
               <div key={leagueName}>

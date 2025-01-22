@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
-
-import { io } from 'socket.io-client'
 import { BaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
-import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
 import { getDartFixtures } from '../../redux/slices/DartSlice'
 import DartGameCard from '../../components/GameCard/DartGameCard'
@@ -17,37 +14,9 @@ function Darts() {
 
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const url = `${BaseUrl}/dart`
   const dispatch = useAppDispatch() as any
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server dart");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("DartEventUpdate", (message) => {
-  //     setLive((prevMessages) => {
-  //       const updatedMessages = prevMessages?.filter(
-  //         (msg) => msg?.id !== message?.id
-  //       );
-  //       return [...updatedMessages, message];
-  //     });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
   let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
     const payloadUpcoming = {
@@ -104,7 +73,8 @@ function Darts() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -132,45 +102,6 @@ function Darts() {
       </div>
       {selectedStatus === 'Scheduled' ? (
         <>
-          {upcoming?.data?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {upcoming?.total > 10 && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: upcoming,
-                        type: 'upcoming',
-                        gameType: 'Dart'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-
           {upcomingOutput &&
             Object.keys(upcomingOutput)?.map((leagueName) => (
               <div key={leagueName}>
@@ -203,45 +134,6 @@ function Darts() {
 
       {selectedStatus === 'Finished' ? (
         <>
-          {finished?.data?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {finished?.total > 10 && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: finished,
-                        type: 'finished',
-                        gameType: 'Dart'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-
           {finishedOutput &&
             Object.keys(finishedOutput)?.map((leagueName) => (
               <div key={leagueName}>
