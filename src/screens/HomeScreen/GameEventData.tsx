@@ -343,19 +343,19 @@ function GameEventData(props: any) {
           : ''
 
     setLoading(true)
-    dispatch(getCricketFixtures(actualPayload)).then((dd) => {
-      if (dd?.payload) {
-        setData((prev) => [...prev, ...dd?.payload?.data])
-        setPage(dd?.payload?.page)
-        setPageSize(dd?.payload?.pageSize)
-        setTotal(dd?.payload?.total)
-        if (data?.length === dd?.payload?.total) {
-          setHasMore(false)
-        }
-      }
+    // dispatch(getCricketFixtures(actualPayload)).then((dd) => {
+    //   if (dd?.payload) {
+    //     setData((prev) => [...prev, ...dd?.payload?.data])
+    //     setPage(dd?.payload?.page)
+    //     setPageSize(dd?.payload?.pageSize)
+    //     setTotal(dd?.payload?.total)
+    //     if (data?.length === dd?.payload?.total) {
+    //       setHasMore(false)
+    //     }
+    //   }
 
-      setLoading(false)
-    })
+    //   setLoading(false)
+    // })
   }
 
   const fetchSnookerData = async (page) => {

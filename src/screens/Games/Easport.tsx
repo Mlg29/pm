@@ -118,7 +118,8 @@ function Easport() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -146,45 +147,6 @@ function Easport() {
       </div>
       {selectedStatus === 'Live' ? (
         <>
-          {live?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {live?.length > 10 && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: live,
-                        type: 'live',
-                        gameType: 'Esports'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-
           {liveOutput &&
             Object.keys(liveOutput)?.map((leagueName) => (
               <div key={leagueName}>
@@ -217,45 +179,6 @@ function Easport() {
 
       {selectedStatus === 'Scheduled' ? (
         <>
-          {upcoming?.data?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {upcoming?.total > 10 && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: upcoming,
-                        type: 'upcoming',
-                        gameType: 'Esports'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-
           {upcomingOutput &&
             Object.keys(upcomingOutput)?.map((leagueName) => (
               <div key={leagueName}>
@@ -288,45 +211,6 @@ function Easport() {
 
       {selectedStatus === 'Finished' ? (
         <>
-          {finished?.data?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <p
-                style={{
-                  ...FONTS.body6,
-                  color: COLORS.gray,
-                  margin: '15px 0px'
-                }}
-              ></p>
-              {finished?.total > 10 && (
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    color: COLORS.orange,
-                    cursor: 'pointer',
-                    margin: '15px 0px'
-                  }}
-                  onClick={() =>
-                    navigate('/events', {
-                      state: {
-                        events: finished,
-                        type: 'finished',
-                        gameType: 'Esports'
-                      }
-                    })
-                  }
-                >
-                  View more
-                </p>
-              )}
-            </div>
-          )}
-
           {finishedOutput &&
             Object.keys(finishedOutput)?.map((leagueName) => (
               <div key={leagueName}>

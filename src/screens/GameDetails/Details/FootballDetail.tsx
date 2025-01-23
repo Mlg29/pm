@@ -16,7 +16,9 @@ import { getLogo, getStat } from '../../../redux/slices/FootballSlice';
 function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, active, setActive, eventArray }) {
     const [homeStat, setHomeStat] = useState(null)
     const [awayStat, setAwayStat] = useState(null)
+
     const dispatch = useAppDispatch() as any;
+
 
 
     useEffect(() => {
@@ -32,7 +34,9 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
         dispatch(getStat(awayTeam)).then((dd) => {
             setAwayStat(dd?.payload?.teams?.team)
         });
+
     }, [])
+
 
     return (
         <>

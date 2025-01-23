@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { useNavigate } from 'react-router-dom'
-import { BaseUrl } from '../../https'
-import { io } from 'socket.io-client'
 import moment from 'moment'
 import {
   getHorseFixtures,
   horseFixtureStatusState
 } from '../../redux/slices/horseSlice'
-import Loader from '../../components/Loader'
 import { COLORS } from '../../utils/colors'
 import { FONTS } from '../../utils/fonts'
 import HorseGameCard from '../../components/GameCard/HorseGameCard'
@@ -17,19 +13,13 @@ import { LoadingState } from '../../components/LoadingState'
 
 function HorseRace() {
   const dispatch = useAppDispatch() as any
-  const navigate = useNavigate()
-  const [loader, setLoader] = useState(false)
-  const url = `${BaseUrl}/horse`
-  const [live, setLive] = useState<any>([])
-  const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const loading = useAppSelector(horseFixtureStatusState) as any
-  const maxMatchesToDisplay = 5
-  const [today, setToday] = useState<any>([])
-  const [tomorrow, setTomorrow] = useState<any>([])
+  const [Live, setLive] = useState<any>([])
+  const [Schedule, setSchedule] = useState<any>([])
 
   let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
+  let ScheduleDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
     const payloadUpcoming = {
@@ -39,10 +29,10 @@ function HorseRace() {
       range: 'finished'
     }
     dispatch(getHorseFixtures(null)).then((dd) => {
-      setToday(dd?.payload)
+      setLive(dd?.payload)
     })
     dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
-      setTomorrow(dd?.payload)
+      setSchedule(dd?.payload)
     })
     dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
       setFinished(dd?.payload)
@@ -51,39 +41,22 @@ function HorseRace() {
     return
   }, [])
 
-  const [selectedStatus, setSelectedStatus] = useState('Today')
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
       id: 1,
-      name: 'Today'
+      name: 'Live'
     },
     {
       id: 2,
-      name: 'Tomorrow'
+      name: 'Schedule'
     },
     {
       id: 3,
       name: 'Finished'
     }
   ]
-
-  // if (loader) {
-  //   return (
-  //     <div
-  //       style={{
-  //         display: "flex",
-  //         flexDirection: "column",
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         flex: 1,
-  //         height: "100vh",
-  //       }}
-  //     >
-  //       <Loader />
-  //     </div>
-  //   );
-  // }
 
   return (
     <div>
@@ -120,9 +93,9 @@ function HorseRace() {
           })}
         </div>
       </div>
-      {selectedStatus === 'Today' ? (
+      {selectedStatus === 'Live' ? (
         <>
-          {today?.length > 0 && (
+          {Live?.length > 0 && (
             <div
               style={{
                 display: 'flex',
@@ -137,53 +110,15 @@ function HorseRace() {
                   margin: '15px 0px'
                 }}
               ></p>
-
             </div>
           )}
         </>
       ) : null}
 
-      {/*{liveOutput && Object.keys(liveOutput)?.map((leagueName) => (
-        <div key={leagueName}>
-          <p style={{ ...FONTS.body7,backgroundColor: COLORS.lightRed, padding: 5, marginBottom: 10, borderRadius: 5, color: COLORS.black, marginRight: 10 }}>
-            {leagueName}
-          </p>
-          <div>
-            {liveOutput[leagueName].map((aa, i) => {
-              return (
-                <div key={i}>
-                 <HorseGameCard id={i} data={aa} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-        </>
-        : null
-      } */}
       <LoadingState isLoading={loading}>
-        {selectedStatus === 'Today' ? (
+        {selectedStatus === 'Live' ? (
           <>
-            {today?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
-            {today?.map((item, i) => i < maxMatchesToDisplay && (
+            {Live?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -217,27 +152,9 @@ function HorseRace() {
           </>
         ) : null}
 
-        {selectedStatus === 'Tomorrow' ? (
+        {selectedStatus === 'Schedule' ? (
           <>
-            {tomorrow?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
-            {tomorrow?.map((item, i) => i < maxMatchesToDisplay && (
+            {Schedule?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -273,24 +190,6 @@ function HorseRace() {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
             {finished?.map((item, i) => (
               <div key={i}>
                 <p
@@ -325,7 +224,7 @@ function HorseRace() {
           </>
         ) : null}
 
-        {upcoming?.length < 1 && today?.length < 1 && finished?.length < 1 ? (
+        {Schedule?.length < 1 && Live?.length < 1 && finished?.length < 1 ? (
           <EmptyState header='No Game Available for Horse Race' height='30vh' />
         ) : null}
       </LoadingState>

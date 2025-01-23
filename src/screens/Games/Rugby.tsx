@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
-
-import { io } from 'socket.io-client'
-import { BaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
-import { AflStatusState, getAflFixtureLive, getAflFixtures } from '../../redux/slices/AflSlice'
+import {
+  AflStatusState,
+  getAflFixtureLive,
+  getAflFixtures
+} from '../../redux/slices/AflSlice'
 import AflGameCard from '../../components/GameCard/AflGameCard'
 import { LoadingState } from '../../components/LoadingState'
 
 function Rugby() {
-  const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [Live, setLive] = useState<any>([])
-  const maxMatchesToDisplay = 5
   const loading = useAppSelector(AflStatusState) as any
   const dispatch = useAppDispatch() as any
 
   let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
     const payloadUpcoming = {
@@ -38,7 +35,6 @@ function Rugby() {
     })
   }, [])
 
-
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
@@ -52,7 +48,6 @@ function Rugby() {
     }
   ]
 
-
   return (
     <div>
       <div>
@@ -62,7 +57,7 @@ function Rugby() {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            marginBottom: 10,
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -119,15 +114,13 @@ function Rugby() {
                 })}
               </div>
             </div>
-
-
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map(
-              (item, i) => {
-                return <div key={i}>
+            {upcoming?.map((item, i) => {
+              return (
+                <div key={i}>
                   <p
                     style={{
                       ...FONTS.body7,
@@ -142,30 +135,33 @@ function Rugby() {
                     {item?.name}
                   </p>
                   <div>
-                    {item?.week?.map((aa, i) => {
-                      const payload = {
-                        league: item?.league,
-                        country: item?.country,
-                        ...aa
-                      }
-                      return (
-                        <div key={i}>
-                          <AflGameCard id={i} data={payload} />
-                        </div>
-                      )
+                    {item?.week?.map((weekItem, i) => {
+                      const { matches, name: leagueName } = weekItem
+                      return matches?.map((matchInfo, matchIndex) => {
+                        if(matchInfo?.match) return (
+                          matchInfo?.match?.map((details, detailsIndex) => {
+                            const payload = {
+                              league: leagueName,
+                              ...details
+                            }
+                            return (
+                              <div key={`${i}-${matchIndex}-${detailsIndex}`}>
+                                <AflGameCard id={matchIndex} data={payload} />
+                              </div>
+                            )
+                          })
+                        )
+                      })
                     })}
                   </div>
                 </div>
-              }
-
-            )}
+              )
+            })}
           </>
         ) : null}
 
-
-
         {upcoming?.category?.match?.length < 1 &&
-          Live?.category?.match?.length < 1 ? (
+        Live?.category?.match?.length < 1 ? (
           <EmptyState
             header='No Game Available for American Football Rugby'
             height='30vh'

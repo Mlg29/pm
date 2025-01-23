@@ -41,6 +41,34 @@ export const styles = {
 function GameDetailCardHeader(props: any) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
+  const [homeLogo, setHomeLogo] = useState(null)
+  const [awayLogo, setAwayLogo] = useState(null)
+
+  const transformUrl = (url) => {
+    const baseUrl = "http://data2.goalserve.com:8084";
+    return url.replace(baseUrl, "/api/");
+  };
+
+  const fetchLogo = async (url, url2) => {
+    const transformedUrl = transformUrl(url);
+    const transformedUrl2 = transformUrl(url2);
+    await fetch(transformedUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setHomeLogo(data[0]?.base64)
+      });
+    await fetch(transformedUrl2)
+      .then((response) => response.json())
+      .then((data) => {
+        setAwayLogo(data[0]?.base64)
+      });
+  }
+
+  useEffect(() => {
+    fetchLogo(data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo)
+
+  }, [data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo])
+
 
 
   return (
@@ -64,10 +92,12 @@ function GameDetailCardHeader(props: any) {
           >
             {data?.league}
           </p>
+
+
           {!data?.localTeam?.teamLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (
-            <img src={data?.localTeam?.teamLogo} style={{ width: "20px" }} />
+            <img src={`data:image/png;base64,${homeLogo}`} style={{ width: "20px" }} alt="Logo" />
           )}
 
           <p
@@ -128,7 +158,7 @@ function GameDetailCardHeader(props: any) {
           {!data?.visitorTeam?.teamLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (
-            <img src={data?.visitorTeam?.teamLogo} style={{ width: "20px" }} />
+            <img src={`data:image/png;base64,${awayLogo}`} style={{ width: "20px" }} alt="Logo" />
           )}
           <p
             style={{

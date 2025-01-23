@@ -19,9 +19,7 @@ function Baseball() {
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const [tomorrow, setTomorrow] = useState<any>([])
   const loading = useAppSelector(BaseballFixtureeStatusState) as any
-  const maxMatchesToDisplay = 5
 
   // useEffect(() => {
   //   const socket = io(url) as any;
@@ -71,12 +69,12 @@ function Baseball() {
     })
   }, [dispatch])
 
-  const [selectedStatus, setSelectedStatus] = useState('finished')
+  const [selectedStatus, setSelectedStatus] = useState('Finished')
 
   const status = [
     {
       id: 1,
-      name: 'finished'
+      name: 'Live'
     },
     {
       id: 2,
@@ -97,7 +95,7 @@ function Baseball() {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            marginBottom: 'maxMatchesToDisplaypx'
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -124,81 +122,39 @@ function Baseball() {
         </div>
       </div>
       <LoadingState isLoading={loading}>
-        {selectedStatus === 'finished' ? (
+        {selectedStatus === 'Live' ? (
           <>
-            {live?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
+            {live?.map((item, i) => (
+              <div key={i}>
                 <p
                   style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
                   }}
-                ></p>
-                {live?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: live,
-                          type: 'live',
-                          gameType: 'Baseball'
-                        }
-                      })
+                >
+                  {item?.['@name']}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
                     }
-                  >
-                    View more
-                  </p>
-                )}
+                    return (
+                      <div key={i}>
+                        <BaseballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            )}
-
-            {live?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: maxMatchesToDisplay,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: maxMatchesToDisplay
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BaseballGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            ))}
           </>
         ) : null}
 
@@ -219,142 +175,76 @@ function Baseball() {
                     margin: '15px 0px'
                   }}
                 ></p>
-                {upcoming?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: upcoming,
-                          type: 'upcoming',
-                          gameType: 'Baseball'
-                        }
-                      })
-                    }
-                  >
-                    View more
-                  </p>
-                )}
               </div>
             )}
 
-            {upcoming?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: maxMatchesToDisplay,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: maxMatchesToDisplay
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BaseballGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            {upcoming?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
+                  }}
+                >
+                  {item?.['@name']}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <BaseballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
           </>
         ) : null}
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
+            {finished?.map((item, i) => (
+              <div key={i}>
                 <p
                   style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
                   }}
-                ></p>
-                {finished?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: finished,
-                          type: 'finished',
-                          gameType: 'Baseball'
-                        }
-                      })
+                >
+                  {item['@name']}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.file_group,
+                      ...aa
                     }
-                  >
-                    View more
-                  </p>
-                )}
+                    return (
+                      <div key={i}>
+                        <BaseballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            )}
-
-            {finished?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: maxMatchesToDisplay,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: maxMatchesToDisplay
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          league: item?.name,
-                          country: item?.file_group,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BaseballGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            ))}
           </>
         ) : null}
 

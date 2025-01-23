@@ -22,6 +22,8 @@ import CricketSlice from './slices/CricketSlice'
 import MiscSlice from './slices/MiscSlice'
 import FormulaSlice from './slices/Formula'
 import BaseballSlice from './slices/BaseballSlice'
+import AussieRuleSlice from './slices/AussieRuleSlice'
+import NascaSlice from './slices/NascaSlice'
 
 export const store = configureStore({
   reducer: {
@@ -45,9 +47,11 @@ export const store = configureStore({
     volleyball: VolleyballSlice,
     handball: HandballSlice,
     afl: AflSlice,
+    aussieRule: AussieRuleSlice,
     futsal: FutsalSlice,
     cricket: CricketSlice,
-    misc: MiscSlice
+    misc: MiscSlice,
+    nasca: NascaSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

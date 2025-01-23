@@ -15,11 +15,10 @@ function Football() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch() as any
   const [live, setLive] = useState<any>([])
-  const loading = useAppSelector(footballFixtureStatusState) as any;
+  const loading = useAppSelector(footballFixtureStatusState) as any
   const [upcoming, setUpcoming] = useState<any>([])
   const [tomorrow, setTomorrow] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const maxMatchesToDisplay = 5
 
   useEffect(() => {
     const payloadUpcoming = {
@@ -38,7 +37,7 @@ function Football() {
     })
 
     dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+      setFinished(dd?.payload||[])
     })
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
       setTomorrow(dd?.payload)
@@ -107,21 +106,9 @@ function Football() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p></p>
-
-              </div>
-            )}
-            {live?.map(
-              (item, i) => {
-                return <div key={i}>
+            {live?.map((item, i) => {
+              return (
+                <div key={i}>
                   <p
                     style={{
                       ...FONTS.body7,
@@ -150,36 +137,16 @@ function Football() {
                     })}
                   </div>
                 </div>
-              }
-
-            )}
+              )
+            })}
           </>
         ) : null}
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-
-
-              </div>
-            )}
-            {upcoming?.map(
-              (item, i) => {
-                return <div key={i}>
+            {upcoming?.map((item, i) => {
+              return (
+                <div key={i}>
                   <p
                     style={{
                       ...FONTS.body7,
@@ -208,36 +175,16 @@ function Football() {
                     })}
                   </div>
                 </div>
-              }
-
-            )}
+              )
+            })}
           </>
         ) : null}
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-
-
-              </div>
-            )}
-            {finished?.map(
-              (item, i) => {
-                return <div key={i}>
+            {finished?.map((item, i) => {
+              return (
+                <div key={i}>
                   <p
                     style={{
                       ...FONTS.body7,
@@ -266,88 +213,44 @@ function Football() {
                     })}
                   </div>
                 </div>
-              }
-
-            )}
+              )
+            })}
           </>
         ) : null}
 
         {selectedStatus === 'Next Day' ? (
           <>
-            {tomorrow?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
+            {tomorrow?.map((item, i) => (
+              <div key={i}>
                 <p
                   style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
                   }}
-                ></p>
-
-                {tomorrow?.length > maxMatchesToDisplay && (
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      color: COLORS.orange,
-                      cursor: 'pointer',
-                      margin: '15px 0px'
-                    }}
-                    onClick={() =>
-                      navigate('/events', {
-                        state: {
-                          events: tomorrow,
-                          type: 'tomorrow',
-                          gameType: 'Soccer'
-                        }
-                      })
+                >
+                  {item?.league}
+                </p>
+                <div>
+                  {item?.matches?.map((aa, i) => {
+                    const payload = {
+                      league: item?.league,
+                      country: item?.country,
+                      ...aa
                     }
-                  >
-                    View more
-                  </p>
-                )}
+                    return (
+                      <div key={i}>
+                        <GameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            )}
-            {tomorrow?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.league}
-                    </p>
-                    <div>
-                      {item?.matches?.map((aa, i) => {
-                        const payload = {
-                          league: item?.league,
-                          country: item?.country,
-                          ...aa
-                        }
-                        if (i < maxMatchesToDisplay)
-                          return (
-                            <div key={i}>
-                              <GameCard id={i} data={payload} />
-                            </div>
-                          )
-                      })}
-                    </div>
-                  </div>
-                )
-            )}
+            ))}
           </>
         ) : null}
         {live?.length < 1 && upcoming?.length < 1 && tomorrow?.length < 1 ? (

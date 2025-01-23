@@ -21,10 +21,15 @@ const initialState = {
   cricket: [],
 };
 
+interface payloadType {
+  eventType: string
+  query?: string
+}
+
 export const getCricketFixtures = createAsyncThunk(
   "cricket/getCricketFixtures",
-  async (payload?: any) => {
-    const buildUrl = (payload) => `${SportBaseUrl}/cricket/${payload?.schedule?'schedule':'live'}`
+  async (payload: payloadType) => {
+    const buildUrl = (payload) => `${SportBaseUrl}/cricket/${payload.eventType}`
     var response = await getRequest(buildUrl(payload));
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;

@@ -18,37 +18,10 @@ import { LoadingState } from '../../components/LoadingState'
 function Boxing() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
+  const [live, setLive] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const loading = useAppSelector(boxingFixtureStatusState) as any
-  const maxMatchesToDisplay = 5
-  const url = `${BaseUrl}/boxing`
   const dispatch = useAppDispatch() as any
-
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
@@ -61,6 +34,10 @@ function Boxing() {
       range: 'finished'
     }
 
+    dispatch(getBoxingFixtures(null)).then((dd) => {
+      setLive(dd?.payload?.scores?.categories)
+    })
+
     dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload?.scores?.categories)
     })
@@ -70,7 +47,7 @@ function Boxing() {
     })
   }, [])
 
-  console.log({ upcoming })
+
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
@@ -93,6 +70,10 @@ function Boxing() {
 
   const status = [
     {
+      id: 1,
+      name: 'Live'
+    },
+    {
       id: 2,
       name: 'Scheduled'
     },
@@ -110,7 +91,8 @@ function Boxing() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '10px'
           }}
         >
           {status?.map((aa, i) => {
@@ -137,112 +119,113 @@ function Boxing() {
         </div>
       </div>
       <LoadingState isLoading={loading}>
-        {selectedStatus === 'Scheduled' ? (
+        {selectedStatus === 'Live' ? (
           <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-
-              </div>
-            )}
-
-            {upcoming?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          name: item?.name,
-                          ...aa
-                        }
-                        return <div key={i}>
+            {live?.map(
+              (item, i) => (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.match?.map((aa, i) => {
+                      const payload = {
+                        name: item?.name,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
                           <BoxingGameCard id={i} data={payload} />
                         </div>
-                      })}
-                    </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              )
+            )}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.map(
+              (item, i) => (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.match?.map((aa, i) => {
+                      const payload = {
+                        name: item?.name,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <BoxingGameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
             )}
           </>
         ) : null}
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-
-              </div>
-            )}
-
             {finished?.map(
-              (item, i) =>
-                i < maxMatchesToDisplay && (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          name: item?.name,
-                          ...aa
-                        }
-                        return <div key={i}>
+              (item, i) => (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.match?.map((aa, i) => {
+                      const payload = {
+                        name: item?.name,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
                           <BoxingGameCard id={i} data={payload} />
                         </div>
-                      })}
-                    </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              )
             )}
           </>
         ) : null}
