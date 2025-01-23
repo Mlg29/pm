@@ -23,7 +23,7 @@ const initialState = {
 };
 
 
-export const getFootballFixtures = createAsyncThunk("football/getFootballFixtures", async (payload: any) => {
+export const getFootballFixtures = createAsyncThunk("football/getFootballFixtures", async (payload?: any) => {
 
   const buildUrl = (payload) => {
     let queryParams = [];
@@ -37,7 +37,7 @@ export const getFootballFixtures = createAsyncThunk("football/getFootballFixture
     const queryString = queryParams.join('&');
 
 
-    return `${SportBaseUrl}/soccer/matches?${queryString}`;
+    return `${SportBaseUrl}/soccer/${payload?.range?`matches?${queryString}`:'live'}`;
   };
 
   var response = await getRequest(buildUrl(payload));
@@ -132,5 +132,6 @@ export const FootballSlice = createSlice({
 
 export const footballEventState = (state: RootState) => state.football.footballEvents;
 export const footballFixtureState = (state: RootState) => state.football.footballFixtures;
+export const footballFixtureStatusState = (state: RootState) => state.football.loading;
 
 export default FootballSlice.reducer;

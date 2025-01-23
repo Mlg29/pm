@@ -26,24 +26,46 @@ function HorseDetails({ selected, gameInfo, handleRoute }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", flex: 1, padding: '0px 10px' }}>
       <HorseCard gameInfo={gameInfo} />
-      <div style={styles.div}>
-        {gameInfo?.runners?.map((dd, i) => {
-          return (
-            <div
-              style={{
-                ...styles.card,
-                backgroundColor:
-                  selected === dd?.name ? COLORS.primary : COLORS.cream,
-                color: selected === dd?.name ? COLORS.cream : COLORS.primary,
-              }}
-              key={i}
-              onClick={() => handleRoute(dd?.name, `W${i + 1}`)}
-            >
-              <p style={{ ...FONTS.h6 }}>Bet {dd?.name} to win</p>
-            </div>
-          );
-        })}
-      </div>
+      {
+        gameInfo?.status === "finished" ?
+          <div style={styles.div}>
+            {gameInfo?.results?.map((dd, i) => {
+              return (
+                <div
+                  style={{
+                    ...styles.card,
+                    backgroundColor:
+                      selected === dd?.name ? COLORS.primary : COLORS.cream,
+                    color: selected === dd?.name ? COLORS.cream : COLORS.primary,
+                  }}
+                  key={i}
+                >
+                  <p style={{ ...FONTS.h6 }}>{dd?.name} finished with {dd?.position} position</p>
+                </div>
+              );
+            })}
+          </div>
+
+          :
+          <div style={styles.div}>
+            {gameInfo?.runners?.map((dd, i) => {
+              return (
+                <div
+                  style={{
+                    ...styles.card,
+                    backgroundColor:
+                      selected === dd?.name ? COLORS.primary : COLORS.cream,
+                    color: selected === dd?.name ? COLORS.cream : COLORS.primary,
+                  }}
+                  key={i}
+                  onClick={() => handleRoute(dd?.name, `W${i + 1}`)}
+                >
+                  <p style={{ ...FONTS.h6 }}>Bet {dd?.name} to win</p>
+                </div>
+              );
+            })}
+          </div>
+      }
     </div>
   );
 }

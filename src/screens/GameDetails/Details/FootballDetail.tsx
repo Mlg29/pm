@@ -14,8 +14,6 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { getLogo, getStat } from '../../../redux/slices/FootballSlice';
 
 function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, active, setActive, eventArray }) {
-    const [homeLogo, setHomeLogo] = useState(null)
-    const [awayLogo, setAwayLogo] = useState(null)
     const [homeStat, setHomeStat] = useState(null)
     const [awayStat, setAwayStat] = useState(null)
     const dispatch = useAppDispatch() as any;
@@ -28,12 +26,6 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
         const awayTeam = {
             teamId: gameInfo?.visitorTeam?.teamId
         }
-        dispatch(getLogo(homeTeam)).then((dd) => {
-            setHomeLogo(dd?.payload)
-        });
-        dispatch(getLogo(awayTeam)).then((dd) => {
-            setAwayLogo(dd?.payload)
-        });
         dispatch(getStat(homeTeam)).then((dd) => {
             setHomeStat(dd?.payload?.teams?.team)
         });

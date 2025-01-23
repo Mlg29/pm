@@ -64,7 +64,7 @@ function CricketCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           {data?.leagueName}
+           {data?.name}
           </p>
           <BiSolidCricketBall size={30} color={COLORS.primary}/>
        
@@ -76,7 +76,7 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localteam?.name}
+            {data?.match?.localteam?.name}
           </p>
         </div>
         <div>
@@ -122,7 +122,7 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.awayteam?.name}
+            {data?.match?.awayteam?.name}
           </p>
         </div>
       </div>

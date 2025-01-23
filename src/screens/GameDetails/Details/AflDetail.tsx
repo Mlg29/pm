@@ -147,21 +147,21 @@ function AflDetail({gameInfo, isMobile, selected, handleRoute}) {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`Bet ${gameInfo?.awayteam?.name} to Win`}
+                    text={`Bet ${gameInfo?.hometeam?.name} to Win`}
                     propStyle={{
                       width: "100%",
                       backgroundColor:
-                        selected === gameInfo?.awayteam?.name
+                        selected === gameInfo?.hometeam?.name
                           ? COLORS.primary
                           : COLORS.cream,
                       color:
-                        selected === gameInfo?.awayteam?.name
+                        selected === gameInfo?.hometeam?.name
                           ? COLORS.cream
                           : COLORS.primary,
                     }}
                     // handlePress={() => navigate('/home')}
                     handlePress={() =>
-                      handleRoute(gameInfo?.awayteam?.name, 'W2')
+                      handleRoute(gameInfo?.hometeam?.name, 'W2')
                     }
                   />
                 </div>
@@ -190,22 +190,22 @@ function AflDetail({gameInfo, isMobile, selected, handleRoute}) {
                 </div>
                 <div style={{ width: "100%", margin: "10px 0px" }}>
                   <Button
-                    text={`Bet ${gameInfo?.awayteam?.name} to Win`}
+                    text={`Bet ${gameInfo?.hometeam?.name} to Win`}
                     propStyle={{
                       width: "90%",
                       backgroundColor:
-                        selected === gameInfo?.awayteam?.name
+                        selected === gameInfo?.hometeam?.name
                           ? COLORS.primary
                           : COLORS.cream,
                       color:
-                        selected === gameInfo?.awayteam?.name
+                        selected === gameInfo?.hometeam?.name
                           ? COLORS.cream
                           : COLORS.primary,
                       fontSize: 12,
                     }}
                     // handlePress={() => navigate('/home')}
                     handlePress={() =>
-                      handleRoute(gameInfo?.awayteam?.name, 'W2')
+                      handleRoute(gameInfo?.hometeam?.name, 'W2')
                     }
                   />
                 </div>

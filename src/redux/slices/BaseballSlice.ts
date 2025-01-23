@@ -1,4 +1,4 @@
-
+   
 /* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unreachable */
@@ -19,11 +19,11 @@ import { BaseUrl, SportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
-  basketballFixtures: [],
+  baseballFixtures: [],
 };
 
-export const getBasketballFixtures = createAsyncThunk(
-  "basketball/getBasketballFixtures",
+export const getBaseballFixtures = createAsyncThunk(
+  "baseball/getBaseballFixtures",
   async (payload?: any) => {
     const buildUrl = (payload) => {
       let queryParams = [];
@@ -39,7 +39,7 @@ export const getBasketballFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/basketball/${payload?.range?`matches?${queryString}`:'live'}`;
+      return `${SportBaseUrl}/baseball/${payload?.range?`matches?${queryString}`:'live'}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -51,30 +51,30 @@ export const getBasketballFixtures = createAsyncThunk(
 
 
 
-export const BasketballSlice = createSlice({
-  name: "basketball",
+export const BaseballSlice = createSlice({
+  name: "baseball",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getBasketballFixtures.pending, (state, action) => {
+    builder.addCase(getBaseballFixtures.pending, (state, action) => {
       state.loading = true;
     }),
       builder.addCase(
-        getBasketballFixtures.fulfilled,
+        getBaseballFixtures.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.basketballFixtures = action.payload;
+          state.baseballFixtures = action.payload;
         }
       );
-    builder.addCase(getBasketballFixtures.rejected, (state, action) => {
+    builder.addCase(getBaseballFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
    
   },
 });
 
-export const BasketballFixtureState = (state: RootState) =>
-  state.basketball.basketballFixtures
-export const BasketballFixtureeStatusState = (state: RootState) => state.basketball.loading;
+export const BaseballFixtureState = (state: RootState) =>
+  state.baseball.baseballFixtures
+export const BaseballFixtureeStatusState = (state: RootState) => state.baseball.loading;
 
-export default BasketballSlice.reducer;
+export default BaseballSlice.reducer;

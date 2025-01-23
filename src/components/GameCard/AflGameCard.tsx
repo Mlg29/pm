@@ -55,20 +55,20 @@ function AflGameCard({ id, data }) {
     >
       <div style={styles.box1}>
       <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-         ({data?.gameDate})
+         ({data?.date || data?.datetime_utc})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
           {data?.status === "Started" ? `${data?.time}'` : data?.status}
         </p>
       </div>
       <div style={styles.box2}>
-        <p style={{ ...FONTS.body7 }}>{data?.localteam?.name}</p>
+        <p style={{ ...FONTS.body7 }}>{data?.hometeam?.name}</p>
         <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
       </div>
       <div style={styles.box3}>
         <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.score ? data?.localteam?.score : "-"}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.score ? data?.awayteam?.score : "-"}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.hometeam?.totalscore ? data?.hometeam?.totalscore : "-"}</p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : "-"}</p>
           
 
         </div>

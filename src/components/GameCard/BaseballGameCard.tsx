@@ -27,6 +27,7 @@ export const styles = {
   },
   box3: {
     display: 'flex',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginRight: 10,
     width: '10%'
@@ -40,7 +41,7 @@ export const styles = {
   }
 }
 
-function CricketGameCard({ id, data }) {
+function BaseballGameCard({ id, data }) {
   const navigate = useNavigate()
 
   return (
@@ -50,7 +51,7 @@ function CricketGameCard({ id, data }) {
         key={id}
         onClick={() =>
           navigate('/game-details', {
-            state: { data: data, gameType: 'Cricket' }
+            state: { data: data, gameType: 'Baseball' }
           })
         }
       >
@@ -63,37 +64,27 @@ function CricketGameCard({ id, data }) {
               color: COLORS.black
             }}
           >
-            ({data?.date || data?.match?.date})
+            ({data?.['@date']} - {data?.['@time']})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {/* {data?.status === "Started" ? `${data?.time}'` : data?.status} */}
-            {data?.time || data?.match?.time}
+            {data?.['@status']}
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>
-            {data?.localteam?.name || data?.match?.localteam?.name}
-          </p>
-          <p style={{ ...FONTS.body7 }}>
-            {data?.visitorteam?.name || data?.match?.visitorteam?.name}
-          </p>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.['@name']}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.['@name']}</p>
         </div>
         <div style={styles.box3}>
-          {/* <GiSoccerField /> */}
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.localteam?.totalscore
-                ? data?.localteam?.totalscore
-                : data?.match?.localteam?.totalscore
-                ? data?.match?.localteam?.totalscore
-                : ''}
+              {data?.localTeam?.['@totalScore']
+                ? data?.localTeam?.['@totalScore']
+                : '-'}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.visitorteam?.totalscore
-                ? data?.visitorteam?.totalscore
-                : data?.match?.visitorteam?.totalscore
-                ? data?.match?.visitorteam?.totalscore
-                : ''}
+              {data?.awayTeam?.['@totalScore']
+                ? data?.awayTeam?.['@totalScore']
+                : '-'}
             </p>
           </div>
         </div>
@@ -102,4 +93,4 @@ function CricketGameCard({ id, data }) {
   )
 }
 
-export default CricketGameCard
+export default BaseballGameCard

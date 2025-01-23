@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FONTS } from "../../utils/fonts";
-import { LuMinusCircle } from "react-icons/lu";
+import { FiMinusCircle } from "react-icons/fi";
 import { MdArrowBackIos } from "react-icons/md";
 import { COLORS } from "../../utils/colors";
 import { GoCircle } from "react-icons/go";
@@ -9,7 +9,7 @@ import Button from "../../components/Button";
 import OtpComponent from "../../components/OtpComponent";
 import CustomeKeyboard from "../../components/CustomKeyboard";
 import TextInput from "../../components/TextInput";
-import { LuPlusCircle } from "react-icons/lu";
+import { FiPlusCircle } from "react-icons/fi";
 import { FlexDirection, MaxAmount, PasswordCreation } from "../../utils/type";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
@@ -183,7 +183,7 @@ function NumberOfGames() {
               marginTop: "5px",
             }}
           >
-            <LuMinusCircle
+            <FiMinusCircle
               size={50}
               style={{ marginRight: "45px", cursor: "pointer" }}
               onClick={decrement}
@@ -199,7 +199,7 @@ function NumberOfGames() {
               value={value}
               onChange={(e) => setValue(e?.target.value)}
             />
-            <LuPlusCircle
+            <FiPlusCircle
               size={50}
               style={{ marginLeft: "45px", cursor: "pointer" }}
               onClick={increment}

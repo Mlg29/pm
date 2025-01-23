@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl,SportBaseUrl } from "../../https";
+import { BaseUrl, SportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -26,10 +26,27 @@ export const getFormulaFixtures = createAsyncThunk(
   async (payload: any) => {
     const buildUrl = (payload) => {
       let queryParams = [];
+      if (payload?.range) queryParams.push(`${payload?.range}`);
+      const queryString = queryParams.join("&");
+
+      return `${SportBaseUrl}/f1/${queryString}`;
+    };
+
+    var response = await getRequest(buildUrl(payload));
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
+export const getFormulaMatchFixtures = createAsyncThunk(
+  "formula/getFormulaMatchFixtures",
+  async (payload: any) => {
+    const buildUrl = (payload) => {
+      let queryParams = [];
       if (payload?.range) queryParams.push(`range=${payload?.range}`);
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/motors/f1?${queryString}`;
+      return `${SportBaseUrl}/f1/matches?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -61,13 +78,27 @@ export const FormulaSlice = createSlice({
     builder.addCase(getFormulaFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
+    builder.addCase(getFormulaMatchFixtures.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getFormulaMatchFixtures.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.formulaFixtures = action.payload;
+        }
+      );
+    builder.addCase(getFormulaMatchFixtures.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
 
- 
-   
+
   },
 });
 
-export const boxingFixtureState = (state: RootState) =>
+export const formulaFixtureState = (state: RootState) =>
   state.formula.formulaFixtures
+export const formulaFixtureStatusState = (state: RootState) =>
+  state.formula.loading
 
 export default FormulaSlice.reducer;

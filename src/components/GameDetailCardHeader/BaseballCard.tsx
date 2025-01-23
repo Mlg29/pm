@@ -3,8 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
-import { GiTennisBall } from "react-icons/gi";
-
+import { FaBaseball } from "react-icons/fa6";
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
 export const styles = {
@@ -38,22 +37,22 @@ export const styles = {
   },
 };
 
-function TennisCard(props) {
+function BaseballCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
-  function isEmpty(value) {
-    for (let prop in value) {
-      if (value.hasOwnProperty(prop)) return false;
-    }
-    return true;
-  }
+  //   function isEmpty(value) {
+  //     for (let prop in value) {
+  //       if (value.hasOwnProperty(prop)) return false;
+  //     }
+  //     return true;
+  //   }
 
-  const eventArray = isEmpty(data?.player)
-    ? []
-    : Array.isArray(data?.player)
-      ? data?.player
-      : [data?.player];
+  //   const eventArray = isEmpty(data?.player)
+  //     ? []
+  //     : Array.isArray(data?.player)
+  //     ? data?.player
+  //     : [data?.player];
 
 
   return (
@@ -77,7 +76,7 @@ function TennisCard(props) {
           >
             {data?.league}
           </p>
-          <GiTennisBall size={30} color={COLORS.primary} />
+          <FaBaseball size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -85,7 +84,7 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.player[0]?.name}
+            {data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -97,7 +96,7 @@ function TennisCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.player[0]?.totalscore} - {data?.player[1]?.totalscore}
+            {data?.localTeam?.totalScore} - {data?.awayTeam?.totalScore}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
@@ -121,7 +120,7 @@ function TennisCard(props) {
           >
             ID: {data?.id}
           </p>
-          <GiTennisBall size={30} color={COLORS.primary} />
+          <FaBaseball size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -129,7 +128,7 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.player[1]?.name}
+            {data?.awayTeam?.name}
           </p>
         </div>
       </div>
@@ -142,38 +141,31 @@ function TennisCard(props) {
         }}
       />
       <div>
-        {eventArray &&
-          eventArray?.map((dd, i) => {
-            return (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 10,
-                }}
-              >
-                <p>{dd?.name} </p>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <p style={{ margin: "0px 5px" }}>{dd?.s1 ? dd?.s1 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s2 ? dd?.s2 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s3 ? dd?.s3 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s4 ? dd?.s4 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s5 ? dd?.s5 : ""} </p>
-                </div>
-              </div>
-            );
-          })}
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <p>{data?.localTeam?.name}</p>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.ot ? data?.localTeam?.ot : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q1 ? data?.localTeam?.q1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q2 ? data?.localTeam?.q2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q3 ? data?.localTeam?.q3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.q4 ? data?.localTeam?.q4 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.localTeam?.totalScore ? data?.localTeam?.totalScore : "-"}</p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 5 }}>
+          <p>{data?.awayTeam?.name}</p>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.ot ? data?.awayTeam?.ot : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q1 ? data?.awayTeam?.q1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q2 ? data?.awayTeam?.q2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q3 ? data?.awayTeam?.q3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.q4 ? data?.awayTeam?.q4 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : "-"}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default TennisCard;
+export default BaseballCard;

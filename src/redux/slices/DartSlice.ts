@@ -75,5 +75,5 @@ export const DartSlice = createSlice({
 
 export const dartState = (state: RootState) =>
   state.dart.dart
-
+export const dartStatusState = (state: RootState) => state.dart.loading;
 export default DartSlice.reducer;

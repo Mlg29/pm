@@ -2,7 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import noLogo from "../../assets/images/no.jpg";
+<<<<<<< HEAD
 import { useEffect } from "react";
+=======
+import { useEffect, useState } from "react";
+>>>>>>> 45bd2f6f3d6ef56269f540d8b3c11b258eb7c173
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -43,6 +47,7 @@ function GameDetailCardHeader(props: any) {
   const { propStyle, data } = props;
 
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   const fetchTeamData = async () => {
   //     const url = "http://data2.goalserve.com:8084/api/v1/logotips/soccer/teams?k=31a4b27821b744ba159608dc5f051e20&ids=21730";
@@ -63,6 +68,8 @@ function GameDetailCardHeader(props: any) {
   // }, []);
 
 
+=======
+>>>>>>> 45bd2f6f3d6ef56269f540d8b3c11b258eb7c173
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -90,6 +97,7 @@ function GameDetailCardHeader(props: any) {
           ) : (
             <img src={data?.localTeam?.teamLogo} style={{ width: "20px" }} />
           )}
+
           <p
             style={{
               ...FONTS.body7,

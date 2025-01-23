@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { BaseUrl, SportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -23,24 +23,31 @@ const initialState = {
 
 export const getMmaFixtures = createAsyncThunk(
   "mma/getMmaFixtures",
-  async (payload: any) => {
-    const buildUrl = (payload) => {
+  async (
+     payload?: any
+  ) => {
+    const buildUrl = (
+       payload?:any
+    ) => {
       let queryParams = [];
-      if (payload?.searchTerm)
-        queryParams.push(`searchTerm=${payload?.searchTerm}`);
-      if (payload?.status) queryParams.push(`status=${payload?.status}`);
-      if (payload?.startTime)
-        queryParams.push(`startTime=${payload.startTime}`);
-      if (payload?.date) queryParams.push(`date=${payload.date}`);
-      if (payload?.page) queryParams.push(`page=${payload?.page}`);
-      if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
+      if (payload?.range) queryParams.push(`range=${payload?.range}`);
+      // if (payload?.searchTerm)
+      //   queryParams.push(`searchTerm=${payload?.searchTerm}`);
+      // if (payload?.status) queryParams.push(`status=${payload?.status}`);
+      // if (payload?.startTime)
+      //   queryParams.push(`startTime=${payload.startTime}`);
+      // if (payload?.date) queryParams.push(`date=${payload.date}`);
+      // if (payload?.page) queryParams.push(`page=${payload?.page}`);
+      // if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/mma/fixtures?${queryString}`;
+      return `${SportBaseUrl}/mma/${payload?.range?`matches?${queryString}`:'live'}`;
     };
 
-    var response = await getRequest(buildUrl(payload));
+    var response = await getRequest(buildUrl(
+      payload
+    ));
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
@@ -96,5 +103,6 @@ export const MmaSlice = createSlice({
 
 export const mmaFixtureState = (state: RootState) =>
   state.mma.mmaFixtures
-
+export const  mmaFixtureStatusState = (state: RootState) =>
+  state.mma.loading
 export default MmaSlice.reducer;

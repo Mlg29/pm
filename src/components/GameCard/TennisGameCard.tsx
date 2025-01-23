@@ -55,15 +55,15 @@ function TennisGameCard({ id, data }) {
     >
       <div style={styles.box1}>
       <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-         ({data?.gameDate})
+         ({data?.date})
         </p>
         <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-          {data?.status > 0 ? `${data?.status}'` : data?.status}
+          {data?.status}
         </p>
       </div>
       <div style={styles.box2}>
-        <p style={{ ...FONTS.body7 }}>{data?.player && data?.player[0]["@name"]}</p>
-        <p style={{ ...FONTS.body7 }}>{data?.player && data?.player[1]["@name"]}</p>
+        <p style={{ ...FONTS.body7 }}>{data?.player && data?.player[0]?.name}</p>
+        <p style={{ ...FONTS.body7 }}>{data?.player && data?.player[1]?.name}</p>
       </div>
       <div style={styles.box3}>
         <div style={{ marginLeft: 10 }}>
@@ -72,7 +72,7 @@ function TennisGameCard({ id, data }) {
               <div key={i} style={{display: 'flex', alignItems: 'center'}}>
                 
                 <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-                  {dd["@totalscore"]}
+                  {dd?.totalscore}
                 </p>
 
               </div>
