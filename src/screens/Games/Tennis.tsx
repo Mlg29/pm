@@ -17,6 +17,7 @@ function Tennis() {
   const [live, setLive] = useState<any>([])
   const loading = useAppSelector(tennisFixtureStatusState) as any
   const [Finised, setFinised] = useState<any>([])
+  const [scheduled, setScheduled] = useState<any>([])
   const dispatch = useAppDispatch() as any
   let createdDate = moment(new Date()).utc().format()
 
@@ -24,9 +25,14 @@ function Tennis() {
     const PayloadFinised = {
       range: 'd-1'
     }
-
+    const PayloadScheduled = {
+      range: 'home_p2p'
+    }
     dispatch(getTennisFixtures(PayloadFinised)).then((dd) => {
       setFinised(dd?.payload?.scores)
+    })
+    dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
+      setScheduled(dd?.payload?.scores)
     })
     dispatch(getTennisFixtures(null)).then((dd) => {
       setLive(dd?.payload?.scores)
@@ -43,6 +49,10 @@ function Tennis() {
     {
       id: 2,
       name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
     }
   ]
 
@@ -117,6 +127,41 @@ function Tennis() {
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
+          <>
+            {scheduled?.category?.map((league, index) => (
+              <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.name}
+                </p>
+                <div>
+                  {scheduled?.category[index]?.match.map((aa, i) => {
+                    const payload = {
+                      league: league.name,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <TennisGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Finished' ? (
           <>
             {Finised?.category?.map((league, index) => (
               <div key={league?.name}>

@@ -446,17 +446,17 @@ function FilterPage() {
 
     setLoading(true)
     setLoader(true)
-    dispatch(getCricketFixtures(payload)).then((dd) => {
-      setData(dd?.payload?.data || [])
-      setPage(dd?.payload?.page)
-      setPageSize(dd?.payload?.pageSize)
-      setTotal(dd?.payload?.total)
-      if (data?.length === dd?.payload?.total) {
-        setHasMore(false)
-      }
-      setLoading(false)
-      setLoader(false)
-    })
+    // dispatch(getCricketFixtures(payload)).then((dd) => {
+    //   setData(dd?.payload?.data || [])
+    //   setPage(dd?.payload?.page)
+    //   setPageSize(dd?.payload?.pageSize)
+    //   setTotal(dd?.payload?.total)
+    //   if (data?.length === dd?.payload?.total) {
+    //     setHasMore(false)
+    //   }
+    //   setLoading(false)
+    //   setLoader(false)
+    // })
   }
 
   const fetchMmaData = async (page) => {

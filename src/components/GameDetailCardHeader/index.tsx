@@ -2,11 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import noLogo from "../../assets/images/no.jpg";
-<<<<<<< HEAD
-import { useEffect } from "react";
-=======
 import { useEffect, useState } from "react";
->>>>>>> 45bd2f6f3d6ef56269f540d8b3c11b258eb7c173
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -45,31 +41,36 @@ export const styles = {
 function GameDetailCardHeader(props: any) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
+  const [homeLogo, setHomeLogo] = useState(null)
+  const [awayLogo, setAwayLogo] = useState(null)
+
+  const transformUrl = (url) => {
+    const baseUrl = "http://data2.goalserve.com:8084";
+    return url.replace(baseUrl, "/api/");
+  };
+
+  const fetchLogo = async (url, url2) => {
+    const transformedUrl = transformUrl(url);
+    const transformedUrl2 = transformUrl(url2);
+    await fetch(transformedUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setHomeLogo(data[0]?.base64)
+      });
+    await fetch(transformedUrl2)
+      .then((response) => response.json())
+      .then((data) => {
+        setAwayLogo(data[0]?.base64)
+      });
+  }
+
+  useEffect(() => {
+    fetchLogo(data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo)
+
+  }, [data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo])
 
 
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   const fetchTeamData = async () => {
-  //     const url = "http://data2.goalserve.com:8084/api/v1/logotips/soccer/teams?k=31a4b27821b744ba159608dc5f051e20&ids=21730";
 
-  //     try {
-  //       const response = await fetch(url, {
-  //         method: 'GET',
-  //         mode: 'no-cors' // This tells the browser to bypass CORS restrictions
-  //       });
-  //       // With 'no-cors', you won't be able to access the response body, but you can fetch the resource.
-  //       console.log(response);
-  //     } catch (err) {
-  //       console.error("Failed to fetch data", err);
-  //     }
-  //   };
-
-  //   fetchTeamData();
-  // }, []);
-
-
-=======
->>>>>>> 45bd2f6f3d6ef56269f540d8b3c11b258eb7c173
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -91,11 +92,12 @@ function GameDetailCardHeader(props: any) {
           >
             {data?.league}
           </p>
-          <img src={`data:image/png;base64,${data?.localTeam?.teamLogo}`} alt="Logo" />
+
+
           {!data?.localTeam?.teamLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (
-            <img src={data?.localTeam?.teamLogo} style={{ width: "20px" }} />
+            <img src={`data:image/png;base64,${homeLogo}`} style={{ width: "20px" }} alt="Logo" />
           )}
 
           <p
@@ -156,7 +158,7 @@ function GameDetailCardHeader(props: any) {
           {!data?.visitorTeam?.teamLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (
-            <img src={data?.visitorTeam?.teamLogo} style={{ width: "20px" }} />
+            <img src={`data:image/png;base64,${awayLogo}`} style={{ width: "20px" }} alt="Logo" />
           )}
           <p
             style={{

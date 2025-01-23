@@ -44,6 +44,8 @@ export const styles = {
 function BaseballGameCard({ id, data }) {
   const navigate = useNavigate()
 
+
+
   return (
     <div>
       <div
@@ -71,19 +73,19 @@ function BaseballGameCard({ id, data }) {
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.['@name']}</p>
-          <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.['@name']}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.localteam?.['@name']}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayteam?.['@name']}</p>
         </div>
         <div style={styles.box3}>
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.localTeam?.['@totalScore']
-                ? data?.localTeam?.['@totalScore']
+              {data?.localteam?.['@totalScore']
+                ? data?.localteam?.['@totalScore']
                 : '-'}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.awayTeam?.['@totalScore']
-                ? data?.awayTeam?.['@totalScore']
+              {data?.awayteam?.['@totalScore']
+                ? data?.awayteam?.['@totalScore']
                 : '-'}
             </p>
           </div>

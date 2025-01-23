@@ -47,7 +47,7 @@ function Boxing() {
     })
   }, [])
 
-  console.log({ upcoming })
+
 
   const groupedByData = (collectedData) => {
     return collectedData?.reduce((acc, current) => {
@@ -122,36 +122,36 @@ function Boxing() {
         {selectedStatus === 'Live' ? (
           <>
             {live?.map(
-              (item, i) =>(
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          name: item?.name,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BoxingGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
+              (item, i) => (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.match?.map((aa, i) => {
+                      const payload = {
+                        name: item?.name,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <BoxingGameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              )
             )}
           </>
         ) : null}
@@ -160,35 +160,35 @@ function Boxing() {
           <>
             {upcoming?.map(
               (item, i) => (
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          name: item?.name,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BoxingGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.match?.map((aa, i) => {
+                      const payload = {
+                        name: item?.name,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <BoxingGameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              )
             )}
           </>
         ) : null}
@@ -196,36 +196,36 @@ function Boxing() {
         {selectedStatus === 'Finished' ? (
           <>
             {finished?.map(
-              (item, i) =>(
-                  <div key={i}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {item?.name}
-                    </p>
-                    <div>
-                      {item?.match?.map((aa, i) => {
-                        const payload = {
-                          name: item?.name,
-                          ...aa
-                        }
-                        return (
-                          <div key={i}>
-                            <BoxingGameCard id={i} data={payload} />
-                          </div>
-                        )
-                      })}
-                    </div>
+              (item, i) => (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.match?.map((aa, i) => {
+                      const payload = {
+                        name: item?.name,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <BoxingGameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                )
+                </div>
+              )
             )}
           </>
         ) : null}

@@ -6,62 +6,49 @@ import { COLORS } from '../../utils/colors'
 import { io } from 'socket.io-client'
 import { BaseUrl } from '../../https'
 import moment from 'moment'
-import { useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
+import { getNascaFixtures, getNascaMatchFixtures, nascaFixtureStatusState } from '../../redux/slices/NascaSlice'
+import { LoadingState } from '../../components/LoadingState'
+import NascarCard from '../../components/GameCard/NascarCard'
 
 function Nascar() {
   const navigate = useNavigate()
+  const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const url = `${BaseUrl}/boxing`
+  const loading = useAppSelector(nascaFixtureStatusState) as any
   const dispatch = useAppDispatch() as any
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
+    const payloadLive = {
+      range: 'live'
+    }
     const payloadUpcoming = {
-      status: 'Not Started'
+      range: 'upcoming'
     }
     const payloadFinished = {
-      status: 'Finished'
+      range: 'finished'
     }
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
+    dispatch(getNascaFixtures(payloadLive)).then((dd) => {
+      setLive(dd?.payload?.scores?.tournament);
+    });
 
-    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-    //     setFinished(dd?.payload);
-    //   });
+    dispatch(getNascaMatchFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload?.scores?.tournament);
+    });
+    dispatch(getNascaMatchFixtures(payloadFinished)).then((dd) => {
+      setFinished(dd?.payload?.scores?.tournament);
+    });
   }, [])
+
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -73,6 +60,10 @@ function Nascar() {
     {
       id: 2,
       name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
     }
   ]
 
@@ -84,7 +75,8 @@ function Nascar() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: 10
           }}
         >
           {status?.map((aa, i) => {
@@ -110,9 +102,93 @@ function Nascar() {
           })}
         </div>
       </div>
-      {finished?.data?.length < 1 && upcoming?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Nascar' height='30vh' />
-      ) : null}
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Live' ? (
+          <>
+            {live.race?.map((item, i) => {
+              const payload = {
+                name: live?.name,
+                ...item
+              }
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {live?.name}
+                </p>
+                <div key={i}>
+                  <NascarCard id={i} data={payload} />
+                </div>
+              </div>
+
+            })}
+          </>
+        ) : null}
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.map((item, i) => {
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div key={i}>
+                  <NascarCard id={i} data={item} />
+                </div>
+              </div>
+
+            })}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finished?.map((item, i) => {
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div key={i}>
+                  <NascarCard id={i} data={item} />
+                </div>
+              </div>
+
+            })}
+
+          </>
+        )
+          : null}
+        {live?.length < 1 && finished?.length < 1 && upcoming?.length < 1 ? (
+          <EmptyState header='No Game Available for Formula1' height='30vh' />
+        ) : null}
+      </LoadingState>
     </div>
   )
 }
