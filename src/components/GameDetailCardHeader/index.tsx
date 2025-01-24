@@ -40,34 +40,32 @@ export const styles = {
 
 function GameDetailCardHeader(props: any) {
   const navigate = useNavigate();
-  const { propStyle, data } = props;
-  const [homeLogo, setHomeLogo] = useState(null)
-  const [awayLogo, setAwayLogo] = useState(null)
+  const { propStyle, data, homeLogo, awayLogo } = props;
+  // const [homeLogo, setHomeLogo] = useState(null)
+  // const [awayLogo, setAwayLogo] = useState(null)
 
-  const transformUrl = (url) => {
-    const baseUrl = "http://data2.goalserve.com:8084";
-    return url.replace(baseUrl, "/api/");
-  };
+  // const transformUrl = (url) => {
+  //   const baseUrl = "http://data2.goalserve.com:8084";
+  //   return url.replace(baseUrl, "/api/");
+  // };
 
-  const fetchLogo = async (url, url2) => {
-    const transformedUrl = transformUrl(url);
-    const transformedUrl2 = transformUrl(url2);
-    await fetch(transformedUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        setHomeLogo(data[0]?.base64)
-      });
-    await fetch(transformedUrl2)
-      .then((response) => response.json())
-      .then((data) => {
-        setAwayLogo(data[0]?.base64)
-      });
-  }
+  // const fetchLogo = async (url, url2) => {
+  //   const transformedUrl = transformUrl(url);
+  //   const transformedUrl2 = transformUrl(url2);
+  //   await fetch(transformedUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setHomeLogo(data[0]?.base64)
+  //     });
+  //   await fetch(transformedUrl2)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setAwayLogo(data[0]?.base64)
+  //     });
+  // }
 
-  useEffect(() => {
-    fetchLogo(data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo)
+  console.log({ homeLogo, awayLogo })
 
-  }, [data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo])
 
 
 
