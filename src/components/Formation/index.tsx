@@ -37,7 +37,7 @@ const styles = {
 }
 
 const Formation = ({ gameInfo, homeTeamInfo, awayTeamInfo }) => {
-  
+
   const [teamLogo, setTeamLogo] = useState({
     local: gameInfo?.localTeam?.teamLogo,
     away: gameInfo?.visitorTeam?.teamLogo
@@ -88,20 +88,16 @@ const Formation = ({ gameInfo, homeTeamInfo, awayTeamInfo }) => {
   const homeTeam = transformPlayers(homeTeamInfo?.player, '#FDDC02')
   const awayTeam = transformPlayers(awayTeamInfo?.player, '#4285F4')
 
-  console.log(
-    gameInfo?.localTeam?.teamLogo,
-    formatImageSrc(gameInfo?.localTeam?.teamLogo)
-  )
-  useEffect(() => {
-    const awayLogo = formatImageSrc(gameInfo?.localTeam?.teamLogo)
-    const localLogo = formatImageSrc(gameInfo?.visitorTeam?.teamLogo)
-    setTeamLogo(() => {
-      return {
-        away: awayLogo,
-        local: localLogo
-      }
-    })
-  }, [gameInfo])
+  // useEffect(() => {
+  //   const awayLogo = formatImageSrc(gameInfo?.localTeam?.teamLogo)
+  //   const localLogo = formatImageSrc(gameInfo?.visitorTeam?.teamLogo)
+  //   setTeamLogo(() => {
+  //     return {
+  //       away: awayLogo,
+  //       local: localLogo
+  //     }
+  //   })
+  // }, [gameInfo])
 
   console.log(teamLogo)
   return (
@@ -124,7 +120,7 @@ const Formation = ({ gameInfo, homeTeamInfo, awayTeamInfo }) => {
             M. Arteta
           </h3> */}
         </div>
-        <p style={{ ...FONTS.body6 }}>{homeTeamInfo['@formation']}</p>
+        <p style={{ ...FONTS.body6 }}>{homeTeamInfo?.['@formation']}</p>
       </div>
       <SoccerLineUp
         size={'responsive'}
@@ -151,7 +147,7 @@ const Formation = ({ gameInfo, homeTeamInfo, awayTeamInfo }) => {
             M. Arteta
           </h3> */}
         </div>
-        <p style={{ ...FONTS.body6 }}>{awayTeamInfo['@formation']}</p>
+        <p style={{ ...FONTS.body6 }}>{awayTeamInfo?.['@formation']}</p>
       </div>
 
       <div style={{ backgroundColor: 'white' }}>
@@ -188,10 +184,10 @@ const Formation = ({ gameInfo, homeTeamInfo, awayTeamInfo }) => {
                 <div style={{ padding: 10 }}>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <p style={{ ...FONTS.body7, marginRight: 5 }}>
-                      {dd['@number']}
+                      {dd?.['@number']}
                     </p>
                     <p style={{ ...FONTS.body7, marginRight: 5 }}>
-                      {dd['@name']}
+                      {dd?.['@name']}
                     </p>
                   </div>
                 </div>

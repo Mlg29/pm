@@ -16,8 +16,13 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      // '/api': {
+      //   target: 'http://data2.goalserve.com:8084',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/api/, ''),
+      // },
       '/api': {
-        target: 'http://data2.goalserve.com:8084',
+        target: 'https://playzeet1.vercel.app',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
