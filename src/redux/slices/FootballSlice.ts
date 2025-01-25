@@ -67,6 +67,13 @@ export const getStat = createAsyncThunk("football/getStat", async (payload: any)
   }
 });
 
+export const getMatchStat = createAsyncThunk("football/getMatchStat", async (payload: any) => {
+  var response = await getRequest(`${SportBaseUrl}/soccer/match-stats?matchId=${payload.matchId}&leagueId=${payload.leagueId}`);
+  if (response?.status === 200 || response?.status === 201) {
+    return response?.data;
+  }
+});
+
 
 export const FootballSlice = createSlice({
   name: "football",
@@ -124,6 +131,19 @@ export const FootballSlice = createSlice({
         }
       );
     builder.addCase(getStat.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getMatchStat.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getMatchStat.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+
+        }
+      );
+    builder.addCase(getMatchStat.rejected, (state, action) => {
       // state.error = action.error.message
     });
 
