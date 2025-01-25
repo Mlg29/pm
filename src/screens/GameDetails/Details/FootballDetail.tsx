@@ -19,6 +19,55 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
     const [matchStat, setMatchStat] = useState(null)
 
     const dispatch = useAppDispatch() as any;
+
+    const [homeLogo, setHomeLogo] = useState(null)
+    const [awayLogo, setAwayLogo] = useState(null)
+
+    const transformUrl = (url) => {
+        const baseUrl = "http://data2.goalserve.com:8084";
+        return url.replace(baseUrl, "/api/");
+    };
+
+    const fetchLogo = async (url, url2) => {
+        try {
+
+            const transformedUrl = transformUrl(url);
+            const transformedUrl2 = transformUrl(url2);
+
+
+            const homeResponse = await fetch(transformedUrl);
+            const homeData = await homeResponse.json();
+
+            if (homeData && homeData[0]?.base64) {
+                setHomeLogo(homeData[0].base64);
+            } else {
+                console.error("Home logo data is invalid:", homeData);
+            }
+
+
+            const awayResponse = await fetch(transformedUrl2);
+            const awayData = await awayResponse.json();
+
+            if (awayData && awayData[0]?.base64) {
+                setAwayLogo(awayData[0].base64);
+            } else {
+                console.error("Away logo data is invalid:", awayData);
+            }
+        } catch (error) {
+            console.error("Error fetching logos:", error);
+        }
+    };
+
+
+
+    useEffect(() => {
+        fetchLogo(gameInfo?.localTeam?.teamLogo, gameInfo?.visitorTeam?.teamLogo)
+
+    }, [gameInfo?.localTeam?.teamLogo, gameInfo?.visitorTeam?.teamLogo])
+
+
+
+
     useEffect(() => {
         const homeTeam = {
             teamId: gameInfo?.localTeam?.teamId
@@ -56,7 +105,7 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
                     flex: 1,
                 }}
             >
-                <GameDetailCardHeader data={gameInfo} />
+                <GameDetailCardHeader data={gameInfo} homeLogo={homeLogo} awayLogo={awayLogo} />
 
                 <div
                     style={{
