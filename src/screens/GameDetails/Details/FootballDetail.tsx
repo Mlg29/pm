@@ -29,18 +29,38 @@ function FootballDetail({
   setActive,
   eventArray
 }) {
+  const [homeStat, setHomeStat] = useState(null)
+  const [awayStat, setAwayStat] = useState(null)
   const [matchStat, setMatchStat] = useState(null)
   const loading = useAppSelector(footballFixtureStatusState) as any
+
   const dispatch = useAppDispatch() as any
+
   useEffect(() => {
+    const homeTeam = {
+      teamId: gameInfo?.localTeam?.teamId
+    }
+    const awayTeam = {
+      teamId: gameInfo?.visitorTeam?.teamId
+    }
+
     const matchStatPayload = {
       leagueId: gameInfo?.leagueId,
       matchId: gameInfo?.static_id
     }
+
+    dispatch(getStat(homeTeam)).then((dd) => {
+      setHomeStat(dd?.payload?.teams?.team)
+    })
+    dispatch(getStat(awayTeam)).then((dd) => {
+      setAwayStat(dd?.payload?.teams?.team)
+    })
     dispatch(getMatchStat(matchStatPayload)).then((dd) => {
       setMatchStat(dd?.payload)
     })
-  }, [dispatch])
+  }, [])
+
+  console.log(matchStat)
 
   return (
     <>
