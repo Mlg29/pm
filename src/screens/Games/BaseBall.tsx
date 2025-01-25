@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { useNavigate } from 'react-router-dom'
-import { BaseUrl } from '../../https'
 import moment from 'moment'
 import { COLORS } from '../../utils/colors'
 import { FONTS } from '../../utils/fonts'
@@ -21,31 +20,6 @@ function Baseball() {
   const [finished, setFinished] = useState<any>([])
   const loading = useAppSelector(BaseballFixtureeStatusState) as any
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server Baseball");
-  //   });
-
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("BaseEventUpdate", (message) => {
-  //     setLive((prevMessages) => {
-  //       const updatedMessages = prevMessages?.filter(
-  //         (msg) => msg?.id !== message?.id
-  //       );
-  //       return [...updatedMessages, message];
-  //     });
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
@@ -53,16 +27,14 @@ function Baseball() {
     const payloadUpcoming = {
       range: 'd1'
     }
-
     const payloadFinished = {
       range: 'd-1'
     }
-
-    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
-    })
     dispatch(getBaseballFixtures(null)).then((dd) => {
       setLive(dd?.payload)
+    })
+    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload)
     })
     dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
       setFinished(dd?.payload)

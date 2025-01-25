@@ -11,16 +11,14 @@ import { FaArrowRightArrowLeft } from 'react-icons/fa6';
 import CardList from '../../../components/CardList';
 import Formation from '../../../components/Formation';
 import { useAppDispatch } from '../../../redux/hooks';
-import { getLogo, getStat } from '../../../redux/slices/FootballSlice';
+import { getLogo, getMatchStat, getStat } from '../../../redux/slices/FootballSlice';
 
 function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, active, setActive, eventArray }) {
     const [homeStat, setHomeStat] = useState(null)
     const [awayStat, setAwayStat] = useState(null)
+    const [matchStat, setMatchStat] = useState(null)
 
     const dispatch = useAppDispatch() as any;
-
-
-
     useEffect(() => {
         const homeTeam = {
             teamId: gameInfo?.localTeam?.teamId
@@ -28,15 +26,25 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
         const awayTeam = {
             teamId: gameInfo?.visitorTeam?.teamId
         }
+
+        const matchStatPayload={
+            leagueId:gameInfo?.leagueId,
+            matchId:gameInfo?.static_id
+        }
+
         dispatch(getStat(homeTeam)).then((dd) => {
             setHomeStat(dd?.payload?.teams?.team)
         });
         dispatch(getStat(awayTeam)).then((dd) => {
             setAwayStat(dd?.payload?.teams?.team)
         });
+        dispatch(getMatchStat(matchStatPayload)).then((dd) => {
+            setMatchStat(dd?.payload)
+        });
 
     }, [])
 
+    console.log(matchStat)
 
     return (
         <>
@@ -447,136 +455,92 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
                         <EmptyState height="100%" header="No Stat Available" />
                     </div> : null
                     }
-                    {gameInfo?.stats && active !== "match-info" &&
-                        Object.keys(gameInfo?.stats).length !== 0 ? (
+                    {matchStat !==null && active !== "match-info" &&
+                        matchStat !==null ? (
                         <div>
                             {active === "stat" && (
                                 <div>
                                     <CardList
                                         header="Ball Possession"
                                         homeText={
-                                            gameInfo?.stats?.localteam?.possestiontime["@total"]
-                                                ? gameInfo?.stats?.localteam?.possestiontime[
-                                                "@total"
-                                                ]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.possestiontime?.["@total"]|| 0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.possestiontime[
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.possestiontime?.[
                                                 "@total"
-                                            ]
-                                                ? gameInfo?.stats?.visitorteam?.possestiontime[
-                                                "@total"
-                                                ]
-                                                : 0
+                                            ]||0
                                         }
                                     />
                                     <CardList
                                         header="Off sides"
                                         homeText={
-                                            gameInfo?.stats?.localteam?.offsides["@total"]
-                                                ? gameInfo?.stats?.localteam?.offsides["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.offsides?.["@total"]|| 0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.offsides["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.offsides["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.offsides?.["@total"]||0
                                         }
                                     />
                                     <CardList
                                         header="Shots"
                                         homeText={
-                                            gameInfo?.stats?.localteam?.shots["@total"]
-                                                ? gameInfo?.stats?.localteam?.shots["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.shots?.["@total"]||0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.shots["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.shots["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.shots?.["@total"]||0
                                         }
                                     />
                                     <CardList
                                         header="Passes"
                                         homeText={
-                                            gameInfo?.stats?.localteam?.passes["@total"]
-                                                ? gameInfo?.stats?.localteam?.passes["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.passes?.["@total"]||0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.passes["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.passes["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.passes?.["@total"]||0
                                         }
                                     />
                                     <CardList
                                         header="Fouls"
                                         homeText={
-                                            gameInfo?.stats?.localteam?.fouls["@total"]
-                                                ? gameInfo?.stats?.localteam?.fouls["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.fouls?.["@total"]||0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.fouls["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.fouls["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.fouls?.["@total"]||0
                                         }
                                     />
                                     <CardList
                                         header={<TbRectangleVerticalFilled color="#FFC15E" />}
                                         homeText={
-                                            gameInfo?.stats?.localteam?.yellowcards["@total"]
-                                                ? gameInfo?.stats?.localteam?.yellowcards[
-                                                "@total"
-                                                ]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.yellowcards?.["@total"]||0 
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.yellowcards["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.yellowcards[
-                                                "@total"
-                                                ]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.yellowcards?.["@total"]||0
                                         }
                                     />
                                     <CardList
                                         header={<TbRectangleVerticalFilled color="red" />}
                                         homeText={
-                                            gameInfo?.stats?.localteam?.redcards["@total"]
-                                                ? gameInfo?.stats?.localteam?.redcards["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.redcards?.["@total"]||0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.redcards["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.redcards["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.redcards?.["@total"]||0
                                         }
                                     />
                                     <CardList
                                         header="Corners"
                                         homeText={
-                                            gameInfo?.stats?.localteam?.corners["@total"]
-                                                ? gameInfo?.stats?.localteam?.corners["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.corners?.["@total"]||0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.corners["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.corners["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.corners?.["@total"]|| 0
                                         }
                                     />
                                     <CardList
                                         header="Saves"
                                         homeText={
-                                            gameInfo?.stats?.localteam?.saves["@total"]
-                                                ? gameInfo?.stats?.localteam?.saves["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.localteam?.saves?.["@total"]||0
                                         }
                                         awayText={
-                                            gameInfo?.stats?.visitorteam?.saves["@total"]
-                                                ? gameInfo?.stats?.visitorteam?.saves["@total"]
-                                                : 0
+                                            matchStat?.commentaries?.tournament?.match?.stats?.visitorteam?.saves?.["@total"]||0
                                         }
                                     />
                                 </div>
@@ -587,9 +551,9 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
                                     style={{ backgroundColor: "#F3F3F3", marginTop: 10 }}
                                 >
                                     <Formation
-                                        gameInfo={gameInfo}
-                                        homeTeamInfo={gameInfo?.lineup?.localteam}
-                                        awayTeamInfo={gameInfo?.lineup?.visitorteam}
+                                        gameInfo={{...gameInfo,...matchStat?.commentaries?.tournament?.match}}
+                                        homeTeamInfo={matchStat?.commentaries?.tournament?.match?.teams?.localteam}
+                                        awayTeamInfo={matchStat?.commentaries?.tournament?.match?.teams?.visitorteam}
                                     />
                                 </div>
                             )}
@@ -601,7 +565,7 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
                                             Attendance
                                         </h1>
                                         <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                                            {gameInfo?.matchinfo?.attendance["@name"]}
+                                            {matchStat?.commentaries?.tournament?.match?.matchinfo?.attendance?.["@name"]}
                                         </p>
                                     </div>
                                     <div style={{ marginTop: "1rem" }}>
@@ -609,7 +573,7 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
                                             Referee
                                         </h1>
                                         <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                                            {gameInfo?.matchinfo?.referee["@name"]}
+                                            {matchStat?.commentaries?.tournament?.match?.matchinfo?.referee?.["@name"]}
                                         </p>
                                     </div>
                                     <div style={{ marginTop: "1rem" }}>
@@ -617,7 +581,7 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
                                             Stadium
                                         </h1>
                                         <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                                            {gameInfo?.matchinfo?.stadium["@name"]}
+                                            {matchStat?.commentaries?.tournament?.match?.matchinfo?.stadium?.["@name"]}
                                         </p>
                                     </div>
                                     <div style={{ marginTop: "1rem" }}>
@@ -625,7 +589,7 @@ function FootballDetail({ selected, gameInfo, styles, isMobile, handleRoute, act
                                             Time
                                         </h1>
                                         <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                                            {gameInfo?.matchinfo?.time["@name"]}
+                                            {matchStat?.commentaries?.tournament?.match?.matchinfo?.time?.["@name"]}
                                         </p>
                                     </div>
                                 </div>
