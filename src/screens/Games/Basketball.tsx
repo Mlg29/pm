@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { useNavigate } from 'react-router-dom'
-import { BaseUrl } from '../../https'
+import { SportBaseUrl } from '../../https'
 import moment from 'moment'
 import { COLORS } from '../../utils/colors'
 import { FONTS } from '../../utils/fonts'

@@ -15,7 +15,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl, SportBaseUrl } from "../../https";
+import { SportBaseUrl, SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -39,7 +39,7 @@ export const getBasketballFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/basketball/${payload?.range?`matches?${queryString}`:'live'}`;
+      return `${SportSportBaseUrl}/basketball/${payload?.range ? `matches?${queryString}` : 'live'}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -69,7 +69,7 @@ export const BasketballSlice = createSlice({
     builder.addCase(getBasketballFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 

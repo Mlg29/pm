@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
 import TennisGameCard from '../../components/GameCard/TennisGameCard'
-import { BaseUrl } from '../../https'
+import { SportBaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {

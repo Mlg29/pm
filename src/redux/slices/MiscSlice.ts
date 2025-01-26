@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -34,7 +34,7 @@ export const getFxRate = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/misc/fx-rates?${queryString}`;
+      return `${SportBaseUrl}/misc/fx-rates?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -57,7 +57,7 @@ export const getTransferRate = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/misc/transfer-rates?${queryString}`;
+      return `${SportBaseUrl}/misc/transfer-rates?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -72,7 +72,7 @@ export const getBankList = createAsyncThunk(
   async () => {
     const buildUrl = () => {
 
-      return `${BaseUrl}/misc/banks`;
+      return `${SportBaseUrl}/misc/banks`;
     };
     var response = await getRequest(buildUrl());
     if (response?.status === 200 || response?.status === 201) {
@@ -86,7 +86,7 @@ export const getBankBranch = createAsyncThunk(
   async (payload: any) => {
     const buildUrl = (payload) => {
 
-      return `${BaseUrl}/misc/banks/${payload?.id}/branches`;
+      return `${SportBaseUrl}/misc/banks/${payload?.id}/branches`;
     };
     var response = await getRequest(buildUrl(payload));
     if (response?.status === 200 || response?.status === 201) {
@@ -99,9 +99,9 @@ export const getBankBranch = createAsyncThunk(
 export const verifyBank = createAsyncThunk(
   "misc/verifyBank",
   async (payload: any, { rejectWithValue }) => {
-    
+
     try {
-      const response = await postRequest(`${BaseUrl}/misc/resolve-bank-account`, payload);
+      const response = await postRequest(`${SportBaseUrl}/misc/resolve-bank-account`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }

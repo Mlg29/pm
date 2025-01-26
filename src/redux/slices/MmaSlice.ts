@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl, SportBaseUrl } from "../../https";
+import { SportBaseUrl, SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -24,10 +24,10 @@ const initialState = {
 export const getMmaFixtures = createAsyncThunk(
   "mma/getMmaFixtures",
   async (
-     payload?: any
+    payload?: any
   ) => {
     const buildUrl = (
-       payload?:any
+      payload?: any
     ) => {
       let queryParams = [];
       if (payload?.range) queryParams.push(`range=${payload?.range}`);
@@ -42,7 +42,7 @@ export const getMmaFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/mma/${payload?.range?`matches?${queryString}`:'live'}`;
+      return `${SportSportBaseUrl}/mma/${payload?.range ? `matches?${queryString}` : 'live'}`;
     };
 
     var response = await getRequest(buildUrl(
@@ -57,7 +57,7 @@ export const getMmaFixtures = createAsyncThunk(
 export const getMmaMatch = createAsyncThunk(
   "mma/getMmaMatch",
   async (payload: any) => {
-    var response = await getRequest(`${BaseUrl}/mma/match/${payload?.tourId}`);
+    var response = await getRequest(`${SportBaseUrl}/mma/match/${payload?.tourId}`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
@@ -97,12 +97,12 @@ export const MmaSlice = createSlice({
     builder.addCase(getMmaMatch.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 
 export const mmaFixtureState = (state: RootState) =>
   state.mma.mmaFixtures
-export const  mmaFixtureStatusState = (state: RootState) =>
+export const mmaFixtureStatusState = (state: RootState) =>
   state.mma.loading
 export default MmaSlice.reducer;

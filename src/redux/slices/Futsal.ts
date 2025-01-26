@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -37,7 +37,7 @@ export const getFutsalFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/futsal/fixtures?${queryString}`;
+      return `${SportBaseUrl}/futsal/fixtures?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -69,7 +69,7 @@ export const FutsalSlice = createSlice({
     builder.addCase(getFutsalFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 

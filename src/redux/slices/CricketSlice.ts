@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl, SportBaseUrl } from "../../https";
+import { SportBaseUrl, SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -29,7 +29,7 @@ interface payloadType {
 export const getCricketFixtures = createAsyncThunk(
   "cricket/getCricketFixtures",
   async (payload: payloadType) => {
-    const buildUrl = (payload) => `${SportBaseUrl}/cricket/${payload.eventType}`
+    const buildUrl = (payload) => `${SportSportBaseUrl}/cricket/${payload.eventType}`
     var response = await getRequest(buildUrl(payload));
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
@@ -59,7 +59,7 @@ export const CricketSlice = createSlice({
     builder.addCase(getCricketFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 

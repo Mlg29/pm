@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { RiFileList3Fill } from "react-icons/ri";
-import { BaseUrl } from "../../https";
+import { SportBaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import GameDetailCardHeader from "../../components/GameDetailCardHeader";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
@@ -53,7 +53,7 @@ function CreateBet() {
   const game = location?.state?.game;
   const gameType = location?.state?.gameType;
   const [gameInfo, setGameInfo] = useState(null);
-  const url = `${BaseUrl}/football`;
+  const url = `${SportBaseUrl}/football`;
 
 
 
@@ -83,78 +83,78 @@ function CreateBet() {
 
 
   return (
-  <div>
-    {
+    <div>
+      {
         !isMobile && <DesktopBackButton />
       }
       <div className="top-container" style={{ backgroundColor: "white" }}>
-      <Header text="Create Bet" />
-      {
-        gameType === "Soccer" &&  <GameDetailCardHeader data={gameInfo} />
-      }
-     
-     {
-      gameType === "Tennis" && <TennisCard data={gameInfo} />
-     }
+        <Header text="Create Bet" />
+        {
+          gameType === "Soccer" && <GameDetailCardHeader data={gameInfo} />
+        }
 
-      <div>
-        <h3 style={{ ...FONTS.h6 }}>Bet Option</h3>
-        <p style={{ ...FONTS.body7, marginBottom: 20 }}>
-          Select the option that best suit you
-        </p>
+        {
+          gameType === "Tennis" && <TennisCard data={gameInfo} />
+        }
 
-      </div>
+        <div>
+          <h3 style={{ ...FONTS.h6 }}>Bet Option</h3>
+          <p style={{ ...FONTS.body7, marginBottom: 20 }}>
+            Select the option that best suit you
+          </p>
 
-      <div style={{ ...styles.rowBtn, cursor: "pointer"  }}  onClick={() => navigate("/invite")}>
-        <div
-          style={{ display: "flex", alignItems: "center"}}
-         
-        >
-          <div>
-            <IoIosPeople
-              color={COLORS.white}
-              size={45}
-              style={{
-                backgroundColor: COLORS.primary,
-                padding: 5,
-                borderRadius: "100%",
-                marginRight: 15,
-              }}
-            />
-          </div>
-          <div>
-            <h3 style={{ ...FONTS.h6 }}>Invite Friends</h3>
-            <p style={{ ...FONTS.body7 }}>Create a bet invite</p>
-          </div>
         </div>
-        <FaChevronRight />
-      </div>
 
-      <div style={{ ...styles.rowBtn,cursor: "pointer"  }} onClick={() => navigate("/amount")}>
-        <div
-          style={{ display: "flex", alignItems: "center" }} 
-        >
-          <div>
-            <RiFileList3Fill
-              color={COLORS.white}
-              size={45}
-              style={{
-                backgroundColor: COLORS.primary,
-                padding: 5,
-                borderRadius: "100%",
-                marginRight: 15,
-              }}
-            />
+        <div style={{ ...styles.rowBtn, cursor: "pointer" }} onClick={() => navigate("/invite")}>
+          <div
+            style={{ display: "flex", alignItems: "center" }}
+
+          >
+            <div>
+              <IoIosPeople
+                color={COLORS.white}
+                size={45}
+                style={{
+                  backgroundColor: COLORS.primary,
+                  padding: 5,
+                  borderRadius: "100%",
+                  marginRight: 15,
+                }}
+              />
+            </div>
+            <div>
+              <h3 style={{ ...FONTS.h6 }}>Invite Friends</h3>
+              <p style={{ ...FONTS.body7 }}>Create a bet invite</p>
+            </div>
           </div>
-          <div>
-            <h3 style={{ ...FONTS.h6 }}>Open Bet</h3>
-            <p style={{ ...FONTS.body7 }}>Creat bet in the bet market</p>
-          </div>
+          <FaChevronRight />
         </div>
-        <FaChevronRight />
+
+        <div style={{ ...styles.rowBtn, cursor: "pointer" }} onClick={() => navigate("/amount")}>
+          <div
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <div>
+              <RiFileList3Fill
+                color={COLORS.white}
+                size={45}
+                style={{
+                  backgroundColor: COLORS.primary,
+                  padding: 5,
+                  borderRadius: "100%",
+                  marginRight: 15,
+                }}
+              />
+            </div>
+            <div>
+              <h3 style={{ ...FONTS.h6 }}>Open Bet</h3>
+              <p style={{ ...FONTS.body7 }}>Creat bet in the bet market</p>
+            </div>
+          </div>
+          <FaChevronRight />
+        </div>
       </div>
     </div>
-  </div>
   );
 }
 

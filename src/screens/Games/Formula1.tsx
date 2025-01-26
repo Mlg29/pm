@@ -4,7 +4,7 @@ import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
 
 import { io } from 'socket.io-client'
-import { BaseUrl } from '../../https'
+import { SportBaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import EmptyState from '../../components/EmptyState'

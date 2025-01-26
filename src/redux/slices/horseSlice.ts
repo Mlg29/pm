@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest
 } from '../../https/server'
-import { BaseUrl, SportBaseUrl } from '../../https'
+import { SportBaseUrl, SportSportBaseUrl } from '../../https'
 
 const initialState = {
   loading: false,
@@ -30,9 +30,8 @@ export const getHorseFixtures = createAsyncThunk(
 
       const queryString = queryParams.join('&')
 
-      return `${SportBaseUrl}/horse-racing/${
-        payload?.range ? `matches?${queryString}` : 'live'
-      }`
+      return `${SportSportBaseUrl}/horse-racing/${payload?.range ? `matches?${queryString}` : 'live'
+        }`
     }
 
     var response = await getRequest(buildUrl(payload))
@@ -45,7 +44,7 @@ export const getHorseFixtures = createAsyncThunk(
 export const getHorseRace = createAsyncThunk(
   'horse/getHorseRace',
   async (payload: any) => {
-    var response = await getRequest(`${BaseUrl}/horse/race/${payload?.tourId}`)
+    var response = await getRequest(`${SportBaseUrl}/horse/race/${payload?.tourId}`)
     if (response?.status === 200 || response?.status === 201) {
       return response?.data
     }
@@ -55,7 +54,7 @@ export const getHorseRace = createAsyncThunk(
 export const getHorseRaceToday = createAsyncThunk(
   'horse/getHorseRaceToday',
   async () => {
-    var response = await getRequest(`${SportBaseUrl}/horse-racing/races`)
+    var response = await getRequest(`${SportSportBaseUrl}/horse-racing/races`)
     if (response?.status === 200 || response?.status === 201) {
       return response?.data
     }
@@ -65,7 +64,7 @@ export const getHorseRaceToday = createAsyncThunk(
 export const getHorseRaceTomorrow = createAsyncThunk(
   'horse/getHorseRaceTomorrow',
   async () => {
-    var response = await getRequest(`${SportBaseUrl}/horse-racing/tomorrows`)
+    var response = await getRequest(`${SportSportBaseUrl}/horse-racing/tomorrows`)
     if (response?.status === 200 || response?.status === 201) {
       return response?.data
     }
@@ -100,7 +99,7 @@ export const HorseSlice = createSlice({
           state.loading = false
         }
       )
-    builder.addCase(getHorseRace.rejected, (state, action) => {})
+    builder.addCase(getHorseRace.rejected, (state, action) => { })
 
     builder.addCase(getHorseRaceToday.pending, (state, action) => {
       state.loading = true
@@ -111,7 +110,7 @@ export const HorseSlice = createSlice({
           state.loading = false
         }
       )
-    builder.addCase(getHorseRaceToday.rejected, (state, action) => {})
+    builder.addCase(getHorseRaceToday.rejected, (state, action) => { })
 
     builder.addCase(getHorseRaceTomorrow.pending, (state, action) => {
       state.loading = true
@@ -122,7 +121,7 @@ export const HorseSlice = createSlice({
           state.loading = false
         }
       )
-    builder.addCase(getHorseRaceTomorrow.rejected, (state, action) => {})
+    builder.addCase(getHorseRaceTomorrow.rejected, (state, action) => { })
   }
 })
 

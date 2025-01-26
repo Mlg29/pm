@@ -1,4 +1,4 @@
-   
+
 /* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unreachable */
@@ -15,7 +15,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl, SportBaseUrl } from "../../https";
+import { SportBaseUrl, SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -39,7 +39,7 @@ export const getBaseballFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/baseball/${payload?.range?`matches?${queryString}`:'live'}`;
+      return `${SportSportBaseUrl}/baseball/${payload?.range ? `matches?${queryString}` : 'live'}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -69,7 +69,7 @@ export const BaseballSlice = createSlice({
     builder.addCase(getBaseballFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 

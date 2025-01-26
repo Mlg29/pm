@@ -17,7 +17,7 @@ import GameCard from "../../components/GameCard";
 import { useNavigate } from "react-router-dom";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
-import { BaseUrl } from "../../https";
+import { SportBaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { getFootballFixtures } from "../../redux/slices/FootballSlice";
@@ -112,7 +112,7 @@ function HomeScreen() {
 
   const ExampleCustomInput = forwardRef(
     ({ value, onClick, className }: any, ref: any) => (
-      <button style={{fontSize: 10}} className={className} onClick={onClick} ref={ref}>
+      <button style={{ fontSize: 10 }} className={className} onClick={onClick} ref={ref}>
         {value}
       </button>
     )
@@ -188,7 +188,7 @@ function HomeScreen() {
       id: 8,
       name: "Volleyball",
       image: selected === "Volleyball" ? avolleyball : involleyball,
-    
+
     },
     {
       id: 11,
@@ -249,7 +249,7 @@ function HomeScreen() {
       name: "Golf",
       image: selected === "Golf" ? agolf : ingolf,
     },
- 
+
     {
       id: 12,
       name: "Table Tennis",
@@ -448,9 +448,9 @@ function HomeScreen() {
 
         {getToken ? (
           <div>
-               <div style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center',width: 15, height: 15, borderRadius: 100, position: 'absolute'}}>
-                    <p style={{fontSize: 8, color: 'white'}}>{notifications?.unreadCount}</p>
-                  </div>
+            <div style={{ backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center', width: 15, height: 15, borderRadius: 100, position: 'absolute' }}>
+              <p style={{ fontSize: 8, color: 'white' }}>{notifications?.unreadCount}</p>
+            </div>
             <img
               src={notification}
               style={{ cursor: "pointer" }}
@@ -566,14 +566,14 @@ function HomeScreen() {
           cursor: "pointer",
         }}
       >
-  <DatePicker
-                selected={selectedDate}
-                onChange={(date) => handleDateChange(date)}
-                customInput={
-                  // <ExampleCustomInput className="example-custom-input" />
-                  <FaCalendarAlt />
-                }
-              />
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => handleDateChange(date)}
+          customInput={
+            // <ExampleCustomInput className="example-custom-input" />
+            <FaCalendarAlt />
+          }
+        />
       </div>
       {selected === "Soccer" && (
         <div>

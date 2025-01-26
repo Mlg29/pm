@@ -4,7 +4,7 @@ import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
 
 import { io } from 'socket.io-client'
-import { BaseUrl } from '../../https'
+import { SportBaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
@@ -17,7 +17,7 @@ function Easport() {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const [live, setLive] = useState<any>([])
-  const url = `${BaseUrl}/esport`
+  const url = `${SportBaseUrl}/esport`
   const dispatch = useAppDispatch() as any
 
   useEffect(() => {
@@ -242,8 +242,8 @@ function Easport() {
       ) : null}
 
       {live?.length < 1 &&
-      upcoming?.data?.length < 1 &&
-      finished?.data?.length < 1 ? (
+        upcoming?.data?.length < 1 &&
+        finished?.data?.length < 1 ? (
         <EmptyState header='No Game Available for Easport' height='30vh' />
       ) : null}
     </div>

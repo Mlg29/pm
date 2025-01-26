@@ -4,7 +4,7 @@ import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
 
 import { io } from 'socket.io-client'
-import { BaseUrl } from '../../https'
+import { SportBaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
@@ -14,7 +14,7 @@ function TableTennis() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const url = `${BaseUrl}/boxing`
+  const url = `${SportBaseUrl}/boxing`
   const dispatch = useAppDispatch() as any
 
   // useEffect(() => {
