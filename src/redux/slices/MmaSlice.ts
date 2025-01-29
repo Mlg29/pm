@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { SportBaseUrl, SportSportBaseUrl } from "../../https";
+import { SportSportBaseUrl, SportSportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -42,7 +42,7 @@ export const getMmaFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportSportBaseUrl}/mma/${payload?.range ? `matches?${queryString}` : 'live'}`;
+      return `${SportSportSportBaseUrl}/mma/${payload?.range ? `matches?${queryString}` : 'live'}`;
     };
 
     var response = await getRequest(buildUrl(
@@ -57,7 +57,7 @@ export const getMmaFixtures = createAsyncThunk(
 export const getMmaMatch = createAsyncThunk(
   "mma/getMmaMatch",
   async (payload: any) => {
-    var response = await getRequest(`${SportBaseUrl}/mma/match/${payload?.tourId}`);
+    var response = await getRequest(`${SportSportBaseUrl}/mma/match/${payload?.tourId}`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }

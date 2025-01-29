@@ -15,7 +15,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { SportBaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -38,7 +38,7 @@ export const getGolfFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/golf/fixtures?${queryString}`;
+      return `${SportSportBaseUrl}/golf/fixtures?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));

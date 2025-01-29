@@ -17,7 +17,7 @@ import GameCard from "../../components/GameCard";
 import { useNavigate } from "react-router-dom";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
-import { SportBaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { getFootballFixtures } from "../../redux/slices/FootballSlice";
@@ -169,27 +169,27 @@ function HomeScreen() {
       name: "MMA/UFC",
       image: ufc,
     },
-    {
-      id: 7,
-      name: "Esports",
-      image: easport,
-    },
-    {
-      id: 9,
-      name: "Darts",
-      image: dart,
-    },
-    {
-      id: 10,
-      name: "Snooker",
-      image: snooker,
-    },
-    {
-      id: 8,
-      name: "Volleyball",
-      image: selected === "Volleyball" ? avolleyball : involleyball,
+    // {
+    //   id: 7,
+    //   name: "Esports",
+    //   image: easport,
+    // },
+    // {
+    //   id: 9,
+    //   name: "Darts",
+    //   image: dart,
+    // },
+    // {
+    //   id: 10,
+    //   name: "Snooker",
+    //   image: snooker,
+    // },
+    // {
+    //   id: 8,
+    //   name: "Volleyball",
+    //   image: selected === "Volleyball" ? avolleyball : involleyball,
 
-    },
+    // },
     {
       id: 11,
       name: "More",
@@ -208,53 +208,53 @@ function HomeScreen() {
       name: "AFL",
       image: rugby,
     },
-    {
-      id: 3,
-      name: "Handball",
-      image: handball,
-    },
-    {
-      id: 6,
-      name: "Futsal",
-      image: futsol,
-    },
+    // {
+    //   id: 3,
+    //   name: "Handball",
+    //   image: handball,
+    // },
+    // {
+    //   id: 6,
+    //   name: "Futsal",
+    //   image: futsol,
+    // },
     {
       id: 11,
       name: "Cricket",
       image: selected === "Cricket" ? acricket : incricket,
     },
-    {
-      id: 4,
-      name: "Ice Hockey",
-      image: hockey,
-    },
+    // {
+    //   id: 4,
+    //   name: "Ice Hockey",
+    //   image: hockey,
+    // },
     {
       id: 5,
       name: "NASCAR",
       image: nascar,
     },
 
-    {
-      id: 7,
-      name: "Hockey",
-      image: selected === "Hockey" ? ahockey : inhockey,
-    },
+    // {
+    //   id: 7,
+    //   name: "Hockey",
+    //   image: selected === "Hockey" ? ahockey : inhockey,
+    // },
     {
       id: 8,
       name: "Baseball",
       image: selected === "Baseball" ? abaseball : inbaseball,
     },
-    {
-      id: 10,
-      name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf,
-    },
+    // {
+    //   id: 10,
+    //   name: "Golf",
+    //   image: selected === "Golf" ? agolf : ingolf,
+    // },
 
-    {
-      id: 12,
-      name: "Table Tennis",
-      image: tabletennis,
-    },
+    // {
+    //   id: 12,
+    //   name: "Table Tennis",
+    //   image: tabletennis,
+    // },
     {
       id: 13,
       name: "Aussie Rules",

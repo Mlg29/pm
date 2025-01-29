@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { RiFileList3Fill } from "react-icons/ri";
-import { SportBaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import GameDetailCardHeader from "../../components/GameDetailCardHeader";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
@@ -53,7 +53,7 @@ function CreateBet() {
   const game = location?.state?.game;
   const gameType = location?.state?.gameType;
   const [gameInfo, setGameInfo] = useState(null);
-  const url = `${SportBaseUrl}/football`;
+  const url = `${SportSportBaseUrl}/football`;
 
 
 

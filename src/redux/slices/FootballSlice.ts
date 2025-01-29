@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { SportBaseUrl, SportSportBaseUrl } from "../../https";
+import { SportSportBaseUrl, SportSportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -37,7 +37,7 @@ export const getFootballFixtures = createAsyncThunk("football/getFootballFixture
     const queryString = queryParams.join('&');
 
 
-    return `${SportSportBaseUrl}/soccer/${payload?.range ? `matches?${queryString}` : 'live'}`;
+    return `${SportSportSportBaseUrl}/soccer/${payload?.range ? `matches?${queryString}` : 'live'}`;
   };
 
   var response = await getRequest(buildUrl(payload));
@@ -47,28 +47,28 @@ export const getFootballFixtures = createAsyncThunk("football/getFootballFixture
 });
 
 export const getFootballEvents = createAsyncThunk("football/getFootballEvents", async () => {
-  var response = await getRequest(`${SportSportBaseUrl}/football/prefill-events`);
+  var response = await getRequest(`${SportSportSportBaseUrl}/football/prefill-events`);
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
 });
 
 export const getLogo = createAsyncThunk("football/getLogo", async (payload: any) => {
-  var response = await getRequest(`${SportSportBaseUrl}/soccer/logo?teamId=${payload.teamId}`);
+  var response = await getRequest(`${SportSportSportBaseUrl}/soccer/logo?teamId=${payload.teamId}`);
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
 });
 
 export const getStat = createAsyncThunk("football/getStat", async (payload: any) => {
-  var response = await getRequest(`${SportSportBaseUrl}/soccer/stats?teamId=${payload.teamId}`);
+  var response = await getRequest(`${SportSportSportBaseUrl}/soccer/stats?teamId=${payload.teamId}`);
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
 });
 
 export const getMatchStat = createAsyncThunk("football/getMatchStat", async (payload: any) => {
-  var response = await getRequest(`${SportSportBaseUrl}/soccer/match-stats?matchId=${payload.matchId}&leagueId=${payload.leagueId}`);
+  var response = await getRequest(`${SportSportSportBaseUrl}/soccer/match-stats?matchId=${payload.matchId}&leagueId=${payload.leagueId}`);
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }

@@ -11,7 +11,7 @@ import {
   updateRequest,
   updateRequestWithNoPayload,
 } from "../../https/server";
-import { SportBaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -22,7 +22,7 @@ export const updateBetRestriction = createAsyncThunk(
   "restriction/updateBetRestriction",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await updateRequest(`${SportBaseUrl}/bet/max-bet-amount-restriction`, payload);
+      const response = await updateRequest(`${SportSportBaseUrl}/bet/max-bet-amount-restriction`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -36,7 +36,7 @@ export const updateBetFrequency = createAsyncThunk(
   "restriction/updateBetFrequency",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await updateRequest(`${SportBaseUrl}/bet/frequency-restriction`, payload);
+      const response = await updateRequest(`${SportSportBaseUrl}/bet/frequency-restriction`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { useNavigate } from 'react-router-dom'
-import { SportBaseUrl } from '../../https'
+import { SportSportBaseUrl } from '../../https'
 import { io } from 'socket.io-client'
 import moment from 'moment'
 import {
@@ -19,7 +19,7 @@ function Cricket() {
   const dispatch = useAppDispatch() as any
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
-  const url = `${SportBaseUrl}/Cricket`
+  const url = `${SportSportBaseUrl}/Cricket`
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const loading = useAppSelector(CricketStatusState) as any

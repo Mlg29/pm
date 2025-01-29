@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { SportBaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -25,7 +25,7 @@ export const createTransaction = createAsyncThunk(
   "transaction/createTransaction",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${SportBaseUrl}/transactions/deposit`, payload);
+      const response = await postRequest(`${SportSportBaseUrl}/transactions/deposit`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -39,7 +39,7 @@ export const withdrawal = createAsyncThunk(
   "transaction/withdrawal",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${SportBaseUrl}/transactions/withdraw`, payload);
+      const response = await postRequest(`${SportSportBaseUrl}/transactions/withdraw`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -54,7 +54,7 @@ export const requestNewPin = createAsyncThunk(
   "transaction/requestNewPin",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${SportBaseUrl}/users/transaction-pin/reset-otp/request`, payload);
+      const response = await postRequest(`${SportSportBaseUrl}/users/transaction-pin/reset-otp/request`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -68,7 +68,7 @@ export const resetPin = createAsyncThunk(
   "transaction/resetPin",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${SportBaseUrl}/users/transaction-pin/reset`, payload);
+      const response = await postRequest(`${SportSportBaseUrl}/users/transaction-pin/reset`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -81,7 +81,7 @@ export const resetPin = createAsyncThunk(
 export const getTransactions = createAsyncThunk(
   "transaction/getTransactions",
   async () => {
-    var response = await getRequest(`${SportBaseUrl}/transactions/history`);
+    var response = await getRequest(`${SportSportBaseUrl}/transactions/history`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }

@@ -10,7 +10,7 @@ import {
   updateRequest,
   postImageRequest
 } from '../../https/server'
-import { SportBaseUrl, SportSportBaseUrl } from '../../https'
+import { SportSportBaseUrl, SportSportSportBaseUrl } from '../../https'
 
 const initialState = {
   loading: false,
@@ -27,7 +27,7 @@ export const getAussieRuleFixtures = createAsyncThunk(
   async (payload: payloadType) => {
     const { eventType, query } = payload
     const buildUrl = () => {
-      return `${SportSportBaseUrl}/afl-australian-rules/${eventType}`
+      return `${SportSportSportBaseUrl}/afl-australian-rules/${eventType}`
     }
     var response = await getRequest(buildUrl())
     if (response?.status === 200 || response?.status === 201) {

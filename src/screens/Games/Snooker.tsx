@@ -4,7 +4,7 @@ import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
 
 import { io } from 'socket.io-client'
-import { SportBaseUrl } from '../../https'
+import { SportSportBaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'

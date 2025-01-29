@@ -45,8 +45,8 @@ function GameDetailCardHeader(props: any) {
   const [awayLogo, setAwayLogo] = useState(null)
 
   const transformUrl = (url) => {
-    const SportBaseUrl = "http://data2.goalserve.com:8084";
-    return url.replace(SportBaseUrl, "/api/");
+    const SportSportBaseUrl = "http://data2.goalserve.com:8084";
+    return url.replace(SportSportBaseUrl, "/api/");
   };
 
   const fetchLogo = async (url, url2) => {

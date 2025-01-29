@@ -13,7 +13,7 @@ import milan from "../../assets/images/millan.svg";
 import Formation from "../../components/Formation";
 import { useMediaQuery } from "react-responsive";
 import EmptyState from "../../components/EmptyState";
-import { SportBaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import { PiSoccerBallBold } from "react-icons/pi";
 import { TbRectangleVerticalFilled } from "react-icons/tb";
@@ -154,10 +154,10 @@ function GameDetails() {
 
   const url =
     gameType === "Tennis"
-      ? `${SportBaseUrl}/tennis`
+      ? `${SportSportBaseUrl}/tennis`
       : gameType === "Horse"
-        ? `${SportBaseUrl}/horse`
-        : `${SportBaseUrl}/football`;
+        ? `${SportSportBaseUrl}/horse`
+        : `${SportSportBaseUrl}/football`;
   const events =
     gameType === "Tennis"
       ? "tennisEventUpdate"
