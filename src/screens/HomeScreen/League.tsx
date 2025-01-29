@@ -6,8 +6,11 @@ import { FONTS } from '../../utils/fonts'
 import DatePickerComponent from '../../components/DatePickerComponent'
 import { useLocation, useNavigate } from 'react-router-dom'
 import moment from 'moment'
-import { useAppDispatch } from '../../redux/hooks'
-import { getFootballFixtures } from '../../redux/slices/FootballSlice'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import {
+  footballFixtureStatusState,
+  getFootballFixtures
+} from '../../redux/slices/FootballSlice'
 import { getTennisFixtures } from '../../redux/slices/TennisSlice'
 import Loader from '../../components/Loader'
 import GameCard from '../../components/GameCard'
@@ -24,6 +27,7 @@ import BoxingGameCard from '../../components/GameCard/BoxingGameCard'
 import MmaGameCard from '../../components/GameCard/MmaGameCard'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { LoadingState } from '../../components/LoadingState'
 
 const styles = {
   row: {
@@ -158,7 +162,7 @@ function League() {
   const [dateRange, setDateRange] = useState()
   const navigate = useNavigate()
   const location = useLocation()
-  const leagueName = location.state.data
+  const leagueName = location.state?.data
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [pageSize, setPageSize] = useState(10)
@@ -167,7 +171,7 @@ function League() {
   const [data, setData] = useState<any>([])
   const dispatch = useAppDispatch() as any
   const [loader, setLoader] = useState(false)
-
+  const footballloading = useAppSelector(footballFixtureStatusState) as any
   const [selectedDate, setSelectedDate] = useState<any>(new Date())
 
   const ExampleCustomInput = forwardRef(
@@ -203,76 +207,81 @@ function League() {
       page: page,
       pageSize: pageSize
     }
-
-    setLoading(true)
-    // setLoader(true);
-    dispatch(getFootballFixtures(payload)).then((dd) => {
-      setData((prev) => [...prev, ...dd?.payload?.data])
-      //setData(dd?.payload?.data);
-      setPage(dd?.payload?.page)
-      setPageSize(dd?.payload?.pageSize)
-      setTotal(dd?.payload?.total)
-      if (data?.length === dd?.payload?.total) {
-        setHasMore(false)
-      }
-      setLoading(false)
-      // setLoader(false);
+    dispatch(getFootballFixtures(null)).then((dd) => {
+      setData((prev) => [...prev, ...dd?.payload])
+      const isEnd = !dd?.payload?.total || data?.length === dd?.payload?.total
+      if (isEnd) setHasMore(false)
     })
+
+    // setLoading(true)
+    // // setLoader(true);
+    // dispatch(getFootballFixtures(payload)).then((dd) => {
+    //   // setData((prev) => [...prev, ...dd?.payload?.data])
+    //   // //setData(dd?.payload?.data);
+    //   // setPage(dd?.payload?.page)
+    //   // setPageSize(dd?.payload?.pageSize)
+    //   // setTotal(dd?.payload?.total)
+    //   if (data?.length === dd?.payload?.total) {
+    //     setHasMore(false)
+    //   }
+    //   setLoading(false)
+    // setLoader(false);
+    //})
   }
 
   useEffect(() => {
     fetchData(page)
-  }, [page, dateRange])
+  }, [])
 
   const fetchMoreData = () => {
     setPage((prevPage) => prevPage + 1)
   }
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league =
-        current?.leagueName ||
-        current?.tournamentName ||
-        current?.name ||
-        current?.league ||
-        game
+  // const groupedByData = (collectedData) => {
+  //   return collectedData?.reduce((acc, current) => {
+  //     const league =
+  //       current?.leagueName ||
+  //       current?.tournamentName ||
+  //       current?.name ||
+  //       current?.league ||
+  //       game
 
-      if (!acc[league]) {
-        acc[league] = []
-      }
+  //     if (!acc[league]) {
+  //       acc[league] = []
+  //     }
 
-      const isDuplicate = acc[league].some((item) => {
-        if (item?.localTeamName || item?.visitorTeamName) {
-          return (
-            item?.localTeamName === current?.localTeamName &&
-            item?.visitorTeamName === current?.visitorTeamName
-          )
-        }
+  //     const isDuplicate = acc[league].some((item) => {
+  //       if (item?.localTeamName || item?.visitorTeamName) {
+  //         return (
+  //           item?.localTeamName === current?.localTeamName &&
+  //           item?.visitorTeamName === current?.visitorTeamName
+  //         )
+  //       }
 
-        if (item?.localteam?.name || item?.awayteam?.name) {
-          return (
-            item?.localteam?.name === current?.localteam?.name &&
-            item?.awayteam?.name === current?.awayteam?.name
-          )
-        }
+  //       if (item?.localteam?.name || item?.awayteam?.name) {
+  //         return (
+  //           item?.localteam?.name === current?.localteam?.name &&
+  //           item?.awayteam?.name === current?.awayteam?.name
+  //         )
+  //       }
 
-        if (item?.player[0]['@name'] || item?.player[1]['@name']) {
-          return (
-            item?.player[0]['@name'] === current?.player[0]['@name'] &&
-            item?.player[1]['@name'] === current?.player[1]['@name']
-          )
-        }
-      })
+  //       if (item?.player[0]['@name'] || item?.player[1]['@name']) {
+  //         return (
+  //           item?.player[0]['@name'] === current?.player[0]['@name'] &&
+  //           item?.player[1]['@name'] === current?.player[1]['@name']
+  //         )
+  //       }
+  //     })
 
-      if (!isDuplicate) {
-        acc[league].push(current)
-      }
+  //     if (!isDuplicate) {
+  //       acc[league].push(current)
+  //     }
 
-      return acc
-    }, {})
-  }
+  //     return acc
+  //   }, {})
+  // }
 
-  const outPutData = groupedByData(data)
+  // const outPutData = groupedByData(data)
 
   return (
     <div className='top-container'>
@@ -292,64 +301,70 @@ function League() {
         </div>
       </div>
 
-      {loader ? (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
-            //  flex: 1,
-            // height: "50vh",
-          }}
-        >
-          <Loader />
-        </div>
-      ) : (
+      <LoadingState isLoading={loading}>
         <div>
           <div>
             <InfiniteScroll
               dataLength={data?.length || []}
               next={fetchMoreData}
               hasMore={hasMore}
-              loader={loading && <h4>Loading...</h4>}
+              loader={
+                footballloading && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: '100%',
+                      margin: ' 1rem auto'
+                    }}
+                  >
+                    <Loader />
+                  </div>
+                )
+              }
               //   endMessage={<p>No more data to load</p>}
             >
-              {outPutData &&
-                Object.keys(outPutData)?.map((leagueName) => (
-                  <div key={leagueName}>
-                    <p
-                      style={{
-                        ...FONTS.body7,
-                        backgroundColor: COLORS.lightRed,
-                        padding: 5,
-                        marginBottom: 10,
-                        borderRadius: 5,
-                        color: COLORS.black,
-                        marginRight: 10
-                      }}
-                    >
-                      {leagueName}
-                    </p>
-                    <div>
-                      {outPutData[leagueName].map((aa, i) => {
-                        return (
-                          <div key={i}>
-                            <GameCard id={i} data={aa} />
-                          </div>
-                        )
-                      })}
-                    </div>
+              {data?.map((league, i) => (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {league?.name}
+                  </p>
+                  <div>
+                    {league?.matches?.map((aa, i) => {
+                      const payload = {
+                        league: league?.league,
+                        leagueId: league?.leagueId,
+                        country: league?.country,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <GameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
                   </div>
-                ))}
+                </div>
+              ))}
             </InfiniteScroll>
 
-            {!data || data?.length < 1 ? (
+            {!data || (data?.length < 1 && !footballloading) ? (
               <EmptyState header='No data available' height='50vh' />
             ) : null}
           </div>
         </div>
-      )}
+      </LoadingState>
     </div>
   )
 }

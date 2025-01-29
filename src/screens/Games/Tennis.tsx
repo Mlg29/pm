@@ -16,23 +16,23 @@ import { LoadingState } from '../../components/LoadingState'
 function Tennis() {
   const [live, setLive] = useState<any>([])
   const loading = useAppSelector(tennisFixtureStatusState) as any
-  const [Finised, setFinised] = useState<any>([])
+  const [Finished, setFinished] = useState<any>([])
   const [scheduled, setScheduled] = useState<any>([])
   const dispatch = useAppDispatch() as any
   let createdDate = moment(new Date()).utc().format()
 
   useEffect(() => {
-    const PayloadFinised = {
-      range: 'd-1'
-    }
-    const PayloadScheduled = {
+    const PayloadFinished = {
       range: 'home_p2p'
     }
-    dispatch(getTennisFixtures(PayloadFinised)).then((dd) => {
-      setFinised(dd?.payload?.scores)
+    const PayloadScheduled = {
+      range: 'd1'
+    }
+    dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
+      setFinished(dd?.payload)
     })
     dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
-      setScheduled(dd?.payload?.scores)
+      setScheduled(dd?.payload)
     })
     dispatch(getTennisFixtures(null)).then((dd) => {
       setLive(dd?.payload?.scores)
@@ -163,7 +163,7 @@ function Tennis() {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {Finised?.category?.map((league, index) => (
+            {Finished?.category?.map((league, index) => (
               <div key={league?.name}>
                 <p
                   style={{
@@ -179,7 +179,7 @@ function Tennis() {
                   {league?.name}
                 </p>
                 <div>
-                  {Finised?.category[index]?.match.map((aa, i) => {
+                  {Finished?.category[index]?.match.map((aa, i) => {
                     const payload = {
                       league: league.name,
                       ...aa
@@ -196,7 +196,7 @@ function Tennis() {
           </>
         ) : null}
 
-        {live?.category?.length < 1 && Finised?.category?.length < 1 ? (
+        {live?.category?.length < 1 && Finished?.category?.length < 1 ? (
           <EmptyState header='No Game Available for Tennis' height='30vh' />
         ) : null}
       </LoadingState>
