@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { SportSportBaseUrl, SportSportSportBaseUrl } from "../../https";
+import { SportSportBaseUrl, SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -26,7 +26,7 @@ export const getAflFixtureLive = createAsyncThunk(
   "afl/getAflFixtureLive",
   async () => {
     const buildUrl = () => {
-      return `${SportSportSportBaseUrl}/american-football/live`;
+      return `${SportSportBaseUrl}/american-football/live`;
     };
 
     var response = await getRequest(buildUrl());
@@ -54,7 +54,7 @@ export const getAflFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportSportSportBaseUrl}/american-football/matches?${queryString}`;
+      return `${SportSportBaseUrl}/american-football/matches?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));

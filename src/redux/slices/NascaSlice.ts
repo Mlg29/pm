@@ -9,7 +9,7 @@ import type { RootState } from "../store";
 import {
     getRequest,
 } from "../../https/server";
-import { SportSportBaseUrl, SportSportSportBaseUrl } from "../../https";
+import { SportSportBaseUrl, SportSportBaseUrl } from "../../https";
 
 const initialState = {
     loading: false,
@@ -24,7 +24,7 @@ export const getNascaFixtures = createAsyncThunk(
             if (payload?.range) queryParams.push(`${payload?.range}`);
             const queryString = queryParams.join("&");
 
-            return `${SportSportSportBaseUrl}/nascar/${queryString}`;
+            return `${SportSportBaseUrl}/nascar/${queryString}`;
         };
 
         var response = await getRequest(buildUrl(payload));
@@ -41,7 +41,7 @@ export const getNascaMatchFixtures = createAsyncThunk(
             if (payload?.range) queryParams.push(`range=${payload?.range}`);
             const queryString = queryParams.join("&");
 
-            return `${SportSportSportBaseUrl}/nascar/matches?${queryString}`;
+            return `${SportSportBaseUrl}/nascar/matches?${queryString}`;
         };
 
         var response = await getRequest(buildUrl(payload));

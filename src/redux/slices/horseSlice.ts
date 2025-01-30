@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest
 } from '../../https/server'
-import { SportSportBaseUrl, SportSportSportBaseUrl } from '../../https'
+import { SportSportBaseUrl, SportSportBaseUrl } from '../../https'
 
 const initialState = {
   loading: false,
@@ -30,7 +30,7 @@ export const getHorseFixtures = createAsyncThunk(
 
       const queryString = queryParams.join('&')
 
-      return `${SportSportSportBaseUrl}/horse-racing/${payload?.range ? `matches?${queryString}` : 'live'
+      return `${SportSportBaseUrl}/horse-racing/${payload?.range ? `matches?${queryString}` : 'live'
         }`
     }
 
@@ -54,7 +54,7 @@ export const getHorseRace = createAsyncThunk(
 export const getHorseRaceToday = createAsyncThunk(
   'horse/getHorseRaceToday',
   async () => {
-    var response = await getRequest(`${SportSportSportBaseUrl}/horse-racing/races`)
+    var response = await getRequest(`${SportSportBaseUrl}/horse-racing/races`)
     if (response?.status === 200 || response?.status === 201) {
       return response?.data
     }
@@ -64,7 +64,7 @@ export const getHorseRaceToday = createAsyncThunk(
 export const getHorseRaceTomorrow = createAsyncThunk(
   'horse/getHorseRaceTomorrow',
   async () => {
-    var response = await getRequest(`${SportSportSportBaseUrl}/horse-racing/tomorrows`)
+    var response = await getRequest(`${SportSportBaseUrl}/horse-racing/tomorrows`)
     if (response?.status === 200 || response?.status === 201) {
       return response?.data
     }

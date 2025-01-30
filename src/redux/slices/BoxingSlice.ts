@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest
 } from '../../https/server'
-import { SportSportBaseUrl, SportSportSportBaseUrl } from '../../https'
+import { SportSportBaseUrl, SportSportBaseUrl } from '../../https'
 
 const initialState = {
   loading: false,
@@ -38,7 +38,7 @@ export const getBoxingFixtures = createAsyncThunk(
 
       const queryString = queryParams.join('&')
 
-      return `${SportSportSportBaseUrl}/boxing/${payload?.range ? `matches?${queryString}` : 'live'}`
+      return `${SportSportBaseUrl}/boxing/${payload?.range ? `matches?${queryString}` : 'live'}`
     }
 
     var response = await getRequest(buildUrl(payload))
