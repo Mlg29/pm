@@ -13,7 +13,7 @@ import milan from "../../assets/images/millan.svg";
 import Formation from "../../../components/Formation";
 import { useMediaQuery } from "react-responsive";
 import EmptyState from "../../../components/EmptyState";
-import { BaseUrl } from "../../../https";
+import { SportSportBaseUrl } from "../../../https";
 import { io } from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
 

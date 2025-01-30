@@ -8,7 +8,7 @@ import slider from "../../assets/images/slider.svg";
 import { forwardRef, useEffect, useMemo, useState } from "react";
 import slider2 from "../../assets/images/slider2.svg";
 import slider3 from "../../assets/images/slider3.svg";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 import { useAppDispatch } from "../../redux/hooks";
 import { io } from "socket.io-client";
 import moment from "moment";
@@ -65,7 +65,7 @@ function Dashboard() {
   const dispatch = useAppDispatch() as any;
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
-  const url = `${BaseUrl}/football`;
+  const url = `${SportSportBaseUrl}/football`;
   const [live, setLive] = useState<any>([]);
   const [upcoming, setUpcoming] = useState<any>([]);
   const [upcomingTennis, setUpcomingTennis] = useState<any>([]);
@@ -79,7 +79,7 @@ function Dashboard() {
 
   const ExampleCustomInput = forwardRef(
     ({ value, onClick, className }: any, ref: any) => (
-      <button style={{fontSize: 10}} className={className} onClick={onClick} ref={ref}>
+      <button style={{ fontSize: 10 }} className={className} onClick={onClick} ref={ref}>
         {value}
       </button>
     )

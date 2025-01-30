@@ -17,7 +17,6 @@ import GameCard from "../../components/GameCard";
 import { useNavigate } from "react-router-dom";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
-import { BaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { getFootballFixtures } from "../../redux/slices/FootballSlice";
@@ -112,7 +111,7 @@ function HomeScreen() {
 
   const ExampleCustomInput = forwardRef(
     ({ value, onClick, className }: any, ref: any) => (
-      <button style={{fontSize: 10}} className={className} onClick={onClick} ref={ref}>
+      <button style={{ fontSize: 10 }} className={className} onClick={onClick} ref={ref}>
         {value}
       </button>
     )
@@ -169,27 +168,27 @@ function HomeScreen() {
       name: "MMA/UFC",
       image: ufc,
     },
-    {
-      id: 7,
-      name: "Esports",
-      image: easport,
-    },
-    {
-      id: 9,
-      name: "Darts",
-      image: dart,
-    },
-    {
-      id: 10,
-      name: "Snooker",
-      image: snooker,
-    },
-    {
-      id: 8,
-      name: "Volleyball",
-      image: selected === "Volleyball" ? avolleyball : involleyball,
-    
-    },
+    // {
+    //   id: 7,
+    //   name: "Esports",
+    //   image: easport,
+    // },
+    // {
+    //   id: 9,
+    //   name: "Darts",
+    //   image: dart,
+    // },
+    // {
+    //   id: 10,
+    //   name: "Snooker",
+    //   image: snooker,
+    // },
+    // {
+    //   id: 8,
+    //   name: "Volleyball",
+    //   image: selected === "Volleyball" ? avolleyball : involleyball,
+
+    // },
     {
       id: 11,
       name: "More",
@@ -208,53 +207,53 @@ function HomeScreen() {
       name: "AFL",
       image: rugby,
     },
-    {
-      id: 3,
-      name: "Handball",
-      image: handball,
-    },
-    {
-      id: 6,
-      name: "Futsal",
-      image: futsol,
-    },
+    // {
+    //   id: 3,
+    //   name: "Handball",
+    //   image: handball,
+    // },
+    // {
+    //   id: 6,
+    //   name: "Futsal",
+    //   image: futsol,
+    // },
     {
       id: 11,
       name: "Cricket",
       image: selected === "Cricket" ? acricket : incricket,
     },
-    {
-      id: 4,
-      name: "Ice Hockey",
-      image: hockey,
-    },
+    // {
+    //   id: 4,
+    //   name: "Ice Hockey",
+    //   image: hockey,
+    // },
     {
       id: 5,
       name: "NASCAR",
       image: nascar,
     },
 
-    {
-      id: 7,
-      name: "Hockey",
-      image: selected === "Hockey" ? ahockey : inhockey,
-    },
+    // {
+    //   id: 7,
+    //   name: "Hockey",
+    //   image: selected === "Hockey" ? ahockey : inhockey,
+    // },
     {
       id: 8,
       name: "Baseball",
       image: selected === "Baseball" ? abaseball : inbaseball,
     },
-    {
-      id: 10,
-      name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf,
-    },
- 
-    {
-      id: 12,
-      name: "Table Tennis",
-      image: tabletennis,
-    },
+    // {
+    //   id: 10,
+    //   name: "Golf",
+    //   image: selected === "Golf" ? agolf : ingolf,
+    // },
+
+    // {
+    //   id: 12,
+    //   name: "Table Tennis",
+    //   image: tabletennis,
+    // },
     {
       id: 13,
       name: "Aussie Rules",
@@ -448,9 +447,9 @@ function HomeScreen() {
 
         {getToken ? (
           <div>
-               <div style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center',width: 15, height: 15, borderRadius: 100, position: 'absolute'}}>
-                    <p style={{fontSize: 8, color: 'white'}}>{notifications?.unreadCount}</p>
-                  </div>
+            <div style={{ backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center', width: 15, height: 15, borderRadius: 100, position: 'absolute' }}>
+              <p style={{ fontSize: 8, color: 'white' }}>{notifications?.unreadCount}</p>
+            </div>
             <img
               src={notification}
               style={{ cursor: "pointer" }}
@@ -566,15 +565,14 @@ function HomeScreen() {
           cursor: "pointer",
         }}
       >
-        
-  <DatePicker
-                selected={selectedDate}
-                onChange={(date) => handleDateChange(date)}
-                customInput={
-                  // <ExampleCustomInput className="example-custom-input" />
-                  <FaCalendarAlt />
-                }
-              />
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => handleDateChange(date)}
+          customInput={
+            // <ExampleCustomInput className="example-custom-input" />
+            <FaCalendarAlt />
+          }
+        />
       </div>
       {selected === "Soccer" && (
         <div>

@@ -15,7 +15,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   userData: null,
@@ -30,7 +30,7 @@ export const createUser = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequestNoToken(
-        `${BaseUrl}/auth/signup`,
+        `${SportSportBaseUrl}/auth/signup`,
         payload
       );
 
@@ -52,7 +52,7 @@ export const createNewPassword = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await updateRequest(
-        `${BaseUrl}/users/password`,
+        `${SportSportBaseUrl}/users/password`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -69,7 +69,7 @@ export const createForgotPassword = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequest(
-        `${BaseUrl}/auth/reset-password`,
+        `${SportSportBaseUrl}/auth/reset-password`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -87,7 +87,7 @@ export const emailWaitList = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequestNoToken(
-        `${BaseUrl}/email-waitlist`,
+        `${SportSportBaseUrl}/email-waitlist`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -104,7 +104,7 @@ export const verifyTransactionPin = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequest(
-        `${BaseUrl}/users/validate/transaction-pin`,
+        `${SportSportBaseUrl}/users/validate/transaction-pin`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -121,7 +121,7 @@ export const verifySignupData = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequestNoToken(
-        `${BaseUrl}/auth/verify-signup-data`,
+        `${SportSportBaseUrl}/auth/verify-signup-data`,
         payload
       );
 
@@ -143,7 +143,7 @@ export const verifyEmailOtp = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequestNoToken(
-        `${BaseUrl}/auth/verify-email-otp`,
+        `${SportSportBaseUrl}/auth/verify-email-otp`,
         payload
       );
 
@@ -165,7 +165,7 @@ export const forgetPassword = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequestNoToken(
-        `${BaseUrl}/auth/forgot-password`,
+        `${SportSportBaseUrl}/auth/forgot-password`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -186,7 +186,7 @@ export const login = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequestNoToken(
-        `${BaseUrl}/auth/login`,
+        `${SportSportBaseUrl}/auth/login`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -199,14 +199,14 @@ export const login = createAsyncThunk(
 );
 
 export const getUserData = createAsyncThunk("auth/getUserData", async () => {
-  var response = await getRequest(`${BaseUrl}/users/profile`);
+  var response = await getRequest(`${SportSportBaseUrl}/users/profile`);
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
 });
 
 export const getSingleUser = createAsyncThunk("auth/getSingleUser", async (payload: any) => {
-  var response = await getRequest(`${BaseUrl}/users?search=${payload}`);
+  var response = await getRequest(`${SportSportBaseUrl}/users?search=${payload}`);
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
@@ -217,12 +217,12 @@ export const uploadImage = createAsyncThunk(
   async (formData: any, { rejectWithValue }) => {
     try {
       const response = await postImageRequest(
-        `${BaseUrl}/file`,
+        `${SportSportBaseUrl}/file`,
         formData
       );
-     if(response?.status === 200 || response?.status === 201){
-      return response
-     }
+      if (response?.status === 200 || response?.status === 201) {
+        return response
+      }
     } catch (e: any) {
       return rejectWithValue(e?.response?.data?.message);
     }
@@ -234,7 +234,7 @@ export const updateUserData = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await updateRequest(
-        `${BaseUrl}/users`,
+        `${SportSportBaseUrl}/users`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -251,7 +251,7 @@ export const updateTransactionPin = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await updateRequest(
-        `${BaseUrl}/users/transaction-pin`,
+        `${SportSportBaseUrl}/users/transaction-pin`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -269,7 +269,7 @@ export const changeTransactionPins = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await updateRequest(
-        `${BaseUrl}/users/change-transaction-pin`,
+        `${SportSportBaseUrl}/users/change-transaction-pin`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -287,7 +287,7 @@ export const terminateAccount = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequest(
-        `${BaseUrl}/users/account/terminate`,
+        `${SportSportBaseUrl}/users/account/terminate`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -305,7 +305,7 @@ export const AccountPayout = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequest(
-        `${BaseUrl}/users/payout-account`,
+        `${SportSportBaseUrl}/users/payout-account`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -318,7 +318,7 @@ export const AccountPayout = createAsyncThunk(
 );
 
 export const getUserPayout = createAsyncThunk("auth/getUserPayout", async () => {
-  var response = await getRequest(`${BaseUrl}/users/payout-account`);
+  var response = await getRequest(`${SportSportBaseUrl}/users/payout-account`);
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
@@ -434,7 +434,7 @@ export const AuthSlice = createSlice({
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.userInfo = action?.payload
-     
+
         }
       );
     builder.addCase(getUserData.rejected, (state, action) => {

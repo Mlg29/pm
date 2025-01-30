@@ -10,7 +10,7 @@ import {
   getRequest,
   updateRequestWithNoPayload,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -21,7 +21,7 @@ export const updateNotifications = createAsyncThunk(
   "notification/updateNotifications",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await updateRequestWithNoPayload(`${BaseUrl}/notifications/${payload?.id}/read`);
+      const response = await updateRequestWithNoPayload(`${SportSportBaseUrl}/notifications/${payload?.id}/read`);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -35,7 +35,7 @@ export const updateNotifications = createAsyncThunk(
 export const getNotifications = createAsyncThunk(
   "notification/getNotifications",
   async () => {
-    var response = await getRequest(`${BaseUrl}/notifications`);
+    var response = await getRequest(`${SportSportBaseUrl}/notifications`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }

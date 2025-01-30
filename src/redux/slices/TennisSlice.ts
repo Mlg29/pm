@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest
 } from '../../https/server'
-import { BaseUrl, SportBaseUrl } from '../../https'
+import { SportSportBaseUrl, SportSportBaseUrl } from '../../https'
 
 const initialState = {
   loading: false,
@@ -38,7 +38,7 @@ export const getTennisFixtures = createAsyncThunk(
 
       const queryString = queryParams.join('&')
 
-      return `${SportBaseUrl}/tennis/${payload?.range?`matches?${queryString}`:'live'}`
+      return `${SportSportBaseUrl}/tennis/${payload?.range ? `matches?${queryString}` : 'live'}`
     }
 
     var response = await getRequest(buildUrl(payload))
@@ -52,7 +52,7 @@ export const getTennisResult = createAsyncThunk(
   'tennis/getTennisResult',
   async (payload: any) => {
     var response = await getRequest(
-      `${BaseUrl}/tennis/result/${payload?.tourId}`
+      `${SportSportBaseUrl}/tennis/result/${payload?.tourId}`
     )
     if (response?.status === 200 || response?.status === 201) {
       return response?.data
@@ -64,7 +64,7 @@ export const getTennisGames = createAsyncThunk(
   'tennis/getTennisGames',
   async (payload: any) => {
     var response = await getRequest(
-      `${BaseUrl}/tennis/games/${payload?.period}`
+      `${SportSportBaseUrl}/tennis/games/${payload?.period}`
     )
     if (response?.status === 200 || response?.status === 201) {
       return response?.data

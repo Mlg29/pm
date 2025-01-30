@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -37,7 +37,7 @@ export const getSnookerFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/snooker/fixtures?${queryString}`;
+      return `${SportSportBaseUrl}/snooker/fixtures?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -69,7 +69,7 @@ export const SnookerSlice = createSlice({
     builder.addCase(getSnookerFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 

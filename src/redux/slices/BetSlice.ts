@@ -18,7 +18,7 @@ import {
   updateRequestWithNoPayload,
   updateRequestWithPayload,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -27,7 +27,7 @@ const initialState = {
 export const getBetById = createAsyncThunk(
   "bet/getBetById",
   async (payload: any) => {
-    var response = await getRequest(`${BaseUrl}/bet/${payload}`);
+    var response = await getRequest(`${SportSportBaseUrl}/bet/${payload}`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
@@ -37,7 +37,7 @@ export const getBetById = createAsyncThunk(
 export const getAdjustBet = createAsyncThunk(
   "bet/getAdjustBet",
   async (payload: any) => {
-    var response = await getRequest(`${BaseUrl}/bet/adjustment/${payload}`);
+    var response = await getRequest(`${SportSportBaseUrl}/bet/adjustment/${payload}`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
@@ -49,7 +49,7 @@ export const getBetHistory = createAsyncThunk(
   "bet/getBetHistory",
   async (payload: any) => {
 
-    var response = await getRequest(`${BaseUrl}/bet/history?status=${payload?.status}`)
+    var response = await getRequest(`${SportSportBaseUrl}/bet/history?status=${payload?.status}`)
 
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
@@ -68,12 +68,12 @@ export const getOpenBet = createAsyncThunk(
       if (payload?.id) queryParams.push(`sportEventId=${payload.id}`);
       if (payload?.outcome) queryParams.push(`outcome=${payload.outcome}`);
       const queryString = queryParams.join("&");
-      return `${BaseUrl}/bet/open?${queryString}`;
+      return `${SportSportBaseUrl}/bet/open?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
     var response = await getRequest(
-      `${BaseUrl}/bet/open?page=${payload?.page}&pageSize=${payload?.pageSize}`
+      `${SportSportBaseUrl}/bet/open?page=${payload?.page}&pageSize=${payload?.pageSize}`
     );
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
@@ -84,12 +84,12 @@ export const getOpenBet = createAsyncThunk(
 export const updateBetAdjust = createAsyncThunk(
   "bet/updateBetAdjust",
   async (payload: any, { rejectWithValue }) => {
-   const pp = {
-    status: payload?.status
-   }
+    const pp = {
+      status: payload?.status
+    }
 
     try {
-      const response = await updateRequestWithPayload(`${BaseUrl}/bet/adjust/${payload?.requestId}`, pp);
+      const response = await updateRequestWithPayload(`${SportSportBaseUrl}/bet/adjust/${payload?.requestId}`, pp);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -104,7 +104,7 @@ export const updateBetById = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await updateRequest(
-        `${BaseUrl}/bet/${payload?.id}`,
+        `${SportSportBaseUrl}/bet/${payload?.id}`,
         payload
       );
       if (response?.status === 200 || response?.status === 201) {
@@ -126,7 +126,7 @@ export const acceptBet = createAsyncThunk(
 
     try {
       const response = await updateRequestWithPayload(
-        `${BaseUrl}/bet/${payload?.id}/accept`, adPayload);
+        `${SportSportBaseUrl}/bet/${payload?.id}/accept`, adPayload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -145,7 +145,7 @@ export const adjustBet = createAsyncThunk(
       requestedPrediction: payload?.requestedPrediction,
     }
     try {
-      const response = await postRequest(`${BaseUrl}/bet/adjust`, pp);
+      const response = await postRequest(`${SportSportBaseUrl}/bet/adjust`, pp);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -159,7 +159,8 @@ export const createBet = createAsyncThunk(
   "bet/createBet",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${BaseUrl}/bet`, payload);
+      console.log("bettt>>>>>", `${SportSportBaseUrl}/bet`)
+      const response = await postRequest(`${SportSportBaseUrl}/bet`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }
@@ -174,7 +175,7 @@ export const deleteBet = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await deleteRequestNoPayload(
-        `${BaseUrl}/bet/${{ payload }}`
+        `${SportSportBaseUrl}/bet/${{ payload }}`
       );
       if (response?.status === 200 || response?.status === 201) {
         return response;

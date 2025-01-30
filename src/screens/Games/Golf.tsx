@@ -4,7 +4,7 @@ import { FONTS } from '../../utils/fonts'
 import { COLORS } from '../../utils/colors'
 
 import { io } from 'socket.io-client'
-import { BaseUrl } from '../../https'
+import { SportSportBaseUrl } from '../../https'
 import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
@@ -15,7 +15,7 @@ function Golf() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const url = `${BaseUrl}/golf`
+  const url = `${SportSportBaseUrl}/golf`
   const dispatch = useAppDispatch() as any
 
   // useEffect(() => {

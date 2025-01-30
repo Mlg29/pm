@@ -15,7 +15,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -38,7 +38,7 @@ export const getGolfFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/golf/fixtures?${queryString}`;
+      return `${SportSportBaseUrl}/golf/fixtures?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -68,7 +68,7 @@ export const GolfSlice = createSlice({
     builder.addCase(getGolfFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 

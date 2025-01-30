@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -37,7 +37,7 @@ export const getHandballFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${BaseUrl}/handball/fixtures?${queryString}`;
+      return `${SportSportBaseUrl}/handball/fixtures?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -69,7 +69,7 @@ export const HandballSlice = createSlice({
     builder.addCase(getHandballFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-   
+
   },
 });
 

@@ -14,7 +14,7 @@ import {
   updateRequest,
   postImageRequest,
 } from "../../https/server";
-import { BaseUrl, SportBaseUrl } from "../../https";
+import { SportSportBaseUrl, SportSportBaseUrl } from "../../https";
 
 const initialState = {
   loading: false,
@@ -29,7 +29,7 @@ export const getFormulaFixtures = createAsyncThunk(
       if (payload?.range) queryParams.push(`${payload?.range}`);
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/f1/${queryString}`;
+      return `${SportSportBaseUrl}/f1/${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));
@@ -46,7 +46,7 @@ export const getFormulaMatchFixtures = createAsyncThunk(
       if (payload?.range) queryParams.push(`range=${payload?.range}`);
       const queryString = queryParams.join("&");
 
-      return `${SportBaseUrl}/f1/matches?${queryString}`;
+      return `${SportSportBaseUrl}/f1/matches?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));

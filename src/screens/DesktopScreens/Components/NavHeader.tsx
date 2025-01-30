@@ -115,7 +115,7 @@ function NavHeader() {
   const userData = useAppSelector(userState)
 
 
- 
+
 
   useEffect(() => {
     dispatch(getNotifications())
@@ -175,26 +175,26 @@ function NavHeader() {
       name: "MMA/UFC",
       image: ufc,
     },
-    {
-      id: 7,
-      name: "Esports",
-      image: easport,
-    },
-    {
-      id: 9,
-      name: "Darts",
-      image: dart,
-    },
-    {
-      id: 10,
-      name: "Snooker",
-      image: snooker,
-    },
-    {
-      id: 8,
-      name: "Volleyball",
-      image: selected === "Volleyball" ? avolleyball : involleyball,
-    },
+    // {
+    //   id: 7,
+    //   name: "Esports",
+    //   image: easport,
+    // },
+    // {
+    //   id: 9,
+    //   name: "Darts",
+    //   image: dart,
+    // },
+    // {
+    //   id: 10,
+    //   name: "Snooker",
+    //   image: snooker,
+    // },
+    // {
+    //   id: 8,
+    //   name: "Volleyball",
+    //   image: selected === "Volleyball" ? avolleyball : involleyball,
+    // },
     {
       id: 11,
       name: "More",
@@ -213,51 +213,51 @@ function NavHeader() {
       name: "AFL",
       image: rugby,
     },
-    {
-      id: 3,
-      name: "Handball",
-      image: handball,
-    },
-    {
-      id: 6,
-      name: "Futsal",
-      image: futsol,
-    },
+    // {
+    //   id: 3,
+    //   name: "Handball",
+    //   image: handball,
+    // },
+    // {
+    //   id: 6,
+    //   name: "Futsal",
+    //   image: futsol,
+    // },
     {
       id: 11,
       name: "Cricket",
       image: selected === "Cricket" ? acricket : incricket,
     },
-    {
-      id: 4,
-      name: "Ice Hockey",
-      image: hockey,
-    },
+    // {
+    //   id: 4,
+    //   name: "Ice Hockey",
+    //   image: hockey,
+    // },
     {
       id: 5,
       name: "NASCAR",
       image: nascar,
     },
-    {
-      id: 7,
-      name: "Hockey",
-      image: selected === "Hockey" ? ahockey : inhockey,
-    },
+    // {
+    //   id: 7,
+    //   name: "Hockey",
+    //   image: selected === "Hockey" ? ahockey : inhockey,
+    // },
     {
       id: 8,
       name: "Baseball",
       image: selected === "Baseball" ? abaseball : inbaseball,
     },
-    {
-      id: 10,
-      name: "Golf",
-      image: selected === "Golf" ? agolf : ingolf,
-    },
-    {
-      id: 12,
-      name: "Table Tennis",
-      image: tabletennis,
-    },
+    // {
+    //   id: 10,
+    //   name: "Golf",
+    //   image: selected === "Golf" ? agolf : ingolf,
+    // },
+    // {
+    //   id: 12,
+    //   name: "Table Tennis",
+    //   image: tabletennis,
+    // },
     {
       id: 13,
       name: "Aussie Rules",
@@ -281,7 +281,7 @@ function NavHeader() {
   };
 
   return (
-    <div style={{position: 'fixed', width: '100%', top: 0, zIndex: 1}}>
+    <div style={{ position: 'fixed', width: '100%', top: 0, zIndex: 1 }}>
       <LargScreen>
         <div style={{ ...styles.rowBtw }}>
           <img
@@ -593,7 +593,7 @@ function NavHeader() {
             src={heading}
             onClick={() => navigate("/home")}
           />
-        
+
           {getToken && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <h3

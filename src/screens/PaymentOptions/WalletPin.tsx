@@ -24,7 +24,7 @@ function WalletPin() {
   const [userData, setUserData] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const userIp = useContext(IPInfoContext);
-  
+
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -38,10 +38,10 @@ function WalletPin() {
     fetchUserInfo();
   }, []);
 
- 
+
 
   const handleSubmit = async () => {
-     // if (userIp?.country_code === "US") {
+    // if (userIp?.country_code === "US") {
     //   toast.error("Placing of bet is restricted for this country", {
     //     position: "bottom-center",
     //   });
@@ -66,6 +66,7 @@ function WalletPin() {
       betCurrency: userData?.defaultCurrency === "NGN" ? "NGN" : "USD",
       prediction: getUserBet?.userType,
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
+      matchEvent: getUserBet?.matchEvent,
       allowOtherCurrency: userFee?.allowOtherCurrency
     };
 
@@ -76,7 +77,7 @@ function WalletPin() {
       requestedPrediction: getUserBet?.userType,
 
     }
-  
+
     const acceptPayload = {
       id: userFee?.betId,
       prediction: userFee?.prediction,
@@ -86,22 +87,23 @@ function WalletPin() {
     const transactionPayload = {
       transactionPin: otp
     }
-  
+
     setLoader(true);
 
     const verifyResponse = await dispatch(verifyTransactionPin(transactionPayload))
-    if(verifyTransactionPin.fulfilled.match(verifyResponse)) {
+    if (verifyTransactionPin.fulfilled.match(verifyResponse)) {
       if (userFee?.isAdjustBet) {
         const response = await dispatch(adjustBet(adjustPayload))
         if (adjustBet.fulfilled.match(response)) {
           setLoader(false);
           // console.log({adjustPayload, response})
           return navigate("/bet-success", {
-            state: {betId: response?.payload?.data?.id, type: "adjust"}
+            state: { betId: response?.payload?.data?.id, type: "adjust" }
           });
         } else {
           var errMsg = response?.payload as string;
           setLoader(false);
+          setOtp("")
           toast.error(errMsg, {
             position: "bottom-center",
           });
@@ -111,9 +113,9 @@ function WalletPin() {
         const response = await dispatch(acceptBet(acceptPayload))
         if (acceptBet.fulfilled.match(response)) {
           setLoader(false);
-     
+
           return navigate("/bet-success", {
-            state: {betId: response?.payload?.data?.id, type: "accept"}
+            state: { betId: response?.payload?.data?.id, type: "accept" }
           });
         } else {
           var errMsg = response?.payload as string;
@@ -127,7 +129,7 @@ function WalletPin() {
         if (createBet.fulfilled.match(response)) {
           setLoader(false);
           return navigate("/bet-success", {
-            state: {betId: response?.payload?.data?.id, type: "created"}
+            state: { betId: response?.payload?.data?.id, type: "created" }
           });
         } else {
           var errMsg = response?.payload as string;
@@ -147,76 +149,78 @@ function WalletPin() {
     }
 
 
-   
+
   };
 
+
+
   return (
-    <div className="top-container" style={{backgroundColor: 'transparent'}}>
-    {
-      !isMobile && <DesktopBackButton />
-    }
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        // flex: 1,
-        // height: "100%",
-        padding: "20px 10px 40px 10px",borderRadius: 10,
-        backgroundColor: 'white'
-      }}
-    >
-      <Header text="Wallet Pin" />
+    <div className="top-container" style={{ backgroundColor: 'transparent' }}>
+      {
+        !isMobile && <DesktopBackButton />
+      }
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
           // flex: 1,
+          // height: "100%",
+          padding: "20px 10px 40px 10px", borderRadius: 10,
+          backgroundColor: 'white'
         }}
       >
+        <Header text="Wallet Pin" />
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center",
-            margin: "0px 0px 2rem 0px",
+            // flex: 1,
           }}
         >
-          <p
+          <div
             style={{
-              ...FONTS.body6,
-              margin: "0px 0px 15px 0px",
-              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "0px 0px 2rem 0px",
             }}
           >
-            Enter your 6-Digit Transaction PIN to place this bet.
-          </p>
-         <div style={{width: isMobile ? "90%" : "70%"}}>
+            <p
+              style={{
+                ...FONTS.body6,
+                margin: "0px 0px 15px 0px",
+                textAlign: "center",
+              }}
+            >
+              Enter your 6-Digit Transaction PIN to place this bet.
+            </p>
+            <div style={{ width: isMobile ? "90%" : "70%" }}>
 
-         <OtpComponent otp={otp} setOtp={setOtp} />
-         
-         <p style={{textAlign: 'center', marginTop: 30, cursor: 'pointer'}} onClick={() => navigate("/request-pin")}>Forgot Pin?</p>
-         </div>
-        </div>
-      </div>
+              <OtpComponent otp={otp} setOtp={setOtp} />
 
-      <div style={{ display: "flex"}}>
-        <div style={{ width: "100%" }}>
-          <CustomeKeyboard value={otp} setValue={setOtp} />
-          <div style={{ width: "100%", margin: "3rem 0px" }}>
-            <Button
-              text="Place Bet"
-              propStyle={{ width: "100%" }}
-              isLoading={loader}
-              handlePress={() => handleSubmit()}
-            />
+              <p style={{ textAlign: 'center', marginTop: 30, cursor: 'pointer' }} onClick={() => navigate("/request-pin")}>Forgot Pin?</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <ToastContainer />
-    </div>
+        <div style={{ display: "flex" }}>
+          <div style={{ width: "100%" }}>
+            <CustomeKeyboard value={otp} setValue={setOtp} />
+            <div style={{ width: "100%", margin: "3rem 0px" }}>
+              <Button
+                text="Place Bet"
+                propStyle={{ width: "100%" }}
+                isLoading={loader}
+                handlePress={() => handleSubmit()}
+              />
+            </div>
+          </div>
+        </div>
+
+        <ToastContainer />
+      </div>
     </div>
   );
 }

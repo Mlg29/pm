@@ -17,7 +17,7 @@ import GameCard from '../../components/GameCard'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import heading from '../../assets/images/heading.svg'
-import { BaseUrl } from '../../https'
+import { SportSportBaseUrl } from '../../https'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getUserData } from '../../redux/slices/AuthSlice'
 import {
@@ -690,13 +690,13 @@ function GameEventData(props: any) {
     }
     const url =
       gameType === 'Soccer'
-        ? `${BaseUrl}/football`
+        ? `${SportSportBaseUrl}/football`
         : gameType === 'Basketball'
-          ? `${BaseUrl}/basketball`
+          ? `${SportSportBaseUrl}/basketball`
           : gameType === 'Tennis'
-            ? `${BaseUrl}/tennis`
+            ? `${SportSportBaseUrl}/tennis`
             : gameType === 'Esports'
-              ? `${BaseUrl}/esport`
+              ? `${SportSportBaseUrl}/esport`
               : ''
     const socketEvents =
       gameType === 'Soccer'

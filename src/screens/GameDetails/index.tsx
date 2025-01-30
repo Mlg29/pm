@@ -13,7 +13,7 @@ import milan from "../../assets/images/millan.svg";
 import Formation from "../../components/Formation";
 import { useMediaQuery } from "react-responsive";
 import EmptyState from "../../components/EmptyState";
-import { BaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 import { io } from "socket.io-client";
 import { PiSoccerBallBold } from "react-icons/pi";
 import { TbRectangleVerticalFilled } from "react-icons/tb";
@@ -154,10 +154,10 @@ function GameDetails() {
 
   const url =
     gameType === "Tennis"
-      ? `${BaseUrl}/tennis`
+      ? `${SportSportBaseUrl}/tennis`
       : gameType === "Horse"
-        ? `${BaseUrl}/horse`
-        : `${BaseUrl}/football`;
+        ? `${SportSportBaseUrl}/horse`
+        : `${SportSportBaseUrl}/football`;
   const events =
     gameType === "Tennis"
       ? "tennisEventUpdate"
@@ -197,7 +197,7 @@ function GameDetails() {
 
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
-    console.log({ name })
+
     if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
       toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
@@ -215,8 +215,9 @@ function GameDetails() {
 
       const payload = {
         userType: selection,
-        sportEventId: gameInfo?.id,
+        sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
+        matchEvent: gameInfo
       };
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));

@@ -24,8 +24,8 @@ export const formatImageSrc = async (value: any): Promise<void> => {
 }
 
 // const transformUrl = (url) => {
-//   const baseUrl = "http://data2.goalserve.com:8084";
-//   return url.replace(baseUrl, "/api/");
+//   const SportSportBaseUrl = "http://data2.goalserve.com:8084";
+//   return url.replace(SportSportBaseUrl, "/api/");
 // };
 
 // const fetchLogo = async (url, url2) => {
