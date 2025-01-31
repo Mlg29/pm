@@ -60,7 +60,7 @@ function FootballDetail({
     })
   }, [])
 
-  console.log(matchStat)
+  const footballMatch = matchStat?.commentaries?.tournament?.match
 
   return (
     <>
@@ -465,99 +465,99 @@ function FootballDetail({
                     <CardList
                       header='Ball Possession'
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.possestiontime?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.possestiontime?.['@total'] || 0
                       }
                     />
                     <CardList
                       header='Off sides'
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.offsides?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.offsides?.['@total'] || 0
                       }
                     />
                     <CardList
                       header='Shots'
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.shots?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.shots?.['@total'] || 0
                       }
                     />
                     <CardList
                       header='Passes'
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.passes?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.passes?.['@total'] || 0
                       }
                     />
                     <CardList
                       header='Fouls'
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.fouls?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.fouls?.['@total'] || 0
                       }
                     />
                     <CardList
                       header={<TbRectangleVerticalFilled color='#FFC15E' />}
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.yellowcards?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.yellowcards?.['@total'] || 0
                       }
                     />
                     <CardList
                       header={<TbRectangleVerticalFilled color='red' />}
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.redcards?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.redcards?.['@total'] || 0
                       }
                     />
                     <CardList
                       header='Corners'
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.corners?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.corners?.['@total'] || 0
                       }
                     />
                     <CardList
                       header='Saves'
                       homeText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.localteam?.saves?.['@total'] || 0
                       }
                       awayText={
-                        matchStat?.commentaries?.tournament?.match?.stats
+                        footballMatch?.stats
                           ?.visitorteam?.saves?.['@total'] || 0
                       }
                     />
@@ -569,14 +569,14 @@ function FootballDetail({
                     <Formation
                       gameInfo={{
                         ...gameInfo,
-                        ...matchStat?.commentaries?.tournament?.match
+                        ...footballMatch
                       }}
                       homeTeamInfo={
-                        matchStat?.commentaries?.tournament?.match?.teams
+                        footballMatch?.teams
                           ?.localteam
                       }
                       awayTeamInfo={
-                        matchStat?.commentaries?.tournament?.match?.teams
+                        footballMatch?.teams
                           ?.visitorteam
                       }
                     />
@@ -591,7 +591,7 @@ function FootballDetail({
                       </h1>
                       <p style={{ ...FONTS.body6, textAlign: 'center' }}>
                         {
-                          matchStat?.commentaries?.tournament?.match?.matchinfo
+                          footballMatch?.matchinfo
                             ?.attendance?.['@name']
                         }
                       </p>
@@ -602,7 +602,7 @@ function FootballDetail({
                       </h1>
                       <p style={{ ...FONTS.body6, textAlign: 'center' }}>
                         {
-                          matchStat?.commentaries?.tournament?.match?.matchinfo
+                          footballMatch?.matchinfo
                             ?.referee?.['@name']
                         }
                       </p>
@@ -613,7 +613,7 @@ function FootballDetail({
                       </h1>
                       <p style={{ ...FONTS.body6, textAlign: 'center' }}>
                         {
-                          matchStat?.commentaries?.tournament?.match?.matchinfo
+                          footballMatch?.matchinfo
                             ?.stadium?.['@name']
                         }
                       </p>
@@ -622,7 +622,7 @@ function FootballDetail({
                       <h1 style={{ ...FONTS.h6, textAlign: 'center' }}>Time</h1>
                       <p style={{ ...FONTS.body6, textAlign: 'center' }}>
                         {
-                          matchStat?.commentaries?.tournament?.match?.matchinfo
+                          footballMatch?.matchinfo
                             ?.time?.['@name']
                         }
                       </p>

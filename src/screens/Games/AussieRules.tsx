@@ -139,25 +139,30 @@ function AussieRules() {
                   <div>
                     {item?.week?.map((weekItem, i) => {
                       const { matches, name: leagueName } = weekItem
-                      return matches?.map((matchInfo, matchIndex) => {
-                        if (matchInfo?.match)
-                          return matchInfo?.match?.map(
-                            (details, detailsIndex) => {
-                              const payload = {
-                                league: leagueName,
-                                ...details
+                      return (
+                        matches !== null &&
+                        matches?.map((matchInfo, matchIndex) => {
+                          if (matchInfo?.match !== null)
+                            return matchInfo?.match?.map(
+                              (details, detailsIndex) => {
+                                const payload = {
+                                  league: leagueName,
+                                  ...details
+                                }
+                                return (
+                                  <div
+                                    key={`${i}-${matchIndex}-${detailsIndex}`}
+                                  >
+                                    <AussieRulesGameCard
+                                      id={matchIndex}
+                                      data={payload}
+                                    />
+                                  </div>
+                                )
                               }
-                              return (
-                                <div key={`${i}-${matchIndex}-${detailsIndex}`}>
-                                  <AussieRulesGameCard
-                                    id={matchIndex}
-                                    data={payload}
-                                  />
-                                </div>
-                              )
-                            }
-                          )
-                      })
+                            )
+                        })
+                      )
                     })}
                   </div>
                 </div>

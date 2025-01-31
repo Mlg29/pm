@@ -17,7 +17,6 @@ import GameCard from "../../components/GameCard";
 import { useNavigate } from "react-router-dom";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import heading from "../../assets/images/heading.svg";
-import { SportSportBaseUrl } from "../../https";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUserData } from "../../redux/slices/AuthSlice";
 import { getFootballFixtures } from "../../redux/slices/FootballSlice";
