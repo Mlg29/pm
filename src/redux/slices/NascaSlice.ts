@@ -9,7 +9,7 @@ import type { RootState } from "../store";
 import {
     getRequest,
 } from "../../https/server";
-import { SportSportBaseUrl, SportSportBaseUrl } from "../../https";
+import { SportSportBaseUrl } from "../../https";
 
 const initialState = {
     loading: false,
