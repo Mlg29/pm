@@ -30,7 +30,7 @@ export const createUser = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await postRequestNoToken(
-        `${SportSportBaseUrl}/auth/signup`,
+        `${SportSportBaseUrl}/auth/register`,
         payload
       );
 
@@ -200,6 +200,7 @@ export const login = createAsyncThunk(
 
 export const getUserData = createAsyncThunk("auth/getUserData", async () => {
   var response = await getRequest(`${SportSportBaseUrl}/users/profile`);
+  console.log({ response })
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }

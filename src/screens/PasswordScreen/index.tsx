@@ -95,8 +95,9 @@ function PasswordScreen() {
     try {
       var response = await dispatch(createUser(payload));
       if (createUser.fulfilled.match(response)) {
+
         localStorage.removeItem("pendingData");
-        localStorage.setItem("token", response?.payload?.data?.accessToken)
+        localStorage.setItem("token", response?.payload?.data?.data?.accessToken)
         toast.success("Success", {
           position: "bottom-center",
         });
@@ -104,7 +105,7 @@ function PasswordScreen() {
         setTimeout(() => {
           setLoader(false);
           navigate("/pin");
-          // navigate("/auth-success");
+
 
         }, 1000);
       } else {
@@ -114,7 +115,7 @@ function PasswordScreen() {
           position: "bottom-center",
         });
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const stepLevel = () => {
@@ -210,16 +211,16 @@ function PasswordScreen() {
         )}
 
         <div>
-           <h3
-              style={{
-                ...FONTS.h2,
-                fontWeight: "bold",
-                textAlign: "center",
-                margin: "10px 0px",
-              }}
-            >
-              Create Your Log In Password
-            </h3>
+          <h3
+            style={{
+              ...FONTS.h2,
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: "10px 0px",
+            }}
+          >
+            Create Your Log In Password
+          </h3>
           <p style={{ ...FONTS.body5, textAlign: "center", fontWeight: "400" }}>
             Create a new password for your account.
           </p>
@@ -234,7 +235,7 @@ function PasswordScreen() {
             value={values.password}
             onChangeText={handleChange("password")}
             errorMsg={touched.password ? errors.password : undefined}
-    
+
           />
 
           <div style={{ margin: "0px 0px 10px 0px" }}>

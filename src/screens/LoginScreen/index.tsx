@@ -61,12 +61,12 @@ function LoginScreen() {
   const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
   const betInviteId = localStorage.getItem("bet-invite-id");
-  const gameDetail =  JSON.parse(localStorage.getItem("gameDetail"))
+  const gameDetail = JSON.parse(localStorage.getItem("gameDetail"))
   const [country, setCountry] = useState("Nigeria");
   const [countryList, setCountryList] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("")
- const deviceId = localStorage.getItem("deviceId")
+  const deviceId = localStorage.getItem("deviceId")
 
 
   const countryListCode = countryList?.find((dd) => phoneNumber.includes(dd?.dialCode));
@@ -98,7 +98,7 @@ function LoginScreen() {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 
-    if(!email && !phoneNumber) {
+    if (!email && !phoneNumber) {
       alert("Enter a valid email address or phone number")
       return;
     }
@@ -123,7 +123,7 @@ function LoginScreen() {
       var response = await dispatch(login(payload));
       if (login.fulfilled.match(response)) {
         // localStorage.setItem("userData", JSON.stringify(response?.payload?.data?.user))
-        localStorage.setItem("token", response?.payload?.data?.accessToken);
+        localStorage.setItem("token", response?.payload?.data?.data?.accessToken);
         toast.success(response?.payload?.data?.message, {
           position: "bottom-center",
         });
@@ -134,12 +134,12 @@ function LoginScreen() {
             navigate(`/bet-invite-detail?${betInviteId}`);
             return;
           }
-          else if(gameDetail){
+          else if (gameDetail) {
             navigate("/game-details", {
               state: { data: gameDetail?.game, gameType: gameDetail?.gameType },
             })
           }
-           else {
+          else {
             navigate("/home");
           }
         }, 1000);
@@ -150,7 +150,7 @@ function LoginScreen() {
           position: "bottom-center",
         });
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
 
@@ -218,8 +218,8 @@ function LoginScreen() {
           ) : (
             <div style={{ width: "100%", marginBottom: 10 }}>
               <label style={{ ...FONTS.body7 }}>
-                Phone number 
-                 <span style={{ color: "red" }}> *</span>
+                Phone number
+                <span style={{ color: "red" }}> *</span>
               </label>
               <PhoneInput
                 placeholder="Enter phone number"
