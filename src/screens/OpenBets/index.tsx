@@ -102,6 +102,8 @@ function OpenBet() {
     })
   }
 
+
+
   useEffect(() => {
     fetchUserInfo();
   }, []);
@@ -132,7 +134,7 @@ function OpenBet() {
       destinationCurrency: data?.betCurrency === "USD" ? "NGN" : "USD",
       amount: data?.betAmount
     }
-  const newAmount = await  dispatch(getFxRate(rateData)).then(pp => {
+    const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
       return pp?.payload?.data
     })
 
@@ -157,7 +159,7 @@ function OpenBet() {
       destinationCurrency: data?.betCurrency === "USD" ? "NGN" : "USD",
       amount: data?.betAmount
     }
-  const newAmount = await  dispatch(getFxRate(rateData)).then(pp => {
+    const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
       return pp?.payload?.data
     })
 
@@ -186,7 +188,7 @@ function OpenBet() {
 
   const typeCheck = selected === "all" ? filterData : selected === "same" ? sameCurrency : selected === "multi" ? multiCurrency : filterData
 
-
+  console.log({ openBets, game })
 
   if (loader) {
     return (
@@ -238,18 +240,18 @@ function OpenBet() {
                   {data?.sportEvent?.sport === "FOOTBALL" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
-                        {game?.leagueName}
+                        {game?.league}
                       </p>
 
                       <div style={{ ...styles.row }}>
                         <div style={{ ...styles.center }}>
                           <img
-                            src={game?.localTeamLogo}
+                            src={game?.localTeam?.teamLogo}
                             alt=""
                             style={{ width: "20px" }}
                           />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localTeamName}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -269,12 +271,12 @@ function OpenBet() {
                         </div>
                         <div style={{ ...styles.center }}>
                           <img
-                            src={game?.visitorTeamLogo}
+                            src={game?.visitorTeam?.teamLogo}
                             alt=""
                             style={{ width: "20px" }}
                           />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.visitorTeamName}
+                            {game?.visitorTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -286,10 +288,10 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localTeamName} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.visitorTeamName} WIN`
-                              : "DRAW"}
+                                ? `${game?.visitorTeam?.name} WIN`
+                                : "DRAW"}
                           </p>
                         </div>
                         <div>
@@ -304,10 +306,10 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localTeamName} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.visitorTeamName} WIN`
-                              : "DRAW"}
+                                ? `${game?.visitorTeam?.name} WIN`
+                                : "DRAW"}
                           </p>
                         </div>
                       </div>
@@ -408,8 +410,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.player[0]["@name"]} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.player[1]["@name"]} WIN`
-                              : ""}
+                                ? `${game?.player[1]["@name"]} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -426,8 +428,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.player[0]["@name"]} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.player[1]["@name"]} WIN`
-                              : ""}
+                                ? `${game?.player[1]["@name"]} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -527,8 +529,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localTeamName} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.visitorTeamName} WIN`
-                              : ""}
+                                ? `${game?.visitorTeamName} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -545,8 +547,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localTeamName} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.visitorTeamName} WIN`
-                              : ""}
+                                ? `${game?.visitorTeamName} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -647,8 +649,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -665,8 +667,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -767,8 +769,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -785,8 +787,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -886,8 +888,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -904,8 +906,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1006,8 +1008,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -1024,8 +1026,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1250,8 +1252,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -1268,8 +1270,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1370,8 +1372,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -1388,8 +1390,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1490,8 +1492,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -1508,8 +1510,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1610,8 +1612,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -1628,8 +1630,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1684,7 +1686,7 @@ function OpenBet() {
                       </div>
                     </div>
                   )}
-                   {data?.sportEvent?.sport === "FUTSAL" && (
+                  {data?.sportEvent?.sport === "FUTSAL" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.league}
@@ -1713,7 +1715,7 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                        <img src={futsol} />
+                          <img src={futsol} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
                             {game?.awayteam?.name}
                           </h3>
@@ -1729,8 +1731,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -1747,8 +1749,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1803,7 +1805,7 @@ function OpenBet() {
                       </div>
                     </div>
                   )}
-                   {data?.sportEvent?.sport === "CRICKET" && (
+                  {data?.sportEvent?.sport === "CRICKET" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.leagueName}
@@ -1811,8 +1813,8 @@ function OpenBet() {
 
                       <div style={{ ...styles.row }}>
                         <div style={{ ...styles.center }}>
-                        <BiSolidCricketBall size={30} color={COLORS.primary}/>
-      
+                          <BiSolidCricketBall size={30} color={COLORS.primary} />
+
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
                             {game?.localteam?.name}
                           </h3>
@@ -1833,8 +1835,8 @@ function OpenBet() {
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
-                        <BiSolidCricketBall size={30} color={COLORS.primary}/>
-       
+                          <BiSolidCricketBall size={30} color={COLORS.primary} />
+
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
                             {game?.awayteam?.name}
                           </h3>
@@ -1850,8 +1852,8 @@ function OpenBet() {
                             {data?.prediction === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : data?.prediction === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                         <div>
@@ -1868,8 +1870,8 @@ function OpenBet() {
                             {userSelection?.userType === "W1"
                               ? `${game?.localteam?.name} WIN`
                               : userSelection?.userType === "W2"
-                              ? `${game?.awayteam?.name} WIN`
-                              : ""}
+                                ? `${game?.awayteam?.name} WIN`
+                                : ""}
                           </p>
                         </div>
                       </div>
@@ -1965,7 +1967,7 @@ function OpenBet() {
 
       </div>
 
-      <FilterModal 
+      <FilterModal
         show={show}
         selected={selected}
         handleTypeCheck={(val) => handleTypeCheck(val)}

@@ -7,7 +7,7 @@ import { FaAsterisk } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
 import { useContext, useEffect, useState } from "react";
-import {IPInfoContext} from "ip-info-react"
+import { IPInfoContext } from "ip-info-react"
 import send1 from "../../assets/images/send-1.svg";
 import send2 from "../../assets/images/send-2.svg";
 import TransactionCard from "../../components/TransactionCard";
@@ -87,6 +87,8 @@ function Transaction() {
   const notifications = useAppSelector(notificationState) as any;
 
 
+  console.log({ userData })
+
 
 
   const getNotification = async () => {
@@ -96,6 +98,7 @@ function Transaction() {
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
+      console.log(">>>>>>", { response })
       setUserData(response?.payload);
     }
   };

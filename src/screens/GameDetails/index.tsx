@@ -217,7 +217,21 @@ function GameDetails() {
         userType: selection,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
-        matchEvent: gameInfo
+        sport: gameType === "Soccer" ? "FOOTBALL" : gameType?.toUpperCase(),
+        // matchEvent: gameInfo
+        matchEvent: {
+          id: gameInfo?.id,
+          sportEventId: gameInfo?.sportEventId,
+          league: gameInfo?.league,
+          leagueId: gameInfo?.commentary_available,
+          country: gameInfo?.country,
+          localTeamName: gameInfo?.localTeam?.name,
+          visitorTeamName: gameInfo?.visitorTeam?.name,
+          status: "Not Started",
+          internalStatus: "UPCOMING",
+          date: gameInfo?.formatted_date,
+          time: gameInfo?.date,
+        },
       };
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));

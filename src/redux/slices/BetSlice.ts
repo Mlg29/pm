@@ -121,7 +121,8 @@ export const acceptBet = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     const adPayload = {
       betAmount: payload?.betAmount,
-      prediction: payload?.prediction
+      prediction: payload?.prediction,
+      sport: payload?.sport
     }
 
     try {

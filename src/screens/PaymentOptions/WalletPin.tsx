@@ -65,6 +65,7 @@ function WalletPin() {
       betAmount: parseFloat(userFee?.amount),
       betCurrency: userData?.defaultCurrency === "NGN" ? "NGN" : "USD",
       prediction: getUserBet?.userType,
+      sport: getUserBet?.sport,
       betType: userFee?.invitedUser ? "PRIVATE" : "OPEN",
       matchEvent: getUserBet?.matchEvent,
       allowOtherCurrency: userFee?.allowOtherCurrency
@@ -72,7 +73,7 @@ function WalletPin() {
 
     const adjustPayload = {
       betId: userFee?.betId,
-      userId: userData?.id,
+      // userId: userData?.id,
       requestedAmount: parseFloat(userFee?.adjustedBetAmount),
       requestedPrediction: getUserBet?.userType,
 
@@ -82,6 +83,7 @@ function WalletPin() {
       id: userFee?.betId,
       prediction: userFee?.prediction,
       betAmount: parseFloat(userFee?.amount),
+      sport: getUserBet?.sport
     }
 
     const transactionPayload = {

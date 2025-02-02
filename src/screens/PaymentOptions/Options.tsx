@@ -35,10 +35,10 @@ function Options() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [loader, setLoader] = useState(false);
-const dispatch = useAppDispatch()
-const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
+  const dispatch = useAppDispatch()
+  const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
 
-const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -56,21 +56,21 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
 
 
   const goToPin = () => {
-    if((userFee?.adjustedBetAmount) > userData?.walletBalance) {
+    if ((userFee?.adjustedBetAmount) > userData?.walletBalance) {
 
       toast.error("Insufficient Balance", {
         position: "bottom-center",
       });
       return
     }
-    if(userFee?.amount > userData?.walletBalance) {
-   
+    if (userFee?.amount > userData?.walletBalance) {
+
       toast.error("Insufficient Balance", {
         position: "bottom-center",
       });
       return
     }
-     navigate("/wallet-pin")
+    navigate("/wallet-pin")
   }
 
 
@@ -92,45 +92,45 @@ const isMobile = useMediaQuery({ maxWidth: 767 });
   }
 
   return (
-    <div className="top-container" style={{backgroundColor: 'transparent'}}>
-    {
-      !isMobile && <DesktopBackButton />
-    }
-    <div style={{display: 'flex', flexDirection: 'column',padding: "20px 10px 40px 10px",borderRadius: 10,backgroundColor: 'white'}}>
-      <Header text="Payment Option" />
-      <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
-        Select your preferred method for payment.
-      </p>
-
-      <div
-        style={{
-          backgroundColor: COLORS.cream,
-          padding: "15px 20px",
-          margin: "1rem 0px 2rem 0px",
-          borderRadius: 20,
-        }}
-      >
-        <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
-          Debit amount for this game
+    <div className="top-container" style={{ backgroundColor: 'transparent' }}>
+      {
+        !isMobile && <DesktopBackButton />
+      }
+      <div style={{ display: 'flex', flexDirection: 'column', padding: "20px 10px 40px 10px", borderRadius: 10, backgroundColor: 'white' }}>
+        <Header text="Payment Option" />
+        <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
+          Select your preferred method for payment.
         </p>
-        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : "$"}{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
-      </div>
 
-      <div style={{...styles.rowBtn,  cursor: "pointer"}} onClick={() => goToPin()}>
-        <div style={{display: "flex", alignItems: "center"}} >
-            <div>
-            <TbCalculatorFilled color={COLORS.white} size={30} style={{backgroundColor: COLORS.primary, padding: 5, borderRadius: "100%", marginRight: 15}} />
-            </div>
-            <div>
-                <h3 style={{...FONTS.body6}}>Wallet</h3>
-                <p style={{...FONTS.body7}}>Balance: {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(userData?.walletBalance)}</p>
-            </div>
+        <div
+          style={{
+            backgroundColor: COLORS.cream,
+            padding: "15px 20px",
+            margin: "1rem 0px 2rem 0px",
+            borderRadius: 20,
+          }}
+        >
+          <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
+            Debit amount for this game
+          </p>
+          <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : "$"}{userFee?.adjustedBetAmount ? formatCurrency(userFee?.adjustedBetAmount) : formatCurrency(userFee?.amount)}</h3>
         </div>
-        <FaChevronRight />
-      </div>
 
-      <ToastContainer />
-    </div>
+        <div style={{ ...styles.rowBtn, cursor: "pointer" }} onClick={() => goToPin()}>
+          <div style={{ display: "flex", alignItems: "center" }} >
+            <div>
+              <TbCalculatorFilled color={COLORS.white} size={30} style={{ backgroundColor: COLORS.primary, padding: 5, borderRadius: "100%", marginRight: 15 }} />
+            </div>
+            <div>
+              <h3 style={{ ...FONTS.body6 }}>Wallet</h3>
+              <p style={{ ...FONTS.body7 }}>Balance: {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(userData?.walletBalance)}</p>
+            </div>
+          </div>
+          <FaChevronRight />
+        </div>
+
+        <ToastContainer />
+      </div>
     </div>
   );
 }

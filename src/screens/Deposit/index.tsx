@@ -39,7 +39,7 @@ function Deposit() {
   const [loaderD, setLoaderD] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  
+
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
@@ -84,21 +84,22 @@ function Deposit() {
   const handleNext = async () => {
     const payload = {
       amount: parseFloat(value),
+      type: "DEPOSIT",
+      status: "SUCCESS"
 
     };
     setLoader(true);
     var response = await dispatch(createTransaction(payload));
 
     if (createTransaction.fulfilled.match(response)) {
-   
       setLoader(false);
-    //  console.log({response})
-     // window.open(response?.payload?.data?.data?.paymentLink, '_blank');
+      //  console.log({response})
+      // window.open(response?.payload?.data?.data?.paymentLink, '_blank');
       closePaymentModal();
       navigate("/deposit-success", {
         state: {
-            message: "Deposit successfully completed",
-            type: "Deposit"
+          message: "Deposit successfully completed",
+          type: "Deposit"
         }
       });
       // toast.success(response?.payload?.data?.message, {
@@ -153,7 +154,7 @@ function Deposit() {
         />
         <InputNumber
           value={value}
-         prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
+          prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
           onValueChange={(e) => handleAmount(e.value)}
           minFractionDigits={2}
           inputStyle={{ ...styles.inputs }}
@@ -178,7 +179,7 @@ function Deposit() {
                   handleNext();
                 }
               },
-              onClose: () => {},
+              onClose: () => { },
             });
           }}
         />
