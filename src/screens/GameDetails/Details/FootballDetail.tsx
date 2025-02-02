@@ -45,7 +45,7 @@ function FootballDetail({
     }
 
     const matchStatPayload = {
-      leagueId: gameInfo?.leagueId,
+      leagueId: gameInfo?.commentary_available,
       matchId: gameInfo?.static_id
     }
 
