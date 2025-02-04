@@ -84,7 +84,7 @@ function BasketballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeam?.name}
+            {data?.localTeamName}
           </p>
         </div>
         <div>
@@ -128,7 +128,7 @@ function BasketballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.awayTeam?.name}
+            {data?.visitoTeamName}
           </p>
         </div>
       </div>

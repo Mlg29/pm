@@ -107,7 +107,7 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeam?.name}
+            {data?.localTeamName}
           </p>
         </div>
         <div>
@@ -167,7 +167,7 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeam?.name}
+            {data?.visitorTeamName}
           </p>
         </div>
       </div>
