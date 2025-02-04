@@ -119,6 +119,7 @@ function Basketball() {
                     const payload = {
                       league: item?.name,
                       country: item?.file_group,
+                      leagueId: item?.id,
                       ...aa
                     }
                     return (
@@ -135,8 +136,9 @@ function Basketball() {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((item, i) => (
-              <div key={i}>
+            {upcoming?.map((item, i) => {
+
+              return <div key={i} >
                 <p
                   style={{
                     ...FONTS.body7,
@@ -155,6 +157,7 @@ function Basketball() {
                     const payload = {
                       league: item?.name,
                       country: item?.file_group,
+                      leagueId: item?.id,
                       ...aa
                     }
                     return (
@@ -165,7 +168,7 @@ function Basketball() {
                   })}
                 </div>
               </div>
-            ))}
+            })}
           </>
         ) : null}
 
@@ -209,6 +212,7 @@ function Basketball() {
                     const payload = {
                       league: item?.name,
                       country: item?.file_group,
+                      leagueId: item?.id,
                       ...aa
                     }
                     return (
@@ -227,7 +231,7 @@ function Basketball() {
           <EmptyState header='No Game Available for Basketball' height='30vh' />
         ) : null}
       </LoadingState>
-    </div>
+    </div >
   )
 }
 

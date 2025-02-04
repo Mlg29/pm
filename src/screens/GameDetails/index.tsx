@@ -194,7 +194,6 @@ function GameDetails() {
   }, []);
 
 
-
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
 
@@ -217,13 +216,13 @@ function GameDetails() {
         userType: selection,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
-        sport: gameType === "Soccer" ? "FOOTBALL" : gameType?.toUpperCase(),
+        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType?.toUpperCase(),
         // matchEvent: gameInfo
         matchEvent: {
           id: gameInfo?.id,
           sportEventId: gameInfo?.sportEventId,
           league: gameInfo?.league,
-          leagueId: gameInfo?.commentary_available,
+          leagueId: gameInfo?.leagueId,
           country: gameInfo?.country,
           localTeamName: gameInfo?.localTeam?.name,
           visitorTeamName: gameInfo?.visitorTeam?.name,

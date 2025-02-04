@@ -128,8 +128,8 @@ function Tennis() {
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {scheduled?.category?.map((league, index) => (
-              <div key={league?.name}>
+            {scheduled?.category?.map((league, index) => {
+              return <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -157,7 +157,7 @@ function Tennis() {
                   })}
                 </div>
               </div>
-            ))}
+            })}
           </>
         ) : null}
 

@@ -37,7 +37,7 @@ function Football() {
     })
 
     dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload||[])
+      setFinished(dd?.payload || [])
     })
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
       setTomorrow(dd?.payload)
@@ -126,7 +126,7 @@ function Football() {
                     {item?.matches?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
-                        leagueId:item?.leagueId,
+                        leagueId: item?.leagueId,
                         country: item?.country,
                         ...aa
                       }
@@ -146,6 +146,7 @@ function Football() {
         {selectedStatus === 'Scheduled' ? (
           <>
             {upcoming?.map((item, i) => {
+
               return (
                 <div key={i}>
                   <p
@@ -166,6 +167,7 @@ function Football() {
                       const payload = {
                         league: item?.league,
                         country: item?.country,
+                        leagueId: item?.leagueId,
                         ...aa
                       }
                       return (
@@ -204,6 +206,7 @@ function Football() {
                       const payload = {
                         league: item?.league,
                         country: item?.country,
+                        leagueId: item?.leagueId,
                         ...aa
                       }
                       return (
