@@ -225,13 +225,14 @@ function GameDetails() {
           leagueId: gameInfo?.leagueId,
           country: gameInfo?.country,
           localTeamName: gameInfo?.localTeam?.name,
-          visitorTeamName: gameInfo?.visitorTeam?.name,
+          visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
           status: "Not Started",
           internalStatus: "UPCOMING",
-          date: gameInfo?.formatted_date,
-          time: gameInfo?.date,
+          date: gameInfo?.formatted_date || gameInfo?.date,
+          time: gameInfo?.time || gameInfo?.date,
         },
       };
+
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
 

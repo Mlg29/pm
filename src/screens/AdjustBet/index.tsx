@@ -32,20 +32,20 @@ const AdjustBet = () => {
   const [amount, setAmount] = useState<any>("");
   const navigate = useNavigate();
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
- const [allowCurrency, setAllowCurrency] = useState(false)
- const [loader, setLoader] = useState(false)
- const userData = useAppSelector(userState)
+  const [allowCurrency, setAllowCurrency] = useState(false)
+  const [loader, setLoader] = useState(false)
+  const userData = useAppSelector(userState)
 
- const checkHandler = () => {
-  setAllowCurrency(!allowCurrency)
-}
+  const checkHandler = () => {
+    setAllowCurrency(!allowCurrency)
+  }
 
-useEffect(() => {
-  setLoader(true)
-  setTimeout(() => {
-    setLoader(false)
-  }, 1000)
-}, [])
+  useEffect(() => {
+    setLoader(true)
+    setTimeout(() => {
+      setLoader(false)
+    }, 1000)
+  }, [])
 
 
   const handleRoute = () => {
@@ -65,7 +65,7 @@ useEffect(() => {
 
 
   const handleAmount = (val) => {
-   // console.log({val})
+    // console.log({val})
     // setAmount(val)
   }
 
@@ -105,10 +105,10 @@ useEffect(() => {
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           @{userFee?.opponentUsername} Bet Amount
         </p>
-        <h3 style={{ ...FONTS.h6 }}>₦{formatCurrency(userFee?.amount)}</h3>
+        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.amount)}</h3>
       </div>
 
-     {/* <div>
+      {/* <div>
      <div style={{display: "flex", alignItems: "center"}}>
       <div style={{width: "30px"}} >
          <input type="checkbox" onChange={checkHandler} checked={allowCurrency}  />
@@ -118,21 +118,21 @@ useEffect(() => {
      </div> */}
 
       <div>
-   
+
         <input
           style={{ ...styles.inputs, display: 'none' }}
           value={amount}
           onChange={(e) => setAmount(e?.target?.value)}
           placeholder="0.00"
         />
-        <InputNumber 
-          value={amount} 
+        <InputNumber
+          value={amount}
           prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
-          onValueChange={(e) => handleAmount(e.value)} 
-          minFractionDigits={2} 
+          onValueChange={(e) => handleAmount(e.value)}
+          minFractionDigits={2}
           inputStyle={{ ...styles.inputs }}
           placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
-          />
+        />
       </div>
 
       <CustomeKeyboard value={amount} setValue={setAmount} int />

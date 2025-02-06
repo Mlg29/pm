@@ -138,12 +138,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <GameDetailCardHeader
@@ -168,7 +168,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -182,8 +182,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
-                      : "DRAW"}
+                        ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
+                        : "DRAW"}
                   </p>
                 ) : (
                   ""
@@ -199,10 +199,10 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
-                        : betData?.opponentPrediction === "DRAW"
-                        ? "DRAW"
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
+                          : betData?.opponentPrediction === "DRAW"
+                            ? "DRAW"
+                            : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -287,12 +287,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <TennisCard data={betData?.sportEvent?.TennisEvent} />
@@ -311,7 +311,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -325,8 +325,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -342,8 +342,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -428,12 +428,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <BasketballCard data={betData?.sportEvent?.BasketballEvent} />
@@ -452,7 +452,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -466,8 +466,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -483,8 +483,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -569,12 +569,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <HorseCard gameInfo={betData?.sportEvent?.HorseEvent} />
@@ -593,7 +593,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -698,12 +698,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <BoxingCard data={betData?.sportEvent?.BoxingEvent} />
@@ -722,7 +722,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -736,8 +736,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.BoxingEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -753,8 +753,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.BoxingEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -839,12 +839,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <EsportCard data={betData?.sportEvent?.EsportEvent} />
@@ -863,7 +863,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -877,8 +877,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -894,8 +894,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -979,12 +979,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <DartCard data={betData?.sportEvent?.DartEvent} />
@@ -1003,7 +1003,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -1017,8 +1017,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -1034,8 +1034,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -1120,12 +1120,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <MmaCard data={betData?.sportEvent?.MmaEvent} />
@@ -1144,7 +1144,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -1158,8 +1158,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -1175,8 +1175,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -1260,12 +1260,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <SnookerCard data={betData?.sportEvent?.SnookerEvent} />
@@ -1284,7 +1284,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -1298,8 +1298,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.SnookerEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -1315,8 +1315,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.SnookerEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -1401,12 +1401,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <VolleyballCard data={betData?.sportEvent?.VollyBallEvent} />
@@ -1425,7 +1425,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -1439,8 +1439,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.VollyBallEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -1456,8 +1456,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.VollyBallEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -1541,12 +1541,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <HandballCard data={betData?.sportEvent?.HandBallEvent} />
@@ -1565,7 +1565,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -1579,8 +1579,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.HandBallEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -1596,8 +1596,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.HandBallEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -1681,12 +1681,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <AflCard data={betData?.sportEvent?.AflEvent} />
@@ -1705,7 +1705,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -1719,8 +1719,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -1736,8 +1736,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -1822,12 +1822,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <FutsalCard data={betData?.sportEvent?.FutsalEvent} />
@@ -1846,7 +1846,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -1860,8 +1860,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -1877,8 +1877,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""
@@ -1963,12 +1963,12 @@ function BetDetail() {
                 betData?.winnerId && betData?.winnerId === userData?.id
                   ? COLORS.green
                   : betData?.winnerId && betData?.winnerId !== userData?.id
-                  ? COLORS.red
-                  : COLORS.gray,
+                    ? COLORS.red
+                    : COLORS.gray,
               margin: "0px 0px 1rem 0px",
             }}
           >
-            ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
 
           <CricketCard data={betData?.sportEvent?.CricketEvent} />
@@ -1987,7 +1987,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                ₦{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
@@ -2001,8 +2001,8 @@ function BetDetail() {
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
-                      ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
-                      : "N/A"}
+                        ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
+                        : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -2018,8 +2018,8 @@ function BetDetail() {
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
-                        : "N/A"}
+                          ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
+                          : "N/A"}
                     </p>
                   ) : (
                     ""

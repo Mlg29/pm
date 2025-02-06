@@ -20,7 +20,7 @@ function TransactionList() {
   const [value, setValue] = useState('')
   const location = useLocation();
   const transactions = location.state.transactions;
-
+  const userData = location.state.userData;
 
 
   const handleClose = () => setShow(false);
@@ -121,19 +121,20 @@ function TransactionList() {
                 amount={data?.amount}
                 date={data?.createdAt}
                 type={data?.type}
+                userData={userData}
               />
             </div>
           );
         })}
 
-{
-          filterSearch?.length < 1 && <div style={{marginTop: "-8rem"}}>
-            <EmptyState 
+      {
+        filterSearch?.length < 1 && <div style={{ marginTop: "-8rem" }}>
+          <EmptyState
             header={"No Transaction Available"}
           />
-          </div>
+        </div>
 
-        }
+      }
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

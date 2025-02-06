@@ -148,7 +148,7 @@ function CreateBet() {
             </div>
             <div>
               <h3 style={{ ...FONTS.h6 }}>Open Bet</h3>
-              <p style={{ ...FONTS.body7 }}>Creat bet in the bet market</p>
+              <p style={{ ...FONTS.body7 }}>Create bet in the bet market</p>
             </div>
           </div>
           <FaChevronRight />

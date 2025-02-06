@@ -49,6 +49,7 @@ function SlipCard(props: any) {
     isUser,
     betCurrency,
     data,
+
   } = props;
   const navigate = useNavigate();
 
@@ -76,8 +77,8 @@ function SlipCard(props: any) {
         {multipleEntry ? (
           <div>
             <p style={{
-                  ...FONTS.body7,
-                }}>A multiple entry bet</p>
+              ...FONTS.body7,
+            }}>A multiple entry bet</p>
           </div>
         ) : (
           <div>
@@ -120,12 +121,12 @@ function SlipCard(props: any) {
                 isWin === isUser?.id
                   ? COLORS.green
                   : !isWin
-                  ? COLORS.gray
-                  : COLORS.red,
+                    ? COLORS.gray
+                    : COLORS.red,
             }}
           >
             {isWin === isUser?.id ? "+" : !isWin ? "" : "-"}
-            {betCurrency === "NGN" ? "₦" : "$"} {formatCurrency(amount)}
+            {isUser?.defaultCurrency === "NGN" ? "₦" : "$"} {formatCurrency(amount)}
           </h3>
           <h3></h3>
         </div>
@@ -153,7 +154,7 @@ function SlipCard(props: any) {
                 Your Prediction
               </p>
               {multipleEntry ? (
-                <p  style={{
+                <p style={{
                   ...FONTS.h7,
                   margin: "0px 0px 0px 5px",
                   textAlign: "right",
@@ -171,8 +172,8 @@ function SlipCard(props: any) {
                   {data?.prediction === "W1"
                     ? `${homeName} Win`
                     : data?.prediction === "W2"
-                    ? `${awayName} Win`
-                    : "DRAW"}
+                      ? `${awayName} Win`
+                      : "DRAW"}
                 </p>
               )}
             </div>

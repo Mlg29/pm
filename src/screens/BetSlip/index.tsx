@@ -280,22 +280,22 @@ function BetSlip() {
                                 <SlipCard
                                   homeName={
                                     item?.sportEvent?.TennisEvent?.player[0][
-                                      "@name"
+                                    "@name"
                                     ]
                                   }
                                   awayName={
                                     item?.sportEvent?.TennisEvent?.player[1][
-                                      "@name"
+                                    "@name"
                                     ]
                                   }
                                   homeScore={
                                     item?.sportEvent?.TennisEvent?.player[0][
-                                      "@totalscore"
+                                    "@totalscore"
                                     ]
                                   }
                                   awayScore={
                                     item?.sportEvent?.TennisEvent?.player[1][
-                                      "@totalscore"
+                                    "@totalscore"
                                     ]
                                   }
                                   isWin={item?.winnerId}
@@ -334,14 +334,14 @@ function BetSlip() {
                                     item?.sportEvent?.BoxingEvent?.localteam
                                       ?.round
                                       ? item?.sportEvent?.BoxingEvent?.localteam
-                                          ?.round
+                                        ?.round
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.BoxingEvent?.awayteam
                                       ?.round
                                       ? item?.sportEvent?.BoxingEvent?.awayteam
-                                          ?.round
+                                        ?.round
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -367,14 +367,14 @@ function BetSlip() {
                                     item?.sportEvent?.EsportEvent?.localteam
                                       ?.score
                                       ? item?.sportEvent?.EsportEvent?.localteam
-                                          ?.score
+                                        ?.score
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.EsportEvent?.awayteam
                                       ?.score
                                       ? item?.sportEvent?.EsportEvent?.awayteam
-                                          ?.score
+                                        ?.score
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -398,14 +398,14 @@ function BetSlip() {
                                     item?.sportEvent?.DartEvent?.localteam
                                       ?.totalscore
                                       ? item?.sportEvent?.DartEvent?.localteam
-                                          ?.totalscore
+                                        ?.totalscore
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.DartEvent?.awayteam
                                       ?.totalscore
                                       ? item?.sportEvent?.DartEvent?.awayteam
-                                          ?.totalscore
+                                        ?.totalscore
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -428,13 +428,13 @@ function BetSlip() {
                                   homeScore={
                                     item?.sportEvent?.MmaEvent?.localteam?.round
                                       ? item?.sportEvent?.MmaEvent?.localteam
-                                          ?.round
+                                        ?.round
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.MmaEvent?.awayteam?.round
                                       ? item?.sportEvent?.MmaEvent?.awayteam
-                                          ?.round
+                                        ?.round
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -461,14 +461,14 @@ function BetSlip() {
                                     item?.sportEvent?.SnookerEvent?.localteam
                                       ?.totalscore
                                       ? item?.sportEvent?.SnookerEvent
-                                          ?.localteam?.totalscore
+                                        ?.localteam?.totalscore
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.SnookerEvent?.awayteam
                                       ?.totalscore
                                       ? item?.sportEvent?.SnookerEvent?.awayteam
-                                          ?.totalscore
+                                        ?.totalscore
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -494,14 +494,14 @@ function BetSlip() {
                                     item?.sportEvent?.VollyBallEvent?.localteam
                                       ?.totalscore
                                       ? item?.sportEvent?.VollyBallEvent
-                                          ?.localteam?.totalscore
+                                        ?.localteam?.totalscore
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.VollyBallEvent?.awayteam
                                       ?.totalscore
                                       ? item?.sportEvent?.VollyBallEvent
-                                          ?.awayteam?.totalscore
+                                        ?.awayteam?.totalscore
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -527,14 +527,14 @@ function BetSlip() {
                                     item?.sportEvent?.HandBallEvent?.localteam
                                       ?.totalscore
                                       ? item?.sportEvent?.HandBallEvent
-                                          ?.localteam?.totalscore
+                                        ?.localteam?.totalscore
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.HandBallEvent?.awayteam
                                       ?.totalscore
                                       ? item?.sportEvent?.HandBallEvent
-                                          ?.awayteam?.totalscore
+                                        ?.awayteam?.totalscore
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -559,14 +559,14 @@ function BetSlip() {
                                     item?.sportEvent?.AflEvent?.localteam
                                       ?.totalscore
                                       ? item?.sportEvent?.AflEvent?.localteam
-                                          ?.totalscore
+                                        ?.totalscore
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.AflEvent?.awayteam
                                       ?.totalscore
                                       ? item?.sportEvent?.AflEvent?.awayteam
-                                          ?.totalscore
+                                        ?.totalscore
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -593,14 +593,14 @@ function BetSlip() {
                                     item?.sportEvent?.FutsalEvent?.localteam
                                       ?.totalscore
                                       ? item?.sportEvent?.FutsalEvent?.localteam
-                                          ?.totalscore
+                                        ?.totalscore
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.FutsalEvent?.awayteam
                                       ?.goals
                                       ? item?.sportEvent?.FutsalEvent?.awayteam
-                                          ?.goals
+                                        ?.goals
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -627,14 +627,14 @@ function BetSlip() {
                                     item?.sportEvent?.CricketEvent?.localteam
                                       ?.totalscore
                                       ? item?.sportEvent?.CricketEvent?.localteam
-                                          ?.totalscore
+                                        ?.totalscore
                                       : "0"
                                   }
                                   awayScore={
                                     item?.sportEvent?.CricketEvent?.awayteam
                                       ?.goals
                                       ? item?.sportEvent?.CricketEvent?.awayteam
-                                          ?.goals
+                                        ?.goals
                                       : "0"
                                   }
                                   isWin={item?.winnerId}
@@ -736,22 +736,22 @@ function BetSlip() {
                               <SlipCard
                                 homeName={
                                   item?.sportEvent?.TennisEvent?.player[0][
-                                    "@name"
+                                  "@name"
                                   ]
                                 }
                                 awayName={
                                   item?.sportEvent?.TennisEvent?.player[1][
-                                    "@name"
+                                  "@name"
                                   ]
                                 }
                                 homeScore={
                                   item?.sportEvent?.TennisEvent?.player[0][
-                                    "@totalscore"
+                                  "@totalscore"
                                   ]
                                 }
                                 awayScore={
                                   item?.sportEvent?.TennisEvent?.player[1][
-                                    "@totalscore"
+                                  "@totalscore"
                                   ]
                                 }
                                 isWin={item?.winnerId}
@@ -787,13 +787,13 @@ function BetSlip() {
                                   item?.sportEvent?.BoxingEvent?.localteam
                                     ?.round
                                     ? item?.sportEvent?.BoxingEvent?.localteam
-                                        ?.round
+                                      ?.round
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.BoxingEvent?.awayteam?.round
                                     ? item?.sportEvent?.BoxingEvent?.awayteam
-                                        ?.round
+                                      ?.round
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -817,13 +817,13 @@ function BetSlip() {
                                   item?.sportEvent?.EsportEvent?.localteam
                                     ?.score
                                     ? item?.sportEvent?.EsportEvent?.localteam
-                                        ?.score
+                                      ?.score
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.EsportEvent?.awayteam?.score
                                     ? item?.sportEvent?.EsportEvent?.awayteam
-                                        ?.score
+                                      ?.score
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -847,14 +847,14 @@ function BetSlip() {
                                   item?.sportEvent?.DartEvent?.localteam
                                     ?.totalscore
                                     ? item?.sportEvent?.DartEvent?.localteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.DartEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.DartEvent?.awayteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -877,13 +877,13 @@ function BetSlip() {
                                 homeScore={
                                   item?.sportEvent?.MmaEvent?.localteam?.round
                                     ? item?.sportEvent?.MmaEvent?.localteam
-                                        ?.round
+                                      ?.round
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.MmaEvent?.awayteam?.round
                                     ? item?.sportEvent?.MmaEvent?.awayteam
-                                        ?.round
+                                      ?.round
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -908,14 +908,14 @@ function BetSlip() {
                                   item?.sportEvent?.SnookerEvent?.localteam
                                     ?.totalscore
                                     ? item?.sportEvent?.SnookerEvent?.localteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.SnookerEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.SnookerEvent?.awayteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -941,14 +941,14 @@ function BetSlip() {
                                   item?.sportEvent?.VollyBallEvent?.localteam
                                     ?.totalscore
                                     ? item?.sportEvent?.VollyBallEvent
-                                        ?.localteam?.totalscore
+                                      ?.localteam?.totalscore
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.VollyBallEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.VollyBallEvent?.awayteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -974,14 +974,14 @@ function BetSlip() {
                                   item?.sportEvent?.HandBallEvent?.localteam
                                     ?.totalscore
                                     ? item?.sportEvent?.HandBallEvent?.localteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.HandBallEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.HandBallEvent?.awayteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -1006,14 +1006,14 @@ function BetSlip() {
                                   item?.sportEvent?.AflEvent?.localteam
                                     ?.totalscore
                                     ? item?.sportEvent?.AflEvent?.localteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.AflEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.AflEvent?.awayteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -1038,14 +1038,14 @@ function BetSlip() {
                                   item?.sportEvent?.FutsalEvent?.localteam
                                     ?.goals
                                     ? item?.sportEvent?.FutsalEvent?.localteam
-                                        ?.goals
+                                      ?.goals
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.FutsalEvent?.awayteam
                                     ?.totalscore
                                     ? item?.sportEvent?.FutsalEvent?.awayteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 isWin={item?.winnerId}
@@ -1069,13 +1069,13 @@ function BetSlip() {
                                   item?.sportEvent?.CricketEvent?.localteam
                                     ?.totalscore
                                     ? item?.sportEvent?.CricketEvent?.localteam
-                                        ?.totalscore
+                                      ?.totalscore
                                     : "0"
                                 }
                                 awayScore={
                                   item?.sportEvent?.CricketEvent?.awayteam?.goals
                                     ? item?.sportEvent?.CricketEvent?.awayteam
-                                        ?.goals
+                                      ?.goals
                                     : "0"
                                 }
                                 isWin={item?.winnerId}

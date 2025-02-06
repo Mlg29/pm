@@ -47,7 +47,7 @@ const styles = {
 
 
 function TransactionCard(props: any) {
-    const { text, amount, date, type } = props
+    const { text, amount, date, type, userData } = props
     return (
         <div style={{ ...styles.container }}>
             {
@@ -58,12 +58,12 @@ function TransactionCard(props: any) {
                     : <div style={{ ...styles.boxSend }}>
                         <img src={colorSend2} />
                     </div>
-                    
+
             }
             <h3 style={{ ...FONTS.h7, width: "50%", color: (type === "DEPOSIT" || type === "BET_CREDIT") ? COLORS.green : COLORS.red, textTransform: 'capitalize' }}>{trimString(text, 30)}</h3>
             <div style={{ ...styles.box2 }}>
-                <h3 style={{ ...FONTS.h6, color: (type === "DEPOSIT" || type === "BET_CREDIT") ? COLORS.green : COLORS.red  }}>₦{formatCurrency(amount)}</h3>
-                <p style={{ ...FONTS.body7, color: COLORS.gray,textAlign: "right", margin: "5px 0px 0px 0px", fontSize: "10px" }}>{moment(date).format('LL')}</p>
+                <h3 style={{ ...FONTS.h6, color: (type === "DEPOSIT" || type === "BET_CREDIT") ? COLORS.green : COLORS.red }}>{userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(amount)}</h3>
+                <p style={{ ...FONTS.body7, color: COLORS.gray, textAlign: "right", margin: "5px 0px 0px 0px", fontSize: "10px" }}>{moment(date).format('LL')}</p>
             </div>
         </div>
     )

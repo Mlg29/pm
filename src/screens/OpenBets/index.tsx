@@ -70,6 +70,26 @@ function OpenBet() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState("");
+  const [exRate, setExRate] = useState(null)
+  const [exchangeRates, setExchangeRates] = useState({});
+
+  const handleFxRate = async (amount, currency, index) => {
+    const rateData = {
+      sourceCurrency: currency === "USD" ? "USD" : "NGN",
+      destinationCurrency: userData?.defaultCurrency === "USD" ? "USD" : "NGN",
+      amount: amount,
+    };
+
+    await dispatch(getFxRate(rateData)).then((pp) => {
+      const expectedAmount = pp?.payload?.data?.rate * amount
+      setExchangeRates((prevRates) => ({
+        ...prevRates,
+        [index]: expectedAmount?.toFixed(2),
+      }));
+    });
+  };
+
+
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -91,21 +111,13 @@ function OpenBet() {
     }
   };
 
-  const fetchFxRate = (payload) => {
-    const payloadData = {
-      sourceCurrency: payload?.sourceCurrency,
-      destinationCurrency: payload?.destinationCurrency,
-      amount: payload?.amount
-    }
-    dispatch(getFxRate(payloadData)).then(pp => {
-      return pp?.payload?.data
-    })
-  }
+
 
 
 
   useEffect(() => {
     fetchUserInfo();
+
   }, []);
 
   useEffect(() => {
@@ -188,7 +200,13 @@ function OpenBet() {
 
   const typeCheck = selected === "all" ? filterData : selected === "same" ? sameCurrency : selected === "multi" ? multiCurrency : filterData
 
-  console.log({ openBets, game })
+  useEffect(() => {
+    typeCheck?.forEach((item, index) => {
+      if (item?.betAmount && item?.betCurrency) {
+        handleFxRate(item.betAmount, item.betCurrency, index);
+      }
+    });
+  }, [typeCheck]);
 
   if (loader) {
     return (
@@ -235,6 +253,7 @@ function OpenBet() {
         {typeCheck?.length > 0 && (
           <div>
             {typeCheck?.map((data, i) => {
+
               return (
                 <>
                   {data?.sportEvent?.sport === "FOOTBALL" && (
@@ -265,8 +284,8 @@ function OpenBet() {
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
-                            {data?.betCurrency === "NGN" ? "₦" : "$"}
-                            {formatCurrency(data?.betAmount)}
+                            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}
+                            {exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -508,14 +527,14 @@ function OpenBet() {
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
-                            {data?.betCurrency === "NGN" ? "₦" : "$"}
-                            {formatCurrency(data?.betAmount)}
+                            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}
+                            {exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
                           <FaTableTennis size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.visitorTeamName}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -527,9 +546,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localTeamName} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.visitorTeamName} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -545,9 +564,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localTeamName} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.visitorTeamName} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>

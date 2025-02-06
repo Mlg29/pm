@@ -148,12 +148,12 @@ function BetInviteDetail() {
             betData?.winnerId && betData?.winnerId === userData?.id
               ? COLORS.green
               : betData?.winnerId && betData?.winnerId !== userData?.id
-              ? COLORS.red
-              : COLORS.gray,
+                ? COLORS.red
+                : COLORS.gray,
           margin: "0px 0px 1rem 0px",
         }}
       >
-        ₦{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+        {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
       </h3>
 
       {betData?.sportEvent?.sport === "FOOTBALL" && (
@@ -177,36 +177,36 @@ function BetInviteDetail() {
         <BoxingCard gameInfo={betData?.sportEvent?.BoxingEvent} />
       )}
 
-{betData?.sportEvent?.sport === "ESPORT" && (
+      {betData?.sportEvent?.sport === "ESPORT" && (
         <EsportCard gameInfo={betData?.sportEvent?.EsportEvent} />
       )}
 
-{betData?.sportEvent?.sport === "DART" && (
+      {betData?.sportEvent?.sport === "DART" && (
         <DartCard gameInfo={betData?.sportEvent?.DartEvent} />
       )}
       {betData?.sportEvent?.sport === "SNOOKER" && (
         <SnookerCard gameInfo={betData?.sportEvent?.SnookerEvent} />
       )}
 
-{betData?.sportEvent?.sport === "VOLLYBALL" && (
+      {betData?.sportEvent?.sport === "VOLLYBALL" && (
         <VolleyballCard gameInfo={betData?.sportEvent?.VollyBallEvent} />
       )}
 
-{betData?.sportEvent?.sport === "HANDBALL" && (
+      {betData?.sportEvent?.sport === "HANDBALL" && (
         <HandballCard gameInfo={betData?.sportEvent?.HandBallEvent} />
       )}
       {betData?.sportEvent?.sport === "AFL" && (
         <AflCard gameInfo={betData?.sportEvent?.AflEvent} />
       )}
-{betData?.sportEvent?.sport === "MMA" && (
+      {betData?.sportEvent?.sport === "MMA" && (
         <MmaCard gameInfo={betData?.sportEvent?.MmaEvent} />
       )}
 
-{betData?.sportEvent?.sport === "FUTSAL" && (
+      {betData?.sportEvent?.sport === "FUTSAL" && (
         <FutsalCard gameInfo={betData?.sportEvent?.FutsalEvent} />
       )}
 
-{betData?.sportEvent?.sport === "CRICKET" && (
+      {betData?.sportEvent?.sport === "CRICKET" && (
         <CricketCard gameInfo={betData?.sportEvent?.CricketEvent} />
       )}
 
@@ -238,15 +238,15 @@ function BetInviteDetail() {
                   ""
                 )}
               </h3>
-            ): betData?.sportEvent?.sport === "BASKETBALL" ? (
+            ) : betData?.sportEvent?.sport === "BASKETBALL" ? (
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.opponentId !== userData?.id ? (
                   <p>
                     {betData?.opponentPrediction === "W1"
                       ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
                       : betData?.opponentPrediction === "W2"
-                      ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
-                      : "DRAW"}
+                        ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
+                        : "DRAW"}
                   </p>
                 ) : (
                   ""
@@ -259,8 +259,8 @@ function BetInviteDetail() {
                     {betData?.opponentPrediction === "W1"
                       ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
                       : betData?.opponentPrediction === "W2"
-                      ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
-                      : "DRAW"}
+                        ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
+                        : "DRAW"}
                   </p>
                 ) : (
                   ""
@@ -273,8 +273,8 @@ function BetInviteDetail() {
                     {betData?.opponentPrediction === "W1"
                       ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
                       : betData?.opponentPrediction === "W2"
-                      ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
-                      : "DRAW"}
+                        ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
+                        : "DRAW"}
                   </p>
                 ) : (
                   ""
@@ -287,8 +287,8 @@ function BetInviteDetail() {
                     {betData?.opponentPrediction === "W1"
                       ? `${betData?.sportEvent?.BoxingEvent?.localteam?.name} Win`
                       : betData?.opponentPrediction === "W2"
-                      ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
-                      : ""}
+                        ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
+                        : ""}
                   </p>
                 ) : (
                   ""
@@ -301,113 +301,113 @@ function BetInviteDetail() {
                     {betData?.opponentPrediction === "W1"
                       ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
                       : betData?.opponentPrediction === "W2"
-                      ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
-                      : ""}
+                        ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
+                        : ""}
                   </p>
                 ) : (
                   ""
                 )}
               </h3>
-            ): betData?.sportEvent?.sport === "DART" ? (
+            ) : betData?.sportEvent?.sport === "DART" ? (
               <h3>
                 {betData?.opponentId !== userData?.id ? (
                   <p>
                     {betData?.opponentPrediction === "W1"
                       ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
                       : betData?.opponentPrediction === "W2"
-                      ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
-                      : ""}
+                        ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
+                        : ""}
                   </p>
                 ) : (
                   ""
                 )}
               </h3>
             )
-            : betData?.sportEvent?.sport === "MMA" ? (
-              <h3>
-                {betData?.opponentId !== userData?.id ? (
-                  <p>
-                    {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
-                      : betData?.opponentPrediction === "W2"
-                      ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
-                      : ""}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </h3>) :
-              betData?.sportEvent?.sport === "VOLLYBALL" ? (
+              : betData?.sportEvent?.sport === "MMA" ? (
                 <h3>
                   {betData?.opponentId !== userData?.id ? (
                     <p>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.VollyballEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.VollyballEvent?.awayteam?.name} Win`
-                        : ""}
+                          ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
+                          : ""}
                     </p>
                   ) : (
                     ""
                   )}
                 </h3>) :
-                betData?.sportEvent?.sport === "HANDBALL" ? (
+                betData?.sportEvent?.sport === "VOLLYBALL" ? (
                   <h3>
                     {betData?.opponentId !== userData?.id ? (
                       <p>
                         {betData?.opponentPrediction === "W1"
-                          ? `${betData?.sportEvent?.HandballEvent?.localteam?.name} Win`
+                          ? `${betData?.sportEvent?.VollyballEvent?.localteam?.name} Win`
                           : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.HandballEvent?.awayteam?.name} Win`
-                          : ""}
+                            ? `${betData?.sportEvent?.VollyballEvent?.awayteam?.name} Win`
+                            : ""}
                       </p>
                     ) : (
                       ""
                     )}
                   </h3>) :
-                  betData?.sportEvent?.sport === "AFL" ? (
+                  betData?.sportEvent?.sport === "HANDBALL" ? (
                     <h3>
                       {betData?.opponentId !== userData?.id ? (
                         <p>
                           {betData?.opponentPrediction === "W1"
-                            ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
+                            ? `${betData?.sportEvent?.HandballEvent?.localteam?.name} Win`
                             : betData?.opponentPrediction === "W2"
-                            ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
-                            : ""}
+                              ? `${betData?.sportEvent?.HandballEvent?.awayteam?.name} Win`
+                              : ""}
                         </p>
                       ) : (
                         ""
                       )}
                     </h3>) :
-                     betData?.sportEvent?.sport === "FUTSAL" ? (
+                    betData?.sportEvent?.sport === "AFL" ? (
                       <h3>
                         {betData?.opponentId !== userData?.id ? (
                           <p>
                             {betData?.opponentPrediction === "W1"
-                              ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
+                              ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
                               : betData?.opponentPrediction === "W2"
-                              ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
-                              : ""}
+                                ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
+                                : ""}
                           </p>
                         ) : (
                           ""
                         )}
                       </h3>) :
-                       betData?.sportEvent?.sport === "CRICKET" ? (
+                      betData?.sportEvent?.sport === "FUTSAL" ? (
                         <h3>
                           {betData?.opponentId !== userData?.id ? (
                             <p>
                               {betData?.opponentPrediction === "W1"
-                                ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
+                                ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
                                 : betData?.opponentPrediction === "W2"
-                                ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
-                                : ""}
+                                  ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
+                                  : ""}
                             </p>
                           ) : (
                             ""
                           )}
                         </h3>) :
-                       null}
+                        betData?.sportEvent?.sport === "CRICKET" ? (
+                          <h3>
+                            {betData?.opponentId !== userData?.id ? (
+                              <p>
+                                {betData?.opponentPrediction === "W1"
+                                  ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
+                                  : betData?.opponentPrediction === "W2"
+                                    ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
+                                    : ""}
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </h3>) :
+                          null}
           </div>
         ) : null}
         <div style={{ ...styles.cardDiv }}>
@@ -454,15 +454,15 @@ function BetInviteDetail() {
                       dd?.name === getPrediction(betData?.opponentPrediction)[0]
                         ? COLORS.gray
                         : selected === dd?.name
-                        ? COLORS.primary
-                        : COLORS.cream,
+                          ? COLORS.primary
+                          : COLORS.cream,
                     color:
                       selected === dd?.name ? COLORS.cream : COLORS.primary,
                   }}
                   key={i}
                   onClick={() =>
                     dd?.name === getPrediction(betData?.opponentPrediction)[0]
-                      ? () => {}
+                      ? () => { }
                       : handleRoute(dd?.name, `W${i + 1}`)
                   }
                 >
@@ -485,12 +485,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.TennisEvent?.player[0]["@name"]
+                      betData?.sportEvent?.TennisEvent?.player[0]["@name"]
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.TennisEvent?.player[0]["@name"]
+                      betData?.sportEvent?.TennisEvent?.player[0]["@name"]
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -511,12 +511,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.TennisEvent?.player[1]["@name"]
+                      betData?.sportEvent?.TennisEvent?.player[1]["@name"]
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.TennisEvent?.player[1]["@name"]
+                      betData?.sportEvent?.TennisEvent?.player[1]["@name"]
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -532,7 +532,7 @@ function BetInviteDetail() {
           )}
         </div>
       )}
-        {betData?.sportEvent?.sport === "BASKETBALL" && (
+      {betData?.sportEvent?.sport === "BASKETBALL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -543,12 +543,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.BasketballEvent?.localTeamName
+                      betData?.sportEvent?.BasketballEvent?.localTeamName
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.BasketballEvent?.localTeamName
+                      betData?.sportEvent?.BasketballEvent?.localTeamName
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -569,12 +569,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.BasketballEvent?.visitorTeamName
+                      betData?.sportEvent?.BasketballEvent?.visitorTeamName
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.BasketballEvent?.visitorTeamName
+                      betData?.sportEvent?.BasketballEvent?.visitorTeamName
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -602,12 +602,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.BoxingEvent?.localteam?.name
+                      betData?.sportEvent?.BoxingEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.BoxingEvent?.localteam?.name
+                      betData?.sportEvent?.BoxingEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -628,12 +628,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.BoxingEvent?.awayteam?.name
+                      betData?.sportEvent?.BoxingEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.BoxingEvent?.awayteam?.name
+                      betData?.sportEvent?.BoxingEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -650,7 +650,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "ESPORT" && (
+      {betData?.sportEvent?.sport === "ESPORT" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -661,12 +661,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.EsportEvent?.localteam?.name
+                      betData?.sportEvent?.EsportEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.EsportEvent?.localteam?.name
+                      betData?.sportEvent?.EsportEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -687,12 +687,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.EsportEvent?.awayteam?.name
+                      betData?.sportEvent?.EsportEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.EsportEvent?.awayteam?.name
+                      betData?.sportEvent?.EsportEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -709,7 +709,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "DART" && (
+      {betData?.sportEvent?.sport === "DART" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -720,12 +720,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.DartEvent?.localteam?.name
+                      betData?.sportEvent?.DartEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.DartEvent?.localteam?.name
+                      betData?.sportEvent?.DartEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -746,12 +746,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.DartEvent?.awayteam?.name
+                      betData?.sportEvent?.DartEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.DartEvent?.awayteam?.name
+                      betData?.sportEvent?.DartEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -768,7 +768,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "MMA" && (
+      {betData?.sportEvent?.sport === "MMA" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -779,12 +779,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.MmaEvent?.localteam?.name
+                      betData?.sportEvent?.MmaEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.MmaEvent?.localteam?.name
+                      betData?.sportEvent?.MmaEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -805,12 +805,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.MmaEvent?.awayteam?.name
+                      betData?.sportEvent?.MmaEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.MmaEvent?.awayteam?.name
+                      betData?.sportEvent?.MmaEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -838,12 +838,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.FootballEvent?.localTeamName
+                      betData?.sportEvent?.FootballEvent?.localTeamName
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.FootballEvent?.localTeamName
+                      betData?.sportEvent?.FootballEvent?.localTeamName
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -864,12 +864,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.FootballEvent?.visitorTeamName
+                      betData?.sportEvent?.FootballEvent?.visitorTeamName
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.FootballEvent?.visitorTeamName
+                      betData?.sportEvent?.FootballEvent?.visitorTeamName
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -902,7 +902,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "SNOOKER" && (
+      {betData?.sportEvent?.sport === "SNOOKER" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -913,12 +913,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.SnookerEvent?.localteam?.name
+                      betData?.sportEvent?.SnookerEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.SnookerEvent?.localteam?.name
+                      betData?.sportEvent?.SnookerEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -939,12 +939,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.SnookerEvent?.awayteam?.name
+                      betData?.sportEvent?.SnookerEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.SnookerEvent?.awayteam?.name
+                      betData?.sportEvent?.SnookerEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -961,7 +961,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "VOLLYBALL" && (
+      {betData?.sportEvent?.sport === "VOLLYBALL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -972,12 +972,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.VollyballEvent?.localteam?.name
+                      betData?.sportEvent?.VollyballEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.VollyballEvent?.localteam?.name
+                      betData?.sportEvent?.VollyballEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -998,12 +998,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.VollyballEvent?.awayteam?.name
+                      betData?.sportEvent?.VollyballEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.VollyballEvent?.awayteam?.name
+                      betData?.sportEvent?.VollyballEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1020,7 +1020,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "HANDBALL" && (
+      {betData?.sportEvent?.sport === "HANDBALL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -1031,12 +1031,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.HandballEvent?.localteam?.name
+                      betData?.sportEvent?.HandballEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.HandballEvent?.localteam?.name
+                      betData?.sportEvent?.HandballEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1057,12 +1057,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.HandballEvent?.awayteam?.name
+                      betData?.sportEvent?.HandballEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.HandballEvent?.awayteam?.name
+                      betData?.sportEvent?.HandballEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1079,7 +1079,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "AFL" && (
+      {betData?.sportEvent?.sport === "AFL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -1090,12 +1090,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.AflEvent?.localteam?.name
+                      betData?.sportEvent?.AflEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.AflEvent?.localteam?.name
+                      betData?.sportEvent?.AflEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1116,12 +1116,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.AflEvent?.awayteam?.name
+                      betData?.sportEvent?.AflEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.AflEvent?.awayteam?.name
+                      betData?.sportEvent?.AflEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1138,7 +1138,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "FUTSAL" && (
+      {betData?.sportEvent?.sport === "FUTSAL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -1149,12 +1149,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.FutsalEvent?.localteam?.name
+                      betData?.sportEvent?.FutsalEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.FutsalEvent?.localteam?.name
+                      betData?.sportEvent?.FutsalEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1175,12 +1175,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.FutsalEvent?.awayteam?.name
+                      betData?.sportEvent?.FutsalEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.FutsalEvent?.awayteam?.name
+                      betData?.sportEvent?.FutsalEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1197,7 +1197,7 @@ function BetInviteDetail() {
         </div>
       )}
 
-{betData?.sportEvent?.sport === "CRICKET" && (
+      {betData?.sportEvent?.sport === "CRICKET" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           {betData?.opponentPrediction !== "W1" && (
@@ -1208,12 +1208,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.CricketEvent?.localteam?.name
+                      betData?.sportEvent?.CricketEvent?.localteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.CricketEvent?.localteam?.name
+                      betData?.sportEvent?.CricketEvent?.localteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
@@ -1234,12 +1234,12 @@ function BetInviteDetail() {
                   width: "100%",
                   backgroundColor:
                     selected ===
-                    betData?.sportEvent?.CricketEvent?.awayteam?.name
+                      betData?.sportEvent?.CricketEvent?.awayteam?.name
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                    betData?.sportEvent?.CricketEvent?.awayteam?.name
+                      betData?.sportEvent?.CricketEvent?.awayteam?.name
                       ? COLORS.cream
                       : COLORS.primary,
                 }}

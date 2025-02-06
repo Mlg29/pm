@@ -188,11 +188,11 @@ const InviteFriend = () => {
             </div>
           </div> */}
 
-          {(exRate && checkSelectedUserDetail && (checkSelectedUserDetail?.defaultCurrency !== userData?.defaultCurrency )) ? (
-            <div style={{marginTop: 30}}>
+          {(exRate && checkSelectedUserDetail && (checkSelectedUserDetail?.defaultCurrency !== userData?.defaultCurrency)) ? (
+            <div style={{ marginTop: 30 }}>
               <p>
                 The invited participant has a {checkSelectedUserDetail?.defaultCurrency} account. {checkSelectedUserDetail?.defaultCurrency} equivalence of
-                your bet amount is: ${exRate?.rate * parseInt(amount)}
+                your bet amount is: {checkSelectedUserDetail?.defaultCurrency === "NGN" ? "₦" : "$"}{exRate?.rate * parseInt(amount)}
               </p>
 
               <div
@@ -205,16 +205,16 @@ const InviteFriend = () => {
                 }}
               >
                 <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
-                  <div>
-                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"=="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
-                  </div>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
+                </div>
               </div>
             </div>
           ) : null}
 
 
-{(exRate && !checkSelectedUserDetail && userData?.defaultCurrency === "NGN") ? (
-            <div style={{marginTop: 30}}>
+          {(exRate && !checkSelectedUserDetail && userData?.defaultCurrency === "NGN") ? (
+            <div style={{ marginTop: 30 }}>
               <p>
                 If the invited participant sets up a USD account, the USD equivalence of your bet amount is:  ${exRate?.rate * parseInt(amount)}
               </p>
@@ -229,17 +229,17 @@ const InviteFriend = () => {
                 }}
               >
                 <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
-                  <div>
-                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
-                  </div>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
+                </div>
               </div>
             </div>
           ) : null}
 
           {(exRate && !checkSelectedUserDetail && userData?.defaultCurrency === "USD") ? (
-            <div style={{marginTop: 30}}>
+            <div style={{ marginTop: 30 }}>
               <p>
-               All bets on this platform are primarily placed in USD. However, if your opponent is based in Nigeria, the bet will be processed in Nigerian Naira (NGN). Naira equivalence of your bet amount: ₦{exRate?.rate * parseInt(amount)}
+                All bets on this platform are primarily placed in USD. However, if your opponent is based in Nigeria, the bet will be processed in Nigerian Naira (NGN). Naira equivalence of your bet amount: ₦{exRate?.rate * parseInt(amount)}
               </p>
 
               <div
@@ -252,10 +252,10 @@ const InviteFriend = () => {
                 }}
               >
                 <p style={{ fontSize: 12, marginBottom: 5 }}>Current Rate</p>
-                  <div>
-                    <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
-                    <p style={{ fontSize: 10, fontWeight: '400', marginTop: 5, marginBottom: 5 }}>Incase opponent base currency is different from USD, the bet will be subject to the applicable FX rate.</p>
-                  </div>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 'bold' }}>{exRate?.rate} {"="} {userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}1</p>
+                  <p style={{ fontSize: 10, fontWeight: '400', marginTop: 5, marginBottom: 5 }}>Incase opponent base currency is different from USD, the bet will be subject to the applicable FX rate.</p>
+                </div>
               </div>
             </div>
           ) : null}

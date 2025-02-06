@@ -87,7 +87,6 @@ function Transaction() {
   const notifications = useAppSelector(notificationState) as any;
 
 
-  console.log({ userData })
 
 
 
@@ -98,7 +97,6 @@ function Transaction() {
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
-      console.log(">>>>>>", { response })
       setUserData(response?.payload);
     }
   };
@@ -206,7 +204,7 @@ function Transaction() {
                 <FaAsterisk color={COLORS.white} size={30} />
               </div>
             )}
-            <div style={{ cursor: "pointer" }}>
+            <div style={{ cursor: "pointer", marginLeft: 30 }}>
               {show ? (
                 <GoEye color={COLORS.white} onClick={() => setShow(!show)} />
               ) : (
@@ -267,6 +265,7 @@ function Transaction() {
                   amount={data?.amount}
                   date={data?.createdAt}
                   type={data?.type}
+                  userData={userData}
 
                 />
               </div>
@@ -286,6 +285,7 @@ function Transaction() {
               navigate("/transaction-list", {
                 state: {
                   transactions: transactions,
+                  userData: userData
                 },
               })
             }

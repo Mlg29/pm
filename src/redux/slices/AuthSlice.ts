@@ -200,7 +200,6 @@ export const login = createAsyncThunk(
 
 export const getUserData = createAsyncThunk("auth/getUserData", async () => {
   var response = await getRequest(`${SportSportBaseUrl}/users/profile`);
-  console.log({ response })
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
