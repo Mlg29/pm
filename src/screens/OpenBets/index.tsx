@@ -289,8 +289,6 @@ function OpenBet() {
                           </h3>
                           <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
                             <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
-
-
                           </p>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -532,9 +530,12 @@ function OpenBet() {
                             {game?.status}
                           </p>
                           <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
-                            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}
-                            {exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}
+                            {data?.betCurrency === "NGN" ? "₦" : "$"}
+                            {formatCurrency(data?.betAmount)}
                           </h3>
+                          <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                            <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                          </p>
                         </div>
                         <div style={{ ...styles.center }}>
                           <FaTableTennis size={30} color={COLORS.primary} />
