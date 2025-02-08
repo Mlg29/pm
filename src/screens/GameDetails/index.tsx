@@ -162,17 +162,23 @@ function GameDetails() {
     }, 1000);
 
   }, []);
-  console.log({ gameInfo })
+  console.log({ isMobile })
+
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
-
+    console.log(">>", gameInfo?.status)
     if (gameInfo?.status === "Finished" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
       toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
       });
       return;
     }
-    if (name !== "Upcoming match") {
+    if (
+      gameInfo?.status !== "upcoming" &&
+      gameInfo?.status !== "Upcoming" &&
+      gameInfo?.status !== "UPCOMING" &&
+      name !== "Upcoming match"
+    ) {
       toast.error("Sorry, the game is in progress, you can't proceed to bet on it", {
         position: "bottom-center",
       });
@@ -186,24 +192,31 @@ function GameDetails() {
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
         sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType?.toUpperCase(),
-        // matchEvent: gameInfo
         matchEvent: {
           id: gameInfo?.id,
           sportEventId: gameInfo?.sportEventId,
           league: gameInfo?.league,
           leagueId: gameInfo?.leagueId,
           country: gameInfo?.country,
-          localTeamName: gameInfo?.localTeam?.name,
-          visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
-          raceName: gameInfo?.name,
-          sportName: gameInfo?.league,
           status: "Not Started",
           internalStatus: "UPCOMING",
           date: gameInfo?.formatted_date || gameInfo?.date,
           time: gameInfo?.time || gameInfo?.date,
-        },
+          ...(gameType !== "Horse" && gameType !== "Formula1" && gameType !== "Tennis" && {
+            localTeamName: gameInfo?.localTeam?.name,
+            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
+          }),
+          ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
+          ...(gameType === "Tennis" ? { sportName: gameInfo?.league } : {}),
+        }
+
+
       };
 
+
+      console.log({ payload })
+
+      return
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
 

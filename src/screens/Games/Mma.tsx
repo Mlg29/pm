@@ -158,11 +158,16 @@ function Mma() {
                   </p>
                 )}
                 <div>
-                  {league?.match?.map((aa, i) => (
-                    <div key={i}>
-                      <MmaGameCard id={index} data={aa} />
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league?.name,
+                      leagueId: league?.id,
+                      ...aa
+                    }
+                    return <div key={i}>
+                      <MmaGameCard id={index} data={payload} />
                     </div>
-                  ))}
+                  })}
                 </div>
               </div>
             ))}
@@ -188,11 +193,16 @@ function Mma() {
                   </p>
                 )}
                 <div>
-                  {league?.match?.map((aa, i) => (
-                    <div key={i}>
-                      <MmaGameCard id={index} data={aa} />
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league?.name,
+                      leagueId: league?.id,
+                      ...aa
+                    }
+                    return <div key={i}>
+                      <MmaGameCard id={index} data={payload} />
                     </div>
-                  ))}
+                  })}
                 </div>
               </div>
             ))}

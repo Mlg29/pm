@@ -141,6 +141,8 @@ function HorseRace() {
                   {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
+                      leagueId: item?.tournamentId,
+                      date: item?.date,
                       country: item?.file_group,
                       ...aa
                     }
@@ -177,6 +179,8 @@ function HorseRace() {
                   {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
+                      leagueId: item?.tournamentId,
+                      date: item?.date,
                       country: item?.file_group,
                       ...aa
                     }
@@ -213,6 +217,8 @@ function HorseRace() {
                   {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
+                      leagueId: item?.tournamentId,
+                      date: item?.date,
                       country: item?.file_group,
                       ...aa
                     }

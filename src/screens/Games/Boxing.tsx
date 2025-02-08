@@ -123,7 +123,8 @@ function Boxing() {
                   <div>
                     {item?.match?.map((aa, i) => {
                       const payload = {
-                        name: item?.name,
+                        league: item?.name,
+                        leagueId: item?.id,
                         ...aa
                       }
                       return (
@@ -160,7 +161,8 @@ function Boxing() {
                   <div>
                     {item?.match?.map((aa, i) => {
                       const payload = {
-                        name: item?.name,
+                        league: item?.name,
+                        leagueId: item?.id,
                         ...aa
                       }
                       return (
@@ -197,7 +199,8 @@ function Boxing() {
                   <div>
                     {item?.match?.map((aa, i) => {
                       const payload = {
-                        name: item?.name,
+                        league: item?.name,
+                        leagueId: item?.id,
                         ...aa
                       }
                       return (

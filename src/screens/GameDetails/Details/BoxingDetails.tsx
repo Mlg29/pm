@@ -129,7 +129,7 @@ function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
     tempElement.innerHTML = str;
     return tempElement.value;
   };
-  console.log({ gameInfo })
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div

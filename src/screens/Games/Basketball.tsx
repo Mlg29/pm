@@ -118,7 +118,7 @@ function Basketball() {
                   {item?.match?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      country: item?.file_group,
+                      country: item?.fileGroup,
                       leagueId: item?.id,
                       ...aa
                     }
@@ -156,7 +156,7 @@ function Basketball() {
                   {item?.match?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      country: item?.file_group,
+                      country: item?.fileGroup,
                       leagueId: item?.id,
                       ...aa
                     }
@@ -211,7 +211,7 @@ function Basketball() {
                   {item?.match?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      country: item?.file_group,
+                      country: item?.fileGroup,
                       leagueId: item?.id,
                       ...aa
                     }

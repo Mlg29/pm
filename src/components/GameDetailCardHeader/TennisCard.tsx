@@ -97,7 +97,7 @@ function TennisCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.player[0]?.totalscore} - {data?.player[1]?.totalscore}
+            {data?.player[0]?.totalScore} - {data?.player[1]?.totalScore}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}

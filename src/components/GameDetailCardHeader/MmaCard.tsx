@@ -133,14 +133,14 @@ function MmaCard(props) {
           </p>
         </div>
       </div>
-      <div
+      {/* <div
         style={{
           height: 1,
           width: "100%",
           margin: "10px 0px",
           backgroundColor: COLORS.gray,
         }}
-      />
+      /> */}
 
     </div>
   );
