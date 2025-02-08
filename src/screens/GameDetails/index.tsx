@@ -162,11 +162,11 @@ function GameDetails() {
     }, 1000);
 
   }, []);
-  console.log({ isMobile })
+
 
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
-    console.log(">>", gameInfo?.status)
+
     if (gameInfo?.status === "Finished" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
       toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
@@ -214,9 +214,7 @@ function GameDetails() {
       };
 
 
-      console.log({ payload })
 
-      return
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
 
