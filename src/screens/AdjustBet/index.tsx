@@ -13,6 +13,8 @@ import { IPInfoContext } from "ip-info-react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { userState } from "../../redux/slices/AuthSlice";
 import { getFxRate } from "../../redux/slices/MiscSlice";
+import arrowleft from "../../assets/images/arrow-left.svg"
+
 
 const styles = {
   inputs: {
@@ -118,6 +120,12 @@ const AdjustBet = () => {
 
   return (
     <div className="top-container">
+      <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
+        navigate(-1)
+      }}>
+        <img src={arrowleft} style={{ padding: "10px", background: COLORS.semiGray, borderRadius: 100 }} />
+
+      </div>
       <Header text="Adjust Bet Stake" />
 
       <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
@@ -135,18 +143,12 @@ const AdjustBet = () => {
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           @{userFee?.opponentUsername} Bet Amount
         </p>
-        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.amount)} <span style={{ color: 'gray' }}>({userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.initialData?.betAmount)})</span></h3>
+        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.amount)} <span style={{ color: 'gray' }}> = {userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.initialData?.betAmount)}</span></h3>
 
 
       </div>
 
-      {
-        exAmount ?
-          <div style={{ backgroundColor: COLORS.cream, width: 120, padding: 2 }}>
-            <p style={{ textAlign: 'center' }}>{userData?.defaultCurrency === "USD" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : null}</p>
-          </div>
-          : null
-      }
+
 
       <div>
 
@@ -166,6 +168,13 @@ const AdjustBet = () => {
           inputStyle={{ ...styles.inputs }}
           placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
         />
+        {
+          exAmount ?
+            <div style={{ padding: 2, display: 'flex', marginTop: -30, justifyContent: 'center', alignItems: 'center' }}>
+              <p style={{ textAlign: 'center' }}>{userData?.defaultCurrency === "USD" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : null}</p>
+            </div>
+            : null
+        }
       </div>
 
       <CustomeKeyboard value={amount} setValue={handleCardAmount} int />
