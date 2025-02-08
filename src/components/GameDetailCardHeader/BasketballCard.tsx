@@ -54,7 +54,7 @@ function BasketballCard(props) {
   //     ? data?.player
   //     : [data?.player];
 
-  console.log({ data })
+
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
@@ -85,7 +85,7 @@ function BasketballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -129,7 +129,7 @@ function BasketballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.awayTeam?.name}
           </p>
         </div>
       </div>

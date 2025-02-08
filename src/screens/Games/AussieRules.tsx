@@ -34,10 +34,10 @@ function AussieRules() {
     }
 
     dispatch(getAussieRuleFixtures(payloadLive)).then((dd) => {
-      setUpcoming(dd?.payload)
+      setLive(dd?.payload)
     })
     dispatch(getAussieRuleFixtures(payloadSchedule)).then((dd) => {
-      setLive(dd?.payload?.results?.tournament)
+      setUpcoming(dd?.payload?.results?.tournament)
     })
     // dispatch(getAussieRuleFixtures(payloadStanding)).then((dd) => {
     //   setStandings(dd?.payload?.standings)
@@ -92,7 +92,7 @@ function AussieRules() {
           })}
         </div>
       </div>
-      <LoadingState isLoading={loading}>
+      {/* <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
             {live?.map((item, i) => {
@@ -176,7 +176,7 @@ function AussieRules() {
             height='30vh'
           />
         ) : null}
-      </LoadingState>
+      </LoadingState> */}
     </div>
   )
 }

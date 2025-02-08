@@ -151,40 +151,40 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 <div style={{ ...styles.mob }}>
                   <div style={{ width: "100%" }}>
                     <Button
-                      text={`Bet ${gameInfo?.localteam?.name} to Win`}
+                      text={`Bet ${gameInfo?.localTeam?.name} to Win`}
                       propStyle={{
                         width: "100%",
                         backgroundColor:
-                          selected === gameInfo?.localteam?.name
+                          selected === gameInfo?.localTeam?.name
                             ? COLORS.primary
                             : COLORS.cream,
                         color:
-                          selected === gameInfo?.localteam?.name
+                          selected === gameInfo?.localTeam?.name
                             ? COLORS.cream
                             : COLORS.primary,
                       }}
                       handlePress={() =>
-                        handleRoute(gameInfo?.localteam?.name, "W1")
+                        handleRoute(gameInfo?.localTeam?.name, "W1")
                       }
                     />
                   </div>
                   <div style={{ width: "100%", margin: "10px 0px" }}>
                     <Button
-                      text={`Bet ${gameInfo?.awayteamteam?.name} to Win`}
+                      text={`Bet ${gameInfo?.awayTeam?.name} to Win`}
                       propStyle={{
                         width: "100%",
                         backgroundColor:
-                          selected === gameInfo?.awayteamteam?.name
+                          selected === gameInfo?.awayTeam?.name
                             ? COLORS.primary
                             : COLORS.cream,
                         color:
-                          selected === gameInfo?.awayteamteam?.name
+                          selected === gameInfo?.awayTeam?.name
                             ? COLORS.cream
                             : COLORS.primary,
                       }}
                       // handlePress={() => navigate('/home')}
                       handlePress={() =>
-                        handleRoute(gameInfo?.awayteamteam?.name, "W2")
+                        handleRoute(gameInfo?.awayTeam?.name, "W2")
                       }
                     />
                   </div>
@@ -193,42 +193,42 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 <div style={{ ...styles.desk }}>
                   <div style={{ width: "100%" }}>
                     <Button
-                      text={`Bet ${gameInfo?.localteam?.name} to Win`}
+                      text={`Bet ${gameInfo?.localTeam?.name} to Win`}
                       propStyle={{
                         width: "90%",
                         backgroundColor:
-                          selected === gameInfo?.localteam?.name
+                          selected === gameInfo?.localTeam?.name
                             ? COLORS.primary
                             : COLORS.cream,
                         color:
-                          selected === gameInfo?.localteam?.name
+                          selected === gameInfo?.localTeam?.name
                             ? COLORS.cream
                             : COLORS.primary,
                         fontSize: 12,
                       }}
                       handlePress={() =>
-                        handleRoute(gameInfo?.localteam?.name, "W1")
+                        handleRoute(gameInfo?.localTeam?.name, "W1")
                       }
                     />
                   </div>
                   <div style={{ width: "100%", margin: "10px 0px" }}>
                     <Button
-                      text={`Bet ${gameInfo?.awayteamteam?.name} to Win`}
+                      text={`Bet ${gameInfo?.awayTeam?.name} to Win`}
                       propStyle={{
                         width: "90%",
                         backgroundColor:
-                          selected === gameInfo?.awayteamteam?.name
+                          selected === gameInfo?.awayTeam?.name
                             ? COLORS.primary
                             : COLORS.cream,
                         color:
-                          selected === gameInfo?.awayteamteam?.name
+                          selected === gameInfo?.awayTeam?.name
                             ? COLORS.cream
                             : COLORS.primary,
                         fontSize: 12,
                       }}
                       // handlePress={() => navigate('/home')}
                       handlePress={() =>
-                        handleRoute(gameInfo?.awayteamteam?.name, "W2")
+                        handleRoute(gameInfo?.awayTeam?.name, "W2")
                       }
                     />
                   </div>
@@ -382,33 +382,33 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 marginBottom: 5,
               }}
             >
-              {gameInfo?.localteam?.name}
+              {gameInfo?.localTeam?.name}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.localteam?.age
-                ? gameInfo?.localteam?.age
+              {gameInfo?.localTeam?.age
+                ? gameInfo?.localTeam?.age
                 : "N/A"}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.localteam?.gender || 'N/A'}
+              {gameInfo?.localTeam?.gender || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.localteam?.height || 'N/A')}
+              {decodeHTMLEntities(gameInfo?.localTeam?.height || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.localteam?.nickname || 'N/A'}
+              {gameInfo?.localTeam?.nickname || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.localteam?.reach || 'N/A')}
+              {decodeHTMLEntities(gameInfo?.localTeam?.reach || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.localteam?.stance || 'N/A'}
+              {gameInfo?.localTeam?.stance || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.localteam?.weightclass || 'N/A')}
+              {decodeHTMLEntities(gameInfo?.localTeam?.weightclass || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.localteam?.weigth || 'N/A'}
+              {gameInfo?.localTeam?.weigth || 'N/A'}
             </p>
             {gameInfo?.fighter1?.fighter?.records?.record?.map((pp) => {
               return (
@@ -451,7 +451,7 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
                 marginBottom: 5,
               }}
             >
-              {gameInfo?.awayteam?.name}
+              {gameInfo?.awayTeam?.name}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
               {gameInfo?.awayteam?.age
@@ -474,10 +474,10 @@ function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
               {gameInfo?.awayteam?.stance || 'N/A'}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {decodeHTMLEntities(gameInfo?.localteam?.weightclass || 'N/A')}
+              {decodeHTMLEntities(gameInfo?.localTeam?.weightclass || 'N/A')}
             </p>
             <p style={{ ...FONTS.body7, marginBottom: 5 }}>
-              {gameInfo?.awayteamteam?.weigth || 'N/A'}
+              {gameInfo?.awayTeam?.weigth || 'N/A'}
             </p>
             {gameInfo?.fighter2?.fighter?.records?.record?.map((pp) => {
               return (

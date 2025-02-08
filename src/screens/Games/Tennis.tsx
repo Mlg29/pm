@@ -23,21 +23,29 @@ function Tennis() {
 
   useEffect(() => {
     const PayloadFinished = {
-      range: 'home_p2p'
+      range: 'finished'
     }
     const PayloadScheduled = {
-      range: 'd1'
+      range: 'upcoming'
     }
     dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+      setFinished(dd?.payload?.scores?.category)
     })
     dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
-      setScheduled(dd?.payload)
+      const pp = dd?.payload?.category?.map((jj, index) => {
+        return {
+          id: index,
+          name: "Tennis" + index,
+          match: jj?.match
+        }
+      })
+      setScheduled(pp)
     })
     dispatch(getTennisFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.scores)
+      setLive(dd?.payload)
     })
   }, [])
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -94,7 +102,7 @@ function Tennis() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.category?.map((league, index) => (
+            {live?.map((league, index) => (
               <div key={league?.name}>
                 <p
                   style={{
@@ -110,9 +118,10 @@ function Tennis() {
                   {league?.name}
                 </p>
                 <div>
-                  {live?.category[index]?.match?.map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
                     const payload = {
                       league: league.name,
+                      leagueId: league.id,
                       ...aa
                     }
                     return (
@@ -128,7 +137,7 @@ function Tennis() {
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {scheduled?.category?.map((league, index) => {
+            {scheduled?.map((league, index) => {
               return <div key={league?.name}>
                 <p
                   style={{
@@ -144,9 +153,10 @@ function Tennis() {
                   {league?.name}
                 </p>
                 <div>
-                  {scheduled?.category[index]?.match.map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
                     const payload = {
-                      league: league.name,
+                      league: league?.name,
+                      leagueId: league?.id,
                       ...aa
                     }
                     return (
@@ -163,7 +173,7 @@ function Tennis() {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {Finished?.category?.map((league, index) => (
+            {Finished?.map((league, index) => (
               <div key={league?.name}>
                 <p
                   style={{
@@ -179,9 +189,10 @@ function Tennis() {
                   {league?.name}
                 </p>
                 <div>
-                  {Finished?.category[index]?.match.map((aa, i) => {
+                  {league?.match.map((aa, i) => {
                     const payload = {
                       league: league.name,
+                      leagueId: league.id,
                       ...aa
                     }
                     return (

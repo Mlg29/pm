@@ -44,7 +44,6 @@ function NascarCard({ id, data }) {
 
 
 
-
     return (
         <div
             style={styles.container}
@@ -66,12 +65,12 @@ function NascarCard({ id, data }) {
             >
                 <div style={styles.box1}>
                     <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-                        {data?.date || data?.race[0]?.date}
+                        {data?.date}
                     </p>
                 </div>
                 <div style={styles.box2}>
 
-                    <p style={{ ...FONTS.body7 }}>{data?.track || data?.race[0]?.name}</p>
+                    <p style={{ ...FONTS.body7 }}>{data?.name}</p>
                 </div>
                 <div
                     style={{
@@ -85,7 +84,7 @@ function NascarCard({ id, data }) {
                         <span style={{ color: COLORS.orange }}>Distance: </span>
                     </p>
                     <p style={{ ...FONTS.body8 }}>
-                        <span>{data?.distance || data?.race[0]?.distance}</span>
+                        <span>{data?.distance}</span>
                     </p>
                 </div>
             </div>

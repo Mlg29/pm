@@ -70,7 +70,6 @@ function GameDetailCardHeader(props: any) {
   }, [data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo])
 
 
-
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -107,7 +106,7 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeam?.name || data?.localTeamName}
           </p>
         </div>
         <div>
@@ -134,7 +133,7 @@ function GameDetailCardHeader(props: any) {
             {data?.localTeam?.goals} - {data?.visitorTeam?.goals}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.status}
+            {data?.time}
           </p>
         </div>
         <div
@@ -167,7 +166,7 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeam?.name || data?.visitorTeamName}
           </p>
         </div>
       </div>

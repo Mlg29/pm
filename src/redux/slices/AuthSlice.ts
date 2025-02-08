@@ -203,6 +203,9 @@ export const getUserData = createAsyncThunk("auth/getUserData", async () => {
   if (response?.status === 200 || response?.status === 201) {
     return response?.data;
   }
+  else {
+    return response
+  }
 });
 
 export const getSingleUser = createAsyncThunk("auth/getSingleUser", async (payload: any) => {
@@ -438,6 +441,7 @@ export const AuthSlice = createSlice({
         }
       );
     builder.addCase(getUserData.rejected, (state, action) => {
+      // console.log({ action })
       // state.error = action.error.message
     });
     builder.addCase(getSingleUser.pending, (state, action) => {

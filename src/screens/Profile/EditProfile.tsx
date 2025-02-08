@@ -126,6 +126,14 @@ function EditProfile() {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
@@ -135,6 +143,9 @@ function EditProfile() {
       setFileUrl(
         response?.payload?.profileImage ? response?.payload?.profileImage : ""
       );
+    }
+    else {
+      handleLogOut()
     }
   };
 
@@ -181,7 +192,7 @@ function EditProfile() {
       profileImage: fileUrl ? fileUrl : "",
       phoneNumber: countryListCode?.dialCode + phoneNumber,
       gender: gender,
-     // countryIso: countryListCode?.code,
+      // countryIso: countryListCode?.code,
       //  country: country,
       //  dob: dob?.toISOString().slice(0, 10),
     };
@@ -217,7 +228,7 @@ function EditProfile() {
         setMessage(errMsg);
         setMessageType("Rejected");
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
 

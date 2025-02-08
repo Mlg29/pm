@@ -59,10 +59,22 @@ function Profile() {
     await dispatch(getNotifications());
   };
 
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
+
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
+    }
+    else {
+      handleLogOut()
     }
   };
 
@@ -215,9 +227,8 @@ function Profile() {
                   ...FONTS.body6,
                   margin: "0px 20px",
                   width: "100%",
-                  color: `${
-                    data?.name === "Log out" ? COLORS.red : COLORS.primary
-                  }`,
+                  color: `${data?.name === "Log out" ? COLORS.red : COLORS.primary
+                    }`,
                 }}
               >
                 {data?.name}

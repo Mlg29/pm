@@ -180,6 +180,7 @@ function OpenBet() {
 
     const payload = {
       invitedUser: null,
+      initialData: data,
       amount: rateByCurrency,
       opponentUsername: data?.user?.userName,
       isAdjustBet: true,

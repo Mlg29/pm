@@ -26,7 +26,7 @@ export const getAflFixtureLive = createAsyncThunk(
   "afl/getAflFixtureLive",
   async () => {
     const buildUrl = () => {
-      return `${SportSportBaseUrl}/american-football/live`;
+      return `${SportSportBaseUrl}/nfl/live`;
     };
 
     var response = await getRequest(buildUrl());
@@ -54,7 +54,7 @@ export const getAflFixtures = createAsyncThunk(
 
       const queryString = queryParams.join("&");
 
-      return `${SportSportBaseUrl}/american-football/matches?${queryString}`;
+      return `${SportSportBaseUrl}/nfl/matches?${queryString}`;
     };
 
     var response = await getRequest(buildUrl(payload));

@@ -84,11 +84,21 @@ const BetAdjust = () => {
 
   const user = betInfo?.bet?.userId === userData?.id;
 
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
+
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
     } else {
+      handleLogOut()
     }
   };
 
@@ -257,7 +267,7 @@ const BetAdjust = () => {
       {sportEvents?.sport === "FUTSAL" && (
         <FutsalCard gameInfo={sportEvents?.FutsalEvent} />
       )}
-       {sportEvents?.sport === "CRICKET" && (
+      {sportEvents?.sport === "CRICKET" && (
         <CricketCard gameInfo={sportEvents?.CricketEvent} />
       )}
 

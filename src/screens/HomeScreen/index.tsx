@@ -383,6 +383,15 @@ function HomeScreen() {
   //   },
   // ];
 
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
+
   const fetchUserInfo = async () => {
     setLoader(true);
     const response = await dispatch(getUserData());
@@ -391,6 +400,7 @@ function HomeScreen() {
       setLoader(false);
     } else {
       setLoader(false);
+      handleLogOut()
     }
   };
 

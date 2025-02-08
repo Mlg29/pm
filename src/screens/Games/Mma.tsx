@@ -36,30 +36,18 @@ function Mma() {
     }
 
     dispatch(getMmaFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.category)
+      setLive(dd?.payload)
     })
 
     dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.category)
+      setUpcoming(dd?.payload)
     })
 
     dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.category)
+      setFinished(dd?.payload)
     })
   }, [])
 
-  // const groupedByData = (collectedData) => {
-  //   return collectedData?.reduce((acc, current) => {
-  //     const league = current?.name
-  //     if (!acc[league]) {
-  //       acc[league] = []
-  //     }
-  //     acc[league].push(current)
-  //     return acc
-  //   }, {})
-  // }
-  // const upcomingOutput = groupedByData(upcoming?.match)
-  // const finishedOutput = groupedByData(finished?.match)
 
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
@@ -134,11 +122,16 @@ function Mma() {
                   </p>
                 )}
                 <div>
-                  {league?.match?.map((aa, i) => (
-                    <div key={i}>
-                      <MmaGameCard id={index} data={aa} />
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league?.name,
+                      leagueId: league?.id,
+                      ...aa
+                    }
+                    return <div key={i}>
+                      <MmaGameCard id={index} data={payload} />
                     </div>
-                  ))}
+                  })}
                 </div>
               </div>
             ))}

@@ -53,9 +53,9 @@ function GameCard({ data, id }) {
         }
       >
         <div style={styles.box1}>
-        <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-          ({data?.formatted_date} - {data?.time})
-        </p>
+          <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+            ({data?.formattedDate} - {data?.time})
+          </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status}
           </p>

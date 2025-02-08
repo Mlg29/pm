@@ -84,6 +84,14 @@ function Dashboard() {
       </button>
     )
   );
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
 
   const fetchUserInfo = async () => {
     setLoader(true);
@@ -92,6 +100,7 @@ function Dashboard() {
       setLoader(false);
     } else {
       setLoader(false);
+      handleLogOut()
     }
   };
 

@@ -10,8 +10,9 @@ import { formatCurrency } from "../../utils/helper";
 import { InputNumber } from 'primereact/inputnumber';
 import Loader from "../../components/Loader";
 import { IPInfoContext } from "ip-info-react";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { userState } from "../../redux/slices/AuthSlice";
+import { getFxRate } from "../../redux/slices/MiscSlice";
 
 const styles = {
   inputs: {
@@ -30,15 +31,32 @@ const styles = {
 
 const AdjustBet = () => {
   const [amount, setAmount] = useState<any>("");
+  const [exAmount, setExAmount] = useState<any>("");
   const navigate = useNavigate();
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
   const [allowCurrency, setAllowCurrency] = useState(false)
   const [loader, setLoader] = useState(false)
   const userData = useAppSelector(userState)
+  const dispatch = useAppDispatch()
 
-  const checkHandler = () => {
-    setAllowCurrency(!allowCurrency)
-  }
+
+  const handleExRate = async (amt) => {
+    const rateData = {
+      sourceCurrency: userData?.defaultCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: userData?.defaultCurrency === "USD" ? "NGN" : "USD",
+      amount: amt
+    }
+    const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
+      const expectedAmount = pp?.payload?.data?.rate * amt
+      return expectedAmount
+    })
+
+    setExAmount(newAmount)
+
+
+  };
+
+
 
   useEffect(() => {
     setLoader(true)
@@ -64,10 +82,19 @@ const AdjustBet = () => {
   }
 
 
-  const handleAmount = (val) => {
-    // console.log({val})
-    // setAmount(val)
+  const handleCardAmount = (amt) => {
+    let result = amt?.replace(/null|undefined/g, "")
+    setAmount(result)
+    handleExRate(result)
   }
+
+  const handleAmount = (val) => {
+    let result = val?.replace(/null|undefined/g, "")
+    setAmount(result)
+    handleExRate(result)
+
+  }
+
 
   if (loader) {
     return (
@@ -85,6 +112,9 @@ const AdjustBet = () => {
       </div>
     );
   }
+
+
+
 
   return (
     <div className="top-container">
@@ -105,37 +135,40 @@ const AdjustBet = () => {
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           @{userFee?.opponentUsername} Bet Amount
         </p>
-        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.amount)}</h3>
+        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.amount)} <span style={{ color: 'gray' }}>({userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.initialData?.betAmount)})</span></h3>
+
+
       </div>
 
-      {/* <div>
-     <div style={{display: "flex", alignItems: "center"}}>
-      <div style={{width: "30px"}} >
-         <input type="checkbox" onChange={checkHandler} checked={allowCurrency}  />
-      </div>
-        <p>Allow Other Currency</p>
-      </div>
-     </div> */}
+      {
+        exAmount ?
+          <div style={{ backgroundColor: COLORS.cream, width: 120, padding: 2 }}>
+            <p style={{ textAlign: 'center' }}>{userData?.defaultCurrency === "USD" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : null}</p>
+          </div>
+          : null
+      }
 
       <div>
 
         <input
           style={{ ...styles.inputs, display: 'none' }}
           value={amount}
-          onChange={(e) => setAmount(e?.target?.value)}
+          onChange={(e) => handleAmount(e?.target?.value)}
           placeholder="0.00"
+          disabled
         />
         <InputNumber
           value={amount}
           prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
           onValueChange={(e) => handleAmount(e.value)}
           minFractionDigits={2}
+          disabled
           inputStyle={{ ...styles.inputs }}
           placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
         />
       </div>
 
-      <CustomeKeyboard value={amount} setValue={setAmount} int />
+      <CustomeKeyboard value={amount} setValue={handleCardAmount} int />
 
       <div style={{ width: "100%", marginTop: 30 }}>
         <Button

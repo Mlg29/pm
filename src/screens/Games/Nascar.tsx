@@ -37,14 +37,35 @@ function Nascar() {
     }
 
     dispatch(getNascaFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.scores?.tournament);
+
+      const tp = dd?.payload?.scores?.tournament?.map(rr => {
+        return {
+          ...rr,
+          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+        }
+      })
+      setLive(tp);
     });
 
     dispatch(getNascaMatchFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.scores?.tournament);
+
+      const tp = dd?.payload?.scores?.tournament?.map(rr => {
+        return {
+          ...rr,
+          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+        }
+      })
+      setUpcoming(tp);
     });
     dispatch(getNascaMatchFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.scores?.tournament);
+
+      const tp = dd?.payload?.scores?.tournament?.map(rr => {
+        return {
+          ...rr,
+          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+        }
+      })
+      setFinished(tp);
     });
   }, [])
 
@@ -105,12 +126,9 @@ function Nascar() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live.race?.map((item, i) => {
-              const payload = {
-                name: live?.name,
-                ...item
-              }
-              return <div key={i}>
+            {live?.map((item, i) => {
+
+              <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -122,10 +140,22 @@ function Nascar() {
                     marginRight: 10
                   }}
                 >
-                  {live?.name}
+                  {item?.name}
                 </p>
-                <div key={i}>
-                  <NascarCard id={i} data={payload} />
+                <div>
+                  {item?.races?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      country: item?.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <NascarCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -135,6 +165,7 @@ function Nascar() {
         {selectedStatus === 'Scheduled' ? (
           <>
             {upcoming?.map((item, i) => {
+
               return <div key={i}>
                 <p
                   style={{
@@ -149,8 +180,20 @@ function Nascar() {
                 >
                   {item?.name}
                 </p>
-                <div key={i}>
-                  <NascarCard id={i} data={item} />
+                <div>
+                  {item?.race?.map((aa, index) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      country: item?.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={index}>
+                        <NascarCard id={index} data={payload} />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -175,8 +218,20 @@ function Nascar() {
                 >
                   {item?.name}
                 </p>
-                <div key={i}>
-                  <NascarCard id={i} data={item} />
+                <div>
+                  {item?.races?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      country: item?.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <NascarCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
 

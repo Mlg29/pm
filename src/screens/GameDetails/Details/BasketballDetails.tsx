@@ -110,7 +110,7 @@ const styles = {
 };
 
 function BasketballDetails({ selected, gameInfo, handleRoute, isMobile }) {
-  console.log({ gameInfo })
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <div

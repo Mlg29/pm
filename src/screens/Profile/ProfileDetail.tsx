@@ -63,11 +63,23 @@ function ProfileDetail() {
   const [password, setPassword] = useState("")
 
 
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
+
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
       setLoader(false);
+    }
+    else {
+      handleLogOut()
     }
   };
 
@@ -85,33 +97,33 @@ function ProfileDetail() {
 
 
   const handleDelete = async () => {
-    if(!password){
+    if (!password) {
       toast.error("Password is required", {
         position: "bottom-center",
       });
       return
     }
-   
+
     const payload = {
-     password: password,
+      password: password,
     }
     setLoader(true);
     var response = await dispatch(terminateAccount(payload))
-    if(terminateAccount.fulfilled.match(response)){
-        setLoader(false);
-        var getDeviceId = localStorage.getItem("deviceId")
-        localStorage.clear()
-        localStorage.setItem("deviceId", getDeviceId)
-        setDeleteData(false)
-        navigate("/home")
+    if (terminateAccount.fulfilled.match(response)) {
+      setLoader(false);
+      var getDeviceId = localStorage.getItem("deviceId")
+      localStorage.clear()
+      localStorage.setItem("deviceId", getDeviceId)
+      setDeleteData(false)
+      navigate("/home")
 
     }
     else {
-        var errMsg = response?.payload as string;
-        setLoader(false);
-        toast.error(errMsg, {
-          position: "bottom-center",
-        });
+      var errMsg = response?.payload as string;
+      setLoader(false);
+      toast.error(errMsg, {
+        position: "bottom-center",
+      });
     }
   }
 
@@ -259,14 +271,14 @@ function ProfileDetail() {
           </p>
 
           <div>
-          <TextInput
-                    label="Password"
-                    placeholder="Enter your password"
-                    value={password}
-                    type="password"
-                    onChangeText={(e) => setPassword(e) }
-                    required
-                />
+            <TextInput
+              label="Password"
+              placeholder="Enter your password"
+              value={password}
+              type="password"
+              onChangeText={(e) => setPassword(e)}
+              required
+            />
           </div>
 
           <div style={{ marginTop: "20px" }}>
@@ -278,7 +290,7 @@ function ProfileDetail() {
                   backgroundColor: COLORS.red,
                   color: COLORS.white,
                 }}
-               handlePress={deleteData ? () => handleDelete() : () => setDeleteData(true)}
+                handlePress={deleteData ? () => handleDelete() : () => setDeleteData(true)}
               />
             </div>
             <div style={{ width: "100%", margin: "20px 0px" }}>
@@ -304,7 +316,7 @@ function ProfileDetail() {
           setShowEdit(false);
         }}
       />
-         <ToastContainer />
+      <ToastContainer />
     </div>
   );
 }

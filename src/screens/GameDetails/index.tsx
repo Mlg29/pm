@@ -38,6 +38,7 @@ import CricketDetail from "./Details/CricketDetail";
 import FootballDetail from "./Details/FootballDetail";
 import TennisDetail from "./Details/TennisDetail";
 import Formula1Detail from "./Details/Formula1Detail";
+import BaseballDetails from "./Details/BaseBallDetails";
 
 const styles = {
   container: {
@@ -152,18 +153,6 @@ function GameDetails() {
 
 
 
-  const url =
-    gameType === "Tennis"
-      ? `${SportSportBaseUrl}/tennis`
-      : gameType === "Horse"
-        ? `${SportSportBaseUrl}/horse`
-        : `${SportSportBaseUrl}/football`;
-  const events =
-    gameType === "Tennis"
-      ? "tennisEventUpdate"
-      : gameType === "Horse"
-        ? "horseEventUpdate"
-        : "footballEventUpdate";
 
   useEffect(() => {
     setLoader(true);
@@ -171,33 +160,13 @@ function GameDetails() {
     setTimeout(() => {
       setLoader(false);
     }, 1000);
-    const socket = io(url) as any;
 
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
-    });
-
-    socket.on("connect_error", (err) => {
-      console.error("WebSocket connection error:", err);
-    });
-
-    socket.on(events, (message) => {
-      const mes = message;
-      if (mes.id === game?.id) {
-        setGameInfo(mes);
-      }
-    });
-
-    return () => {
-      socket.disconnect();
-    };
   }, []);
-
-
+  console.log({ gameInfo })
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
 
-    if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
+    if (gameInfo?.status === "Finished" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
       toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
       });
@@ -226,6 +195,8 @@ function GameDetails() {
           country: gameInfo?.country,
           localTeamName: gameInfo?.localTeam?.name,
           visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
+          raceName: gameInfo?.name,
+          sportName: gameInfo?.league,
           status: "Not Started",
           internalStatus: "UPCOMING",
           date: gameInfo?.formatted_date || gameInfo?.date,
@@ -408,6 +379,14 @@ function GameDetails() {
 
         {gameType === "Handball" && (
           <HandballDetail
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+        {gameType === "Baseball" && (
+          <BaseballDetails
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

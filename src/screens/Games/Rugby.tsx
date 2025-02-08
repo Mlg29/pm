@@ -15,6 +15,7 @@ import { LoadingState } from '../../components/LoadingState'
 
 function Rugby() {
   const [upcoming, setUpcoming] = useState<any>([])
+  const [finished, setFinished] = useState<any>([])
   const [Live, setLive] = useState<any>([])
   const loading = useAppSelector(AflStatusState) as any
   const dispatch = useAppDispatch() as any
@@ -26,8 +27,16 @@ function Rugby() {
       range: 'upcoming'
     }
 
+    const payloadFinished = {
+      range: 'finished'
+    }
+
     dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.shedules?.tournament)
+      setUpcoming(dd?.payload?.category)
+    })
+
+    dispatch(getAflFixtures(payloadFinished)).then((dd) => {
+      setFinished(dd?.payload?.category)
     })
 
     dispatch(getAflFixtureLive()).then((dd) => {
@@ -43,10 +52,16 @@ function Rugby() {
       name: 'Live'
     },
     {
-      id: 3,
+      id: 2,
       name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
     }
   ]
+
+  console.log({ Live, upcoming, finished })
 
   return (
     <div>
@@ -83,7 +98,7 @@ function Rugby() {
           })}
         </div>
       </div>
-      <LoadingState isLoading={loading}>
+      {/* <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
             <div>
@@ -101,9 +116,10 @@ function Rugby() {
                 {Live.name}
               </p>
               <div>
-                {Live?.match?.map((aa, i) => {
+                {Array.isArray(Live) && Live?.map((aa, i) => {
                   const payload = {
-                    league: Live?.name,
+                    league: aa?.name,
+                    leagueId: aa?.id,
                     ...aa
                   }
                   return (
@@ -138,7 +154,7 @@ function Rugby() {
                     {item?.week?.map((weekItem, i) => {
                       const { matches, name: leagueName } = weekItem
                       return matches?.map((matchInfo, matchIndex) => {
-                        if(matchInfo?.match) return (
+                        if (matchInfo?.match) return (
                           matchInfo?.match?.map((details, detailsIndex) => {
                             const payload = {
                               league: leagueName,
@@ -161,13 +177,13 @@ function Rugby() {
         ) : null}
 
         {upcoming?.category?.match?.length < 1 &&
-        Live?.category?.match?.length < 1 ? (
+          Live?.category?.match?.length < 1 ? (
           <EmptyState
             header='No Game Available for American Football Rugby'
             height='30vh'
           />
         ) : null}
-      </LoadingState>
+      </LoadingState> */}
     </div>
   )
 }

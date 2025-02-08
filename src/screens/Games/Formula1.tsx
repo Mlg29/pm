@@ -43,7 +43,7 @@ function Formula1() {
     })
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
 
-      setLive(dd?.payload)
+      setLive(dd?.payload?.scores?.categories)
     })
     dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
       setFinished(dd?.payload?.scores?.tournament)

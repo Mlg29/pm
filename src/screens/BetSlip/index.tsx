@@ -24,6 +24,8 @@ import {
   getNotifications,
   notificationState,
 } from "../../redux/slices/NotificationSlice";
+import arrowleft from "../../assets/images/arrow-left.svg"
+
 
 interface Log {
   date: string;
@@ -110,7 +112,14 @@ function BetSlip() {
 
   return (
     <div className="top-container">
+      <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
+        navigate(-1)
+      }}>
+        <img src={arrowleft} style={{ padding: "10px", background: COLORS.semiGray, borderRadius: 100 }} />
+
+      </div>
       <div style={{ ...styles.container }}>
+
         <h3>Bet Slip</h3>
         {isMobile && (
           <div>

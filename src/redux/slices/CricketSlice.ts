@@ -22,14 +22,25 @@ const initialState = {
 };
 
 interface payloadType {
-  eventType: string
+  range: string
   query?: string
 }
 
 export const getCricketFixtures = createAsyncThunk(
   "cricket/getCricketFixtures",
   async (payload: payloadType) => {
-    const buildUrl = (payload) => `${SportSportBaseUrl}/cricket/${payload.eventType}`
+    const buildUrl = (payload) => `${SportSportBaseUrl}/cricket/${payload.range}`
+    var response = await getRequest(buildUrl(payload));
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
+
+export const getCricketMatchFixtures = createAsyncThunk(
+  "cricket/getCricketMatchFixtures",
+  async (payload: payloadType) => {
+    const buildUrl = (payload) => `${SportSportBaseUrl}/cricket/matches?range=${payload.range}`
     var response = await getRequest(buildUrl(payload));
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
@@ -60,6 +71,19 @@ export const CricketSlice = createSlice({
       // state.error = action.error.message
     });
 
+    builder.addCase(getCricketMatchFixtures.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getCricketMatchFixtures.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.cricket = action.payload;
+        }
+      );
+    builder.addCase(getCricketMatchFixtures.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
   },
 });
 

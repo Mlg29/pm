@@ -6,7 +6,8 @@ import { io } from 'socket.io-client'
 import moment from 'moment'
 import {
   getCricketFixtures,
-  CricketStatusState
+  CricketStatusState,
+  getCricketMatchFixtures
 } from '../../redux/slices/CricketSlice'
 import Loader from '../../components/Loader'
 import { COLORS } from '../../utils/colors'
@@ -22,26 +23,34 @@ function Cricket() {
   const url = `${SportSportBaseUrl}/Cricket`
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
+  const [finished, setFinished] = useState<any>([])
   const loading = useAppSelector(CricketStatusState) as any
-  const [today, setToday] = useState<any>([])
-  const [Schedule, setSchedule] = useState<any>([])
 
   let createdDate = moment(new Date()).utc().format()
   let ScheduleDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
     const payloadLive = {
-      eventType: 'live'
+      range: 'live'
     }
-    const payloadSchedule = {
-      eventType: 'schedule'
+    const payloadUpcoming = {
+      range: 'upcoming'
     }
 
+    const payloadFinished = {
+      range: 'upcoming'
+    }
+
+
     dispatch(getCricketFixtures(payloadLive)).then((dd) => {
-      setToday(dd?.payload)
+      setLive(dd?.payload?.scores?.categories)
     })
-    dispatch(getCricketFixtures(payloadSchedule)).then((dd) => {
-      setSchedule(dd?.payload)
+    dispatch(getCricketMatchFixtures(payloadUpcoming)).then((dd) => {
+      setUpcoming(dd?.payload)
+    })
+
+    dispatch(getCricketMatchFixtures(payloadFinished)).then((dd) => {
+      setFinished(dd?.payload)
     })
 
     return
@@ -56,7 +65,11 @@ function Cricket() {
     },
     {
       id: 2,
-      name: 'Schedule'
+      name: 'Scheduled'
+    },
+    {
+      id: 2,
+      name: 'Finished'
     }
   ]
 
@@ -99,7 +112,7 @@ function Cricket() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {today?.map((item, i) => (
+            {live?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -116,9 +129,14 @@ function Cricket() {
                 </p>
                 <div>
                   {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
                     return (
                       <div key={i}>
-                        <CricketGameCard id={i} data={aa} />
+                        <CricketGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
@@ -128,9 +146,9 @@ function Cricket() {
           </>
         ) : null}
 
-        {selectedStatus === 'Schedule' ? (
+        {selectedStatus === 'Scheduled' ? (
           <>
-            {Schedule?.fixtures?.category?.map((item, i) => (
+            {upcoming?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -146,13 +164,63 @@ function Cricket() {
                   {item?.name}
                 </p>
                 <div>
-                  <CricketGameCard id={i} data={item} />
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <CricketGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             ))}
           </>
         ) : null}
-        {upcoming?.match?.length < 1 && today?.match?.length < 1 ? (
+
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finished?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <CricketGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : null}
+
+
+        {upcoming?.match?.length < 1 && live?.match?.length < 1 && finished?.match?.length < 1 ? (
           <EmptyState header='No Game Available for Cricket' height='30vh' />
         ) : null}
       </LoadingState>

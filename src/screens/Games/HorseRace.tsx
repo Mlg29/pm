@@ -29,13 +29,16 @@ function HorseRace() {
       range: 'finished'
     }
     dispatch(getHorseFixtures(null)).then((dd) => {
-      setLive(dd?.payload)
+
+      setLive(dd?.payload?.tournaments)
     })
     dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
-      setSchedule(dd?.payload)
+
+      setSchedule(dd?.payload?.tournaments)
     })
     dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+
+      setFinished(dd?.payload?.scores?.tournaments)
     })
 
     return
@@ -57,6 +60,7 @@ function HorseRace() {
       name: 'Finished'
     }
   ]
+
 
   return (
     <div>
@@ -118,7 +122,7 @@ function HorseRace() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {Live?.map((item, i) => (
+            {Array.isArray(Live) && Live?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{

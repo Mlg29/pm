@@ -54,8 +54,9 @@ const InviteFriend = () => {
     // setSelectedUser("");
     const response = await dispatch(getSingleUser(email));
     if (getSingleUser.fulfilled.match(response)) {
+      const user = await response?.payload?.filter(m => m.userName.toLowerCase().includes(email?.toLowerCase()) || m.email?.toLowerCase().includes(email?.toLowerCase()))
       setCheckLoader(false);
-      setUsers(response?.payload);
+      setUsers(user);
     } else {
       var errMsg = response?.payload as string;
       setCheckLoader(false);
@@ -122,7 +123,7 @@ const InviteFriend = () => {
         <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
           <TextInput
             label="Username or Email Address"
-            placeholder="Enter your friend email"
+            placeholder="Enter your friend username or email"
             required
             value={email}
             type="email"

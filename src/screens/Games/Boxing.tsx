@@ -49,23 +49,6 @@ function Boxing() {
 
 
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league = current?.name
-
-      if (!acc[league]) {
-        acc[league] = []
-      }
-
-      acc[league].push(current)
-
-      return acc
-    }, {})
-  }
-
-  const upcomingOutput = groupedByData(upcoming?.data)
-  const finishedOutput = groupedByData(finished?.data)
-
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
   const status = [

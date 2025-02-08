@@ -25,7 +25,7 @@ export const styles = {
     marginRight: 10,
     display: "flex",
     alignItems: "center",
-     width: "50%",
+    width: "50%",
   },
   box3: {
     display: "flex",
@@ -41,8 +41,6 @@ export const styles = {
 
 function HorseGameCard({ id, data }) {
   const navigate = useNavigate();
-
-
 
 
   return (
@@ -66,14 +64,14 @@ function HorseGameCard({ id, data }) {
       >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.datetime}
+            {data?.datetimeUtc}
           </p>
         </div>
-          <div style={styles.box2}>
-            
-            <p style={{ ...FONTS.body7 }}>{data?.name}</p>
-          </div>
-          <div
+        <div style={styles.box2}>
+
+          <p style={{ ...FONTS.body7 }}>{data?.name}</p>
+        </div>
+        <div
           style={{
             display: "flex",
             flexDirection: "column",

@@ -64,10 +64,10 @@ function CricketCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           {data?.name}
+            {data?.name || data?.league}
           </p>
-          <BiSolidCricketBall size={30} color={COLORS.primary}/>
-       
+          <BiSolidCricketBall size={30} color={COLORS.primary} />
+
           {/* <FaVolleyball size={30} color={COLORS.primary} /> */}
           <p
             style={{
@@ -76,7 +76,7 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.match?.localteam?.name}
+            {data?.localteam?.name}
           </p>
         </div>
         <div>
@@ -90,7 +90,7 @@ function CricketCard(props) {
           >
             {data?.localteam?.goals ? data?.localteam?.goals : 0} - {data?.awayteam?.goals ? data?.awayteam?.goals : 0}
           </h3> */}
-        
+
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
@@ -113,8 +113,8 @@ function CricketCard(props) {
           >
             ID: {data?.id}
           </p>
-          <BiSolidCricketBall size={30} color={COLORS.primary}/>
-       
+          <BiSolidCricketBall size={30} color={COLORS.primary} />
+
           <p
             style={{
               ...FONTS.body7,
@@ -122,7 +122,7 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.match?.awayteam?.name}
+            {data?.visitorteam?.name}
           </p>
         </div>
       </div>

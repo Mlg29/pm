@@ -39,11 +39,22 @@ function Deposit() {
   const [loaderD, setLoaderD] = useState(false);
   const [userData, setUserData] = useState(null);
 
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
 
   const fetchUserInfo = async () => {
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
+    }
+    else {
+      handleLogOut()
     }
   };
 

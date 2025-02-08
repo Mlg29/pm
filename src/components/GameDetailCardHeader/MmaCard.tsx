@@ -70,7 +70,7 @@ function MmaCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            {data?.name}
+            {data?.name || data?.type}
           </p>
           <SiUfc size={30} color={COLORS.primary} />
           <p
@@ -80,25 +80,25 @@ function MmaCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localteam?.name}
+            {data?.localTeam?.name}
           </p>
         </div>
         <div>
-        {
-            data?.localteam?.winner === "True" || data?.awayteam?.winner === "True" ?
-            <h3
-            style={{
-              ...FONTS.h7,
-              textAlign: "center",
-              margin: "10px 0px 0px 0px",
-              color: COLORS.green
-            }}
-          >
-           Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name}` : data?.awayteam?.winner === "True" ?`${data?.awayteam?.name}` : null}
-          </h3>
-          : null
+          {
+            data?.localTeam?.winner === "True" || data?.awayTeam?.winner === "True" ?
+              <h3
+                style={{
+                  ...FONTS.h7,
+                  textAlign: "center",
+                  margin: "10px 0px 0px 0px",
+                  color: COLORS.green
+                }}
+              >
+                Winner: {data?.localTeam?.winner === "True" ? `${data?.localTeam?.name}` : data?.awayTeam?.winner === "True" ? `${data?.awayTeam?.name}` : null}
+              </h3>
+              : null
           }
-         
+
           <p style={{ ...FONTS.body7, fontWeight: '600', marginTop: 5, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
           </p>
@@ -129,7 +129,7 @@ function MmaCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.awayteam?.name}
+            {data?.awayTeam?.name}
           </p>
         </div>
       </div>

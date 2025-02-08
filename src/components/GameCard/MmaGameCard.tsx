@@ -45,42 +45,42 @@ function MmaGameCard({ id, data }) {
 
   return (
     <div>
- 
 
-        <div
-      style={styles.container}
-      key={id}
-      onClick={() =>
-        navigate("/game-details", { state: { data: data, gameType: "Mma/Ufc" } })
-      }
-    >
-      <div style={styles.box1}>
-      <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-        ({data?.date})
-        </p>
-        <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-          {data?.status > 0 ? `${data?.status}'` : data?.status}
-        </p>
-      </div>
-      <div style={styles.box2}>
-        <p style={{ ...FONTS.body7 }}>{data?.localteam?.name}</p>
-        <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
-      </div>
-      <div style={styles.box3}>
-        {/* <GiSoccerField /> */}
-        <div style={{ marginLeft: 10 }}>
-        {/* <p style={{ ...FONTS.body7,color: COLORS.dimRed }}></p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}></p> */}
-            <p style={{ ...FONTS.body7,color: data?.localteam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.localteam?.winner === "True" ? `Winner` : "-"}</p>
-        <p style={{ ...FONTS.body7,color: data?.localteam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.awayteam?.winner === "True" ? `Winner` : "-"}</p>
-        
 
+      <div
+        style={styles.container}
+        key={id}
+        onClick={() =>
+          navigate("/game-details", { state: { data: data, gameType: "Mma/Ufc" } })
+        }
+      >
+        <div style={styles.box1}>
+          <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+            ({data?.date})
+          </p>
+          <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
+            {data?.status}
+          </p>
         </div>
+        <div style={styles.box2}>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.name}</p>
+        </div>
+        <div style={styles.box3}>
+          {/* <GiSoccerField /> */}
+          <div style={{ marginLeft: 10 }}>
+            {/* <p style={{ ...FONTS.body7,color: COLORS.dimRed }}></p>
+        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}></p> */}
+            <p style={{ ...FONTS.body7, color: data?.localTeam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.localTeam?.winner === "True" ? `Winner` : "-"}</p>
+            <p style={{ ...FONTS.body7, color: data?.localTeam?.winner ? COLORS.green : COLORS.dimRed }}>{data?.awayTeam?.winner === "True" ? `Winner` : "-"}</p>
+
+
+          </div>
+        </div>
+
       </div>
- 
     </div>
-    </div>
-  
+
   );
 }
 

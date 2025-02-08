@@ -28,6 +28,7 @@ import HandballCard from "../../components/GameDetailCardHeader/HandballCard";
 import AflCard from "../../components/GameDetailCardHeader/AflCard";
 import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
 import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
+import arrowleft from "../../assets/images/arrow-left.svg"
 
 const styles = {
   div: {
@@ -98,7 +99,12 @@ function BetDetail() {
       {sportType === "FOOTBALL" && (
         <div>
           {isMobile && <Header text="Bet Details" />}
+          <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
+            navigate(-1)
+          }}>
+            <img src={arrowleft} style={{ padding: "10px", background: COLORS.semiGray, borderRadius: 100 }} />
 
+          </div>
           <h3
             style={{
               ...FONTS.h5,
@@ -160,7 +166,7 @@ function BetDetail() {
               <h3 style={{ ...FONTS.h6 }}>{betData?.id}</h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
-              <p style={{ ...FONTS.body7 }}>Date & Time</p>
+              <p style={{ ...FONTS.body7 }}>Bet Created On</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {moment(betData?.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
               </h3>
