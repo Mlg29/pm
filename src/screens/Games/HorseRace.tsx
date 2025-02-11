@@ -30,15 +30,15 @@ function HorseRace() {
     }
     dispatch(getHorseFixtures(null)).then((dd) => {
 
-      setLive(dd?.payload?.tournaments)
+      setLive(dd?.payload?.tournaments || [])
     })
     dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
 
-      setSchedule(dd?.payload?.tournaments)
+      setSchedule(dd?.payload?.tournaments || [])
     })
     dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
 
-      setFinished(dd?.payload?.scores?.tournaments)
+      setFinished(dd?.payload?.scores?.tournaments || [])
     })
 
     return
@@ -155,6 +155,10 @@ function HorseRace() {
                 </div>
               </div>
             ))}
+
+            {Live?.length < 1 ? (
+              <EmptyState header='No Game Available for Horse Race' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -193,6 +197,10 @@ function HorseRace() {
                 </div>
               </div>
             ))}
+
+            {Schedule?.length < 1 ? (
+              <EmptyState header='No Game Available for Horse Race' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -231,12 +239,14 @@ function HorseRace() {
                 </div>
               </div>
             ))}
+
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Horse Race' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
-        {Schedule?.length < 1 && Live?.length < 1 && finished?.length < 1 ? (
-          <EmptyState header='No Game Available for Horse Race' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

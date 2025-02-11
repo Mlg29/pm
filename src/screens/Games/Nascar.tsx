@@ -38,34 +38,34 @@ function Nascar() {
 
     dispatch(getNascaFixtures(payloadLive)).then((dd) => {
 
-      const tp = dd?.payload?.scores?.tournament?.map(rr => {
+      const tp = dd?.payload?.category?.map(rr => {
         return {
           ...rr,
           race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
         }
       })
-      setLive(tp);
+      setLive(tp || []);
     });
 
     dispatch(getNascaMatchFixtures(payloadUpcoming)).then((dd) => {
 
-      const tp = dd?.payload?.scores?.tournament?.map(rr => {
+      const tp = dd?.payload?.category?.map(rr => {
         return {
           ...rr,
           race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
         }
       })
-      setUpcoming(tp);
+      setUpcoming(tp || []);
     });
     dispatch(getNascaMatchFixtures(payloadFinished)).then((dd) => {
 
-      const tp = dd?.payload?.scores?.tournament?.map(rr => {
+      const tp = dd?.payload?.category?.map(rr => {
         return {
           ...rr,
-          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+          race: Array.isArray(rr?.races) ? rr?.races : [rr?.races]
         }
       })
-      setFinished(tp);
+      setFinished(tp || []);
     });
   }, [])
 
@@ -87,6 +87,8 @@ function Nascar() {
       name: 'Finished'
     }
   ]
+
+
 
   return (
     <div>
@@ -160,6 +162,10 @@ function Nascar() {
               </div>
 
             })}
+
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Nascar' height='30vh' />
+            ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
@@ -198,6 +204,10 @@ function Nascar() {
               </div>
 
             })}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Nascar' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -219,7 +229,7 @@ function Nascar() {
                   {item?.name}
                 </p>
                 <div>
-                  {item?.races?.map((aa, i) => {
+                  {item?.race?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
                       leagueId: item?.id,
@@ -236,13 +246,13 @@ function Nascar() {
               </div>
 
             })}
-
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Nascar' height='30vh' />
+            ) : null}
           </>
         )
           : null}
-        {live?.length < 1 && finished?.length < 1 && upcoming?.length < 1 ? (
-          <EmptyState header='No Game Available for Formula1' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

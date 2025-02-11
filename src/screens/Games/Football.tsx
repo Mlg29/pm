@@ -40,10 +40,10 @@ function Football() {
       setFinished(dd?.payload || [])
     })
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-      setTomorrow(dd?.payload)
+      setTomorrow(dd?.payload || [])
     })
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+      setUpcoming(dd?.payload || [])
     })
   }, [dispatch])
 
@@ -140,6 +140,10 @@ function Football() {
                 </div>
               )
             })}
+
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Football' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -180,6 +184,10 @@ function Football() {
                 </div>
               )
             })}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Football' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -219,6 +227,10 @@ function Football() {
                 </div>
               )
             })}
+
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Football' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -255,11 +267,13 @@ function Football() {
                 </div>
               </div>
             ))}
+
+            {tomorrow?.length < 1 ? (
+              <EmptyState header='No Game Available for Football' height='30vh' />
+            ) : null}
           </>
         ) : null}
-        {live?.length < 1 && upcoming?.length < 1 && tomorrow?.length < 1 ? (
-          <EmptyState header='No Game Available for Football' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

@@ -39,14 +39,14 @@ function Formula1() {
     }
 
     dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.scores?.tournament)
+      setUpcoming(dd?.payload?.scores?.tournament || [])
     })
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
 
-      setLive(dd?.payload?.scores?.categories)
+      setLive(dd?.payload?.scores?.categories || [])
     })
     dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.scores?.tournament)
+      setFinished(dd?.payload?.scores?.tournament || [])
     })
   }, [])
 
@@ -127,6 +127,10 @@ function Formula1() {
               </div>
 
             })}
+
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Formula1' height='30vh' />
+            ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
@@ -152,6 +156,9 @@ function Formula1() {
               </div>
 
             })}
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Formula1' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -179,12 +186,13 @@ function Formula1() {
 
             })}
 
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Formula1' height='30vh' />
+            ) : null}
           </>
         )
           : null}
-        {live?.length < 1 && finished?.length < 1 && upcoming?.length < 1 ? (
-          <EmptyState header='No Game Available for Formula1' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

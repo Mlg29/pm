@@ -34,13 +34,13 @@ function Basketball() {
     }
 
     dispatch(getBasketballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+      setUpcoming(dd?.payload || [])
     })
     dispatch(getBasketballFixtures(null)).then((dd) => {
-      setLive(dd?.payload)
+      setLive(dd?.payload || [])
     })
     dispatch(getBasketballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+      setFinished(dd?.payload || [])
     })
   }, [dispatch])
 
@@ -131,6 +131,9 @@ function Basketball() {
                 </div>
               </div>
             ))}
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Basketball' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -169,6 +172,10 @@ function Basketball() {
                 </div>
               </div>
             })}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Basketball' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -224,12 +231,14 @@ function Basketball() {
                 </div>
               </div>
             ))}
+
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Basketball' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
-        {live?.length < 1 && upcoming?.length < 1 && finished?.length < 1 ? (
-          <EmptyState header='No Game Available for Basketball' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div >
   )

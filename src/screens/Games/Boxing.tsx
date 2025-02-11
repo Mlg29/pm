@@ -35,15 +35,15 @@ function Boxing() {
     }
 
     dispatch(getBoxingFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.scores?.categories)
+      setLive(dd?.payload?.scores?.categories || [])
     })
 
     dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.scores?.categories)
+      setUpcoming(dd?.payload?.scores?.categories || [])
     })
 
     dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.scores?.categories)
+      setFinished(dd?.payload?.scores?.categories || [])
     })
   }, [])
 
@@ -137,6 +137,10 @@ function Boxing() {
                 </div>
               )
             )}
+
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Boxing' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -175,6 +179,10 @@ function Boxing() {
                 </div>
               )
             )}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Boxing' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -213,11 +221,13 @@ function Boxing() {
                 </div>
               )
             )}
+
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Boxing' height='30vh' />
+            ) : null}
           </>
         ) : null}
-        {upcoming?.length < 1 && finished?.length < 1 ? (
-          <EmptyState header='No Game Available for Boxing' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

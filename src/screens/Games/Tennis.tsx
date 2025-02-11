@@ -29,20 +29,13 @@ function Tennis() {
       range: 'upcoming'
     }
     dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.scores?.category)
+      setFinished(dd?.payload?.category || [])
     })
     dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
-      const pp = dd?.payload?.category?.map((jj, index) => {
-        return {
-          id: index,
-          name: "Tennis" + index,
-          match: jj?.match
-        }
-      })
-      setScheduled(pp)
+      setScheduled(dd?.payload?.category || [])
     })
     dispatch(getTennisFixtures(null)).then((dd) => {
-      setLive(dd?.payload)
+      setLive(dd?.payload?.category || [])
     })
   }, [])
 
@@ -63,6 +56,7 @@ function Tennis() {
       name: 'Finished'
     }
   ]
+
 
   return (
     <div>
@@ -122,6 +116,7 @@ function Tennis() {
                     const payload = {
                       league: league.name,
                       leagueId: league.id,
+                      country: league.city,
                       ...aa
                     }
                     return (
@@ -133,6 +128,10 @@ function Tennis() {
                 </div>
               </div>
             ))}
+
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Tennis' height='30vh' />
+            ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
@@ -157,6 +156,7 @@ function Tennis() {
                     const payload = {
                       league: league?.name,
                       leagueId: league?.id,
+                      country: league.city,
                       ...aa
                     }
                     return (
@@ -168,6 +168,10 @@ function Tennis() {
                 </div>
               </div>
             })}
+
+            {scheduled?.length < 1 ? (
+              <EmptyState header='No Game Available for Tennis' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -193,6 +197,7 @@ function Tennis() {
                     const payload = {
                       league: league.name,
                       leagueId: league.id,
+                      country: league.city,
                       ...aa
                     }
                     return (
@@ -204,12 +209,14 @@ function Tennis() {
                 </div>
               </div>
             ))}
+
+            {Finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Tennis' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
-        {live?.category?.length < 1 && Finished?.category?.length < 1 ? (
-          <EmptyState header='No Game Available for Tennis' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

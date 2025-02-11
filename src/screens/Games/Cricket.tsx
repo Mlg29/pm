@@ -43,14 +43,14 @@ function Cricket() {
 
 
     dispatch(getCricketFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.scores?.categories)
+      setLive(dd?.payload?.scores?.categories || [])
     })
     dispatch(getCricketMatchFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+      setUpcoming(dd?.payload || [])
     })
 
     dispatch(getCricketMatchFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+      setFinished(dd?.payload || [])
     })
 
     return
@@ -143,6 +143,9 @@ function Cricket() {
                 </div>
               </div>
             ))}
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Cricket' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -179,6 +182,9 @@ function Cricket() {
                 </div>
               </div>
             ))}
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Cricket' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -216,13 +222,15 @@ function Cricket() {
                 </div>
               </div>
             ))}
+
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Cricket' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
 
-        {upcoming?.match?.length < 1 && live?.match?.length < 1 && finished?.match?.length < 1 ? (
-          <EmptyState header='No Game Available for Cricket' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

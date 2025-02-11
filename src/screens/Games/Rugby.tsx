@@ -32,15 +32,15 @@ function Rugby() {
     }
 
     dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.category)
+      setUpcoming(dd?.payload?.category || [])
     })
 
     dispatch(getAflFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.category)
+      setFinished(dd?.payload?.category || [])
     })
 
     dispatch(getAflFixtureLive()).then((dd) => {
-      setLive(dd?.payload?.scores?.category)
+      setLive(dd?.payload?.category || [])
     })
   }, [])
 
@@ -61,7 +61,6 @@ function Rugby() {
     }
   ]
 
-  console.log({ Live, upcoming, finished })
 
   return (
     <div>
@@ -98,10 +97,10 @@ function Rugby() {
           })}
         </div>
       </div>
-      {/* <LoadingState isLoading={loading}>
+      <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            <div>
+            {/* <div>
               <p
                 style={{
                   ...FONTS.body7,
@@ -129,7 +128,15 @@ function Rugby() {
                   )
                 })}
               </div>
-            </div>
+            </div> */}
+
+            {
+              Live?.length < 1 ? (
+                <EmptyState
+                  header='No Game Available for American Football Rugby'
+                  height='30vh'
+                />
+              ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
@@ -173,17 +180,70 @@ function Rugby() {
                 </div>
               )
             })}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState
+                header='No Game Available for American Football Rugby'
+                height='30vh'
+              />
+            ) : null}
           </>
         ) : null}
 
-        {upcoming?.category?.match?.length < 1 &&
-          Live?.category?.match?.length < 1 ? (
-          <EmptyState
-            header='No Game Available for American Football Rugby'
-            height='30vh'
-          />
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finished?.map((item, i) => {
+              return (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.week?.map((weekItem, i) => {
+                      const { matches, name: leagueName } = weekItem
+                      return matches?.map((matchInfo, matchIndex) => {
+                        if (matchInfo?.match) return (
+                          matchInfo?.match?.map((details, detailsIndex) => {
+                            const payload = {
+                              league: leagueName,
+                              ...details
+                            }
+                            return (
+                              <div key={`${i}-${matchIndex}-${detailsIndex}`}>
+                                <AflGameCard id={matchIndex} data={payload} />
+                              </div>
+                            )
+                          })
+                        )
+                      })
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+
+            {finished?.length < 1 ? (
+              <EmptyState
+                header='No Game Available for American Football Rugby'
+                height='30vh'
+              />
+            ) : null}
+          </>
         ) : null}
-      </LoadingState> */}
+
+
+      </LoadingState>
     </div>
   )
 }

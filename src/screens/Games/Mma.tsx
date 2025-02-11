@@ -36,15 +36,15 @@ function Mma() {
     }
 
     dispatch(getMmaFixtures(null)).then((dd) => {
-      setLive(dd?.payload)
+      setLive(dd?.payload || [])
     })
 
     dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+      setUpcoming(dd?.payload || [])
     })
 
     dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+      setFinished(dd?.payload || [])
     })
   }, [])
 
@@ -135,6 +135,10 @@ function Mma() {
                 </div>
               </div>
             ))}
+
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -171,6 +175,9 @@ function Mma() {
                 </div>
               </div>
             ))}
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
+            ) : null}
           </>
         ) : null}
         {selectedStatus === 'Finished' ? (
@@ -206,11 +213,14 @@ function Mma() {
                 </div>
               </div>
             ))}
+
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
+            ) : null}
+
           </>
         ) : null}
-        {upcoming?.length < 1 && finished?.length < 1 ? (
-          <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )

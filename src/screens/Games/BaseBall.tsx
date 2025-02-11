@@ -31,13 +31,13 @@ function Baseball() {
       range: 'd-1'
     }
     dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories)
+      setLive(dd?.payload?.categories || [])
     })
     dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+      setUpcoming(dd?.payload || [])
     })
     dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
+      setFinished(dd?.payload || [])
     })
   }, [dispatch])
 
@@ -127,6 +127,9 @@ function Baseball() {
                 </div>
               </div>
             ))}
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -181,6 +184,10 @@ function Baseball() {
                 </div>
               </div>
             ))}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
@@ -217,12 +224,14 @@ function Baseball() {
                 </div>
               </div>
             ))}
+
+            {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            ) : null}
           </>
         ) : null}
 
-        {live?.length < 1 && upcoming?.length < 1 && finished?.length < 1 ? (
-          <EmptyState header='No Game Available for Baseball' height='30vh' />
-        ) : null}
+
       </LoadingState>
     </div>
   )
