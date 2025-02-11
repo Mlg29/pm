@@ -80,8 +80,11 @@ function OpenBet() {
       amount: amount,
     };
 
+
+
     await dispatch(getFxRate(rateData)).then((pp) => {
       const expectedAmount = pp?.payload?.data?.rate * amount
+
       setExchangeRates((prevRates) => ({
         ...prevRates,
         [index]: expectedAmount?.toFixed(2),
@@ -165,23 +168,12 @@ function OpenBet() {
     return navigate("/options", { state: { gameType: gameType } });
   };
 
-  const handleAdjust = async (data) => {
-    const rateData = {
-      sourceCurrency: data?.betCurrency === "USD" ? "USD" : "NGN",
-      destinationCurrency: data?.betCurrency === "USD" ? "NGN" : "USD",
-      amount: data?.betAmount
-    }
-    const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
-      return pp?.payload?.data
-    })
-
-    const rate = newAmount?.rate * parseInt(data?.betAmount)
-    const rateByCurrency = data?.betCurrency === userData?.defaultCurrency ? data?.betAmount : rate
+  const handleAdjust = async (data, exAmt) => {
 
     const payload = {
       invitedUser: null,
       initialData: data,
-      amount: rateByCurrency,
+      amount: exAmt,
       opponentUsername: data?.user?.userName,
       isAdjustBet: true,
       betId: data?.id,
@@ -371,7 +363,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -491,7 +483,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -613,7 +605,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -733,7 +725,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -853,7 +845,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -972,7 +964,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1092,7 +1084,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1216,7 +1208,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1336,7 +1328,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1456,7 +1448,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1576,7 +1568,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1696,7 +1688,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1815,7 +1807,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{
@@ -1936,7 +1928,7 @@ function OpenBet() {
                             padding: 10,
                             borderRadius: 10,
                           }}
-                          onClick={() => handleAdjust(data)}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
                         >
                           <p
                             style={{

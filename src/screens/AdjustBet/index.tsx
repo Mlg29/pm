@@ -38,6 +38,7 @@ const AdjustBet = () => {
   const userFee = JSON.parse(localStorage.getItem("inviteeInfo"))
   const [allowCurrency, setAllowCurrency] = useState(false)
   const [loader, setLoader] = useState(false)
+  const [exLoader, setExLoader] = useState(false)
   const userData = useAppSelector(userState)
   const dispatch = useAppDispatch()
 
@@ -46,10 +47,14 @@ const AdjustBet = () => {
     const rateData = {
       sourceCurrency: userData?.defaultCurrency === "USD" ? "USD" : "NGN",
       destinationCurrency: userData?.defaultCurrency === "USD" ? "NGN" : "USD",
-      amount: amt
+      amount: parseFloat(amt)
     }
+
+    setExLoader(true)
     const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
       const expectedAmount = pp?.payload?.data?.rate * amt
+
+      setExLoader(false)
       return expectedAmount
     })
 
@@ -72,10 +77,13 @@ const AdjustBet = () => {
     const payload = {
       invitedUser: null,
       amount: userFee?.amount,
+      initialData: userFee?.initialData,
       opponentUsername: userFee?.opponentUsername,
       adjustedBetAmount: parseFloat(amount),
+      adjustedBetAmountInExchange: parseFloat(exAmount),
       isAdjustBet: true,
       betId: userFee?.betId,
+      betCurrency: userFee?.initialData?.betCurrency,
       allowOtherCurrency: allowCurrency
     };
 
@@ -96,6 +104,7 @@ const AdjustBet = () => {
     handleExRate(result)
 
   }
+
 
 
   if (loader) {
@@ -120,12 +129,12 @@ const AdjustBet = () => {
 
   return (
     <div className="top-container">
-      <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
+      {/* <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
         navigate(-1)
       }}>
         <img src={arrowleft} style={{ padding: "10px", background: COLORS.semiGray, borderRadius: 100 }} />
 
-      </div>
+      </div> */}
       <Header text="Adjust Bet Stake" />
 
       <p style={{ ...FONTS.body6, margin: "0rem 0px" }}>
@@ -168,12 +177,22 @@ const AdjustBet = () => {
           inputStyle={{ ...styles.inputs }}
           placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
         />
+
         {
-          exAmount ?
+          exLoader ?
             <div style={{ padding: 2, display: 'flex', marginTop: -30, justifyContent: 'center', alignItems: 'center' }}>
-              <p style={{ textAlign: 'center' }}>{userData?.defaultCurrency === "USD" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : null}</p>
+              <p style={{ textAlign: 'center' }}>Loading...</p>
             </div>
-            : null
+            :
+            <div>
+              {
+                exAmount ?
+                  <div style={{ padding: 2, display: 'flex', marginTop: -30, justifyContent: 'center', alignItems: 'center' }}>
+                    <p style={{ textAlign: 'center' }}>{userData?.defaultCurrency === "USD" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : null}</p>
+                  </div>
+                  : null
+              }
+            </div>
         }
       </div>
 

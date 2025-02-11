@@ -3,6 +3,8 @@ import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import noLogo from "../../assets/images/no.jpg";
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../redux/hooks";
+import { getLogo } from "../../redux/slices/FootballSlice";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -43,31 +45,26 @@ function GameDetailCardHeader(props: any) {
   const { propStyle, data } = props;
   const [homeLogo, setHomeLogo] = useState(null)
   const [awayLogo, setAwayLogo] = useState(null)
+  const dispatch = useAppDispatch() as any
 
-  const transformUrl = (url) => {
-    const SportSportBaseUrl = "http://data2.goalserve.com:8084";
-    return url.replace(SportSportBaseUrl, "/api/");
-  };
 
-  const fetchLogo = async (url, url2) => {
-    const transformedUrl = transformUrl(url);
-    const transformedUrl2 = transformUrl(url2);
-    await fetch(transformedUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        setHomeLogo(data[0]?.base64)
-      });
-    await fetch(transformedUrl2)
-      .then((response) => response.json())
-      .then((data) => {
-        setAwayLogo(data[0]?.base64)
-      });
-  }
+  console.log({ data })
 
   useEffect(() => {
-    fetchLogo(data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo)
+    const getLogos = () => {
+      const payload = {
+        teamId: data?.localTeam?.teamId
+      }
+      dispatch(getLogo(payload)).then(pp => {
+        console.log({ pp })
+        //setHomeLogo(pp)
+      })
+    }
 
-  }, [data?.localTeam?.teamLogo, data?.visitorTeam?.teamLogo])
+    getLogos()
+
+
+  }, [data?.localTeam?.teamId, data?.visitorTeam?.teamId])
 
 
   return (

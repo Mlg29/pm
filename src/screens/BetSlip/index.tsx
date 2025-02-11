@@ -62,6 +62,17 @@ function BetSlip() {
     });
   }, [active]);
 
+
+
+  const getAllBetIds = betList?.map(dd => {
+    return {
+      betId: dd?.id,
+      outcome: dd?.prediction
+    }
+  })
+
+  console.log(getAllBetIds?.length)
+
   const groupByDate = (data) => {
     return data?.reduce((acc, item) => {
       const date = moment(item?.createdAt).format("DD-MMM-YYYY");

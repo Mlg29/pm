@@ -83,7 +83,7 @@ function WalletPin() {
     const adjustPayload = {
       betId: userFee?.betId,
       // userId: userData?.id,
-      requestedAmount: parseFloat(userFee?.adjustedBetAmount),
+      requestedAmount: userFee?.betCurrency === "USD" ? parseFloat(userFee?.adjustedBetAmountInExchange) : parseFloat(userFee?.adjustedBetAmount),
       requestedPrediction: getUserBet?.userType,
 
     }
@@ -99,7 +99,7 @@ function WalletPin() {
       transactionPin: otp
     }
 
-    console.log({ payload })
+
 
     setLoader(true);
 

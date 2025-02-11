@@ -72,20 +72,20 @@ function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const LargScreen = ({ children }: any) => {
     const isLargeScreen = useMediaQuery({ minWidth: 1551 });
-    return isLargeScreen ? <div style={{marginTop: 150}}>{children}</div>: null;
+    return isLargeScreen ? <div style={{ marginTop: 150 }}>{children}</div> : null;
   };
   const Desktop = ({ children }: any) => {
     const isDesktop = useMediaQuery({ minWidth: 992, maxWidth: 1550 });
-    return isDesktop ? <div style={{marginTop: 150}}>{children}</div> : null;
+    return isDesktop ? <div style={{ marginTop: 150 }}>{children}</div> : null;
   };
   const Tablet = ({ children }: any) => {
     const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
-    return isTablet ? <div style={{marginTop: 150}}>{children}</div> : null;
+    return isTablet ? <div style={{ marginTop: 150 }}>{children}</div> : null;
   };
 
   const handleLeague = (name) => {
     navigate("/league", {
-      state: {data: name}
+      state: { data: name }
     })
   }
 
@@ -96,7 +96,7 @@ function DashboardLayout({ children }) {
         <div style={{ ...styles.container }}>
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
+              <h3 style={{ ...FONTS.h6 }}>Top Leagues</h3>
               {Leagues?.map((data: any, i) => {
                 return (
                   <div key={i} onClick={() => handleLeague(data?.name)}>
@@ -142,7 +142,7 @@ function DashboardLayout({ children }) {
         <div style={{ ...styles.containerDes }}>
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>Top Leagus</h3>
+              <h3 style={{ ...FONTS.h6 }}>Top Leagues</h3>
               {Leagues?.map((data: any, i) => {
                 return (
                   <div key={i} onClick={() => handleLeague(data?.name)}>
@@ -176,7 +176,7 @@ function DashboardLayout({ children }) {
         <div style={{ ...styles.containerTab }}>
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h7 }}>Top Leagus</h3>
+              <h3 style={{ ...FONTS.h7 }}>Top Leagues</h3>
               {Leagues?.map((data: any, i) => {
                 return (
                   <div key={i} onClick={() => handleLeague(data?.name)}>

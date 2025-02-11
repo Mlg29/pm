@@ -67,6 +67,8 @@ export const getStat = createAsyncThunk("football/getStat", async (payload: any)
   }
 });
 
+
+
 export const getMatchStat = createAsyncThunk("football/getMatchStat", async (payload: any) => {
   var response = await getRequest(`${SportSportBaseUrl}/soccer/match-stats?matchId=${payload.matchId}&leagueId=${payload.leagueId}`);
   if (response?.status === 200 || response?.status === 201) {
@@ -114,6 +116,7 @@ export const FootballSlice = createSlice({
         getLogo.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
+
 
         }
       );

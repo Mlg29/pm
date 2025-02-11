@@ -98,7 +98,7 @@ function BetDetail() {
     <div className="top-container">
       {sportType === "FOOTBALL" && (
         <div>
-          {isMobile && <Header text="Bet Details" />}
+          {/* {isMobile && <Header text="Bet Details" />} */}
           <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
             navigate(-1)
           }}>

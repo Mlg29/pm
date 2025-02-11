@@ -33,6 +33,7 @@ import HandballCard from "../../components/GameDetailCardHeader/HandballCard";
 import AflCard from "../../components/GameDetailCardHeader/AflCard";
 import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
 import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
+import { getFxRate } from "../../redux/slices/MiscSlice";
 
 const styles = {
   inputs: {
@@ -81,8 +82,27 @@ const BetAdjust = () => {
   const [userData, setUserData] = useState(null);
   const events = betData?.sportEvent;
   const sportEvents = events;
+  const [exAmount, setExAmount] = useState<any>("");
 
   const user = betInfo?.bet?.userId === userData?.id;
+
+  console.log({ betInfo, betData })
+
+  const handleExRate = async () => {
+    const rateData = {
+      sourceCurrency: betInfo?.bet?.betCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: betInfo?.bet?.betCurrency === "USD" ? "NGN" : "USD",
+      amount: betInfo?.requestedAmount
+    }
+    const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
+      const expectedAmount = pp?.payload?.data?.rate * betInfo?.requestedAmount
+      return expectedAmount
+    })
+
+    setExAmount(newAmount)
+
+
+  };
 
   const handleLogOut = () => {
     var getDeviceId = localStorage.getItem("deviceId")
@@ -112,6 +132,7 @@ const BetAdjust = () => {
       });
     });
     fetchUserInfo();
+    handleExRate()
   }, [id]);
 
   const decideOnBet = async (status) => {
@@ -198,7 +219,7 @@ const BetAdjust = () => {
                 )}
               </p>
               <h3 style={{ ...FONTS.h7, textAlign: "center" }}>
-                {formatCurrency(betData?.betAmount)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount)}
               </h3>
             </div>
 
@@ -285,7 +306,7 @@ const BetAdjust = () => {
         <div style={{ ...styles.cardDiv }}>
           <p style={{ ...FONTS.body7, paddingBottom: 4 }}>Adjusted Stake</p>
           <h3 style={{ ...FONTS.h6 }}>
-            ₦ {formatCurrency(betInfo?.requestedAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(exAmount)}
           </h3>
         </div>
         <div style={{ ...styles.cardDiv }}>
