@@ -7,12 +7,13 @@ import { useNavigate } from "react-router-dom";
 function NotificationCard(props: any) {
   const navigate = useNavigate();
   const { header, message, date, showBtn, data, handleRead } = props;
+
   return (
     <div style={{ ...styles.container }}>
       <div
         style={{ cursor: "pointer" }}
-       // onClick={() => navigate("/challenge-detail")}
-        onClick={() => data?.status === "READ" ? () => {} : handleRead(data?.id)}
+        // onClick={() => navigate("/challenge-detail")}
+        onClick={() => data?.status === "READ" ? () => { } : handleRead(data?.id)}
       >
         <p style={{ ...FONTS.body7 }}>
           {moment(data?.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
@@ -32,13 +33,13 @@ function NotificationCard(props: any) {
       </div>
       : null
     } */}
-   {
-    data?.type === "BET_ADJUSTED_BR" ?
-    <div style={{cursor: "pointer", marginTop: 10}}>
-    <p style={{...FONTS.body7, color: COLORS.orange, textDecoration: 'underline'}} onClick={() => navigate(`/bet-adjust?${data?.content?.adjustmentId}`)}>View Detail</p>
-  </div>
-  : null
-   }
+      {
+        data?.type === "BET_ADJUSTED_BR" ?
+          <div style={{ cursor: "pointer", marginTop: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.orange, textDecoration: 'underline' }} onClick={() => navigate(`/bet-adjust?${data?.content?.adjustmentId}`)}>View Detail</p>
+          </div>
+          : null
+      }
     </div>
   );
 }

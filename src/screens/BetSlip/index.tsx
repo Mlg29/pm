@@ -104,6 +104,8 @@ function BetSlip() {
 
   const groupedData = groupByDate(betList);
 
+  console.log({ betList })
+
   if (loader) {
     return (
       <div

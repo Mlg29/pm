@@ -19,7 +19,7 @@ function NotificationScreen() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [loader, setLoader] = useState(false)
 
- // console.log({notifications})
+  // console.log({notifications})
 
 
   const getNotification = async () => {
@@ -35,7 +35,7 @@ function NotificationScreen() {
     }
     setUpdateLoader(true);
     var response = await dispatch(updateNotifications(payload))
-    if(updateNotifications.fulfilled.match(response)){
+    if (updateNotifications.fulfilled.match(response)) {
 
       setUpdateLoader(false);
       getNotification()
@@ -82,42 +82,42 @@ function NotificationScreen() {
   }
 
   return (
-    <div className="top-container" style={{backgroundColor: 'transparent'}}>
-    {
-      !isMobile && <DesktopBackButton />
-    }
-    <div style={{backgroundColor: 'white', padding: 16}}>
-         <Header text="Notifications" />
-
-      {/* <Header text="Notifications" /> */}
+    <div className="top-container" style={{ backgroundColor: 'transparent' }}>
       {
-        updateLoader && <div style={{height: 30}}>
-          <Loader />
-        </div>
+        !isMobile && <DesktopBackButton />
       }
-      <div style={{ margin: "20px 0px 0px 0px" }}>
+      <div style={{ backgroundColor: 'white', padding: 16 }}>
+        <Header text="Notifications" />
+
+        {/* <Header text="Notifications" /> */}
         {
-          notifications?.map((data, i) => {
-            return <div key={i}>
-                 <NotificationCard
-                    data={data}
-                    handleRead={(id) => markAsRead(id)}
+          updateLoader && <div style={{ height: 30 }}>
+            <Loader />
+          </div>
+        }
+        <div style={{ margin: "20px 0px 0px 0px" }}>
+          {
+            notifications?.map((data, i) => {
+              return <div key={i}>
+                <NotificationCard
+                  data={data}
+                  handleRead={(id) => markAsRead(id)}
+                />
+              </div>
+            })
+          }
+          {
+            notifications?.length < 1 && <div style={{ marginTop: "-3rem" }}>
+              <EmptyState
+                header={"No Notification Available"}
               />
             </div>
-          }) 
-        }
-       {
-          notifications?.length < 1 && <div style={{marginTop: "-3rem"}}>
-            <EmptyState 
-            header={"No Notification Available"}
-          />
-          </div>
 
-        }
+          }
+        </div>
+
+        <ToastContainer />
       </div>
-
-      <ToastContainer />
-    </div>
     </div>
   );
 }

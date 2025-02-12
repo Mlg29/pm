@@ -162,12 +162,14 @@ function Deposit() {
           value={value}
           onChange={(e) => setValue(e?.target?.value)}
           placeholder="0.00"
+          disabled
         />
         <InputNumber
           value={value}
           prefix={userData?.defaultCurrency === "NGN" ? "₦" : "$"}
           onValueChange={(e) => handleAmount(e.value)}
           minFractionDigits={2}
+          disabled
           inputStyle={{ ...styles.inputs }}
           placeholder={userData?.defaultCurrency === "NGN" ? "₦0.00" : "$0.00"}
         />

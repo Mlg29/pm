@@ -126,7 +126,7 @@ function SlipCard(props: any) {
             }}
           >
             {isWin === isUser?.id ? "+" : !isWin ? "" : "-"}
-            {isUser?.defaultCurrency === "NGN" ? "₦" : "$"} {formatCurrency(amount)}
+            {isUser?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(amount)}
           </h3>
           <h3></h3>
         </div>

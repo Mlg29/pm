@@ -86,15 +86,17 @@ const BetAdjust = () => {
 
   const user = betInfo?.bet?.userId === userData?.id;
 
-  console.log({ betInfo, betData })
 
   const handleExRate = async () => {
     const rateData = {
-      sourceCurrency: betInfo?.bet?.betCurrency === "USD" ? "USD" : "NGN",
-      destinationCurrency: betInfo?.bet?.betCurrency === "USD" ? "NGN" : "USD",
+      sourceCurrency: betInfo?.requesterCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: betInfo?.bet?.betCurrency === "USD" ? "USD" : "NGN",
       amount: betInfo?.requestedAmount
     }
+
+    console.log({ rateData })
     const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
+
       const expectedAmount = pp?.payload?.data?.rate * betInfo?.requestedAmount
       return expectedAmount
     })
@@ -139,6 +141,7 @@ const BetAdjust = () => {
     const payload = {
       requestId: id,
       status: status,
+      betOwnerAmount: parseFloat(exAmount)
     };
     setUpdateLoader(true);
     var response = await dispatch(updateBetAdjust(payload));
@@ -178,6 +181,9 @@ const BetAdjust = () => {
       </div>
     );
   }
+
+
+
 
   return (
     <div className="top-container">
@@ -306,7 +312,7 @@ const BetAdjust = () => {
         <div style={{ ...styles.cardDiv }}>
           <p style={{ ...FONTS.body7, paddingBottom: 4 }}>Adjusted Stake</p>
           <h3 style={{ ...FONTS.h6 }}>
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(exAmount)}
+            {betInfo?.bet?.betCurrency === "USD" ? "$" : "₦"}{formatCurrency(exAmount)}
           </h3>
         </div>
         <div style={{ ...styles.cardDiv }}>

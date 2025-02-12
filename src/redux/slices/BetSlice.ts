@@ -85,7 +85,8 @@ export const updateBetAdjust = createAsyncThunk(
   "bet/updateBetAdjust",
   async (payload: any, { rejectWithValue }) => {
     const pp = {
-      status: payload?.status
+      status: payload?.status,
+      betOwnerAmount: payload?.betOwnerAmount
     }
 
     try {
