@@ -157,11 +157,29 @@ export const adjustBet = createAsyncThunk(
   }
 );
 
+export const settleBet = createAsyncThunk(
+  "bet/settleBet",
+  async (payload: any, { rejectWithValue }) => {
+    const pp = {
+      betId: payload?.betId,
+      outcome: payload?.outcome
+    }
+    try {
+      const response = await postRequest(`${SportSportBaseUrl}/bet/settlements`, pp);
+      if (response?.status === 200 || response?.status === 201) {
+        return response;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e?.response?.data?.message);
+    }
+  }
+);
+
 export const createBet = createAsyncThunk(
   "bet/createBet",
   async (payload: any, { rejectWithValue }) => {
     try {
-      console.log("bettt>>>>>", `${SportSportBaseUrl}/bet`)
+
       const response = await postRequest(`${SportSportBaseUrl}/bet`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
@@ -287,6 +305,18 @@ export const BetSlice = createSlice({
         }
       );
     builder.addCase(createBet.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(settleBet.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        settleBet.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+        }
+      );
+    builder.addCase(settleBet.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(deleteBet.pending, (state, action) => {

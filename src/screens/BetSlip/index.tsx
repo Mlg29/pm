@@ -12,7 +12,7 @@ import roma from "../../assets/images/roma.svg";
 import user from "../../assets/images/user.svg";
 import { useMediaQuery } from "react-responsive";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getBetHistory } from "../../redux/slices/BetSlice";
+import { getBetHistory, settleBet } from "../../redux/slices/BetSlice";
 import moment from "moment";
 import {
   getUserData,
@@ -62,14 +62,31 @@ function BetSlip() {
     });
   }, [active]);
 
+  const fetchBetData = () => {
+    const payload = {
+      status: active,
+    };
+
+    dispatch(getBetHistory(payload)).then((pp) => {
+
+      return pp?.payload?.map(dd => {
+        if (dd?.payload?.sportEvent?.outcome) {
+          const payloadData = {
+            betId: dd?.payload?.id,
+            outcome: dd?.payload?.sportEvent?.outcome
+          }
+          dispatch(settleBet(payloadData)).then(aa => console.log({ aa }))
+        }
+      })
 
 
-  const getAllBetIds = betList?.map(dd => {
-    return {
-      betId: dd?.id,
-      outcome: dd?.prediction
-    }
-  })
+    });
+  }
+
+
+
+
+  // setInterval(fetchBetData, 5000);
 
 
   const groupByDate = (data) => {
