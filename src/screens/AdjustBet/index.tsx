@@ -152,7 +152,19 @@ const AdjustBet = () => {
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           @{userFee?.opponentUsername} Bet Amount
         </p>
-        <h3 style={{ ...FONTS.h6 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.amount)} <span style={{ color: 'gray' }}> = {userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}{formatCurrency(userFee?.initialData?.betAmount)}</span></h3>
+        <h3 style={{ ...FONTS.h6 }}>
+          {
+            isNaN(userFee?.amount) ? null
+              :
+              <span>{userData?.defaultCurrency === "NGN" ? "₦" :
+                userData?.defaultCurrency === "USD" ? "$" : ""}</span>
+          }
+
+          {
+            isNaN(userFee?.amount) ? null : `${formatCurrency(userFee?.amount)} =`
+          }
+          <span style={{ color: 'gray' }}> {userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}
+            {formatCurrency(userFee?.initialData?.betAmount)}</span></h3>
 
 
       </div>
@@ -179,19 +191,25 @@ const AdjustBet = () => {
         />
 
         {
-          exLoader ?
-            <div style={{ padding: 2, display: 'flex', marginTop: -30, justifyContent: 'center', alignItems: 'center' }}>
-              <p style={{ textAlign: 'center' }}>Loading...</p>
-            </div>
-            :
+          isNaN(userFee?.amount) ? null :
             <div>
               {
-                exAmount ?
+                exLoader ?
                   <div style={{ padding: 2, display: 'flex', marginTop: -30, justifyContent: 'center', alignItems: 'center' }}>
-                    <p style={{ textAlign: 'center' }}>{userData?.defaultCurrency === "USD" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : null}</p>
+                    <p style={{ textAlign: 'center' }}>Loading...</p>
                   </div>
-                  : null
+                  :
+                  <div>
+                    {
+                      exAmount ?
+                        <div style={{ padding: 2, display: 'flex', marginTop: -30, justifyContent: 'center', alignItems: 'center' }}>
+                          <p style={{ textAlign: 'center' }}>{userData?.defaultCurrency === "USD" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : null}</p>
+                        </div>
+                        : null
+                    }
+                  </div>
               }
+
             </div>
         }
       </div>

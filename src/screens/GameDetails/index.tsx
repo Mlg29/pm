@@ -39,6 +39,7 @@ import FootballDetail from "./Details/FootballDetail";
 import TennisDetail from "./Details/TennisDetail";
 import Formula1Detail from "./Details/Formula1Detail";
 import BaseballDetails from "./Details/BaseBallDetails";
+import NascarDetail from "./Details/NascarDetail";
 
 const styles = {
   container: {
@@ -191,13 +192,13 @@ function GameDetails() {
         userType: selection,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
-        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType?.toUpperCase(),
+        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
         matchEvent: {
           id: gameInfo?.id,
           sportEventId: gameInfo?.sportEventId,
           league: gameInfo?.league,
           leagueId: gameInfo?.leagueId,
-          country: gameInfo?.country,
+          ...(gameInfo?.country !== undefined && { country: gameInfo.country }),
           status: "Not Started",
           internalStatus: "UPCOMING",
           date: gameInfo?.formatted_date || gameInfo?.date,
@@ -207,14 +208,15 @@ function GameDetails() {
             visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
           }),
           ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
-          ...(gameType === "Tennis" ? { sportName: gameInfo?.league } : {}),
+          ...(gameType === "Tennis" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
         }
 
 
       };
 
 
-
+      // console.log({ payload })
+      // return
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
 
@@ -328,6 +330,14 @@ function GameDetails() {
 
         {gameType === "Formula1" && (
           <Formula1Detail
+            selected={selected}
+            gameInfo={gameInfo}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+          />
+        )}
+
+        {gameType === "Nascar" && (
+          <NascarDetail
             selected={selected}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}

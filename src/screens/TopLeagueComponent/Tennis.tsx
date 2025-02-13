@@ -1,49 +1,49 @@
 import { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { useNavigate } from 'react-router-dom'
-import moment from 'moment'
-import { COLORS } from '../../utils/colors'
 import { FONTS } from '../../utils/fonts'
+import { COLORS } from '../../utils/colors'
+import TennisGameCard from '../../components/GameCard/TennisGameCard'
+import { SportSportBaseUrl } from '../../https'
+import moment from 'moment'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  getBaseballFixtures,
-  BaseballFixtureeStatusState
-} from '../../redux/slices/BaseballSlice'
+  getTennisFixtures,
+  tennisFixtureStatusState
+} from '../../redux/slices/TennisSlice'
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
-import BaseballGameCard from '../../components/GameCard/BaseballGameCard'
 
-function Baseball() {
-  const dispatch = useAppDispatch() as any
-  const navigate = useNavigate()
+function Tennis({ leagueName }) {
   const [live, setLive] = useState<any>([])
-  const [upcoming, setUpcoming] = useState<any>([])
-  const [finished, setFinished] = useState<any>([])
-  const loading = useAppSelector(BaseballFixtureeStatusState) as any
-
+  const loading = useAppSelector(tennisFixtureStatusState) as any
+  const [Finished, setFinished] = useState<any>([])
+  const [scheduled, setScheduled] = useState<any>([])
+  const dispatch = useAppDispatch() as any
   let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
-    const payloadUpcoming = {
-      range: 'd1'
+    const PayloadFinished = {
+      range: 'finished'
     }
-    const payloadFinished = {
-      range: 'd-1'
+    const PayloadScheduled = {
+      range: 'upcoming'
     }
-    dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories || [])
+    dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
+      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setFinished(filterData || [])
     })
-    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
+    dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
+      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setScheduled(filterData || [])
     })
-    dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
+    dispatch(getTennisFixtures(null)).then((dd) => {
+      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setLive(filterData || [])
     })
-  }, [dispatch])
+  }, [])
 
 
-
-  const [selectedStatus, setSelectedStatus] = useState('Finished')
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
@@ -60,10 +60,10 @@ function Baseball() {
     }
   ]
 
+
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>Baseball</p>
         <div
           style={{
             display: 'flex',
@@ -98,128 +98,113 @@ function Baseball() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => (
-              <div key={i}>
+            {live?.map((league, index) => (
+              <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
-                  {item?.['@name']}
+                  {league?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
                     const payload = {
-                      league: item?.name,
-                      leagueId: item?.id,
+                      league: league.name,
+                      leagueId: league.id,
+                      country: league.city,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <TennisGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
             ))}
+
             {live?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+              <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
         ) : null}
-
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
-            {upcoming?.map((item, i) => (
-              <div key={i}>
+            {scheduled?.map((league, index) => {
+              return <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
-                  {item?.['@name']}
+                  {league?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
                     const payload = {
-                      league: item?.name,
-                      leagueId: item?.id,
+                      league: league?.name,
+                      leagueId: league?.id,
+                      country: league.city,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <TennisGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
-            ))}
+            })}
 
-            {upcoming?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            {scheduled?.length < 1 ? (
+              <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
         ) : null}
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => (
-              <div key={i}>
+            {Finished?.map((league, index) => (
+              <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
-                  {item?.name}
+                  {league?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {league?.match.map((aa, i) => {
                     const payload = {
-                      league: item?.name,
-                      leagueId: item?.id,
+                      league: league.name,
+                      leagueId: league.id,
+                      country: league.city,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <TennisGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
@@ -227,8 +212,8 @@ function Baseball() {
               </div>
             ))}
 
-            {finished?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            {Finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
         ) : null}
@@ -239,4 +224,4 @@ function Baseball() {
   )
 }
 
-export default Baseball
+export default Tennis

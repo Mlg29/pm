@@ -82,9 +82,9 @@ function OpenBet() {
 
 
 
+
     await dispatch(getFxRate(rateData)).then((pp) => {
       const expectedAmount = pp?.payload?.data?.rate * amount
-
       setExchangeRates((prevRates) => ({
         ...prevRates,
         [index]: expectedAmount?.toFixed(2),
@@ -280,9 +280,12 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
-                          <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
-                            <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
-                          </p>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
+
                         </div>
                         <div style={{ ...styles.center }}>
                           <img
@@ -407,6 +410,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <FaTableTennis size={30} color={COLORS.primary} />
@@ -509,7 +517,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <FaTableTennis size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localTeamName}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -526,9 +534,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
-                          <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
-                            <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
-                          </p>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <FaTableTennis size={30} color={COLORS.primary} />
@@ -649,6 +659,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <GiBoxingGlove size={30} color={COLORS.primary} />
@@ -769,6 +784,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <IoGameController size={30} color={COLORS.primary} />
@@ -888,6 +908,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <SiDart size={30} color={COLORS.primary} />
@@ -1008,6 +1033,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <SiUfc size={30} color={COLORS.primary} />
@@ -1123,6 +1153,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div />
                       </div>
@@ -1252,6 +1287,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <GiSportMedal size={30} color={COLORS.primary} />
@@ -1372,6 +1412,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <FaVolleyball size={30} color={COLORS.primary} />
@@ -1492,6 +1537,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <TbPlayHandball size={30} color={COLORS.primary} />
@@ -1612,6 +1662,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <MdSportsRugby size={30} color={COLORS.primary} />
@@ -1731,6 +1786,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <img src={futsol} />
@@ -1851,6 +1911,11 @@ function OpenBet() {
                             {data?.betCurrency === "NGN" ? "₦" : "$"}
                             {formatCurrency(data?.betAmount)}
                           </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i] : "Loading..."}) </span>
+                            </p>
+                          }
                         </div>
                         <div style={{ ...styles.center }}>
                           <BiSolidCricketBall size={30} color={COLORS.primary} />

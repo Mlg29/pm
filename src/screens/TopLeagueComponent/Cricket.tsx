@@ -1,49 +1,65 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { useNavigate } from 'react-router-dom'
+import { SportSportBaseUrl } from '../../https'
+import { io } from 'socket.io-client'
 import moment from 'moment'
+import {
+  getCricketFixtures,
+  CricketStatusState,
+  getCricketMatchFixtures
+} from '../../redux/slices/CricketSlice'
+import Loader from '../../components/Loader'
 import { COLORS } from '../../utils/colors'
 import { FONTS } from '../../utils/fonts'
-import {
-  getBaseballFixtures,
-  BaseballFixtureeStatusState
-} from '../../redux/slices/BaseballSlice'
+import CricketGameCard from '../../components/GameCard/CricketGameCard'
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
-import BaseballGameCard from '../../components/GameCard/BaseballGameCard'
 
-function Baseball() {
+function Cricket({ leagueName }) {
   const dispatch = useAppDispatch() as any
   const navigate = useNavigate()
+  const [loader, setLoader] = useState(false)
+  const url = `${SportSportBaseUrl}/Cricket`
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const loading = useAppSelector(BaseballFixtureeStatusState) as any
+  const loading = useAppSelector(CricketStatusState) as any
 
   let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
+  let ScheduleDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
+    const payloadLive = {
+      range: 'live'
+    }
     const payloadUpcoming = {
-      range: 'd1'
+      range: 'upcoming'
     }
+
     const payloadFinished = {
-      range: 'd-1'
+      range: 'upcoming'
     }
-    dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories || [])
-    })
-    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
-    })
-    dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
-    })
-  }, [dispatch])
 
 
+    dispatch(getCricketFixtures(payloadLive)).then((dd) => {
+      const filterData = dd?.payload?.scores?.categories?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setLive(filterData || [])
+    })
+    dispatch(getCricketMatchFixtures(payloadUpcoming)).then((dd) => {
+      const filterData = dd?.payload?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setUpcoming(filterData || [])
+    })
 
-  const [selectedStatus, setSelectedStatus] = useState('Finished')
+    dispatch(getCricketMatchFixtures(payloadFinished)).then((dd) => {
+      const filterData = dd?.payload?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setFinished(filterData || [])
+    })
+
+    return
+  }, [])
+
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
@@ -55,7 +71,7 @@ function Baseball() {
       name: 'Scheduled'
     },
     {
-      id: 3,
+      id: 2,
       name: 'Finished'
     }
   ]
@@ -63,7 +79,7 @@ function Baseball() {
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>Baseball</p>
+
         <div
           style={{
             display: 'flex',
@@ -95,6 +111,7 @@ function Baseball() {
           })}
         </div>
       </div>
+
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
@@ -105,107 +122,10 @@ function Baseball() {
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
-                  }}
-                >
-                  {item?.['@name']}
-                </p>
-                <div>
-                  {item?.match?.map((aa, i) => {
-                    const payload = {
-                      league: item?.name,
-                      leagueId: item?.id,
-                      ...aa
-                    }
-                    return (
-                      <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
-            {live?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
-            ) : null}
-          </>
-        ) : null}
-
-        {selectedStatus === 'Scheduled' ? (
-          <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
-            {upcoming?.map((item, i) => (
-              <div key={i}>
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    backgroundColor: COLORS.lightRed,
-                    padding: 5,
-                    marginBottom: 5,
-                    borderRadius: 5,
-                    color: COLORS.black,
-                    marginRight: 5
-                  }}
-                >
-                  {item?.['@name']}
-                </p>
-                <div>
-                  {item?.match?.map((aa, i) => {
-                    const payload = {
-                      league: item?.name,
-                      leagueId: item?.id,
-                      ...aa
-                    }
-                    return (
-                      <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
-
-            {upcoming?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
-            ) : null}
-          </>
-        ) : null}
-
-        {selectedStatus === 'Finished' ? (
-          <>
-            {finished?.map((item, i) => (
-              <div key={i}>
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    backgroundColor: COLORS.lightRed,
-                    padding: 5,
-                    marginBottom: 5,
-                    borderRadius: 5,
-                    color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
                   {item?.name}
@@ -219,7 +139,86 @@ function Baseball() {
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <CricketGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+            {live?.length < 1 ? (
+              <EmptyState header='No Game Available for Cricket' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {upcoming?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <CricketGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Cricket' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finished?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <CricketGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
@@ -228,10 +227,11 @@ function Baseball() {
             ))}
 
             {finished?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+              <EmptyState header='No Game Available for Cricket' height='30vh' />
             ) : null}
           </>
         ) : null}
+
 
 
       </LoadingState>
@@ -239,4 +239,4 @@ function Baseball() {
   )
 }
 
-export default Baseball
+export default Cricket

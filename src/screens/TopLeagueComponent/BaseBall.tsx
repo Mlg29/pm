@@ -12,7 +12,7 @@ import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import BaseballGameCard from '../../components/GameCard/BaseballGameCard'
 
-function Baseball() {
+function Baseball({ leagueName }) {
   const dispatch = useAppDispatch() as any
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
@@ -31,13 +31,13 @@ function Baseball() {
       range: 'd-1'
     }
     dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories || [])
+      setLive(dd?.payload?.categories?.filter(m => m?.["@name"]?.toLowerCase().includes(leagueName?.toLowerCase())) || [])
     })
     dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
+      setUpcoming(dd?.payload?.filter(m => m?.["@name"]?.toLowerCase().includes(leagueName?.toLowerCase())) || [])
     })
     dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
+      setFinished(dd?.payload?.filter(m => m?.["@name"]?.toLowerCase().includes(leagueName?.toLowerCase())) || [])
     })
   }, [dispatch])
 
@@ -63,7 +63,6 @@ function Baseball() {
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>Baseball</p>
         <div
           style={{
             display: 'flex',

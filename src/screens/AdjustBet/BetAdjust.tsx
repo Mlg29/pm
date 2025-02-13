@@ -83,21 +83,23 @@ const BetAdjust = () => {
   const events = betData?.sportEvent;
   const sportEvents = events;
   const [exAmount, setExAmount] = useState<any>("");
+  const [type, setType] = useState("")
 
   const user = betInfo?.bet?.userId === userData?.id;
 
 
-  const handleExRate = async () => {
+
+  const handleExRate = async (data) => {
     const rateData = {
-      sourceCurrency: betInfo?.requesterCurrency === "USD" ? "USD" : "NGN",
-      destinationCurrency: betInfo?.bet?.betCurrency === "USD" ? "USD" : "NGN",
-      amount: betInfo?.requestedAmount
+      sourceCurrency: data?.requesterCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: data?.bet?.betCurrency === "USD" ? "USD" : "NGN",
+      amount: data?.requestedAmount
     }
 
-    console.log({ rateData })
     const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
 
-      const expectedAmount = pp?.payload?.data?.rate * betInfo?.requestedAmount
+      const expectedAmount = pp?.payload?.data?.rate * data?.requestedAmount
+
       return expectedAmount
     })
 
@@ -128,22 +130,28 @@ const BetAdjust = () => {
     setLoader(true);
     dispatch(getAdjustBet(id)).then((pp) => {
       setBetInfo(pp?.payload);
+      handleExRate(pp?.payload)
       dispatch(getBetById(pp?.payload?.bet?.id)).then((pp) => {
         setBetData(pp?.payload);
         setLoader(false);
       });
     });
     fetchUserInfo();
-    handleExRate()
+
   }, [id]);
+
+
 
   const decideOnBet = async (status) => {
     const payload = {
       requestId: id,
       status: status,
-      betOwnerAmount: parseFloat(exAmount)
+      betOwnerAmount: betInfo?.bet?.betCurrency === betInfo?.requesterCurrency ? parseFloat(parseFloat(betInfo?.requestedAmount).toFixed(2)) : parseFloat(parseFloat(exAmount).toFixed(2))
     };
+
+    setType(status)
     setUpdateLoader(true);
+
     var response = await dispatch(updateBetAdjust(payload));
     if (updateBetAdjust.fulfilled.match(response)) {
       setUpdateLoader(false);
@@ -164,6 +172,8 @@ const BetAdjust = () => {
       });
     }
   };
+
+
 
   if (loader) {
     return (
@@ -300,6 +310,10 @@ const BetAdjust = () => {
 
       <div style={{ ...styles.div }}>
         <div style={{ ...styles.cardDiv }}>
+          <p style={{ ...FONTS.body7, paddingBottom: 4 }}>Status</p>
+          <h3 style={{ ...FONTS.h6, color: betInfo?.status === "PENDING" ? "blue" : betInfo?.status === "ACCEPTED" ? "green" : betInfo?.status === "REJECTED" ? "red" : "" }}>{betInfo?.status}</h3>
+        </div>
+        <div style={{ ...styles.cardDiv }}>
           <p style={{ ...FONTS.body7, paddingBottom: 4 }}>Bet ID</p>
           <h3 style={{ ...FONTS.h6 }}>{betData?.id}</h3>
         </div>
@@ -312,7 +326,7 @@ const BetAdjust = () => {
         <div style={{ ...styles.cardDiv }}>
           <p style={{ ...FONTS.body7, paddingBottom: 4 }}>Adjusted Stake</p>
           <h3 style={{ ...FONTS.h6 }}>
-            {betInfo?.bet?.betCurrency === "USD" ? "$" : "₦"}{formatCurrency(exAmount)}
+            {betInfo?.bet?.betCurrency === "USD" ? "$" : "₦"}{betInfo?.bet?.betCurrency === betInfo?.requesterCurrency ? formatCurrency(betInfo?.requestedAmount) : formatCurrency(exAmount)}
           </h3>
         </div>
         <div style={{ ...styles.cardDiv }}>
@@ -341,27 +355,31 @@ const BetAdjust = () => {
         </div>
       </div>
 
-      <div style={{ width: "100%", marginTop: 30 }}>
-        <Button
-          text="Accept Stake"
-          propStyle={{ width: "100%" }}
-          isLoading={updateLoader}
-          handlePress={() => decideOnBet("ACCEPTED")}
-        />
-        <div style={{ height: 20 }} />
-        <Button
-          text="Reject Stake"
-          isLoading={updateLoader}
-          propStyle={{
-            width: "100%",
-            color: COLORS.primary,
-            backgroundColor: COLORS.white,
-            border: `1px solid ${COLORS.primary}`,
-          }}
-          handlePress={() => decideOnBet("REJECTED")}
-        />
-      </div>
+      {
+        betInfo?.status === "ACCEPTED" || betInfo?.status === "REJECTED" ? null
+          :
+          <div style={{ width: "100%", marginTop: 30 }}>
+            <Button
+              text="Accept Stake"
+              propStyle={{ width: "100%" }}
+              isLoading={updateLoader && type === "ACCEPTED"}
+              handlePress={() => decideOnBet("ACCEPTED")}
+            />
+            <div style={{ height: 20 }} />
+            <Button
+              text="Reject Stake"
+              isLoading={updateLoader && type === "REJECTED"}
+              propStyle={{
+                width: "100%",
+                color: COLORS.primary,
+                backgroundColor: COLORS.white,
+                border: `1px solid ${COLORS.primary}`,
+              }}
+              handlePress={() => decideOnBet("REJECTED")}
+            />
+          </div>
 
+      }
       <ToastContainer />
     </div>
   );

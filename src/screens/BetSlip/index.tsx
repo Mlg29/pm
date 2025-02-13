@@ -71,7 +71,6 @@ function BetSlip() {
     }
   })
 
-  console.log(getAllBetIds?.length)
 
   const groupByDate = (data) => {
     return data?.reduce((acc, item) => {
@@ -104,7 +103,7 @@ function BetSlip() {
 
   const groupedData = groupByDate(betList);
 
-  console.log({ betList })
+
 
   if (loader) {
     return (
@@ -240,7 +239,7 @@ function BetSlip() {
                         {date}
                       </p>
                       <div>
-                        {groupedData[date]?.map((item, i) => {
+                        {groupedData[date]?.reverse()?.map((item, i) => {
                           return (
                             <div key={i}>
                               {item?.sportEvent?.sport === "FOOTBALL" && (

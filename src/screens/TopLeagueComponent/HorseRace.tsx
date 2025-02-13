@@ -1,49 +1,50 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
+import {
+  getHorseFixtures,
+  horseFixtureStatusState
+} from '../../redux/slices/horseSlice'
 import { COLORS } from '../../utils/colors'
 import { FONTS } from '../../utils/fonts'
-import {
-  getBaseballFixtures,
-  BaseballFixtureeStatusState
-} from '../../redux/slices/BaseballSlice'
+import HorseGameCard from '../../components/GameCard/HorseGameCard'
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
-import BaseballGameCard from '../../components/GameCard/BaseballGameCard'
 
-function Baseball() {
+function HorseRace({ leagueName }) {
   const dispatch = useAppDispatch() as any
-  const navigate = useNavigate()
-  const [live, setLive] = useState<any>([])
-  const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const loading = useAppSelector(BaseballFixtureeStatusState) as any
+  const loading = useAppSelector(horseFixtureStatusState) as any
+  const [Live, setLive] = useState<any>([])
+  const [Schedule, setSchedule] = useState<any>([])
 
   let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
+  let ScheduleDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'd1'
+      range: 'upcoming'
     }
     const payloadFinished = {
-      range: 'd-1'
+      range: 'finished'
     }
-    dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories || [])
+    dispatch(getHorseFixtures(null)).then((dd) => {
+      const filterData = dd?.payload?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setLive(filterData || [])
     })
-    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
+    dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
+      const filterData = dd?.payload?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setSchedule(filterData || [])
     })
-    dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
+    dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
+      const filterData = dd?.payload?.scores?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      setFinished(filterData || [])
     })
-  }, [dispatch])
 
+    return
+  }, [])
 
-
-  const [selectedStatus, setSelectedStatus] = useState('Finished')
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
@@ -52,7 +53,7 @@ function Baseball() {
     },
     {
       id: 2,
-      name: 'Scheduled'
+      name: 'Schedule'
     },
     {
       id: 3,
@@ -60,10 +61,11 @@ function Baseball() {
     }
   ]
 
+
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>Baseball</p>
+
         <div
           style={{
             display: 'flex',
@@ -95,91 +97,100 @@ function Baseball() {
           })}
         </div>
       </div>
+      {selectedStatus === 'Live' ? (
+        <>
+          {Live?.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <p
+                style={{
+                  ...FONTS.body6,
+                  color: COLORS.gray,
+                  margin: '15px 0px'
+                }}
+              ></p>
+            </div>
+          )}
+        </>
+      ) : null}
+
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => (
+            {Array.isArray(Live) && Live?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
-                  {item?.['@name']}
+                  {item?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      leagueId: item?.id,
+                      leagueId: item?.tournamentId,
+                      date: item?.date,
+                      country: item?.file_group,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <HorseGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
             ))}
-            {live?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+
+            {Live?.length < 1 ? (
+              <EmptyState header='No Game Available for Horse Race' height='30vh' />
             ) : null}
           </>
         ) : null}
 
-        {selectedStatus === 'Scheduled' ? (
+        {selectedStatus === 'Schedule' ? (
           <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
-
-            {upcoming?.map((item, i) => (
+            {Schedule?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
-                  {item?.['@name']}
+                  {item?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      leagueId: item?.id,
+                      leagueId: item?.tournamentId,
+                      date: item?.date,
+                      country: item?.file_group,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <HorseGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
@@ -187,8 +198,8 @@ function Baseball() {
               </div>
             ))}
 
-            {upcoming?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            {Schedule?.length < 1 ? (
+              <EmptyState header='No Game Available for Horse Race' height='30vh' />
             ) : null}
           </>
         ) : null}
@@ -202,24 +213,26 @@ function Baseball() {
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
                   {item?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      leagueId: item?.id,
+                      leagueId: item?.tournamentId,
+                      date: item?.date,
+                      country: item?.file_group,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <HorseGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
@@ -228,7 +241,7 @@ function Baseball() {
             ))}
 
             {finished?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+              <EmptyState header='No Game Available for Horse Race' height='30vh' />
             ) : null}
           </>
         ) : null}
@@ -239,4 +252,4 @@ function Baseball() {
   )
 }
 
-export default Baseball
+export default HorseRace

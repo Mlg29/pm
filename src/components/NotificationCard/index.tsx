@@ -8,11 +8,18 @@ function NotificationCard(props: any) {
   const navigate = useNavigate();
   const { header, message, date, showBtn, data, handleRead } = props;
 
+
+
+  const handleRoute = (data) => {
+    handleRead(data?.id)
+    navigate(`/bet-adjust?${data?.content?.adjustmentId}`)
+  }
+
   return (
     <div style={{ ...styles.container }}>
       <div
         style={{ cursor: "pointer" }}
-        // onClick={() => navigate("/challenge-detail")}
+
         onClick={() => data?.status === "READ" ? () => { } : handleRead(data?.id)}
       >
         <p style={{ ...FONTS.body7 }}>
@@ -21,22 +28,10 @@ function NotificationCard(props: any) {
         <p style={{ ...FONTS.h6, margin: "5px 0px", color: data?.status === "READ" ? "gray" : "black" }}>{data?.title}</p>
         <p style={{ ...FONTS.h7, color: data?.status === "READ" ? "gray" : "black" }}>{data?.message}</p>
       </div>
-
-      {/* {
-        showBtn ?   <div style={{...styles.row}}>
-        <div style={{...styles.btn, backgroundColor: COLORS.primary, borderRadius: 10, padding: "10px 0px", cursor: "pointer"}} onClick={() => navigate("/options")}>
-            <p style={{...FONTS.body6, color: COLORS.white, textAlign: 'center'}}>Accept</p>
-        </div>
-        <div style={{...styles.btn, backgroundColor: COLORS.cream, borderRadius: 10, padding: "10px 0px", cursor: "pointer"}} onClick={() => navigate("/adjust-bet")}>
-            <p style={{...FONTS.body6, color: COLORS.primary, textAlign: 'center'}}>Adjust Stake</p>
-        </div>
-      </div>
-      : null
-    } */}
       {
         data?.type === "BET_ADJUSTED_BR" ?
           <div style={{ cursor: "pointer", marginTop: 10 }}>
-            <p style={{ ...FONTS.body7, color: COLORS.orange, textDecoration: 'underline' }} onClick={() => navigate(`/bet-adjust?${data?.content?.adjustmentId}`)}>View Detail</p>
+            <p style={{ ...FONTS.body7, color: COLORS.orange, textDecoration: 'underline' }} onClick={() => handleRoute(data)}>View Detail</p>
           </div>
           : null
       }

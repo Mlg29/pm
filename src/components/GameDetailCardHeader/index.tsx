@@ -48,7 +48,6 @@ function GameDetailCardHeader(props: any) {
   const dispatch = useAppDispatch() as any
 
 
-  console.log({ data })
 
   useEffect(() => {
     const getLogos = () => {
@@ -142,15 +141,7 @@ function GameDetailCardHeader(props: any) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            ID: {data?.id}
-          </p>
+
           {!data?.visitorTeam?.teamLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (

@@ -41,20 +41,6 @@ function BasketballCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
-  //   function isEmpty(value) {
-  //     for (let prop in value) {
-  //       if (value.hasOwnProperty(prop)) return false;
-  //     }
-  //     return true;
-  //   }
-
-  //   const eventArray = isEmpty(data?.player)
-  //     ? []
-  //     : Array.isArray(data?.player)
-  //     ? data?.player
-  //     : [data?.player];
-
-
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
@@ -141,7 +127,7 @@ function BasketballCard(props) {
           backgroundColor: COLORS.gray,
         }}
       />
-      <div>
+      {/* <div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <p>{data?.localTeam?.name}</p>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -164,7 +150,7 @@ function BasketballCard(props) {
             <p style={{ margin: "0px 5px", color: 'red' }}>{data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : "-"}</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

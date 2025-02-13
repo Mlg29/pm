@@ -98,7 +98,7 @@ export const BasketLeagues = [
     },
 ]
 
-const TennisLeague = [
+export const TennisLeague = [
     {
         id: 1,
         name: "Wimbledon"
@@ -129,7 +129,7 @@ const TennisLeague = [
     }
 ]
 
-const HorseLeague = [
+export const HorseLeague = [
     {
         id: 1,
         name: "Ascot"
@@ -168,7 +168,7 @@ const HorseLeague = [
     }
 ]
 
-const BoxingLeague = [
+export const BoxingLeague = [
     {
         id: 1,
         name: "WBC"
@@ -195,7 +195,7 @@ const BoxingLeague = [
     },
 ]
 
-const MmaLeague = [
+export const MmaLeague = [
     {
         id: 1,
         name: "One Championship"
@@ -226,7 +226,7 @@ const MmaLeague = [
     }
 ]
 
-const NascarLeague = [
+export const NascarLeague = [
     {
         id: 1,
         name: "Formular 1"
@@ -249,7 +249,7 @@ const NascarLeague = [
     },
 ]
 
-const AflLeague = [
+export const AflLeague = [
     {
         id: 1,
         name: "National Football League North"
@@ -270,7 +270,7 @@ const AflLeague = [
 ]
 
 
-const BaseballLeague = [
+export const BaseballLeague = [
     {
         id: 1,
         name: "Nippon Professional Baseball"
@@ -294,7 +294,7 @@ const BaseballLeague = [
 ]
 
 
-const CricketLeague = [
+export const CricketLeague = [
     {
         id: 1,
         name: "Big Bash League"
@@ -338,7 +338,7 @@ const CricketLeague = [
 ]
 
 
-const AussieLeague = [
+export const AussieLeague = [
     {
         id: 1,
         name: "AFL"

@@ -12,7 +12,7 @@ import {
 import { LoadingState } from '../../components/LoadingState'
 import AussieRulesGameCard from '../../components/GameCard/AusseiRules'
 
-function AussieRules() {
+function AussieRules({ leagueName }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [standings, setStandings] = useState<any>([])
   const [live, setLive] = useState<any>([])
@@ -34,10 +34,12 @@ function AussieRules() {
     }
 
     dispatch(getAussieRuleFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload)
+
+      setLive(dd?.payload?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase())))
     })
     dispatch(getAussieRuleFixtures(payloadSchedule)).then((dd) => {
-      setUpcoming(dd?.payload?.results?.tournament)
+
+      setUpcoming(dd?.payload?.results?.tournament?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase())))
     })
     // dispatch(getAussieRuleFixtures(payloadStanding)).then((dd) => {
     //   setStandings(dd?.payload?.standings)
@@ -57,10 +59,10 @@ function AussieRules() {
     }
   ]
 
+
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>AussieRules</p>
         <div
           style={{
             display: 'flex',

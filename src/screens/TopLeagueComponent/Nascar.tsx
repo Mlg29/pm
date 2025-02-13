@@ -1,49 +1,77 @@
-import { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import moment from 'moment'
-import { COLORS } from '../../utils/colors'
 import { FONTS } from '../../utils/fonts'
-import {
-  getBaseballFixtures,
-  BaseballFixtureeStatusState
-} from '../../redux/slices/BaseballSlice'
-import EmptyState from '../../components/EmptyState'
-import { LoadingState } from '../../components/LoadingState'
-import BaseballGameCard from '../../components/GameCard/BaseballGameCard'
+import { COLORS } from '../../utils/colors'
 
-function Baseball() {
-  const dispatch = useAppDispatch() as any
+import { io } from 'socket.io-client'
+import { SportSportBaseUrl } from '../../https'
+import moment from 'moment'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
+import EmptyState from '../../components/EmptyState'
+import { getNascaFixtures, getNascaMatchFixtures, nascaFixtureStatusState } from '../../redux/slices/NascaSlice'
+import { LoadingState } from '../../components/LoadingState'
+import NascarCard from '../../components/GameCard/NascarCard'
+
+function Nascar({ leagueName }) {
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const loading = useAppSelector(BaseballFixtureeStatusState) as any
+  const loading = useAppSelector(nascaFixtureStatusState) as any
+  const dispatch = useAppDispatch() as any
+
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
+    const payloadLive = {
+      range: 'live'
+    }
     const payloadUpcoming = {
-      range: 'd1'
+      range: 'upcoming'
     }
     const payloadFinished = {
-      range: 'd-1'
+      range: 'finished'
     }
-    dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories || [])
-    })
-    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
-    })
-    dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
-    })
-  }, [dispatch])
+
+    dispatch(getNascaFixtures(payloadLive)).then((dd) => {
+
+      const tp = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))?.map(rr => {
+        return {
+          ...rr,
+          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+        }
+      })
+      setLive(tp || []);
+    });
+
+    dispatch(getNascaMatchFixtures(payloadUpcoming)).then((dd) => {
+
+      const tp = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))?.map(rr => {
+        return {
+          ...rr,
+          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+        }
+      })
+      setUpcoming(tp || []);
+    });
+    dispatch(getNascaMatchFixtures(payloadFinished)).then((dd) => {
+
+      const tp = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))?.map(rr => {
+        return {
+          ...rr,
+          race: Array.isArray(rr?.races) ? rr?.races : [rr?.races]
+        }
+      })
+      setFinished(tp || []);
+    });
+  }, [])
 
 
 
-  const [selectedStatus, setSelectedStatus] = useState('Finished')
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
@@ -60,16 +88,17 @@ function Baseball() {
     }
   ]
 
+
+
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>Baseball</p>
         <div
           style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            marginBottom: '10px'
+            marginBottom: 10
           }}
         >
           {status?.map((aa, i) => {
@@ -98,145 +127,134 @@ function Baseball() {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => (
+            {live?.map((item, i) => {
+
               <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
-                  {item?.['@name']}
+                  {item?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
                       leagueId: item?.id,
+                      country: item?.country,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <NascarCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
-            ))}
+
+            })}
+
             {live?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+              <EmptyState header='No Game Available for Nascar' height='30vh' />
             ) : null}
           </>
         ) : null}
-
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
+            {upcoming?.map((item, i) => {
 
-            {upcoming?.map((item, i) => (
-              <div key={i}>
+              return <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
-                  {item?.['@name']}
+                  {item?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {item?.race?.map((aa, index) => {
                     const payload = {
                       league: item?.name,
                       leagueId: item?.id,
+                      country: item?.country,
                       ...aa
                     }
                     return (
-                      <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                      <div key={index}>
+                        <NascarCard id={index} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
-            ))}
+
+            })}
 
             {upcoming?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+              <EmptyState header='No Game Available for Nascar' height='30vh' />
             ) : null}
           </>
         ) : null}
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => (
-              <div key={i}>
+            {finished?.map((item, i) => {
+              return <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
                     backgroundColor: COLORS.lightRed,
                     padding: 5,
-                    marginBottom: 5,
+                    marginBottom: 10,
                     borderRadius: 5,
                     color: COLORS.black,
-                    marginRight: 5
+                    marginRight: 10
                   }}
                 >
                   {item?.name}
                 </p>
                 <div>
-                  {item?.match?.map((aa, i) => {
+                  {item?.race?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
                       leagueId: item?.id,
+                      country: item?.country,
                       ...aa
                     }
                     return (
                       <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
+                        <NascarCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
-            ))}
 
+            })}
             {finished?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
+              <EmptyState header='No Game Available for Nascar' height='30vh' />
             ) : null}
           </>
-        ) : null}
-
+        )
+          : null}
 
       </LoadingState>
     </div>
   )
 }
 
-export default Baseball
+export default Nascar

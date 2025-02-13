@@ -38,6 +38,7 @@ function AussieRulesGameCard({ data, id }) {
   const navigate = useNavigate();
 
 
+
   return (
     <div>
       <div
@@ -50,24 +51,24 @@ function AussieRulesGameCard({ data, id }) {
         }
       >
         <div style={styles.box1}>
-        <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-          ({data?.formatted_date} - {data?.time})
-        </p>
+          <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+            ({data?.match?.formatted_date || data?.match?.date} - {data?.match?.time})
+          </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.status}
+            {data?.match?.status}
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.name}</p>
-          <p style={{ ...FONTS.body7 }}>{data?.visitorTeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.match?.localteam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.match?.visitorteam?.name}</p>
         </div>
         <div style={styles.box3}>
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.localTeam?.goals}
+              {data?.match?.localteam?.goals}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.visitorTeam?.goals}
+              {data?.match?.visitorteam?.goals}
             </p>
           </div>
         </div>
