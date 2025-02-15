@@ -35,7 +35,7 @@ function FootballDetail({
   const loading = useAppSelector(footballFixtureStatusState) as any
 
   const dispatch = useAppDispatch() as any
-
+  console.log({ gameInfo })
   useEffect(() => {
     const homeTeam = {
       teamId: gameInfo?.localTeam?.teamId
@@ -45,9 +45,11 @@ function FootballDetail({
     }
 
     const matchStatPayload = {
-      leagueId: gameInfo?.commentary_available,
-      matchId: gameInfo?.static_id
+      leagueId: gameInfo?.leagueId,
+      matchId: gameInfo?.staticId
     }
+
+
 
     dispatch(getStat(homeTeam)).then((dd) => {
       setHomeStat(dd?.payload?.teams?.team)
@@ -56,6 +58,7 @@ function FootballDetail({
       setAwayStat(dd?.payload?.teams?.team)
     })
     dispatch(getMatchStat(matchStatPayload)).then((dd) => {
+
       setMatchStat(dd?.payload)
     })
   }, [])
