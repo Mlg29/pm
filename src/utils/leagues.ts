@@ -15,15 +15,15 @@ export const Leagues = [
     },
     {
         id: 3,
-        name: "English Premier League"
+        name: "England: Premier League"
     },
     {
         id: 4,
-        name: "La Liga"
+        name: "Spain: LaLiga"
     },
     {
         id: 5,
-        name: "Bundesliga"
+        name: "Germany: Bundesliga"
     },
     {
         id: 6,
