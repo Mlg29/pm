@@ -165,8 +165,11 @@ function GameDetails() {
   }, []);
 
 
+
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
+
+    const players = gameInfo?.runners?.map(dd => dd?.name);
 
     if (gameInfo?.status === "Finished" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
       toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
@@ -198,7 +201,7 @@ function GameDetails() {
           sportEventId: gameInfo?.sportEventId,
           league: gameInfo?.league,
           leagueId: gameInfo?.leagueId,
-          ...(gameInfo?.country !== undefined ? { country: gameInfo.country } : gameInfo?.league !== undefined ? { league: gameInfo.league } : {}),
+          ...(gameInfo?.country !== undefined ? { country: gameInfo.country } : gameInfo?.league !== undefined ? { country: gameInfo.league } : {}),
           status: "Not Started",
           internalStatus: "UPCOMING",
           date: gameInfo?.formatted_date || gameInfo?.date,
@@ -208,6 +211,7 @@ function GameDetails() {
             visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
           }),
           ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
+          ...(gameType === "Horse" || gameType === "Formula1" ? { racers: players } : {}),
           ...(gameType === "Tennis" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
         }
 

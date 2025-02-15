@@ -20,6 +20,8 @@ function Football() {
   const [tomorrow, setTomorrow] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
 
+  const [selectedStatus, setSelectedStatus] = useState('Live')
+
   useEffect(() => {
     const payloadUpcoming = {
       range: 'upcoming'
@@ -46,11 +48,10 @@ function Football() {
 
       setUpcoming(dd?.payload?.category || [])
     })
-  }, [dispatch])
+  }, [dispatch, selectedStatus])
 
 
 
-  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
