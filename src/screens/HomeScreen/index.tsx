@@ -117,16 +117,13 @@ function HomeScreen() {
     )
   );
 
-  const handleDateChange = (date) => {
-    const customDate = moment(date).format("YYYY-MM-DD");
-    setSelectedDate(date);
 
-    return navigate("/filter", {
-      state: {
-        gameName: selected,
-        customDate: customDate,
-      },
-    });
+
+  const handleDateChange = (date) => {
+    const today = new Date() as any;
+    const selectedIndex = Math.ceil((date - today) / (1000 * 60 * 60 * 24)) + 1;
+    console.log("Selected Index:", selectedIndex);
+
   };
 
   const getNotification = async () => {
@@ -475,9 +472,13 @@ function HomeScreen() {
         )}
       </div>
 
-      <SearchComponent disabled placeholder="Search by sport, club or game" />
+      {/* <SearchComponent disabled placeholder="Search by sport, club or game" /> */}
 
-      <div>
+      {/* <div>
+        <SliderComponent />
+      </div> */}
+
+      <div style={{ height: "250px", overflow: "hidden" }}>
         <SliderComponent />
       </div>
 
@@ -578,6 +579,8 @@ function HomeScreen() {
         <DatePicker
           selected={selectedDate}
           onChange={(date) => handleDateChange(date)}
+          minDate={new Date()}
+          maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}
           customInput={
             // <ExampleCustomInput className="example-custom-input" />
             <FaCalendarAlt />

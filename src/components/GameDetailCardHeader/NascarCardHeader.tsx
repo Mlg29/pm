@@ -41,7 +41,7 @@ function NascarCardHeader({ gameInfo }) {
         <div style={styles.container}>
             <div style={styles.row}>
                 <p style={{ ...FONTS.h7 }}>{gameInfo?.name || gameInfo?.track}</p>
-                <p style={{ ...FONTS.h7 }}>Race ID: {gameInfo?.id || gameInfo?.leagueId}</p>
+
             </div>
 
             <div style={styles.center}>

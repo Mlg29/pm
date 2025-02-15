@@ -71,8 +71,8 @@ function EsportCard(props) {
           >
             {data?.league}
           </p>
-        
-         <IoGameController size={30} color={COLORS.primary} />
+
+          <IoGameController size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -94,7 +94,7 @@ function EsportCard(props) {
           >
             {data?.localteam?.score ? data?.localteam?.score : 0} - {data?.awayteam?.score ? data?.awayteam?.score : 0}
           </h3>
-        
+
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
@@ -108,16 +108,8 @@ function EsportCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            ID: {data?.id}
-          </p>
-          <IoGameController  size={30} color={COLORS.primary} />
+
+          <IoGameController size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,

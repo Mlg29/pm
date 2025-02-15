@@ -65,9 +65,9 @@ function SnookerCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           Dart
+            Dart
           </p>
-        
+
           <GiSportMedal size={30} color={COLORS.primary} />
           <p
             style={{
@@ -80,21 +80,21 @@ function SnookerCard(props) {
           </p>
         </div>
         <div>
-        {
+          {
             data?.localteam?.winner === "True" || data?.awayteam?.winner === "True" ?
-            <h3
-            style={{
-              ...FONTS.h7,
-              textAlign: "center",
-              margin: "10px 0px 0px 0px",
-              color: COLORS.green
-            }}
-          >
-           Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name} (round ${data?.localteam?.round})` : data?.awayteam?.winner === "True" ?`${data?.awayteam?.name} (round ${data?.awayteam?.round})` : null}
-          </h3>
-          : null
+              <h3
+                style={{
+                  ...FONTS.h7,
+                  textAlign: "center",
+                  margin: "10px 0px 0px 0px",
+                  color: COLORS.green
+                }}
+              >
+                Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name} (round ${data?.localteam?.round})` : data?.awayteam?.winner === "True" ? `${data?.awayteam?.name} (round ${data?.awayteam?.round})` : null}
+              </h3>
+              : null
           }
-        
+
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
@@ -108,16 +108,8 @@ function SnookerCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            ID: {data?.id}
-          </p>
-          <GiSportMedal  size={30} color={COLORS.primary} />
+
+          <GiSportMedal size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,

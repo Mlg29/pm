@@ -40,7 +40,7 @@ function Formula1CardHeader({ gameInfo }) {
         <div style={styles.container}>
             <div style={styles.row}>
                 <p style={{ ...FONTS.h7 }}>{gameInfo?.name}</p>
-                <p style={{ ...FONTS.h7 }}>Race ID: {gameInfo?.id}</p>
+
             </div>
 
             <div style={styles.center}>

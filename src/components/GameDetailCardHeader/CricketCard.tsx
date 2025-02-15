@@ -104,15 +104,7 @@ function CricketCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            ID: {data?.id}
-          </p>
+
           <BiSolidCricketBall size={30} color={COLORS.primary} />
 
           <p

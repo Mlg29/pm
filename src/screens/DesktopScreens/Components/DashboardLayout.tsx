@@ -124,7 +124,7 @@ function DashboardLayout({ children }) {
     setCountryList(x);
   }, []);
 
-  console.log({ search })
+
   const countries = countryList?.filter(m => m?.country?.toLowerCase().includes(search?.toLowerCase())).map(dd => dd?.country)
   const TopLeagues = sportEvents === "Soccer" ? Leagues : sportEvents === "Basketball" ? BasketLeagues : sportEvents === "Tennis" ? TennisLeague : sportEvents === "Horse" ? HorseLeague : sportEvents === "Boxing" ? BoxingLeague : sportEvents === "MMA/UFC" ? MmaLeague : sportEvents === "Cricket" ? CricketLeague : sportEvents === "AFL" ? AflLeague : sportEvents === "NASCAR" ? NascarLeague : sportEvents === "Baseball" ? BaseballLeague : sportEvents === "Aussie Rules" ? AussieLeague : []
 
@@ -165,7 +165,7 @@ function DashboardLayout({ children }) {
             </div>
             <div style={{ ...styles.subBox2 }}>
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} />
+              {/* <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} /> */}
 
               <div style={{ maxHeight: 600, overflowY: "auto" }}>
                 {countries?.map((data: any, i) => {
@@ -207,7 +207,7 @@ function DashboardLayout({ children }) {
             </div>
             <div style={{ ...styles.subBox2 }}>
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} />
+              {/* <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} /> */}
 
               <div style={{ maxHeight: 600, overflowY: "auto" }}>
                 {countries?.map((data: any, i) => {
@@ -244,7 +244,7 @@ function DashboardLayout({ children }) {
             </div>
             <div style={{ ...styles.subBox2 }}>
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} />
+              {/* <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} /> */}
 
               <div style={{ maxHeight: 600, overflowY: "auto" }}>
                 {countries?.map((data: any, i) => {

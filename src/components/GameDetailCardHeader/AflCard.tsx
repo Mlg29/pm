@@ -65,9 +65,9 @@ function AflCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           AFL
+            AFL
           </p>
-        
+
           <MdSportsRugby size={30} color={COLORS.primary} />
           <p
             style={{
@@ -90,7 +90,7 @@ function AflCard(props) {
           >
             {data?.localteam?.totalscore ? data?.localteam?.totalscore : 0} - {data?.hometeam?.totalscore ? data?.hometeam?.totalscore : 0}
           </h3>
-        
+
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
@@ -104,15 +104,7 @@ function AflCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            ID: {data?.id}
-          </p>
+
           <MdSportsRugby size={30} color={COLORS.primary} />
           <p
             style={{

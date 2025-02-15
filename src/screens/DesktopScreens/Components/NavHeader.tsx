@@ -93,7 +93,7 @@ const styles = {
     alignItems: "center",
     borderBottom: `1px solid ${COLORS.semiGray}`,
     background: COLORS.white,
-    padding: "0px 2rem",
+    padding: "1rem 2rem",
   },
   rowDes: {
     display: "flex",
@@ -322,7 +322,7 @@ function NavHeader() {
           <div style={{ ...styles.row }}>
             {getToken && <div style={{ width: "10%" }}></div>}
             <div style={{ width: "50%" }}>
-              <SearchInput disabled placeholder="Search by sport, club or game" />
+              {/* <SearchInput disabled placeholder="Search by sport, club or game" /> */}
             </div>
 
             {getToken ? (
@@ -626,7 +626,7 @@ function NavHeader() {
           <div style={{ ...styles.rowDes }}>
             {getToken && <div style={{ width: "10%" }}></div>}
             <div style={{ width: "50%" }}>
-              <SearchInput disabled placeholder="Search by sport, club or game" />
+              {/* <SearchInput disabled placeholder="Search by sport, club or game" /> */}
             </div>
 
             {getToken ? (
@@ -926,7 +926,7 @@ function NavHeader() {
           )}
           <div style={{ ...styles.rowTab }}>
             <div style={{ width: "30%" }}>
-              <SearchInput disabled placeholder="Search by sport, club or game" />
+              {/* <SearchInput disabled placeholder="Search by sport, club or game" /> */}
             </div>
             {getToken ? (
               <div

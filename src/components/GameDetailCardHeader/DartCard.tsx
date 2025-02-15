@@ -63,9 +63,9 @@ function DartCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           Dart
+            Dart
           </p>
-        
+
           <SiDart size={30} color={COLORS.primary} />
           <p
             style={{
@@ -88,21 +88,21 @@ function DartCard(props) {
           >
             {data?.localteam?.totalscore ? data?.localteam?.totalscore : 0} - {data?.awayteam?.totalscore ? data?.awayteam?.totalscore : 0}
           </h3> */}
-           {
+          {
             data?.localteam?.winner === "True" || data?.awayteam?.winner === "True" ?
-            <h3
-            style={{
-              ...FONTS.h7,
-              textAlign: "center",
-              margin: "10px 0px 0px 0px",
-              color: COLORS.green
-            }}
-          >
-           Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name} (round ${data?.localteam?.round})` : data?.awayteam?.winner === "True" ?`${data?.awayteam?.name} (round ${data?.awayteam?.round})` : null}
-          </h3>
-          : null
+              <h3
+                style={{
+                  ...FONTS.h7,
+                  textAlign: "center",
+                  margin: "10px 0px 0px 0px",
+                  color: COLORS.green
+                }}
+              >
+                Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name} (round ${data?.localteam?.round})` : data?.awayteam?.winner === "True" ? `${data?.awayteam?.name} (round ${data?.awayteam?.round})` : null}
+              </h3>
+              : null
           }
-        
+
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
@@ -116,16 +116,8 @@ function DartCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            ID: {data?.id}
-          </p>
-          <SiDart  size={30} color={COLORS.primary} />
+
+          <SiDart size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,

@@ -70,7 +70,6 @@ function Dashboard() {
   const [upcoming, setUpcoming] = useState<any>([]);
   const [upcomingTennis, setUpcomingTennis] = useState<any>([]);
   const [liveTennis, setLiveTennis] = useState<any>([]);
-  const [today, setToday] = useState<any>([]);
   const [tomorrow, setTomorrow] = useState<any>([]);
   const [sportEvents, setSportEvents] = useState(
     localStorage.getItem("sport") || "Soccer"
@@ -104,16 +103,13 @@ function Dashboard() {
     }
   };
 
-  const handleDateChange = (date) => {
-    const customDate = moment(date).format("YYYY-MM-DD");
-    setSelectedDate(date);
 
-    return navigate("/filter", {
-      state: {
-        gameName: sportEvents,
-        customDate: customDate,
-      },
-    });
+
+  const handleDateChange = (date) => {
+    const today = new Date() as any;
+    const selectedIndex = Math.ceil((date - today) / (1000 * 60 * 60 * 24)) + 1;
+    console.log("Selected Index:", selectedIndex); // Logs 1 for today, 2 for tomorrow, etc.
+
   };
 
   useEffect(() => {
@@ -157,7 +153,7 @@ function Dashboard() {
     <div style={{ ...styles.container }}>
       <DashboardLayout>
         <div>
-          <div>
+          <div style={{ height: "300px", overflow: "hidden" }}>
             <SliderComponent />
           </div>
 
@@ -173,6 +169,8 @@ function Dashboard() {
               <DatePicker
                 selected={selectedDate}
                 onChange={(date) => handleDateChange(date)}
+                minDate={new Date()}
+                maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}
                 customInput={
                   // <ExampleCustomInput className="example-custom-input" />
                   <FaCalendarAlt />

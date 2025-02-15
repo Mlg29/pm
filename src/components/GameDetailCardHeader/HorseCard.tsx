@@ -40,7 +40,7 @@ function HorseCard({ gameInfo }) {
     <div style={styles.container}>
       <div style={styles.row}>
         <p style={{ ...FONTS.h7 }}>{gameInfo?.league}</p>
-        <p style={{ ...FONTS.h7 }}>Race ID: {gameInfo?.id}</p>
+
       </div>
 
       <div style={styles.center}>

@@ -72,20 +72,20 @@ function BetSlip() {
 
       return pp?.payload?.map(dd => {
 
-        if (active === "Active") {
+        if (active === "ACTIVE") {
           const payloadData = {
             betId: dd?.id,
             outcome: userData?.id === dd?.userId ? dd?.prediction : dd?.opponentPrediction
           }
-
           dispatch(settleBet(payloadData)).then(aa => console.log({ aa }))
         }
+
+
       })
 
 
     });
   }
-
 
   setInterval(fetchBetData, 5000);
 

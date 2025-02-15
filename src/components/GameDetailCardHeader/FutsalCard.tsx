@@ -65,9 +65,9 @@ function FutsalCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-           {data?.leagueName}
+            {data?.leagueName}
           </p>
-        <img src={futsol} />
+          <img src={futsol} />
           {/* <FaVolleyball size={30} color={COLORS.primary} /> */}
           <p
             style={{
@@ -90,7 +90,7 @@ function FutsalCard(props) {
           >
             {data?.localteam?.goals ? data?.localteam?.goals : 0} - {data?.awayteam?.goals ? data?.awayteam?.goals : 0}
           </h3>
-        
+
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
           </p>
@@ -104,15 +104,7 @@ function FutsalCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            ID: {data?.id}
-          </p>
+
           <img src={futsol} />
           <p
             style={{
