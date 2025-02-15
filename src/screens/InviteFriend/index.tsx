@@ -170,26 +170,7 @@ const InviteFriend = () => {
             prefix={userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}
           />
 
-          {/* <div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: 30,
-              }}
-            >
-              <div style={{ width: "30px" }}>
-                <input
-                  type="checkbox"
-                  onChange={checkHandler}
-                  checked={allowCurrency}
-                />
-              </div>
-              <p>Allow Other Currency</p>
-            </div>
-          </div> */}
-
-          {(exRate && checkSelectedUserDetail && (checkSelectedUserDetail?.defaultCurrency !== userData?.defaultCurrency)) ? (
+          {(exRate && email && amount && checkSelectedUserDetail && (checkSelectedUserDetail?.defaultCurrency !== userData?.defaultCurrency)) ? (
             <div style={{ marginTop: 30 }}>
               <p>
                 The invited participant has a {checkSelectedUserDetail?.defaultCurrency} account. {checkSelectedUserDetail?.defaultCurrency} equivalence of
@@ -214,7 +195,7 @@ const InviteFriend = () => {
           ) : null}
 
 
-          {(exRate && !checkSelectedUserDetail && userData?.defaultCurrency === "NGN") ? (
+          {(exRate && email && amount && !checkSelectedUserDetail && userData?.defaultCurrency === "NGN") ? (
             <div style={{ marginTop: 30 }}>
               <p>
                 If the invited participant sets up a USD account, the USD equivalence of your bet amount is:  ${exRate?.rate * parseInt(amount)}
@@ -237,7 +218,9 @@ const InviteFriend = () => {
             </div>
           ) : null}
 
-          {(exRate && !checkSelectedUserDetail && userData?.defaultCurrency === "USD") ? (
+
+
+          {(exRate && email && amount && !checkSelectedUserDetail && userData?.defaultCurrency === "USD") ? (
             <div style={{ marginTop: 30 }}>
               <p>
                 All bets on this platform are primarily placed in USD. However, if your opponent is based in Nigeria, the bet will be processed in Nigerian Naira (NGN). Naira equivalence of your bet amount: ₦{exRate?.rate * parseInt(amount)}
