@@ -23,14 +23,14 @@ function Football({ leagueName }) {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'd1'
+      range: 'upcoming'
     }
 
     const payloadTomorrow = {
-      range: 'd2'
+      range: 'd1'
     }
     const payloadFinished = {
-      range: 'd-1'
+      range: 'finished'
     }
 
     dispatch(getFootballFixtures(null)).then((dd) => {
@@ -138,7 +138,7 @@ function Football({ leagueName }) {
                       }
                       return (
                         <div key={i}>
-                          <GameCard id={i} data={payload} />
+                          <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                         </div>
                       )
                     })}
@@ -148,7 +148,7 @@ function Football({ leagueName }) {
             })}
 
             {live?.length < 1 ? (
-              <EmptyState header={`No Game Available for ${leagueName}`} height='30vh' />
+              <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
         ) : null}
@@ -173,7 +173,7 @@ function Football({ leagueName }) {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.matches?.map((aa, i) => {
+                    {item?.match?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
                         country: item?.country,
@@ -182,7 +182,7 @@ function Football({ leagueName }) {
                       }
                       return (
                         <div key={i}>
-                          <GameCard id={i} data={payload} />
+                          <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                         </div>
                       )
                     })}
@@ -192,7 +192,7 @@ function Football({ leagueName }) {
             })}
 
             {upcoming?.length < 1 ? (
-              <EmptyState header={`No Game Available for ${leagueName}`} height='30vh' />
+              <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
         ) : null}
@@ -216,7 +216,7 @@ function Football({ leagueName }) {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.matches?.map((aa, i) => {
+                    {item?.match?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
                         country: item?.country,
@@ -225,7 +225,7 @@ function Football({ leagueName }) {
                       }
                       return (
                         <div key={i}>
-                          <GameCard id={i} data={payload} />
+                          <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                         </div>
                       )
                     })}
@@ -235,7 +235,7 @@ function Football({ leagueName }) {
             })}
 
             {finished?.length < 1 ? (
-              <EmptyState header={`No Game Available for ${leagueName}`} height='30vh' />
+              <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
         ) : null}
@@ -266,7 +266,7 @@ function Football({ leagueName }) {
                     }
                     return (
                       <div key={i}>
-                        <GameCard id={i} data={payload} />
+                        <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                       </div>
                     )
                   })}
@@ -275,7 +275,7 @@ function Football({ leagueName }) {
             ))}
 
             {tomorrow?.length < 1 ? (
-              <EmptyState header={`No Game Available for ${leagueName}`} height='30vh' />
+              <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
         ) : null}

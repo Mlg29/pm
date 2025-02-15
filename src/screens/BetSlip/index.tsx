@@ -62,6 +62,7 @@ function BetSlip() {
     });
   }, [active]);
 
+
   const fetchBetData = () => {
     const payload = {
       status: active,
@@ -70,11 +71,13 @@ function BetSlip() {
     dispatch(getBetHistory(payload)).then((pp) => {
 
       return pp?.payload?.map(dd => {
-        if (dd?.payload?.sportEvent?.outcome) {
+
+        if (active === "Active") {
           const payloadData = {
-            betId: dd?.payload?.id,
-            outcome: dd?.payload?.sportEvent?.outcome
+            betId: dd?.id,
+            outcome: userData?.id === dd?.userId ? dd?.prediction : dd?.opponentPrediction
           }
+
           dispatch(settleBet(payloadData)).then(aa => console.log({ aa }))
         }
       })
@@ -84,9 +87,8 @@ function BetSlip() {
   }
 
 
+  setInterval(fetchBetData, 5000);
 
-
-  // setInterval(fetchBetData, 5000);
 
 
   const groupByDate = (data) => {

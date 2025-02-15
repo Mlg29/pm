@@ -219,7 +219,7 @@ function OpenBet() {
   }
 
   const getPrediction = (prediction: string) => {
-    const result = game?.horses?.horse
+    const result = game?.runners
       .filter((item, i) => prediction === `W${i + 1}`)
       .map((horse, i) => {
         return `${horse?.name} WIN`;
@@ -1134,7 +1134,7 @@ function OpenBet() {
                   {data?.sportEvent?.sport === "HORSE_RACING" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
-                        {game?.tournamentName}
+                        {game?.league}
                       </p>
 
                       <div style={{ ...styles.row }}>
@@ -1145,6 +1145,7 @@ function OpenBet() {
                               ...FONTS.body7,
                               marginTop: "10px",
                               color: COLORS.red,
+                              textTransform: 'capitalize'
                             }}
                           >
                             {game?.status}
@@ -1164,7 +1165,7 @@ function OpenBet() {
                       <div
                         style={{ ...styles.horseRow, scrollbarWidth: "none" }}
                       >
-                        {game?.horses?.horse?.map((gm) => {
+                        {game?.runners?.map((gm) => {
                           return (
                             <div
                               style={{ margin: "10px 10px", paddingBottom: 10 }}

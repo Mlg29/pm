@@ -37,8 +37,17 @@ export const styles = {
   },
 };
 
-function GameCard({ data, id }) {
+function GameCard({ data, id, sportStatus }) {
   const navigate = useNavigate();
+
+  const utcDate = new Date(data?.datetimeUtc);
+  const localTime = utcDate.toLocaleTimeString("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
+
 
 
   return (
@@ -54,10 +63,10 @@ function GameCard({ data, id }) {
       >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-            ({data?.formattedDate} - {data?.time})
+            ({data?.formattedDate} - {localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.status}
+            {sportStatus === "Scheduled" ? "Not Started" : data?.status}
           </p>
         </div>
         <div style={styles.box2}>

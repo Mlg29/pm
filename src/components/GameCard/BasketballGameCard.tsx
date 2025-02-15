@@ -44,6 +44,13 @@ export const styles = {
 function BasketballGameCard({ id, data }) {
   const navigate = useNavigate();
 
+  const utcDate = new Date(data?.datetimeUtc);
+  const localTime = utcDate.toLocaleTimeString("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
 
 
   return (
@@ -58,9 +65,9 @@ function BasketballGameCard({ id, data }) {
         }
       >
         <div style={styles.box1}>
-        <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-         ({data?.date} - {data?.time})
-        </p>
+          <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+            ({data?.date} - {localTime})
+          </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status}
           </p>
@@ -70,7 +77,7 @@ function BasketballGameCard({ id, data }) {
           <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.name}</p>
         </div>
         <div style={styles.box3}>
-    
+
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
               {data?.localTeam?.totalScore

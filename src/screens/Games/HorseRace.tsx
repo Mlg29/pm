@@ -33,7 +33,6 @@ function HorseRace() {
       setLive(dd?.payload?.tournaments || [])
     })
     dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
-
       setSchedule(dd?.payload?.tournaments || [])
     })
     dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
@@ -43,6 +42,8 @@ function HorseRace() {
 
     return
   }, [])
+
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -60,6 +61,7 @@ function HorseRace() {
       name: 'Finished'
     }
   ]
+
 
 
   return (

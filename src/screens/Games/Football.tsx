@@ -22,14 +22,14 @@ function Football() {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'd1'
+      range: 'upcoming'
     }
 
     const payloadTomorrow = {
-      range: 'd2'
+      range: 'd1'
     }
     const payloadFinished = {
-      range: 'd-1'
+      range: 'finished'
     }
 
     dispatch(getFootballFixtures(null)).then((dd) => {
@@ -37,15 +37,18 @@ function Football() {
     })
 
     dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
+      setFinished(dd?.payload?.category || [])
     })
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
       setTomorrow(dd?.payload || [])
     })
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
+
+      setUpcoming(dd?.payload?.category || [])
     })
   }, [dispatch])
+
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -67,6 +70,7 @@ function Football() {
       name: 'Next Day'
     }
   ]
+
 
   return (
     <div>
@@ -107,6 +111,7 @@ function Football() {
         {selectedStatus === 'Live' ? (
           <>
             {live?.map((item, i) => {
+
               return (
                 <div key={i}>
                   <p
@@ -132,7 +137,7 @@ function Football() {
                       }
                       return (
                         <div key={i}>
-                          <GameCard id={i} data={payload} />
+                          <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                         </div>
                       )
                     })}
@@ -167,7 +172,7 @@ function Football() {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.matches?.map((aa, i) => {
+                    {item?.match?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
                         country: item?.country,
@@ -176,7 +181,7 @@ function Football() {
                       }
                       return (
                         <div key={i}>
-                          <GameCard id={i} data={payload} />
+                          <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                         </div>
                       )
                     })}
@@ -210,7 +215,7 @@ function Football() {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.matches?.map((aa, i) => {
+                    {item?.match?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
                         country: item?.country,
@@ -219,7 +224,7 @@ function Football() {
                       }
                       return (
                         <div key={i}>
-                          <GameCard id={i} data={payload} />
+                          <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                         </div>
                       )
                     })}
@@ -260,7 +265,7 @@ function Football() {
                     }
                     return (
                       <div key={i}>
-                        <GameCard id={i} data={payload} />
+                        <GameCard id={i} data={payload} sportStatus={selectedStatus} />
                       </div>
                     )
                   })}

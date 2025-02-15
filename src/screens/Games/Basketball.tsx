@@ -37,7 +37,7 @@ function Basketball() {
       setUpcoming(dd?.payload || [])
     })
     dispatch(getBasketballFixtures(null)).then((dd) => {
-      setLive(dd?.payload || [])
+      setLive(dd?.payload?.category || [])
     })
     dispatch(getBasketballFixtures(payloadFinished)).then((dd) => {
       setFinished(dd?.payload || [])
@@ -112,13 +112,13 @@ function Basketball() {
                     marginRight: 5
                   }}
                 >
-                  {item?.name}
+                  {item?.name || item?.league}
                 </p>
                 <div>
                   {item?.match?.map((aa, i) => {
                     const payload = {
-                      league: item?.name,
-                      country: item?.fileGroup,
+                      league: item?.name || item?.league,
+                      country: item?.fileGroup || item?.country,
                       leagueId: item?.id,
                       ...aa
                     }
@@ -159,7 +159,7 @@ function Basketball() {
                   {item?.match?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      country: item?.fileGroup,
+                      country: item?.fileGroup || item?.country,
                       leagueId: item?.id,
                       ...aa
                     }
@@ -218,7 +218,7 @@ function Basketball() {
                   {item?.match?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
-                      country: item?.fileGroup,
+                      country: item?.fileGroup || item?.country,
                       leagueId: item?.id,
                       ...aa
                     }

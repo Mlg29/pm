@@ -43,6 +43,7 @@ function HorseGameCard({ id, data }) {
   const navigate = useNavigate();
 
 
+
   return (
     <div
       style={styles.container}
@@ -66,6 +67,7 @@ function HorseGameCard({ id, data }) {
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.datetimeUtc}
           </p>
+
         </div>
         <div style={styles.box2}>
 

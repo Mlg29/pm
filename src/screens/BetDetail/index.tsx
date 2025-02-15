@@ -94,6 +94,7 @@ function BetDetail() {
     return result;
   };
 
+
   return (
     <div className="top-container">
       {sportType === "FOOTBALL" && (
@@ -458,7 +459,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{" "}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}
                 {formatCurrency(
                   betData?.betAmount || betData?.opponentBetAmount
                 )}
