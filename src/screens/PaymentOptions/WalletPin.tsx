@@ -143,8 +143,10 @@ function WalletPin() {
           });
         } else {
           var errMsg = response?.payload as string;
+
+          var err = Array.isArray(errMsg) ? errMsg[0] : errMsg
           setLoader(false);
-          toast.error(errMsg, {
+          toast.error(err, {
             position: "bottom-center",
           });
         }

@@ -49,8 +49,15 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
-    width: 250,
+    // width: 250,
     margin: "20px 0px",
+  },
+  rw2: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
+    // width: 250,
+    margin: "0px 0px",
   },
   btnRow: {
     display: "flex",
@@ -88,7 +95,7 @@ function Transaction() {
 
 
 
-
+  console.log({ userData })
 
   const getNotification = async () => {
     await dispatch(getNotifications());
@@ -125,6 +132,9 @@ function Transaction() {
     fetchTransactions();
     getNotification();
   }, []);
+
+
+
 
   if (loader) {
     return (
@@ -192,6 +202,7 @@ function Transaction() {
                   display: "flex",
                   justifyContent: "space-evenly",
                   alignItems: "center",
+                  margin: "0px 10px"
                 }}
               >
                 <h2 style={{ ...FONTS.largeTitle, color: COLORS.white }}>
@@ -205,6 +216,7 @@ function Transaction() {
                   display: "flex",
                   justifyContent: "space-evenly",
                   alignItems: "center",
+                  margin: "0px 10px"
                 }}
               >
                 <FaAsterisk color={COLORS.white} size={30} />
@@ -214,7 +226,53 @@ function Transaction() {
                 <FaAsterisk color={COLORS.white} size={30} />
               </div>
             )}
-            <div style={{ cursor: "pointer", marginLeft: 30 }}>
+            <div style={{ cursor: "pointer" }}>
+              {show ? (
+                <GoEye color={COLORS.white} onClick={() => setShow(!show)} />
+              ) : (
+                <GoEyeClosed
+                  color={COLORS.white}
+                  onClick={() => setShow(!show)}
+                />
+              )}
+            </div>
+          </div>
+
+          <p style={{ ...FONTS.body7, color: COLORS.white }}>Withdrawable Balance</p>
+          <div style={{ ...styles.rw2 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.white }}>{userData?.defaultCurrency === "NGN" ? "NGN" : "USD"}</p>
+            {show ? (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  margin: "0px 10px"
+                }}
+              >
+                <h2 style={{ ...FONTS.largeTitle, color: COLORS.white }}>
+                  {formatCurrency(userData?.availableBalance)}
+                </h2>
+              </div>
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  margin: "0px 10px"
+                }}
+              >
+                <FaAsterisk color={COLORS.white} size={30} />
+                <FaAsterisk color={COLORS.white} size={30} />
+                <FaAsterisk color={COLORS.white} size={30} />
+                <FaAsterisk color={COLORS.white} size={30} />
+                <FaAsterisk color={COLORS.white} size={30} />
+              </div>
+            )}
+            <div style={{ cursor: "pointer" }}>
               {show ? (
                 <GoEye color={COLORS.white} onClick={() => setShow(!show)} />
               ) : (

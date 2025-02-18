@@ -35,7 +35,7 @@ function FootballDetail({
   const loading = useAppSelector(footballFixtureStatusState) as any
 
   const dispatch = useAppDispatch() as any
-  console.log({ gameInfo })
+
   useEffect(() => {
     const homeTeam = {
       teamId: gameInfo?.localTeam?.teamId

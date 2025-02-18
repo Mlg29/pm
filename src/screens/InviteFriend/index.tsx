@@ -70,7 +70,7 @@ const InviteFriend = () => {
     if (email?.length === 0) {
       setUsers([]);
     }
-    if (email?.length > 2) {
+    if (email?.includes("@")) {
       checkUser();
     }
   }, [email]);
@@ -91,7 +91,7 @@ const InviteFriend = () => {
     const payload = {
       invitedUser: email,
       amount: amount,
-      // allowOtherCurrency: allowCurrency,
+      allowOtherCurrency: true,
     };
 
     localStorage.setItem("inviteeInfo", JSON.stringify(payload));

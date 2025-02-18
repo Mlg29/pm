@@ -55,7 +55,7 @@ function GameDetailCardHeader(props: any) {
         teamId: data?.localTeam?.teamId
       }
       dispatch(getLogo(payload)).then(pp => {
-        console.log({ pp })
+        console.log(">>>", { pp })
         //setHomeLogo(pp)
       })
     }
