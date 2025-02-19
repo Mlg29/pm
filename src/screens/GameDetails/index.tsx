@@ -211,7 +211,7 @@ function GameDetails() {
             visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
           }),
           ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
-          ...(gameType === "Horse" || gameType === "Formula1" ? { racers: players } : {}),
+          ...(gameType === "Horse" || gameType === "Formula1" ? { playerNames: players } : {}),
           ...(gameType === "Tennis" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
         }
 

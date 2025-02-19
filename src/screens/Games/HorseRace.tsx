@@ -30,10 +30,10 @@ function HorseRace() {
     }
     dispatch(getHorseFixtures(null)).then((dd) => {
 
-      setLive(dd?.payload?.tournaments || [])
+      setLive(dd?.payload?.scores?.tournaments || [])
     })
     dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
-      setSchedule(dd?.payload?.tournaments || [])
+      setSchedule(dd?.payload?.scores?.tournaments || [])
     })
     dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
 

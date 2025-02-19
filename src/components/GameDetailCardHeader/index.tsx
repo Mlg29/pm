@@ -3,8 +3,8 @@ import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import noLogo from "../../assets/images/no.jpg";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../redux/hooks";
-import { getLogo } from "../../redux/slices/FootballSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { awayLogoState, getLogo, getSecondLogo, homeLogoState } from "../../redux/slices/FootballSlice";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -42,28 +42,10 @@ export const styles = {
 
 function GameDetailCardHeader(props: any) {
   const navigate = useNavigate();
-  const { propStyle, data } = props;
-  const [homeLogo, setHomeLogo] = useState(null)
-  const [awayLogo, setAwayLogo] = useState(null)
+  const { propStyle, data, homeLogo, awayLogo } = props;
+
   const dispatch = useAppDispatch() as any
 
-
-
-  useEffect(() => {
-    const getLogos = () => {
-      const payload = {
-        teamId: data?.localTeam?.teamId
-      }
-      dispatch(getLogo(payload)).then(pp => {
-        console.log(">>>", { pp })
-        //setHomeLogo(pp)
-      })
-    }
-
-    getLogos()
-
-
-  }, [data?.localTeam?.teamId, data?.visitorTeam?.teamId])
 
 
   return (
@@ -89,7 +71,7 @@ function GameDetailCardHeader(props: any) {
           </p>
 
 
-          {!data?.localTeam?.teamLogo ? (
+          {!homeLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (
             <img src={`data:image/png;base64,${homeLogo}`} style={{ width: "20px" }} alt="Logo" />
@@ -142,7 +124,7 @@ function GameDetailCardHeader(props: any) {
           }}
         >
 
-          {!data?.visitorTeam?.teamLogo ? (
+          {!awayLogo ? (
             <img src={noLogo} style={{ width: "30px" }} />
           ) : (
             <img src={`data:image/png;base64,${awayLogo}`} style={{ width: "20px" }} alt="Logo" />

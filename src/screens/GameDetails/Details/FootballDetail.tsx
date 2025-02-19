@@ -15,9 +15,11 @@ import {
   footballFixtureStatusState,
   getLogo,
   getMatchStat,
+  getSecondLogo,
   getStat
 } from '../../../redux/slices/FootballSlice'
 import { LoadingState } from '../../../components/LoadingState'
+import { SportSportBaseUrl } from '../../../https'
 
 function FootballDetail({
   selected,
@@ -33,8 +35,19 @@ function FootballDetail({
   const [awayStat, setAwayStat] = useState(null)
   const [matchStat, setMatchStat] = useState(null)
   const loading = useAppSelector(footballFixtureStatusState) as any
-
+  const [homeLogo, setHomeLogo] = useState(null)
+  const [awayLogo, setAwayLogo] = useState(null)
   const dispatch = useAppDispatch() as any
+
+  const fetchLogos = async () => {
+    await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.localTeam?.teamId}`).then(res => res?.json()).then(m => setHomeLogo(m?.base64)).finally(async () => {
+      // await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.visitorTeam?.teamId}`).then(res => res?.json()).then(y => {
+      //   // console.log(">>>>>>>", y)
+      //   setAwayLogo(y?.base64)
+      // })
+    })
+
+  }
 
   useEffect(() => {
     const homeTeam = {
@@ -57,13 +70,20 @@ function FootballDetail({
     dispatch(getStat(awayTeam)).then((dd) => {
       setAwayStat(dd?.payload?.teams?.team)
     })
-    dispatch(getMatchStat(matchStatPayload)).then((dd) => {
-
+    dispatch(getMatchStat(matchStatPayload)).then(async (dd) => {
       setMatchStat(dd?.payload)
+      await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.visitorTeam?.teamId}`).then(res => res?.json()).then(y => {
+        // console.log(">>>>>>>", y)
+        setAwayLogo(y?.base64)
+      })
     })
+
+    fetchLogos()
+
   }, [])
 
   const footballMatch = matchStat?.commentaries?.tournament?.match
+
 
   return (
     <>
@@ -77,8 +97,8 @@ function FootballDetail({
       >
         <GameDetailCardHeader
           data={gameInfo}
-          homeLogo={gameInfo?.localTeam?.teamLogo}
-          awayLogo={gameInfo?.visitorTeam?.teamLogo}
+          homeLogo={homeLogo}
+          awayLogo={awayLogo}
         />
 
         <div

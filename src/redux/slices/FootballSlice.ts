@@ -19,7 +19,9 @@ import { SportSportBaseUrl } from "../../https";
 const initialState = {
   loading: false,
   footballFixtures: [],
-  footballEvents: []
+  footballEvents: [],
+  homeLogo: null,
+  awayLogo: null
 };
 
 
@@ -56,7 +58,14 @@ export const getFootballEvents = createAsyncThunk("football/getFootballEvents", 
 export const getLogo = createAsyncThunk("football/getLogo", async (payload: any) => {
   var response = await getRequest(`${SportSportBaseUrl}/soccer/logo?teamId=${payload.teamId}`);
   if (response?.status === 200 || response?.status === 201) {
-    return response?.data;
+    return response;
+  }
+});
+
+export const getSecondLogo = createAsyncThunk("football/getSecondLogo", async (payload: any) => {
+  var response = await getRequest(`${SportSportBaseUrl}/soccer/logo?teamId=${payload.teamId}`);
+  if (response?.status === 200 || response?.status === 201) {
+    return response;
   }
 });
 
@@ -115,12 +124,26 @@ export const FootballSlice = createSlice({
       builder.addCase(
         getLogo.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
-
+          // state.loading = false;
+          state.homeLogo = action.payload.data.base64;
 
         }
       );
     builder.addCase(getLogo.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getSecondLogo.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getSecondLogo.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          // state.loading = false;
+          state.awayLogo = action.payload.data.base64;
+
+        }
+      );
+    builder.addCase(getSecondLogo.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(getStat.pending, (state, action) => {
@@ -156,5 +179,6 @@ export const FootballSlice = createSlice({
 export const footballEventState = (state: RootState) => state.football.footballEvents;
 export const footballFixtureState = (state: RootState) => state.football.footballFixtures;
 export const footballFixtureStatusState = (state: RootState) => state.football.loading;
-
+export const homeLogoState = (state: RootState) => state.football.homeLogo;
+export const awayLogoState = (state: RootState) => state.football.awayLogo;
 export default FootballSlice.reducer;
