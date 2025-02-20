@@ -79,7 +79,7 @@ function TennisGameCard({ id, data }) {
                 <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
 
                   <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-                    {dd?.totalscore}
+                    {dd?.totalscore || dd?.totalScore}
                   </p>
 
                 </div>

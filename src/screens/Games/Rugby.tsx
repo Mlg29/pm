@@ -13,7 +13,7 @@ import {
 import AflGameCard from '../../components/GameCard/AflGameCard'
 import { LoadingState } from '../../components/LoadingState'
 
-function Rugby() {
+function Rugby({ calendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const [Live, setLive] = useState<any>([])

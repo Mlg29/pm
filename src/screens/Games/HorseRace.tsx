@@ -11,7 +11,7 @@ import HorseGameCard from '../../components/GameCard/HorseGameCard'
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 
-function HorseRace() {
+function HorseRace({ calendarDate }) {
   const dispatch = useAppDispatch() as any
   const [finished, setFinished] = useState<any>([])
   const loading = useAppSelector(horseFixtureStatusState) as any
@@ -30,7 +30,7 @@ function HorseRace() {
     }
     dispatch(getHorseFixtures(null)).then((dd) => {
 
-      setLive(dd?.payload?.scores?.tournaments || [])
+      setLive(dd?.payload?.scores?.tournaments || dd?.payload?.races || [])
     })
     dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
       setSchedule(dd?.payload?.scores?.tournaments || [])
@@ -42,7 +42,6 @@ function HorseRace() {
 
     return
   }, [])
-
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')

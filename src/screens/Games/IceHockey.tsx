@@ -10,7 +10,7 @@ import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
 
-function IceHockey() {
+function IceHockey({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])

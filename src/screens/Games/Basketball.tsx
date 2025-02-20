@@ -13,12 +13,13 @@ import EmptyState from '../../components/EmptyState'
 import BasketballGameCard from '../../components/GameCard/BasketballGameCard'
 import { LoadingState } from '../../components/LoadingState'
 
-function Basketball() {
+function Basketball({ calendarDate }) {
   const dispatch = useAppDispatch() as any
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
+  const [tomorrow, setTomorrow] = useState<any>([])
   const loading = useAppSelector(BasketballFixtureeStatusState) as any
 
   let createdDate = moment(new Date()).utc().format()
@@ -32,21 +33,38 @@ function Basketball() {
     const payloadFinished = {
       range: 'd-1'
     }
+    const payloadTomorrow = {
+      range: calendarDate?.index
+    }
 
     dispatch(getBasketballFixtures(payloadUpcoming)).then((dd) => {
       setUpcoming(dd?.payload || [])
     })
     dispatch(getBasketballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.category || [])
+      setLive(dd?.payload?.category || dd?.payload || [])
     })
     dispatch(getBasketballFixtures(payloadFinished)).then((dd) => {
       setFinished(dd?.payload || [])
     })
-  }, [dispatch])
+    dispatch(getBasketballFixtures(payloadTomorrow)).then((dd) => {
+      setTomorrow(dd?.payload || [])
+    })
+  }, [dispatch, calendarDate?.formattedDate])
+
+  const fetchBetData = () => {
+    dispatch(getBasketballFixtures(null)).then((dd) => {
+      setLive(dd?.payload?.category || dd?.payload || [])
+    })
+  }
+
+  useEffect(() => {
+    const interval = setInterval(fetchBetData, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const [selectedStatus, setSelectedStatus] = useState('Finished')
 
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -60,6 +78,28 @@ function Basketball() {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
+
 
   return (
     <div>
@@ -233,6 +273,66 @@ function Basketball() {
             ))}
 
             {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Basketball' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {tomorrow?.length > 0 && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <p
+                  style={{
+                    ...FONTS.body6,
+                    color: COLORS.gray,
+                    margin: '15px 0px'
+                  }}
+                ></p>
+              </div>
+            )}
+
+            {tomorrow?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      country: item?.fileGroup || item?.country,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <BasketballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {tomorrow?.length < 1 ? (
               <EmptyState header='No Game Available for Basketball' height='30vh' />
             ) : null}
           </>

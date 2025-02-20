@@ -12,7 +12,7 @@ import EmptyState from '../../components/EmptyState'
 import { getEasportFixtures } from '../../redux/slices/Easport'
 import EsportGameCard from '../../components/GameCard/EsportGameCard'
 
-function Easport() {
+function Easport({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])

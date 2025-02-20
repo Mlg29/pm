@@ -9,7 +9,7 @@ import EmptyState from '../../components/EmptyState'
 import { getDartFixtures } from '../../redux/slices/DartSlice'
 import DartGameCard from '../../components/GameCard/DartGameCard'
 
-function Darts() {
+function Darts({ calendarDate }) {
   const navigate = useNavigate()
 
   const [upcoming, setUpcoming] = useState<any>([])

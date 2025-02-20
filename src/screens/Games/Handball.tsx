@@ -9,7 +9,7 @@ import EmptyState from '../../components/EmptyState'
 import { getHandballFixtures } from '../../redux/slices/HandballSlice'
 import HandballGameCard from '../../components/GameCard/HandballGameCard'
 
-function Handball() {
+function Handball({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])

@@ -15,7 +15,7 @@ import EmptyState from '../../components/EmptyState'
 import BoxingGameCard from '../../components/GameCard/BoxingGameCard'
 import { LoadingState } from '../../components/LoadingState'
 
-function Boxing() {
+function Boxing({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [live, setLive] = useState<any>([])
@@ -43,6 +43,7 @@ function Boxing() {
     })
 
     dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
+      console.log({ dd })
       setFinished(dd?.payload?.scores?.categories || [])
     })
   }, [])

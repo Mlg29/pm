@@ -16,7 +16,7 @@ import {
 import MmaGameCard from '../../components/GameCard/MmaGameCard'
 import { LoadingState } from '../../components/LoadingState'
 
-function Mma() {
+function Mma({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
@@ -40,7 +40,7 @@ function Mma() {
     })
 
     dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
+      setUpcoming(dd?.payload?.match || dd?.payload || [])
     })
 
     dispatch(getMmaFixtures(payloadFinished)).then((dd) => {

@@ -13,14 +13,14 @@ import { getNascaFixtures, getNascaMatchFixtures, nascaFixtureStatusState } from
 import { LoadingState } from '../../components/LoadingState'
 import NascarCard from '../../components/GameCard/NascarCard'
 
-function Nascar() {
+function Nascar({ calendarDate }) {
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const loading = useAppSelector(nascaFixtureStatusState) as any
   const dispatch = useAppDispatch() as any
-
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
@@ -67,11 +67,11 @@ function Nascar() {
       })
       setFinished(tp || []);
     });
-  }, [])
+  }, [dispatch, selectedStatus])
 
 
 
-  const [selectedStatus, setSelectedStatus] = useState('Live')
+
 
   const status = [
     {

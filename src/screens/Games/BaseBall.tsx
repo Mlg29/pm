@@ -12,40 +12,47 @@ import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import BaseballGameCard from '../../components/GameCard/BaseballGameCard'
 
-function Baseball() {
+function Baseball({ calendarDate }) {
   const dispatch = useAppDispatch() as any
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
+  const [tomorrow, setTomorrow] = useState<any>([])
   const loading = useAppSelector(BaseballFixtureeStatusState) as any
+  const [selectedStatus, setSelectedStatus] = useState('Finished')
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'd1'
+      range: 'upcoming'
     }
     const payloadFinished = {
-      range: 'd-1'
+      range: 'finished'
+    }
+    const payloadTomorrow = {
+      range: calendarDate?.index
     }
     dispatch(getBaseballFixtures(null)).then((dd) => {
       setLive(dd?.payload?.categories || [])
     })
     dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
+      setUpcoming(dd?.payload?.categories || [])
     })
     dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
+      console.log({ dd })
+      setFinished(dd?.payload?.categories || [])
     })
-  }, [dispatch])
+    dispatch(getBaseballFixtures(payloadTomorrow)).then((dd) => {
+      setTomorrow(dd?.payload || [])
+    })
+  }, [dispatch, selectedStatus])
 
 
 
-  const [selectedStatus, setSelectedStatus] = useState('Finished')
-
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -59,6 +66,29 @@ function Baseball() {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
+
+  console.log({ finished })
 
   return (
     <div>
@@ -168,7 +198,7 @@ function Baseball() {
                     marginRight: 5
                   }}
                 >
-                  {item?.['@name']}
+                  {item?.name}
                 </p>
                 <div>
                   {item?.match?.map((aa, i) => {
@@ -228,6 +258,47 @@ function Baseball() {
             ))}
 
             {finished?.length < 1 ? (
+              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {tomorrow?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <BaseballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {tomorrow?.length < 1 ? (
               <EmptyState header='No Game Available for Baseball' height='30vh' />
             ) : null}
           </>

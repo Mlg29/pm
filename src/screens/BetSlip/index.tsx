@@ -72,13 +72,12 @@ function BetSlip() {
 
       return pp?.payload?.map(dd => {
 
-        if (active === "ACTIVE") {
-          const payloadData = {
-            betId: dd?.id,
-            outcome: userData?.id === dd?.userId ? dd?.prediction : dd?.opponentPrediction
-          }
-          dispatch(settleBet(payloadData)).then(aa => console.log({ aa }))
+        const payloadData = {
+          betId: dd?.id,
+          outcome: userData?.id === dd?.userId ? dd?.prediction : dd?.opponentPrediction
         }
+        dispatch(settleBet(payloadData)).then(aa => console.log({ aa }))
+
 
 
       })
@@ -87,8 +86,11 @@ function BetSlip() {
     });
   }
 
-  setInterval(fetchBetData, 5000);
 
+  useEffect(() => {
+    const interval = setInterval(fetchBetData, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
 
   const groupByDate = (data) => {

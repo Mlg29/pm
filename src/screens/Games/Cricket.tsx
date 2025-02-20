@@ -16,7 +16,7 @@ import CricketGameCard from '../../components/GameCard/CricketGameCard'
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 
-function Cricket() {
+function Cricket({ calendarDate }) {
   const dispatch = useAppDispatch() as any
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
@@ -38,7 +38,7 @@ function Cricket() {
     }
 
     const payloadFinished = {
-      range: 'upcoming'
+      range: 'finished'
     }
 
 
@@ -50,7 +50,8 @@ function Cricket() {
     })
 
     dispatch(getCricketMatchFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
+      console.log({ dd })
+      setFinished(dd?.payload?.scores?.category || dd?.payload || [])
     })
 
     return

@@ -9,7 +9,7 @@ import EmptyState from '../../components/EmptyState'
 import { getFutsalFixtures } from '../../redux/slices/Futsal'
 import FutsalGameCard from '../../components/GameCard/FutsalGameCard'
 
-function Futsol() {
+function Futsol({ calendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const dispatch = useAppDispatch() as any

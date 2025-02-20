@@ -105,6 +105,7 @@ function HomeScreen() {
   const notifications = useAppSelector(notificationState) as any;
   const [loader, setLoader] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [calendarDate, setCalendarDate] = useState<any>(null)
 
 
   const [selectedDate, setSelectedDate] = useState<any>(new Date());
@@ -121,8 +122,24 @@ function HomeScreen() {
 
   const handleDateChange = (date) => {
     const today = new Date() as any;
-    const selectedIndex = Math.ceil((date - today) / (1000 * 60 * 60 * 24)) + 1;
-    console.log("Selected Index:", selectedIndex);
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+
+    const difference = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
+
+    const relativeDate = difference === 0 ? "d0" : difference < 0 ? `d${difference}` : `d+${difference}`;
+
+    const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
+      .toString().padStart(2, '0')}-${date.getFullYear()}`;
+    if (relativeDate === "d0") {
+      return
+    }
+    else {
+      setCalendarDate({
+        index: relativeDate,
+        formattedDate: formattedDate
+      })
+    }
 
   };
 
@@ -579,43 +596,43 @@ function HomeScreen() {
         <DatePicker
           selected={selectedDate}
           onChange={(date) => handleDateChange(date)}
-          minDate={new Date()}
+          minDate={new Date(new Date().setDate(new Date().getDate() - 7))}
           maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}
           customInput={
-            // <ExampleCustomInput className="example-custom-input" />
+
             <FaCalendarAlt />
           }
         />
       </div>
       {selected === "Soccer" && (
         <div>
-          <Football />
+          <Football calendarDate={calendarDate} />
         </div>
       )}
-      {selected === "Basketball" && <Basketball />}
+      {selected === "Basketball" && <Basketball calendarDate={calendarDate} />}
 
-      {selected === "Tennis" && <Tennis />}
+      {selected === "Tennis" && <Tennis calendarDate={calendarDate} />}
 
-      {selected === "Horse" && <HorseRace />}
+      {selected === "Horse" && <HorseRace calendarDate={calendarDate} />}
 
-      {selected === "Boxing" && <Boxing />}
-      {selected === "Cricket" && <Cricket />}
-      {selected === "Baseball" && <Baseball />}
-      {selected === "Volleyball" && <Volleyball />}
-      {selected === "Golf" && <Golf />}
-      {selected === "Hockey" && <Hockey />}
-      {selected === "Formula 1" && <Formula1 />}
-      {selected === "AFL" && <Rugby />}
-      {selected === "Handball" && <Handball />}
-      {selected === "Ice Hockey" && <IceHockey />}
-      {selected === "NASCAR" && <Nascar />}
-      {selected === "Futsal" && <Futsol />}
-      {selected === "MMA/UFC" && <Mma />}
-      {selected === "Darts" && <Darts />}
-      {selected === "Snooker" && <Snooker />}
-      {selected === "Esports" && <Easport />}
-      {selected === "Table Tennis" && <TableTennis />}
-      {selected === "Aussie Rules" && <AussieRules />}
+      {selected === "Boxing" && <Boxing calendarDate={calendarDate} />}
+      {selected === "Cricket" && <Cricket calendarDate={calendarDate} />}
+      {selected === "Baseball" && <Baseball calendarDate={calendarDate} />}
+      {selected === "Volleyball" && <Volleyball calendarDate={calendarDate} />}
+      {selected === "Golf" && <Golf calendarDate={calendarDate} />}
+      {selected === "Hockey" && <Hockey calendarDate={calendarDate} />}
+      {selected === "Formula 1" && <Formula1 calendarDate={calendarDate} />}
+      {selected === "AFL" && <Rugby calendarDate={calendarDate} />}
+      {selected === "Handball" && <Handball calendarDate={calendarDate} />}
+      {selected === "Ice Hockey" && <IceHockey calendarDate={calendarDate} />}
+      {selected === "NASCAR" && <Nascar calendarDate={calendarDate} />}
+      {selected === "Futsal" && <Futsol calendarDate={calendarDate} />}
+      {selected === "MMA/UFC" && <Mma calendarDate={calendarDate} />}
+      {selected === "Darts" && <Darts calendarDate={calendarDate} />}
+      {selected === "Snooker" && <Snooker calendarDate={calendarDate} />}
+      {selected === "Esports" && <Easport calendarDate={calendarDate} />}
+      {selected === "Table Tennis" && <TableTennis calendarDate={calendarDate} />}
+      {selected === "Aussie Rules" && <AussieRules calendarDate={calendarDate} />}
 
       {getToken && <BottomTabs />}
     </div>

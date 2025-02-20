@@ -11,7 +11,7 @@ import {
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 
-function Football() {
+function Football({ calendarDate }) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch() as any
   const [live, setLive] = useState<any>([])
@@ -22,13 +22,14 @@ function Football() {
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
+
   useEffect(() => {
     const payloadUpcoming = {
       range: 'upcoming'
     }
 
     const payloadTomorrow = {
-      range: 'd1'
+      range: calendarDate?.index
     }
     const payloadFinished = {
       range: 'finished'
@@ -50,10 +51,34 @@ function Football() {
     })
   }, [dispatch, selectedStatus])
 
+  const fetchBetData = () => {
+    dispatch(getFootballFixtures(null)).then((dd) => {
+      setLive(dd?.payload)
+    })
+  }
+
+  useEffect(() => {
+    const interval = setInterval(fetchBetData, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
 
+  const oldStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    }
+  ]
 
-  const status = [
+  const secondStatus = [
     {
       id: 1,
       name: 'Live'
@@ -67,10 +92,12 @@ function Football() {
       name: 'Finished'
     },
     {
-      id: 2,
-      name: 'Next Day'
+      id: 4,
+      name: calendarDate?.formattedDate
     }
   ]
+
+  const status = calendarDate ? secondStatus : oldStatus
 
 
   return (
@@ -240,7 +267,7 @@ function Football() {
           </>
         ) : null}
 
-        {selectedStatus === 'Next Day' ? (
+        {selectedStatus === calendarDate?.formattedDate ? (
           <>
             {tomorrow?.map((item, i) => (
               <div key={i}>

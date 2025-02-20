@@ -16,7 +16,7 @@ import {
 import { LoadingState } from '../../components/LoadingState'
 import Formula1Card from '../../components/GameCard/Formula1Card'
 
-function Formula1() {
+function Formula1({ calendarDate }) {
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
@@ -46,7 +46,7 @@ function Formula1() {
       setLive(dd?.payload?.scores?.categories || [])
     })
     dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.scores?.tournament || [])
+      setFinished(dd?.payload?.scores?.tournament || dd?.payload?.scores?.categories || [])
     })
   }, [])
 

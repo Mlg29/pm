@@ -11,7 +11,7 @@ import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
 import { getGolfFixtures } from '../../redux/slices/GolfSlice'
 
-function Golf() {
+function Golf({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])

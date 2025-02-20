@@ -12,7 +12,7 @@ import {
 import { LoadingState } from '../../components/LoadingState'
 import AussieRulesGameCard from '../../components/GameCard/AusseiRules'
 
-function AussieRules() {
+function AussieRules({ calendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [standings, setStandings] = useState<any>([])
   const [live, setLive] = useState<any>([])
@@ -132,32 +132,40 @@ function AussieRules() {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.round?.map((item, i) => {
-              const payload = {
-                league: item?.name,
-                leagueId: item?.id,
-                ...item
-              }
-              return (
-                <div key={i}>
-                  <p
-                    style={{
-                      ...FONTS.body7,
-                      backgroundColor: COLORS.lightRed,
-                      padding: 5,
-                      marginBottom: 10,
-                      borderRadius: 5,
-                      color: COLORS.black,
-                      marginRight: 10
-                    }}
-                  >
-                    {item?.name}
-                  </p>
-                  <AussieRulesGameCard id={i} data={payload} />
 
+
+            {upcoming?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.round?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <AussieRulesGameCard id={i} data={payload} />
+
+                      </div>
+                    )
+                  })}
                 </div>
-              )
-            })}
+              </div>
+            ))}
 
             {upcoming?.length < 1 ? (
               <EmptyState

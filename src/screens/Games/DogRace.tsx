@@ -1,9 +1,9 @@
 import React from 'react'
 
-function DogRace() {
+function DogRace({ calendarDate }) {
   return (
     <div>
-      
+
     </div>
   )
 }

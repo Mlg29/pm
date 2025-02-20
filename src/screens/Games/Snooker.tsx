@@ -12,7 +12,7 @@ import EmptyState from '../../components/EmptyState'
 import { getSnookerFixtures } from '../../redux/slices/SnookerSlice'
 import SnookerGameCard from '../../components/GameCard/SnookerGameCard'
 
-function Snooker() {
+function Snooker({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])

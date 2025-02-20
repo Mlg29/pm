@@ -75,6 +75,9 @@ function Dashboard() {
     localStorage.getItem("sport") || "Soccer"
   );
   const [selectedDate, setSelectedDate] = useState<any>(new Date());
+  const [calendarDate, setCalendarDate] = useState<any>(null)
+
+
 
   const ExampleCustomInput = forwardRef(
     ({ value, onClick, className }: any, ref: any) => (
@@ -104,12 +107,27 @@ function Dashboard() {
   };
 
 
-
   const handleDateChange = (date) => {
     const today = new Date() as any;
-    const selectedIndex = Math.ceil((date - today) / (1000 * 60 * 60 * 24)) + 1;
-    console.log("Selected Index:", selectedIndex); // Logs 1 for today, 2 for tomorrow, etc.
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
 
+    const difference = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
+
+    const relativeDate = difference === 0 ? "d0" : difference < 0 ? `d${difference}` : `d+${difference}`;
+
+    const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
+      .toString().padStart(2, '0')}-${date.getFullYear()}`;
+
+    if (relativeDate === "d0") {
+      return
+    }
+    else {
+      setCalendarDate({
+        index: relativeDate,
+        formattedDate: formattedDate
+      })
+    }
   };
 
   useEffect(() => {
@@ -169,39 +187,38 @@ function Dashboard() {
               <DatePicker
                 selected={selectedDate}
                 onChange={(date) => handleDateChange(date)}
-                minDate={new Date()}
+                minDate={new Date(new Date().setDate(new Date().getDate() - 7))}
                 maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}
                 customInput={
-                  // <ExampleCustomInput className="example-custom-input" />
                   <FaCalendarAlt />
                 }
               />
             </div>
-            {sportEvents && sportEvents === "Soccer" && <Football />}
+            {sportEvents && sportEvents === "Soccer" && <Football calendarDate={calendarDate} />}
 
-            {sportEvents === "Basketball" && <Basketball />}
+            {sportEvents === "Basketball" && <Basketball calendarDate={calendarDate} />}
 
-            {sportEvents === "Tennis" && <Tennis />}
+            {sportEvents === "Tennis" && <Tennis calendarDate={calendarDate} />}
 
-            {sportEvents === "Horse" && <HorseRace />}
-            {sportEvents === "Cricket" && <Cricket />}
-            {sportEvents === "Boxing" && <Boxing />}
-            {sportEvents === "Baseball" && <Baseball />}
-            {sportEvents === "Volleyball" && <Volleyball />}
-            {sportEvents === "Golf" && <Golf />}
-            {sportEvents === "Hockey" && <Hockey />}
-            {sportEvents === "Formula 1" && <Formula1 />}
-            {sportEvents === "AFL" && <Rugby />}
-            {sportEvents === "Handball" && <Handball />}
-            {sportEvents === "Ice Hockey" && <IceHockey />}
-            {sportEvents === "NASCAR" && <Nascar />}
-            {sportEvents === "Futsal" && <Futsol />}
-            {sportEvents === "MMA/UFC" && <Mma />}
-            {sportEvents === "Darts" && <Darts />}
-            {sportEvents === "Snooker" && <Snooker />}
-            {sportEvents === "Esports" && <Easport />}
-            {sportEvents === "Table Tennis" && <TableTennis />}
-            {sportEvents === "Aussie Rules" && <AussieRules />}
+            {sportEvents === "Horse" && <HorseRace calendarDate={calendarDate} />}
+            {sportEvents === "Cricket" && <Cricket calendarDate={calendarDate} />}
+            {sportEvents === "Boxing" && <Boxing calendarDate={calendarDate} />}
+            {sportEvents === "Baseball" && <Baseball calendarDate={calendarDate} />}
+            {sportEvents === "Volleyball" && <Volleyball calendarDate={calendarDate} />}
+            {sportEvents === "Golf" && <Golf calendarDate={calendarDate} />}
+            {sportEvents === "Hockey" && <Hockey calendarDate={calendarDate} />}
+            {sportEvents === "Formula 1" && <Formula1 calendarDate={calendarDate} />}
+            {sportEvents === "AFL" && <Rugby calendarDate={calendarDate} />}
+            {sportEvents === "Handball" && <Handball calendarDate={calendarDate} />}
+            {sportEvents === "Ice Hockey" && <IceHockey calendarDate={calendarDate} />}
+            {sportEvents === "NASCAR" && <Nascar calendarDate={calendarDate} />}
+            {sportEvents === "Futsal" && <Futsol calendarDate={calendarDate} />}
+            {sportEvents === "MMA/UFC" && <Mma calendarDate={calendarDate} />}
+            {sportEvents === "Darts" && <Darts calendarDate={calendarDate} />}
+            {sportEvents === "Snooker" && <Snooker calendarDate={calendarDate} />}
+            {sportEvents === "Esports" && <Easport calendarDate={calendarDate} />}
+            {sportEvents === "Table Tennis" && <TableTennis calendarDate={calendarDate} />}
+            {sportEvents === "Aussie Rules" && <AussieRules calendarDate={calendarDate} />}
           </div>
         </div>
       </DashboardLayout>
