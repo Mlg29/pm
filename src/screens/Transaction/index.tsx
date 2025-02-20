@@ -4,6 +4,7 @@ import { FONTS } from "../../utils/fonts";
 import { COLORS } from "../../utils/colors";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaAsterisk } from "react-icons/fa";
+import { FiAlertCircle } from "react-icons/fi";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
 import { useContext, useEffect, useState } from "react";
@@ -26,6 +27,9 @@ import {
   getNotifications,
   notificationState,
 } from "../../redux/slices/NotificationSlice";
+import { Tooltip } from 'primereact/tooltip';
+
+
 
 const styles = {
   div: {
@@ -57,7 +61,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-around",
     // width: 250,
-    margin: "0px 0px",
+    margin: "10px 0px",
   },
   btnRow: {
     display: "flex",
@@ -95,7 +99,6 @@ function Transaction() {
 
 
 
-  console.log({ userData })
 
   const getNotification = async () => {
     await dispatch(getNotifications());
@@ -238,7 +241,12 @@ function Transaction() {
             </div>
           </div>
 
-          <p style={{ ...FONTS.body7, color: COLORS.white }}>Withdrawable Balance</p>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Tooltip target=".logo" mouseTrack mouseTrackLeft={10} position="bottom" style={{ width: '50%' }} />
+
+            <p style={{ ...FONTS.body7, color: COLORS.white }}>Withdrawable Balance</p>
+            <FiAlertCircle color="white" className="logo" data-pr-tooltip="70% Commitment Rule: To ensure a secure gaming environment while in compliance with AML regulations, 70% of your deposit must be wagered before withdrawal. Wins do not contribute to this requirement." size={20} style={{ marginLeft: 10, cursor: 'pointer' }} />
+          </div>
           <div style={{ ...styles.rw2 }}>
             <p style={{ ...FONTS.body7, color: COLORS.white }}>{userData?.defaultCurrency === "NGN" ? "NGN" : "USD"}</p>
             {show ? (
@@ -295,8 +303,8 @@ function Transaction() {
               cursor: "pointer",
             }}
             onClick={() =>
-              //isMobile ? navigate("/withdrawal") : setShowTransfer(true)
-              navigate("/withdrawal")
+              userData?.availableBalance <= 0 ? alert("Insuffient balance to withdraw from") :
+                navigate("/withdrawal")
             }
           >
             <img src={send2} />

@@ -23,6 +23,7 @@ const styles = {
 function Formula1Detail({ selected, gameInfo, handleRoute }) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
+    console.log({ gameInfo })
 
     return (
         <div style={{ display: "flex", flexDirection: "column", flex: 1, padding: '0px 10px' }}>

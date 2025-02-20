@@ -186,6 +186,7 @@ function Dashboard() {
             >
               <DatePicker
                 selected={selectedDate}
+                popperPlacement="left-start"
                 onChange={(date) => handleDateChange(date)}
                 minDate={new Date(new Date().setDate(new Date().getDate() - 7))}
                 maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}

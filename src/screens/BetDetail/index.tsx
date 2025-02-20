@@ -29,6 +29,10 @@ import AflCard from "../../components/GameDetailCardHeader/AflCard";
 import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
 import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
 import arrowleft from "../../assets/images/arrow-left.svg"
+import { IoMdCheckmarkCircle } from "react-icons/io";
+
+
+
 
 const styles = {
   div: {
@@ -57,15 +61,32 @@ function BetDetail() {
   const [loader, setLoader] = useState(false);
   const userData = useAppSelector(userState);
 
+
+
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
+
   useEffect(() => {
     setLoader(true);
     dispatch(getBetById(id)).then((pp) => {
-      setBetData(pp?.payload);
       setLoader(false);
+      if (pp?.type === "bet/getBetById/rejected") {
+        handleLogOut()
+      }
+      setBetData(pp?.payload);
+
     });
   }, [id]);
 
   const sportType = betData?.sportEvent?.sport;
+
+
 
   if (loader) {
     return (
@@ -85,7 +106,7 @@ function BetDetail() {
   }
 
   const getPrediction = (prediction: string) => {
-    const result = betData?.sportEvent?.HorseEvent?.horses?.horse
+    const result = betData?.sportEvent?.HorseEvent?.racerNames
       .filter((item, i) => prediction === `W${i + 1}`)
       .map((horse, i) => {
         return `${horse?.name} WIN`;
@@ -94,7 +115,8 @@ function BetDetail() {
     return result;
   };
 
-  console.log({ betData })
+
+
 
   return (
     <div className="top-container">
@@ -186,12 +208,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
                         : "DRAW"}
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+
                   </p>
                 ) : (
                   ""
@@ -203,7 +236,11 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color: betData?.winnerId && betData?.winnerId !== userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
@@ -211,6 +248,12 @@ function BetDetail() {
                           : betData?.opponentPrediction === "DRAW"
                             ? "DRAW"
                             : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
                     </p>
                   ) : (
                     ""
@@ -329,12 +372,22 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
                         : "N/A"}
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
                   </p>
                 ) : (
                   ""
@@ -346,12 +399,23 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
                     </p>
                   ) : (
                     ""
@@ -470,12 +534,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
                   </p>
                 ) : (
                   ""
@@ -487,12 +562,23 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
                     </p>
                   ) : (
                     ""
@@ -609,9 +695,22 @@ function BetDetail() {
             </div>
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
-              <h3 style={{ ...FONTS.h6 }}>
+              <h3 style={{
+                ...FONTS.h6
+              }}>
                 {betData?.userId === userData?.id ? (
-                  <p>{getPrediction(betData?.prediction)}</p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>{getPrediction(betData?.prediction)}
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+                  </p>
                 ) : (
                   ""
                 )}
@@ -622,7 +721,18 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>{getPrediction(betData?.opponentPrediction)}</p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>{getPrediction(betData?.opponentPrediction)}
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
+                    </p>
                   ) : (
                     ""
                   )}
@@ -740,12 +850,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.BoxingEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
                         : "N/A"}
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+
                   </p>
                 ) : (
                   ""
@@ -757,12 +878,24 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.BoxingEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
+
                     </p>
                   ) : (
                     ""
@@ -881,12 +1014,24 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+
                   </p>
                 ) : (
                   ""
@@ -898,12 +1043,23 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
                           : "N/A"}
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
+
                     </p>
                   ) : (
                     ""
@@ -1021,12 +1177,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
                   </p>
                 ) : (
                   ""
@@ -1038,12 +1205,23 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
                     </p>
                   ) : (
                     ""
@@ -1162,12 +1340,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
                   </p>
                 ) : (
                   ""
@@ -1179,12 +1368,23 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
                     </p>
                   ) : (
                     ""
@@ -1302,12 +1502,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.SnookerEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
                   </p>
                 ) : (
                   ""
@@ -1319,12 +1530,23 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.SnookerEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
                     </p>
                   ) : (
                     ""
@@ -1443,12 +1665,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.VollyBallEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
                         : "N/A"}
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+
                   </p>
                 ) : (
                   ""
@@ -1460,12 +1693,24 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.VollyBallEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
+
                     </p>
                   ) : (
                     ""
@@ -1583,12 +1828,24 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.HandBallEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+
                   </p>
                 ) : (
                   ""
@@ -1600,12 +1857,24 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.HandBallEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
+
                     </p>
                   ) : (
                     ""
@@ -1723,12 +1992,24 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+
                   </p>
                 ) : (
                   ""
@@ -1740,12 +2021,24 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId === userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
+
                     </p>
                   ) : (
                     ""
@@ -1864,12 +2157,23 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
                   </p>
                 ) : (
                   ""
@@ -1881,12 +2185,23 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
                     </p>
                   ) : (
                     ""
@@ -2005,12 +2320,24 @@ function BetDetail() {
               <p style={{ ...FONTS.body7 }}>Your Prediction</p>
               <h3 style={{ ...FONTS.h6 }}>
                 {betData?.userId === userData?.id ? (
-                  <p>
+                  <p style={{
+                    color:
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
                       : betData?.prediction === "W2"
                         ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
                         : "N/A"}
+
+                    {
+                      betData?.winnerId && betData?.winnerId === userData?.id
+                        ? <IoMdCheckmarkCircle />
+                        : null
+                    }
+
                   </p>
                 ) : (
                   ""
@@ -2022,12 +2349,24 @@ function BetDetail() {
                 <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
-                    <p>
+                    <p style={{
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
                         : betData?.opponentPrediction === "W2"
                           ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
                           : "N/A"}
+
+                      {
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? <IoMdCheckmarkCircle />
+                          : null
+                      }
+
                     </p>
                   ) : (
                     ""

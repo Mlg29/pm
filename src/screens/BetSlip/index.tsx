@@ -217,17 +217,6 @@ function BetSlip() {
           style={{
             ...styles.tb,
             backgroundColor:
-              active === "REFUNDED" ? COLORS.white : "transparent",
-            cursor: "pointer",
-          }}
-          onClick={() => setActive("REFUNDED")}
-        >
-          <p style={{ ...FONTS.body6 }}>Refunded</p>
-        </div>
-        <div
-          style={{
-            ...styles.tb,
-            backgroundColor:
               active === "CANCELED" ? COLORS.white : "transparent",
             cursor: "pointer",
           }}

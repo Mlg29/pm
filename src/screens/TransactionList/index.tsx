@@ -31,71 +31,100 @@ function TransactionList() {
   };
 
   const handleTypeCheck = (val: any) => {
-    if (selected?.includes(val)) {
+    const bb = ["ALL", "BET_CREDIT", "BET_DEBIT", "DEPOSIT", "WITHDRAW"]
+    if (val === "ALL") {
+      if (selected === bb) {
+        setSelected([])
+      }
+      else {
+        setSelected(["ALL", "BET_CREDIT", "BET_DEBIT", "DEPOSIT", "WITHDRAW"])
+      }
+
+    }
+    else if (selected?.includes(val)) {
       const filt = selected?.filter((a: any) => a !== val);
       setSelected(filt);
-    } else {
+    }
+    else if (!selected) {
+      setSelected([val])
+    }
+    else {
       setSelected([...selected, val]);
     }
   };
 
   const handleChange = (event) => {
+    setSelected([])
     setValue(event)
+  }
+
+  const applyFilter = () => {
+    setValue("")
+    handleClose()
+  }
+  const closeFilter = () => {
+    setSelected([])
+    handleClose()
   }
 
   const types = [
     {
       id: 1,
       name: "All Type",
-      icons: selected?.includes("all") ? (
-        <FaCheckSquare size={20} onClick={() => handleTypeCheck("all")} />
+      type: "ALL",
+      icons: selected?.includes("ALL") ? (
+        <FaCheckSquare size={20} onClick={() => handleTypeCheck("ALL")} />
       ) : (
-        <FaRegSquare size={20} onClick={() => handleTypeCheck("all")} />
+        <FaRegSquare size={20} onClick={() => handleTypeCheck("ALL")} />
       ),
     },
     {
       id: 2,
       name: "Deposit",
-      icons: selected?.includes("deposit") ? (
-        <FaCheckSquare size={20} onClick={() => handleTypeCheck("deposit")} />
+      type: "DEPOSIT",
+      icons: selected?.includes("DEPOSIT") ? (
+        <FaCheckSquare size={20} onClick={() => handleTypeCheck("DEPOSIT")} />
       ) : (
-        <FaRegSquare size={20} onClick={() => handleTypeCheck("deposit")} />
+        <FaRegSquare size={20} onClick={() => handleTypeCheck("DEPOSIT")} />
       ),
     },
     {
       id: 3,
-      name: "Win Credit",
-      icons: selected?.includes("credit") ? (
-        <FaCheckSquare size={20} onClick={() => handleTypeCheck("credit")} />
+      name: "Bet Credit",
+      type: "BET_CREDIT",
+      icons: selected?.includes("BET_CREDIT") ? (
+        <FaCheckSquare size={20} onClick={() => handleTypeCheck("BET_CREDIT")} />
       ) : (
-        <FaRegSquare size={20} onClick={() => handleTypeCheck("credit")} />
+        <FaRegSquare size={20} onClick={() => handleTypeCheck("BET_CREDIT")} />
       ),
     },
     {
       id: 4,
-      name: "Withdrawal",
-      icons: selected?.includes("withdrawal") ? (
+      name: "Withdraw",
+      type: "WITHDRAW",
+      icons: selected?.includes("WITHDRAW") ? (
         <FaCheckSquare
           size={20}
-          onClick={() => handleTypeCheck("withdrawal")}
+          onClick={() => handleTypeCheck("WITHDRAW")}
         />
       ) : (
-        <FaRegSquare size={20} onClick={() => handleTypeCheck("withdrawal")} />
+        <FaRegSquare size={20} onClick={() => handleTypeCheck("WITHDRAW")} />
       ),
     },
     {
       id: 5,
       name: "Bet Debit",
-      icons: selected?.includes("debit") ? (
-        <FaCheckSquare size={20} onClick={() => handleTypeCheck("debit")} />
+      type: "BET_DEBIT",
+      icons: selected?.includes("BET_DEBIT") ? (
+        <FaCheckSquare size={20} onClick={() => handleTypeCheck("BET_DEBIT")} />
       ) : (
-        <FaRegSquare size={20} onClick={() => handleTypeCheck("debit")} />
+        <FaRegSquare size={20} onClick={() => handleTypeCheck("BET_DEBIT")} />
       ),
     },
   ];
 
 
-  const filterSearch = transactions?.filter((a) => a?.amount.toString().includes(value) || a?.id?.toLowerCase().includes(value))
+  const filterSearch = selected?.length > 0 ? transactions.filter((t) => selected?.includes(t.type)) : transactions?.filter((a) => a?.amount.toString().includes(value) || a?.id?.toLowerCase().includes(value) || selected?.includes(a?.type))
 
 
 
@@ -104,7 +133,7 @@ function TransactionList() {
       {isMobile && <Header text="Transactions" />}
 
       <SearchComponent
-        placeholder="Search transactions by amount and id"
+        placeholder="Search transactions by amount or id"
         allowFilter
         value={value}
         handleChange={(e) => handleChange(e)}
@@ -112,7 +141,6 @@ function TransactionList() {
       />
 
       {filterSearch
-        ?.filter((a, b) => b < 4)
         ?.map((data, i) => {
           return (
             <div key={i}>
@@ -136,7 +164,7 @@ function TransactionList() {
 
       }
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={closeFilter}>
         <Modal.Header closeButton>
           <Modal.Title>Filter</Modal.Title>
         </Modal.Header>
@@ -167,13 +195,9 @@ function TransactionList() {
           </div>
 
           <div style={{ marginTop: "20px" }}>
-            <DatePickerComponent
-              label="Transaction Date Range"
-              placeholder="Transaction Date"
-              propStyle={{ width: "100%" }}
-            />
+
             <div style={{ width: "100%", marginTop: "20px" }}>
-              <Button text="Apply Filter" propStyle={{ width: "100%" }} />
+              <Button handlePress={() => applyFilter()} text="Apply Filter" propStyle={{ width: "100%" }} />
             </div>
             <div style={{ width: "100%", margin: "20px 0px" }}>
               <Button
@@ -183,7 +207,7 @@ function TransactionList() {
                   backgroundColor: COLORS.cream,
                   color: COLORS.primary,
                 }}
-                handlePress={() => handleClose()}
+                handlePress={() => closeFilter()}
               />
             </div>
           </div>

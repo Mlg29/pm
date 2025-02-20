@@ -74,6 +74,10 @@ const AdjustBet = () => {
 
 
   const handleRoute = () => {
+    if (userFee?.initialData?.betCurrency !== userData?.defaultCurrency && !exAmount) {
+      alert("Please wait.. Exchange rate fetching amount")
+      return
+    }
     const payload = {
       invitedUser: null,
       amount: userFee?.amount,
