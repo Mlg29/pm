@@ -34,6 +34,9 @@ import AflCard from "../../components/GameDetailCardHeader/AflCard";
 import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
 import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
 import { getFxRate } from "../../redux/slices/MiscSlice";
+import arrowleft from "../../assets/images/arrow-left.svg"
+import { useMediaQuery } from "react-responsive";
+
 
 const styles = {
   inputs: {
@@ -84,7 +87,7 @@ const BetAdjust = () => {
   const sportEvents = events;
   const [exAmount, setExAmount] = useState<any>("");
   const [type, setType] = useState("")
-
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const user = betInfo?.bet?.userId === userData?.id;
 
 
@@ -197,7 +200,17 @@ const BetAdjust = () => {
 
   return (
     <div className="top-container">
-      <Header text="Challenge Details" />
+
+      {isMobile && <Header text="Challenge Details" />}
+      {
+        isMobile ? null :
+          <div style={{ marginTop: 10, cursor: "pointer", marginBottom: 10 }} onClick={() => {
+            navigate(-1)
+          }}>
+            <img src={arrowleft} style={{ padding: "10px", background: COLORS.semiGray, borderRadius: 100 }} />
+
+          </div>
+      }
 
       {sportEvents?.sport === "FOOTBALL" && (
         <div style={styles.card}>

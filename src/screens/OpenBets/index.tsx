@@ -236,7 +236,7 @@ function OpenBet() {
     <div>
       {!isMobile && <DesktopBackButton />}
       <div className="top-container" style={{ backgroundColor: "white" }}>
-        <Header text="Open Bet" filter handleFilter={() => handleFilter()} />
+        <Header text="Open Bet" handleFilter={() => handleFilter()} />
 
         <p style={{ ...FONTS.body6 }}>
           Please select from the available open bets created by other users that
@@ -642,7 +642,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <GiBoxingGlove size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -668,7 +668,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <GiBoxingGlove size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -680,9 +680,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -698,9 +698,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -767,7 +767,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <IoGameController size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -793,7 +793,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <IoGameController size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -805,9 +805,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -823,9 +823,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -891,7 +891,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <SiDart size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -917,7 +917,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <SiDart size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -929,9 +929,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -947,9 +947,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1016,7 +1016,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <SiUfc size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -1042,7 +1042,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <SiUfc size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -1054,9 +1054,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1072,9 +1072,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1271,7 +1271,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <GiSportMedal size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -1297,7 +1297,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <GiSportMedal size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -1309,9 +1309,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1327,9 +1327,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1396,7 +1396,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <FaVolleyball size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -1422,7 +1422,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <FaVolleyball size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -1434,9 +1434,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1452,9 +1452,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1521,7 +1521,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <TbPlayHandball size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -1547,7 +1547,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <TbPlayHandball size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -1559,9 +1559,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1577,9 +1577,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1646,7 +1646,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <MdSportsRugby size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -1672,7 +1672,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <MdSportsRugby size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -1684,9 +1684,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1702,9 +1702,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1770,7 +1770,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <img src={futsol} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -1796,7 +1796,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <img src={futsol} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -1808,9 +1808,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1826,9 +1826,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1895,7 +1895,7 @@ function OpenBet() {
                           <BiSolidCricketBall size={30} color={COLORS.primary} />
 
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.localteam?.name}
+                            {game?.localTeam?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -1922,7 +1922,7 @@ function OpenBet() {
                           <BiSolidCricketBall size={30} color={COLORS.primary} />
 
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.awayteam?.name}
+                            {game?.awayTeam?.name}
                           </h3>
                         </div>
                       </div>
@@ -1934,9 +1934,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {data?.prediction === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : data?.prediction === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -1952,9 +1952,9 @@ function OpenBet() {
                           </p>
                           <p style={{ ...FONTS.body7 }}>
                             {userSelection?.userType === "W1"
-                              ? `${game?.localteam?.name} WIN`
+                              ? `${game?.localTeam?.name} WIN`
                               : userSelection?.userType === "W2"
-                                ? `${game?.awayteam?.name} WIN`
+                                ? `${game?.awayTeam?.name} WIN`
                                 : ""}
                           </p>
                         </div>

@@ -24,6 +24,7 @@ function Basketball({ calendarDate }) {
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
+  const [selectedStatus, setSelectedStatus] = useState('Finished')
 
   useEffect(() => {
     const payloadUpcoming = {
@@ -49,7 +50,7 @@ function Basketball({ calendarDate }) {
     dispatch(getBasketballFixtures(payloadTomorrow)).then((dd) => {
       setTomorrow(dd?.payload || [])
     })
-  }, [dispatch, calendarDate?.formattedDate])
+  }, [dispatch, calendarDate?.formattedDate, selectedStatus])
 
   const fetchBetData = () => {
     dispatch(getBasketballFixtures(null)).then((dd) => {
@@ -62,7 +63,6 @@ function Basketball({ calendarDate }) {
     return () => clearInterval(interval);
   }, []);
 
-  const [selectedStatus, setSelectedStatus] = useState('Finished')
 
   const oldStatus = [
     {

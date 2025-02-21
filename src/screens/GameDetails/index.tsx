@@ -165,7 +165,6 @@ function GameDetails() {
   }, []);
 
 
-
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
 
@@ -201,7 +200,8 @@ function GameDetails() {
           sportEventId: gameInfo?.sportEventId,
           league: gameInfo?.league,
           leagueId: gameInfo?.leagueId,
-          ...(gameInfo?.country !== undefined ? { country: gameInfo.country } : gameInfo?.league !== undefined ? { country: gameInfo.league } : {}),
+          ...(gameInfo?.country !== undefined ? { country: gameInfo.country } : {}),
+          // ...(gameInfo?.country !== undefined ? { country: gameInfo.country } : gameInfo?.league !== undefined ? { country: gameInfo.league } : {}),
           status: "Not Started",
           internalStatus: "UPCOMING",
           date: gameInfo?.formatted_date || gameInfo?.date,

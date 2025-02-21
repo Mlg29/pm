@@ -36,13 +36,14 @@ function Football({ calendarDate }) {
     }
 
     dispatch(getFootballFixtures(null)).then((dd) => {
-      setLive(dd?.payload)
+      setLive(dd?.payload?.category)
     })
 
     dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
       setFinished(dd?.payload?.category || [])
     })
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+
       setTomorrow(dd?.payload || [])
     })
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
@@ -51,9 +52,11 @@ function Football({ calendarDate }) {
     })
   }, [dispatch, selectedStatus])
 
+
+
   const fetchBetData = () => {
     dispatch(getFootballFixtures(null)).then((dd) => {
-      setLive(dd?.payload)
+      setLive(dd?.payload?.category)
     })
   }
 

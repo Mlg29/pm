@@ -117,18 +117,22 @@ function BetDetail() {
 
 
 
-
   return (
     <div className="top-container">
-      {sportType === "FOOTBALL" && (
-        <div>
-          {/* {isMobile && <Header text="Bet Details" />} */}
+      {
+        isMobile ? null :
           <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
             navigate(-1)
           }}>
             <img src={arrowleft} style={{ padding: "10px", background: COLORS.semiGray, borderRadius: 100 }} />
 
           </div>
+      }
+      {sportType === "FOOTBALL" && (
+        <div>
+
+          {isMobile && <Header text="Bet Details" />}
+
           <h3
             style={{
               ...FONTS.h5,
@@ -212,7 +216,9 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black,
                   }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
@@ -237,9 +243,12 @@ function BetDetail() {
                 <h3 style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
                     <p style={{
-                      color: betData?.winnerId && betData?.winnerId !== userData?.id
-                        ? COLORS.green
-                        : COLORS.red,
+                      color:
+                        betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.green
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
@@ -376,7 +385,9 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
@@ -403,7 +414,9 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
@@ -538,7 +551,9 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
                       ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
@@ -566,7 +581,9 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
                         ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
@@ -703,7 +720,9 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>{getPrediction(betData?.prediction)}
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
@@ -725,7 +744,9 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>{getPrediction(betData?.opponentPrediction)}
                       {
                         betData?.winnerId && betData?.winnerId !== userData?.id
@@ -854,12 +875,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.BoxingEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.BoxingEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.BoxingEvent?.visitorTeamName} Win`
                         : "N/A"}
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
@@ -882,12 +905,14 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.BoxingEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.BoxingEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.BoxingEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.BoxingEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -1018,12 +1043,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.EsportEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.EsportEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -1045,14 +1072,16 @@ function BetDetail() {
                   {betData?.opponentId !== userData?.id ? (
                     <p style={{
                       color:
-                        betData?.winnerId && betData?.winnerId !== userData?.id
+                        betData?.winnerId && betData?.winnerId === userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId !== userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.EsportEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.EsportEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.EsportEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.EsportEvent?.visitorTeamName} Win`
                           : "N/A"}
                       {
                         betData?.winnerId && betData?.winnerId !== userData?.id
@@ -1181,12 +1210,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.DartEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -1209,12 +1240,14 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.DartEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.DartEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.DartEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -1344,12 +1377,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.MmaEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.MmaEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -1372,12 +1407,14 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.MmaEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.MmaEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.MmaEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.MmaEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -1506,12 +1543,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.SnookerEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.SnookerEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.SnookerEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -1534,12 +1573,14 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.SnookerEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.SnookerEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.SnookerEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.SnookerEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -1669,12 +1710,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.VollyBallEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.VollyBallEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.VollyBallEvent?.visitorTeamName} Win`
                         : "N/A"}
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
@@ -1697,12 +1740,14 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.VollyBallEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.VollyBallEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.VollyBallEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.VollyBallEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -1832,12 +1877,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.HandBallEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.HandBallEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.HandBallEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -1861,12 +1908,14 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.HandBallEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.HandBallEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.HandBallEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.HandBallEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -1996,12 +2045,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.AflEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.AflEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -2023,14 +2074,16 @@ function BetDetail() {
                   {betData?.opponentId !== userData?.id ? (
                     <p style={{
                       color:
-                        betData?.winnerId && betData?.winnerId === userData?.id
+                        betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.AflEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.AflEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.AflEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.AflEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -2161,12 +2214,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.FutsalEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.FutsalEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -2189,12 +2244,14 @@ function BetDetail() {
                       color:
                         betData?.winnerId && betData?.winnerId !== userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId === userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.FutsalEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.FutsalEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.FutsalEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.FutsalEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
@@ -2324,12 +2381,14 @@ function BetDetail() {
                     color:
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? COLORS.green
-                        : COLORS.red,
+                        : betData?.winnerId && betData?.winnerId !== userData?.id
+                          ? COLORS.red
+                          : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
+                      ? `${betData?.sportEvent?.CricketEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
+                        ? `${betData?.sportEvent?.CricketEvent?.visitorTeamName} Win`
                         : "N/A"}
 
                     {
@@ -2351,14 +2410,16 @@ function BetDetail() {
                   {betData?.opponentId !== userData?.id ? (
                     <p style={{
                       color:
-                        betData?.winnerId && betData?.winnerId !== userData?.id
+                        betData?.winnerId && betData?.winnerId === userData?.id
                           ? COLORS.green
-                          : COLORS.red,
+                          : betData?.winnerId && betData?.winnerId !== userData?.id
+                            ? COLORS.red
+                            : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.CricketEvent?.localteam?.name} Win`
+                        ? `${betData?.sportEvent?.CricketEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.CricketEvent?.awayteam?.name} Win`
+                          ? `${betData?.sportEvent?.CricketEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {
