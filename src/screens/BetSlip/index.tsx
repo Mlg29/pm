@@ -87,10 +87,10 @@ function BetSlip() {
   }
 
 
-  useEffect(() => {
-    const interval = setInterval(fetchBetData, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(fetchBetData, 5000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
 
   const groupByDate = (data) => {
@@ -142,7 +142,7 @@ function BetSlip() {
       </div>
     );
   }
-
+  console.log({ betList })
   return (
     <div className="top-container">
       <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
