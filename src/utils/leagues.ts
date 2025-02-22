@@ -3,98 +3,121 @@
 export const Leagues = [
     {
         id: 1,
-        name: "UEFA Champions League"
+        name: "UEFA Champions League",
+        text: "UEFA Champions League"
     },
     {
         id: 2,
-        name: "UEFA Europa League"
+        name: "UEFA Europa League",
+        text: "UEFA Europa League"
     },
     {
         id: 11,
-        name: "UEFA Conference League"
+        name: "UEFA Conference League",
+        text: "UEFA Conference League"
     },
     {
         id: 3,
-        name: "England: Premier League"
+        name: "English Premier League",
+        text: "England: Premier League"
     },
     {
         id: 4,
-        name: "Spain: LaLiga"
+        name: "La Liga",
+        text: "Spain: LaLiga"
     },
     {
         id: 5,
-        name: "Germany: Bundesliga"
+        name: "Bundesliga",
+        text: "Germany: Bundesliga"
     },
     {
         id: 6,
-        name: "Seria A"
+        name: "Seria A",
+        text: "Italy: Serie A"
     },
     {
         id: 7,
-        name: "League 1"
+        name: "League 1",
+        text: "France: Ligue 1"
     },
     {
         id: 8,
-        name: "Eredivise"
+        name: "Eredivise",
+        text: "Netherlands: Eredivise"
     },
-    {
-        id: 9,
-        name: "CAF Champions League"
-    },
-    {
-        id: 10,
-        name: "World Championship"
-    },
-    {
-        id: 12,
-        name: "Euro"
-    },
+    // {
+    //     id: 9,
+    //     name: "CAF Champions League",
+    //     text: ""
+    // },
+    // {
+    //     id: 10,
+    //     name: "World Championship",
+    //     text: ""
+    // },
+    // {
+    //     id: 12,
+    //     name: "Euro",
+    //     text: ""
+    // },
 ]
 
 export const BasketLeagues = [
     {
         id: 1,
-        name: "NBA"
+        name: "NBA",
+        text: "NBA"
     },
     {
         id: 2,
-        name: "NBA Women"
+        name: "NBA Women",
+        text: "NBA Women"
     },
     {
         id: 11,
-        name: "LNB/Betclic Elite"
+        name: "LNB/Betclic Elite",
+        text: "LNB/Betclic Elite",
     },
     {
         id: 3,
-        name: "Lega Basket Serie A"
+        name: "Lega Basket Serie A",
+        text: "Lega Basket Serie A"
     },
     {
         id: 4,
-        name: "Liga ACB"
+        name: "Liga ACB",
+        text: "Liga ACB"
     },
     {
         id: 5,
-        name: "NCAA"
+        name: "NCAA",
+        text: "NCAA"
     },
     {
         id: 6,
-        name: "EuroBasket"
+        name: "EuroBasket",
+        text: "EuroBasket"
     },
     {
         id: 7,
-        name: "Euroleague"
+        name: "Euroleague",
+        text: "Euroleague"
     },
     {
         id: 8,
-        name: "EuroCup Basketball"
+        name: "EuroCup Basketball",
+        text: "EuroCup Basketball"
     },
     {
         id: 9,
-        name: "Basketball Champions League"
+        name: "Basketball Champions League",
+        text: "Basketball Champions League"
     },
     {
         id: 10,
-        name: "FIBA Basketball World Cup"
+        name: "FIBA Basketball World Cup",
+        text: "FIBA Basketball World Cup"
     },
 ]
 
@@ -105,124 +128,152 @@ export const TennisLeague = [
     },
     {
         id: 2,
-        name: "Australian Open"
+        name: "Australian Open",
+        text: "Australian Open"
     },
     {
         id: 3,
-        name: "French Open"
+        name: "French Open",
+        text: "French Open"
     },
     {
         id: 4,
-        name: "US Open"
+        name: "US Open",
+        text: "US Open"
     },
     {
         id: 5,
-        name: "ATP Tour"
+        name: "ATP Tour",
+        text: "ATP Tour"
     },
     {
         id: 6,
-        name: "WTA Tour"
+        name: "WTA Tour",
+        text: "WTA Tour"
     },
     {
         id: 7,
-        name: "Indian Wells Open"
+        name: "Indian Wells Open",
+        text: "Indian Wells Open"
     }
 ]
 
 export const HorseLeague = [
     {
         id: 1,
-        name: "Ascot"
+        name: "Ascot",
+        text: "Ascot"
     },
     {
         id: 2,
-        name: "Royal Ascot"
+        name: "Royal Ascot",
+        text: "Royal Ascot"
     },
     {
         id: 3,
-        name: "Cheltenham"
+        name: "Cheltenham",
+        text: "Cheltenham"
     },
     {
         id: 4,
-        name: "Epsom Downs"
+        name: "Epsom Downs",
+        text: "Epsom Downs"
     },
     {
         id: 5,
-        name: "Newmarket"
+        name: "Newmarket",
+        text: "Newmarket"
     },
     {
         id: 6,
-        name: "Kentucky Derby"
+        name: "Kentucky Derby",
+        text: "Kentucky Derby"
     },
     {
         id: 7,
-        name: "Kentucky Oaks"
+        name: "Kentucky Oaks",
+        text: "Kentucky Oaks"
     },
     {
         id: 8,
         name: "Pagasus World Cup",
+        text: "Pagasus World Cup",
     },
     {
         id: 9,
-        name: "Dubai World Cup"
+        name: "Dubai World Cup",
+        text: "Dubai World Cup"
     }
 ]
 
 export const BoxingLeague = [
     {
         id: 1,
-        name: "WBC"
+        name: "WBC",
+        text: "WBC"
     },
     {
         id: 2,
-        name: "WBA"
+        name: "WBA",
+        text: "WBA"
     },
     {
         id: 3,
-        name: "WBO"
+        name: "WBO",
+        text: "WBO"
     },
     {
         id: 4,
-        name: "IBO"
+        name: "IBO",
+        text: "IBO"
     },
     {
         id: 5,
-        name: "IBA World Boxing"
+        name: "IBA World Boxing",
+        text: "IBA World Boxing"
     },
     {
         id: 6,
-        name: "Riyadh Season"
+        name: "Riyadh Season",
+        text: "Riyadh Season"
     },
 ]
 
 export const MmaLeague = [
     {
         id: 1,
-        name: "One Championship"
+        name: "One Championship",
+        text: "One Championship"
     },
     {
         id: 2,
-        name: "Ultimate Fighting Championship"
+        name: "Ultimate Fighting Championship",
+        text: "Ultimate Fighting Championship"
     },
     {
         id: 3,
-        name: "Bellator MMA"
+        name: "Bellator MMA",
+        text: "Bellator MMA"
     },
     {
         id: 4,
-        name: "Professional Fighting League"
+        name: "Professional Fighting League",
+        text: "Professional Fighting League"
     },
     {
         id: 5,
-        name: "Strikeforce"
+        name: "Strikeforce",
+        text: "Strikeforce"
     },
     {
         id: 6,
-        name: "WTA Tour"
+        name: "WTA Tour",
+        text: "WTA Tour"
     },
     {
         id: 7,
-        name: "Indian Wells Open"
+        name: "Indian Wells Open",
+        text: "Indian Wells Open"
     }
 ]
 

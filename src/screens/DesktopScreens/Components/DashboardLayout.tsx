@@ -129,7 +129,6 @@ function DashboardLayout({ children }) {
   const TopLeagues = sportEvents === "Soccer" ? Leagues : sportEvents === "Basketball" ? BasketLeagues : sportEvents === "Tennis" ? TennisLeague : sportEvents === "Horse" ? HorseLeague : sportEvents === "Boxing" ? BoxingLeague : sportEvents === "MMA/UFC" ? MmaLeague : sportEvents === "Cricket" ? CricketLeague : sportEvents === "AFL" ? AflLeague : sportEvents === "NASCAR" ? NascarLeague : sportEvents === "Baseball" ? BaseballLeague : sportEvents === "Aussie Rules" ? AussieLeague : []
 
   const handleChange = (val) => {
-    console.log(val)
     setSearch(val)
   }
 
@@ -145,7 +144,7 @@ function DashboardLayout({ children }) {
               <>
                 {TopLeagues?.map((data: any, i) => {
                   return (
-                    <div key={i} onClick={() => handleLeague(data?.name)}>
+                    <div key={i} onClick={() => handleLeague(data?.text)}>
                       <p
                         style={{
                           ...FONTS.body6,
@@ -163,10 +162,11 @@ function DashboardLayout({ children }) {
 
 
             </div>
-            <div style={{ ...styles.subBox2 }}>
+            <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+            <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+            {/* <div style={{ ...styles.subBox2 }}>
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              {/* <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} /> */}
-
+       
               <div style={{ maxHeight: 600, overflowY: "auto" }}>
                 {countries?.map((data: any, i) => {
                   return (
@@ -178,7 +178,7 @@ function DashboardLayout({ children }) {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
           </div>
           <div style={{ ...styles.box2 }}>{children}</div>
           <OpenBetLayout />
@@ -193,7 +193,7 @@ function DashboardLayout({ children }) {
               <>
                 {TopLeagues?.map((data: any, i) => {
                   return (
-                    <div key={i} onClick={() => handleLeague(data?.name)}>
+                    <div key={i} onClick={() => handleLeague(data?.text)}>
                       <p style={{ ...FONTS.body6, margin: "15px 0px", cursor: 'pointer' }}>
                         {data?.name}
                       </p>
@@ -205,10 +205,10 @@ function DashboardLayout({ children }) {
 
 
             </div>
-            <div style={{ ...styles.subBox2 }}>
+            {/* <div style={{ ...styles.subBox2 }}>
+              
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              {/* <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} /> */}
-
+       
               <div style={{ maxHeight: 600, overflowY: "auto" }}>
                 {countries?.map((data: any, i) => {
                   return (
@@ -220,7 +220,9 @@ function DashboardLayout({ children }) {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
+            <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+            <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           </div>
           <div style={{ ...styles.box2 }}>{children}</div>
           <OpenBetLayout />
@@ -234,7 +236,7 @@ function DashboardLayout({ children }) {
               <h3 style={{ ...FONTS.h7 }}>Top Leagues</h3>
               {TopLeagues?.map((data: any, i) => {
                 return (
-                  <div key={i} onClick={() => handleLeague(data?.name)}>
+                  <div key={i} onClick={() => handleLeague(data?.text)}>
                     <p style={{ ...FONTS.body7, margin: "15px 0px", cursor: 'pointer' }}>
                       {data?.name}
                     </p>
@@ -242,10 +244,10 @@ function DashboardLayout({ children }) {
                 );
               })}
             </div>
-            <div style={{ ...styles.subBox2 }}>
+            {/* <div style={{ ...styles.subBox2 }}>
+          
               <h3 style={{ ...FONTS.h6 }}>A - Z</h3>
-              {/* <input placeholder="Search by country" value={search} onChange={(e) => handleChange(e.target.value)} style={{ backgroundColor: 'white', padding: 10, border: '1px solid gray', borderRadius: 5 }} /> */}
-
+            
               <div style={{ maxHeight: 600, overflowY: "auto" }}>
                 {countries?.map((data: any, i) => {
                   return (
@@ -257,7 +259,9 @@ function DashboardLayout({ children }) {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
+            <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+            <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           </div>
           <div style={{ ...styles.box2 }}>{children}</div>
           <OpenBetLayout />

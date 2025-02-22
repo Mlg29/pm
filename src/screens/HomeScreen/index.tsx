@@ -407,19 +407,23 @@ function HomeScreen() {
   }
 
   const fetchUserInfo = async () => {
-    setLoader(true);
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
       setUserData(response?.payload);
-      setLoader(false);
     } else {
-      setLoader(false);
       handleLogOut()
     }
   };
 
+
   useEffect(() => {
-    fetchUserInfo();
+    const getFetch = async () => {
+      setLoader(true);
+      await fetchUserInfo();
+      setLoader(false);
+    }
+    getFetch()
+
   }, []);
 
   const handleMoreSelect = (data) => {

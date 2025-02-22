@@ -98,240 +98,33 @@ const OpenBetLayout = () => {
     <>
       <LargeScreen>
         <div style={{ ...styles.box3 }}>
-          {/* <div style={{ ...styles.mini }}>
-            <h3
-              style={{
-                ...FONTS.h5,
-                ...styles.bg,
-                margin: "0px",
-                color: COLORS.white,
-              }}
-            >
-              OPEN BET
-            </h3>
-            {!showBet ? (
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer",
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p
-                    style={{
-                      ...FONTS.body6,
-                      textAlign: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div style={{ ...styles.sub2 }}>
-                <p style={{ ...FONTS.body7, margin: "10px 0px" }}>
-                  Please select from the available open bets created by other
-                  users that matches your options
-                </p>
-                {["", "", ""]?.map((aa) => {
-                  return <BetCard />;
-                })}
-                <div
-                  style={{
-                    background: COLORS.primary,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer",
-                    color: COLORS.white,
-                  }}
-                  onClick={() => setCreateBet(true)}
-                >
-                  <p
-                    style={{
-                      ...FONTS.body6,
-                      textAlign: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            )}
-          </div> */}
-           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
-           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+
+          <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+          <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           <img src={ads} style={{ width: "100%" }} />
         </div>
       </LargeScreen>
 
       <Desktop>
         <div style={{ ...styles.box3 }}>
-          {/* <div style={{ ...styles.mini }}>
-            <h3
-              style={{
-                ...FONTS.h5,
-                ...styles.bg,
-                margin: "0px",
-                color: COLORS.white,
-              }}
-            >
-              OPEN BET
-            </h3>
-            {!showBet ? (
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer",
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div style={{ ...styles.sub2 }}>
-                <p style={{ ...FONTS.body7, margin: "10px 0px" }}>
-                  Please select from the available open bets created by other
-                  users that matches your options
-                </p>
-                {["", "", ""]?.map((aa) => {
-                  return <BetCard />;
-                })}
-                <div
-                  style={{
-                    background: COLORS.primary,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer",
-                    color: COLORS.white,
-                  }}
-                  onClick={() => setCreateBet(true)}
-                >
-                  <p
-                    style={{
-                      ...FONTS.body6,
-                      textAlign: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            )}
-          </div> */}
-           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
-           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+
+          <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+          <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           <img src={ads} style={{ width: "100%" }} />
         </div>
       </Desktop>
 
       <Tablet>
         <div style={{ ...styles.box3 }}>
-          {/* <div style={{ ...styles.mini }}>
-            <h3
-              style={{
-                ...FONTS.h6,
-                ...styles.bg,
-                margin: "0px",
-                color: COLORS.white,
-              }}
-            >
-              OPEN BET
-            </h3>
-            {!showBet ? (
-              <div style={{ ...styles.sub }}>
-                <img src={empty} />
-                <p style={{ ...FONTS.body7, textAlign: "center" }}>
-                  You haven’t select any option for this game. Available open
-                  bet will be displayed here when you select an option.
-                </p>
-                <div
-                  style={{
-                    background: COLORS.lightGray,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer",
-                  }}
-                  //onClick={() => navigate("/open-bets")}
-                >
-                  <p style={{ ...FONTS.body6, textAlign: "center" }}>
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div style={{ ...styles.sub2 }}>
-                <p style={{ ...FONTS.body7, margin: "10px 0px" }}>
-                  Please select from the available open bets created by other
-                  users that matches your options
-                </p>
-                {["", "", ""]?.map((aa) => {
-                  return <BetCard />;
-                })}
-                <div
-                  style={{
-                    background: COLORS.primary,
-                    padding: 10,
-                    borderRadius: 10,
-                    width: "100%",
-                    margin: "2rem 0px 0px 0px",
-                    cursor: "pointer",
-                    color: COLORS.white,
-                  }}
-                  onClick={() => setCreateBet(true)}
-                >
-                  <p
-                    style={{
-                      ...FONTS.body6,
-                      textAlign: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Create Bet
-                  </p>
-                </div>
-              </div>
-            )}
-          </div> */}
-           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
-           <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+
+          <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
+          <img src={ads} style={{ width: "100%", marginBottom: 10 }} />
           <img src={ads} style={{ width: "100%" }} />
         </div>
       </Tablet>
 
 
-      <CreateModal 
+      <CreateModal
         show={createBet}
         handleClose={() => setCreateBet(false)}
       />

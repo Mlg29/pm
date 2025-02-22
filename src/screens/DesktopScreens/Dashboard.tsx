@@ -96,15 +96,16 @@ function Dashboard() {
   }
 
   const fetchUserInfo = async () => {
-    setLoader(true);
     const response = await dispatch(getUserData());
     if (getUserData.fulfilled.match(response)) {
-      setLoader(false);
+
     } else {
-      setLoader(false);
+
       handleLogOut()
     }
   };
+
+
 
 
   const handleDateChange = (date) => {
@@ -131,7 +132,13 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    fetchUserInfo();
+    const getFetch = async () => {
+      setLoader(true);
+      await fetchUserInfo();
+      setLoader(false);
+    }
+    getFetch()
+
   }, []);
 
 
