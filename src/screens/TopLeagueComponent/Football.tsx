@@ -35,12 +35,13 @@ function Football({ leagueName }) {
 
     dispatch(getFootballFixtures(null)).then((dd) => {
 
-      const filterData = dd?.payload?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.category?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
       setLive(filterData || [])
     })
 
+
     dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-      const filterData = dd?.payload?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.category?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
       setFinished(filterData || [])
     })
     dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
@@ -48,7 +49,7 @@ function Football({ leagueName }) {
       setTomorrow(filterData || [])
     })
     dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      const filterData = dd?.payload?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.category?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
       setUpcoming(filterData || [])
     })
   }, [dispatch])

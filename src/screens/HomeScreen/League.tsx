@@ -37,7 +37,6 @@ function League() {
   const leagueName = location.state?.name
   const sportEvents = location.state?.sport
 
-  console.log({ leagueName })
 
   return (
     <div className='top-container'>
