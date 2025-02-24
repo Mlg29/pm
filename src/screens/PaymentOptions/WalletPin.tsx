@@ -91,8 +91,9 @@ function WalletPin() {
       id: userFee?.betId,
       prediction: userFee?.prediction,
       betAmount: parseFloat(userFee?.amount),
-      sport: getUserBet?.sport
+      sport: getUserBet?.sport || userFee?.sport
     }
+
 
     const transactionPayload = {
       transactionPin: otp
@@ -129,6 +130,7 @@ function WalletPin() {
           });
         } else {
           var errMsg = response?.payload as string;
+
           setLoader(false);
           toast.error(errMsg, {
             position: "bottom-center",

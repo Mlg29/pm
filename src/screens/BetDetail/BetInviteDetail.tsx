@@ -31,6 +31,7 @@ import AflCard from "../../components/GameDetailCardHeader/AflCard";
 import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
 import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
 import arrowleft from "../../assets/images/arrow-left.svg"
+import { getFxRate } from "../../redux/slices/MiscSlice";
 
 
 
@@ -71,6 +72,7 @@ function BetInviteDetail() {
   const userData = useAppSelector(userState);
   const [selected, setSelected] = useState("");
   const token = localStorage.getItem("token");
+  const [exAmount, setExAmount] = useState<any>("")
 
   useEffect(() => {
     setLoader(true);
@@ -81,26 +83,29 @@ function BetInviteDetail() {
     } else {
       dispatch(getBetById(id)).then((pp) => {
         setBetData(pp?.payload);
+        handleExRate(pp?.payload)
         setLoader(false);
       });
       localStorage.removeItem("bet-invite-id");
     }
   }, [id]);
 
-  const handleRoute = (route: string, pred) => {
-    setSelected(route);
+  const
+    handleRoute = (route: string, pred) => {
+      setSelected(route);
 
 
-    const payload = {
-      invitedUser: null,
-      amount: betData?.betAmount || betData?.opponentBetAmount,
-      isAcceptBet: true,
-      betId: betData?.id,
-      prediction: pred,
+      const payload = {
+        invitedUser: null,
+        amount: exAmount ? exAmount : (betData?.betAmount || betData?.opponentBetAmount),
+        isAcceptBet: true,
+        betId: betData?.id,
+        sport: betData?.sportEvent?.sport,
+        prediction: pred,
+      };
+      localStorage.setItem("inviteeInfo", JSON.stringify(payload));
+      return navigate("/options");
     };
-    localStorage.setItem("inviteeInfo", JSON.stringify(payload));
-    return navigate("/options");
-  };
 
   const getPrediction = (prediction: string) => {
     const result = betData?.sportEvent?.HorseEvent?.horses?.horse
@@ -111,6 +116,27 @@ function BetInviteDetail() {
 
     return result;
   };
+
+  const handleExRate = async (data) => {
+    const rateData = {
+      sourceCurrency: data?.opponent?.defaultCurrency === "USD" ? "USD" : "NGN",
+      destinationCurrency: data?.user?.defaultCurrency === "USD" ? "USD" : "NGN",
+      amount: data?.opponentBetAmount
+    }
+
+
+    const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
+
+      const expectedAmount = pp?.payload?.data?.rate * data?.opponentBetAmount
+
+      return expectedAmount
+    })
+
+    setExAmount(newAmount)
+
+
+  };
+  console.log({ exAmount })
 
   if (loader) {
     return (
@@ -128,7 +154,7 @@ function BetInviteDetail() {
       </div>
     );
   }
-
+  console.log({ betData })
   return (
     <div className="top-container">
       {isMobile && <Header text="Bet Details" />}
@@ -164,7 +190,7 @@ function BetInviteDetail() {
           margin: "0px 0px 1rem 0px",
         }}
       >
-        {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+        {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
       </h3>
 
       {betData?.sportEvent?.sport === "FOOTBALL" && (
@@ -235,7 +261,7 @@ function BetInviteDetail() {
         <div style={{ ...styles.cardDiv }}>
           <p style={{ ...FONTS.body7 }}>Stake</p>
           <h3 style={{ ...FONTS.h6 }}>
-            ₦ {formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exAmount ? formatCurrency(exAmount) : formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
           </h3>
         </div>
         {betData?.opponent ? (
@@ -268,9 +294,9 @@ function BetInviteDetail() {
                 {betData?.opponentId !== userData?.id ? (
                   <p>
                     {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
+                      ? `${betData?.sportEvent?.TennisEvent?.localTeamName} Win`
                       : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
+                        ? `${betData?.sportEvent?.TennisEvent?.visitorTeamName} Win`
                         : "DRAW"}
                   </p>
                 ) : (
@@ -491,23 +517,23 @@ function BetInviteDetail() {
           {betData?.opponentPrediction !== "W1" && (
             <div style={{ width: "100%" }}>
               <Button
-                text={`${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`}
+                text={`${betData?.sportEvent?.TennisEvent?.localTeamName} Win`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
                     selected ===
-                      betData?.sportEvent?.TennisEvent?.player[0]["@name"]
+                      betData?.sportEvent?.TennisEvent?.localTeamName
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                      betData?.sportEvent?.TennisEvent?.player[0]["@name"]
+                      betData?.sportEvent?.TennisEvent?.localTeamName
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
                 handlePress={() =>
                   handleRoute(
-                    betData?.sportEvent?.TennisEvent?.player[0]["@name"],
+                    betData?.sportEvent?.TennisEvent?.localTeamName,
                     "W1"
                   )
                 }
@@ -517,24 +543,24 @@ function BetInviteDetail() {
           {betData?.opponentPrediction !== "W2" && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
-                text={`${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`}
+                text={`${betData?.sportEvent?.TennisEvent?.visitorTeamName} Win`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
                     selected ===
-                      betData?.sportEvent?.TennisEvent?.player[1]["@name"]
+                      betData?.sportEvent?.TennisEvent?.visitorTeamName
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
                     selected ===
-                      betData?.sportEvent?.TennisEvent?.player[1]["@name"]
+                      betData?.sportEvent?.TennisEvent?.visitorTeamName
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
                 // handlePress={() => navigate('/home')}
                 handlePress={() =>
                   handleRoute(
-                    betData?.sportEvent?.TennisEvent?.player[1]["@name"],
+                    betData?.sportEvent?.TennisEvent?.visitorTeamName,
                     "W2"
                   )
                 }

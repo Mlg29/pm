@@ -231,7 +231,7 @@ function OpenBet() {
   const handleFilter = () => {
     handleShow()
   }
-  console.log({ typeCheck })
+
   return (
     <div>
       {!isMobile && <DesktopBackButton />}
