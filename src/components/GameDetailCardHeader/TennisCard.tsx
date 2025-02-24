@@ -85,11 +85,11 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.player[0]?.name}
+            {data?.localTeamName}
           </p>
         </div>
         <div>
-          <h3
+          {/* <h3
             style={{
               ...FONTS.h5,
               textAlign: "center",
@@ -98,7 +98,7 @@ function TennisCard(props) {
             }}
           >
             {data?.player[0]?.totalScore} - {data?.player[1]?.totalScore}
-          </h3>
+          </h3> */}
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
           </p>
@@ -121,7 +121,7 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.player[1]?.name}
+            {data?.visitorTeamName}
           </p>
         </div>
       </div>

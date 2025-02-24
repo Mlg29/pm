@@ -390,9 +390,9 @@ function BetDetail() {
                           : COLORS.black
                   }}>
                     {betData?.prediction === "W1"
-                      ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
+                      ? `${betData?.sportEvent?.TennisEvent?.localTeamName} Win`
                       : betData?.prediction === "W2"
-                        ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
+                        ? `${betData?.sportEvent?.TennisEvent?.visitorTeamName} Win`
                         : "N/A"}
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
@@ -419,9 +419,9 @@ function BetDetail() {
                             : COLORS.black
                     }}>
                       {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.TennisEvent?.player[0]["@name"]} Win`
+                        ? `${betData?.sportEvent?.TennisEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.TennisEvent?.player[1]["@name"]} Win`
+                          ? `${betData?.sportEvent?.TennisEvent?.visitorTeamName} Win`
                           : "N/A"}
 
                       {

@@ -14,6 +14,11 @@ export function trimString(str, maxLength) {
   return str
 }
 
+export const convertToPST = (utcDate) => {
+  const date = new Date(utcDate);
+  return date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+};
+
 export const formatImageSrc = async (value: any): Promise<void> => {
   // const transformedUrl = transformUrl(value);
   await fetch(value)

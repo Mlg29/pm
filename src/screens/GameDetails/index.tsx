@@ -165,6 +165,7 @@ function GameDetails() {
   }, []);
 
 
+
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
 
@@ -180,6 +181,7 @@ function GameDetails() {
       gameInfo?.status !== "upcoming" &&
       gameInfo?.status !== "Upcoming" &&
       gameInfo?.status !== "UPCOMING" &&
+      gameInfo?.status !== "Not Started" &&
       name !== "Upcoming match"
     ) {
       toast.error("Sorry, the game is in progress, you can't proceed to bet on it", {
@@ -206,13 +208,13 @@ function GameDetails() {
           internalStatus: "UPCOMING",
           date: gameInfo?.formatted_date || gameInfo?.date,
           time: gameInfo?.time || gameInfo?.date,
-          ...(gameType !== "Horse" && gameType !== "Formula1" && gameType !== "Tennis" && {
-            localTeamName: gameInfo?.localTeam?.name,
-            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name,
+          ...(gameType !== "Horse" && gameType !== "Formula1" && {
+            localTeamName: gameInfo?.localTeam?.name || gameInfo?.player[0]?.name,
+            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name || gameInfo?.player[1]?.name,
           }),
           ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
-          ...(gameType === "Horse" || gameType === "Formula1" ? { playerNames: players } : {}),
-          ...(gameType === "Tennis" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
+          ...(gameType === "Horse" || gameType === "Formula1" ? { racerNames: players } : {}),
+          ...(gameType === "Golf" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
         }
 
 

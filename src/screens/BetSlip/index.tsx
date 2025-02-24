@@ -86,6 +86,8 @@ function BetSlip() {
     });
   }
 
+  console.log({ betList })
+
 
   // useEffect(() => {
   //   const interval = setInterval(fetchBetData, 5000);
@@ -311,24 +313,14 @@ function BetSlip() {
                               {item?.sportEvent?.sport === "TENNIS" && (
                                 <SlipCard
                                   homeName={
-                                    item?.sportEvent?.TennisEvent?.player[0][
-                                    "@name"
-                                    ]
+                                    item?.sportEvent?.TennisEvent?.localTeamName
                                   }
                                   awayName={
-                                    item?.sportEvent?.TennisEvent?.player[1][
-                                    "@name"
-                                    ]
+                                    item?.sportEvent?.TennisEvent?.visitorTeamName
                                   }
-                                  homeScore={
-                                    item?.sportEvent?.TennisEvent?.player[0][
-                                    "@totalscore"
-                                    ]
+                                  homeScore={'-'
                                   }
-                                  awayScore={
-                                    item?.sportEvent?.TennisEvent?.player[1][
-                                    "@totalscore"
-                                    ]
+                                  awayScore={'-'
                                   }
                                   isWin={item?.winnerId}
                                   amount={
@@ -757,24 +749,14 @@ function BetSlip() {
                             {item?.sportEvent?.sport === "TENNIS" && (
                               <SlipCard
                                 homeName={
-                                  item?.sportEvent?.TennisEvent?.player[0][
-                                  "@name"
-                                  ]
+                                  item?.sportEvent?.TennisEvent?.localTeamName
                                 }
                                 awayName={
-                                  item?.sportEvent?.TennisEvent?.player[1][
-                                  "@name"
-                                  ]
+                                  item?.sportEvent?.TennisEvent?.visitorTeamName
                                 }
-                                homeScore={
-                                  item?.sportEvent?.TennisEvent?.player[0][
-                                  "@totalscore"
-                                  ]
+                                homeScore={'-'
                                 }
-                                awayScore={
-                                  item?.sportEvent?.TennisEvent?.player[1][
-                                  "@totalscore"
-                                  ]
+                                awayScore={'-'
                                 }
                                 isWin={item?.winnerId}
                                 amount={

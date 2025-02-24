@@ -39,20 +39,28 @@ function Football({ calendarDate }) {
       setLive(dd?.payload?.category)
     })
 
-    dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.category || [])
-    })
-    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+    // dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload?.category || [])
+    // })
+    // dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
 
-      setTomorrow(dd?.payload || [])
-    })
-    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
+    //   setTomorrow(dd?.payload || [])
+    // })
+    // dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
 
-      setUpcoming(dd?.payload?.category || [])
-    })
+    //   setUpcoming(dd?.payload?.category || [])
+    // })
   }, [dispatch, selectedStatus])
 
+  const filteredLeagues = live?.map(league => ({
+    ...league,
+    matches: league.matches.filter(match => match.status === "34")
+  }))
+    .filter(league => league.matches.length > 0);
 
+  const filterData = live
+
+  console.log({ filteredLeagues })
 
   const fetchBetData = () => {
     dispatch(getFootballFixtures(null)).then((dd) => {

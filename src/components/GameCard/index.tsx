@@ -4,6 +4,7 @@ import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
+import { convertToPST } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -47,6 +48,9 @@ function GameCard({ data, id, sportStatus }) {
     minute: "2-digit",
     hour12: true
   });
+
+
+  // const localTime2 = convertToPST(data?.datetimeUtc)
 
 
   return (
