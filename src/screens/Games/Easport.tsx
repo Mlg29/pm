@@ -9,7 +9,7 @@ import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
-import { getEasportFixtures } from '../../redux/slices/Easport'
+import { getEasportFixtures, getEasportFixturesMatch } from '../../redux/slices/Easport'
 import EsportGameCard from '../../components/GameCard/EsportGameCard'
 
 function Easport({ calendarDate }) {
@@ -19,81 +19,40 @@ function Easport({ calendarDate }) {
   const [live, setLive] = useState<any>([])
   const url = `${SportSportBaseUrl}/esport`
   const dispatch = useAppDispatch() as any
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  useEffect(() => {
-    const socket = io(url) as any
 
-    socket.on('connect', () => {
-      console.log('Connected to WebSocket server esport')
-    })
-
-    socket.on('connect_error', (err) => {
-      console.error('WebSocket connection error:', err)
-    })
-
-    socket.on('EsportEventUpdate', (message) => {
-      setLive((prevMessages) => {
-        const updatedMessages = prevMessages?.filter(
-          (msg) => msg?.id !== message?.id
-        )
-        return [...updatedMessages, message]
-      })
-    })
-
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect()
-    }
-  }, [])
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
     const payloadUpcoming = {
-      status: 'Not Started'
+      range: 'upcoming'
     }
-    const payloadLive = {
-      status: 'Started'
-    }
+
 
     const payloadFinished = {
-      status: 'Finished'
+      range: 'finished'
     }
 
-    dispatch(getEasportFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
-    })
-    dispatch(getEasportFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
-    })
+    // dispatch(getEasportFixturesMatch(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload?.match)
+    // })
+    // dispatch(getEasportFixturesMatch(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload?.match)
+    // })
 
-    dispatch(getEasportFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.data)
+    dispatch(getEasportFixtures()).then((dd) => {
+      setLive(dd?.payload?.match)
     })
   }, [])
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league = current?.league
 
-      if (!acc[league]) {
-        acc[league] = []
-      }
+  const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
+  const scheduleLeagues = live?.filter(bb => bb?.status === "Not Started")
+  const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
 
-      acc[league].push(current)
-
-      return acc
-    }, {})
-  }
-
-  const liveOutput = groupedByData(live)
-
-  const upcomingOutput = groupedByData(upcoming?.data)
-
-  const finishedOutput = groupedByData(finished?.data)
-
-  const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const status = [
     {
@@ -147,105 +106,51 @@ function Easport({ calendarDate }) {
       </div>
       {selectedStatus === 'Live' ? (
         <>
-          {liveOutput &&
-            Object.keys(liveOutput)?.map((leagueName) => (
-              <div key={leagueName}>
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    backgroundColor: COLORS.lightRed,
-                    padding: 5,
-                    marginBottom: 10,
-                    borderRadius: 5,
-                    color: COLORS.black,
-                    marginRight: 10
-                  }}
-                >
-                  {leagueName}
-                </p>
-                <div>
-                  {liveOutput[leagueName].map((aa, i) => {
-                    return (
-                      <div key={i}>
-                        <EsportGameCard id={i} data={aa} />
-                      </div>
-                    )
-                  })}
-                </div>
+          {liveLeagues?.map((aa, i) => {
+            return (
+              <div key={i}>
+                <EsportGameCard id={i} data={aa} />
               </div>
-            ))}
+            )
+          })}
+          {liveLeagues?.length < 1 ? (
+            <EmptyState header='No Game Available for Easport' height='30vh' />
+          ) : null}
         </>
       ) : null}
 
       {selectedStatus === 'Scheduled' ? (
         <>
-          {upcomingOutput &&
-            Object.keys(upcomingOutput)?.map((leagueName) => (
-              <div key={leagueName}>
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    backgroundColor: COLORS.lightRed,
-                    padding: 5,
-                    marginBottom: 10,
-                    borderRadius: 5,
-                    color: COLORS.black,
-                    marginRight: 10
-                  }}
-                >
-                  {leagueName}
-                </p>
-                <div>
-                  {upcomingOutput[leagueName].map((aa, i) => {
-                    return (
-                      <div key={i}>
-                        <EsportGameCard id={i} data={aa} />
-                      </div>
-                    )
-                  })}
-                </div>
+          {scheduleLeagues?.map((aa, i) => {
+            return (
+              <div key={i}>
+                <EsportGameCard id={i} data={aa} />
               </div>
-            ))}
+            )
+          })}
+          {scheduleLeagues?.length < 1 ? (
+            <EmptyState header='No Game Available for Easport' height='30vh' />
+          ) : null}
         </>
       ) : null}
 
       {selectedStatus === 'Finished' ? (
         <>
-          {finishedOutput &&
-            Object.keys(finishedOutput)?.map((leagueName) => (
-              <div key={leagueName}>
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    backgroundColor: COLORS.lightRed,
-                    padding: 5,
-                    marginBottom: 10,
-                    borderRadius: 5,
-                    color: COLORS.black,
-                    marginRight: 10
-                  }}
-                >
-                  {leagueName}
-                </p>
-                <div>
-                  {finishedOutput[leagueName].map((aa, i) => {
-                    return (
-                      <div key={i}>
-                        <EsportGameCard id={i} data={aa} />
-                      </div>
-                    )
-                  })}
-                </div>
+          {finishedLeagues?.map((aa, i) => {
+            return (
+              <div key={i}>
+                <EsportGameCard id={i} data={aa} />
               </div>
-            ))}
+            )
+          })}
+          {
+            finishedLeagues?.length < 1 ? (
+              <EmptyState header='No Game Available for Easport' height='30vh' />
+            ) : null}
         </>
       ) : null}
 
-      {live?.length < 1 &&
-        upcoming?.data?.length < 1 &&
-        finished?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Easport' height='30vh' />
-      ) : null}
+
     </div>
   )
 }

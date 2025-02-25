@@ -182,11 +182,11 @@ function HomeScreen() {
       name: "MMA/UFC",
       image: ufc,
     },
-    // {
-    //   id: 7,
-    //   name: "Esports",
-    //   image: easport,
-    // },
+    {
+      id: 7,
+      name: "Esports",
+      image: easport,
+    },
     // {
     //   id: 9,
     //   name: "Darts",

@@ -24,43 +24,42 @@ function Football({ calendarDate }) {
 
 
   useEffect(() => {
-    const payloadUpcoming = {
-      range: 'upcoming'
-    }
-
     const payloadTomorrow = {
       range: calendarDate?.index
-    }
-    const payloadFinished = {
-      range: 'finished'
     }
 
     dispatch(getFootballFixtures(null)).then((dd) => {
       setLive(dd?.payload?.category)
     })
 
-    // dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-    //   setFinished(dd?.payload?.category || [])
-    // })
-    // dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
 
-    //   setTomorrow(dd?.payload || [])
-    // })
-    // dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
+    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
 
-    //   setUpcoming(dd?.payload?.category || [])
-    // })
-  }, [dispatch, selectedStatus])
+      setTomorrow(dd?.payload || [])
+    })
 
-  const filteredLeagues = live?.map(league => ({
+  }, [])
+
+  const liveMatches = live?.map(league => ({
     ...league,
-    matches: league.matches.filter(match => match.status === "34")
+    matches: league.matches.filter(match => match.status > 0 || match.status === "HT")
   }))
     .filter(league => league.matches.length > 0);
 
-  const filterData = live
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    matches: league.matches.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league.matches.length > 0);
 
-  console.log({ filteredLeagues })
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    matches: league.matches.filter(match => match.status === "FT")
+  }))
+    .filter(league => league.matches.length > 0);
+
+
 
   const fetchBetData = () => {
     dispatch(getFootballFixtures(null)).then((dd) => {
@@ -149,7 +148,7 @@ function Football({ calendarDate }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => {
+            {liveMatches?.map((item, i) => {
 
               return (
                 <div key={i}>
@@ -185,7 +184,7 @@ function Football({ calendarDate }) {
               )
             })}
 
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
@@ -193,7 +192,7 @@ function Football({ calendarDate }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((item, i) => {
+            {upcomingMatches?.map((item, i) => {
 
               return (
                 <div key={i}>
@@ -211,11 +210,11 @@ function Football({ calendarDate }) {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.match?.map((aa, i) => {
+                    {item?.matches?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
-                        country: item?.country,
                         leagueId: item?.leagueId,
+                        country: item?.country,
                         ...aa
                       }
                       return (
@@ -229,7 +228,7 @@ function Football({ calendarDate }) {
               )
             })}
 
-            {upcoming?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
@@ -237,7 +236,8 @@ function Football({ calendarDate }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => {
+            {finishedMatches?.map((item, i) => {
+
               return (
                 <div key={i}>
                   <p
@@ -254,11 +254,11 @@ function Football({ calendarDate }) {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.match?.map((aa, i) => {
+                    {item?.matches?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
-                        country: item?.country,
                         leagueId: item?.leagueId,
+                        country: item?.country,
                         ...aa
                       }
                       return (
@@ -272,7 +272,7 @@ function Football({ calendarDate }) {
               )
             })}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>

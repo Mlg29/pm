@@ -166,6 +166,7 @@ function GameDetails() {
 
 
 
+
   const handleRoute = (route: string, selection?: string) => {
     const name = gameInfo?.winner?.name || gameInfo?.winner
 
@@ -196,7 +197,7 @@ function GameDetails() {
         userType: selection,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
-        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
+        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType === "Esports" ? "ESPORT" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
         matchEvent: {
           id: gameInfo?.id,
           sportEventId: gameInfo?.sportEventId,

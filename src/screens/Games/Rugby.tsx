@@ -31,13 +31,13 @@ function Rugby({ calendarDate }) {
       range: 'finished'
     }
 
-    dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.category || [])
-    })
+    // dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload?.category || [])
+    // })
 
-    dispatch(getAflFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.category || [])
-    })
+    // dispatch(getAflFixtures(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload?.category || [])
+    // })
 
     dispatch(getAflFixtureLive()).then((dd) => {
       setLive(dd?.payload?.category || [])

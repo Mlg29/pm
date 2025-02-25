@@ -38,17 +38,36 @@ function Boxing({ calendarDate }) {
       setLive(dd?.payload?.scores?.categories || [])
     })
 
-    dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.scores?.categories || [])
-    })
+    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload?.scores?.categories || [])
+    // })
 
-    dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-      console.log({ dd })
-      setFinished(dd?.payload?.scores?.categories || [])
-    })
+    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
+    //   console.log({ dd })
+    //   setFinished(dd?.payload?.scores?.categories || [])
+    // })
   }, [])
 
 
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final")
+  }))
+    .filter(league => league?.match.length > 0);
 
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
@@ -105,7 +124,7 @@ function Boxing({ calendarDate }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map(
+            {liveMatches?.map(
               (item, i) => (
                 <div key={i}>
                   <p
@@ -139,7 +158,7 @@ function Boxing({ calendarDate }) {
               )
             )}
 
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Boxing' height='30vh' />
             ) : null}
           </>
@@ -147,7 +166,7 @@ function Boxing({ calendarDate }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map(
+            {upcomingMatches?.map(
               (item, i) => (
                 <div key={i}>
                   <p
@@ -181,7 +200,7 @@ function Boxing({ calendarDate }) {
               )
             )}
 
-            {upcoming?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Boxing' height='30vh' />
             ) : null}
           </>
@@ -189,7 +208,7 @@ function Boxing({ calendarDate }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map(
+            {finishedMatches?.map(
               (item, i) => (
                 <div key={i}>
                   <p
@@ -223,7 +242,7 @@ function Boxing({ calendarDate }) {
               )
             )}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Boxing' height='30vh' />
             ) : null}
           </>

@@ -201,6 +201,8 @@ function OpenBet() {
     });
   }, [typeCheck]);
 
+  // console.log({ typeCheck })
+
   if (loader) {
     return (
       <div

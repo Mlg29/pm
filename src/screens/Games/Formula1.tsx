@@ -38,17 +38,23 @@ function Formula1({ calendarDate }) {
       range: 'finished'
     }
 
-    dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.scores?.tournament || [])
-    })
+    // dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload?.scores?.tournament || [])
+    // })
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
 
       setLive(dd?.payload?.scores?.categories || [])
     })
-    dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.scores?.tournament || dd?.payload?.scores?.categories || [])
-    })
+    // dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload?.scores?.tournament || dd?.payload?.scores?.categories || [])
+    // })
   }, [])
+
+
+  const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
+  const scheduleLeagues = live?.filter(bb => bb?.status === "Not Started")
+  const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -106,7 +112,7 @@ function Formula1({ calendarDate }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => {
+            {liveLeagues?.map((item, i) => {
               return <div key={i}>
                 <p
                   style={{
@@ -128,14 +134,14 @@ function Formula1({ calendarDate }) {
 
             })}
 
-            {live?.length < 1 ? (
+            {liveLeagues?.length < 1 ? (
               <EmptyState header='No Game Available for Formula1' height='30vh' />
             ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((item, i) => {
+            {scheduleLeagues?.map((item, i) => {
               return <div key={i}>
                 <p
                   style={{
@@ -156,7 +162,7 @@ function Formula1({ calendarDate }) {
               </div>
 
             })}
-            {upcoming?.length < 1 ? (
+            {scheduleLeagues?.length < 1 ? (
               <EmptyState header='No Game Available for Formula1' height='30vh' />
             ) : null}
           </>
@@ -164,7 +170,7 @@ function Formula1({ calendarDate }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => {
+            {finishedLeagues?.map((item, i) => {
               return <div key={i}>
                 <p
                   style={{
@@ -186,7 +192,7 @@ function Formula1({ calendarDate }) {
 
             })}
 
-            {finished?.length < 1 ? (
+            {finishedLeagues?.length < 1 ? (
               <EmptyState header='No Game Available for Formula1' height='30vh' />
             ) : null}
           </>

@@ -48,7 +48,28 @@ function Baseball({ calendarDate }) {
     dispatch(getBaseballFixtures(payloadTomorrow)).then((dd) => {
       setTomorrow(dd?.payload || [])
     })
-  }, [dispatch, selectedStatus])
+  }, [dispatch])
+
+
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
 
 
 
@@ -88,7 +109,7 @@ function Baseball({ calendarDate }) {
 
   const status = calendarDate ? secondStatus : oldStatus
 
-  console.log({ finished })
+
 
   return (
     <div>
@@ -128,7 +149,7 @@ function Baseball({ calendarDate }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => (
+            {liveMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -159,7 +180,7 @@ function Baseball({ calendarDate }) {
                 </div>
               </div>
             ))}
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Baseball' height='30vh' />
             ) : null}
           </>
@@ -167,7 +188,7 @@ function Baseball({ calendarDate }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.length > 0 && (
+            {upcomingMatches?.length > 0 && (
               <div
                 style={{
                   display: 'flex',
@@ -185,7 +206,7 @@ function Baseball({ calendarDate }) {
               </div>
             )}
 
-            {upcoming?.map((item, i) => (
+            {upcomingMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -217,7 +238,7 @@ function Baseball({ calendarDate }) {
               </div>
             ))}
 
-            {upcoming?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Baseball' height='30vh' />
             ) : null}
           </>
@@ -225,7 +246,7 @@ function Baseball({ calendarDate }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => (
+            {finishedMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -257,7 +278,7 @@ function Baseball({ calendarDate }) {
               </div>
             ))}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Baseball' height='30vh' />
             ) : null}
           </>

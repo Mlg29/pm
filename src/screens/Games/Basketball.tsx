@@ -27,30 +27,19 @@ function Basketball({ calendarDate }) {
   const [selectedStatus, setSelectedStatus] = useState('Finished')
 
   useEffect(() => {
-    const payloadUpcoming = {
-      range: 'd1'
-    }
-
-    const payloadFinished = {
-      range: 'd-1'
-    }
     const payloadTomorrow = {
       range: calendarDate?.index
     }
 
-    dispatch(getBasketballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload || [])
-    })
+
     dispatch(getBasketballFixtures(null)).then((dd) => {
       setLive(dd?.payload?.category || dd?.payload || [])
     })
-    dispatch(getBasketballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
-    })
+
     dispatch(getBasketballFixtures(payloadTomorrow)).then((dd) => {
       setTomorrow(dd?.payload || [])
     })
-  }, [dispatch, calendarDate?.formattedDate, selectedStatus])
+  }, [dispatch, calendarDate?.formattedDate])
 
   const fetchBetData = () => {
     dispatch(getBasketballFixtures(null)).then((dd) => {
@@ -62,6 +51,26 @@ function Basketball({ calendarDate }) {
     const interval = setInterval(fetchBetData, 60000);
     return () => clearInterval(interval);
   }, []);
+
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status > 0 || match.status === "HT")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
 
 
   const oldStatus = [
@@ -139,7 +148,7 @@ function Basketball({ calendarDate }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => (
+            {liveMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -171,7 +180,7 @@ function Basketball({ calendarDate }) {
                 </div>
               </div>
             ))}
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Basketball' height='30vh' />
             ) : null}
           </>
@@ -179,7 +188,7 @@ function Basketball({ calendarDate }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((item, i) => {
+            {upcomingMatches?.map((item, i) => {
 
               return <div key={i} >
                 <p
@@ -213,7 +222,7 @@ function Basketball({ calendarDate }) {
               </div>
             })}
 
-            {upcoming?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Basketball' height='30vh' />
             ) : null}
           </>
@@ -221,25 +230,9 @@ function Basketball({ calendarDate }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <p
-                  style={{
-                    ...FONTS.body6,
-                    color: COLORS.gray,
-                    margin: '15px 0px'
-                  }}
-                ></p>
-              </div>
-            )}
 
-            {finished?.map((item, i) => (
+
+            {finishedMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -272,7 +265,7 @@ function Basketball({ calendarDate }) {
               </div>
             ))}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Basketball' height='30vh' />
             ) : null}
           </>

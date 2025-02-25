@@ -33,12 +33,12 @@ function Tennis({ calendarDate }) {
       range: calendarDate?.index
     }
 
-    dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.category || [])
-    })
-    dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
-      setScheduled(dd?.payload?.category || [])
-    })
+    // dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload?.category || [])
+    // })
+    // dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
+    //   setScheduled(dd?.payload?.category || [])
+    // })
     dispatch(getTennisFixtures(null)).then((dd) => {
       setLive(dd?.payload?.category || [])
     })
@@ -57,6 +57,28 @@ function Tennis({ calendarDate }) {
     const interval = setInterval(fetchBetData, 60000);
     return () => clearInterval(interval);
   }, []);
+
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
@@ -136,7 +158,7 @@ function Tennis({ calendarDate }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((league, index) => (
+            {liveMatches?.map((league, index) => (
               <div key={league?.name}>
                 <p
                   style={{
@@ -169,14 +191,14 @@ function Tennis({ calendarDate }) {
               </div>
             ))}
 
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {scheduled?.map((league, index) => {
+            {upcomingMatches?.map((league, index) => {
               return <div key={league?.name}>
                 <p
                   style={{
@@ -209,7 +231,7 @@ function Tennis({ calendarDate }) {
               </div>
             })}
 
-            {scheduled?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
@@ -217,7 +239,7 @@ function Tennis({ calendarDate }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {Finished?.map((league, index) => (
+            {finishedMatches?.map((league, index) => (
               <div key={league?.name}>
                 <p
                   style={{
@@ -250,7 +272,7 @@ function Tennis({ calendarDate }) {
               </div>
             ))}
 
-            {Finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>

@@ -36,19 +36,37 @@ function Mma({ calendarDate }) {
     }
 
     dispatch(getMmaFixtures(null)).then((dd) => {
-      setLive(dd?.payload || [])
+      setLive(dd?.payload?.category || [])
     })
 
-    dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.match || dd?.payload || [])
-    })
+    // dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload?.match || dd?.payload || [])
+    // })
 
-    dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload || [])
-    })
+    // dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload || [])
+    // })
   }, [])
 
 
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final")
+  }))
+    .filter(league => league?.match.length > 0);
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
   const status = [
@@ -104,7 +122,7 @@ function Mma({ calendarDate }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((league, index) => (
+            {liveMatches?.map((league, index) => (
               <div key={league?.id}>
                 {league?.name && league?.match?.length > 0 && (
                   <p
@@ -136,7 +154,7 @@ function Mma({ calendarDate }) {
               </div>
             ))}
 
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
             ) : null}
           </>
@@ -144,7 +162,7 @@ function Mma({ calendarDate }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((league, index) => (
+            {upcomingMatches?.map((league, index) => (
               <div key={league?.id}>
                 {league?.name && league?.match?.length > 0 && (
                   <p
@@ -175,14 +193,14 @@ function Mma({ calendarDate }) {
                 </div>
               </div>
             ))}
-            {upcoming?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
             ) : null}
           </>
         ) : null}
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((league, index) => (
+            {finishedMatches?.map((league, index) => (
               <div key={league?.id}>
                 {league?.name && league?.match?.length > 0 && (
                   <p
@@ -214,7 +232,7 @@ function Mma({ calendarDate }) {
               </div>
             ))}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
             ) : null}
 

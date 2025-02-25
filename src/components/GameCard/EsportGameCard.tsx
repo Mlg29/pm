@@ -42,43 +42,50 @@ export const styles = {
 
 function EsportGameCard({ id, data }) {
   const navigate = useNavigate();
+  const utcDate = new Date(data?.datetimeUtc);
+  const localTime = utcDate.toLocaleTimeString("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
 
   return (
     <div>
-  
 
-       <div
-      style={styles.container}
-      key={id}
-      onClick={() =>
-        navigate("/game-details", { state: { data: data, gameType: "Esports" } })
-      }
-    >
-      <div style={styles.box1}>
-      <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-         ({data?.gameDate})
-        </p>
-        <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-          {data?.status === "Started" ? `${data?.time}'` : data?.status}
-        </p>
-      </div>
-      <div style={styles.box2}>
-        <p style={{ ...FONTS.body7 }}>{data?.localteam?.name}</p>
-        <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
-      </div>
-      <div style={styles.box3}>
-        {/* <GiSoccerField /> */}
-        <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.localteam?.score ? data?.localteam?.score : "-"}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.score ? data?.awayteam?.score : "-"}</p>
-          
 
+      <div
+        style={styles.container}
+        key={id}
+        onClick={() =>
+          navigate("/game-details", { state: { data: data, gameType: "Esports" } })
+        }
+      >
+        <div style={styles.box1}>
+          <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+            ({data?.date} - {localTime})
+          </p>
+          <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
+            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+          </p>
         </div>
-      </div>
+        <div style={styles.box2}>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.name}</p>
+        </div>
+        <div style={styles.box3}>
+          {/* <GiSoccerField /> */}
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>{data?.localTeam?.totalScore ? data?.localTeam?.totalScore : "-"}</p>
+            <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>{data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : "-"}</p>
 
+
+          </div>
+        </div>
+
+      </div>
     </div>
-    </div>
-   
+
   );
 }
 

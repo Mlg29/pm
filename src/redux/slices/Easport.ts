@@ -21,33 +21,54 @@ const initialState = {
   easport: [],
 };
 
+// export const getEasportFixtures = createAsyncThunk(
+//   "easport/getEasportFixtures",
+//   async (payload: any) => {
+//     const buildUrl = (payload) => {
+//       let queryParams = [];
+//       if (payload?.searchTerm)
+//         queryParams.push(`searchTerm=${payload?.searchTerm}`);
+//       if (payload?.status) queryParams.push(`status=${payload?.status}`);
+//       if (payload?.startTime)
+//         queryParams.push(`time=${payload.startTime}`);
+//       if (payload?.date) queryParams.push(`date=${payload.date}`);
+//       if (payload?.page) queryParams.push(`page=${payload?.page}`);
+//       if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
+
+//       const queryString = queryParams.join("&");
+
+//       return `${SportSportBaseUrl}/esport/fixtures?${queryString}`;
+//     };
+
+//     var response = await getRequest(buildUrl(payload));
+//     if (response?.status === 200 || response?.status === 201) {
+//       return response?.data;
+//     }
+//   }
+// );
+
 export const getEasportFixtures = createAsyncThunk(
   "easport/getEasportFixtures",
-  async (payload: any) => {
-    const buildUrl = (payload) => {
-      let queryParams = [];
-      if (payload?.searchTerm)
-        queryParams.push(`searchTerm=${payload?.searchTerm}`);
-      if (payload?.status) queryParams.push(`status=${payload?.status}`);
-      if (payload?.startTime)
-        queryParams.push(`time=${payload.startTime}`);
-      if (payload?.date) queryParams.push(`date=${payload.date}`);
-      if (payload?.page) queryParams.push(`page=${payload?.page}`);
-      if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
+  async () => {
 
-      const queryString = queryParams.join("&");
 
-      return `${SportSportBaseUrl}/esport/fixtures?${queryString}`;
-    };
-
-    var response = await getRequest(buildUrl(payload));
+    var response = await getRequest(`${SportSportBaseUrl}/esports/live`);
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     }
   }
 );
 
+export const getEasportFixturesMatch = createAsyncThunk(
+  "easport/getEasportFixturesMatch",
+  async (payload: any) => {
 
+    var response = await getRequest(`${SportSportBaseUrl}/esports/matches?range=${payload?.range}`);
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data;
+    }
+  }
+);
 
 
 
@@ -69,7 +90,19 @@ export const EasportSlice = createSlice({
     builder.addCase(getEasportFixtures.rejected, (state, action) => {
       // state.error = action.error.message
     });
-
+    builder.addCase(getEasportFixturesMatch.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getEasportFixturesMatch.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.easport = action.payload;
+        }
+      );
+    builder.addCase(getEasportFixturesMatch.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
   },
 });
 

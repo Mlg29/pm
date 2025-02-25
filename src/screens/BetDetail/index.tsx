@@ -116,7 +116,6 @@ function BetDetail() {
   };
 
 
-
   return (
     <div className="top-container">
       {
@@ -177,7 +176,8 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <GameDetailCardHeader
@@ -352,7 +352,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <TennisCard data={betData?.sportEvent?.TennisEvent} />
@@ -518,7 +518,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <BasketballCard data={betData?.sportEvent?.BasketballEvent} />
@@ -685,7 +685,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <HorseCard gameInfo={betData?.sportEvent?.HorseEvent} />
@@ -842,7 +842,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <BoxingCard data={betData?.sportEvent?.BoxingEvent} />
@@ -1010,7 +1010,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <EsportCard data={betData?.sportEvent?.EsportEvent} />
@@ -1177,7 +1177,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <DartCard data={betData?.sportEvent?.DartEvent} />
@@ -1344,7 +1344,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <MmaCard data={betData?.sportEvent?.MmaEvent} />
@@ -1510,7 +1510,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <SnookerCard data={betData?.sportEvent?.SnookerEvent} />
@@ -1677,7 +1677,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <VolleyballCard data={betData?.sportEvent?.VollyBallEvent} />
@@ -1844,7 +1844,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <HandballCard data={betData?.sportEvent?.HandBallEvent} />
@@ -2012,7 +2012,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <AflCard data={betData?.sportEvent?.AflEvent} />
@@ -2181,7 +2181,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <FutsalCard data={betData?.sportEvent?.FutsalEvent} />
@@ -2348,7 +2348,7 @@ function BetDetail() {
               margin: "0px 0px 1rem 0px",
             }}
           >
-            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.betAmount || betData?.opponentBetAmount)}
+            {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
           <CricketCard data={betData?.sportEvent?.CricketEvent} />
