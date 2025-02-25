@@ -33,6 +33,7 @@ function Basketball({ calendarDate }) {
 
 
     dispatch(getBasketballFixtures(null)).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.category || dd?.payload || [])
     })
 

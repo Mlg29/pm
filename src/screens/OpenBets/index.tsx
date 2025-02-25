@@ -234,6 +234,8 @@ function OpenBet() {
     handleShow()
   }
 
+  console.log({ game })
+
   return (
     <div>
       {!isMobile && <DesktopBackButton />}

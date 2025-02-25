@@ -46,9 +46,11 @@ function Football({ calendarDate }) {
   }))
     .filter(league => league.matches.length > 0);
 
+  const isTimeFormat = (str) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(str);
+
   const upcomingMatches = live?.map(league => ({
     ...league,
-    matches: league.matches.filter(match => match.status === "Not Started")
+    matches: league.matches.filter(match => isTimeFormat(match?.status))
   }))
     .filter(league => league.matches.length > 0);
 
@@ -59,7 +61,7 @@ function Football({ calendarDate }) {
   }))
     .filter(league => league.matches.length > 0);
 
-
+  console.log({ live })
 
   const fetchBetData = () => {
     dispatch(getFootballFixtures(null)).then((dd) => {

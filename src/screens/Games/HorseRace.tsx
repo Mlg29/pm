@@ -30,7 +30,7 @@ function HorseRace({ calendarDate }) {
     }
     dispatch(getHorseFixtures(null)).then((dd) => {
 
-      setLive(dd?.payload?.scores?.tournaments || dd?.payload?.races || [])
+      setLive(dd?.payload?.tournaments || dd?.payload?.races || [])
     })
     // dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
     //   setSchedule(dd?.payload?.scores?.tournaments || [])
@@ -53,7 +53,7 @@ function HorseRace({ calendarDate }) {
 
   const upcomingMatches = Array.isArray(Live) && Live?.map(league => ({
     ...league,
-    races: league?.races.filter(match => match.status === "Not Started")
+    races: league?.races.filter(match => match?.results === "Upcoming race")
   }))
     .filter(league => league?.races.length > 0);
 
