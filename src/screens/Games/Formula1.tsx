@@ -29,7 +29,7 @@ function Formula1({ calendarDate }) {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
     const payloadLive = {
       range: 'live'
@@ -38,9 +38,12 @@ function Formula1({ calendarDate }) {
       range: 'finished'
     }
 
-    // dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload?.scores?.tournament || [])
-    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
+        setUpcoming(dd?.payload?.scores?.tournament || [])
+      })
+    }
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
 
       setLive(dd?.payload?.scores?.categories || [])
@@ -48,7 +51,7 @@ function Formula1({ calendarDate }) {
     // dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
     //   setFinished(dd?.payload?.scores?.tournament || dd?.payload?.scores?.categories || [])
     // })
-  }, [])
+  }, [calendarDate])
 
 
   const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
@@ -58,7 +61,7 @@ function Formula1({ calendarDate }) {
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -72,6 +75,27 @@ function Formula1({ calendarDate }) {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
 
 
   return (
@@ -198,6 +222,38 @@ function Formula1({ calendarDate }) {
           </>
         )
           : null}
+
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {upcoming?.map((item, i) => {
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div key={i}>
+                  <Formula1Card id={i} data={item} />
+                </div>
+              </div>
+
+            })}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Formula1' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
 
       </LoadingState>
     </div>

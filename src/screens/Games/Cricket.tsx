@@ -34,7 +34,7 @@ function Cricket({ calendarDate }) {
       range: 'live'
     }
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
 
     const payloadFinished = {
@@ -45,9 +45,12 @@ function Cricket({ calendarDate }) {
     dispatch(getCricketFixtures(payloadLive)).then((dd) => {
       setLive(dd?.payload?.scores?.categories || [])
     })
-    // dispatch(getCricketMatchFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload || [])
-    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getCricketMatchFixtures(payloadUpcoming)).then((dd) => {
+        setUpcoming(dd?.payload || [])
+      })
+    }
 
     // dispatch(getCricketMatchFixtures(payloadFinished)).then((dd) => {
     //   console.log({ dd })
@@ -55,7 +58,7 @@ function Cricket({ calendarDate }) {
     // })
 
     return
-  }, [])
+  }, [calendarDate])
 
 
 
@@ -81,7 +84,8 @@ function Cricket({ calendarDate }) {
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  const status = [
+
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -91,10 +95,31 @@ function Cricket({ calendarDate }) {
       name: 'Scheduled'
     },
     {
-      id: 2,
+      id: 3,
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
 
   return (
     <div>
@@ -252,7 +277,45 @@ function Cricket({ calendarDate }) {
           </>
         ) : null}
 
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {upcoming?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <CricketGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
 
+            {upcoming?.length < 1 ? (
+              <EmptyState header='No Game Available for Cricket' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
 
       </LoadingState>
     </div>

@@ -29,7 +29,7 @@ function Mma({ calendarDate }) {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
     const payloadFinished = {
       range: 'finished'
@@ -39,14 +39,17 @@ function Mma({ calendarDate }) {
       setLive(dd?.payload?.category || [])
     })
 
-    // dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload?.match || dd?.payload || [])
-    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getMmaFixtures(payloadUpcoming)).then((dd) => {
+        setUpcoming(dd?.payload?.match || dd?.payload || [])
+      })
+    }
 
     // dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
     //   setFinished(dd?.payload || [])
     // })
-  }, [])
+  }, [calendarDate])
 
 
   const liveMatches = live?.map(league => ({
@@ -69,7 +72,7 @@ function Mma({ calendarDate }) {
     .filter(league => league?.match.length > 0);
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -83,6 +86,28 @@ function Mma({ calendarDate }) {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
+
 
   return (
     <div>
@@ -233,6 +258,48 @@ function Mma({ calendarDate }) {
             ))}
 
             {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
+            ) : null}
+
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {upcoming?.map((league, index) => (
+              <div key={league?.id}>
+                {league?.name && league?.match?.length > 0 && (
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {league?.name}
+                  </p>
+                )}
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league?.name,
+                      leagueId: league?.id,
+                      ...aa
+                    }
+                    return <div key={i}>
+                      <MmaGameCard id={index} data={payload} />
+                    </div>
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {upcoming?.length < 1 ? (
               <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
             ) : null}
 

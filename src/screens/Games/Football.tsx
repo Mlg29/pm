@@ -32,13 +32,15 @@ function Football({ calendarDate }) {
       setLive(dd?.payload?.category)
     })
 
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload || [])
+      })
+    }
 
-    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
 
-      setTomorrow(dd?.payload || [])
-    })
-
-  }, [])
+  }, [calendarDate])
 
   const liveMatches = live?.map(league => ({
     ...league,
@@ -61,7 +63,7 @@ function Football({ calendarDate }) {
   }))
     .filter(league => league.matches.length > 0);
 
-  console.log({ live })
+
 
   const fetchBetData = () => {
     dispatch(getFootballFixtures(null)).then((dd) => {

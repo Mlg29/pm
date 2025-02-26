@@ -28,7 +28,7 @@ function Boxing({ calendarDate }) {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
     const payloadFinished = {
       range: 'finished'
@@ -38,15 +38,18 @@ function Boxing({ calendarDate }) {
       setLive(dd?.payload?.scores?.categories || [])
     })
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload?.scores?.categories || [])
-    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
+        setUpcoming(dd?.payload?.scores?.categories || [])
+      })
+    }
 
     // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
     //   console.log({ dd })
     //   setFinished(dd?.payload?.scores?.categories || [])
     // })
-  }, [])
+  }, [calendarDate])
 
 
 
@@ -71,7 +74,7 @@ function Boxing({ calendarDate }) {
 
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -85,6 +88,28 @@ function Boxing({ calendarDate }) {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
+
 
   return (
     <div>
@@ -243,6 +268,49 @@ function Boxing({ calendarDate }) {
             )}
 
             {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Boxing' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {upcoming?.map(
+              (item, i) => (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.match?.map((aa, i) => {
+                      const payload = {
+                        league: item?.name,
+                        leagueId: item?.id,
+                        ...aa
+                      }
+                      return (
+                        <div key={i}>
+                          <BoxingGameCard id={i} data={payload} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            )}
+
+            {upcoming?.length < 1 ? (
               <EmptyState header='No Game Available for Boxing' height='30vh' />
             ) : null}
           </>

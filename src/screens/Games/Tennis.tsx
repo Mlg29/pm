@@ -42,10 +42,13 @@ function Tennis({ calendarDate }) {
     dispatch(getTennisFixtures(null)).then((dd) => {
       setLive(dd?.payload?.category || [])
     })
-    dispatch(getTennisFixtures(payloadTomorrow)).then((dd) => {
-      setTomorrow(dd?.payload?.category || [])
-    })
-  }, [])
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getTennisFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload?.category || [])
+      })
+    }
+  }, [calendarDate])
 
   const fetchBetData = () => {
     dispatch(getTennisFixtures(null)).then((dd) => {
@@ -75,7 +78,7 @@ function Tennis({ calendarDate }) {
 
   const finishedMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Finished")
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
   }))
     .filter(league => league?.match.length > 0);
 

@@ -30,7 +30,7 @@ function Nascar({ calendarDate }) {
       range: 'live'
     }
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
     const payloadFinished = {
       range: 'finished'
@@ -47,16 +47,18 @@ function Nascar({ calendarDate }) {
       setLive(tp || []);
     });
 
-    // dispatch(getNascaMatchFixtures(payloadUpcoming)).then((dd) => {
-
-    //   const tp = dd?.payload?.category?.map(rr => {
-    //     return {
-    //       ...rr,
-    //       race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
-    //     }
-    //   })
-    //   setUpcoming(tp || []);
-    // });
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getNascaMatchFixtures(payloadUpcoming)).then((dd) => {
+        const tp = dd?.payload?.category?.map(rr => {
+          return {
+            ...rr,
+            race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+          }
+        })
+        setUpcoming(tp || []);
+      });
+    }
     // dispatch(getNascaMatchFixtures(payloadFinished)).then((dd) => {
 
     //   const tp = dd?.payload?.category?.map(rr => {
@@ -67,7 +69,7 @@ function Nascar({ calendarDate }) {
     //   })
     //   setFinished(tp || []);
     // });
-  }, [dispatch])
+  }, [dispatch, calendarDate])
 
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({
@@ -90,7 +92,8 @@ function Nascar({ calendarDate }) {
     .filter(league => league?.races.length > 0);
 
 
-  const status = [
+
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -104,6 +107,27 @@ function Nascar({ calendarDate }) {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
 
 
 
@@ -263,6 +287,49 @@ function Nascar({ calendarDate }) {
 
             })}
             {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Nascar' height='30vh' />
+            ) : null}
+          </>
+        )
+          : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {upcoming?.map((item, i) => {
+              return <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.race?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      country: item?.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <NascarCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+            })}
+            {upcoming?.length < 1 ? (
               <EmptyState header='No Game Available for Nascar' height='30vh' />
             ) : null}
           </>

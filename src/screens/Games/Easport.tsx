@@ -28,7 +28,7 @@ function Easport({ calendarDate }) {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
 
 
@@ -36,9 +36,12 @@ function Easport({ calendarDate }) {
       range: 'finished'
     }
 
-    // dispatch(getEasportFixturesMatch(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload?.match)
-    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getEasportFixturesMatch(payloadUpcoming)).then((dd) => {
+        setUpcoming(dd?.payload?.match)
+      })
+    }
     // dispatch(getEasportFixturesMatch(payloadFinished)).then((dd) => {
     //   setFinished(dd?.payload?.match)
     // })
@@ -46,7 +49,7 @@ function Easport({ calendarDate }) {
     dispatch(getEasportFixtures()).then((dd) => {
       setLive(dd?.payload?.match)
     })
-  }, [])
+  }, [calendarDate])
 
 
   const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
@@ -54,7 +57,8 @@ function Easport({ calendarDate }) {
   const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
 
 
-  const status = [
+
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -68,6 +72,27 @@ function Easport({ calendarDate }) {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
 
   return (
     <div>
@@ -145,6 +170,22 @@ function Easport({ calendarDate }) {
           })}
           {
             finishedLeagues?.length < 1 ? (
+              <EmptyState header='No Game Available for Easport' height='30vh' />
+            ) : null}
+        </>
+      ) : null}
+
+      {selectedStatus === calendarDate?.formattedDate ? (
+        <>
+          {upcoming?.map((aa, i) => {
+            return (
+              <div key={i}>
+                <EsportGameCard id={i} data={aa} />
+              </div>
+            )
+          })}
+          {
+            upcoming?.length < 1 ? (
               <EmptyState header='No Game Available for Easport' height='30vh' />
             ) : null}
         </>

@@ -37,10 +37,13 @@ function Basketball({ calendarDate }) {
       setLive(dd?.payload?.category || dd?.payload || [])
     })
 
-    dispatch(getBasketballFixtures(payloadTomorrow)).then((dd) => {
-      setTomorrow(dd?.payload || [])
-    })
-  }, [dispatch, calendarDate?.formattedDate])
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getBasketballFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload || [])
+      })
+    }
+  }, [dispatch, calendarDate])
 
   const fetchBetData = () => {
     dispatch(getBasketballFixtures(null)).then((dd) => {

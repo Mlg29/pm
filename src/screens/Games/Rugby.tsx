@@ -24,16 +24,18 @@ function Rugby({ calendarDate }) {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
 
     const payloadFinished = {
       range: 'finished'
     }
-
-    // dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload?.category || [])
-    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
+        setUpcoming(dd?.payload?.category || [])
+      })
+    }
 
     // dispatch(getAflFixtures(payloadFinished)).then((dd) => {
     //   setFinished(dd?.payload?.category || [])
@@ -42,13 +44,13 @@ function Rugby({ calendarDate }) {
     dispatch(getAflFixtureLive()).then((dd) => {
       setLive(dd?.payload?.category || [])
     })
-  }, [])
+  }, [calendarDate])
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  const status = [
+  const oldStatus = [
     {
-      id: 2,
+      id: 1,
       name: 'Live'
     },
     {
@@ -61,6 +63,26 @@ function Rugby({ calendarDate }) {
     }
   ]
 
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
 
   return (
     <div>
@@ -242,6 +264,57 @@ function Rugby({ calendarDate }) {
           </>
         ) : null}
 
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {upcoming?.map((item, i) => {
+              return (
+                <div key={i}>
+                  <p
+                    style={{
+                      ...FONTS.body7,
+                      backgroundColor: COLORS.lightRed,
+                      padding: 5,
+                      marginBottom: 10,
+                      borderRadius: 5,
+                      color: COLORS.black,
+                      marginRight: 10
+                    }}
+                  >
+                    {item?.name}
+                  </p>
+                  <div>
+                    {item?.week?.map((weekItem, i) => {
+                      const { matches, name: leagueName } = weekItem
+                      return matches?.map((matchInfo, matchIndex) => {
+                        if (matchInfo?.match) return (
+                          matchInfo?.match?.map((details, detailsIndex) => {
+                            const payload = {
+                              league: leagueName,
+                              ...details
+                            }
+                            return (
+                              <div key={`${i}-${matchIndex}-${detailsIndex}`}>
+                                <AflGameCard id={matchIndex} data={payload} />
+                              </div>
+                            )
+                          })
+                        )
+                      })
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+
+            {upcoming?.length < 1 ? (
+              <EmptyState
+                header='No Game Available for American Football Rugby'
+                height='30vh'
+              />
+            ) : null}
+          </>
+        ) : null}
 
       </LoadingState>
     </div>

@@ -26,9 +26,7 @@ function Baseball({ calendarDate }) {
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
-    const payloadUpcoming = {
-      range: 'upcoming'
-    }
+
     const payloadFinished = {
       range: 'finished'
     }
@@ -38,17 +36,20 @@ function Baseball({ calendarDate }) {
     dispatch(getBaseballFixtures(null)).then((dd) => {
       setLive(dd?.payload?.categories || [])
     })
-    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.categories || [])
-    })
-    dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      console.log({ dd })
-      setFinished(dd?.payload?.categories || [])
-    })
-    dispatch(getBaseballFixtures(payloadTomorrow)).then((dd) => {
-      setTomorrow(dd?.payload || [])
-    })
-  }, [dispatch])
+    // dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload?.categories || [])
+    // })
+    // dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
+    //   console.log({ dd })
+    //   setFinished(dd?.payload?.categories || [])
+    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getBaseballFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload || [])
+      })
+    }
+  }, [dispatch, calendarDate])
 
 
 

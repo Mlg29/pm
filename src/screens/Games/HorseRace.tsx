@@ -23,7 +23,7 @@ function HorseRace({ calendarDate }) {
 
   useEffect(() => {
     const payloadUpcoming = {
-      range: 'upcoming'
+      range: calendarDate?.index
     }
     const payloadFinished = {
       range: 'finished'
@@ -32,16 +32,17 @@ function HorseRace({ calendarDate }) {
 
       setLive(dd?.payload?.tournaments || dd?.payload?.races || [])
     })
-    // dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
-    //   setSchedule(dd?.payload?.scores?.tournaments || [])
-    // })
-    // dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
 
-    //   setFinished(dd?.payload?.scores?.tournaments || [])
-    // })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
+        setSchedule(dd?.payload?.scores?.tournaments || [])
+      })
+    }
+
 
     return
-  }, [])
+  }, [calendarDate])
 
 
 
@@ -66,20 +67,41 @@ function HorseRace({ calendarDate }) {
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
     },
     {
       id: 2,
-      name: 'Schedule'
+      name: 'Scheduled'
     },
     {
       id: 3,
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
 
 
 
@@ -262,6 +284,49 @@ function HorseRace({ calendarDate }) {
             ))}
 
             {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Horse Race' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {Schedule?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.races?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.tournamentId,
+                      date: item?.date,
+                      country: item?.file_group,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <HorseGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {Schedule?.length < 1 ? (
               <EmptyState header='No Game Available for Horse Race' height='30vh' />
             ) : null}
           </>
