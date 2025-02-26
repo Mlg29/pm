@@ -31,15 +31,6 @@ function Rugby({ leagueName }) {
       range: 'finished'
     }
 
-    dispatch(getAflFixtures(payloadUpcoming)).then((dd) => {
-      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setUpcoming(filterData || [])
-    })
-
-    dispatch(getAflFixtures(payloadFinished)).then((dd) => {
-      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setFinished(filterData || [])
-    })
 
     dispatch(getAflFixtureLive()).then((dd) => {
       const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
@@ -68,7 +59,7 @@ function Rugby({ leagueName }) {
   return (
     <div>
       <div>
-
+        <p style={{ fontSize: 14, fontWeight: '500' }}>AFL</p>
         <div
           style={{
             display: 'flex',
@@ -103,35 +94,35 @@ function Rugby({ leagueName }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
+            {/* <div>
+            <p
+              style={{
+                ...FONTS.body7,
+                backgroundColor: COLORS.lightRed,
+                padding: 5,
+                marginBottom: 10,
+                borderRadius: 5,
+                color: COLORS.black,
+                marginRight: 10
+              }}
+            >
+              {Live.name}
+            </p>
             <div>
-              <p
-                style={{
-                  ...FONTS.body7,
-                  backgroundColor: COLORS.lightRed,
-                  padding: 5,
-                  marginBottom: 10,
-                  borderRadius: 5,
-                  color: COLORS.black,
-                  marginRight: 10
-                }}
-              >
-                {Live.name}
-              </p>
-              <div>
-                {Array.isArray(Live) && Live?.map((aa, i) => {
-                  const payload = {
-                    league: aa?.name,
-                    leagueId: aa?.id,
-                    ...aa
-                  }
-                  return (
-                    <div key={i}>
-                      <AflGameCard id={i} data={payload} />
-                    </div>
-                  )
-                })}
-              </div>
+              {Array.isArray(Live) && Live?.map((aa, i) => {
+                const payload = {
+                  league: aa?.name,
+                  leagueId: aa?.id,
+                  ...aa
+                }
+                return (
+                  <div key={i}>
+                    <AflGameCard id={i} data={payload} />
+                  </div>
+                )
+              })}
             </div>
+          </div> */}
 
             {
               Live?.length < 1 ? (

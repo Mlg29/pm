@@ -32,17 +32,29 @@ function HorseRace({ leagueName }) {
       const filterData = dd?.payload?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
       setLive(filterData || [])
     })
-    dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
-      const filterData = dd?.payload?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setSchedule(filterData || [])
-    })
-    dispatch(getHorseFixtures(payloadFinished)).then((dd) => {
-      const filterData = dd?.payload?.scores?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setFinished(filterData || [])
-    })
 
     return
   }, [])
+
+
+  const liveMatches = Array.isArray(Live) && Live?.map(league => ({
+    ...league,
+    races: league?.races.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.races.length > 0);
+
+  const upcomingMatches = Array.isArray(Live) && Live?.map(league => ({
+    ...league,
+    races: league?.races.filter(match => match?.results === "Upcoming race")
+  }))
+    .filter(league => league?.races.length > 0);
+
+
+  const finishedMatches = Array.isArray(Live) && Live?.map(league => ({
+    ...league,
+    races: league?.races.filter(match => match.status === "Cancelled" || match.status === "Finished")
+  }))
+    .filter(league => league?.races.length > 0);
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -65,7 +77,6 @@ function HorseRace({ leagueName }) {
   return (
     <div>
       <div>
-
         <div
           style={{
             display: 'flex',
@@ -99,7 +110,7 @@ function HorseRace({ leagueName }) {
       </div>
       {selectedStatus === 'Live' ? (
         <>
-          {Live?.length > 0 && (
+          {liveMatches?.length > 0 && (
             <div
               style={{
                 display: 'flex',
@@ -122,7 +133,7 @@ function HorseRace({ leagueName }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {Array.isArray(Live) && Live?.map((item, i) => (
+            {liveMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -156,7 +167,7 @@ function HorseRace({ leagueName }) {
               </div>
             ))}
 
-            {Live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Horse Race' height='30vh' />
             ) : null}
           </>
@@ -164,7 +175,7 @@ function HorseRace({ leagueName }) {
 
         {selectedStatus === 'Schedule' ? (
           <>
-            {Schedule?.map((item, i) => (
+            {upcomingMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -198,7 +209,7 @@ function HorseRace({ leagueName }) {
               </div>
             ))}
 
-            {Schedule?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Horse Race' height='30vh' />
             ) : null}
           </>
@@ -206,7 +217,7 @@ function HorseRace({ leagueName }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => (
+            {finishedMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -240,11 +251,14 @@ function HorseRace({ leagueName }) {
               </div>
             ))}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Horse Race' height='30vh' />
             ) : null}
           </>
         ) : null}
+
+
+
 
 
       </LoadingState>

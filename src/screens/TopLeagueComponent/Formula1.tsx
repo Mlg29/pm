@@ -38,19 +38,24 @@ function Formula1({ leagueName }) {
       range: 'finished'
     }
 
-    dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
-      const filterData = dd?.payload?.scores?.tournament?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setUpcoming(filterData || [])
-    })
+    // dispatch(getFormulaMatchFixtures(payloadUpcoming)).then((dd) => {
+    //   const filterData = dd?.payload?.scores?.tournament?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+    //   setUpcoming(filterData || [])
+    // })
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
       const filterData = dd?.payload?.scores?.categories?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
       setLive(filterData || [])
     })
-    dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
-      const filterData = dd?.payload?.scores?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setFinished(filterData || [])
-    })
+    // dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
+    //   const filterData = dd?.payload?.scores?.tournaments?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+    //   setFinished(filterData || [])
+    // })
   }, [])
+
+  const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
+  const scheduleLeagues = live?.filter(bb => bb?.status === "Not Started")
+  const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -108,7 +113,7 @@ function Formula1({ leagueName }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => {
+            {liveLeagues?.map((item, i) => {
               return <div key={i}>
                 <p
                   style={{
@@ -130,14 +135,14 @@ function Formula1({ leagueName }) {
 
             })}
 
-            {live?.length < 1 ? (
+            {liveLeagues?.length < 1 ? (
               <EmptyState header='No Game Available for Formula1' height='30vh' />
             ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((item, i) => {
+            {scheduleLeagues?.map((item, i) => {
               return <div key={i}>
                 <p
                   style={{
@@ -158,7 +163,7 @@ function Formula1({ leagueName }) {
               </div>
 
             })}
-            {upcoming?.length < 1 ? (
+            {scheduleLeagues?.length < 1 ? (
               <EmptyState header='No Game Available for Formula1' height='30vh' />
             ) : null}
           </>
@@ -166,7 +171,7 @@ function Formula1({ leagueName }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => {
+            {finishedLeagues?.map((item, i) => {
               return <div key={i}>
                 <p
                   style={{
@@ -188,12 +193,14 @@ function Formula1({ leagueName }) {
 
             })}
 
-            {finished?.length < 1 ? (
+            {finishedLeagues?.length < 1 ? (
               <EmptyState header='No Game Available for Formula1' height='30vh' />
             ) : null}
           </>
         )
           : null}
+
+
 
       </LoadingState>
     </div>

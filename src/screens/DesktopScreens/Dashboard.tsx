@@ -132,6 +132,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
+
     const getFetch = async () => {
       setLoader(true);
       await fetchUserInfo();

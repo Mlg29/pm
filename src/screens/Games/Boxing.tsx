@@ -30,9 +30,6 @@ function Boxing({ calendarDate }) {
     const payloadUpcoming = {
       range: calendarDate?.index
     }
-    const payloadFinished = {
-      range: 'finished'
-    }
 
     dispatch(getBoxingFixtures(null)).then((dd) => {
       setLive(dd?.payload?.scores?.categories || [])

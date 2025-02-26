@@ -39,20 +39,30 @@ function Football({ leagueName }) {
       setLive(filterData || [])
     })
 
-
-    dispatch(getFootballFixtures(payloadFinished)).then((dd) => {
-      const filterData = dd?.payload?.category?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setFinished(filterData || [])
-    })
-    dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-      const filterData = dd?.payload?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setTomorrow(filterData || [])
-    })
-    dispatch(getFootballFixtures(payloadUpcoming)).then((dd) => {
-      const filterData = dd?.payload?.category?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setUpcoming(filterData || [])
-    })
   }, [dispatch])
+
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    matches: league.matches.filter(match => match.status > 0 || match.status === "HT")
+  }))
+    .filter(league => league.matches.length > 0);
+
+  const isTimeFormat = (str) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(str);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    matches: league.matches.filter(match => isTimeFormat(match?.status))
+  }))
+    .filter(league => league.matches.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    matches: league.matches.filter(match => match.status === "FT")
+  }))
+    .filter(league => league.matches.length > 0);
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -68,17 +78,12 @@ function Football({ leagueName }) {
     {
       id: 3,
       name: 'Finished'
-    },
-    {
-      id: 2,
-      name: 'Next Day'
     }
   ]
 
   return (
     <div>
       <div>
-
         <div
           style={{
             display: 'flex',
@@ -113,7 +118,8 @@ function Football({ leagueName }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => {
+            {liveMatches?.map((item, i) => {
+
               return (
                 <div key={i}>
                   <p
@@ -148,7 +154,7 @@ function Football({ leagueName }) {
               )
             })}
 
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
@@ -156,7 +162,7 @@ function Football({ leagueName }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((item, i) => {
+            {upcomingMatches?.map((item, i) => {
 
               return (
                 <div key={i}>
@@ -174,11 +180,11 @@ function Football({ leagueName }) {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.match?.map((aa, i) => {
+                    {item?.matches?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
-                        country: item?.country,
                         leagueId: item?.leagueId,
+                        country: item?.country,
                         ...aa
                       }
                       return (
@@ -192,7 +198,7 @@ function Football({ leagueName }) {
               )
             })}
 
-            {upcoming?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
@@ -200,7 +206,8 @@ function Football({ leagueName }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => {
+            {finishedMatches?.map((item, i) => {
+
               return (
                 <div key={i}>
                   <p
@@ -217,11 +224,11 @@ function Football({ leagueName }) {
                     {item?.league}
                   </p>
                   <div>
-                    {item?.match?.map((aa, i) => {
+                    {item?.matches?.map((aa, i) => {
                       const payload = {
                         league: item?.league,
-                        country: item?.country,
                         leagueId: item?.leagueId,
+                        country: item?.country,
                         ...aa
                       }
                       return (
@@ -235,51 +242,12 @@ function Football({ leagueName }) {
               )
             })}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Football' height='30vh' />
             ) : null}
           </>
         ) : null}
 
-        {selectedStatus === 'Next Day' ? (
-          <>
-            {tomorrow?.map((item, i) => (
-              <div key={i}>
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    backgroundColor: COLORS.lightRed,
-                    padding: 5,
-                    marginBottom: 10,
-                    borderRadius: 5,
-                    color: COLORS.black,
-                    marginRight: 10
-                  }}
-                >
-                  {item?.league}
-                </p>
-                <div>
-                  {item?.matches?.map((aa, i) => {
-                    const payload = {
-                      league: item?.league,
-                      country: item?.country,
-                      ...aa
-                    }
-                    return (
-                      <div key={i}>
-                        <GameCard id={i} data={payload} sportStatus={selectedStatus} />
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
-
-            {tomorrow?.length < 1 ? (
-              <EmptyState header='No Game Available for Football' height='30vh' />
-            ) : null}
-          </>
-        ) : null}
 
       </LoadingState>
     </div>

@@ -46,18 +46,32 @@ function Cricket({ leagueName }) {
       const filterData = dd?.payload?.scores?.categories?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
       setLive(filterData || [])
     })
-    dispatch(getCricketMatchFixtures(payloadUpcoming)).then((dd) => {
-      const filterData = dd?.payload?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setUpcoming(filterData || [])
-    })
 
-    dispatch(getCricketMatchFixtures(payloadFinished)).then((dd) => {
-      const filterData = dd?.payload?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setFinished(filterData || [])
-    })
 
     return
   }, [])
+
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -115,7 +129,7 @@ function Cricket({ leagueName }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => (
+            {liveMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -146,7 +160,7 @@ function Cricket({ leagueName }) {
                 </div>
               </div>
             ))}
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Cricket' height='30vh' />
             ) : null}
           </>
@@ -154,7 +168,7 @@ function Cricket({ leagueName }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.map((item, i) => (
+            {upcomingMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -185,7 +199,7 @@ function Cricket({ leagueName }) {
                 </div>
               </div>
             ))}
-            {upcoming?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Cricket' height='30vh' />
             ) : null}
           </>
@@ -194,7 +208,7 @@ function Cricket({ leagueName }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {finished?.map((item, i) => (
+            {finishedMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -226,7 +240,7 @@ function Cricket({ leagueName }) {
               </div>
             ))}
 
-            {finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Cricket' height='30vh' />
             ) : null}
           </>

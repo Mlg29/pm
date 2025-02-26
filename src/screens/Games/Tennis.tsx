@@ -74,7 +74,6 @@ function Tennis({ calendarDate }) {
   }))
     .filter(league => league?.match.length > 0);
 
-  console.log({ live })
 
   const finishedMatches = live?.map(league => ({
     ...league,

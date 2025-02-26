@@ -28,19 +28,34 @@ function Tennis({ leagueName }) {
     const PayloadScheduled = {
       range: 'upcoming'
     }
-    dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
-      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setFinished(filterData || [])
-    })
-    dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
-      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
-      setScheduled(filterData || [])
-    })
+
     dispatch(getTennisFixtures(null)).then((dd) => {
       const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
       setLive(filterData || [])
     })
   }, [])
+
+
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
+
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
@@ -64,6 +79,7 @@ function Tennis({ leagueName }) {
   return (
     <div>
       <div>
+
         <div
           style={{
             display: 'flex',
@@ -98,7 +114,7 @@ function Tennis({ leagueName }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((league, index) => (
+            {liveMatches?.map((league, index) => (
               <div key={league?.name}>
                 <p
                   style={{
@@ -131,14 +147,14 @@ function Tennis({ leagueName }) {
               </div>
             ))}
 
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {scheduled?.map((league, index) => {
+            {upcomingMatches?.map((league, index) => {
               return <div key={league?.name}>
                 <p
                   style={{
@@ -171,7 +187,7 @@ function Tennis({ leagueName }) {
               </div>
             })}
 
-            {scheduled?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
@@ -179,7 +195,7 @@ function Tennis({ leagueName }) {
 
         {selectedStatus === 'Finished' ? (
           <>
-            {Finished?.map((league, index) => (
+            {finishedMatches?.map((league, index) => (
               <div key={league?.name}>
                 <p
                   style={{
@@ -212,11 +228,12 @@ function Tennis({ leagueName }) {
               </div>
             ))}
 
-            {Finished?.length < 1 ? (
+            {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
         ) : null}
+
 
 
       </LoadingState>

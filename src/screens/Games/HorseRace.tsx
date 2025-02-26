@@ -104,7 +104,6 @@ function HorseRace({ calendarDate }) {
   const status = calendarDate ? secondStatus : oldStatus
 
 
-
   return (
     <div>
       <div>

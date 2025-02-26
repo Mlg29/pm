@@ -33,14 +33,29 @@ function Baseball({ leagueName }) {
     dispatch(getBaseballFixtures(null)).then((dd) => {
       setLive(dd?.payload?.categories?.filter(m => m?.["@name"]?.toLowerCase().includes(leagueName?.toLowerCase())) || [])
     })
-    dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload?.filter(m => m?.["@name"]?.toLowerCase().includes(leagueName?.toLowerCase())) || [])
-    })
-    dispatch(getBaseballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload?.filter(m => m?.["@name"]?.toLowerCase().includes(leagueName?.toLowerCase())) || [])
-    })
+
   }, [dispatch])
 
+
+
+  const liveMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const upcomingMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Not Started")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const finishedMatches = live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
 
 
   const [selectedStatus, setSelectedStatus] = useState('Finished')
@@ -97,7 +112,7 @@ function Baseball({ leagueName }) {
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (
           <>
-            {live?.map((item, i) => (
+            {liveMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -128,7 +143,7 @@ function Baseball({ leagueName }) {
                 </div>
               </div>
             ))}
-            {live?.length < 1 ? (
+            {liveMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Baseball' height='30vh' />
             ) : null}
           </>
@@ -136,7 +151,7 @@ function Baseball({ leagueName }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcoming?.length > 0 && (
+            {upcomingMatches?.length > 0 && (
               <div
                 style={{
                   display: 'flex',
@@ -154,47 +169,7 @@ function Baseball({ leagueName }) {
               </div>
             )}
 
-            {upcoming?.map((item, i) => (
-              <div key={i}>
-                <p
-                  style={{
-                    ...FONTS.body7,
-                    backgroundColor: COLORS.lightRed,
-                    padding: 5,
-                    marginBottom: 5,
-                    borderRadius: 5,
-                    color: COLORS.black,
-                    marginRight: 5
-                  }}
-                >
-                  {item?.['@name']}
-                </p>
-                <div>
-                  {item?.match?.map((aa, i) => {
-                    const payload = {
-                      league: item?.name,
-                      leagueId: item?.id,
-                      ...aa
-                    }
-                    return (
-                      <div key={i}>
-                        <BaseballGameCard id={i} data={payload} />
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
-
-            {upcoming?.length < 1 ? (
-              <EmptyState header='No Game Available for Baseball' height='30vh' />
-            ) : null}
-          </>
-        ) : null}
-
-        {selectedStatus === 'Finished' ? (
-          <>
-            {finished?.map((item, i) => (
+            {upcomingMatches?.map((item, i) => (
               <div key={i}>
                 <p
                   style={{
@@ -226,11 +201,52 @@ function Baseball({ leagueName }) {
               </div>
             ))}
 
-            {finished?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Baseball' height='30vh' />
             ) : null}
           </>
         ) : null}
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finishedMatches?.map((item, i) => (
+              <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 5,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 5
+                  }}
+                >
+                  {item?.name}
+                </p>
+                <div>
+                  {item?.match?.map((aa, i) => {
+                    const payload = {
+                      league: item?.name,
+                      leagueId: item?.id,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <BaseballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Baseball' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
 
 
       </LoadingState>

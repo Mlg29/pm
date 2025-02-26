@@ -61,16 +61,16 @@ function Easport({ leagueName }) {
       status: 'Finished'
     }
 
-    dispatch(getEasportFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
-    })
-    dispatch(getEasportFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
-    })
+    // dispatch(getEasportFixtures(payloadUpcoming)).then((dd) => {
+    //   setUpcoming(dd?.payload)
+    // })
+    // dispatch(getEasportFixtures(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload)
+    // })
 
-    dispatch(getEasportFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.data)
-    })
+    // dispatch(getEasportFixtures(payloadLive)).then((dd) => {
+    //   setLive(dd?.payload?.data)
+    // })
   }, [])
 
   const groupedByData = (collectedData) => {
