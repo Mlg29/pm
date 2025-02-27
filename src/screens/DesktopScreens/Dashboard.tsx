@@ -134,8 +134,13 @@ function Dashboard() {
   useEffect(() => {
 
     const getFetch = async () => {
+      const token = localStorage.getItem("token")
+
       setLoader(true);
-      await fetchUserInfo();
+      if (token) {
+        await fetchUserInfo();
+      }
+
       setLoader(false);
     }
     getFetch()
@@ -157,6 +162,8 @@ function Dashboard() {
       window.removeEventListener("localStorageUpdated", handleStorageChange);
     };
   }, []);
+
+
 
   if (loader) {
     return (

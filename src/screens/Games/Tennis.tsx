@@ -40,6 +40,7 @@ function Tennis({ calendarDate }) {
     //   setScheduled(dd?.payload?.category || [])
     // })
     dispatch(getTennisFixtures(null)).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.category || [])
     })
     if (calendarDate) {
