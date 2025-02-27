@@ -15,7 +15,8 @@ import { LoadingState } from '../../components/LoadingState'
 
 function Tennis({ calendarDate }) {
   const [live, setLive] = useState<any>([])
-  const loading = useAppSelector(tennisFixtureStatusState) as any
+  // const loading = useAppSelector(tennisFixtureStatusState) as any
+  const [loading, setLoading] = useState(false)
   const [Finished, setFinished] = useState<any>([])
   const [scheduled, setScheduled] = useState<any>([])
   const [tomorrow, setTomorrow] = useState<any>([])
@@ -39,9 +40,11 @@ function Tennis({ calendarDate }) {
     // dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
     //   setScheduled(dd?.payload?.category || [])
     // })
+    setLoading(true)
     dispatch(getTennisFixtures(null)).then((dd) => {
       console.log({ dd })
       setLive(dd?.payload?.category || [])
+      setLoading(false)
     })
     if (calendarDate) {
       setSelectedStatus(calendarDate?.formattedDate)

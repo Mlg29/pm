@@ -79,7 +79,7 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeam?.name}
+            {data?.localTeamName}
           </p>
         </div>
         <div>
@@ -121,7 +121,7 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.awayTeam?.name}
+            {data?.visitorTeamName}
           </p>
         </div>
       </div>

@@ -14,7 +14,8 @@ import { LoadingState } from '../../components/LoadingState'
 function HorseRace({ calendarDate }) {
   const dispatch = useAppDispatch() as any
   const [finished, setFinished] = useState<any>([])
-  const loading = useAppSelector(horseFixtureStatusState) as any
+  // const loading = useAppSelector(horseFixtureStatusState) as any
+  const [loading, setLoading] = useState(false)
   const [Live, setLive] = useState<any>([])
   const [Schedule, setSchedule] = useState<any>([])
 
@@ -28,9 +29,12 @@ function HorseRace({ calendarDate }) {
     const payloadFinished = {
       range: 'finished'
     }
-    dispatch(getHorseFixtures(null)).then((dd) => {
 
+    setLoading(true)
+    dispatch(getHorseFixtures(null)).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.tournaments || dd?.payload?.races || [])
+      setLoading(false)
     })
 
     if (calendarDate) {
@@ -54,7 +58,7 @@ function HorseRace({ calendarDate }) {
 
   const upcomingMatches = Array.isArray(Live) && Live?.map(league => ({
     ...league,
-    races: league?.races.filter(match => match?.results === "Upcoming race")
+    races: league?.races.filter(match => match?.status === "Not Started" || match?.results === "Upcoming race")
   }))
     .filter(league => league?.races.length > 0);
 
@@ -204,7 +208,7 @@ function HorseRace({ calendarDate }) {
           </>
         ) : null}
 
-        {selectedStatus === 'Schedule' ? (
+        {selectedStatus === 'Scheduled' ? (
           <>
             {upcomingMatches?.map((item, i) => (
               <div key={i}>

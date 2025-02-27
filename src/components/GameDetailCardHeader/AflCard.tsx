@@ -76,7 +76,7 @@ function AflCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localteam?.name}
+            {data?.localTeamName}
           </p>
         </div>
         <div>
@@ -113,7 +113,7 @@ function AflCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.hometeam?.name}
+            {data?.visitorTeamName}
           </p>
         </div>
       </div>

@@ -20,8 +20,8 @@ function Basketball({ calendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const [tomorrow, setTomorrow] = useState<any>([])
-  const loading = useAppSelector(BasketballFixtureeStatusState) as any
-
+  // const loading = useAppSelector(BasketballFixtureeStatusState) as any
+  const [loading, setLoading] = useState(false)
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
   const [selectedStatus, setSelectedStatus] = useState('Finished')
@@ -31,10 +31,11 @@ function Basketball({ calendarDate }) {
       range: calendarDate?.index
     }
 
-
+    setLoading(true)
     dispatch(getBasketballFixtures(null)).then((dd) => {
       console.log({ dd })
       setLive(dd?.payload?.category || dd?.payload || [])
+      setLoading(false)
     })
 
     if (calendarDate) {

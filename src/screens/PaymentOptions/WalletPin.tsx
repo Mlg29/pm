@@ -87,6 +87,8 @@ function WalletPin() {
       requestedPrediction: getUserBet?.userType,
     }
 
+
+
     const acceptPayload = {
       id: userFee?.betId,
       prediction: userFee?.prediction,
@@ -98,7 +100,7 @@ function WalletPin() {
     const transactionPayload = {
       transactionPin: otp
     }
-
+    console.log({ acceptPayload })
     setLoader(true);
 
     const verifyResponse = await dispatch(verifyTransactionPin(transactionPayload))

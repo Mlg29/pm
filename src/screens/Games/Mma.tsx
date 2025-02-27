@@ -22,8 +22,8 @@ function Mma({ calendarDate }) {
   const [finished, setFinished] = useState<any>([])
   const [live, setLive] = useState<any>([])
   const dispatch = useAppDispatch() as any
-  const loading = useAppSelector(mmaFixtureStatusState) as any
-
+  // const loading = useAppSelector(mmaFixtureStatusState) as any
+  const [loading, setLoading] = useState(false)
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
@@ -35,8 +35,11 @@ function Mma({ calendarDate }) {
       range: 'finished'
     }
 
+    setLoading(true)
     dispatch(getMmaFixtures(null)).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.category || [])
+      setLoading(false)
     })
 
     if (calendarDate) {

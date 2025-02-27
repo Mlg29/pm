@@ -14,7 +14,7 @@ import { formatCurrency } from "../../utils/helper";
 import moment from "moment";
 import Loader from "../../components/Loader";
 import { RxAvatar } from "react-icons/rx";
-import { userState } from "../../redux/slices/AuthSlice";
+import { getUserData, userState } from "../../redux/slices/AuthSlice";
 import Button from "../../components/Button";
 import TennisGameCard from "../../components/GameCard/TennisGameCard";
 import TennisCard from "../../components/GameDetailCardHeader/TennisCard";
@@ -69,12 +69,31 @@ function BetInviteDetail() {
   const [betData, setBetData] = useState<any>();
   const id = location?.search?.replace("?", "");
   const [loader, setLoader] = useState(false);
-  const userData = useAppSelector(userState);
+
   const [selected, setSelected] = useState("");
   const token = localStorage.getItem("token");
   const [exAmount, setExAmount] = useState<any>("")
+  const [userData, setUserData] = useState(null);
+
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
+
+  const fetchUserInfo = async () => {
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
+    }
+
+  };
 
   useEffect(() => {
+    fetchUserInfo()
     setLoader(true);
     if (!token) {
       navigate("/login");
@@ -136,7 +155,7 @@ function BetInviteDetail() {
 
 
   };
-  console.log({ exAmount })
+
 
   if (loader) {
     return (
@@ -211,40 +230,40 @@ function BetInviteDetail() {
       )}
 
       {betData?.sportEvent?.sport === "BOXING" && (
-        <BoxingCard gameInfo={betData?.sportEvent?.BoxingEvent} />
+        <BoxingCard data={betData?.sportEvent?.BoxingEvent} />
       )}
 
       {betData?.sportEvent?.sport === "ESPORT" && (
-        <EsportCard gameInfo={betData?.sportEvent?.EsportEvent} />
+        <EsportCard data={betData?.sportEvent?.EsportEvent} />
       )}
 
       {betData?.sportEvent?.sport === "DART" && (
-        <DartCard gameInfo={betData?.sportEvent?.DartEvent} />
+        <DartCard data={betData?.sportEvent?.DartEvent} />
       )}
       {betData?.sportEvent?.sport === "SNOOKER" && (
-        <SnookerCard gameInfo={betData?.sportEvent?.SnookerEvent} />
+        <SnookerCard data={betData?.sportEvent?.SnookerEvent} />
       )}
 
       {betData?.sportEvent?.sport === "VOLLYBALL" && (
-        <VolleyballCard gameInfo={betData?.sportEvent?.VollyBallEvent} />
+        <VolleyballCard data={betData?.sportEvent?.VollyBallEvent} />
       )}
 
       {betData?.sportEvent?.sport === "HANDBALL" && (
-        <HandballCard gameInfo={betData?.sportEvent?.HandBallEvent} />
+        <HandballCard data={betData?.sportEvent?.HandBallEvent} />
       )}
       {betData?.sportEvent?.sport === "AFL" && (
-        <AflCard gameInfo={betData?.sportEvent?.AflEvent} />
+        <AflCard data={betData?.sportEvent?.AflEvent} />
       )}
       {betData?.sportEvent?.sport === "MMA" && (
-        <MmaCard gameInfo={betData?.sportEvent?.MmaEvent} />
+        <MmaCard data={betData?.sportEvent?.MmaEvent} />
       )}
 
       {betData?.sportEvent?.sport === "FUTSAL" && (
-        <FutsalCard gameInfo={betData?.sportEvent?.FutsalEvent} />
+        <FutsalCard data={betData?.sportEvent?.FutsalEvent} />
       )}
 
       {betData?.sportEvent?.sport === "CRICKET" && (
-        <CricketCard gameInfo={betData?.sportEvent?.CricketEvent} />
+        <CricketCard data={betData?.sportEvent?.CricketEvent} />
       )}
 
       <div style={{ ...styles.div }}>

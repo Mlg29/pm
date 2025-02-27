@@ -20,9 +20,9 @@ function Boxing({ calendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [live, setLive] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const loading = useAppSelector(boxingFixtureStatusState) as any
+  // const loading = useAppSelector(boxingFixtureStatusState) as any
   const dispatch = useAppDispatch() as any
-
+  const [loading, setLoading] = useState(false)
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
@@ -31,8 +31,11 @@ function Boxing({ calendarDate }) {
       range: calendarDate?.index
     }
 
+    setLoading(true)
     dispatch(getBoxingFixtures(null)).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.scores?.categories || [])
+      setLoading(false)
     })
 
     if (calendarDate) {

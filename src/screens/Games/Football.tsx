@@ -15,7 +15,8 @@ function Football({ calendarDate }) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch() as any
   const [live, setLive] = useState<any>([])
-  const loading = useAppSelector(footballFixtureStatusState) as any
+  // const loading = useAppSelector(footballFixtureStatusState) as any
+  const [loading, setLoading] = useState(false)
   const [upcoming, setUpcoming] = useState<any>([])
   const [tomorrow, setTomorrow] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
@@ -27,9 +28,10 @@ function Football({ calendarDate }) {
     const payloadTomorrow = {
       range: calendarDate?.index
     }
-
+    setLoading(true)
     dispatch(getFootballFixtures(null)).then((dd) => {
       setLive(dd?.payload?.category)
+      setLoading(false)
     })
 
     if (calendarDate) {

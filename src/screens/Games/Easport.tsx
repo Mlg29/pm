@@ -47,6 +47,7 @@ function Easport({ calendarDate }) {
     // })
 
     dispatch(getEasportFixtures()).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.match)
     })
   }, [calendarDate])
@@ -54,7 +55,7 @@ function Easport({ calendarDate }) {
 
   const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
   const scheduleLeagues = live?.filter(bb => bb?.status === "Not Started")
-  const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
+  const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT" || bb?.status === "Postponed")
 
 
 
