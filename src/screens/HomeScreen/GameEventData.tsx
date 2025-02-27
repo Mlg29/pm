@@ -271,19 +271,19 @@ function GameEventData(props: any) {
             : ''
 
     setLoading(true)
-    dispatch(getEasportFixtures(actualPayload)).then((dd) => {
-      if (dd?.payload) {
-        setData((prev) => [...prev, ...dd?.payload?.data])
-        setPage(dd?.payload?.page)
-        setPageSize(dd?.payload?.pageSize)
-        setTotal(dd?.payload?.total)
-        if (data?.length === dd?.payload?.total) {
-          setHasMore(false)
-        }
-      }
+    // dispatch(getEasportFixtures(actualPayload)).then((dd) => {
+    //   if (dd?.payload) {
+    //     setData((prev) => [...prev, ...dd?.payload?.data])
+    //     setPage(dd?.payload?.page)
+    //     setPageSize(dd?.payload?.pageSize)
+    //     setTotal(dd?.payload?.total)
+    //     if (data?.length === dd?.payload?.total) {
+    //       setHasMore(false)
+    //     }
+    //   }
 
-      setLoading(false)
-    })
+    //   setLoading(false)
+    // })
   }
 
   const fetchDartData = async (page) => {
