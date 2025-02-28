@@ -33,8 +33,8 @@ function Boxing({ calendarDate }) {
 
     setLoading(true)
     dispatch(getBoxingFixtures(null)).then((dd) => {
-      console.log({ dd })
-      setLive(dd?.payload?.scores?.categories || [])
+      console.log("", { dd })
+      setLive(dd?.payload?.categories || [])
       setLoading(false)
     })
 
@@ -68,7 +68,7 @@ function Boxing({ calendarDate }) {
 
   const finishedMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final")
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final" || match.status === "Finished")
   }))
     .filter(league => league?.match.length > 0);
 

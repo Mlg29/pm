@@ -168,6 +168,9 @@ function GameDetails() {
 
 
   const handleRoute = (route: string, selection?: string) => {
+
+
+
     const name = gameInfo?.winner?.name || gameInfo?.winner
 
     const players = gameInfo?.runners?.map(dd => dd?.name);
@@ -194,7 +197,7 @@ function GameDetails() {
       setSelected(route);
 
       const payload = {
-        userType: selection,
+        userType: route,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id,
         sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType === "Esports" ? "ESPORT" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),

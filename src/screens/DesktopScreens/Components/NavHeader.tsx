@@ -258,11 +258,11 @@ function NavHeader() {
     //   name: "Table Tennis",
     //   image: tabletennis,
     // },
-    {
-      id: 13,
-      name: "Aussie Rules",
-      image: aussie,
-    },
+    // {
+    //   id: 13,
+    //   name: "Aussie Rules",
+    //   image: aussie,
+    // },
   ];
 
   const handleMoreSelect = (data) => {

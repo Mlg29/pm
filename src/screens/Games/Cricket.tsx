@@ -43,7 +43,8 @@ function Cricket({ calendarDate }) {
 
 
     dispatch(getCricketFixtures(payloadLive)).then((dd) => {
-      setLive(dd?.payload?.scores?.categories || [])
+      console.log(">>", dd)
+      setLive(dd?.payload?.category || [])
     })
     if (calendarDate) {
       setSelectedStatus(calendarDate?.formattedDate)
@@ -64,7 +65,7 @@ function Cricket({ calendarDate }) {
 
   const liveMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+    match: league?.match.filter(match => match.status === "In Progress")
   }))
     .filter(league => league?.match.length > 0);
 
@@ -77,7 +78,7 @@ function Cricket({ calendarDate }) {
 
   const finishedMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final")
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final" || match.status === "Not covered Live" || match.status === "Finished" || match.status === "Stumps")
   }))
     .filter(league => league?.match.length > 0);
 

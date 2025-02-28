@@ -34,7 +34,8 @@ function Baseball({ calendarDate }) {
       range: calendarDate?.index
     }
     dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories || [])
+      console.log({ dd })
+      setLive(dd?.payload?.category || [])
     })
     // dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
     //   setUpcoming(dd?.payload?.categories || [])
@@ -55,20 +56,20 @@ function Baseball({ calendarDate }) {
 
   const liveMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+    match: league?.match.filter(match => match["@status"] === "In progress")
   }))
     .filter(league => league?.match.length > 0);
 
   const upcomingMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Not Started")
+    match: league?.match.filter(match => match["@status"] === "Not Started")
   }))
     .filter(league => league?.match.length > 0);
 
 
   const finishedMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Finished")
+    match: league?.match.filter(match => match["@status"] === "Cancelled" || match["@status"] === "Finished")
   }))
     .filter(league => league?.match.length > 0);
 

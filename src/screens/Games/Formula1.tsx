@@ -20,7 +20,7 @@ function Formula1({ calendarDate }) {
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
-  const [finished, setFinished] = useState<any>([])
+  const [schedule, setSchedule] = useState<any>([])
   const loading = useAppSelector(formulaFixtureStatusState) as any
   const dispatch = useAppDispatch() as any
 
@@ -34,9 +34,7 @@ function Formula1({ calendarDate }) {
     const payloadLive = {
       range: 'live'
     }
-    const payloadFinished = {
-      range: 'finished'
-    }
+
 
     if (calendarDate) {
       setSelectedStatus(calendarDate?.formattedDate)
@@ -45,18 +43,28 @@ function Formula1({ calendarDate }) {
       })
     }
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
-
-      setLive(dd?.payload?.scores?.categories || [])
+      console.log("live>>>", dd)
+      setLive(dd?.payload?.tournament || [])
     })
-    // dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
-    //   setFinished(dd?.payload?.scores?.tournament || dd?.payload?.scores?.categories || [])
-    // })
+
   }, [calendarDate])
 
 
-  const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
-  const scheduleLeagues = live?.filter(bb => bb?.status === "Not Started")
-  const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
+  useEffect(() => {
+    const payloadFinished = {
+      range: 'upcoming'
+    }
+
+    dispatch(getFormulaMatchFixtures(payloadFinished)).then((dd) => {
+      console.log(">>>", dd)
+      setSchedule(dd?.payload?.scores?.tournament || dd?.payload?.scores?.categories || [])
+    })
+  }, [])
+
+
+  const liveLeagues = live?.filter(bb => bb?.race?.status > 0 || bb?.race?.status === "HT")
+  const scheduleLeagues = live?.filter(bb => bb?.race?.status === "Not Started")
+  const finishedLeagues = live?.filter(bb => bb?.race?.status === "Finished" || bb?.status === "FT")
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
@@ -165,7 +173,7 @@ function Formula1({ calendarDate }) {
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {scheduleLeagues?.map((item, i) => {
+            {schedule?.map((item, i) => {
               return <div key={i}>
                 <p
                   style={{
@@ -186,7 +194,7 @@ function Formula1({ calendarDate }) {
               </div>
 
             })}
-            {scheduleLeagues?.length < 1 ? (
+            {schedule?.length < 1 ? (
               <EmptyState header='No Game Available for Formula1' height='30vh' />
             ) : null}
           </>

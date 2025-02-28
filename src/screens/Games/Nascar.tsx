@@ -9,7 +9,7 @@ import moment from 'moment'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
-import { getNascaFixtures, getNascaMatchFixtures, nascaFixtureStatusState } from '../../redux/slices/NascaSlice'
+import { getNascaFixtures, getNascaFixturesLive, getNascaMatchFixtures, nascaFixtureStatusState } from '../../redux/slices/NascaSlice'
 import { LoadingState } from '../../components/LoadingState'
 import NascarCard from '../../components/GameCard/NascarCard'
 
@@ -17,7 +17,7 @@ function Nascar({ calendarDate }) {
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
-  const [finished, setFinished] = useState<any>([])
+  const [schedule, setSchedule] = useState<any>([])
   const loading = useAppSelector(nascaFixtureStatusState) as any
   const dispatch = useAppDispatch() as any
   const [selectedStatus, setSelectedStatus] = useState('Live')
@@ -32,19 +32,18 @@ function Nascar({ calendarDate }) {
     const payloadUpcoming = {
       range: calendarDate?.index
     }
-    const payloadFinished = {
-      range: 'finished'
-    }
 
-    dispatch(getNascaFixtures(payloadLive)).then((dd) => {
-
-      const tp = dd?.payload?.category?.map(rr => {
-        return {
-          ...rr,
-          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
-        }
-      })
-      setLive(tp || []);
+    dispatch(getNascaFixturesLive()).then((dd) => {
+      console.log({ dd })
+      // const tp = dd?.payload?.tournaments?.map(rr => {
+      //   return {
+      //     ...rr,
+      //     race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+      //   }
+      // })
+      const bb = [dd?.payload?.tournaments]
+      console.log({ bb })
+      setLive(bb || []);
     });
 
     if (calendarDate) {
@@ -59,37 +58,68 @@ function Nascar({ calendarDate }) {
         setUpcoming(tp || []);
       });
     }
-    // dispatch(getNascaMatchFixtures(payloadFinished)).then((dd) => {
 
-    //   const tp = dd?.payload?.category?.map(rr => {
-    //     return {
-    //       ...rr,
-    //       race: Array.isArray(rr?.races) ? rr?.races : [rr?.races]
-    //     }
-    //   })
-    //   setFinished(tp || []);
-    // });
   }, [dispatch, calendarDate])
+
+
+  useEffect(() => {
+    const payloadFinished = {
+      range: 'upcoming'
+    }
+
+
+    dispatch(getNascaMatchFixtures(payloadFinished)).then((dd) => {
+      console.log("sch", dd)
+      const tp = dd?.payload?.category?.map(rr => {
+        return {
+          ...rr,
+          race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]
+        }
+      })
+      setSchedule(tp || []);
+    });
+  }, [])
 
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    races: league?.races.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+    race: league?.race?.filter(match => match.status === "In progress" || match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
   }))
-    .filter(league => league?.races.length > 0);
+    .filter(league => league?.race?.length > 0);
 
-  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
-    ...league,
-    races: league?.races.filter(match => match.status === "Not Started")
-  }))
-    .filter(league => league?.races.length > 0);
+  // const liveMatches = live?.race?.filter(dd => dd?.status === "In Progress").map(aa => {
+  //   return {
+  //     name: live?.name,
+  //     ...aa
+  //   }
+  // })
+
+  // const upcomingMatches = live?.race?.filter(dd => dd?.status === "Not Started").map(aa => {
+  //   return {
+  //     name: live?.name,
+  //     ...aa
+  //   }
+  // })
+
+  // const finishedMatches = live?.race?.filter(dd => dd?.status === "Finished").map(aa => {
+  //   return {
+  //     name: live?.name,
+  //     ...aa
+  //   }
+  // })
+
+  // const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+  //   ...league,
+  //   races: league?.races.filter(match => match.status === "Not Started")
+  // }))
+  //   .filter(league => league?.races.length > 0);
 
 
   const finishedMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    races: league?.races.filter(match => match.status === "Cancelled" || match.status === "Finished")
+    race: league?.race?.filter(match => match.status === "Cancelled" || match.status === "Finished")
   }))
-    .filter(league => league?.races.length > 0);
+    .filter(league => league?.race?.length > 0);
 
 
 
@@ -185,7 +215,7 @@ function Nascar({ calendarDate }) {
                   {item?.name}
                 </p>
                 <div>
-                  {item?.races?.map((aa, i) => {
+                  {/* {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
                       leagueId: item?.id,
@@ -197,7 +227,10 @@ function Nascar({ calendarDate }) {
                         <NascarCard id={i} data={payload} />
                       </div>
                     )
-                  })}
+                  })} */}
+                  <div key={i}>
+                    <NascarCard id={i} data={item} />
+                  </div>
                 </div>
               </div>
 
@@ -210,7 +243,7 @@ function Nascar({ calendarDate }) {
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcomingMatches?.map((item, i) => {
+            {schedule?.map((item, i) => {
 
               return <div key={i}>
                 <p
@@ -245,7 +278,7 @@ function Nascar({ calendarDate }) {
 
             })}
 
-            {upcomingMatches?.length < 1 ? (
+            {schedule?.length < 1 ? (
               <EmptyState header='No Game Available for Nascar' height='30vh' />
             ) : null}
           </>
@@ -269,7 +302,7 @@ function Nascar({ calendarDate }) {
                   {item?.name}
                 </p>
                 <div>
-                  {item?.race?.map((aa, i) => {
+                  {/* {item?.races?.map((aa, i) => {
                     const payload = {
                       league: item?.name,
                       leagueId: item?.id,
@@ -281,11 +314,15 @@ function Nascar({ calendarDate }) {
                         <NascarCard id={i} data={payload} />
                       </div>
                     )
-                  })}
+                  })} */}
+                  <div key={i}>
+                    <NascarCard id={i} data={item} />
+                  </div>
                 </div>
               </div>
 
             })}
+
             {finishedMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Nascar' height='30vh' />
             ) : null}

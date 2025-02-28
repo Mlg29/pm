@@ -16,6 +16,25 @@ const initialState = {
     nascaFixtures: [],
 };
 
+
+export const getNascaFixturesLive = createAsyncThunk(
+    "nasca/getNascaFixturesLive",
+    async () => {
+        const buildUrl = (payload) => {
+            let queryParams = [];
+            if (payload?.range) queryParams.push(`${payload?.range}`);
+            const queryString = queryParams.join("&");
+
+            return `${SportSportBaseUrl}/nascar/live`;
+        };
+
+        var response = await getRequest(`${SportSportBaseUrl}/nascar/live`);
+        if (response?.status === 200 || response?.status === 201) {
+            return response?.data;
+        }
+    }
+);
+
 export const getNascaFixtures = createAsyncThunk(
     "nasca/getNascaFixtures",
     async (payload: any) => {
@@ -71,6 +90,19 @@ export const NascaSlice = createSlice({
                 }
             );
         builder.addCase(getNascaFixtures.rejected, (state, action) => {
+            // state.error = action.error.message
+        });
+        builder.addCase(getNascaFixturesLive.pending, (state, action) => {
+            state.loading = true;
+        }),
+            builder.addCase(
+                getNascaFixturesLive.fulfilled,
+                (state, action: PayloadAction<any>) => {
+                    state.loading = false;
+                    state.nascaFixtures = action.payload;
+                }
+            );
+        builder.addCase(getNascaFixturesLive.rejected, (state, action) => {
             // state.error = action.error.message
         });
         builder.addCase(getNascaMatchFixtures.pending, (state, action) => {

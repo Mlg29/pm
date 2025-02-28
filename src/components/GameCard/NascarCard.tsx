@@ -69,8 +69,7 @@ function NascarCard({ id, data }) {
                     </p>
                 </div>
                 <div style={styles.box2}>
-
-                    <p style={{ ...FONTS.body7 }}>{data?.name || data?.track}</p>
+                    <p style={{ ...FONTS.body7 }}>{data?.track || data?.name}</p>
                 </div>
                 <div
                     style={{

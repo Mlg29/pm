@@ -19,7 +19,7 @@ import { LoadingState } from '../../components/LoadingState'
 function Mma({ calendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
-  const [finished, setFinished] = useState<any>([])
+  const [schedule, setSchedule] = useState<any>([])
   const [live, setLive] = useState<any>([])
   const dispatch = useAppDispatch() as any
   // const loading = useAppSelector(mmaFixtureStatusState) as any
@@ -30,9 +30,6 @@ function Mma({ calendarDate }) {
   useEffect(() => {
     const payloadUpcoming = {
       range: calendarDate?.index
-    }
-    const payloadFinished = {
-      range: 'finished'
     }
 
     setLoading(true)
@@ -49,10 +46,18 @@ function Mma({ calendarDate }) {
       })
     }
 
-    // dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
-    //   setFinished(dd?.payload || [])
-    // })
+
   }, [calendarDate])
+
+  useEffect(() => {
+    const payloadFinished = {
+      range: 'upcoming'
+    }
+
+    dispatch(getMmaFixtures(payloadFinished)).then((dd) => {
+      setSchedule(dd?.payload || [])
+    })
+  }, [])
 
 
   const liveMatches = live?.map(league => ({
@@ -190,7 +195,7 @@ function Mma({ calendarDate }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcomingMatches?.map((league, index) => (
+            {schedule?.map((league, index) => (
               <div key={league?.id}>
                 {league?.name && league?.match?.length > 0 && (
                   <p
@@ -221,7 +226,7 @@ function Mma({ calendarDate }) {
                 </div>
               </div>
             ))}
-            {upcomingMatches?.length < 1 ? (
+            {schedule?.length < 1 ? (
               <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
             ) : null}
           </>
