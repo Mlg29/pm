@@ -127,9 +127,12 @@ const styles = {
 };
 
 
-function EsportDetails({ gameInfo, isMobile, selected, handleRoute }) {
+function EsportDetails({ gameInfo, dateTime, isMobile, selected, handleRoute }) {
 
-
+  const bb = {
+    ...gameInfo,
+    dateTime
+  }
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
@@ -140,7 +143,7 @@ function EsportDetails({ gameInfo, isMobile, selected, handleRoute }) {
           flex: 1,
         }}
       >
-        <EsportCard data={gameInfo} />
+        <EsportCard data={bb} />
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {isMobile ? (

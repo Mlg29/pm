@@ -658,6 +658,70 @@ function BetSlip() {
                                   data={item}
                                 />
                               )}
+
+                              {item?.sportEvent?.sport === "NASCAR" && (
+                                <SlipCard
+                                  homeName={
+                                    item?.sportEvent?.NascarEvent?.localTeamName
+                                  }
+                                  awayName={
+                                    item?.sportEvent?.NascarEvent?.visitorTeamName
+                                  }
+                                  homeScore={
+                                    item?.sportEvent?.NascarEvent?.localteam
+                                      ?.totalscore
+                                      ? item?.sportEvent?.NascarEvent?.localteam
+                                        ?.totalscore
+                                      : ""
+                                  }
+                                  awayScore={
+                                    item?.sportEvent?.NascarEvent?.awayteam
+                                      ?.goals
+                                      ? item?.sportEvent?.NascarEvent?.awayteam
+                                        ?.goals
+                                      : ""
+                                  }
+                                  isWin={item?.winnerId}
+                                  amount={
+                                    item?.betAmount || item?.opponentBetAmount
+                                  }
+                                  isUser={userData}
+                                  betCurrency={item?.betCurrency}
+                                  data={item}
+                                />
+                              )}
+
+                              {item?.sportEvent?.sport === "BASEBALL" && (
+                                <SlipCard
+                                  homeName={
+                                    item?.sportEvent?.BaseballEvent?.localTeamName
+                                  }
+                                  awayName={
+                                    item?.sportEvent?.BaseballEvent?.visitorTeamName
+                                  }
+                                  homeScore={
+                                    item?.sportEvent?.BaseballEvent?.localteam
+                                      ?.totalscore
+                                      ? item?.sportEvent?.BaseballEvent?.localteam
+                                        ?.totalscore
+                                      : ""
+                                  }
+                                  awayScore={
+                                    item?.sportEvent?.BaseballEvent?.awayteam
+                                      ?.goals
+                                      ? item?.sportEvent?.BaseballEvent?.awayteam
+                                        ?.goals
+                                      : ""
+                                  }
+                                  isWin={item?.winnerId}
+                                  amount={
+                                    item?.betAmount || item?.opponentBetAmount
+                                  }
+                                  isUser={userData}
+                                  betCurrency={item?.betCurrency}
+                                  data={item}
+                                />
+                              )}
                             </div>
                           );
                         })}
@@ -1088,6 +1152,70 @@ function BetSlip() {
                                 isWin={item?.winnerId}
                                 amount={
                                   item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+
+                            {item?.sportEvent?.sport === "NASCAR" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.NascarEvent?.localTeamName
+                                }
+                                awayName={
+                                  item?.sportEvent?.NascarEvent?.visitorTeamName
+                                }
+                                homeScore={
+                                  item?.sportEvent?.NascarEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.NascarEvent?.localteam
+                                      ?.totalscore
+                                    : ""
+                                }
+                                awayScore={
+                                  item?.sportEvent?.NascarEvent?.awayteam
+                                    ?.goals
+                                    ? item?.sportEvent?.NascarEvent?.awayteam
+                                      ?.goals
+                                    : ""
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
+                                }
+                                isUser={userData}
+                                betCurrency={item?.betCurrency}
+                                data={item}
+                              />
+                            )}
+
+                            {item?.sportEvent?.sport === "BASEBALL" && (
+                              <SlipCard
+                                homeName={
+                                  item?.sportEvent?.BaseballEvent?.localTeamName
+                                }
+                                awayName={
+                                  item?.sportEvent?.BaseballEvent?.visitorTeamName
+                                }
+                                homeScore={
+                                  item?.sportEvent?.BaseballEvent?.localteam
+                                    ?.totalscore
+                                    ? item?.sportEvent?.BaseballEvent?.localteam
+                                      ?.totalscore
+                                    : ""
+                                }
+                                awayScore={
+                                  item?.sportEvent?.BaseballEvent?.awayteam
+                                    ?.goals
+                                    ? item?.sportEvent?.BaseballEvent?.awayteam
+                                      ?.goals
+                                    : ""
+                                }
+                                isWin={item?.winnerId}
+                                amount={
+                                  item?.betAmount || item?.opponentBetAmount
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}

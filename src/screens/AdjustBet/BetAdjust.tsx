@@ -36,6 +36,8 @@ import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
 import { getFxRate } from "../../redux/slices/MiscSlice";
 import arrowleft from "../../assets/images/arrow-left.svg"
 import { useMediaQuery } from "react-responsive";
+import NascarCardHeader from "../../components/GameDetailCardHeader/NascarCardHeader";
+import BaseballCard from "../../components/GameDetailCardHeader/BaseballCard";
 
 
 const styles = {
@@ -318,7 +320,13 @@ const BetAdjust = () => {
         <FutsalCard gameInfo={sportEvents?.FutsalEvent} />
       )}
       {sportEvents?.sport === "CRICKET" && (
-        <CricketCard gameInfo={sportEvents?.CricketEvent} />
+        <CricketCard data={sportEvents?.CricketEvent} />
+      )}
+      {sportEvents?.sport === "NASCAR" && (
+        <NascarCardHeader gameInfo={sportEvents?.CricketEvent} />
+      )}
+      {sportEvents?.sport === "BASEBALL" && (
+        <BaseballCard data={sportEvents?.CricketEvent} />
       )}
 
       <div style={{ ...styles.div }}>

@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-function HorseDetails({ selected, gameInfo, handleRoute }) {
+function HorseDetails({ selected, gameInfo, dateTime, handleRoute }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
 

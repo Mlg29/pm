@@ -159,7 +159,7 @@ function SlipCard(props: any) {
                   margin: "0px 0px 0px 5px",
                   textAlign: "right",
                   color: COLORS.orange
-                }}>{getPrediction(data?.prediction)}</p>
+                }}>{data?.prediction}</p>
               ) : (
                 <p
                   style={{
@@ -169,9 +169,9 @@ function SlipCard(props: any) {
                     color: COLORS.orange
                   }}
                 >
-                  {data?.prediction === "W1"
+                  {data?.prediction === homeName
                     ? `${homeName} Win`
-                    : data?.prediction === "W2"
+                    : data?.prediction === awayName
                       ? `${awayName} Win`
                       : "DRAW"}
                 </p>

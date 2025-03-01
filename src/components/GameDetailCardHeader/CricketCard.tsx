@@ -44,7 +44,6 @@ function CricketCard(props) {
 
 
 
-
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -76,7 +75,7 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -92,7 +91,7 @@ function CricketCard(props) {
           </h3> */}
 
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+            {data?.status === "Started" ? `${data?.dateTime}'` : data?.status}
           </p>
         </div>
         <div
@@ -114,7 +113,7 @@ function CricketCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.visitorTeam?.name}
           </p>
         </div>
       </div>

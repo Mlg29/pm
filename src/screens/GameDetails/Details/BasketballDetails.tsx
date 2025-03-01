@@ -109,8 +109,11 @@ const styles = {
   },
 };
 
-function BasketballDetails({ selected, gameInfo, handleRoute, isMobile }) {
-
+function BasketballDetails({ selected, dateTime, gameInfo, handleRoute, isMobile }) {
+  const bb = {
+    ...gameInfo,
+    dateTime
+  }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <div
@@ -121,7 +124,7 @@ function BasketballDetails({ selected, gameInfo, handleRoute, isMobile }) {
           // flex: 1,
         }}
       >
-        <BasketballCard data={gameInfo} />
+        <BasketballCard data={bb} />
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {isMobile ? (

@@ -111,7 +111,7 @@ function GameDetailCardHeader(props: any) {
             {data?.localTeam?.goals} - {data?.visitorTeam?.goals}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.time}
+            {data?.dateTime}
           </p>
         </div>
         <div

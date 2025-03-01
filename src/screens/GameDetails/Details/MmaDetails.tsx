@@ -123,7 +123,7 @@ const styles = {
   },
 };
 
-function MmaDetails({ gameInfo, isMobile, selected, handleRoute }) {
+function MmaDetails({ gameInfo, isMobile, dateTime, selected, handleRoute }) {
   const decodeHTMLEntities = (str) => {
     const tempElement = document.createElement("textarea");
     tempElement.innerHTML = str;

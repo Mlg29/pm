@@ -32,6 +32,8 @@ import FutsalCard from "../../components/GameDetailCardHeader/FutsalCard";
 import CricketCard from "../../components/GameDetailCardHeader/CricketCard";
 import arrowleft from "../../assets/images/arrow-left.svg"
 import { getFxRate } from "../../redux/slices/MiscSlice";
+import BaseballCard from "../../components/GameDetailCardHeader/BaseballCard";
+import NascarCardHeader from "../../components/GameDetailCardHeader/NascarCardHeader";
 
 
 
@@ -100,9 +102,9 @@ function BetInviteDetail() {
       localStorage.setItem("bet-invite-id", id);
       return;
     } else {
-      dispatch(getBetById(id)).then((pp) => {
+      dispatch(getBetById(id)).then(async (pp) => {
         setBetData(pp?.payload);
-        handleExRate(pp?.payload)
+        await handleExRate(pp?.payload)
         setLoader(false);
       });
       localStorage.removeItem("bet-invite-id");
@@ -120,21 +122,15 @@ function BetInviteDetail() {
         isAcceptBet: true,
         betId: betData?.id,
         sport: betData?.sportEvent?.sport,
-        prediction: pred,
+        prediction: route,
       };
       localStorage.setItem("inviteeInfo", JSON.stringify(payload));
       return navigate("/options");
     };
 
-  const getPrediction = (prediction: string) => {
-    const result = betData?.sportEvent?.HorseEvent?.horses?.horse
-      .filter((item, i) => prediction === `W${i + 1}`)
-      .map((horse, i) => {
-        return `${horse?.name}`;
-      });
 
-    return result;
-  };
+
+
 
   const handleExRate = async (data) => {
     const rateData = {
@@ -266,6 +262,14 @@ function BetInviteDetail() {
         <CricketCard data={betData?.sportEvent?.CricketEvent} />
       )}
 
+      {betData?.sportEvent?.sport === "BASEBALL" && (
+        <BaseballCard data={betData?.sportEvent?.BaseballEvent} />
+      )}
+
+      {betData?.sportEvent?.sport === "NASCAR" && (
+        <NascarCardHeader gameInfo={betData?.sportEvent?.NascarEvent} />
+      )}
+
       <div style={{ ...styles.div }}>
         <div style={{ ...styles.cardDiv }}>
           <p style={{ ...FONTS.body7 }}>Bet ID</p>
@@ -287,183 +291,114 @@ function BetInviteDetail() {
           <div style={{ ...styles.cardDiv }}>
             <p style={{ ...FONTS.body7 }}>Opponent Prediction</p>
             {betData?.sportEvent?.sport === "HORSE_RACING" ? (
-              <p style={{ ...FONTS.h6 }}>
-                {betData?.opponentId !== userData?.id ? (
-                  <p>{getPrediction(betData?.opponentPrediction)} WIN</p>
-                ) : (
-                  ""
-                )}
+
+              <p>
+                {betData?.opponentPrediction}
               </p>
             ) : betData?.sportEvent?.sport === "BASKETBALL" ? (
               <p style={{ ...FONTS.h6 }}>
                 {betData?.opponentId !== userData?.id ? (
                   <p>
-                    {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`
-                      : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`
-                        : "DRAW"}
+                    {betData?.opponentPrediction}
                   </p>
                 ) : (
                   ""
                 )}
               </p>
-            ) : betData?.sportEvent?.sport === "TENNIS" ? (
-              <p style={{ ...FONTS.h6 }}>
-                {betData?.opponentId !== userData?.id ? (
-                  <p>
-                    {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.TennisEvent?.localTeamName} Win`
-                      : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.TennisEvent?.visitorTeamName} Win`
-                        : "DRAW"}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </p>
-            ) : betData?.sportEvent?.sport === "FOOTBALL" ? (
-              <p>
-                {betData?.opponentId !== userData?.id ? (
-                  <p>
-                    {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.FootballEvent?.localTeamName} Win`
-                      : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`
-                        : "DRAW"}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </p>
-            ) : betData?.sportEvent?.sport === "BOXING" ? (
-              <p>
-                {betData?.opponentId !== userData?.id ? (
-                  <p>
-                    {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.BoxingEvent?.localTeamName} Win`
-                      : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.BoxingEvent?.visitorTeamName} Win`
-                        : ""}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </p>
-            ) : betData?.sportEvent?.sport === "ESPORT" ? (
-              <p>
-                {betData?.opponentId !== userData?.id ? (
-                  <p>
-                    {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.EsportEvent?.localTeamName} Win`
-                      : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.EsportEvent?.visitorTeamName} Win`
-                        : ""}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </p>
-            ) : betData?.sportEvent?.sport === "DART" ? (
-              <p>
-                {betData?.opponentId !== userData?.id ? (
-                  <p>
-                    {betData?.opponentPrediction === "W1"
-                      ? `${betData?.sportEvent?.DartEvent?.localTeamName} Win`
-                      : betData?.opponentPrediction === "W2"
-                        ? `${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`
-                        : ""}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </p>
-            )
-              : betData?.sportEvent?.sport === "MMA" ? (
-                <p>
+            ) :
+              betData?.sportEvent?.sport === "NASCAR" ? (
+                <p style={{ ...FONTS.h6 }}>
                   {betData?.opponentId !== userData?.id ? (
                     <p>
-                      {betData?.opponentPrediction === "W1"
-                        ? `${betData?.sportEvent?.MmaEvent?.localTeamName} Win`
-                        : betData?.opponentPrediction === "W2"
-                          ? `${betData?.sportEvent?.MmaEvent?.visitorTeamName} Win`
-                          : ""}
+                      {betData?.opponentPrediction}
                     </p>
                   ) : (
                     ""
                   )}
-                </p>) :
-                betData?.sportEvent?.sport === "VOLLYBALL" ? (
-                  <p>
+                </p>
+              )
+                :
+                betData?.sportEvent?.sport === "BASEBALL" ? (
+                  <p style={{ ...FONTS.h6 }}>
                     {betData?.opponentId !== userData?.id ? (
                       <p>
-                        {betData?.opponentPrediction === "W1"
-                          ? `${betData?.sportEvent?.VollyballEvent?.localTeamName} Win`
-                          : betData?.opponentPrediction === "W2"
-                            ? `${betData?.sportEvent?.VollyballEvent?.visitorTeamName} Win`
-                            : ""}
+                        {betData?.opponentPrediction}
                       </p>
                     ) : (
                       ""
                     )}
-                  </p>) :
-                  betData?.sportEvent?.sport === "HANDBALL" ? (
-                    <p>
+                  </p>
+                )
+                  : betData?.sportEvent?.sport === "TENNIS" ? (
+                    <p style={{ ...FONTS.h6 }}>
                       {betData?.opponentId !== userData?.id ? (
                         <p>
-                          {betData?.opponentPrediction === "W1"
-                            ? `${betData?.sportEvent?.HandballEvent?.localTeamName} Win`
-                            : betData?.opponentPrediction === "W2"
-                              ? `${betData?.sportEvent?.HandballEvent?.visitorTeamName} Win`
-                              : ""}
+                          {betData?.opponentPrediction}
                         </p>
                       ) : (
                         ""
                       )}
-                    </p>) :
-                    betData?.sportEvent?.sport === "AFL" ? (
-                      <p>
-                        {betData?.opponentId !== userData?.id ? (
-                          <p>
-                            {betData?.opponentPrediction === "W1"
-                              ? `${betData?.sportEvent?.AflEvent?.localTeamName} Win`
-                              : betData?.opponentPrediction === "W2"
-                                ? `${betData?.sportEvent?.AflEvent?.visitorTeamName} Win`
-                                : ""}
-                          </p>
-                        ) : (
-                          ""
-                        )}
-                      </p>) :
-                      betData?.sportEvent?.sport === "FUTSAL" ? (
+                    </p>
+                  ) : betData?.sportEvent?.sport === "FOOTBALL" ? (
+                    <p>
+                      {betData?.opponentId !== userData?.id ? (
                         <p>
-                          {betData?.opponentId !== userData?.id ? (
-                            <p>
-                              {betData?.opponentPrediction === "W1"
-                                ? `${betData?.sportEvent?.FutsalEvent?.localTeamName} Win`
-                                : betData?.opponentPrediction === "W2"
-                                  ? `${betData?.sportEvent?.FutsalEvent?.visitorTeamName} Win`
-                                  : ""}
-                            </p>
-                          ) : (
-                            ""
-                          )}
-                        </p>) :
-                        betData?.sportEvent?.sport === "CRICKET" ? (
+                          {betData?.opponentPrediction}
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </p>
+                  ) : betData?.sportEvent?.sport === "BOXING" ? (
+                    <p>
+                      {betData?.opponentId !== userData?.id ? (
+                        <p>
+                          {betData?.opponentPrediction}
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </p>
+                  ) : betData?.sportEvent?.sport === "ESPORT" ? (
+                    <p>
+                      {betData?.opponentPrediction}
+                    </p>
+                  ) : betData?.sportEvent?.sport === "DART" ? (
+                    <p>
+                      {betData?.opponentPrediction}
+                    </p>
+                  )
+                    : betData?.sportEvent?.sport === "MMA" ? (
+                      <p>
+                        {betData?.opponentPrediction}
+                      </p>
+                    ) :
+                      betData?.sportEvent?.sport === "VOLLYBALL" ? (
+                        <p>
+                          {betData?.opponentPrediction}
+                        </p>
+                      ) :
+                        betData?.sportEvent?.sport === "HANDBALL" ? (
                           <p>
-                            {betData?.opponentId !== userData?.id ? (
+                            {betData?.opponentPrediction}
+                          </p>
+                        ) :
+                          betData?.sportEvent?.sport === "AFL" ? (
+                            <p>
+                              {betData?.opponentPrediction}
+                            </p>
+                          ) :
+                            betData?.sportEvent?.sport === "FUTSAL" ? (
                               <p>
-                                {betData?.opponentPrediction === "W1"
-                                  ? `${betData?.sportEvent?.CricketEvent?.localTeamName} Win`
-                                  : betData?.opponentPrediction === "W2"
-                                    ? `${betData?.sportEvent?.CricketEvent?.visitorTeamName} Win`
-                                    : ""}
+                                {betData?.opponentPrediction}
                               </p>
-                            ) : (
-                              ""
-                            )}
-                          </p>) :
-                          null}
+                            ) :
+                              betData?.sportEvent?.sport === "CRICKET" ? (
+                                <p>
+                                  {betData?.opponentPrediction}
+                                </p>
+                              ) :
+                                null}
           </div>
         ) : null}
         <div style={{ ...styles.cardDiv }}>
@@ -501,29 +436,29 @@ function BetInviteDetail() {
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
           <div style={styles.div}>
-            {betData?.sportEvent?.HorseEvent?.horses?.horse?.map((dd, i) => {
+            {betData?.sportEvent?.HorseEvent?.racerNames?.filter(pp => pp !== betData?.opponentPrediction).map((dd, i) => {
               return (
                 <div
                   style={{
                     ...styles.card,
                     backgroundColor:
-                      dd?.name === getPrediction(betData?.opponentPrediction)[0]
+                      dd === betData?.opponentPrediction
                         ? COLORS.gray
-                        : selected === dd?.name
+                        : selected === dd
                           ? COLORS.primary
                           : COLORS.cream,
                     color:
-                      selected === dd?.name ? COLORS.cream : COLORS.primary,
+                      selected === dd ? COLORS.cream : COLORS.primary,
                   }}
                   key={i}
                   onClick={() =>
-                    dd?.name === getPrediction(betData?.opponentPrediction)[0]
+                    dd === betData?.opponentPrediction
                       ? () => { }
-                      : handleRoute(dd?.name, `W${i + 1}`)
+                      : handleRoute(dd, `W${i + 1}`)
                   }
                 >
-                  <p style={{ ...FONTS.h6 }}>Bet {dd?.name} to win</p>
-                  <p style={{ ...FONTS.body6 }}>{dd?.odds?.bookmaker?.odd}</p>
+                  <p style={{ ...FONTS.h6 }}>Bet {dd} to win</p>
+                  {/* <p style={{ ...FONTS.body6 }}>{dd?.odds?.bookmaker?.odd}</p> */}
                 </div>
               );
             })}
@@ -533,7 +468,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "TENNIS" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.TennisEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.TennisEvent?.localTeamName} Win`}
@@ -559,7 +494,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.TennisEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.TennisEvent?.visitorTeamName} Win`}
@@ -591,7 +526,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "BASKETBALL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.BasketballEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.BasketballEvent?.localTeamName} Win`}
@@ -617,7 +552,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.BasketballEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.BasketballEvent?.visitorTeamName} Win`}
@@ -650,7 +585,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "BOXING" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.BoxingEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.BoxingEvent?.localTeamName} Win`}
@@ -676,7 +611,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.BoxingEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.BoxingEvent?.visitorTeamName} Win`}
@@ -709,7 +644,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "ESPORT" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.EsportEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.EsportEvent?.localTeamName} Win`}
@@ -735,7 +670,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.EsportEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.EsportEvent?.visitorTeamName} Win`}
@@ -768,7 +703,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "DART" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.DartEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.DartEvent?.localTeamName} Win`}
@@ -794,7 +729,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.DartEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`}
@@ -827,7 +762,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "MMA" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.MmaEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.MmaEvent?.localTeamName} Win`}
@@ -853,7 +788,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.MmaEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.MmaEvent?.visitorTeamName} Win`}
@@ -886,7 +821,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "FOOTBALL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.FootballEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.FootballEvent?.localTeamName} Win`}
@@ -912,7 +847,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.FootballEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.FootballEvent?.visitorTeamName} Win`}
@@ -961,7 +896,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "SNOOKER" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.SnookerEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.SnookerEvent?.localTeamName} Win`}
@@ -987,7 +922,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.SnookerEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.SnookerEvent?.visitorTeamName} Win`}
@@ -1020,7 +955,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "VOLLYBALL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.VollyballEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.VollyballEvent?.localTeamName} Win`}
@@ -1046,7 +981,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.VollyballEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.VollyballEvent?.visitorTeamName} Win`}
@@ -1079,7 +1014,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "HANDBALL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.HandballEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.HandballEvent?.localTeamName} Win`}
@@ -1105,7 +1040,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.HandballEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.HandballEvent?.visitorTeamName} Win`}
@@ -1138,7 +1073,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "AFL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.AflEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.AflEvent?.localTeamName} Win`}
@@ -1164,7 +1099,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.AflEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.AflEvent?.visitorTeamName} Win`}
@@ -1197,7 +1132,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "FUTSAL" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.FutsalEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.FutsalEvent?.localTeamName} Win`}
@@ -1223,7 +1158,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.FutsalEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.FutsalEvent?.visitorTeamName} Win`}
@@ -1256,7 +1191,7 @@ function BetInviteDetail() {
       {betData?.sportEvent?.sport === "CRICKET" && (
         <div style={{ width: "100%", marginTop: 30 }}>
           <p>Select your prediction</p>
-          {betData?.opponentPrediction !== "W1" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.CricketEvent?.localTeamName && (
             <div style={{ width: "100%" }}>
               <Button
                 text={`${betData?.sportEvent?.CricketEvent?.localTeamName} Win`}
@@ -1282,7 +1217,7 @@ function BetInviteDetail() {
               />
             </div>
           )}
-          {betData?.opponentPrediction !== "W2" && (
+          {betData?.opponentPrediction !== betData?.sportEvent?.CricketEvent?.visitorTeamName && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`${betData?.sportEvent?.CricketEvent?.visitorTeamName} Win`}
@@ -1303,6 +1238,125 @@ function BetInviteDetail() {
                 handlePress={() =>
                   handleRoute(
                     betData?.sportEvent?.CricketEvent?.visitorTeamName,
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+      {betData?.sportEvent?.sport === "NASCAR" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== betData?.sportEvent?.NascarEvent?.localTeamName && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.NascarEvent?.localTeamName} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                      betData?.sportEvent?.NascarEvent?.localTeamName
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                      betData?.sportEvent?.NascarEvent?.localTeamName
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.NascarEvent?.localTeamName,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== betData?.sportEvent?.NascarEvent?.visitorTeamName && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.NascarEvent?.visitorTeamName} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                      betData?.sportEvent?.NascarEvent?.visitorTeamName
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                      betData?.sportEvent?.NascarEvent?.visitorTeamName
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.NascarEvent?.visitorTeamName,
+                    "W2"
+                  )
+                }
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+
+      {betData?.sportEvent?.sport === "BASEBALL" && (
+        <div style={{ width: "100%", marginTop: 30 }}>
+          <p>Select your prediction</p>
+          {betData?.opponentPrediction !== betData?.sportEvent?.BaseballEvent?.localTeamName && (
+            <div style={{ width: "100%" }}>
+              <Button
+                text={`${betData?.sportEvent?.BaseballEvent?.localTeamName} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                      betData?.sportEvent?.BaseballEvent?.localTeamName
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                      betData?.sportEvent?.BaseballEvent?.localTeamName
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.BaseballEvent?.localTeamName,
+                    "W1"
+                  )
+                }
+              />
+            </div>
+          )}
+          {betData?.opponentPrediction !== betData?.sportEvent?.BaseballEvent?.visitorTeamName && (
+            <div style={{ width: "100%", margin: "10px 0px" }}>
+              <Button
+                text={`${betData?.sportEvent?.BaseballEvent?.visitorTeamName} Win`}
+                propStyle={{
+                  width: "100%",
+                  backgroundColor:
+                    selected ===
+                      betData?.sportEvent?.BaseballEvent?.visitorTeamName
+                      ? COLORS.primary
+                      : COLORS.cream,
+                  color:
+                    selected ===
+                      betData?.sportEvent?.BaseballEvent?.visitorTeamName
+                      ? COLORS.cream
+                      : COLORS.primary,
+                }}
+                // handlePress={() => navigate('/home')}
+                handlePress={() =>
+                  handleRoute(
+                    betData?.sportEvent?.BaseballEvent?.visitorTeamName,
                     "W2"
                   )
                 }

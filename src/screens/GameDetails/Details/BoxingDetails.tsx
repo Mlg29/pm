@@ -122,7 +122,7 @@ const styles = {
   },
 };
 
-function BoxingDetails({ gameInfo, isMobile, selected, handleRoute }) {
+function BoxingDetails({ gameInfo, dateTime, isMobile, selected, handleRoute }) {
 
   const decodeHTMLEntities = (str) => {
     const tempElement = document.createElement("textarea");

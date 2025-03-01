@@ -21,7 +21,7 @@ const styles = {
     },
 };
 
-function NascarDetail({ selected, gameInfo, handleRoute }) {
+function NascarDetail({ selected, gameInfo, dateTime, handleRoute }) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
 

@@ -20,7 +20,7 @@ const styles = {
     },
 };
 
-function Formula1Detail({ selected, gameInfo, handleRoute }) {
+function Formula1Detail({ selected, dateTime, gameInfo, handleRoute }) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
     console.log({ gameInfo })

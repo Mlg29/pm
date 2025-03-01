@@ -164,8 +164,15 @@ function GameDetails() {
 
   }, []);
 
+  const utcDate = new Date(gameInfo?.datetimeUtc);
+  const localTime = utcDate.toLocaleTimeString("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
 
-
+  console.log({ gameInfo })
 
   const handleRoute = (route: string, selection?: string) => {
 
@@ -186,6 +193,7 @@ function GameDetails() {
       gameInfo?.status !== "Upcoming" &&
       gameInfo?.status !== "UPCOMING" &&
       gameInfo?.status !== "Not Started" &&
+      gameInfo?.["@status"] !== "Not Started" &&
       name !== "Upcoming match"
     ) {
       toast.error("Sorry, the game is in progress, you can't proceed to bet on it", {
@@ -199,10 +207,10 @@ function GameDetails() {
       const payload = {
         userType: route,
         sportEventId: gameInfo?.sportEventId,
-        sportId: gameInfo?.id,
+        sportId: gameInfo?.id || gameInfo["@id"],
         sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType === "Esports" ? "ESPORT" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
         matchEvent: {
-          id: gameInfo?.id,
+          id: gameInfo?.id || gameInfo["@id"],
           sportEventId: gameInfo?.sportEventId,
           league: gameInfo?.league,
           leagueId: gameInfo?.leagueId,
@@ -210,11 +218,11 @@ function GameDetails() {
           // ...(gameInfo?.country !== undefined ? { country: gameInfo.country } : gameInfo?.league !== undefined ? { country: gameInfo.league } : {}),
           status: "Not Started",
           internalStatus: "UPCOMING",
-          date: gameInfo?.formatted_date || gameInfo?.date,
-          time: gameInfo?.time || gameInfo?.date,
+          date: gameInfo?.formatted_date || gameInfo["@date"] || gameInfo?.date,
+          time: gameInfo?.time || gameInfo["@time"] || gameInfo?.date,
           ...(gameType !== "Horse" && gameType !== "Formula1" && {
-            localTeamName: gameInfo?.localTeam?.name || gameInfo?.player[0]?.name,
-            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name || gameInfo?.player[1]?.name,
+            localTeamName: gameInfo?.localTeam?.name || gameInfo?.localTeam["@name"] || gameInfo?.player[0]?.name,
+            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam["@name"] || gameInfo?.awayTeam?.name || gameInfo?.player[1]?.name,
           }),
           ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
           ...(gameType === "Horse" || gameType === "Formula1" ? { racerNames: players } : {}),
@@ -225,8 +233,8 @@ function GameDetails() {
       };
 
 
-      // console.log({ payload })
-      // return
+      console.log({ payload })
+      return
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
 
@@ -306,6 +314,7 @@ function GameDetails() {
             active={active}
             setActive={setActive}
             styles={styles}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             eventArray={eventArray}
             handleRoute={(event, selection) => handleRoute(event, selection)}
           />
@@ -317,6 +326,7 @@ function GameDetails() {
             styles={styles}
             isMobile={isMobile}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
           />
         )}
@@ -326,6 +336,7 @@ function GameDetails() {
             selected={selected}
             isMobile={isMobile}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
           />
         )}
@@ -334,6 +345,7 @@ function GameDetails() {
           <HorseDetails
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
           />
         )}
@@ -342,6 +354,7 @@ function GameDetails() {
           <Formula1Detail
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
           />
         )}
@@ -350,6 +363,7 @@ function GameDetails() {
           <NascarDetail
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
           />
         )}
@@ -358,6 +372,7 @@ function GameDetails() {
           <BoxingDetails
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -367,6 +382,7 @@ function GameDetails() {
           <MmaDetails
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -376,6 +392,7 @@ function GameDetails() {
           <EsportDetails
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -385,6 +402,7 @@ function GameDetails() {
           <DartDetails
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -394,6 +412,7 @@ function GameDetails() {
           <SnookerDetail
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -403,6 +422,7 @@ function GameDetails() {
           <VolleyballDetail
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -412,6 +432,7 @@ function GameDetails() {
           <HandballDetail
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -420,6 +441,7 @@ function GameDetails() {
           <BaseballDetails
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -429,6 +451,7 @@ function GameDetails() {
           <AflDetail
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -438,6 +461,7 @@ function GameDetails() {
           <FutsalDetail
             selected={selected}
             gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}
           />
@@ -446,6 +470,7 @@ function GameDetails() {
         {gameType === "Cricket" && (
           <CricketDetail
             selected={selected}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
             gameInfo={gameInfo}
             handleRoute={(event, selection) => handleRoute(event, selection)}
             isMobile={isMobile}

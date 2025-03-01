@@ -101,11 +101,11 @@ function SecretQuestion() {
     },
     {
       id: 3,
-      value: "What was the manufacturer name of your first car??",
+      value: "What was the manufacturer name of your first car?",
     },
     {
       id: 4,
-      value: "What was the name of your first childhood friend??",
+      value: "What was the name of your first childhood friend?",
     },
     {
       id: 5,
@@ -172,7 +172,7 @@ function SecretQuestion() {
             position: "bottom-center",
           });
         }
-      } catch (err) {}
+      } catch (err) { }
     },
   });
 
@@ -198,12 +198,12 @@ function SecretQuestion() {
     <div style={{ ...styles.container }}>
       <div style={{ display: "flex", flexDirection: "column", flex: 3 }}>
         {
-          isMobile &&  <div style={{ marginTop: 10 }}>
-          <BackButton />
-        </div>
+          isMobile && <div style={{ marginTop: 10 }}>
+            <BackButton />
+          </div>
         }
-       
-       <div style={{ marginBottom: 30 }}>
+
+        <div style={{ marginBottom: 30 }}>
           <h3
             style={{
               ...FONTS.h2,
@@ -218,7 +218,7 @@ function SecretQuestion() {
             Enter questions and answers you would remember.
           </p>
         </div>
-      
+
 
         <form>
           {[1, 2, 3].map((i) => (
@@ -289,7 +289,7 @@ function SecretQuestion() {
           >
             Submit
           </button> */}
-           <div style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <Button
               text="Submit"
               propStyle={{ width: "100%" }}

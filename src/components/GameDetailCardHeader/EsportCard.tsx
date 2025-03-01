@@ -96,7 +96,7 @@ function EsportCard(props) {
           </h3>
 
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+            {data?.status === "Started" ? `${data?.dateTime}'` : data?.status}
           </p>
         </div>
         <div

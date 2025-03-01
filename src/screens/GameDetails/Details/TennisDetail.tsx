@@ -3,7 +3,7 @@ import TennisCard from '../../../components/GameDetailCardHeader/TennisCard'
 import Button from '../../../components/Button'
 import { COLORS } from '../../../utils/colors'
 
-function TennisDetail({ gameInfo, isMobile, styles, handleRoute, selected }) {
+function TennisDetail({ gameInfo, isMobile, styles, dateTime, handleRoute, selected }) {
 
 
     return (

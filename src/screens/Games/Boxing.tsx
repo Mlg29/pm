@@ -34,7 +34,7 @@ function Boxing({ calendarDate }) {
     setLoading(true)
     dispatch(getBoxingFixtures(null)).then((dd) => {
       console.log("", { dd })
-      setLive(dd?.payload?.categories || [])
+      setLive(dd?.payload?.category || [])
       setLoading(false)
     })
 

@@ -27,6 +27,7 @@ function FootballDetail({
   styles,
   isMobile,
   handleRoute,
+  dateTime,
   active,
   setActive,
   eventArray
@@ -84,6 +85,10 @@ function FootballDetail({
 
   const footballMatch = matchStat?.commentaries?.tournament?.match
 
+  const bb = {
+    ...gameInfo,
+    dateTime
+  }
 
   return (
     <>
@@ -96,7 +101,7 @@ function FootballDetail({
         }}
       >
         <GameDetailCardHeader
-          data={gameInfo}
+          data={bb}
           homeLogo={homeLogo}
           awayLogo={awayLogo}
         />
