@@ -37,9 +37,7 @@ function Tennis({ calendarDate }) {
     // dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
     //   setFinished(dd?.payload?.category || [])
     // })
-    // dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
-    //   setScheduled(dd?.payload?.category || [])
-    // })
+
     setLoading(true)
     dispatch(getTennisFixtures(null)).then((dd) => {
       console.log({ dd })
@@ -64,6 +62,16 @@ function Tennis({ calendarDate }) {
     const interval = setInterval(fetchBetData, 60000);
     return () => clearInterval(interval);
   }, []);
+
+
+  useEffect(() => {
+    const PayloadScheduled = {
+      range: 'upcoming'
+    }
+    dispatch(getTennisFixtures(PayloadScheduled)).then((dd) => {
+      setScheduled(dd?.payload?.category || [])
+    })
+  }, [])
 
 
   const liveMatches = live?.map(league => ({
@@ -205,7 +213,7 @@ function Tennis({ calendarDate }) {
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {upcomingMatches?.map((league, index) => {
+            {scheduled?.map((league, index) => {
               return <div key={league?.name}>
                 <p
                   style={{
@@ -238,7 +246,7 @@ function Tennis({ calendarDate }) {
               </div>
             })}
 
-            {upcomingMatches?.length < 1 ? (
+            {scheduled?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>
