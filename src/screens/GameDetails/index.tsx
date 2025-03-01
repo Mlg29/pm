@@ -233,8 +233,8 @@ function GameDetails() {
       };
 
 
-      console.log({ payload })
-      return
+      // console.log({ payload })
+      // return
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));
 
