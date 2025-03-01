@@ -190,6 +190,10 @@ function OpenBet() {
       a?.prediction !== userSelection?.userType
   );
 
+
+  console.log({ openBets, filterData, userSelection })
+
+
   const sameCurrency = filterData?.filter(bb => bb?.betCurrency === userData?.defaultCurrency)
   const multiCurrency = filterData?.filter(bb => bb?.betCurrency !== userData?.defaultCurrency)
 

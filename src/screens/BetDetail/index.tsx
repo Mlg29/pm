@@ -117,7 +117,7 @@ function BetDetail() {
     return result;
   };
 
-
+  console.log({ betData })
   return (
     <div className="top-container">
       {
