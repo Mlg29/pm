@@ -70,6 +70,9 @@ const InviteFriend = () => {
     if (email?.length === 0) {
       setUsers([]);
     }
+    if (!email?.includes('@')) {
+      setAmount("0")
+    }
     if (email?.includes("@")) {
       checkUser();
     }
@@ -122,8 +125,8 @@ const InviteFriend = () => {
 
         <div style={{ display: "flex", flexDirection: "column", flex: 4 }}>
           <TextInput
-            label="Username or Email Address"
-            placeholder="Enter your friend username or email"
+            label="Email Address"
+            placeholder="Enter your friend email"
             required
             value={email}
             type="email"

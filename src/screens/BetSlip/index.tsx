@@ -275,7 +275,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -302,7 +302,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -324,7 +324,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -337,7 +337,7 @@ function BetSlip() {
                                   multipleEntry
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -368,7 +368,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -399,7 +399,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -430,7 +430,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -459,7 +459,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -491,7 +491,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -523,7 +523,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -555,7 +555,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -587,7 +587,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -619,7 +619,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -651,7 +651,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -683,7 +683,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -715,7 +715,7 @@ function BetSlip() {
                                   }
                                   isWin={item?.winnerId}
                                   amount={
-                                    item?.betAmount || item?.opponentBetAmount
+                                    item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                   }
                                   isUser={userData}
                                   betCurrency={item?.betCurrency}
@@ -775,7 +775,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -802,7 +802,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -824,7 +824,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -837,7 +837,7 @@ function BetSlip() {
                                 multipleEntry
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -868,7 +868,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -899,7 +899,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -930,7 +930,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -959,7 +959,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -991,7 +991,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -1023,7 +1023,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -1055,7 +1055,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -1087,7 +1087,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -1119,7 +1119,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -1151,7 +1151,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.betAmount || item?.opponentBetAmount)
+                                  item?.winnerId === userData?.id ? item?.amountWon : (item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0)
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -1183,7 +1183,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.betAmount || item?.opponentBetAmount
+                                  item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}
@@ -1215,7 +1215,7 @@ function BetSlip() {
                                 }
                                 isWin={item?.winnerId}
                                 amount={
-                                  item?.betAmount || item?.opponentBetAmount
+                                  item?.winnerId === userData?.id ? item?.amountWon : item?.userId === userData?.id ? item?.betAmount : item?.opponentId === userData?.id ? item?.opponentBetAmount : 0
                                 }
                                 isUser={userData}
                                 betCurrency={item?.betCurrency}

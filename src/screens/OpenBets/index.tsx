@@ -157,6 +157,11 @@ function OpenBet() {
     const rateByCurrency = data?.betCurrency === userData?.defaultCurrency ? data?.betAmount : rate
 
 
+    if ((data?.betCurrency !== userData?.defaultCurrency) && !rate) {
+      alert("Please wait.. Calculating exchange rate...")
+      return
+    }
+
     const payload = {
       invitedUser: null,
       amount: parseFloat(rateByCurrency),
@@ -170,6 +175,11 @@ function OpenBet() {
   };
 
   const handleAdjust = async (data, exAmt) => {
+
+    if ((data?.betCurrency !== userData?.defaultCurrency) && !exAmt) {
+      alert("Please wait.. Calculating exchange rate...")
+      return
+    }
 
     const payload = {
       invitedUser: null,
@@ -190,8 +200,6 @@ function OpenBet() {
       a?.prediction !== userSelection?.userType
   );
 
-
-  console.log({ openBets, filterData, userSelection })
 
 
   const sameCurrency = filterData?.filter(bb => bb?.betCurrency === userData?.defaultCurrency)
@@ -403,7 +411,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <FaTableTennis size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.player[0]["@name"]}
+                            {game?.player[0]?.name}
                           </h3>
                         </div>
                         <div style={{ ...styles.center }}>
@@ -429,7 +437,7 @@ function OpenBet() {
                         <div style={{ ...styles.center }}>
                           <FaTableTennis size={30} color={COLORS.primary} />
                           <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
-                            {game?.player[1]["@name"]}
+                            {game?.player[1]?.name}
                           </h3>
                         </div>
                       </div>
@@ -440,10 +448,10 @@ function OpenBet() {
                             @{data?.user?.userName}
                           </p>
                           <p style={{ ...FONTS.body7 }}>
-                            {data?.prediction === game?.player[0]["@name"]
-                              ? `${game?.player[0]["@name"]} WIN`
-                              : data?.prediction === game?.player[1]["@name"]
-                                ? `${game?.player[1]["@name"]} WIN`
+                            {data?.prediction === game?.player[0]?.name
+                              ? `${game?.player[0]?.name} WIN`
+                              : data?.prediction === game?.player[1]?.name
+                                ? `${game?.player[1]?.name} WIN`
                                 : ""}
                           </p>
                         </div>
@@ -458,10 +466,10 @@ function OpenBet() {
                             You
                           </p>
                           <p style={{ ...FONTS.body7 }}>
-                            {userSelection?.userType === game?.player[0]["@name"]
-                              ? `${game?.player[0]["@name"]} WIN`
-                              : userSelection?.userType === game?.player[1]["@name"]
-                                ? `${game?.player[1]["@name"]} WIN`
+                            {userSelection?.userType === game?.player[0]?.name
+                              ? `${game?.player[0]?.name} WIN`
+                              : userSelection?.userType === game?.player[1]?.name
+                                ? `${game?.player[1]?.name} WIN`
                                 : ""}
                           </p>
                         </div>

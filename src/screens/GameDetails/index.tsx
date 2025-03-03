@@ -218,11 +218,11 @@ function GameDetails() {
           // ...(gameInfo?.country !== undefined ? { country: gameInfo.country } : gameInfo?.league !== undefined ? { country: gameInfo.league } : {}),
           status: "Not Started",
           internalStatus: "UPCOMING",
-          date: gameInfo?.formatted_date || gameInfo["@date"] || gameInfo?.date,
-          time: gameInfo?.time || gameInfo["@time"] || gameInfo?.date,
+          date: gameInfo?.formatted_date || gameInfo?.date || gameInfo["@date"],
+          time: gameInfo?.time || gameInfo?.date || gameInfo["@time"],
           ...(gameType !== "Horse" && gameType !== "Formula1" && {
-            localTeamName: gameInfo?.localTeam?.name || gameInfo?.localTeam["@name"] || gameInfo?.player[0]?.name,
-            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam["@name"] || gameInfo?.awayTeam?.name || gameInfo?.player[1]?.name,
+            localTeamName: gameInfo?.localTeam?.name || gameInfo?.player[0]?.name || gameInfo?.localTeam["@name"],
+            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name || gameInfo?.player[1]?.name || gameInfo?.awayTeam["@name"],
           }),
           ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
           ...(gameType === "Horse" || gameType === "Formula1" ? { racerNames: players } : {}),
@@ -233,7 +233,7 @@ function GameDetails() {
       };
 
 
-      // console.log({ payload })
+      //  console.log({ payload })
       // return
 
       localStorage.setItem("userBetSelection", JSON.stringify(payload));

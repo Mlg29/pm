@@ -56,7 +56,14 @@ export const getFootballEvents = createAsyncThunk("football/getFootballEvents", 
 });
 
 export const getLogo = createAsyncThunk("football/getLogo", async (payload: any) => {
-  var response = await getRequest(`${SportSportBaseUrl}/soccer/logo?teamId=${payload.teamId}`);
+  var response = await getRequest(`${SportSportBaseUrl}/soccer/logo?teamId=${payload.teamId}&t=${new Date().getTime()}`);
+  if (response?.status === 200 || response?.status === 201) {
+    return response;
+  }
+});
+
+export const getAwayLogo = createAsyncThunk("football/getAwayLogo", async (payload: any) => {
+  var response = await getRequest(`${SportSportBaseUrl}/soccer/logo?teamId=${payload.teamId}&t=${new Date().getTime()}`);
   if (response?.status === 200 || response?.status === 201) {
     return response;
   }
@@ -125,11 +132,25 @@ export const FootballSlice = createSlice({
         getLogo.fulfilled,
         (state, action: PayloadAction<any>) => {
           // state.loading = false;
-          state.homeLogo = action.payload.data.base64;
+          // state.homeLogo = action.payload.data.base64;
 
         }
       );
     builder.addCase(getLogo.rejected, (state, action) => {
+      // state.error = action.error.message
+    });
+    builder.addCase(getAwayLogo.pending, (state, action) => {
+      state.loading = true;
+    }),
+      builder.addCase(
+        getAwayLogo.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          // state.loading = false;
+          // state.homeLogo = action.payload.data.base64;
+
+        }
+      );
+    builder.addCase(getAwayLogo.rejected, (state, action) => {
       // state.error = action.error.message
     });
     builder.addCase(getSecondLogo.pending, (state, action) => {

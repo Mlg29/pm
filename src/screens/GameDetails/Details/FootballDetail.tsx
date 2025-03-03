@@ -13,6 +13,7 @@ import Formation from '../../../components/Formation'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import {
   footballFixtureStatusState,
+  getAwayLogo,
   getLogo,
   getMatchStat,
   getSecondLogo,
@@ -40,48 +41,59 @@ function FootballDetail({
   const [awayLogo, setAwayLogo] = useState(null)
   const dispatch = useAppDispatch() as any
 
+  console.log("game>", gameInfo?.localTeam?.teamId, gameInfo?.visitorTeam?.teamId)
+
   const fetchLogos = async () => {
-    await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.localTeam?.teamId}`).then(res => res?.json()).then(m => setHomeLogo(m?.base64)).finally(async () => {
-      // await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.visitorTeam?.teamId}`).then(res => res?.json()).then(y => {
-      //   // console.log(">>>>>>>", y)
-      //   setAwayLogo(y?.base64)
-      // })
-    })
+    await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.localTeam?.teamId}`)
+      .then(res => res?.json())
+      .then(async m => {
+        console.log("m>>>>>>>", m)
+        setHomeLogo(m?.base64)
+        await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.visitorTeam?.teamId}`)
+          .then(res => res?.json())
+          .then(async m => {
+            console.log("yyy>>>>>>>", m)
+            setAwayLogo(m?.base64)
+
+          })
+
+      }).finally(async () => {
+
+      })
 
   }
 
-  useEffect(() => {
-    const homeTeam = {
-      teamId: gameInfo?.localTeam?.teamId
-    }
-    const awayTeam = {
-      teamId: gameInfo?.visitorTeam?.teamId
-    }
 
+
+
+  useEffect(() => {
+    fetchLogos()
+  }, [])
+
+  useEffect(() => {
+    const homeTeam = { teamId: gameInfo?.localTeam?.teamId }
+    const awayTeam = { teamId: gameInfo?.visitorTeam?.teamId }
     const matchStatPayload = {
       leagueId: gameInfo?.leagueId,
       matchId: gameInfo?.staticId
     }
 
+    Promise.all([
+      dispatch(getStat(homeTeam)),
+      dispatch(getStat(awayTeam)),
+      dispatch(getMatchStat(matchStatPayload)),
 
+    ]).then(([homeResult, awayResult, matchResult]) => {
+      setHomeStat(homeResult?.payload?.teams?.team)
+      setAwayStat(awayResult?.payload?.teams?.team)
+      setMatchStat(matchResult?.payload)
 
-    dispatch(getStat(homeTeam)).then((dd) => {
-      setHomeStat(dd?.payload?.teams?.team)
-    })
-    dispatch(getStat(awayTeam)).then((dd) => {
-      setAwayStat(dd?.payload?.teams?.team)
-    })
-    dispatch(getMatchStat(matchStatPayload)).then(async (dd) => {
-      setMatchStat(dd?.payload)
-      await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.visitorTeam?.teamId}`).then(res => res?.json()).then(y => {
-        // console.log(">>>>>>>", y)
-        setAwayLogo(y?.base64)
-      })
     })
 
-    fetchLogos()
+
 
   }, [])
+
 
   const footballMatch = matchStat?.commentaries?.tournament?.match
 
@@ -144,7 +156,7 @@ function FootballDetail({
                     color: selected === 'draw' ? COLORS.cream : COLORS.primary
                   }}
                   //  handlePress={() => navigate('/home')}
-                  handlePress={() => handleRoute('draw', 'DRAW')}
+                  handlePress={() => handleRoute('draw', 'draw')}
                 />
               </div>
               <div style={{ width: '100%', margin: '0px 0px 10px 0px' }}>
@@ -201,7 +213,7 @@ function FootballDetail({
                     fontSize: 12
                   }}
                   //  handlePress={() => navigate('/home')}
-                  handlePress={() => handleRoute('draw', 'DRAW')}
+                  handlePress={() => handleRoute('draw', 'draw')}
                 />
               </div>
               <div style={{ width: '100%', margin: '10px 0px' }}>

@@ -875,18 +875,18 @@ function BetInviteDetail() {
             </div>
           )}
 
-          {betData?.opponentPrediction !== "DRAW" && (
+          {betData?.opponentPrediction !== "draw" && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
-                text={`DRAW`}
+                text={`draw`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
-                    selected === "DRAW" ? COLORS.primary : COLORS.cream,
-                  color: selected === "DRAW" ? COLORS.cream : COLORS.primary,
+                    selected === "draw" ? COLORS.primary : COLORS.cream,
+                  color: selected === "draw" ? COLORS.cream : COLORS.primary,
                 }}
                 // handlePress={() => navigate('/home')}
-                handlePress={() => handleRoute("DRAW", "DRAW")}
+                handlePress={() => handleRoute("draw", "draw")}
               />
             </div>
           )}

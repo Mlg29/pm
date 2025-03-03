@@ -173,7 +173,9 @@ function SlipCard(props: any) {
                     ? `${homeName} Win`
                     : data?.prediction === awayName
                       ? `${awayName} Win`
-                      : "DRAW"}
+                      : data?.prediction === "draw"
+                        ? "DRAW"
+                        : "N/A"}
                 </p>
               )}
             </div>

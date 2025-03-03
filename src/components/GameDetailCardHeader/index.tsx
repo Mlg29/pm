@@ -47,7 +47,6 @@ function GameDetailCardHeader(props: any) {
   const dispatch = useAppDispatch() as any
 
 
-
   return (
     <div style={{ ...styles.container, ...propStyle }}>
       <div style={{ ...styles.row }}>
@@ -99,7 +98,7 @@ function GameDetailCardHeader(props: any) {
               color: COLORS.white,
             }}
           >
-            {data?.status}
+            {data?.winner === "Upcoming match" ? "Not started" : data?.status}
           </p>
           <h3
             style={{

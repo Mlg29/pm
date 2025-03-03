@@ -60,7 +60,7 @@ function Basketball({ calendarDate }) {
 
   const liveMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status > 0 || match.status === "HT")
+    match: league?.match.filter(match => match.status?.toLowerCase()?.includes("quarter"))
   }))
     .filter(league => league?.match.length > 0);
 

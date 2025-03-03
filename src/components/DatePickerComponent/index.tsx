@@ -19,14 +19,14 @@ const DatePickerComponent = (props: any) => {
     propStyle,
     placeholder
   } = props;
-  
+
 
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", }}>
       <label style={{ ...FONTS.body7 }}>
         {label} {required ? <span style={{ color: "red" }}>*</span> : null}
       </label>
-      <Calendar value={value} onChange={(e) => onChangeDate(e.value)} className="btns" ariaLabel="Date" placeholder={placeholder}  showButtonBar style={{height: 60, border: '0.1px solid gray', borderRadius: 5}} />
+      <Calendar value={value} onChange={(e) => onChangeDate(e.value)} className="btns custom-calendar" placeholder={placeholder} showButtonBar style={{ height: 60, border: '0.1px solid gray', borderRadius: 5 }} />
     </div>
   );
 };

@@ -39,7 +39,7 @@ function Tennis({ leagueName }) {
 
   const liveMatches = live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
+    match: league?.match.filter(match => match?.status?.toLowerCase().includes("set"))
   }))
     .filter(league => league?.match.length > 0);
 
