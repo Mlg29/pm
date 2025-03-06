@@ -43,6 +43,15 @@ export const styles = {
 function CricketGameCard({ id, data }) {
   const navigate = useNavigate()
 
+
+  const utcDate = new Date(data?.datetimeUtc);
+  const localTime = utcDate.toLocaleTimeString("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
+
   return (
     <div>
       <div
@@ -63,11 +72,11 @@ function CricketGameCard({ id, data }) {
               color: COLORS.black
             }}
           >
-            ({data?.date || data?.match?.date})
+            ({data?.date} - {localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {/* {data?.status === "Started" ? `${data?.time}'` : data?.status} */}
-            {data?.time || data?.match?.time}
+            {data?.status}
           </p>
         </div>
         <div style={styles.box2}>
@@ -85,15 +94,15 @@ function CricketGameCard({ id, data }) {
               {data?.localteam?.totalscore
                 ? data?.localteam?.totalscore
                 : data?.match?.localteam?.totalscore
-                ? data?.match?.localteam?.totalscore
-                : ''}
+                  ? data?.match?.localteam?.totalscore
+                  : ''}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
               {data?.visitorteam?.totalscore
                 ? data?.visitorteam?.totalscore
                 : data?.match?.visitorteam?.totalscore
-                ? data?.match?.visitorteam?.totalscore
-                : ''}
+                  ? data?.match?.visitorteam?.totalscore
+                  : ''}
             </p>
           </div>
         </div>

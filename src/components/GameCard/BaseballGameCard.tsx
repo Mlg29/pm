@@ -44,7 +44,13 @@ export const styles = {
 function BaseballGameCard({ id, data }) {
   const navigate = useNavigate()
 
-
+  const utcDate = new Date(data?.datetimeUtc);
+  const localTime = utcDate.toLocaleTimeString("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
 
   return (
     <div>
@@ -66,26 +72,26 @@ function BaseballGameCard({ id, data }) {
               color: COLORS.black
             }}
           >
-            ({data?.['@date']} - {data?.['@time']})
+            ({data?.date} - {localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.['@status']}
+            {data?.status}
           </p>
         </div>
         <div style={styles.box2}>
-          <p style={{ ...FONTS.body7 }}>{data?.localteam?.['@name']}</p>
-          <p style={{ ...FONTS.body7 }}>{data?.awayteam?.['@name']}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.localTeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayTeam?.name}</p>
         </div>
         <div style={styles.box3}>
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.localteam?.['@totalScore']
-                ? data?.localteam?.['@totalScore']
+              {data?.localTeam?.totalscore
+                ? data?.localTeam?.totalscore
                 : '-'}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-              {data?.awayteam?.['@totalScore']
-                ? data?.awayteam?.['@totalScore']
+              {data?.awayTeam?.totalscore
+                ? data?.awayTeam?.totalscore
                 : '-'}
             </p>
           </div>

@@ -144,6 +144,7 @@ function NavHeader() {
 
 
 
+
   const itemList = [
     {
       id: 1,
@@ -265,6 +266,8 @@ function NavHeader() {
     // },
   ];
 
+  const nameExists = (name) => itemList.some(item => item.name === name);
+
   const handleMoreSelect = (data) => {
     localStorage.setItem("sport", data);
     window.dispatchEvent(new Event("localStorageUpdated"));
@@ -272,6 +275,13 @@ function NavHeader() {
     setVisible(false);
     navigate("/home");
   };
+
+  const handleMore = (data) => {
+    setVisible(true)
+    // handleSelection(data)
+  }
+
+
 
   const handleSelection = (info) => {
     setSelected(info);
@@ -522,7 +532,8 @@ function NavHeader() {
                       backgroundColor:
                         info?.name === selected
                           ? COLORS.primary
-                          : "transparent",
+                          : (!nameExists(selected) && info?.name === "More") ? COLORS.primary
+                            : "transparent",
                       borderRadius: "30px",
                       border: `1px solid ${COLORS.semiGray}`,
                     }}
@@ -535,7 +546,8 @@ function NavHeader() {
                         color:
                           info?.name === selected
                             ? COLORS.white
-                            : COLORS.primary,
+                            : (!nameExists(selected) && info?.name === "More") ? 'white'
+                              : COLORS.primary,
                         margin: "0px 5px",
                       }}
                     >
@@ -584,7 +596,7 @@ function NavHeader() {
             })}
           </Sidebar>
         </div>
-      </LargScreen>
+      </LargScreen >
 
       <Desktop>
         <div style={{ ...styles.rowBtwDes }}>
@@ -813,7 +825,7 @@ function NavHeader() {
                   }}
                   onClick={() =>
                     info?.name === "More"
-                      ? setVisible(true)
+                      ? handleMore(info?.name)
                       : handleSelection(info?.name)
                   }
                 >
@@ -824,7 +836,8 @@ function NavHeader() {
                       backgroundColor:
                         info?.name === selected
                           ? COLORS.primary
-                          : "transparent",
+                          : (!nameExists(selected) && info?.name === "More") ? COLORS.primary
+                            : "transparent",
                       borderRadius: "30px",
                       border: `1px solid ${COLORS.semiGray}`,
                     }}
@@ -835,9 +848,10 @@ function NavHeader() {
                       style={{
                         ...FONTS.h6,
                         color:
-                          info?.name === selected
+                          info?.name === selected || selected === "More"
                             ? COLORS.white
-                            : COLORS.primary,
+                            : (!nameExists(selected) && info?.name === "More") ? 'white'
+                              : COLORS.primary,
                         margin: "0px 5px",
                       }}
                     >
@@ -1123,7 +1137,8 @@ function NavHeader() {
                       backgroundColor:
                         info?.name === selected
                           ? COLORS.primary
-                          : "transparent",
+                          : (!nameExists(selected) && info?.name === "More") ? COLORS.primary
+                            : "transparent",
                       borderRadius: "30px",
                       border: `1px solid ${COLORS.semiGray}`,
                     }}
@@ -1136,7 +1151,8 @@ function NavHeader() {
                         color:
                           info?.name === selected
                             ? COLORS.white
-                            : COLORS.primary,
+                            : (!nameExists(selected) && info?.name === "More") ? 'white'
+                              : COLORS.primary,
                         margin: "0px 5px",
                       }}
                     >
@@ -1188,7 +1204,7 @@ function NavHeader() {
       </Tablet>
 
       <LogOut show={show} handleClose={() => handleClose()} />
-    </div>
+    </div >
   );
 }
 

@@ -54,22 +54,22 @@ function Baseball({ calendarDate }) {
 
 
 
-  const liveMatches = live?.map(league => ({
+  const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match["@status"] === "In progress")
+    match: league?.match.filter(match => match?.status === "In progress")
   }))
     .filter(league => league?.match.length > 0);
 
-  const upcomingMatches = live?.map(league => ({
+  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match["@status"] === "Not Started")
+    match: league?.match.filter(match => match?.status === "Not Started")
   }))
     .filter(league => league?.match.length > 0);
 
 
-  const finishedMatches = live?.map(league => ({
+  const finishedMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match["@status"] === "Cancelled" || match["@status"] === "Finished")
+    match: league?.match.filter(match => match?.status === "Cancelled" || match?.status === "Finished")
   }))
     .filter(league => league?.match.length > 0);
 

@@ -275,6 +275,7 @@ function HomeScreen() {
     // },
   ];
 
+  const nameExists = (name) => itemList.some(item => item.name === name);
 
   // const itemList = [
   //   {
@@ -535,7 +536,7 @@ function HomeScreen() {
                   display: "flex",
                   padding: "10px",
                   backgroundColor:
-                    info?.name === selected ? COLORS.primary : "transparent",
+                    info?.name === selected ? COLORS.primary : (!nameExists(selected) && info?.name === "More") ? COLORS.primary : "transparent",
                   borderRadius: "30px",
                   border: `1px solid ${COLORS.semiGray}`,
                 }}
@@ -545,7 +546,7 @@ function HomeScreen() {
                   style={{
                     ...FONTS.h6,
                     color:
-                      info?.name === selected ? COLORS.white : COLORS.primary,
+                      info?.name === selected ? COLORS.white : (!nameExists(selected) && info?.name === "More") ? 'white' : COLORS.primary,
                     margin: "0px 5px",
                   }}
                 >

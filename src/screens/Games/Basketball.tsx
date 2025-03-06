@@ -58,20 +58,20 @@ function Basketball({ calendarDate }) {
   }, []);
 
 
-  const liveMatches = live?.map(league => ({
+  const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status?.toLowerCase()?.includes("quarter"))
   }))
     .filter(league => league?.match.length > 0);
 
-  const upcomingMatches = live?.map(league => ({
+  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Not Started")
   }))
     .filter(league => league?.match.length > 0);
 
 
-  const finishedMatches = live?.map(league => ({
+  const finishedMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Finished")
   }))

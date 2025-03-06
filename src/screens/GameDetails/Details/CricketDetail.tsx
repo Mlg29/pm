@@ -112,7 +112,7 @@ const styles = {
 
 function CricketDetail({ gameInfo, dateTime, isMobile, selected, handleRoute }) {
 
-
+  console.log({ gameInfo })
   const bb = {
     ...gameInfo,
     dateTime
@@ -134,40 +134,40 @@ function CricketDetail({ gameInfo, dateTime, isMobile, selected, handleRoute }) 
           <div style={{ ...styles.mob }}>
             <div style={{ width: "100%" }}>
               <Button
-                text={`Bet ${gameInfo?.localTeam?.name} to Win`}
+                text={`Bet ${gameInfo?.localTeam?.name || gameInfo?.localteam?.name} to Win`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
-                    selected === gameInfo?.localTeam?.name
+                    selected === (gameInfo?.localTeam?.name || gameInfo?.localteam?.name)
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.localTeam?.name
+                    selected === (gameInfo?.localTeam?.name || gameInfo?.localteam?.name)
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
                 handlePress={() =>
-                  handleRoute(gameInfo?.localTeam?.name, 'W1')
+                  handleRoute((gameInfo?.localTeam?.name || gameInfo?.localteam?.name), 'W1')
                 }
               />
             </div>
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
-                text={`Bet ${gameInfo?.visitorTeam?.name} to Win`}
+                text={`Bet ${gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name} to Win`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
-                    selected === gameInfo?.visitorTeam?.name
+                    selected === (gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name)
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.visitorTeam?.name
+                    selected === (gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name)
                       ? COLORS.cream
                       : COLORS.primary,
                 }}
                 // handlePress={() => navigate('/home')}
                 handlePress={() =>
-                  handleRoute(gameInfo?.visitorTeam?.name, 'W2')
+                  handleRoute((gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name), 'W2')
                 }
               />
             </div>
@@ -176,42 +176,42 @@ function CricketDetail({ gameInfo, dateTime, isMobile, selected, handleRoute }) 
           <div style={{ ...styles.desk }}>
             <div style={{ width: "100%" }}>
               <Button
-                text={`Bet ${gameInfo?.localTeam?.name} to Win`}
+                text={`Bet ${gameInfo?.localTeam?.name || gameInfo?.localteam?.name} to Win`}
                 propStyle={{
                   width: "90%",
                   backgroundColor:
-                    selected === gameInfo?.localTeam?.name
+                    selected === (gameInfo?.localTeam?.name || gameInfo?.localteam?.name)
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.localTeam?.name
+                    selected === (gameInfo?.localTeam?.name || gameInfo?.localteam?.name)
                       ? COLORS.cream
                       : COLORS.primary,
                   fontSize: 12,
                 }}
                 handlePress={() =>
-                  handleRoute(gameInfo?.localTeam?.name, 'W1')
+                  handleRoute((gameInfo?.localTeam?.name || gameInfo?.localteam?.name), 'W1')
                 }
               />
             </div>
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
-                text={`Bet ${gameInfo?.visitorTeam?.name} to Win`}
+                text={`Bet ${gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name} to Win`}
                 propStyle={{
                   width: "90%",
                   backgroundColor:
-                    selected === gameInfo?.visitorTeam?.name
+                    selected === (gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name)
                       ? COLORS.primary
                       : COLORS.cream,
                   color:
-                    selected === gameInfo?.visitorTeam?.name
+                    selected === (gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name)
                       ? COLORS.cream
                       : COLORS.primary,
                   fontSize: 12,
                 }}
                 // handlePress={() => navigate('/home')}
                 handlePress={() =>
-                  handleRoute(gameInfo?.visitorTeam?.name, 'W2')
+                  handleRoute((gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name), 'W2')
                 }
               />
             </div>

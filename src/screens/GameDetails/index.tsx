@@ -172,17 +172,15 @@ function GameDetails() {
     hour12: true
   });
 
-  console.log({ gameInfo })
 
   const handleRoute = (route: string, selection?: string) => {
 
 
-
     const name = gameInfo?.winner?.name || gameInfo?.winner
 
-    const players = gameInfo?.runners?.map(dd => dd?.name);
+    const players = gameInfo?.runners?.map(dd => dd?.name) || gameInfo?.race?.results?.driver?.map(m => m?.name);
 
-    if (gameInfo?.status === "Finished" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.internalStatus === "Ended") {
+    if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Ended") {
       toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
         position: "bottom-center",
       });
@@ -208,7 +206,7 @@ function GameDetails() {
         userType: route,
         sportEventId: gameInfo?.sportEventId,
         sportId: gameInfo?.id || gameInfo["@id"],
-        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType === "Esports" ? "ESPORT" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
+        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "BOXING" ? "BOXING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType === "Esports" ? "ESPORT" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
         matchEvent: {
           id: gameInfo?.id || gameInfo["@id"],
           sportEventId: gameInfo?.sportEventId,
@@ -221,12 +219,12 @@ function GameDetails() {
           date: gameInfo?.formatted_date || gameInfo?.date || gameInfo["@date"],
           time: gameInfo?.time || gameInfo?.date || gameInfo["@time"],
           ...(gameType !== "Horse" && gameType !== "Formula1" && {
-            localTeamName: gameInfo?.localTeam?.name || gameInfo?.player[0]?.name || gameInfo?.localTeam["@name"],
-            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.awayTeam?.name || gameInfo?.player[1]?.name || gameInfo?.awayTeam["@name"],
+            localTeamName: gameInfo?.localTeam?.name || gameInfo?.localteam?.name || gameInfo?.player[0]?.name || gameInfo?.localTeam["@name"],
+            visitorTeamName: gameInfo?.visitorTeam?.name || gameInfo?.visitorteam?.name || gameInfo?.awayTeam?.name || gameInfo?.player[1]?.name || gameInfo?.awayTeam["@name"],
           }),
           ...(gameType === "Horse" || gameType === "Formula1" ? { raceName: gameInfo?.name } : {}),
           ...(gameType === "Horse" || gameType === "Formula1" ? { racerNames: players } : {}),
-          ...(gameType === "Golf" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
+          ...(gameType === "Golf" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "BOXING" ? "BOXING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
         }
 
 

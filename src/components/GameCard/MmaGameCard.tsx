@@ -43,6 +43,15 @@ export const styles = {
 function MmaGameCard({ id, data }) {
   const navigate = useNavigate();
 
+  const utcDate = new Date(data?.datetime || data?.datetimeUtc);
+  const localTime = utcDate.toLocaleTimeString("en-US", {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
+
+
   return (
     <div>
 
@@ -56,7 +65,7 @@ function MmaGameCard({ id, data }) {
       >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-            ({data?.date})
+            ({data?.date} - {localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status}

@@ -3032,7 +3032,7 @@ function BetDetail() {
             {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : (betData?.betAmount || betData?.opponentBetAmount))}
           </h3>
 
-          <BaseballCard gameInfo={betData?.sportEvent?.NascarEvent} />
+          <BaseballCard data={betData?.sportEvent?.BaseballEvent} />
 
           <div style={{ ...styles.div }}>
             <div style={{ ...styles.cardDiv }}>

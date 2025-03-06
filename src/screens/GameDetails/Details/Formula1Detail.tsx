@@ -28,10 +28,12 @@ function Formula1Detail({ selected, dateTime, gameInfo, handleRoute }) {
     return (
         <div style={{ display: "flex", flexDirection: "column", flex: 1, padding: '0px 10px' }}>
             <Formula1CardHeader gameInfo={gameInfo} />
+
+
             {
-                gameInfo?.race?.status === "finished" ?
+                gameInfo?.race?.status === "finished" || gameInfo?.race?.status === "Finished" || gameInfo?.race?.status === "Final" ?
                     <div style={styles.div}>
-                        {gameInfo?.race.results?.map((dd, i) => {
+                        {gameInfo?.race.results?.driver?.map((dd, i) => {
                             return (
                                 <div
                                     style={{
@@ -41,6 +43,7 @@ function Formula1Detail({ selected, dateTime, gameInfo, handleRoute }) {
                                         color: selected === dd?.name ? COLORS.cream : COLORS.primary,
                                     }}
                                     key={i}
+                                    onClick={() => handleRoute(dd?.name, `W${i + 1}`)}
                                 >
                                     <p style={{ ...FONTS.h6 }}>{dd?.name} finished with {dd?.position} position</p>
                                 </div>

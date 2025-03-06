@@ -24,7 +24,7 @@ const styles = {
 function NascarDetail({ selected, gameInfo, dateTime, handleRoute }) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
-
+    console.log({ gameInfo })
     return (
         <div style={{ display: "flex", flexDirection: "column", flex: 1, padding: '0px 10px' }}>
             <NascarCardHeader gameInfo={gameInfo} />

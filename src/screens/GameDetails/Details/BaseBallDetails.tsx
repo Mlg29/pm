@@ -115,6 +115,7 @@ function BaseballDetails({ selected, gameInfo, dateTime, handleRoute, isMobile }
         ...gameInfo,
         dateTime
     }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
             <div
@@ -132,40 +133,40 @@ function BaseballDetails({ selected, gameInfo, dateTime, handleRoute, isMobile }
                     <div style={{ ...styles.mob }}>
                         <div style={{ width: "100%" }}>
                             <Button
-                                text={`Bet ${gameInfo?.localTeam?.["@name"]} to Win`}
+                                text={`Bet ${gameInfo?.localTeam?.name} to Win`}
                                 propStyle={{
                                     width: "100%",
                                     backgroundColor:
-                                        selected === gameInfo?.localTeam?.["@name"]
+                                        selected === gameInfo?.localTeam?.name
                                             ? COLORS.primary
                                             : COLORS.cream,
                                     color:
-                                        selected === gameInfo?.localTeam?.["@name"]
+                                        selected === gameInfo?.localTeam?.name
                                             ? COLORS.cream
                                             : COLORS.primary,
                                 }}
                                 handlePress={() =>
-                                    handleRoute(gameInfo?.localTeam?.["@name"], 'W1')
+                                    handleRoute(gameInfo?.localTeam?.name, 'W1')
                                 }
                             />
                         </div>
                         <div style={{ width: "100%", margin: "10px 0px" }}>
                             <Button
-                                text={`Bet ${gameInfo?.awayTeam?.["@name"]} to Win`}
+                                text={`Bet ${gameInfo?.awayTeam?.name} to Win`}
                                 propStyle={{
                                     width: "100%",
                                     backgroundColor:
-                                        selected === gameInfo?.awayTeam?.["@name"]
+                                        selected === gameInfo?.awayTeam?.name
                                             ? COLORS.primary
                                             : COLORS.cream,
                                     color:
-                                        selected === gameInfo?.awayTeam?.["@name"]
+                                        selected === gameInfo?.awayTeam?.name
                                             ? COLORS.cream
                                             : COLORS.primary,
                                 }}
                                 // handlePress={() => navigate('/home')}
                                 handlePress={() =>
-                                    handleRoute(gameInfo?.awayTeam?.["@name"], 'W2')
+                                    handleRoute(gameInfo?.awayTeam?.name, 'W2')
                                 }
                             />
                         </div>
@@ -174,42 +175,42 @@ function BaseballDetails({ selected, gameInfo, dateTime, handleRoute, isMobile }
                     <div style={{ ...styles.desk }}>
                         <div style={{ width: "100%" }}>
                             <Button
-                                text={`Bet ${gameInfo?.localTeam?.["@name"]} to Win`}
+                                text={`Bet ${gameInfo?.localTeam?.name} to Win`}
                                 propStyle={{
                                     width: "90%",
                                     backgroundColor:
-                                        selected === gameInfo?.localTeam?.["@name"]
+                                        selected === gameInfo?.localTeam?.name
                                             ? COLORS.primary
                                             : COLORS.cream,
                                     color:
-                                        selected === gameInfo?.localTeam?.["@name"]
+                                        selected === gameInfo?.localTeam?.name
                                             ? COLORS.cream
                                             : COLORS.primary,
                                     fontSize: 12,
                                 }}
                                 handlePress={() =>
-                                    handleRoute(gameInfo?.localTeam?.["@name"], 'W1')
+                                    handleRoute(gameInfo?.localTeam?.name, 'W1')
                                 }
                             />
                         </div>
                         <div style={{ width: "100%", margin: "10px 0px" }}>
                             <Button
-                                text={`Bet ${gameInfo?.awayTeam?.["@name"]} to Win`}
+                                text={`Bet ${gameInfo?.awayTeam?.name} to Win`}
                                 propStyle={{
                                     width: "90%",
                                     backgroundColor:
-                                        selected === gameInfo?.awayTeam?.["@name"]
+                                        selected === gameInfo?.awayTeam?.name
                                             ? COLORS.primary
                                             : COLORS.cream,
                                     color:
-                                        selected === gameInfo?.awayTeam?.["@name"]
+                                        selected === gameInfo?.awayTeam?.name
                                             ? COLORS.cream
                                             : COLORS.primary,
                                     fontSize: 12,
                                 }}
                                 // handlePress={() => navigate('/home')}
                                 handlePress={() =>
-                                    handleRoute(gameInfo?.awayTeam?.["@name"], 'W2')
+                                    handleRoute(gameInfo?.awayTeam?.name, 'W2')
                                 }
                             />
                         </div>

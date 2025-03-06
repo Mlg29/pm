@@ -62,9 +62,9 @@ function Formula1({ calendarDate }) {
   }, [])
 
 
-  const liveLeagues = live?.filter(bb => bb?.race?.status > 0 || bb?.race?.status === "HT")
-  const scheduleLeagues = live?.filter(bb => bb?.race?.status === "Not Started")
-  const finishedLeagues = live?.filter(bb => bb?.race?.status === "Finished" || bb?.status === "FT")
+  const liveLeagues = Array.isArray(live) && live?.filter(bb => bb?.race?.status > 0 || bb?.race?.status === "HT")
+  const scheduleLeagues = Array.isArray(live) && live?.filter(bb => bb?.race?.status === "Not Started")
+  const finishedLeagues = Array.isArray(live) && live?.filter(bb => bb?.race?.status === "Finished" || bb?.status === "FT")
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')

@@ -84,7 +84,7 @@ function BaseballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeam?.["@name"]}
+            {data?.localTeam?.name || data?.localTeamName}
           </p>
         </div>
         <div>
@@ -96,10 +96,10 @@ function BaseballCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localTeam?.["@totalscore"]} - {data?.awayTeam?.["@totalscore"]}
+            {data?.localTeam?.totalscore} - {data?.awayTeam?.totalscore}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.["@status"]}
+            {data?.status}
           </p>
         </div>
         <div
@@ -120,7 +120,7 @@ function BaseballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.awayTeam?.["@name"]}
+            {data?.awayTeam?.name || data?.visitorTeamName}
           </p>
         </div>
       </div>
@@ -132,38 +132,38 @@ function BaseballCard(props) {
           backgroundColor: COLORS.gray,
         }}
       />
-      <div>
+      {/* <div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <p>{data?.localTeam?.["@name"]}</p>
+          <p>{data?.localTeam?.name}</p>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in1"] ? data?.localTeam?.["@in1"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in2"] ? data?.localTeam?.["@in2"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in3"] ? data?.localTeam?.["@in3"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in4"] ? data?.localTeam?.["@in4"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in5"] ? data?.localTeam?.["@in5"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in6"] ? data?.localTeam?.["@in6"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in7"] ? data?.localTeam?.["@in7"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in8"] ? data?.localTeam?.["@in8"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.["@in9"] ? data?.localTeam?.["@in9"] : "-"}</p>
-            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.localTeam?.["@totalscore"] ? data?.localTeam?.["@totalscore"] : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in1 ? data?.localTeam?.in1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in2 ? data?.localTeam?.in2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in3 ? data?.localTeam?.in3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in4 ? data?.localTeam?.in4 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in5 ? data?.localTeam?.in5 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in6 ? data?.localTeam?.in6 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in7 ? data?.localTeam?.in7 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in8 ? data?.localTeam?.in8 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.localTeam?.in9 ? data?.localTeam?.in9 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.localTeam?.totalscore ? data?.localTeam?.totalscore : "-"}</p>
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 5 }}>
-          <p>{data?.awayTeam?.["@name"]}</p>
+          <p>{data?.awayTeam?.name}</p>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in1"] ? data?.awayTeam?.["@in1"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in2"] ? data?.awayTeam?.["@in2"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in3"] ? data?.awayTeam?.["@in3"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in4"] ? data?.awayTeam?.["@in4"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in5"] ? data?.awayTeam?.["@in5"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in6"] ? data?.awayTeam?.["@in6"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in7"] ? data?.awayTeam?.["@in7"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in8"] ? data?.awayTeam?.["@in8"] : "-"}</p>
-            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.["@in9"] ? data?.awayTeam?.["@in9"] : "-"}</p>
-            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.awayTeam?.["@totalscore"] ? data?.awayTeam?.["@totalscore"] : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in1 ? data?.awayTeam?.in1 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in2 ? data?.awayTeam?.in2 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in3 ? data?.awayTeam?.in3 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in4 ? data?.awayTeam?.in4 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in5 ? data?.awayTeam?.in5 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in6 ? data?.awayTeam?.in6 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in7 ? data?.awayTeam?.in7 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in8 ? data?.awayTeam?.in8 : "-"}</p>
+            <p style={{ margin: "0px 5px" }}>{data?.awayTeam?.in9 ? data?.awayTeam?.in9 : "-"}</p>
+            <p style={{ margin: "0px 5px", color: 'red' }}>{data?.awayTeam?.totalscore ? data?.awayTeam?.totalscore : "-"}</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
