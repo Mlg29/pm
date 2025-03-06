@@ -52,9 +52,9 @@ function Formula1({ leagueName }) {
     // })
   }, [])
 
-  const liveLeagues = live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
-  const scheduleLeagues = live?.filter(bb => bb?.status === "Not Started")
-  const finishedLeagues = live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
+  const liveLeagues = Array.isArray(live) && live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
+  const scheduleLeagues = Array.isArray(live) && live?.filter(bb => bb?.status === "Not Started")
+  const finishedLeagues = Array.isArray(live) && live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT")
 
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
