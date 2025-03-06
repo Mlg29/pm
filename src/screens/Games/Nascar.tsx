@@ -80,7 +80,7 @@ function Nascar({ calendarDate }) {
     });
   }, [])
 
-  console.log({ schedule })
+
   const liveMatches = Array.isArray(live) && Array.isArray(live) && live?.map(league => ({
     ...league,
     race: league?.race?.filter(match => match.status === "In progress" || match.status === "Set 1" || match.status === "Set 2" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
