@@ -135,6 +135,19 @@ function Easport({ calendarDate }) {
           {liveLeagues?.map((aa, i) => {
             return (
               <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {aa?.league}
+                </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
             )
@@ -150,6 +163,19 @@ function Easport({ calendarDate }) {
           {scheduleLeagues?.map((aa, i) => {
             return (
               <div key={i}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {aa?.league}
+                </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
             )
@@ -165,6 +191,20 @@ function Easport({ calendarDate }) {
           {finishedLeagues?.map((aa, i) => {
             return (
               <div key={i}>
+
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {aa?.league}
+                </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
             )

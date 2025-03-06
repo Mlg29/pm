@@ -111,9 +111,11 @@ function Easport({ leagueName }) {
   ]
 
   return (
+
+
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>Easport</p>
+
         <div
           style={{
             display: 'flex',
@@ -147,9 +149,9 @@ function Easport({ leagueName }) {
       </div>
       {selectedStatus === 'Live' ? (
         <>
-          {liveOutput &&
-            Object.keys(liveOutput)?.map((leagueName) => (
-              <div key={leagueName}>
+          {liveOutput?.map((aa, i) => {
+            return (
+              <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -161,27 +163,23 @@ function Easport({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {leagueName}
+                  {aa?.league}
                 </p>
-                <div>
-                  {liveOutput[leagueName].map((aa, i) => {
-                    return (
-                      <div key={i}>
-                        <EsportGameCard id={i} data={aa} />
-                      </div>
-                    )
-                  })}
-                </div>
+                <EsportGameCard id={i} data={aa} />
               </div>
-            ))}
+            )
+          })}
+          {liveOutput?.length < 1 ? (
+            <EmptyState header='No Game Available for Easport' height='30vh' />
+          ) : null}
         </>
       ) : null}
 
       {selectedStatus === 'Scheduled' ? (
         <>
-          {upcomingOutput &&
-            Object.keys(upcomingOutput)?.map((leagueName) => (
-              <div key={leagueName}>
+          {upcomingOutput?.map((aa, i) => {
+            return (
+              <div key={i}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -193,27 +191,24 @@ function Easport({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {leagueName}
+                  {aa?.league}
                 </p>
-                <div>
-                  {upcomingOutput[leagueName].map((aa, i) => {
-                    return (
-                      <div key={i}>
-                        <EsportGameCard id={i} data={aa} />
-                      </div>
-                    )
-                  })}
-                </div>
+                <EsportGameCard id={i} data={aa} />
               </div>
-            ))}
+            )
+          })}
+          {upcomingOutput?.length < 1 ? (
+            <EmptyState header='No Game Available for Easport' height='30vh' />
+          ) : null}
         </>
       ) : null}
 
       {selectedStatus === 'Finished' ? (
         <>
-          {finishedOutput &&
-            Object.keys(finishedOutput)?.map((leagueName) => (
-              <div key={leagueName}>
+          {finishedOutput?.map((aa, i) => {
+            return (
+              <div key={i}>
+
                 <p
                   style={{
                     ...FONTS.body7,
@@ -225,27 +220,20 @@ function Easport({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {leagueName}
+                  {aa?.league}
                 </p>
-                <div>
-                  {finishedOutput[leagueName].map((aa, i) => {
-                    return (
-                      <div key={i}>
-                        <EsportGameCard id={i} data={aa} />
-                      </div>
-                    )
-                  })}
-                </div>
+                <EsportGameCard id={i} data={aa} />
               </div>
-            ))}
+            )
+          })}
+          {
+            finishedOutput?.length < 1 ? (
+              <EmptyState header='No Game Available for Easport' height='30vh' />
+            ) : null}
         </>
       ) : null}
 
-      {live?.length < 1 &&
-        upcoming?.data?.length < 1 &&
-        finished?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Easport' height='30vh' />
-      ) : null}
+
     </div>
   )
 }
