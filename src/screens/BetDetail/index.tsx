@@ -118,6 +118,8 @@ function BetDetail() {
   };
 
   console.log({ betData })
+
+
   return (
     <div className="top-container">
       {
@@ -204,7 +206,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -416,7 +418,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -617,7 +619,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -819,7 +821,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -999,7 +1001,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -1203,7 +1205,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -1407,7 +1409,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -1571,7 +1573,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -1772,7 +1774,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -1936,7 +1938,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -2100,7 +2102,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -2265,7 +2267,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -2471,7 +2473,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -2635,7 +2637,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -2841,7 +2843,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
@@ -3048,7 +3050,7 @@ function BetDetail() {
             <div style={{ ...styles.cardDiv }}>
               <p style={{ ...FONTS.body7 }}>Stake</p>
               <h3 style={{ ...FONTS.h6 }}>
-                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.winnerId === userData?.id ? betData?.amountWon : betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
+                {userData?.defaultCurrency === "NGN" ? "₦" : "$"}{formatCurrency(betData?.userId === userData?.id ? betData?.betAmount : betData?.opponentId === userData?.id ? betData?.opponentBetAmount : 0)}
               </h3>
             </div>
             <div style={{ ...styles.cardDiv }}>
