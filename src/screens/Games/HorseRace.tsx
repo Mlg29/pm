@@ -12,7 +12,7 @@ import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
 
-function HorseRace({ calendarDate }) {
+function HorseRace({ calendarDate, setCalendarDate }) {
   const dispatch = useAppDispatch() as any
   const [finished, setFinished] = useState<any>([])
   // const loading = useAppSelector(horseFixtureStatusState) as any
