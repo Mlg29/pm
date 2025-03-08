@@ -11,8 +11,9 @@ import {
 } from '../../redux/slices/AussieRuleSlice'
 import { LoadingState } from '../../components/LoadingState'
 import AussieRulesGameCard from '../../components/GameCard/AusseiRules'
+import { MdCancel } from "react-icons/md";
 
-function AussieRules({ calendarDate }) {
+function AussieRules({ calendarDate, setCalendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [standings, setStandings] = useState<any>([])
   const [live, setLive] = useState<any>([])
@@ -71,23 +72,41 @@ function AussieRules({ calendarDate }) {
         >
           {status?.map((aa, i) => {
             return (
-              <p
-                key={i}
-                onClick={() => setSelectedStatus(aa?.name)}
-                style={{
-                  width: 80,
-                  padding: 3,
-                  cursor: 'pointer',
-                  backgroundColor:
-                    selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                  color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                  marginRight: 4,
-                  textAlign: 'center',
-                  fontSize: 12
-                }}
-              >
-                {aa?.name}
-              </p>
+              <div key={i} style={{ position: 'relative' }}>
+                {calendarDate && aa?.name === calendarDate?.formattedDate && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: -25,
+                      right: 0,
+                      cursor: 'pointer',
+                      fontSize: 12,
+                      color: 'red'
+                    }}
+                    onClick={() => {
+                      setCalendarDate(null)
+                      setSelectedStatus("Live")
+                    }}
+                  >
+                    <MdCancel size={25} />
+                  </span>
+                )}
+                <p
+                  onClick={() => setSelectedStatus(aa?.name)}
+                  style={{
+                    width: 80,
+                    padding: 3,
+                    cursor: 'pointer',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
+                    marginRight: 4,
+                    textAlign: 'center',
+                    fontSize: 12
+                  }}
+                >
+                  {aa?.name}
+                </p>
+              </div>
             )
           })}
         </div>

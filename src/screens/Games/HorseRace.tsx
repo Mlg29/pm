@@ -10,6 +10,7 @@ import { FONTS } from '../../utils/fonts'
 import HorseGameCard from '../../components/GameCard/HorseGameCard'
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
+import { MdCancel } from "react-icons/md";
 
 function HorseRace({ calendarDate }) {
   const dispatch = useAppDispatch() as any
@@ -121,23 +122,38 @@ function HorseRace({ calendarDate }) {
         >
           {status?.map((aa, i) => {
             return (
-              <p
-                key={i}
-                onClick={() => setSelectedStatus(aa?.name)}
-                style={{
-                  width: 80,
-                  padding: 3,
-                  cursor: 'pointer',
-                  backgroundColor:
-                    selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                  color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                  marginRight: 4,
-                  textAlign: 'center',
-                  fontSize: 12
-                }}
-              >
-                {aa?.name}
-              </p>
+              <div key={i} style={{ position: 'relative' }}>
+                {calendarDate && aa?.name === calendarDate?.formattedDate && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: -25,
+                      right: 0,
+                      cursor: 'pointer',
+                      fontSize: 12,
+                      color: 'red'
+                    }}
+                    onClick={() => console.log('Cancel clicked')}
+                  >
+                    <MdCancel size={25} />
+                  </span>
+                )}
+                <p
+                  onClick={() => setSelectedStatus(aa?.name)}
+                  style={{
+                    width: 80,
+                    padding: 3,
+                    cursor: 'pointer',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
+                    marginRight: 4,
+                    textAlign: 'center',
+                    fontSize: 12
+                  }}
+                >
+                  {aa?.name}
+                </p>
+              </div>
             )
           })}
         </div>

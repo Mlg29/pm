@@ -615,33 +615,33 @@ function HomeScreen() {
       </div>
       {selected === "Soccer" && (
         <div>
-          <Football calendarDate={calendarDate} />
+          <Football calendarDate={calendarDate} setCalendarDate={setCalendarDate} />
         </div>
       )}
-      {selected === "Basketball" && <Basketball calendarDate={calendarDate} />}
+      {selected === "Basketball" && <Basketball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
 
-      {selected === "Tennis" && <Tennis calendarDate={calendarDate} />}
+      {selected === "Tennis" && <Tennis calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
 
-      {selected === "Horse" && <HorseRace calendarDate={calendarDate} />}
+      {selected === "Horse" && <HorseRace calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
 
-      {selected === "Boxing" && <Boxing calendarDate={calendarDate} />}
-      {selected === "Cricket" && <Cricket calendarDate={calendarDate} />}
-      {selected === "Baseball" && <Baseball calendarDate={calendarDate} />}
-      {selected === "Volleyball" && <Volleyball calendarDate={calendarDate} />}
-      {selected === "Golf" && <Golf calendarDate={calendarDate} />}
-      {selected === "Hockey" && <Hockey calendarDate={calendarDate} />}
-      {selected === "Formula 1" && <Formula1 calendarDate={calendarDate} />}
-      {selected === "AFL" && <Rugby calendarDate={calendarDate} />}
-      {selected === "Handball" && <Handball calendarDate={calendarDate} />}
-      {selected === "Ice Hockey" && <IceHockey calendarDate={calendarDate} />}
-      {selected === "NASCAR" && <Nascar calendarDate={calendarDate} />}
-      {selected === "Futsal" && <Futsol calendarDate={calendarDate} />}
-      {selected === "MMA/UFC" && <Mma calendarDate={calendarDate} />}
-      {selected === "Darts" && <Darts calendarDate={calendarDate} />}
-      {selected === "Snooker" && <Snooker calendarDate={calendarDate} />}
-      {selected === "Esports" && <Easport calendarDate={calendarDate} />}
-      {selected === "Table Tennis" && <TableTennis calendarDate={calendarDate} />}
-      {selected === "Aussie Rules" && <AussieRules calendarDate={calendarDate} />}
+      {selected === "Boxing" && <Boxing calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Cricket" && <Cricket calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Baseball" && <Baseball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Volleyball" && <Volleyball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Golf" && <Golf calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Hockey" && <Hockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Formula 1" && <Formula1 calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "AFL" && <Rugby calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Handball" && <Handball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Ice Hockey" && <IceHockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "NASCAR" && <Nascar calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Futsal" && <Futsol calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "MMA/UFC" && <Mma calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Darts" && <Darts calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Snooker" && <Snooker calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Esports" && <Easport calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Table Tennis" && <TableTennis calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Aussie Rules" && <AussieRules calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
 
       {getToken && <BottomTabs />}
     </div>
