@@ -60,7 +60,7 @@ function Basketball({ leagueName }) {
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status?.toLowerCase()?.includes("quarter"))
+    match: league?.match.filter(match => match.status?.toLowerCase()?.includes("quarter") || match?.status === "Half Time")
   }))
     .filter(league => league?.match.length > 0);
 

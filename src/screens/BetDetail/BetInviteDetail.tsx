@@ -124,6 +124,7 @@ function BetInviteDetail() {
         sport: betData?.sportEvent?.sport,
         prediction: route,
       };
+
       localStorage.setItem("inviteeInfo", JSON.stringify(payload));
       return navigate("/options");
     };
@@ -134,15 +135,23 @@ function BetInviteDetail() {
 
   const handleExRate = async (data) => {
     const rateData = {
-      sourceCurrency: data?.opponent?.defaultCurrency === "USD" ? "USD" : "NGN",
-      destinationCurrency: data?.user?.defaultCurrency === "USD" ? "USD" : "NGN",
+      // sourceCurrency: data?.opponent?.defaultCurrency === "USD" ? "USD" : "NGN",
+      // destinationCurrency: data?.user?.defaultCurrency === "USD" ? "USD" : "NGN",
+      sourceCurrency: "USD",
+      destinationCurrency: "NGN",
       amount: data?.opponentBetAmount
     }
 
 
     const newAmount = await dispatch(getFxRate(rateData)).then(pp => {
+      var expectedAmount = null;
 
-      const expectedAmount = pp?.payload?.data?.rate * data?.opponentBetAmount
+      if (data?.opponent?.defaultCurrency !== "USD") {
+        expectedAmount = data?.opponentBetAmount / pp?.payload?.data?.rate
+      }
+      else {
+        expectedAmount = data?.opponentBetAmount * pp?.payload?.data?.rate
+      }
 
       return expectedAmount
     })
@@ -875,18 +884,18 @@ function BetInviteDetail() {
             </div>
           )}
 
-          {betData?.opponentPrediction !== "draw" && (
+          {betData?.opponentPrediction !== "Draw" && (
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
-                text={`draw`}
+                text={`Draw`}
                 propStyle={{
                   width: "100%",
                   backgroundColor:
-                    selected === "draw" ? COLORS.primary : COLORS.cream,
-                  color: selected === "draw" ? COLORS.cream : COLORS.primary,
+                    selected === "Draw" ? COLORS.primary : COLORS.cream,
+                  color: selected === "Draw" ? COLORS.cream : COLORS.primary,
                 }}
                 // handlePress={() => navigate('/home')}
-                handlePress={() => handleRoute("draw", "draw")}
+                handlePress={() => handleRoute("Draw", "Draw")}
               />
             </div>
           )}
