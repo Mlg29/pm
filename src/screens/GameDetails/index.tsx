@@ -175,18 +175,34 @@ function GameDetails() {
   console.log({ gameInfo })
   const handleRoute = (route: string, selection?: string) => {
 
+    var name = null
+    var players = null
+    if (gameType === "Nascar") {
+      name = gameInfo?.winner?.name || gameInfo?.winner || gameInfo?.race?.status
+      players = gameInfo?.runners?.map(dd => dd?.name) || gameInfo?.race?.results?.driver?.map(m => m?.name) || gameInfo?.race[0]?.results?.driver?.map(m => m?.name);
+      if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Ended" || gameInfo?.race[0]?.status === "Finished") {
+        toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
+          position: "bottom-center",
+        });
+        return;
+      }
+    }
+    else {
+      name = gameInfo?.winner?.name || gameInfo?.winner
+      players = gameInfo?.runners?.map(dd => dd?.name) || gameInfo?.race?.results?.driver?.map(m => m?.name)
 
-    const name = gameInfo?.winner?.name || gameInfo?.winner || gameInfo?.race?.status
+      if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Ended") {
+        toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
+          position: "bottom-center",
+        });
+        return;
+      }
+    }
 
-    const players = gameInfo?.runners?.map(dd => dd?.name) || gameInfo?.race?.results?.driver?.map(m => m?.name) || gameInfo?.race[0]?.results?.driver?.map(m => m?.name);
+
     // console.log("heyyy", name, players)
     // if (!gameInfo) { }
-    if (gameInfo?.status === "Finished" || gameInfo?.internalStatus === "Finished" || gameInfo?.status === "Ended" || gameInfo?.status === "Final" || gameInfo?.status === "FT" || gameInfo?.["@status"] === "Finished" || gameInfo?.internalStatus === "Ended" || gameInfo?.race[0]?.status === "Finished") {
-      toast.error("Sorry, the game has ended, you can't proceed to bet on it", {
-        position: "bottom-center",
-      });
-      return;
-    }
+
     if (
       gameInfo?.status !== "upcoming" &&
       gameInfo?.status !== "Upcoming" &&
