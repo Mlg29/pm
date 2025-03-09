@@ -36,7 +36,8 @@ function BetSlip() {
   const [active, setActive] = useState("PENDING");
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dispatch = useAppDispatch();
-  const userData = useAppSelector(userState);
+  // const userData = useAppSelector(userState);
+  const [userData, setUserData] = useState<any>(null)
   const [betList, setBetList] = useState<any>([]);
   const [loader, setLoader] = useState(false);
   const notifications = useAppSelector(notificationState) as any;
@@ -45,8 +46,39 @@ function BetSlip() {
     await dispatch(getNotifications());
   };
 
+  const handleLogOut = () => {
+    var getDeviceId = localStorage.getItem("deviceId")
+    localStorage.clear()
+    setTimeout(() => {
+      localStorage.setItem("deviceId", getDeviceId)
+      navigate("/home")
+    }, 1000)
+  }
+
+  const fetchUserInfo = async () => {
+    const response = await dispatch(getUserData());
+    if (getUserData.fulfilled.match(response)) {
+      setUserData(response?.payload);
+    } else {
+      handleLogOut()
+    }
+  };
+
+
   useEffect(() => {
-    dispatch(getUserData());
+    const getFetch = async () => {
+      const token = localStorage.getItem("token")
+      setLoader(true);
+      if (token) {
+        await fetchUserInfo();
+      }
+      setLoader(false);
+    }
+    getFetch()
+
+  }, []);
+
+  useEffect(() => {
     getNotification();
   }, []);
 

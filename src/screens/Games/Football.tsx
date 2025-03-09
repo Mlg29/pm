@@ -11,6 +11,10 @@ import {
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
+import { io } from "socket.io-client";
+import { SportSportBaseUrl } from '../../https'
+
+
 
 function Football({ calendarDate, setCalendarDate }) {
   const navigate = useNavigate()
@@ -23,6 +27,33 @@ function Football({ calendarDate, setCalendarDate }) {
   const [finished, setFinished] = useState<any>([])
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
+
+
+  // const url = `${SportSportBaseUrl}/soccer/live`;
+
+
+
+  // useEffect(() => {
+
+  //   const socket = io(url) as any;
+
+  //   socket.on("connect", () => {
+  //     console.log("Connected to WebSocket server");
+  //   });
+
+  //   socket.on("connect_error", (err) => {
+  //     console.error("WebSocket connection error:", err);
+  //   });
+
+  //   socket.on("soccerUpdates", (message) => {
+  //     const mes = message;
+
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
 
   useEffect(() => {

@@ -167,6 +167,20 @@ function EsportDetails({ gameInfo, dateTime, isMobile, selected, handleRoute }) 
                 }
               />
             </div>
+            <div style={{ width: '100%', margin: '10px 0px' }}>
+              <Button
+                text='Draw'
+                propStyle={{
+                  width: '100%',
+                  backgroundColor:
+                    selected === 'draw' ? COLORS.primary : COLORS.cream,
+                  color: selected === 'draw' ? COLORS.cream : COLORS.primary,
+
+                }}
+                //  handlePress={() => navigate('/home')}
+                handlePress={() => handleRoute('draw', 'draw')}
+              />
+            </div>
             <div style={{ width: "100%", margin: "10px 0px" }}>
               <Button
                 text={`Bet ${gameInfo?.awayTeam?.name} to Win`}
@@ -208,6 +222,20 @@ function EsportDetails({ gameInfo, dateTime, isMobile, selected, handleRoute }) 
                 handlePress={() =>
                   handleRoute(gameInfo?.localTeam?.name, 'W1')
                 }
+              />
+            </div>
+            <div style={{ width: '100%', margin: '10px 0px' }}>
+              <Button
+                text='Draw'
+                propStyle={{
+                  width: '90%',
+                  backgroundColor:
+                    selected === 'draw' ? COLORS.primary : COLORS.cream,
+                  color: selected === 'draw' ? COLORS.cream : COLORS.primary,
+                  fontSize: 12
+                }}
+                //  handlePress={() => navigate('/home')}
+                handlePress={() => handleRoute('draw', 'draw')}
               />
             </div>
             <div style={{ width: "100%", margin: "10px 0px" }}>
