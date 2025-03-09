@@ -9,7 +9,7 @@ import EmptyState from '../../components/EmptyState'
 import { getHandballFixtures } from '../../redux/slices/HandballSlice'
 import HandballGameCard from '../../components/GameCard/HandballGameCard'
 import { MdCancel } from "react-icons/md";
-
+import { io } from "socket.io-client";
 
 function Handball({ calendarDate, setCalendarDate }) {
   const navigate = useNavigate()
@@ -17,31 +17,30 @@ function Handball({ calendarDate, setCalendarDate }) {
   const [finished, setFinished] = useState<any>([])
   const dispatch = useAppDispatch() as any
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
+  const url = `${SportSportBaseUrl}`;
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
 
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
+  useEffect(() => {
 
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
+    const socket = io(url) as any;
 
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("handballUpdate", (message) => {
+      const mes = message;
+      // setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')

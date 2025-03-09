@@ -29,6 +29,31 @@ function Formula1({ calendarDate, setCalendarDate }) {
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("formulaOneUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     const payloadUpcoming = {
       range: calendarDate?.index

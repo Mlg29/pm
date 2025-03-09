@@ -13,6 +13,8 @@ import EmptyState from '../../components/EmptyState'
 import BasketballGameCard from '../../components/GameCard/BasketballGameCard'
 import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
+import { io } from "socket.io-client";
+
 
 
 function Basketball({ calendarDate, setCalendarDate }) {
@@ -27,6 +29,31 @@ function Basketball({ calendarDate, setCalendarDate }) {
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
   const [selectedStatus, setSelectedStatus] = useState('Finished')
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("basketballUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const payloadTomorrow = {
@@ -48,16 +75,7 @@ function Basketball({ calendarDate, setCalendarDate }) {
     }
   }, [dispatch, calendarDate])
 
-  const fetchBetData = () => {
-    dispatch(getBasketballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.category || dd?.payload || [])
-    })
-  }
 
-  useEffect(() => {
-    const interval = setInterval(fetchBetData, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({

@@ -12,6 +12,8 @@ import {
 import { LoadingState } from '../../components/LoadingState'
 import AussieRulesGameCard from '../../components/GameCard/AusseiRules'
 import { MdCancel } from "react-icons/md";
+import { io } from "socket.io-client";
+import { SportSportBaseUrl } from '../../https'
 
 function AussieRules({ calendarDate, setCalendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
@@ -22,6 +24,31 @@ function AussieRules({ calendarDate, setCalendarDate }) {
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("australianFootballLeagueUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const payloadLive = {

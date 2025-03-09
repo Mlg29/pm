@@ -29,31 +29,30 @@ function Football({ calendarDate, setCalendarDate }) {
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
 
-  // const url = `${SportSportBaseUrl}/soccer/live`;
+  const url = `${SportSportBaseUrl}`;
 
 
+  useEffect(() => {
 
-  // useEffect(() => {
+    const socket = io(url) as any;
 
-  //   const socket = io(url) as any;
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server");
-  //   });
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
 
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
+    socket.on("soccerUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
 
-  //   socket.on("soccerUpdates", (message) => {
-  //     const mes = message;
-
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -98,17 +97,6 @@ function Football({ calendarDate, setCalendarDate }) {
     .filter(league => league.matches.length > 0);
 
 
-
-  const fetchBetData = () => {
-    dispatch(getFootballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.category)
-    })
-  }
-
-  useEffect(() => {
-    const interval = setInterval(fetchBetData, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
 
   const oldStatus = [

@@ -16,34 +16,32 @@ function TableTennis({ calendarDate, setCalendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-  const url = `${SportSportBaseUrl}/boxing`
   const dispatch = useAppDispatch() as any
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
+  const url = `${SportSportBaseUrl}`;
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
 
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
+  useEffect(() => {
 
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
+    const socket = io(url) as any;
 
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("tabelTennisUpdates", (message) => {
+      const mes = message;
+      // setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')

@@ -13,6 +13,7 @@ import {
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
+import { io } from "socket.io-client";
 
 
 function Tennis({ calendarDate, setCalendarDate }) {
@@ -24,6 +25,32 @@ function Tennis({ calendarDate, setCalendarDate }) {
   const [tomorrow, setTomorrow] = useState<any>([])
   const dispatch = useAppDispatch() as any
   let createdDate = moment(new Date()).utc().format()
+
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("tennisUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const PayloadFinished = {
@@ -54,16 +81,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
     }
   }, [calendarDate])
 
-  const fetchBetData = () => {
-    dispatch(getTennisFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.category || [])
-    })
-  }
 
-  useEffect(() => {
-    const interval = setInterval(fetchBetData, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
 
   useEffect(() => {

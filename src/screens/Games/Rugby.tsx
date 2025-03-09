@@ -13,7 +13,8 @@ import {
 import AflGameCard from '../../components/GameCard/AflGameCard'
 import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
-
+import { SportSportBaseUrl } from '../../https'
+import { io } from "socket.io-client";
 
 function Rugby({ calendarDate, setCalendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
@@ -23,6 +24,31 @@ function Rugby({ calendarDate, setCalendarDate }) {
   const dispatch = useAppDispatch() as any
 
   let createdDate = moment(new Date()).utc().format()
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("americanFootballUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const payloadUpcoming = {

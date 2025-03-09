@@ -19,7 +19,7 @@ function Easport({ calendarDate, setCalendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const [live, setLive] = useState<any>([])
-  const url = `${SportSportBaseUrl}/esport`
+
   const dispatch = useAppDispatch() as any
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -27,6 +27,31 @@ function Easport({ calendarDate, setCalendarDate }) {
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("esportsUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const payloadUpcoming = {

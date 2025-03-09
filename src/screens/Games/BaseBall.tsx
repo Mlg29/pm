@@ -12,7 +12,8 @@ import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import BaseballGameCard from '../../components/GameCard/BaseballGameCard'
 import { MdCancel } from "react-icons/md";
-
+import { io } from "socket.io-client";
+import { SportSportBaseUrl } from '../../https'
 
 function Baseball({ calendarDate, setCalendarDate }) {
   const dispatch = useAppDispatch() as any
@@ -26,6 +27,31 @@ function Baseball({ calendarDate, setCalendarDate }) {
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("baseballUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
 

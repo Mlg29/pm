@@ -23,7 +23,7 @@ function Cricket({ calendarDate, setCalendarDate }) {
   const dispatch = useAppDispatch() as any
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
-  const url = `${SportSportBaseUrl}/Cricket`
+
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
@@ -31,6 +31,31 @@ function Cricket({ calendarDate, setCalendarDate }) {
 
   let createdDate = moment(new Date()).utc().format()
   let ScheduleDate = moment(createdDate).add(1, 'd')
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("cricketUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const payloadLive = {

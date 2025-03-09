@@ -9,7 +9,7 @@ import EmptyState from '../../components/EmptyState'
 import { getDartFixtures } from '../../redux/slices/DartSlice'
 import DartGameCard from '../../components/GameCard/DartGameCard'
 import { MdCancel } from "react-icons/md";
-
+import { io } from "socket.io-client";
 
 function Darts({ calendarDate, setCalendarDate }) {
   const navigate = useNavigate()
@@ -19,6 +19,31 @@ function Darts({ calendarDate, setCalendarDate }) {
   const dispatch = useAppDispatch() as any
 
   let createdDate = moment(new Date()).utc().format()
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("dartsUpdates", (message) => {
+      const mes = message;
+      // setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const payloadUpcoming = {

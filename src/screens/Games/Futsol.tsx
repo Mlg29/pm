@@ -9,38 +9,36 @@ import EmptyState from '../../components/EmptyState'
 import { getFutsalFixtures } from '../../redux/slices/Futsal'
 import FutsalGameCard from '../../components/GameCard/FutsalGameCard'
 import { MdCancel } from "react-icons/md";
-
+import { io } from "socket.io-client";
 
 function Futsol({ calendarDate, setCalendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const dispatch = useAppDispatch() as any
+  const url = `${SportSportBaseUrl}`;
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
+  useEffect(() => {
 
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
+    const socket = io(url) as any;
 
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
 
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("futsolUpdates", (message) => {
+      const mes = message;
+      // setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')

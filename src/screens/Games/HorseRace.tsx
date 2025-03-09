@@ -11,6 +11,8 @@ import HorseGameCard from '../../components/GameCard/HorseGameCard'
 import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
+import { io } from "socket.io-client";
+import { SportSportBaseUrl } from '../../https'
 
 function HorseRace({ calendarDate, setCalendarDate }) {
   const dispatch = useAppDispatch() as any
@@ -22,6 +24,31 @@ function HorseRace({ calendarDate, setCalendarDate }) {
 
   let createdDate = moment(new Date()).utc().format()
   let ScheduleDate = moment(createdDate).add(1, 'd')
+
+  const url = `${SportSportBaseUrl}`;
+
+
+  useEffect(() => {
+
+    const socket = io(url) as any;
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("horseRacingUpdates", (message) => {
+      const mes = message;
+      setLive(mes)
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const payloadUpcoming = {
