@@ -42,7 +42,7 @@ export const styles = {
 function NascarCard({ id, data }) {
     const navigate = useNavigate();
 
-
+    console.log({ data })
 
     return (
         <div
@@ -65,7 +65,7 @@ function NascarCard({ id, data }) {
             >
                 <div style={styles.box1}>
                     <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-                        {data?.date}
+                        {data?.date || data?.race[0]?.date}
                     </p>
                 </div>
                 <div style={styles.box2}>

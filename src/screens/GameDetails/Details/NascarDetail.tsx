@@ -23,15 +23,21 @@ const styles = {
 
 function NascarDetail({ selected, gameInfo, dateTime, handleRoute }) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
+    const bb = {
+        gameName: gameInfo?.name,
+        race: gameInfo?.race[0]
+    }
 
-    console.log({ gameInfo })
+    // console.log("gam>>", gameInfo)
+
     return (
         <div style={{ display: "flex", flexDirection: "column", flex: 1, padding: '0px 10px' }}>
-            <NascarCardHeader gameInfo={gameInfo} />
+            <NascarCardHeader gameInfo={bb} />
             {
-                gameInfo?.status?.toLowerCase() === "finished" ?
+                gameInfo?.race[0]?.status === "Finished" ?
                     <div style={styles.div}>
-                        {gameInfo?.results?.driver?.map((dd, i) => {
+                        {gameInfo?.race[0]?.results?.driver?.map((dd, i) => {
+
                             return (
                                 <div
                                     style={{
@@ -40,6 +46,7 @@ function NascarDetail({ selected, gameInfo, dateTime, handleRoute }) {
                                             selected === dd?.name ? COLORS.primary : COLORS.cream,
                                         color: selected === dd?.name ? COLORS.cream : COLORS.primary,
                                     }}
+                                    onClick={() => handleRoute(dd?.name, `W${i + 1}`)}
                                     key={i}
                                 >
                                     <p style={{ ...FONTS.h6 }}>{dd?.name} finished with {dd?.position} position</p>

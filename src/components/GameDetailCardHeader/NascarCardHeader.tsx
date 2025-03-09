@@ -40,7 +40,7 @@ function NascarCardHeader({ gameInfo }) {
     return (
         <div style={styles.container}>
             <div style={styles.row}>
-                <p style={{ ...FONTS.h7 }}>{gameInfo?.name || gameInfo?.track}</p>
+                <p style={{ ...FONTS.h7 }}>{gameInfo?.name || gameInfo?.track || gameInfo?.gameName}</p>
 
             </div>
 
