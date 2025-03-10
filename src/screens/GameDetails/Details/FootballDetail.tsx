@@ -37,38 +37,9 @@ function FootballDetail({
   const [awayStat, setAwayStat] = useState(null)
   const [matchStat, setMatchStat] = useState(null)
   const loading = useAppSelector(footballFixtureStatusState) as any
-  const [homeLogo, setHomeLogo] = useState(null)
-  const [awayLogo, setAwayLogo] = useState(null)
   const dispatch = useAppDispatch() as any
 
-  console.log("game>", gameInfo?.localTeam?.teamId, gameInfo?.visitorTeam?.teamId)
 
-  const fetchLogos = async () => {
-    await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.localTeam?.teamId}`)
-      .then(res => res?.json())
-      .then(async m => {
-        console.log("m>>>>>>>", m)
-        setHomeLogo(m?.base64)
-        await fetch(`${SportSportBaseUrl}/soccer/logo?teamId=${gameInfo?.visitorTeam?.teamId}`)
-          .then(res => res?.json())
-          .then(async m => {
-            console.log("yyy>>>>>>>", m)
-            setAwayLogo(m?.base64)
-
-          })
-
-      }).finally(async () => {
-
-      })
-
-  }
-
-
-
-
-  useEffect(() => {
-    fetchLogos()
-  }, [])
 
   useEffect(() => {
     const homeTeam = { teamId: gameInfo?.localTeam?.teamId }
@@ -114,8 +85,6 @@ function FootballDetail({
       >
         <GameDetailCardHeader
           data={bb}
-          homeLogo={homeLogo}
-          awayLogo={awayLogo}
         />
 
         <div

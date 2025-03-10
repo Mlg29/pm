@@ -79,10 +79,10 @@ function GameCard({ data, id, sportStatus }) {
         <div style={styles.box3}>
           <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.localTeam?.goals ? data?.localTeam?.goals : "-"}
+              {data?.localTeam?.goals === "?" ? "-" : data?.localTeam?.goals ? data?.localTeam?.goals : "-"}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.green }}>
-              {data?.visitorTeam?.goals ? data?.visitorTeam?.goals : "-"}
+              {data?.visitorTeam?.goals === "?" ? "-" : data?.visitorTeam?.goals ? data?.visitorTeam?.goals : "-"}
             </p>
           </div>
         </div>

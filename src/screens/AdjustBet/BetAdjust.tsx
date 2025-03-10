@@ -93,7 +93,7 @@ const BetAdjust = () => {
   const user = betInfo?.bet?.userId === userData?.id;
 
 
-
+  console.log({ betInfo, betData })
   const handleExRate = async (data) => {
     const rateData = {
       sourceCurrency: data?.requesterCurrency === "USD" ? "USD" : "NGN",

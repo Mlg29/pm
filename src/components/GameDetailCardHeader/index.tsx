@@ -5,6 +5,7 @@ import noLogo from "../../assets/images/no.jpg";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { awayLogoState, getLogo, getSecondLogo, homeLogoState } from "../../redux/slices/FootballSlice";
+import { SportSportBaseUrl } from "../../https";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -42,9 +43,29 @@ export const styles = {
 
 function GameDetailCardHeader(props: any) {
   const navigate = useNavigate();
-  const { propStyle, data, homeLogo, awayLogo } = props;
+  const { propStyle, data, } = props;
+  const [homeLogo, setHomeLogo] = useState(null)
+  const [awayLogo, setAwayLogo] = useState(null)
 
   const dispatch = useAppDispatch() as any
+
+
+  const fetchLogos = async () => {
+    await fetch(`${SportSportBaseUrl}/soccer/logo?localTeamId=${data?.localTeam?.teamId}&awayTeamId=${data?.visitorTeam?.teamId}`)
+      .then(res => res?.json())
+      .then(async m => {
+        setHomeLogo(m[0]?.base64)
+        setAwayLogo(m[1]?.base64)
+      }).finally(async () => {
+
+      })
+
+  }
+
+
+  useEffect(() => {
+    fetchLogos()
+  }, [])
 
 
   return (
@@ -107,7 +128,7 @@ function GameDetailCardHeader(props: any) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeam?.goals} - {data?.visitorTeam?.goals}
+            {data?.localTeam?.goals === "?" ? null : data?.localTeam?.goals} - {data?.visitorTeam?.goals === "?" ? null : data?.visitorTeam?.goals}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.dateTime}

@@ -53,6 +53,7 @@ function SlipCard(props: any) {
   } = props;
   const navigate = useNavigate();
 
+  const gameName = (data?.sportEvent?.HorseEvent?.league + " - " + data?.sportEvent?.HorseEvent?.raceName)
   const getPrediction = (prediction: string) => {
     const result = data?.sportEvent?.HorseEvent?.horses?.horse
       .filter((item, i) => prediction === `W${i + 1}`)
@@ -78,7 +79,7 @@ function SlipCard(props: any) {
           <div>
             <p style={{
               ...FONTS.body7,
-            }}>A multiple entry bet</p>
+            }}>{gameName}</p>
           </div>
         ) : (
           <div>
