@@ -19,7 +19,7 @@ function NotificationScreen() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [loader, setLoader] = useState(false)
 
-  //console.log({ notifications })
+  // console.log({ notifications })
 
 
   const getNotification = async () => {
