@@ -73,6 +73,21 @@ function Football({ calendarDate, setCalendarDate }) {
     }
 
 
+  }, [])
+
+  useEffect(() => {
+    const payloadTomorrow = {
+      range: calendarDate?.index
+    }
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
+        // console.log(">>", payloadTomorrow, { dd })
+        setTomorrow(dd?.payload || [])
+      })
+    }
+
+
   }, [calendarDate])
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({

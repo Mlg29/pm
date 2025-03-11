@@ -51,9 +51,7 @@ function HorseRace({ calendarDate, setCalendarDate }) {
   }, []);
 
   useEffect(() => {
-    const payloadUpcoming = {
-      range: calendarDate?.index
-    }
+
     const payloadFinished = {
       range: 'finished'
     }
@@ -65,6 +63,16 @@ function HorseRace({ calendarDate, setCalendarDate }) {
       setLoading(false)
     })
 
+
+    return
+  }, [])
+
+
+  useEffect(() => {
+    const payloadUpcoming = {
+      range: calendarDate?.index
+    }
+
     if (calendarDate) {
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getHorseFixtures(payloadUpcoming)).then((dd) => {
@@ -72,8 +80,6 @@ function HorseRace({ calendarDate, setCalendarDate }) {
       })
     }
 
-
-    return
   }, [calendarDate])
 
 

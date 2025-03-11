@@ -211,7 +211,7 @@ function NavHeader() {
     },
     {
       id: 2,
-      name: "AFL",
+      name: "American League",
       image: rugby,
     },
     // {
@@ -234,11 +234,11 @@ function NavHeader() {
     //   name: "Ice Hockey",
     //   image: hockey,
     // },
-    {
-      id: 5,
-      name: "NASCAR",
-      image: nascar,
-    },
+    // {
+    //   id: 5,
+    //   name: "NASCAR",
+    //   image: nascar,
+    // },
     // {
     //   id: 7,
     //   name: "Hockey",

@@ -87,6 +87,7 @@ const AdjustBet = () => {
       adjustedBetAmountInExchange: parseFloat(exAmount),
       isAdjustBet: true,
       betId: userFee?.betId,
+      userInvitePrediction: userFee?.userPrediction,
       betCurrency: userFee?.initialData?.betCurrency,
       allowOtherCurrency: allowCurrency
     };
@@ -168,7 +169,8 @@ const AdjustBet = () => {
             isNaN(userFee?.amount) ? null : `${formatCurrency(userFee?.amount)} =`
           }
           <span style={{ color: 'gray' }}> {userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}
-            {formatCurrency(userFee?.initialData?.betAmount)}</span></h3>
+            {formatCurrency(userFee?.initialData?.betAmount || userFee?.initialData?.opponentBetAmount)}</span>
+        </h3>
 
 
       </div>

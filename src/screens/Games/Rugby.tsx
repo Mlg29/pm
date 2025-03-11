@@ -115,7 +115,7 @@ function Rugby({ calendarDate, setCalendarDate }) {
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>AFL</p>
+        <p style={{ fontSize: 14, fontWeight: '500' }}>American League</p>
         <div
           style={{
             display: 'flex',

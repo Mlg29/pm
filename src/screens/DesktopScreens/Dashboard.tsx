@@ -224,7 +224,7 @@ function Dashboard() {
             {sportEvents === "Golf" && <Golf calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
             {sportEvents === "Hockey" && <Hockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
             {sportEvents === "Formula 1" && <Formula1 calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-            {sportEvents === "AFL" && <Rugby calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+            {sportEvents === "American League" && <Rugby calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
             {sportEvents === "Handball" && <Handball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
             {sportEvents === "Ice Hockey" && <IceHockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
             {sportEvents === "NASCAR" && <Nascar calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}

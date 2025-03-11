@@ -153,9 +153,6 @@ function OpenBet() {
 
   const handleAccept = async (data) => {
     const rateData = {
-      // sourceCurrency: data?.betCurrency === "USD" ? "USD" : "NGN",
-      // destinationCurrency: data?.betCurrency === "USD" ? "NGN" : "USD",
-      // amount: data?.betAmount
       sourceCurrency: "USD",
       destinationCurrency: "NGN",
       amount: data?.betAmount

@@ -86,7 +86,11 @@ function Basketball({ calendarDate, setCalendarDate }) {
 
   const upcomingMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Not Started")
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today && match.status === "Not Started";
+    })
   }))
     .filter(league => league?.match.length > 0);
 

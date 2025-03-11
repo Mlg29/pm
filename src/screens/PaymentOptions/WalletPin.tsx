@@ -84,7 +84,7 @@ function WalletPin() {
       betId: userFee?.betId,
       //requestedAmount: userFee?.initialData.betCurrency === userData?.defaultCurrency ? parseFloat(userFee?.adjustedBetAmount) : parseFloat(userFee?.adjustedBetAmountInExchange),
       requestedAmount: parseFloat(userFee?.adjustedBetAmount),
-      requestedPrediction: getUserBet?.userType,
+      requestedPrediction: getUserBet?.userType || userFee?.userInvitePrediction,
     }
 
 
@@ -100,7 +100,7 @@ function WalletPin() {
     const transactionPayload = {
       transactionPin: otp
     }
-    console.log({ acceptPayload })
+    // console.log({ acceptPayload, getUserBet, userFee })
     setLoader(true);
 
     const verifyResponse = await dispatch(verifyTransactionPin(transactionPayload))

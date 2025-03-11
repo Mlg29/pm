@@ -65,7 +65,7 @@ function GameDetailCardHeader(props: any) {
 
   useEffect(() => {
     fetchLogos()
-  }, [])
+  }, [data?.localTeam?.teamId, data?.visitorTeam?.teamId])
 
 
   return (

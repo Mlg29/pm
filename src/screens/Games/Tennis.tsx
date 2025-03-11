@@ -44,7 +44,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
 
     socket.on("tennisUpdates", (message) => {
       const mes = message;
-      setLive(mes)
+      setLive(mes?.category)
     });
 
     return () => {
@@ -101,11 +101,16 @@ function Tennis({ calendarDate, setCalendarDate }) {
     .filter(league => league?.match.length > 0);
 
 
-  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+  const upcomingMatches = Array.isArray(scheduled) && scheduled?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Not Started")
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today && match.status === "Not Started";
+    })
   }))
     .filter(league => league?.match.length > 0);
+
 
 
   const finishedMatches = Array.isArray(live) && live?.map(league => ({
@@ -252,7 +257,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
         ) : null}
         {selectedStatus === 'Scheduled' ? (
           <>
-            {Array.isArray(scheduled) && scheduled?.map((league, index) => {
+            {Array.isArray(upcomingMatches) && upcomingMatches?.map((league, index) => {
               return <div key={league?.name}>
                 <p
                   style={{
@@ -285,7 +290,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
               </div>
             })}
 
-            {scheduled?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for Tennis' height='30vh' />
             ) : null}
           </>

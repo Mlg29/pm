@@ -47,7 +47,7 @@ function Mma({ calendarDate, setCalendarDate }) {
 
     socket.on("mmaUpdates", (message) => {
       const mes = message;
-      setLive(mes)
+      setLive(mes?.category)
     });
 
     return () => {
@@ -62,7 +62,7 @@ function Mma({ calendarDate, setCalendarDate }) {
 
     setLoading(true)
     dispatch(getMmaFixtures(null)).then((dd) => {
-      console.log({ dd })
+      console.log(">>>>", { dd })
       setLive(dd?.payload?.category || [])
       setLoading(false)
     })
@@ -94,16 +94,26 @@ function Mma({ calendarDate, setCalendarDate }) {
   }))
     .filter(league => league?.match.length > 0);
 
-  const upcomingMatches = live?.map(league => ({
+
+  const upcomingMatches = Array.isArray(schedule) && schedule?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Not Started")
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today;
+    })
   }))
     .filter(league => league?.match.length > 0);
 
 
   const finishedMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final")
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today && (match.status === "Cancelled" || match.status === "Final" || match.status === "Finished");
+    })
+
   }))
     .filter(league => league?.match.length > 0);
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
@@ -143,6 +153,7 @@ function Mma({ calendarDate, setCalendarDate }) {
   ]
 
   const status = calendarDate ? secondStatus : oldStatus
+
 
 
   return (
@@ -241,7 +252,7 @@ function Mma({ calendarDate, setCalendarDate }) {
 
         {selectedStatus === 'Scheduled' ? (
           <>
-            {Array.isArray(schedule) && schedule?.map((league, index) => (
+            {Array.isArray(upcomingMatches) && upcomingMatches?.map((league, index) => (
               <div key={league?.id}>
                 {league?.name && league?.match?.length > 0 && (
                   <p
@@ -272,7 +283,7 @@ function Mma({ calendarDate, setCalendarDate }) {
                 </div>
               </div>
             ))}
-            {schedule?.length < 1 ? (
+            {upcomingMatches?.length < 1 ? (
               <EmptyState header='No Game Available for MMA/UFC' height='30vh' />
             ) : null}
           </>

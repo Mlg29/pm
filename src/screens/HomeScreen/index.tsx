@@ -218,7 +218,7 @@ function HomeScreen() {
     },
     {
       id: 2,
-      name: "AFL",
+      name: "American League",
       image: rugby,
     },
     // {
@@ -241,11 +241,11 @@ function HomeScreen() {
     //   name: "Ice Hockey",
     //   image: hockey,
     // },
-    {
-      id: 5,
-      name: "NASCAR",
-      image: nascar,
-    },
+    // {
+    //   id: 5,
+    //   name: "NASCAR",
+    //   image: nascar,
+    // },
 
     // {
     //   id: 7,
@@ -631,7 +631,7 @@ function HomeScreen() {
       {selected === "Golf" && <Golf calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
       {selected === "Hockey" && <Hockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
       {selected === "Formula 1" && <Formula1 calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "AFL" && <Rugby calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "American League" && <Rugby calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
       {selected === "Handball" && <Handball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
       {selected === "Ice Hockey" && <IceHockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
       {selected === "NASCAR" && <Nascar calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}

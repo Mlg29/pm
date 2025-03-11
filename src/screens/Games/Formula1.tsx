@@ -46,7 +46,7 @@ function Formula1({ calendarDate, setCalendarDate }) {
 
     socket.on("formulaOneUpdates", (message) => {
       const mes = message;
-      setLive(mes)
+      setLive(mes?.scores?.tournament)
     });
 
     return () => {
@@ -71,7 +71,7 @@ function Formula1({ calendarDate, setCalendarDate }) {
     }
     dispatch(getFormulaFixtures(payloadLive)).then((dd) => {
       console.log("live>>>", dd)
-      setLive(dd?.payload?.tournament || [])
+      setLive(dd?.payload?.scores?.tournament || dd?.payload?.tournament || [])
     })
 
   }, [calendarDate])
@@ -93,7 +93,7 @@ function Formula1({ calendarDate, setCalendarDate }) {
   const scheduleLeagues = Array.isArray(live) && live?.filter(bb => bb?.race?.status === "Not Started")
   const finishedLeagues = Array.isArray(live) && live?.filter(bb => bb?.race?.status === "Finished" || bb?.status === "FT")
 
-
+  console.log({ live })
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
   const oldStatus = [
