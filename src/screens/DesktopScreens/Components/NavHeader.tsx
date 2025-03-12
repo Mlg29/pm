@@ -186,11 +186,11 @@ function NavHeader() {
     //   name: "Darts",
     //   image: dart,
     // },
-    // {
-    //   id: 10,
-    //   name: "Snooker",
-    //   image: snooker,
-    // },
+    {
+      id: 10,
+      name: "Snooker",
+      image: snooker,
+    },
     // {
     //   id: 8,
     //   name: "Volleyball",
@@ -204,21 +204,32 @@ function NavHeader() {
   ];
 
   const otherItemList = [
+    // {
+    //   id: 1,
+    //   name: "Formula 1",
+    //   image: formula,
+    // },
+    // {
+    //   id: 2,
+    //   name: "American League",
+    //   image: rugby,
+    // },
     {
       id: 1,
-      name: "Formula 1",
-      image: formula,
+      name: "Darts",
+      image: dart,
     },
     {
       id: 2,
-      name: "American League",
-      image: rugby,
+      name: "Volleyball",
+      image: involleyball,
+
     },
-    // {
-    //   id: 3,
-    //   name: "Handball",
-    //   image: handball,
-    // },
+    {
+      id: 3,
+      name: "Handball",
+      image: handball,
+    },
     // {
     //   id: 6,
     //   name: "Futsal",
@@ -229,11 +240,11 @@ function NavHeader() {
       name: "Cricket",
       image: selected === "Cricket" ? acricket : incricket,
     },
-    // {
-    //   id: 4,
-    //   name: "Ice Hockey",
-    //   image: hockey,
-    // },
+    {
+      id: 4,
+      name: "Ice Hockey",
+      image: hockey,
+    },
     // {
     //   id: 5,
     //   name: "NASCAR",
@@ -254,11 +265,11 @@ function NavHeader() {
     //   name: "Golf",
     //   image: selected === "Golf" ? agolf : ingolf,
     // },
-    // {
-    //   id: 12,
-    //   name: "Table Tennis",
-    //   image: tabletennis,
-    // },
+    {
+      id: 12,
+      name: "Table Tennis",
+      image: tabletennis,
+    },
     // {
     //   id: 13,
     //   name: "Aussie Rules",

@@ -192,17 +192,12 @@ function HomeScreen() {
     //   name: "Darts",
     //   image: dart,
     // },
-    // {
-    //   id: 10,
-    //   name: "Snooker",
-    //   image: snooker,
-    // },
-    // {
-    //   id: 8,
-    //   name: "Volleyball",
-    //   image: selected === "Volleyball" ? avolleyball : involleyball,
+    {
+      id: 10,
+      name: "Snooker",
+      image: snooker,
+    },
 
-    // },
     {
       id: 11,
       name: "More",
@@ -211,21 +206,32 @@ function HomeScreen() {
   ];
 
   const otherItemList = [
+    // {
+    //   id: 1,
+    //   name: "Formula 1",
+    //   image: formula,
+    // },
+    // {
+    //   id: 2,
+    //   name: "American League",
+    //   image: rugby,
+    // },
     {
       id: 1,
-      name: "Formula 1",
-      image: formula,
+      name: "Darts",
+      image: dart,
     },
     {
       id: 2,
-      name: "American League",
-      image: rugby,
+      name: "Volleyball",
+      image: involleyball,
+
     },
-    // {
-    //   id: 3,
-    //   name: "Handball",
-    //   image: handball,
-    // },
+    {
+      id: 3,
+      name: "Handball",
+      image: handball,
+    },
     // {
     //   id: 6,
     //   name: "Futsal",
@@ -236,11 +242,11 @@ function HomeScreen() {
       name: "Cricket",
       image: selected === "Cricket" ? acricket : incricket,
     },
-    // {
-    //   id: 4,
-    //   name: "Ice Hockey",
-    //   image: hockey,
-    // },
+    {
+      id: 4,
+      name: "Ice Hockey",
+      image: hockey,
+    },
     // {
     //   id: 5,
     //   name: "NASCAR",
@@ -263,11 +269,11 @@ function HomeScreen() {
     //   image: selected === "Golf" ? agolf : ingolf,
     // },
 
-    // {
-    //   id: 12,
-    //   name: "Table Tennis",
-    //   image: tabletennis,
-    // },
+    {
+      id: 12,
+      name: "Table Tennis",
+      image: tabletennis,
+    },
     // {
     //   id: 13,
     //   name: "Aussie Rules",
@@ -277,126 +283,6 @@ function HomeScreen() {
 
   const nameExists = (name) => itemList.some(item => item.name === name);
 
-  // const itemList = [
-  //   {
-  //     id: 1,
-  //     name: "Soccer",
-  //     image: selected === "Soccer" ? asoccer : insoccer,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Basketball",
-  //     image: selected === "Basketball" ? abasketball : inbasketball,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Tennis",
-  //     image: selected === "Tennis" ? atennis : intennis,
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Cricket",
-  //     image: selected === "Cricket" ? acricket : incricket,
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Baseball",
-  //     image: selected === "Baseball" ? abaseball : inbaseball,
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Volleyball",
-  //     image: selected === "Volleyball" ? avolleyball : involleyball,
-  //   },
-  //   {
-  //     id: 7,
-  //     name: "Golf",
-  //     image: selected === "Golf" ? agolf : ingolf,
-  //   },
-  //   {
-  //     id: 8,
-  //     name: "Horse",
-  //     image: selected === "Horse" ? ahorse : inhorse,
-  //   },
-  //   {
-  //     id: 9,
-  //     name: "Hockey",
-  //     image: selected === "Hockey" ? ahockey : inhockey,
-  //   },
-  //   {
-  //     id: 10,
-  //     name: "More",
-  //     image: more,
-  //   },
-  // ];
-
-  // const otherItemList = [
-  //   {
-  //     id: 1,
-  //     name: "Formula 1",
-  //     image: formula,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "AFL",
-  //     image: rugby,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Handball",
-  //     image: handball,
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Ice Hockey",
-  //     image: hockey,
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "NASCAR",
-  //     image: nascar,
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Futsal",
-  //     image: futsol,
-  //   },
-  //   {
-  //     id: 7,
-  //     name: "Boxing",
-  //     image: boxing,
-  //   },
-  //   {
-  //     id: 8,
-  //     name: "MMA/UFC",
-  //     image: ufc,
-  //   },
-  //   {
-  //     id: 9,
-  //     name: "Darts",
-  //     image: dart,
-  //   },
-  //   {
-  //     id: 10,
-  //     name: "Snooker",
-  //     image: snooker,
-  //   },
-  //   {
-  //     id: 11,
-  //     name: "Easport",
-  //     image: easport,
-  //   },
-  //   {
-  //     id: 12,
-  //     name: "Table Tennis",
-  //     image: tabletennis,
-  //   },
-  //   {
-  //     id: 13,
-  //     name: "Aussie Rules",
-  //     image: aussie,
-  //   },
-  // ];
 
   const handleLogOut = () => {
     var getDeviceId = localStorage.getItem("deviceId")

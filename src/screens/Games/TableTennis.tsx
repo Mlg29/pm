@@ -10,13 +10,19 @@ import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
 import { MdCancel } from "react-icons/md";
+import { LoadingState } from '../../components/LoadingState'
+import { getTableTennisFixtures } from '../../redux/slices/TableTennisSlice'
+import TableTennisGameCard from '../../components/GameCard/TableTennisGameCard'
 
 
 function TableTennis({ calendarDate, setCalendarDate }) {
   const navigate = useNavigate()
-  const [upcoming, setUpcoming] = useState<any>([])
+  const [scheduled, setScheduled] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const dispatch = useAppDispatch() as any
+  const [tomorrow, setTomorrow] = useState<any>([])
+  const [loading, setLoading] = useState(false)
+  const [live, setLive] = useState<any>([])
 
   const url = `${SportSportBaseUrl}`;
 
@@ -35,7 +41,7 @@ function TableTennis({ calendarDate, setCalendarDate }) {
 
     socket.on("tabelTennisUpdates", (message) => {
       const mes = message;
-      // setLive(mes)
+      setLive(mes?.category)
     });
 
     return () => {
@@ -43,29 +49,79 @@ function TableTennis({ calendarDate, setCalendarDate }) {
     };
   }, []);
 
-  let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
+
+
 
   useEffect(() => {
-    const payloadUpcoming = {
-      status: 'Not Started'
+    const PayloadFinished = {
+      range: 'finished'
     }
-    const payloadFinished = {
-      status: 'Finished'
+    const PayloadScheduled = {
+      range: 'upcoming'
+    }
+    const payloadTomorrow = {
+      range: calendarDate?.index
     }
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
 
-    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-    //     setFinished(dd?.payload);
-    //   });
+    setLoading(true)
+    dispatch(getTableTennisFixtures(null)).then((dd) => {
+
+      setLive(dd?.payload?.category || [])
+      setLoading(false)
+    })
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getTableTennisFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload?.category || [])
+      })
+    }
+  }, [calendarDate])
+
+
+
+
+  useEffect(() => {
+    const PayloadScheduled = {
+      range: 'upcoming'
+    }
+    dispatch(getTableTennisFixtures(PayloadScheduled)).then((dd) => {
+      setScheduled(dd?.payload?.category || [])
+    })
   }, [])
+
+
+  const liveMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const upcomingMatches = Array.isArray(scheduled) && scheduled?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today && match.status === "Not Started";
+    })
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+
+  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+
 
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -73,8 +129,35 @@ function TableTennis({ calendarDate, setCalendarDate }) {
     {
       id: 2,
       name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
+
+
 
   return (
     <div>
@@ -84,7 +167,8 @@ function TableTennis({ calendarDate, setCalendarDate }) {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: 10
           }}
         >
           {status?.map((aa, i) => {
@@ -128,9 +212,173 @@ function TableTennis({ calendarDate, setCalendarDate }) {
           })}
         </div>
       </div>
-      {finished?.data?.length < 1 && upcoming?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Table Tennis' height='30vh' />
-      ) : null}
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Live' ? (
+          <>
+            {liveMatches?.map((league, index) => (
+              <div key={league?.league}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.city,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <TableTennisGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {liveMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Table Tennis' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {Array.isArray(upcomingMatches) && upcomingMatches?.map((league, index) => {
+              return <div key={league?.league}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league?.league,
+                      leagueId: league?.id,
+                      country: league.city,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <TableTennisGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            })}
+
+            {upcomingMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Table Tennis' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finishedMatches?.map((league, index) => (
+              <div key={league?.league}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.city,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <TableTennisGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Table Tennis' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {tomorrow?.map((league, index) => (
+              <div key={league?.league}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.city,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <TableTennisGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {tomorrow?.length < 1 ? (
+              <EmptyState header='No Game Available for Table Tennis' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+      </LoadingState>
     </div>
   )
 }

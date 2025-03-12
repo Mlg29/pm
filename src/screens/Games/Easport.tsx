@@ -45,7 +45,7 @@ function Easport({ calendarDate, setCalendarDate }) {
 
     socket.on("esportsUpdates", (message) => {
       const mes = message;
-      setLive(mes)
+      setLive(mes?.match)
     });
 
     return () => {

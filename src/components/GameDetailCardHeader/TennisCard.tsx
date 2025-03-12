@@ -85,7 +85,7 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.player[0]?.name}
           </p>
         </div>
         <div>
@@ -121,7 +121,7 @@ function TennisCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.player[1]?.name}
           </p>
         </div>
       </div>

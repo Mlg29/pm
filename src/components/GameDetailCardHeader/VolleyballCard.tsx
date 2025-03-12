@@ -48,7 +48,18 @@ function VolleyballCard(props) {
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
+      <p
+        style={{
+          ...FONTS.body7,
+          fontSize: "8px",
+          margin: "0px 0px 10px 0px",
+        }}
+      >
+        {data?.league}
+      </p>
+
       <div style={{ ...styles.row }}>
+
         <div
           style={{
             display: "flex",
@@ -58,15 +69,6 @@ function VolleyballCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            {data?.league}
-          </p>
 
           <FaVolleyball size={30} color={COLORS.primary} />
           <p
@@ -76,7 +78,7 @@ function VolleyballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -88,7 +90,7 @@ function VolleyballCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localteam?.totalscore ? data?.localteam?.totalscore : 0} - {data?.awayteam?.totalscore ? data?.awayteam?.totalscore : 0}
+            {data?.localTeam?.totalScore ? data?.localTeam?.totalScore : 0} - {data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : 0}
           </h3>
 
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
@@ -113,7 +115,7 @@ function VolleyballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.awayTeam?.name}
           </p>
         </div>
       </div>

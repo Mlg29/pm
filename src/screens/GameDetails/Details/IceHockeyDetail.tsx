@@ -1,11 +1,11 @@
 
 import Button from "../../../components/Button";
-import DartCard from "../../../components/GameDetailCardHeader/DartCard";
-import SnookerCard from "../../../components/GameDetailCardHeader/SnookerCard";
 
 import { COLORS } from "../../../utils/colors";
 
 import { FlexDirection, OverflowY, Position } from "../../../utils/type";
+import VolleyballCard from "../../../components/GameDetailCardHeader/VolleyballCard";
+import IceHockeyCard from "../../../components/GameDetailCardHeader/IceHockeyCard";
 
 
 
@@ -110,8 +110,7 @@ const styles = {
 };
 
 
-function SnookerDetail({ gameInfo, isMobile, dateTime, selected, handleRoute }) {
-  console.log({ gameInfo })
+function IceHockeyDetail({ gameInfo, isMobile, dateTime, selected, handleRoute }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
@@ -122,7 +121,7 @@ function SnookerDetail({ gameInfo, isMobile, dateTime, selected, handleRoute }) 
           flex: 1,
         }}
       >
-        <SnookerCard data={gameInfo} />
+        <IceHockeyCard data={gameInfo} />
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {isMobile ? (
@@ -219,4 +218,4 @@ function SnookerDetail({ gameInfo, isMobile, dateTime, selected, handleRoute }) 
   )
 }
 
-export default SnookerDetail
+export default IceHockeyDetail

@@ -3,7 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
-import { SiDart } from "react-icons/si";
+import { GiTennisBall } from "react-icons/gi";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -38,10 +38,22 @@ export const styles = {
   },
 };
 
-function DartCard(props) {
+function TableTennisCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
+  function isEmpty(value) {
+    for (let prop in value) {
+      if (value.hasOwnProperty(prop)) return false;
+    }
+    return true;
+  }
+
+  const eventArray = isEmpty(data?.player)
+    ? []
+    : Array.isArray(data?.player)
+      ? data?.player
+      : [data?.player];
 
 
   return (
@@ -63,10 +75,9 @@ function DartCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            Dart
+            {data?.league}
           </p>
-
-          <SiDart size={30} color={COLORS.primary} />
+          <GiTennisBall size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -74,7 +85,7 @@ function DartCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName || data?.localTeam?.name}
+            {data?.localTeamName || data?.player[0]?.name}
           </p>
         </div>
         <div>
@@ -86,25 +97,10 @@ function DartCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localTeam?.totalscore ? data?.localTeam?.totalscore : 0} - {data?.awayTeam?.totalscore ? data?.awayTeam?.totalscore : 0}
+            {data?.player[0]?.totalScore} - {data?.player[1]?.totalScore}
           </h3> */}
-          {
-            data?.localTeam?.winner === "True" || data?.awayTeam?.winner === "True" ?
-              <h3
-                style={{
-                  ...FONTS.h7,
-                  textAlign: "center",
-                  margin: "10px 0px 0px 0px",
-                  color: COLORS.green
-                }}
-              >
-                Winner: {data?.localTeam?.winner === "True" ? `${data?.localTeam?.name} (round ${data?.localTeam?.round})` : data?.awayTeam?.winner === "True" ? `${data?.awayTeam?.name} (round ${data?.awayTeam?.round})` : null}
-              </h3>
-              : null
-          }
-
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+            {data?.status}
           </p>
         </div>
         <div
@@ -117,7 +113,7 @@ function DartCard(props) {
           }}
         >
 
-          <SiDart size={30} color={COLORS.primary} />
+          <GiTennisBall size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -125,7 +121,7 @@ function DartCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName || data?.awayTeam?.name}
+            {data?.visitorTeamName || data?.player[1]?.name}
           </p>
         </div>
       </div>
@@ -137,9 +133,39 @@ function DartCard(props) {
           backgroundColor: COLORS.gray,
         }}
       />
-
+      <div>
+        {eventArray &&
+          eventArray?.map((dd, i) => {
+            return (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 10,
+                }}
+              >
+                <p>{dd?.name} </p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <p style={{ margin: "0px 5px" }}>{dd?.s1 ? dd?.s1 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s2 ? dd?.s2 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s3 ? dd?.s3 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s4 ? dd?.s4 : ""} </p>
+                  <p style={{ margin: "0px 5px" }}>{dd?.s5 ? dd?.s5 : ""} </p>
+                </div>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
 
-export default DartCard;
+export default TableTennisCard;

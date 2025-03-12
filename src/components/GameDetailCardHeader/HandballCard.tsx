@@ -76,7 +76,7 @@ function HandballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -88,7 +88,7 @@ function HandballCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localteam?.totalscore ? data?.localteam?.totalscore : 0} - {data?.awayteam?.totalscore ? data?.awayteam?.totalscore : 0}
+            {data?.localTeam?.totalScore ? data?.localTeam?.totalScore : 0} - {data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : 0}
           </h3>
 
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
@@ -113,7 +113,7 @@ function HandballCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.awayTeam?.name}
           </p>
         </div>
       </div>

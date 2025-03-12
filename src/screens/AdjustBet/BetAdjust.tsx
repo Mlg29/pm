@@ -38,6 +38,8 @@ import arrowleft from "../../assets/images/arrow-left.svg"
 import { useMediaQuery } from "react-responsive";
 import NascarCardHeader from "../../components/GameDetailCardHeader/NascarCardHeader";
 import BaseballCard from "../../components/GameDetailCardHeader/BaseballCard";
+import TableTennisCard from "../../components/GameDetailCardHeader/TableTennisCard";
+import IceHockeyCard from "../../components/GameDetailCardHeader/IceHockeyCard";
 
 
 const styles = {
@@ -281,6 +283,10 @@ const BetAdjust = () => {
         </div>
       )}
 
+      {sportEvents?.sport === "TABLE_TENNIS" && (
+        <TableTennisCard data={sportEvents?.TableTennisEvent} />
+      )}
+
       {sportEvents?.sport === "TENNIS" && (
         <TennisCard data={sportEvents?.TennisEvent} />
       )}
@@ -306,6 +312,9 @@ const BetAdjust = () => {
 
       {sportEvents?.sport === "VOLLYBALL" && (
         <VolleyballCard data={sportEvents?.VollyBallEvent} />
+      )}
+      {sportEvents?.sport === "ICE_HOCKEY" && (
+        <IceHockeyCard data={sportEvents?.IceHockeyEvent} />
       )}
       {sportEvents?.sport === "HANDBALL" && (
         <HandballCard data={sportEvents?.HandBallEvent} />

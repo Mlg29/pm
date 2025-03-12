@@ -21,31 +21,26 @@ const initialState = {
   snooker: [],
 };
 
+
+
 export const getSnookerFixtures = createAsyncThunk(
-  "snooker/getSnookerFixtures",
-  async (payload: any) => {
-    const buildUrl = (payload) => {
-      let queryParams = [];
-      if (payload?.searchTerm)
-        queryParams.push(`searchTerm=${payload?.searchTerm}`);
-      if (payload?.status) queryParams.push(`status=${payload?.status}`);
-      if (payload?.startTime)
-        queryParams.push(`time=${payload.startTime}`);
-      if (payload?.date) queryParams.push(`date=${payload.date}`);
-      if (payload?.page) queryParams.push(`page=${payload?.page}`);
-      if (payload?.pageSize) queryParams.push(`pageSize=${payload?.pageSize}`);
+  'snooker/getSnookerFixtures',
+  async (payload?: any) => {
+    const buildUrl = (payload?: any) => {
+      let queryParams = []
+      if (payload?.range) queryParams.push(`range=${payload?.range}`)
 
-      const queryString = queryParams.join("&");
+      const queryString = queryParams.join('&')
 
-      return `${SportSportBaseUrl}/snooker/fixtures?${queryString}`;
-    };
+      return `${SportSportBaseUrl}/snooker/${payload?.range ? `matches?${queryString}` : 'live'}`
+    }
 
-    var response = await getRequest(buildUrl(payload));
+    var response = await getRequest(buildUrl(payload))
     if (response?.status === 200 || response?.status === 201) {
-      return response?.data;
+      return response?.data
     }
   }
-);
+)
 
 
 

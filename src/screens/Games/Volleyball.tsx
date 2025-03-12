@@ -10,11 +10,17 @@ import { getVolleyballFixtures } from '../../redux/slices/VolleyballSlice'
 import VolleyballGameCard from '../../components/GameCard/VolleyballGameCard'
 import { MdCancel } from "react-icons/md";
 import { io } from "socket.io-client";
+import { LoadingState } from '../../components/LoadingState'
 
 function Volleyball({ calendarDate, setCalendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const dispatch = useAppDispatch() as any
+  const [loading, setLoading] = useState(false)
+  const [live, setLive] = useState<any>([])
+  const [tomorrow, setTomorrow] = useState<any>([])
+
+
 
   const url = `${SportSportBaseUrl}`;
 
@@ -33,7 +39,7 @@ function Volleyball({ calendarDate, setCalendarDate }) {
 
     socket.on("volleyballUpdates", (message) => {
       const mes = message;
-      // setLive(mes)
+      setLive(mes?.category)
     });
 
     return () => {
@@ -42,51 +48,67 @@ function Volleyball({ calendarDate, setCalendarDate }) {
   }, []);
 
 
-  let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
-
   useEffect(() => {
-    const payloadUpcoming = {
-      status: 'Not Started'
-    }
-    const payloadFinished = {
-      status: 'Finished'
-    }
 
-    dispatch(getVolleyballFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+    setLoading(true)
+    dispatch(getVolleyballFixtures(null)).then((dd) => {
+      setLive(dd?.payload?.category)
+      setLoading(false)
     })
 
-    dispatch(getVolleyballFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
-    })
+
   }, [])
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league = current?.league || 'Volley ball'
 
-      if (!acc[league]) {
-        acc[league] = []
-      }
+  useEffect(() => {
 
-      acc[league].push(current)
+    const payloadTomorrow = {
+      range: calendarDate?.index
+    }
 
-      return acc
-    }, {})
-  }
 
-  const upcomingOutput = groupedByData(upcoming?.data)
 
-  const finishedOutput = groupedByData(finished?.data)
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getVolleyballFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload?.category)
+        setLoading(false)
+      })
+    }
+  }, [calendarDate])
+
+  const liveMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today && match.status === "Not Started";
+    })
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+
+  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
 
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
-  const status = [
-    // {
-    //   id: 1,
-    //   name: "Live",
-    // },
+  const oldStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
     {
       id: 2,
       name: 'Scheduled'
@@ -96,6 +118,29 @@ function Volleyball({ calendarDate, setCalendarDate }) {
       name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
+
+
 
   return (
     <div>
@@ -150,15 +195,11 @@ function Volleyball({ calendarDate, setCalendarDate }) {
           })}
         </div>
       </div>
-      {upcoming?.data?.length < 1 && finished?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Volleyball' height='30vh' />
-      ) : null}
-
-      {selectedStatus === 'Scheduled' ? (
-        <>
-          {upcomingOutput &&
-            Object.keys(upcomingOutput)?.map((leagueName) => (
-              <div key={leagueName}>
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Live' ? (
+          <>
+            {liveMatches?.map((league, index) => (
+              <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -170,27 +211,35 @@ function Volleyball({ calendarDate, setCalendarDate }) {
                     marginRight: 10
                   }}
                 >
-                  {leagueName}
+                  {league?.league}
                 </p>
                 <div>
-                  {upcomingOutput[leagueName].map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
                     return (
                       <div key={i}>
-                        <VolleyballGameCard id={i} data={aa} />
+                        <VolleyballGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
             ))}
-        </>
-      ) : null}
 
-      {selectedStatus === 'Finished' ? (
-        <>
-          {finishedOutput &&
-            Object.keys(finishedOutput)?.map((leagueName) => (
-              <div key={leagueName}>
+            {liveMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Volleyball' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {Array.isArray(upcomingMatches) && upcomingMatches?.map((league, index) => {
+              return <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -202,21 +251,117 @@ function Volleyball({ calendarDate, setCalendarDate }) {
                     marginRight: 10
                   }}
                 >
-                  {leagueName}
+                  {league?.league}
                 </p>
                 <div>
-                  {finishedOutput[leagueName].map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
                     return (
                       <div key={i}>
-                        <VolleyballGameCard id={i} data={aa} />
+                        <VolleyballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            })}
+
+            {upcomingMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Volleyball' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finishedMatches?.map((league, index) => (
+              <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <VolleyballGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
             ))}
-        </>
-      ) : null}
+
+            {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Volleyball' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {tomorrow?.map((league, index) => (
+              <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <VolleyballGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {tomorrow?.length < 1 ? (
+              <EmptyState header='No Game Available for Volleyball' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+      </LoadingState>
     </div>
   )
 }

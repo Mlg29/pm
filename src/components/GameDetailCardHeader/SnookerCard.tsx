@@ -65,7 +65,7 @@ function SnookerCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            Dart
+            {data?.league}
           </p>
 
           <GiSportMedal size={30} color={COLORS.primary} />
@@ -76,12 +76,12 @@ function SnookerCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
           {
-            data?.localteam?.winner === "True" || data?.awayteam?.winner === "True" ?
+            data?.localTeam?.winner === "True" || data?.awayTeam?.winner === "True" ?
               <h3
                 style={{
                   ...FONTS.h7,
@@ -90,7 +90,7 @@ function SnookerCard(props) {
                   color: COLORS.green
                 }}
               >
-                Winner: {data?.localteam?.winner === "True" ? `${data?.localteam?.name} (round ${data?.localteam?.round})` : data?.awayteam?.winner === "True" ? `${data?.awayteam?.name} (round ${data?.awayteam?.round})` : null}
+                Winner: {data?.localTeam?.winner === "True" ? `${data?.localTeam?.name} (round ${data?.localTeam?.round})` : data?.awayTeam?.winner === "True" ? `${data?.awayTeam?.name} (round ${data?.awayTeam?.round})` : null}
               </h3>
               : null
           }
@@ -117,7 +117,7 @@ function SnookerCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.awayTeam?.name}
           </p>
         </div>
       </div>

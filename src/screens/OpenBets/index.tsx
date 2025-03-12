@@ -167,7 +167,7 @@ function OpenBet() {
     // const rate = newAmount?.rate * parseInt(data?.betAmount)
     var rate2 = null;
 
-    if (data?.currency === "USD") {
+    if (userData?.defaultCurrency === "USD") {
       rate2 = parseInt(data?.betAmount) / newAmount?.rate
     }
     else {
@@ -178,7 +178,6 @@ function OpenBet() {
     const rateByCurrency = data?.betCurrency === userData?.defaultCurrency ? data?.betAmount : rate2
 
 
-    // return
     if ((data?.betCurrency !== userData?.defaultCurrency) && !rate2) {
       alert("Please wait.. Calculating exchange rate...")
       return
@@ -270,7 +269,7 @@ function OpenBet() {
     handleShow()
   }
 
-  // console.log({ game })
+  // console.log({ typeCheck })
 
   return (
     <div>
@@ -424,6 +423,130 @@ function OpenBet() {
                   )}
 
                   {data?.sportEvent?.sport === "TENNIS" && (
+                    <div key={i} style={{ ...styles.contain }}>
+                      <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
+                        {game?.tournamentName}
+                      </p>
+
+                      <div style={{ ...styles.row }}>
+                        <div style={{ ...styles.center }}>
+                          <FaTableTennis size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.player[0]?.name}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
+                            {game?.status}
+                          </p>
+                          <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
+                            {data?.betCurrency === "NGN" ? "₦" : "$"}
+                            {formatCurrency(data?.betAmount)}
+                          </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i]?.toFixed(2) : "Loading..."}) </span>
+                            </p>
+                          }
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <FaTableTennis size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.player[1]?.name}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div style={{ ...styles.row, paddingBottom: "1rem" }}>
+                        <div>
+                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                            @{data?.user?.userName}
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {data?.prediction === game?.player[0]?.name
+                              ? `${game?.player[0]?.name} WIN`
+                              : data?.prediction === game?.player[1]?.name
+                                ? `${game?.player[1]?.name} WIN`
+                                : ""}
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              textAlign: "right",
+                            }}
+                          >
+                            You
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {userSelection?.userType === game?.player[0]?.name
+                              ? `${game?.player[0]?.name} WIN`
+                              : userSelection?.userType === game?.player[1]?.name
+                                ? `${game?.player[1]?.name} WIN`
+                                : ""}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          ...styles.row,
+                          paddingBottom: "0rem",
+                          border: "none",
+                        }}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAccept(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              color: COLORS.white,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Accept Bet
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            backgroundColor: COLORS.cream,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.h7,
+                              color: COLORS.primary,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Adjust Bet
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {data?.sportEvent?.sport === "TABLE_TENNIS" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.tournamentName}
@@ -1427,6 +1550,131 @@ function OpenBet() {
                   )}
 
                   {data?.sportEvent?.sport === "VOLLYBALL" && (
+                    <div key={i} style={{ ...styles.contain }}>
+                      <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
+                        {game?.league}
+                      </p>
+
+                      <div style={{ ...styles.row }}>
+                        <div style={{ ...styles.center }}>
+                          <FaVolleyball size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.localTeam?.name}
+                          </h3>
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              color: COLORS.red,
+                            }}
+                          >
+                            {game?.status ? `${game?.time}'` : game?.status}
+                          </p>
+                          <h3 style={{ ...FONTS.h7, marginTop: "5px" }}>
+                            {data?.betCurrency === "NGN" ? "₦" : "$"}
+                            {formatCurrency(data?.betAmount)}
+                          </h3>
+                          {
+                            (isNaN(exchangeRates[i])) ? null : <p style={{ ...FONTS.h7, marginTop: "-5px" }}>
+                              <span>({userData?.defaultCurrency === "NGN" ? "₦" : "$"}{exchangeRates[i] !== undefined ? exchangeRates[i]?.toFixed(2) : "Loading..."}) </span>
+                            </p>
+                          }
+                        </div>
+                        <div style={{ ...styles.center }}>
+                          <FaVolleyball size={30} color={COLORS.primary} />
+                          <h3 style={{ ...FONTS.h7, marginTop: "10px" }}>
+                            {game?.awayTeam?.name}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div style={{ ...styles.row, paddingBottom: "1rem" }}>
+                        <div>
+                          <p style={{ ...FONTS.body7, marginTop: "10px" }}>
+                            @{data?.user?.userName}
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {data?.prediction === game?.localTeam?.name
+                              ? `${game?.localTeam?.name} WIN`
+                              : data?.prediction === game?.awayTeam?.name
+                                ? `${game?.awayTeam?.name} WIN`
+                                : ""}
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              marginTop: "10px",
+                              textAlign: "right",
+                            }}
+                          >
+                            You
+                          </p>
+                          <p style={{ ...FONTS.body7 }}>
+                            {userSelection?.userType === game?.localTeam?.name
+                              ? `${game?.localTeam?.name} WIN`
+                              : userSelection?.userType === game?.awayTeam?.name
+                                ? `${game?.awayTeam?.name} WIN`
+                                : ""}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          ...styles.row,
+                          paddingBottom: "0rem",
+                          border: "none",
+                        }}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: COLORS.primary,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAccept(data)}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.body7,
+                              color: COLORS.white,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Accept Bet
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            backgroundColor: COLORS.cream,
+                            width: "48%",
+                            padding: 10,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleAdjust(data, exchangeRates[i])}
+                        >
+                          <p
+                            style={{
+                              ...FONTS.h7,
+                              color: COLORS.primary,
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Adjust Bet
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {data?.sportEvent?.sport === "ICE_HOCKEY" && (
                     <div key={i} style={{ ...styles.contain }}>
                       <p style={{ ...FONTS.body7, margin: "0px 0px 1rem 0px" }}>
                         {game?.league}

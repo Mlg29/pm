@@ -40,6 +40,8 @@ import TennisDetail from "./Details/TennisDetail";
 import Formula1Detail from "./Details/Formula1Detail";
 import BaseballDetails from "./Details/BaseBallDetails";
 import NascarDetail from "./Details/NascarDetail";
+import TableTennisDetail from "./Details/TableTennisDetail";
+import IceHockeyDetail from "./Details/IceHockeyDetail";
 
 const styles = {
   container: {
@@ -223,7 +225,7 @@ function GameDetails() {
         userType: route,
         sportEventId: gameInfo?.sportEventId || gameInfo?.race[0]?.sportEventId,
         sportId: gameInfo?.id || gameInfo["@id"],
-        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "BOXING" ? "BOXING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType === "Esports" ? "ESPORT" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
+        sport: gameType === "Soccer" ? "FOOTBALL" : gameType === "Table Tennis" ? "TABLE_TENNIS" : gameType === "Ice Hockey" ? "ICE_HOCKEY" : gameType === "Volleyball" ? "VOLLYBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "BOXING" ? "BOXING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType === "Esports" ? "ESPORT" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase(),
         matchEvent: {
           id: gameInfo?.id || gameInfo["@id"],
           sportEventId: gameInfo?.sportEventId || gameInfo?.race[0]?.sportEventId,
@@ -241,7 +243,7 @@ function GameDetails() {
           }),
           ...(gameType === "Horse" || gameType === "Formula1" || gameType === "Nascar" ? { raceName: gameInfo?.name } : {}),
           ...(gameType === "Horse" || gameType === "Formula1" || gameType === "Nascar" ? { racerNames: players } : {}),
-          ...(gameType === "Golf" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "BOXING" ? "BOXING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
+          ...(gameType === "Golf" ? { sportName: gameType === "Soccer" ? "FOOTBALL" : gameType === "Table Tennis" ? "TABLE_TENNIS" : gameType === "Ice Hockey" ? "ICE_HOCKEY" : gameType === "Basketball" ? "BASKETBALL" : gameType === "Volleyball" ? "VOLLYBALL" : gameType === "Tennis" ? "TENNIS" : gameType === "Horse" ? "HORSE_RACING" : gameType?.toUpperCase() === "BOXING" ? "BOXING" : gameType?.toUpperCase() === "MMA/UFC" ? "MMA" : gameType?.toUpperCase() === "FORMULA 1" ? "FORMULA_ONE" : gameType?.toUpperCase() === "AFL" ? "AMERICAN_FOOTBALL_LEAGUE" : gameType?.toUpperCase() === "CRICKET" ? "CRICKET" : gameType?.toUpperCase() === "NASCAR" ? "NASCAR" : gameType?.toUpperCase() === "BASEBALL" ? "BASEBALL" : gameType === "Aussie Rules" ? "AFL_AUSTRALIAN_RULES" : gameType?.toUpperCase() } : {}),
         }
 
 
@@ -346,6 +348,17 @@ function GameDetails() {
           />
         )}
 
+        {gameType === "Table Tennis" && (
+          <TableTennisDetail
+            selected={selected}
+            styles={styles}
+            isMobile={isMobile}
+            gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+          />
+        )}
+
         {gameType === "Basketball" && (
           <BasketballDetails
             selected={selected}
@@ -435,6 +448,16 @@ function GameDetails() {
 
         {gameType === "Volleyball" && (
           <VolleyballDetail
+            selected={selected}
+            gameInfo={gameInfo}
+            dateTime={`${gameInfo?.formattedDate} - ${localTime}`}
+            handleRoute={(event, selection) => handleRoute(event, selection)}
+            isMobile={isMobile}
+          />
+        )}
+
+        {gameType === "Ice Hockey" && (
+          <IceHockeyDetail
             selected={selected}
             gameInfo={gameInfo}
             dateTime={`${gameInfo?.formattedDate} - ${localTime}`}

@@ -3,7 +3,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
-import { SiDart } from "react-icons/si";
+import { FaVolleyball } from "react-icons/fa6";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -38,15 +38,28 @@ export const styles = {
   },
 };
 
-function DartCard(props) {
+function IceHockeyCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
 
 
+
+
   return (
     <div style={{ ...styles.container, ...propStyle }}>
+      <p
+        style={{
+          ...FONTS.body7,
+          fontSize: "8px",
+          margin: "0px 0px 10px 0px",
+        }}
+      >
+        {data?.league}
+      </p>
+
       <div style={{ ...styles.row }}>
+
         <div
           style={{
             display: "flex",
@@ -56,17 +69,8 @@ function DartCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            Dart
-          </p>
 
-          <SiDart size={30} color={COLORS.primary} />
+          <FaVolleyball size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -78,7 +82,7 @@ function DartCard(props) {
           </p>
         </div>
         <div>
-          {/* <h3
+          <h3
             style={{
               ...FONTS.h5,
               textAlign: "center",
@@ -86,22 +90,8 @@ function DartCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localTeam?.totalscore ? data?.localTeam?.totalscore : 0} - {data?.awayTeam?.totalscore ? data?.awayTeam?.totalscore : 0}
-          </h3> */}
-          {
-            data?.localTeam?.winner === "True" || data?.awayTeam?.winner === "True" ?
-              <h3
-                style={{
-                  ...FONTS.h7,
-                  textAlign: "center",
-                  margin: "10px 0px 0px 0px",
-                  color: COLORS.green
-                }}
-              >
-                Winner: {data?.localTeam?.winner === "True" ? `${data?.localTeam?.name} (round ${data?.localTeam?.round})` : data?.awayTeam?.winner === "True" ? `${data?.awayTeam?.name} (round ${data?.awayTeam?.round})` : null}
-              </h3>
-              : null
-          }
+            {data?.localTeam?.totalScore ? data?.localTeam?.totalScore : 0} - {data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : 0}
+          </h3>
 
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}
@@ -117,7 +107,7 @@ function DartCard(props) {
           }}
         >
 
-          <SiDart size={30} color={COLORS.primary} />
+          <FaVolleyball size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
@@ -142,4 +132,4 @@ function DartCard(props) {
   );
 }
 
-export default DartCard;
+export default IceHockeyCard;

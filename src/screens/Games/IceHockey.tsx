@@ -10,12 +10,17 @@ import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
 import { MdCancel } from "react-icons/md";
+import { getIceHockeyFixtures } from '../../redux/slices/IceHockeySlice'
+import { LoadingState } from '../../components/LoadingState'
+import IceHockeyGameCard from '../../components/GameCard/IceHockeyGameCard'
 
 function IceHockey({ calendarDate, setCalendarDate }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-
+  const [loading, setLoading] = useState(false)
+  const [live, setLive] = useState<any>([])
+  const [tomorrow, setTomorrow] = useState<any>([])
   const dispatch = useAppDispatch() as any
 
   const url = `${SportSportBaseUrl}`;
@@ -35,7 +40,7 @@ function IceHockey({ calendarDate, setCalendarDate }) {
 
     socket.on("iceHockeyUpdates", (message) => {
       const mes = message;
-      // setLive(mes)
+      setLive(mes?.category)
     });
 
     return () => {
@@ -43,29 +48,65 @@ function IceHockey({ calendarDate, setCalendarDate }) {
     };
   }, []);
 
-  let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
+
 
   useEffect(() => {
-    const payloadUpcoming = {
-      status: 'Not Started'
-    }
-    const payloadFinished = {
-      status: 'Finished'
-    }
 
-    // dispatch(getBoxingFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload);
-    // });
+    setLoading(true)
+    dispatch(getIceHockeyFixtures(null)).then((dd) => {
+      setLive(dd?.payload?.category)
+      setLoading(false)
+    })
 
-    // dispatch(getBoxingFixtures(payloadFinished)).then((dd) => {
-    //     setFinished(dd?.payload);
-    //   });
+
   }, [])
 
-  const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  const status = [
+  useEffect(() => {
+
+    const payloadTomorrow = {
+      range: calendarDate?.index
+    }
+
+
+
+    if (calendarDate) {
+      setSelectedStatus(calendarDate?.formattedDate)
+      dispatch(getIceHockeyFixtures(payloadTomorrow)).then((dd) => {
+        setTomorrow(dd?.payload?.category)
+        setLoading(false)
+      })
+    }
+  }, [calendarDate])
+
+  const liveMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today && match.status === "Not Started";
+    })
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+
+  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
+
+  const [selectedStatus, setSelectedStatus] = useState('Scheduled')
+
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -73,8 +114,37 @@ function IceHockey({ calendarDate, setCalendarDate }) {
     {
       id: 2,
       name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
     }
   ]
+
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    },
+    {
+      id: 4,
+      name: calendarDate?.formattedDate
+    }
+  ]
+
+  const status = calendarDate ? secondStatus : oldStatus
+
+
+
+
 
   return (
     <div>
@@ -84,7 +154,8 @@ function IceHockey({ calendarDate, setCalendarDate }) {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: 10
           }}
         >
           {status?.map((aa, i) => {
@@ -128,9 +199,173 @@ function IceHockey({ calendarDate, setCalendarDate }) {
           })}
         </div>
       </div>
-      {finished?.data?.length < 1 && upcoming?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Ice Hockey' height='30vh' />
-      ) : null}
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Live' ? (
+          <>
+            {liveMatches?.map((league, index) => (
+              <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <IceHockeyGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {liveMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Ice Hockey' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {Array.isArray(upcomingMatches) && upcomingMatches?.map((league, index) => {
+              return <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <IceHockeyGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            })}
+
+            {upcomingMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Ice Hockey' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finishedMatches?.map((league, index) => (
+              <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <IceHockeyGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Ice Hockey' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+        {selectedStatus === calendarDate?.formattedDate ? (
+          <>
+            {tomorrow?.map((league, index) => (
+              <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <IceHockeyGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {tomorrow?.length < 1 ? (
+              <EmptyState header='No Game Available for Ice Hockey' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+      </LoadingState>
     </div>
   )
 }

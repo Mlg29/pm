@@ -110,7 +110,7 @@ const AdjustBet = () => {
 
   }
 
-  console.log({ userFee })
+  // console.log({ userFee })
 
   if (loader) {
     return (
