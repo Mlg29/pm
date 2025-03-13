@@ -40,6 +40,8 @@ function Handball({ calendarDate, setCalendarDate }) {
     socket.on("handballUpdate", (message) => {
       const mes = message;
       console.log({ mes })
+
+      console.log("mess", mes)
       setLive(mes?.category)
     });
 

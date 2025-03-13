@@ -44,8 +44,9 @@ function Boxing({ calendarDate, setCalendarDate }) {
       console.error("WebSocket connection error:", err);
     });
 
-    socket.on("mmaUpdates", (message) => {
+    socket.on("boxingUpdates", (message) => {
       const mes = message;
+
       setLive(mes)
     });
 

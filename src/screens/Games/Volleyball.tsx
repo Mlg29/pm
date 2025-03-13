@@ -39,6 +39,7 @@ function Volleyball({ calendarDate, setCalendarDate }) {
 
     socket.on("volleyballUpdates", (message) => {
       const mes = message;
+      console.log("mess", mes)
       setLive(mes?.category)
     });
 

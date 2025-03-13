@@ -40,6 +40,7 @@ function Darts({ calendarDate, setCalendarDate }) {
     socket.on("dartsUpdates", (message) => {
       const mes = message;
       console.log({ mes })
+      console.log("mess", mes)
       setLive(mes?.category)
     });
 

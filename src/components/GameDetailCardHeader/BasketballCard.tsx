@@ -42,7 +42,7 @@ function BasketballCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
-  const localTime = convertToUserTime(data?.date, data?.time)
+  // const localTime = convertToUserTime(data?.date, data?.time)
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
@@ -90,9 +90,9 @@ function BasketballCard(props) {
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
           </p>
-          <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
+          {/* <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {localTime}
-          </p>
+          </p> */}
         </div>
         <div
           style={{

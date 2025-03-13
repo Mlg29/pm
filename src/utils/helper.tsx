@@ -20,12 +20,12 @@ export const convertToPST = (utcDate) => {
 };
 
 export const convertToUserTime = (dateString, time) => {
-  const [day, month, year] = dateString.split('.').map(Number);
-  const [hours, minutes] = time.split(':').map(Number);
+  const [day, month, year] = dateString?.split('.').map(Number);
+  const [hours, minutes] = time?.split(':').map(Number);
 
   const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
 
-  const formattedTime = date.toLocaleTimeString([], {
+  const formattedTime = date?.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,

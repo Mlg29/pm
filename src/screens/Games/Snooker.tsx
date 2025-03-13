@@ -42,6 +42,7 @@ function Snooker({ calendarDate, setCalendarDate }) {
 
     socket.on("snookerUpdates", (message) => {
       const mes = message;
+      console.log("mess", mes)
       setLive(mes?.category)
     });
 
@@ -57,6 +58,7 @@ function Snooker({ calendarDate, setCalendarDate }) {
 
     setLoading(true)
     dispatch(getSnookerFixtures(null)).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.category)
       setLoading(false)
     })
