@@ -43,7 +43,7 @@ export const styles = {
 function NascarCard({ id, data }) {
     const navigate = useNavigate();
 
-    const localTime = convertToUserTime(data?.time)
+    const localTime = convertToUserTime(data?.date, data?.time)
 
     return (
         <div

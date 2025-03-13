@@ -45,7 +45,7 @@ function Formula1Card({ id, data }) {
 
 
     const utcDate = new Date(data?.race.datetime || data?.race.datetimeUtc);
-    const localTime = convertToUserTime(data?.time)
+    const localTime = convertToUserTime(data?.date, data?.time)
 
 
     return (

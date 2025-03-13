@@ -19,19 +19,19 @@ export const convertToPST = (utcDate) => {
   return date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 };
 
-export const convertToUserTime = (time) => {
+export const convertToUserTime = (dateString, time) => {
+  const [day, month, year] = dateString.split('.').map(Number);
   const [hours, minutes] = time.split(':').map(Number);
 
+  const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
 
-  const date = new Date();
-  date.setUTCHours(hours, minutes, 0, 0);
-
-  return date.toLocaleTimeString([], {
+  const formattedTime = date.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
-    // timeZoneName: 'short',
   });
+
+  return `${dateString} - ${formattedTime}`;
 };
 
 export const formatImageSrc = async (value: any): Promise<void> => {

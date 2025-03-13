@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
 import { FaBasketball } from "react-icons/fa6";
+import { convertToUserTime } from "../../utils/helper";
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
 export const styles = {
@@ -41,6 +42,7 @@ function BasketballCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
+  const localTime = convertToUserTime(data?.date, data?.time)
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
@@ -87,6 +89,9 @@ function BasketballCard(props) {
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
+          </p>
+          <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
+            {localTime}
           </p>
         </div>
         <div

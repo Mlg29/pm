@@ -44,7 +44,7 @@ function HorseGameCard({ id, data }) {
   const navigate = useNavigate();
 
 
-  const localTime = convertToUserTime(data?.time)
+  const localTime = convertToUserTime(data?.date, data?.time)
   //  utcDate.toLocaleTimeString("en-US", {
   //   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   //   hour: "2-digit",

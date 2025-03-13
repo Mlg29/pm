@@ -45,7 +45,7 @@ function MmaGameCard({ id, data }) {
   const navigate = useNavigate();
 
   const utcDate = new Date(data?.datetime || data?.datetimeUtc);
-  const localTime = convertToUserTime(data?.time)
+  const localTime = convertToUserTime(data?.date, data?.time)
 
 
   return (

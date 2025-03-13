@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import noLogo from "../../assets/images/no.jpg";
 import { FONTS } from "../../utils/fonts";
 import { GiTennisBall } from "react-icons/gi";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -41,6 +42,7 @@ export const styles = {
 function TennisCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
+
 
   function isEmpty(value) {
     for (let prop in value) {
@@ -102,6 +104,7 @@ function TennisCard(props) {
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
           </p>
+
         </div>
         <div
           style={{

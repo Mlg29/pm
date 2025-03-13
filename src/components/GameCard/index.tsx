@@ -41,7 +41,7 @@ export const styles = {
 function GameCard({ data, id, sportStatus }) {
   const navigate = useNavigate();
 
-  const localTime = convertToUserTime(data?.time)
+  const localTime = convertToUserTime(data?.formattedDate, data?.time)
 
 
   // const localTime2 = convertToPST(data?.datetimeUtc)
@@ -60,7 +60,7 @@ function GameCard({ data, id, sportStatus }) {
       >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-            ({data?.formattedDate} - {localTime})
+            ({localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {sportStatus === "Scheduled" ? "Not Started" : data?.status}

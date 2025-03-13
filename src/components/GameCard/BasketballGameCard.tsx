@@ -46,7 +46,7 @@ function BasketballGameCard({ id, data }) {
   const navigate = useNavigate();
 
   const utcDate = new Date(data?.datetimeUtc);
-  const localTime = convertToUserTime(data?.time)
+  const localTime = convertToUserTime(data?.date, data?.time)
 
 
   return (
@@ -62,7 +62,7 @@ function BasketballGameCard({ id, data }) {
       >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-            ({data?.date} - {localTime})
+            ({localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status}

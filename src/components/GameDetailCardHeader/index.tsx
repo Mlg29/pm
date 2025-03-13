@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { awayLogoState, getLogo, getSecondLogo, homeLogoState } from "../../redux/slices/FootballSlice";
 import { SportSportBaseUrl } from "../../https";
+import { convertToUserTime } from "../../utils/helper";
 
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
@@ -67,6 +68,7 @@ function GameDetailCardHeader(props: any) {
     fetchLogos()
   }, [data?.localTeam?.teamId, data?.visitorTeam?.teamId])
 
+  const localTime = convertToUserTime(data?.formattedDate, data?.time)
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
@@ -131,7 +133,7 @@ function GameDetailCardHeader(props: any) {
             {data?.localTeam?.goals === "?" ? null : data?.localTeam?.goals} - {data?.visitorTeam?.goals === "?" ? null : data?.visitorTeam?.goals}
           </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.dateTime}
+            {localTime}
           </p>
         </div>
         <div

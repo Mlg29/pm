@@ -38,7 +38,7 @@ export const styles = {
 function AussieRulesGameCard({ data, id }) {
   const navigate = useNavigate();
 
-  const localTime = convertToUserTime(data?.time)
+  const localTime = convertToUserTime(data?.date, data?.time)
 
   return (
     <div>
