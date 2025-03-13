@@ -19,7 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { SecretQuestionSchema } from "../../https/schemas";
 import { updateUserData } from "../../redux/slices/AuthSlice";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import * as yup from "yup";
 import { useMediaQuery } from "react-responsive";
 
 export const styles = {
@@ -122,13 +122,13 @@ function SecretQuestion() {
     answer3: "",
   };
 
-  const validationSchema = Yup.object({
-    question1: Yup.string().required("Required"),
-    answer1: Yup.string().required("Required"),
-    question2: Yup.string().required("Required"),
-    answer2: Yup.string().required("Required"),
-    question3: Yup.string().required("Required"),
-    answer3: Yup.string().required("Required"),
+  const validationSchema = yup.object({
+    question1: yup.string().required("Required"),
+    answer1: yup.string().required("Required"),
+    question2: yup.string().required("Required"),
+    answer2: yup.string().required("Required"),
+    question3: yup.string().required("Required"),
+    answer3: yup.string().required("Required"),
   });
 
   const convertToObjectArray = (data) => {
