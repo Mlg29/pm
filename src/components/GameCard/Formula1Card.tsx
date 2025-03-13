@@ -74,7 +74,7 @@ function Formula1Card({ id, data }) {
                 </div> */}
                 <div style={styles.box1}>
                     <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-                        ({data?.race?.date} - {localTime})
+                        ({localTime})
                     </p>
                     <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
                         {data?.race?.status}

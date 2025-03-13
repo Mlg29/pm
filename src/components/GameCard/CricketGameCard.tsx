@@ -68,7 +68,7 @@ function CricketGameCard({ id, data }) {
               color: COLORS.black
             }}
           >
-            ({data?.date} - {localTime})
+            ({localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {/* {data?.status === "Started" ? `${data?.time}'` : data?.status} */}
