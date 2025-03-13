@@ -91,6 +91,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { FaCalendarAlt } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
 
 
 
@@ -101,7 +102,7 @@ function HomeScreen() {
   const dispatch = useAppDispatch() as any;
   const getToken = localStorage.getItem("token");
   const [userData, setUserData] = useState(null);
-
+  const isMobile = useMediaQuery({ maxWidth: 590 });
   const notifications = useAppSelector(notificationState) as any;
   const [loader, setLoader] = useState(true);
   const [visible, setVisible] = useState(false);
@@ -167,11 +168,11 @@ function HomeScreen() {
       name: "Tennis",
       image: selected === "Tennis" ? atennis : intennis,
     },
-    {
-      id: 4,
-      name: "Horse",
-      image: selected === "Horse" ? ahorse : inhorse,
-    },
+    // {
+    //   id: 4,
+    //   name: "Horse",
+    //   image: selected === "Horse" ? ahorse : inhorse,
+    // },
     {
       id: 5,
       name: "Boxing",
@@ -389,7 +390,7 @@ function HomeScreen() {
         <SliderComponent />
       </div> */}
 
-      <div style={{ height: "250px", overflow: "hidden" }}>
+      <div style={{ height: isMobile ? "250px" : "400px", overflow: "hidden" }}>
         <SliderComponent />
       </div>
 

@@ -42,7 +42,7 @@ function DartCard(props) {
   const navigate = useNavigate();
   const { propStyle, data } = props;
 
-
+  console.log([data])
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
@@ -63,7 +63,7 @@ function DartCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            Dart
+            {data?.league}
           </p>
 
           <SiDart size={30} color={COLORS.primary} />
@@ -78,7 +78,7 @@ function DartCard(props) {
           </p>
         </div>
         <div>
-          {/* <h3
+          <h3
             style={{
               ...FONTS.h5,
               textAlign: "center",
@@ -86,8 +86,8 @@ function DartCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localTeam?.totalscore ? data?.localTeam?.totalscore : 0} - {data?.awayTeam?.totalscore ? data?.awayTeam?.totalscore : 0}
-          </h3> */}
+            {data?.localTeam?.totalScore ? data?.localTeam?.totalScore : 0} - {data?.awayTeam?.totalscore ? data?.awayTeam?.totalscore : 0}
+          </h3>
           {
             data?.localTeam?.winner === "True" || data?.awayTeam?.winner === "True" ?
               <h3

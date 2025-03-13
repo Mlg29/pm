@@ -155,7 +155,7 @@ function GameDetails() {
   const [loader, setLoader] = useState(false);
 
 
-
+  console.log({ gameInfo })
 
   useEffect(() => {
     setLoader(true);
@@ -174,7 +174,7 @@ function GameDetails() {
     hour12: true
   });
 
-  console.log({ gameInfo })
+
   const handleRoute = (route: string, selection?: string) => {
 
     var name = null

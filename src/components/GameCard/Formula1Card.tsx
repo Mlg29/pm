@@ -5,6 +5,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import { OverflowX } from "../../utils/type";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -44,13 +45,7 @@ function Formula1Card({ id, data }) {
 
 
     const utcDate = new Date(data?.race.datetime || data?.race.datetimeUtc);
-    const localTime = utcDate.toLocaleTimeString("en-US", {
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true
-    });
-
+    const localTime = convertToUserTime(data?.time)
 
 
     return (

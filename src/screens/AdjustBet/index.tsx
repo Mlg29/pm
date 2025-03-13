@@ -130,8 +130,6 @@ const AdjustBet = () => {
   }
 
 
-
-
   return (
     <div className="top-container">
       {/* <div style={{ marginTop: 10, cursor: "pointer" }} onClick={() => {
@@ -157,20 +155,36 @@ const AdjustBet = () => {
         <p style={{ ...FONTS.body7, color: COLORS.gray, marginBottom: "10px" }}>
           @{userFee?.opponentUsername} Bet Amount
         </p>
-        <h3 style={{ ...FONTS.h6 }}>
-          {
-            isNaN(userFee?.amount) ? null
-              :
-              <span>{userData?.defaultCurrency === "NGN" ? "₦" :
-                userData?.defaultCurrency === "USD" ? "$" : ""}</span>
-          }
+        {
+          userData?.defaultCurrency === userFee?.initialData?.betCurrency ? <>
+            <h3 style={{ ...FONTS.h6 }}>
+              {
+                isNaN(userFee?.amount) ? null
+                  :
+                  <span>{userData?.defaultCurrency === "NGN" ? "₦" :
+                    userData?.defaultCurrency === "USD" ? "$" : ""}</span>
+              }
+              {
+                isNaN(userFee?.amount) ? null : `${formatCurrency(userFee?.amount)}`
+              }
+            </h3>
+          </>
+            :
+            <h3 style={{ ...FONTS.h6 }}>
+              {
+                isNaN(userFee?.amount) ? null
+                  :
+                  <span>{userData?.defaultCurrency === "NGN" ? "₦" :
+                    userData?.defaultCurrency === "USD" ? "$" : ""}</span>
+              }
 
-          {
-            isNaN(userFee?.amount) ? null : `${formatCurrency(userFee?.amount)} =`
-          }
-          <span style={{ color: 'gray' }}> {userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}
-            {formatCurrency(userFee?.initialData?.betAmount || userFee?.initialData?.opponentBetAmount)}</span>
-        </h3>
+              {
+                isNaN(userFee?.amount) ? null : `${formatCurrency(userFee?.amount)} =`
+              }
+              <span style={{ color: 'gray' }}> {userFee?.initialData?.betCurrency === "NGN" ? "₦" : userFee?.initialData?.betCurrency === "USD" ? "$" : ""}
+                {formatCurrency(userFee?.initialData?.betAmount || userFee?.initialData?.opponentBetAmount)}</span>
+            </h3>
+        }
 
 
       </div>

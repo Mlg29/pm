@@ -51,7 +51,7 @@ function Snooker({ calendarDate, setCalendarDate }) {
   }, []);
 
 
-
+  console.log({ live })
 
   useEffect(() => {
 
@@ -84,7 +84,7 @@ function Snooker({ calendarDate, setCalendarDate }) {
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
+    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("frame"))
   }))
     .filter(league => league?.match.length > 0);
 

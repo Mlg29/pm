@@ -50,6 +50,7 @@ function IceHockey({ calendarDate, setCalendarDate }) {
 
 
 
+
   useEffect(() => {
 
     setLoading(true)
@@ -81,7 +82,7 @@ function IceHockey({ calendarDate, setCalendarDate }) {
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
+    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("period"))
   }))
     .filter(league => league?.match.length > 0);
 
@@ -100,7 +101,7 @@ function IceHockey({ calendarDate, setCalendarDate }) {
 
   const finishedMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "After Penalties" || match.status === "After Overtime" || match.status === "Interrupted" || match.status === "Finished")
   }))
     .filter(league => league?.match.length > 0);
 

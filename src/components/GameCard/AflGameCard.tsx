@@ -5,6 +5,7 @@ import noLogo from "../../assets/images/no.jpg";
 import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -43,40 +44,42 @@ export const styles = {
 function AflGameCard({ id, data }) {
   const navigate = useNavigate();
 
+  const localTime = convertToUserTime(data?.time)
+
   return (
     <div>
 
-       <div
-      style={styles.container}
-      key={id}
-      onClick={() =>
-        navigate("/game-details", { state: { data: data, gameType: "AFL" } })
-      }
-    >
-      <div style={styles.box1}>
-      <p style={{ ...FONTS.body8,fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-         ({data?.date || data?.datetime_utc})
-        </p>
-        <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-          {data?.status === "Started" ? `${data?.time}'` : data?.status}
-        </p>
-      </div>
-      <div style={styles.box2}>
-        <p style={{ ...FONTS.body7 }}>{data?.hometeam?.name}</p>
-        <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
-      </div>
-      <div style={styles.box3}>
-        <div style={{ marginLeft: 10 }}>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.hometeam?.totalscore ? data?.hometeam?.totalscore : "-"}</p>
-        <p style={{ ...FONTS.body7,color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : "-"}</p>
-          
-
+      <div
+        style={styles.container}
+        key={id}
+        onClick={() =>
+          navigate("/game-details", { state: { data: data, gameType: "AFL" } })
+        }
+      >
+        <div style={styles.box1}>
+          <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
+            ({data?.date || localTime})
+          </p>
+          <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
+            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+          </p>
         </div>
-      </div>
+        <div style={styles.box2}>
+          <p style={{ ...FONTS.body7 }}>{data?.hometeam?.name}</p>
+          <p style={{ ...FONTS.body7 }}>{data?.awayteam?.name}</p>
+        </div>
+        <div style={styles.box3}>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>{data?.hometeam?.totalscore ? data?.hometeam?.totalscore : "-"}</p>
+            <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>{data?.awayteam?.totalscore ? data?.awayteam?.totalscore : "-"}</p>
 
+
+          </div>
+        </div>
+
+      </div>
     </div>
-    </div>
-   
+
   );
 }
 

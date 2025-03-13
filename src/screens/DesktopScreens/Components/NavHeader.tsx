@@ -161,11 +161,11 @@ function NavHeader() {
       name: "Tennis",
       image: selected === "Tennis" ? atennis : intennis,
     },
-    {
-      id: 4,
-      name: "Horse",
-      image: selected === "Horse" ? ahorse : inhorse,
-    },
+    // {
+    //   id: 4,
+    //   name: "Horse",
+    //   image: selected === "Horse" ? ahorse : inhorse,
+    // },
     {
       id: 5,
       name: "Boxing",

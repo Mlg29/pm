@@ -19,6 +19,21 @@ export const convertToPST = (utcDate) => {
   return date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 };
 
+export const convertToUserTime = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
+
+
+  const date = new Date();
+  date.setUTCHours(hours, minutes, 0, 0);
+
+  return date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+    // timeZoneName: 'short',
+  });
+};
+
 export const formatImageSrc = async (value: any): Promise<void> => {
   // const transformedUrl = transformUrl(value);
   await fetch(value)

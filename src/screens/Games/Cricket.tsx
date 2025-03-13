@@ -49,7 +49,6 @@ function Cricket({ calendarDate, setCalendarDate }) {
 
     socket.on("cricketUpdates", (message) => {
       const mes = message;
-      console.log(">>", mes)
       setLive(mes)
     });
 

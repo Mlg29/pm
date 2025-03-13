@@ -5,6 +5,7 @@ import noLogo from "../../assets/images/no.jpg";
 import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -44,12 +45,7 @@ function MmaGameCard({ id, data }) {
   const navigate = useNavigate();
 
   const utcDate = new Date(data?.datetime || data?.datetimeUtc);
-  const localTime = utcDate.toLocaleTimeString("en-US", {
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true
-  });
+  const localTime = convertToUserTime(data?.time)
 
 
   return (

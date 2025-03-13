@@ -5,6 +5,7 @@ import noLogo from "../../assets/images/no.jpg";
 import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -45,12 +46,7 @@ function BasketballGameCard({ id, data }) {
   const navigate = useNavigate();
 
   const utcDate = new Date(data?.datetimeUtc);
-  const localTime = utcDate.toLocaleTimeString("en-US", {
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true
-  });
+  const localTime = convertToUserTime(data?.time)
 
 
   return (
@@ -79,15 +75,75 @@ function BasketballGameCard({ id, data }) {
         <div style={styles.box3}>
 
           <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.localTeam?.q1
+                ? data?.localTeam?.q1
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.awayTeam?.q1
+                ? data?.awayTeam?.q1
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.localTeam?.q2
+                ? data?.localTeam?.q2
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.awayTeam?.q2
+                ? data?.awayTeam?.q2
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.localTeam?.q3
+                ? data?.localTeam?.q3
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.awayTeam?.q3
+                ? data?.awayTeam?.q3
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.localTeam?.q4
+                ? data?.localTeam?.q4
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.awayTeam?.q4
+                ? data?.awayTeam?.q4
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.localTeam?.ot
+                ? data?.localTeam?.ot
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body7, color: COLORS.gray }}>
+              {data?.awayTeam?.ot
+                ? data?.awayTeam?.ot
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
               {data?.localTeam?.totalScore
                 ? data?.localTeam?.totalScore
-                : "-"}
+                : ""}
             </p>
             <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
               {data?.awayTeam?.totalScore
                 ? data?.awayTeam?.totalScore
-                : "-"}
+                : ""}
             </p>
           </div>
         </div>

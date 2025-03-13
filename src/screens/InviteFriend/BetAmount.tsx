@@ -91,7 +91,7 @@ const BetAmount = () => {
               <div>
                 {
                   exRate ? <div>
-                    <p style={{ textAlign: 'right', margin: "10px 0px" }}>{userData?.defaultCurrency === "NGN" ? "$" : userData?.defaultCurrency === "USD" ? "₦" : ""}{exRate?.rate * parseInt(amount)}</p>
+                    <p style={{ textAlign: 'right', margin: "10px 0px" }}>{userData?.defaultCurrency === "NGN" ? "$" : userData?.defaultCurrency === "USD" ? "₦" : ""}{isNaN(exRate?.rate * parseInt(amount) ? 0 : exRate?.rate * parseInt(amount))}</p>
                   </div>
                     : null
                 }
@@ -132,7 +132,7 @@ const BetAmount = () => {
                         </div>
 
                         <div>
-                          <p style={{ fontSize: 14 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{amount} = {userData?.defaultCurrency === "NGN" ? "$" : userData?.defaultCurrency === "USD" ? "₦" : ""}{exRate?.rate * parseInt(amount)}</p>
+                          <p style={{ fontSize: 14 }}>{userData?.defaultCurrency === "NGN" ? "₦" : userData?.defaultCurrency === "USD" ? "$" : ""}{amount} = {userData?.defaultCurrency === "NGN" ? "$" : userData?.defaultCurrency === "USD" ? "₦" : ""}{isNaN(exRate?.rate * parseInt(amount)) ? 0 : exRate?.rate * parseInt(amount)}</p>
                         </div>
                       </div>
                     </div>

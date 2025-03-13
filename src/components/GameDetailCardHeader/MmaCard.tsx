@@ -80,7 +80,7 @@ function MmaCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -121,7 +121,7 @@ function MmaCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.awayTeam?.name}
           </p>
         </div>
       </div>

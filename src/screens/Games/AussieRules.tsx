@@ -42,7 +42,7 @@ function AussieRules({ calendarDate, setCalendarDate }) {
 
     socket.on("australianFootballLeagueUpdates", (message) => {
       const mes = message;
-      setLive(mes)
+      setLive(mes?.category)
     });
 
     return () => {

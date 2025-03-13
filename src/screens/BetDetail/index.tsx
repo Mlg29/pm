@@ -2562,7 +2562,8 @@ function BetDetail() {
                       ? `${betData?.sportEvent?.HandBallEvent?.localTeamName} Win`
                       : betData?.prediction === betData?.sportEvent?.HandBallEvent?.visitorTeamName
                         ? `${betData?.sportEvent?.HandBallEvent?.visitorTeamName} Win`
-                        : "N/A"}
+                        : betData?.prediction === "draw"
+                          ? "DRAW" : "N/A"}
 
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
@@ -2584,7 +2585,8 @@ function BetDetail() {
                       ? `${betData?.sportEvent?.HandBallEvent?.localTeamName} Win`
                       : betData?.opponentPrediction === betData?.sportEvent?.HandBallEvent?.visitorTeamName
                         ? `${betData?.sportEvent?.HandBallEvent?.visitorTeamName} Win`
-                        : "N/A"}
+                        : betData?.opponentPrediction === "draw"
+                          ? "DRAW" : "N/A"}
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? <IoMdCheckmarkCircle />
@@ -2612,7 +2614,8 @@ function BetDetail() {
                         ? `${betData?.sportEvent?.HandBallEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === betData?.sportEvent?.HandBallEvent?.visitorTeamName
                           ? `${betData?.sportEvent?.HandBallEvent?.visitorTeamName} Win`
-                          : "N/A"}
+                          : betData?.opponentPrediction === "draw"
+                            ? "DRAW" : "N/A"}
 
                       {
                         betData?.winnerId && betData?.winnerId !== userData?.id
@@ -2634,7 +2637,8 @@ function BetDetail() {
                         ? `${betData?.sportEvent?.HandBallEvent?.localTeamName} Win`
                         : betData?.prediction === betData?.sportEvent?.HandBallEvent?.visitorTeamName
                           ? `${betData?.sportEvent?.HandBallEvent?.visitorTeamName} Win`
-                          : "N/A"}
+                          : betData?.prediction === "draw"
+                            ? "DRAW" : "N/A"}
 
                       {
                         betData?.winnerId && betData?.winnerId !== userData?.id

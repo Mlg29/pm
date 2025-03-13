@@ -39,6 +39,7 @@ function Darts({ calendarDate, setCalendarDate }) {
 
     socket.on("dartsUpdates", (message) => {
       const mes = message;
+      console.log({ mes })
       setLive(mes?.category)
     });
 
@@ -77,10 +78,10 @@ function Darts({ calendarDate, setCalendarDate }) {
       })
     }
   }, [calendarDate])
-
+  console.log({ live })
   const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
+    match: league?.match?.filter(match => /\d/.test(match.status))
   }))
     .filter(league => league?.match.length > 0);
 

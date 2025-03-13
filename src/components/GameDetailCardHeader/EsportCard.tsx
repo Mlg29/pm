@@ -80,7 +80,7 @@ function EsportCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -92,11 +92,11 @@ function EsportCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.localteam?.score ? data?.localteam?.score : 0} - {data?.awayteam?.score ? data?.awayteam?.score : 0}
+            {data?.localTeam?.totalScore ? data?.localTeam?.totalScore : 0} - {data?.awayTeam?.totalScore ? data?.awayTeam?.totalScore : 0}
           </h3>
 
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
-            {data?.status === "Started" ? `${data?.dateTime}'` : data?.status}
+            {data?.status === "Started" ? `${data?.status}'` : data?.status}
           </p>
         </div>
         <div
@@ -117,7 +117,7 @@ function EsportCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.awayTeam?.name}
           </p>
         </div>
       </div>

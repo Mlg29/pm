@@ -5,6 +5,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import { OverflowX } from "../../utils/type";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -42,7 +43,7 @@ export const styles = {
 function NascarCard({ id, data }) {
     const navigate = useNavigate();
 
-    console.log({ data })
+    const localTime = convertToUserTime(data?.time)
 
     return (
         <div

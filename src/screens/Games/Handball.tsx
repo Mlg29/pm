@@ -40,7 +40,7 @@ function Handball({ calendarDate, setCalendarDate }) {
     socket.on("handballUpdate", (message) => {
       const mes = message;
       console.log({ mes })
-      setLive(mes)
+      setLive(mes?.category)
     });
 
     return () => {
@@ -50,7 +50,7 @@ function Handball({ calendarDate, setCalendarDate }) {
 
 
 
-
+  console.log({ live })
   useEffect(() => {
 
     setLoading(true)
@@ -82,7 +82,7 @@ function Handball({ calendarDate, setCalendarDate }) {
 
   const liveMatches = Array.isArray(live) && live?.map(league => ({
     ...league,
-    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
+    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("half"))
   }))
     .filter(league => league?.match.length > 0);
 

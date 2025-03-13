@@ -5,6 +5,7 @@ import { COLORS } from "../../../utils/colors";
 
 import { FlexDirection, OverflowY, Position } from "../../../utils/type";
 import VolleyballCard from "../../../components/GameDetailCardHeader/VolleyballCard";
+import { FONTS } from "../../../utils/fonts";
 
 
 
@@ -106,6 +107,17 @@ const styles = {
     height: "200px",
     overflowY: "scroll" as OverflowY,
   },
+  box2: {
+    marginRight: 10,
+    width: "80%",
+  },
+  box3: {
+    display: "flex",
+    justifyContent: 'flex-end',
+    alignItems: "center",
+    marginRight: 10,
+    width: "10%",
+  },
 };
 
 
@@ -121,6 +133,87 @@ function VolleyballDetail({ gameInfo, isMobile, dateTime, selected, handleRoute 
         }}
       >
         <VolleyballCard data={gameInfo} />
+      </div>
+      <div style={{ display: 'flex', marginBottom: 20, flexDirection: 'row', alignItems: 'center' }}>
+        <div style={styles.box2}>
+          <p style={{ ...FONTS.h5 }}>{gameInfo?.localTeam?.name}</p>
+          <p style={{ ...FONTS.h5 }}>{gameInfo?.awayTeam?.name}</p>
+        </div>
+        <div style={styles.box3}>
+
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.s1
+                ? gameInfo?.localTeam?.s1
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.s1
+                ? gameInfo?.awayTeam?.s1
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.s2
+                ? gameInfo?.localTeam?.s2
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.s2
+                ? gameInfo?.awayTeam?.s2
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.s3
+                ? gameInfo?.localTeam?.s3
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.s3
+                ? gameInfo?.awayTeam?.s3
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.s4
+                ? gameInfo?.localTeam?.s4
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.s4
+                ? gameInfo?.awayTeam?.s4
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.ot
+                ? gameInfo?.localTeam?.ot
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.ot
+                ? gameInfo?.awayTeam?.ot
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.h5, color: COLORS.dimRed }}>
+              {gameInfo?.localTeam?.totalScore
+                ? gameInfo?.localTeam?.totalScore
+                : ""}
+            </p>
+            <p style={{ ...FONTS.h5, color: COLORS.dimRed }}>
+              {gameInfo?.awayTeam?.totalScore
+                ? gameInfo?.awayTeam?.totalScore
+                : ""}
+            </p>
+          </div>
+        </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {isMobile ? (

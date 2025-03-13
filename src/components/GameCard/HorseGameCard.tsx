@@ -5,6 +5,7 @@ import { COLORS } from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import { OverflowX } from "../../utils/type";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -42,13 +43,16 @@ export const styles = {
 function HorseGameCard({ id, data }) {
   const navigate = useNavigate();
 
-  const utcDate = new Date(data?.datetimeUtc);
-  const localTime = utcDate.toLocaleTimeString("en-US", {
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true
-  });
+
+  const localTime = convertToUserTime(data?.time)
+  //  utcDate.toLocaleTimeString("en-US", {
+  //   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  //   hour12: true
+  // });
+
+
 
   return (
     <div

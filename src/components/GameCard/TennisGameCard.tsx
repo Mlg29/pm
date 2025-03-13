@@ -5,6 +5,7 @@ import noLogo from "../../assets/images/no.jpg";
 import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -42,12 +43,7 @@ function TennisGameCard({ id, data }) {
   const navigate = useNavigate();
 
   const utcDate = new Date(data?.datetimeUtc);
-  const localTime = utcDate.toLocaleTimeString("en-US", {
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true
-  });
+  const localTime = convertToUserTime(data?.time)
 
   return (
     <div>
@@ -77,9 +73,23 @@ function TennisGameCard({ id, data }) {
             {data?.player?.map((dd, i) => {
               return (
                 <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
-
-                  <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-                    {dd?.totalscore || dd?.totalScore}
+                  <p style={{ ...FONTS.body7, color: COLORS.gray, margin: '0px 5px' }}>
+                    {dd?.s5}
+                  </p>
+                  <p style={{ ...FONTS.body7, color: COLORS.gray, margin: '0px 5px' }}>
+                    {dd?.s4}
+                  </p>
+                  <p style={{ ...FONTS.body7, color: COLORS.gray, margin: '0px 5px' }}>
+                    {dd?.s3}
+                  </p>
+                  <p style={{ ...FONTS.body7, color: COLORS.gray, margin: '0px 5px' }}>
+                    {dd?.s2}
+                  </p>
+                  <p style={{ ...FONTS.body7, color: COLORS.gray, margin: '0px 5px' }}>
+                    {dd?.s1}
+                  </p>
+                  <p style={{ ...FONTS.body7, color: COLORS.dimRed, margin: '0px 5px' }}>
+                    {dd?.totalscore}
                   </p>
 
                 </div>

@@ -80,6 +80,16 @@ function SnookerCard(props) {
           </p>
         </div>
         <div>
+          <h3
+            style={{
+              ...FONTS.h5,
+              textAlign: "center",
+              margin: "10px 0px 0px 0px",
+              color: COLORS.dimRed
+            }}
+          >
+            {data?.localTeam?.totalScore ? data?.localTeam?.totalScore : 0} - {data?.awayTeam?.totalscore ? data?.awayTeam?.totalscore : 0}
+          </h3>
           {
             data?.localTeam?.winner === "True" || data?.awayTeam?.winner === "True" ?
               <h3

@@ -5,6 +5,7 @@ import noLogo from "../../assets/images/no.jpg";
 import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -42,6 +43,7 @@ export const styles = {
 
 function BoxingGameCard({ id, data }) {
   const navigate = useNavigate();
+  const localTime = convertToUserTime(data?.time)
 
   return (
     <div>
@@ -54,7 +56,7 @@ function BoxingGameCard({ id, data }) {
       >
         <div style={styles.box1}>
           <p style={{ ...FONTS.body8, fontSize: 10, fontWeight: 'bold', color: COLORS.black }}>
-            ({data?.date})
+            ({data?.date} - {localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
             {data?.status === "Started" ? `${data?.time}'` : data?.status}

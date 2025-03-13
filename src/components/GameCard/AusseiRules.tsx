@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
 import { FONTS } from "../../utils/fonts";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -37,7 +38,7 @@ export const styles = {
 function AussieRulesGameCard({ data, id }) {
   const navigate = useNavigate();
 
-
+  const localTime = convertToUserTime(data?.time)
 
   return (
     <div>

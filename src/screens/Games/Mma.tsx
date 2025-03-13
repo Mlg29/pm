@@ -47,6 +47,7 @@ function Mma({ calendarDate, setCalendarDate }) {
 
     socket.on("mmaUpdates", (message) => {
       const mes = message;
+      console.log("mess>>", mes)
       setLive(mes?.category)
     });
 

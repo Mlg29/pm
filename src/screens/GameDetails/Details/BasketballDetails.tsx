@@ -104,8 +104,19 @@ const styles = {
     height: "100%",
   },
   btt: {
-    height: "200px",
+    // height: "200px",
     overflowY: "scroll" as OverflowY,
+  },
+  box2: {
+    marginRight: 10,
+    width: "80%",
+  },
+  box3: {
+    display: "flex",
+    justifyContent: 'flex-end',
+    alignItems: "center",
+    marginRight: 10,
+    width: "10%",
   },
 };
 
@@ -125,6 +136,87 @@ function BasketballDetails({ selected, dateTime, gameInfo, handleRoute, isMobile
         }}
       >
         <BasketballCard data={bb} />
+      </div>
+      <div style={{ display: 'flex', marginBottom: 20, flexDirection: 'row', alignItems: 'center' }}>
+        <div style={styles.box2}>
+          <p style={{ ...FONTS.h5 }}>{gameInfo?.localTeam?.name}</p>
+          <p style={{ ...FONTS.h5 }}>{gameInfo?.awayTeam?.name}</p>
+        </div>
+        <div style={styles.box3}>
+
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.q1
+                ? gameInfo?.localTeam?.q1
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.q1
+                ? gameInfo?.awayTeam?.q1
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.q2
+                ? gameInfo?.localTeam?.q2
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.q2
+                ? gameInfo?.awayTeam?.q2
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.q3
+                ? gameInfo?.localTeam?.q3
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.q3
+                ? gameInfo?.awayTeam?.q3
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.q4
+                ? gameInfo?.localTeam?.q4
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.q4
+                ? gameInfo?.awayTeam?.q4
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.localTeam?.ot
+                ? gameInfo?.localTeam?.ot
+                : ""}
+            </p>
+            <p style={{ ...FONTS.body5, color: COLORS.gray }}>
+              {gameInfo?.awayTeam?.ot
+                ? gameInfo?.awayTeam?.ot
+                : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <p style={{ ...FONTS.h5, color: COLORS.dimRed }}>
+              {gameInfo?.localTeam?.totalScore
+                ? gameInfo?.localTeam?.totalScore
+                : ""}
+            </p>
+            <p style={{ ...FONTS.h5, color: COLORS.dimRed }}>
+              {gameInfo?.awayTeam?.totalScore
+                ? gameInfo?.awayTeam?.totalScore
+                : ""}
+            </p>
+          </div>
+        </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {isMobile ? (

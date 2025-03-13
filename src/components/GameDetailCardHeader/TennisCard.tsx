@@ -89,7 +89,7 @@ function TennisCard(props) {
           </p>
         </div>
         <div>
-          {/* <h3
+          <h3
             style={{
               ...FONTS.h5,
               textAlign: "center",
@@ -97,8 +97,8 @@ function TennisCard(props) {
               color: COLORS.dimRed
             }}
           >
-            {data?.player[0]?.totalScore} - {data?.player[1]?.totalScore}
-          </h3> */}
+            {data?.player[0]?.totalscore} - {data?.player[1]?.totalscore}
+          </h3>
           <p style={{ ...FONTS.body7, fontSize: "8px", textAlign: "center" }}>
             {data?.status}
           </p>
@@ -147,18 +147,19 @@ function TennisCard(props) {
                   marginBottom: 10,
                 }}
               >
-                <p>{dd?.name} </p>
+                <p style={{ ...FONTS.h5 }}>{dd?.name} </p>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
                   }}
                 >
-                  <p style={{ margin: "0px 5px" }}>{dd?.s1 ? dd?.s1 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s2 ? dd?.s2 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s3 ? dd?.s3 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s4 ? dd?.s4 : ""} </p>
-                  <p style={{ margin: "0px 5px" }}>{dd?.s5 ? dd?.s5 : ""} </p>
+                  <p style={{ ...FONTS.body5, color: 'gray', margin: "0px 5px" }}>{dd?.s1 ? dd?.s1 : ""} </p>
+                  <p style={{ ...FONTS.body5, color: 'gray', margin: "0px 5px" }}>{dd?.s2 ? dd?.s2 : ""} </p>
+                  <p style={{ ...FONTS.body5, color: 'gray', margin: "0px 5px" }}>{dd?.s3 ? dd?.s3 : ""} </p>
+                  <p style={{ ...FONTS.body5, color: 'gray', margin: "0px 5px" }}>{dd?.s4 ? dd?.s4 : ""} </p>
+                  <p style={{ ...FONTS.body5, color: 'gray', margin: "0px 5px" }}>{dd?.s5 ? dd?.s5 : ""} </p>
+                  <p style={{ ...FONTS.body5, color: COLORS.dimRed, margin: "0px 5px" }}>{dd?.totalscore ? dd?.totalscore : ""} </p>
                 </div>
               </div>
             );

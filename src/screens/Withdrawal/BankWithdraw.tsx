@@ -87,9 +87,9 @@ function BankWithdraw() {
 
 
   const handleWithdrawal = async () => {
-   const bb =  value.replace(/,/g, "");
+    const bb = value.replace(/,/g, "");
 
-    if(userData?.walletBalance < parseFloat(bb)){
+    if (userData?.walletBalance < parseFloat(bb)) {
       toast.error("Insufficient wallet balance", {
         position: "bottom-center",
       });
@@ -148,7 +148,7 @@ function BankWithdraw() {
     }
   };
 
-  
+
 
   if (load) {
     return (
@@ -339,7 +339,7 @@ function BankWithdraw() {
                   backgroundColor: accountName?.length < 1 ? "gray" : "",
                 }}
                 handlePress={
-                  accountName?.length < 1 ? () => {} : () => handleSubmit()
+                  accountName?.length < 1 ? () => { } : () => handleSubmit()
                 }
               />
             </div>

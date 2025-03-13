@@ -53,6 +53,8 @@ function Easport({ calendarDate, setCalendarDate }) {
     };
   }, []);
 
+  console.log({ live })
+
   useEffect(() => {
     const payloadUpcoming = {
       range: calendarDate?.index
@@ -80,7 +82,7 @@ function Easport({ calendarDate, setCalendarDate }) {
   }, [calendarDate])
 
 
-  const liveLeagues = Array.isArray(live) && live?.filter(bb => bb?.status > 0 || bb?.status === "HT")
+  const liveLeagues = Array.isArray(live) && live?.filter(bb => bb?.status?.toLowerCase() === "live" || bb?.status === "Started")
   const scheduleLeagues = Array.isArray(live) && live?.filter(bb => bb?.status === "Not Started")
   const finishedLeagues = Array.isArray(live) && live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT" || bb?.status === "Postponed")
 
@@ -191,7 +193,7 @@ function Easport({ calendarDate, setCalendarDate }) {
                     marginRight: 10
                   }}
                 >
-                  {aa?.league}
+                  {aa?.type} - {aa?.league}
                 </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
@@ -219,7 +221,7 @@ function Easport({ calendarDate, setCalendarDate }) {
                     marginRight: 10
                   }}
                 >
-                  {aa?.league}
+                  {aa?.type} - {aa?.league}
                 </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
@@ -248,7 +250,7 @@ function Easport({ calendarDate, setCalendarDate }) {
                     marginRight: 10
                   }}
                 >
-                  {aa?.league}
+                  {aa?.type} - {aa?.league}
                 </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
@@ -266,6 +268,20 @@ function Easport({ calendarDate, setCalendarDate }) {
           {upcoming?.map((aa, i) => {
             return (
               <div key={i}>
+
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {aa?.type} - {aa?.league}
+                </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
             )

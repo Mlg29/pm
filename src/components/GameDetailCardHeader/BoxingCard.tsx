@@ -69,7 +69,7 @@ function BoxingCard(props) {
               margin: "0px 0px 10px 0px",
             }}
           >
-            {data?.name}
+            {data?.name || data?.league}
           </p>
           <GiBoxingGlove size={30} color={COLORS.primary} />
           <p
@@ -79,7 +79,7 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.localTeamName}
+            {data?.localTeamName || data?.localTeam?.name}
           </p>
         </div>
         <div>
@@ -121,7 +121,7 @@ function BoxingCard(props) {
               margin: "10px 0px 0px 0px",
             }}
           >
-            {data?.visitorTeamName}
+            {data?.visitorTeamName || data?.awayTeam?.name}
           </p>
         </div>
       </div>

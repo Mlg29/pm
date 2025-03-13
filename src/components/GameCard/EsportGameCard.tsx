@@ -5,6 +5,7 @@ import noLogo from "../../assets/images/no.jpg";
 import { useNavigate } from "react-router-dom";
 import { GiSoccerField } from "react-icons/gi";
 import moment from "moment";
+import { convertToUserTime } from "../../utils/helper";
 
 type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
 
@@ -43,12 +44,7 @@ export const styles = {
 function EsportGameCard({ id, data }) {
   const navigate = useNavigate();
   const utcDate = new Date(data?.datetimeUtc);
-  const localTime = utcDate.toLocaleTimeString("en-US", {
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true
-  });
+  const localTime = convertToUserTime(data?.time)
 
   return (
     <div>
@@ -66,7 +62,7 @@ function EsportGameCard({ id, data }) {
             ({data?.date} - {localTime})
           </p>
           <p style={{ ...FONTS.body7, color: COLORS.dimRed }}>
-            {data?.status === "Started" ? `${data?.time}'` : data?.status}
+            {data?.status === "Started" ? `Live` : data?.status}
           </p>
         </div>
         <div style={styles.box2}>
