@@ -205,7 +205,7 @@ function HandballDetail({ gameInfo, dateTime, isMobile, selected, handleRoute })
               <Button
                 text='Draw'
                 propStyle={{
-                  width: '100%',
+                  width: '90%',
                   backgroundColor:
                     selected === 'draw' ? COLORS.primary : COLORS.cream,
                   color: selected === 'draw' ? COLORS.cream : COLORS.primary
