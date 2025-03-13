@@ -8,6 +8,9 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
+    rollupOptions: {
+      external: [], // Make sure 'yup' is not wrongly excluded
+    },
   },
   resolve: {
     alias: {
