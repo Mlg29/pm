@@ -87,6 +87,7 @@ function BetInviteDetail() {
   const [userOption, setUserOption] = useState<any>("")
   //const [userSelection, setUserSelection] = useState<any>("")
 
+
   const handleLogOut = () => {
     var getDeviceId = localStorage.getItem("deviceId")
     localStorage.clear()
@@ -321,6 +322,8 @@ function BetInviteDetail() {
         <GameDetailCardHeader
           data={betData?.sportEvent?.FootballEvent}
           propStyle={{ backgroundColor: COLORS.semiGray, padding: "20px 20px" }}
+          homeLogo={null}
+          awayLogo={null}
         />
       )}
       {betData?.sportEvent?.sport === "BASKETBALL" && (

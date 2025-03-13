@@ -192,6 +192,8 @@ function BetDetail() {
               backgroundColor: COLORS.semiGray,
               padding: "20px 20px",
             }}
+            homeLogo={null}
+            awayLogo={null}
           />
 
           <div style={{ ...styles.div }}>
