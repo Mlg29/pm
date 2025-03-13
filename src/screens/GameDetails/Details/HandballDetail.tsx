@@ -110,7 +110,7 @@ const styles = {
 
 
 function HandballDetail({ gameInfo, dateTime, isMobile, selected, handleRoute }) {
-  console.log({ gameInfo })
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
