@@ -71,11 +71,24 @@ function Deposit() {
   }, []);
 
   const currency = userData?.defaultCurrency === "NGN" ? "NGN" : "USD"
+  const threePointFivePercentOfTheAmount = 0.035 * parseInt(value);
+
+  const ninePercentOfThreePointFive = 0.09 * threePointFivePercentOfTheAmount;
+
+  const chargeableAmount =
+    currency === 'NGN'
+      ? parseInt(value) +
+      threePointFivePercentOfTheAmount +
+      ninePercentOfThreePointFive +
+      70
+      : parseInt(value) +
+      threePointFivePercentOfTheAmount +
+      ninePercentOfThreePointFive;
 
   const config: any = {
     public_key: publicKey,
     tx_ref: Date.now(),
-    amount: parseInt(value),
+    amount: chargeableAmount,
     currency: currency,
     payment_options: "card,mobilemoney,ussd",
     customer: {
@@ -94,11 +107,12 @@ function Deposit() {
 
   const handleNext = async () => {
     const payload = {
-      amount: parseFloat(value),
+      amount: parseInt(value),
       type: "DEPOSIT",
       status: "SUCCESS"
 
     };
+
     setLoader(true);
     var response = await dispatch(createTransaction(payload));
 
