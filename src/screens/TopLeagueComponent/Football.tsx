@@ -21,6 +21,8 @@ function Football({ leagueName }) {
   const [finished, setFinished] = useState<any>([])
 
 
+  console.log({ leagueName })
+
   useEffect(() => {
     const payloadUpcoming = {
       range: 'upcoming'
@@ -35,7 +37,7 @@ function Football({ leagueName }) {
 
     dispatch(getFootballFixtures(null)).then((dd) => {
 
-      const filterData = dd?.payload?.category?.filter(m => m?.league?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.category?.filter(m => leagueName?.some(word => m?.league?.toLowerCase().includes(word)))
       setLive(filterData || [])
     })
 

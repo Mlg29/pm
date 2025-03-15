@@ -36,7 +36,7 @@ function Mma({ leagueName }) {
     }
 
     dispatch(getMmaFixtures(null)).then((dd) => {
-      const filterData = dd?.payload?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.category?.filter(m => leagueName?.some(word => m?.name?.toLowerCase().includes(word)))
       setLive(filterData || [])
     })
 

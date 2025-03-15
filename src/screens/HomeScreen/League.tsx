@@ -34,16 +34,16 @@ import AussieRules from '../TopLeagueComponent/AussieRules'
 
 function League() {
   const location = useLocation()
-  const leagueName = location.state?.name
+  const searchWords = location.state?.name
   const sportEvents = location.state?.sport
 
-
+  const leagueName = searchWords?.toLowerCase().split(" ");
 
   return (
     <div className='top-container'>
 
 
-      <h3 style={{ ...FONTS.h6 }}>{leagueName}</h3>
+      <h3 style={{ ...FONTS.h6 }}>{searchWords}</h3>
 
       <div>
         {sportEvents && sportEvents === "Soccer" && <Football leagueName={leagueName} />}

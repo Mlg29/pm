@@ -248,7 +248,7 @@ export const MmaLeague = [
     {
         id: 2,
         name: "Ultimate Fighting Championship",
-        text: "Ultimate Fighting Championship"
+        text: "UFC"
     },
     {
         id: 3,

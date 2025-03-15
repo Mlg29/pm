@@ -35,7 +35,7 @@ function Boxing({ leagueName }) {
     }
 
     dispatch(getBoxingFixtures(null)).then((dd) => {
-      const filterData = dd?.payload?.scores?.categories?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.scores?.category?.filter(m => leagueName?.some(word => m?.name?.toLowerCase().includes(word)))
       setLive(filterData || [])
     })
 
