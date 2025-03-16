@@ -76,26 +76,30 @@ function Basketball({ calendarDate, setCalendarDate }) {
   }, [dispatch, calendarDate])
 
 
+  // const aa = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
+  //   ...league,
+  //   match: league?.match.filter(match => console.log(match.status))
+  // }))
+  // console.log({ aa })
 
-
-  const liveMatches = Array.isArray(live) && live?.map(league => ({
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
-    match: league?.match.filter(match => match.status?.toLowerCase()?.includes("quarter") || match?.status === "Half Time")
+    match: league?.match.filter(match => match.status?.toLowerCase()?.includes("quarter") || match?.status === "Half Time" || match?.status === "After Over Time")
   }))
     .filter(league => league?.match.length > 0);
 
-  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+  const upcomingMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => {
       const matchDate = match?.date;
       const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
-      return matchDate === today && match.status === "Not Started";
+      return matchDate === today && match.status === "Not Started" || match?.status === "Postponed";
     })
   }))
     .filter(league => league?.match.length > 0);
 
 
-  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Finished")
   }))

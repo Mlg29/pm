@@ -83,9 +83,9 @@ function Easport({ calendarDate, setCalendarDate }) {
   }, [calendarDate])
 
 
-  const liveLeagues = Array.isArray(live) && live?.filter(bb => bb?.status?.toLowerCase() === "live" || bb?.status === "Started")
-  const scheduleLeagues = Array.isArray(live) && live?.filter(bb => bb?.status === "Not Started")
-  const finishedLeagues = Array.isArray(live) && live?.filter(bb => bb?.status === "Finished" || bb?.status === "FT" || bb?.status === "Postponed")
+  const liveLeagues = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.filter(bb => bb?.status?.toLowerCase() === "live" || bb?.status === "Started")
+  const scheduleLeagues = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.filter(bb => bb?.status === "Not Started")
+  const finishedLeagues = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.filter(bb => bb?.status === "Finished" || bb?.status === "FT" || bb?.status === "Postponed")
 
 
 

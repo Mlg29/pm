@@ -90,7 +90,7 @@ function Football({ calendarDate, setCalendarDate }) {
 
   }, [calendarDate])
 
-  const liveMatches = Array.isArray(live) && live?.map(league => ({
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     matches: league.matches.filter(match => match.status > 0 || match.status === "HT")
   }))
@@ -98,14 +98,14 @@ function Football({ calendarDate, setCalendarDate }) {
 
   const isTimeFormat = (str) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(str);
 
-  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+  const upcomingMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     matches: league.matches.filter(match => isTimeFormat(match?.status))
   }))
     .filter(league => league.matches.length > 0);
 
 
-  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     matches: league.matches.filter(match => match.status === "FT")
   }))

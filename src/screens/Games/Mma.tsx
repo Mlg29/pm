@@ -89,7 +89,7 @@ function Mma({ calendarDate, setCalendarDate }) {
   }, [])
 
 
-  const liveMatches = Array.isArray(live) && live?.map(league => ({
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Live" || match.status === "In Progress" || match.status === "Set 3" || match.status === "Set 4" || match.status === "Set 5" || match.status === "Set 6" || match.status === "Set 7")
   }))
@@ -107,7 +107,7 @@ function Mma({ calendarDate, setCalendarDate }) {
     .filter(league => league?.match.length > 0);
 
 
-  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => {
       const matchDate = match?.date;

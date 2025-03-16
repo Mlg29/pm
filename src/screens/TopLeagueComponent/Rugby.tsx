@@ -109,7 +109,7 @@ function Rugby({ leagueName }) {
               {Live.name}
             </p>
             <div>
-              {Array.isArray(Live) && Live?.map((aa, i) => {
+              {(Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map((aa, i) => {
                 const payload = {
                   league: aa?.name,
                   leagueId: aa?.id,

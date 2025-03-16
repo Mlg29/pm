@@ -80,14 +80,14 @@ function IceHockey({ calendarDate, setCalendarDate }) {
     }
   }, [calendarDate])
 
-  const liveMatches = Array.isArray(live) && live?.map(league => ({
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match?.filter(match => match?.status?.toLowerCase().includes("period"))
   }))
     .filter(league => league?.match.length > 0);
 
 
-  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+  const upcomingMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => {
       const matchDate = match?.date;
@@ -99,7 +99,7 @@ function IceHockey({ calendarDate, setCalendarDate }) {
 
 
 
-  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Cancelled" || match.status === "After Penalties" || match.status === "After Overtime" || match.status === "Interrupted" || match.status === "Finished")
   }))

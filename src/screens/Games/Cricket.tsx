@@ -91,13 +91,13 @@ function Cricket({ calendarDate, setCalendarDate }) {
 
 
 
-  const liveMatches = Array.isArray(live) && live?.map(league => ({
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "In Progress")
   }))
     .filter(league => league?.match.length > 0);
 
-  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+  const upcomingMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => {
       const matchDate = match?.date;
@@ -109,7 +109,7 @@ function Cricket({ calendarDate, setCalendarDate }) {
     .filter(league => league?.match.length > 0);
 
 
-  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Final" || match.status === "Not covered Live" || match.status === "Finished" || match.status === "Stumps")
   }))

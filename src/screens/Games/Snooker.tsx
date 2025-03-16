@@ -84,14 +84,17 @@ function Snooker({ calendarDate, setCalendarDate }) {
     }
   }, [calendarDate])
 
-  const liveMatches = Array.isArray(live) && live?.map(league => ({
-    ...league,
-    match: league?.match?.filter(match => match?.status?.toLowerCase().includes("frame"))
-  }))
-    .filter(league => league?.match.length > 0);
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")
+    .map(league => ({
+      ...league,
+      match: Array.isArray(league?.match)
+        ? league.match.filter(match => match?.status?.toLowerCase().includes("frame"))
+        : []
+    }))
+    .filter(league => league.match.length > 0)
 
 
-  const upcomingMatches = Array.isArray(live) && live?.map(league => ({
+  const upcomingMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => {
       const matchDate = match?.date;
@@ -103,7 +106,7 @@ function Snooker({ calendarDate, setCalendarDate }) {
 
 
 
-  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
   }))

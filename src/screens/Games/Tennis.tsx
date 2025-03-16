@@ -96,7 +96,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
   }, [])
 
 
-  const liveMatches = Array.isArray(live) && live?.map(league => ({
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match?.filter(match => match?.status?.toLowerCase().includes("set"))
   }))
@@ -115,7 +115,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
 
 
 
-  const finishedMatches = Array.isArray(live) && live?.map(league => ({
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
   }))

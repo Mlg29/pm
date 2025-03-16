@@ -15,6 +15,12 @@ function NotificationCard(props: any) {
     navigate(`/bet-adjust?${data?.content?.adjustmentId}`)
   }
 
+
+  const handleRouteChallenge = (data) => {
+    handleRead(data?.id)
+    navigate(`/bet-invite-detail?${data?.content?.betId}`)
+  }
+
   return (
     <div style={{ ...styles.container }}>
       <div
@@ -32,6 +38,13 @@ function NotificationCard(props: any) {
         data?.type === "BET_ADJUSTED_BR" ?
           <div style={{ cursor: "pointer", marginTop: 10 }}>
             <p style={{ ...FONTS.body7, color: COLORS.orange, textDecoration: 'underline' }} onClick={() => handleRoute(data)}>View Detail</p>
+          </div>
+          : null
+      }
+      {
+        data?.type === "BET_INVITATION" ?
+          <div style={{ cursor: "pointer", marginTop: 10 }}>
+            <p style={{ ...FONTS.body7, color: COLORS.orange, textDecoration: 'underline' }} onClick={() => handleRouteChallenge(data)}>View Detail</p>
           </div>
           : null
       }
