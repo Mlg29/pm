@@ -206,6 +206,25 @@ export const HorseLeague = [
     }
 ]
 
+export const HockeyLeague = [
+    {
+        id: 1,
+        name: "National Hockey League"
+    },
+    {
+        id: 2,
+        name: "deutsche Eishockey Liga"
+    },
+    {
+        id: 3,
+        name: "Hockey League"
+    },
+    {
+        id: 4,
+        name: "World Championship"
+    },
+]
+
 export const BoxingLeague = [
     {
         id: 1,
@@ -238,7 +257,212 @@ export const BoxingLeague = [
         text: "Riyadh Season"
     },
 ]
+export const HandballLeague = [
+    {
+        id: 1,
+        name: "Lnh div"
+    },
+    {
+        id: 2,
+        name: "Bundesliga"
+    },
+    {
+        id: 3,
+        name: "Liga Asobal"
+    },
+    {
+        id: 4,
+        name: "EHF Championship"
+    },
+    {
+        id: 5,
+        name: "IHF World Championship"
+    },
+]
+export const VolleyballLeague = [
+    {
+        id: 1,
+        name: "SuperLega"
+    },
+    {
+        id: 2,
+        name: "Piusliga"
+    },
+    {
+        id: 3,
+        name: "Cev European Champions League"
+    },
+    {
+        id: 4,
+        name: "European Volleyball Championship"
+    },
+    {
+        id: 5,
+        name: "World Championship"
+    },
+    {
+        id: 6,
+        name: "FIVB Nations League"
+    }
+]
+export const DartsLeague = [
+    {
+        id: 1,
+        name: "Grand Slam"
+    },
+    {
+        id: 2,
+        name: "The Masters"
+    },
+    {
+        id: 3,
+        name: "World Series"
+    },
+    {
+        id: 4,
+        name: "Wdf World Championship"
+    },
+    {
+        id: 5,
+        name: "World Grand Prix"
+    },
+    {
+        id: 6,
+        name: "Pdc World Championship"
+    },
+    {
+        id: 7,
+        name: "World Matchplay"
+    }
+]
 
+export const SnookerLeague = [
+    {
+        id: 1,
+        name: "Uk Championship"
+    },
+    {
+        id: 2,
+        name: "World Championship"
+    },
+    {
+        id: 3,
+        name: "The Masters"
+    },
+    {
+        id: 4,
+        name: "World Open"
+    },
+    {
+        id: 5,
+        name: "Power Snooker"
+    },
+    {
+        id: 6,
+        name: "Paul hunter Classic"
+    },
+    {
+        id: 7,
+        name: "World Mixed Doubles Championships"
+    },
+    {
+        id: 8,
+        name: "World Cup"
+    },
+    {
+        id: 9,
+        name: "6 red World Championship"
+    },
+    {
+        id: 10,
+        name: "Champion of Champions"
+    },
+    {
+        id: 11,
+        name: "Premier League"
+    }
+]
+
+export const TableTennisLeague = [
+    {
+        id: 1,
+        name: "Grand Smash"
+    },
+    {
+        id: 2,
+        name: "WTT Series"
+    },
+    {
+        id: 3,
+        name: "WTT Finals"
+    },
+    {
+        id: 4,
+        name: "WTT Champions"
+    },
+    {
+        id: 5,
+        name: "WTT Star Contenders"
+    },
+    {
+        id: 6,
+        name: "WTT Contenders"
+    },
+    {
+        id: 7,
+        name: "Extraliga"
+    },
+    {
+        id: 8,
+        name: "TTBL - Bundesliga"
+    }
+]
+export const IceHockeyLeague = [
+    {
+        id: 1,
+        name: "National Hockey League"
+    },
+    {
+        id: 2,
+        name: "FIH Hockey Nations Cup"
+    },
+    {
+        id: 3,
+        name: "Kontinental Hockey League"
+    },
+    {
+        id: 4,
+        name: "FIH World Cup"
+    },
+    {
+        id: 5,
+        name: "FIH Pro League"
+    },
+    {
+        id: 6,
+        name: "Olympics"
+    },
+    {
+        id: 7,
+        name: "Deutsh Cup"
+    },
+    {
+        id: 8,
+        name: "Hockey Allsvenskan"
+    },
+    {
+        id: 9,
+        name: "Swedish Hockey League"
+    },
+    {
+        id: 10,
+        name: "IIHF Champions Hockey League"
+    },
+    {
+        id: 11,
+        name: "IIHF Continental Cup"
+    }
+]
 export const MmaLeague = [
     {
         id: 1,
@@ -247,7 +471,7 @@ export const MmaLeague = [
     },
     {
         id: 2,
-        name: "Ultimate Fighting Championship",
+        name: "UFC",
         text: "UFC"
     },
     {
@@ -431,6 +655,31 @@ export const AussieLeague = [
         name: "AFL Europe Championship"
     },
 ]
+
+export const EsportLeague = [
+    {
+        id: 1,
+        name: "DOTA 2"
+    },
+    {
+        id: 2,
+        name: "League of Legends"
+    },
+    {
+        id: 3,
+        name: "Counter-Strike"
+    },
+    {
+        id: 4,
+        name: "Electronic Sports League"
+    },
+    {
+        id: 5,
+        name: "Versus"
+    },
+]
+
+
 
 export const Countries = [
     {

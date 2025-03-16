@@ -1746,7 +1746,9 @@ function BetDetail() {
                       ? `${betData?.sportEvent?.DartEvent?.localTeamName} Win`
                       : betData?.prediction === betData?.sportEvent?.DartEvent?.visitorTeamName
                         ? `${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`
-                        : "N/A"}
+                        : betData?.prediction === "draw"
+                          ? "DRAW"
+                          : "N/A"}
 
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
@@ -1767,7 +1769,8 @@ function BetDetail() {
                       ? `${betData?.sportEvent?.DartEvent?.localTeamName} Win`
                       : betData?.opponentPrediction === betData?.sportEvent?.DartEvent?.visitorTeamName
                         ? `${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`
-                        : "N/A"}
+                        : betData?.opponentPrediction === "draw"
+                          ? "DRAW" : "N/A"}
                     {
                       betData?.winnerId && betData?.winnerId === userData?.id
                         ? <IoMdCheckmarkCircle />
@@ -1795,7 +1798,8 @@ function BetDetail() {
                         ? `${betData?.sportEvent?.DartEvent?.localTeamName} Win`
                         : betData?.opponentPrediction === betData?.sportEvent?.DartEvent?.visitorTeamName
                           ? `${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`
-                          : "N/A"}
+                          : betData?.opponentPrediction === "draw"
+                            ? "DRAW" : "N/A"}
 
                       {
                         betData?.winnerId && betData?.winnerId !== userData?.id
@@ -1816,7 +1820,8 @@ function BetDetail() {
                         ? `${betData?.sportEvent?.DartEvent?.localTeamName} Win`
                         : betData?.prediction === betData?.sportEvent?.DartEvent?.visitorTeamName
                           ? `${betData?.sportEvent?.DartEvent?.visitorTeamName} Win`
-                          : "N/A"}
+                          : betData?.prediction === "draw"
+                            ? "DRAW" : "N/A"}
 
                       {
                         betData?.winnerId && betData?.winnerId !== userData?.id

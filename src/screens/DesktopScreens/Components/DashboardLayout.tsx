@@ -1,4 +1,4 @@
-import { AflLeague, AussieLeague, BaseballLeague, BasketLeagues, BoxingLeague, CricketLeague, HorseLeague, Leagues, MmaLeague, NascarLeague, TennisLeague } from "../../../utils/leagues";
+import { AflLeague, AussieLeague, BaseballLeague, BasketLeagues, BoxingLeague, CricketLeague, DartsLeague, EsportLeague, HandballLeague, HorseLeague, IceHockeyLeague, Leagues, MmaLeague, NascarLeague, SnookerLeague, TableTennisLeague, TennisLeague, VolleyballLeague } from "../../../utils/leagues";
 import ads from "../../../assets/images/ads.svg";
 import empty from "../../../assets/images/empty.svg";
 import { COLORS } from "../../../utils/colors";
@@ -126,7 +126,7 @@ function DashboardLayout({ children }) {
 
 
   const countries = countryList?.filter(m => m?.country?.toLowerCase().includes(search?.toLowerCase())).map(dd => dd?.country)
-  const TopLeagues = sportEvents === "Soccer" ? Leagues : sportEvents === "Basketball" ? BasketLeagues : sportEvents === "Tennis" ? TennisLeague : sportEvents === "Horse" ? HorseLeague : sportEvents === "Boxing" ? BoxingLeague : sportEvents === "MMA/UFC" ? MmaLeague : sportEvents === "Cricket" ? CricketLeague : sportEvents === "AFL" ? AflLeague : sportEvents === "NASCAR" ? NascarLeague : sportEvents === "Baseball" ? BaseballLeague : sportEvents === "Aussie Rules" ? AussieLeague : []
+  const TopLeagues = sportEvents === "Soccer" ? Leagues : sportEvents === "Basketball" ? BasketLeagues : sportEvents === "Tennis" ? TennisLeague : sportEvents === "Horse" ? HorseLeague : sportEvents === "Boxing" ? BoxingLeague : sportEvents === "MMA/UFC" ? MmaLeague : sportEvents === "Cricket" ? CricketLeague : sportEvents === "AFL" ? AflLeague : sportEvents === "NASCAR" ? NascarLeague : sportEvents === "Baseball" ? BaseballLeague : sportEvents === "Aussie Rules" ? AussieLeague : sportEvents === "Table Tennis" ? TableTennisLeague : sportEvents === "Ice Hockey" ? IceHockeyLeague : sportEvents === "Snooker" ? SnookerLeague : sportEvents === "Darts" ? DartsLeague : sportEvents === "Volleyball" ? VolleyballLeague : sportEvents === "Handball" ? HandballLeague : sportEvents === "Esports" ? EsportLeague : []
 
   const handleChange = (val) => {
     setSearch(val)
@@ -144,7 +144,7 @@ function DashboardLayout({ children }) {
               <>
                 {TopLeagues?.map((data: any, i) => {
                   return (
-                    <div key={i} onClick={() => handleLeague(data?.text)}>
+                    <div key={i} onClick={() => handleLeague(data?.name)}>
                       <p
                         style={{
                           ...FONTS.body6,
@@ -193,7 +193,7 @@ function DashboardLayout({ children }) {
               <>
                 {TopLeagues?.map((data: any, i) => {
                   return (
-                    <div key={i} onClick={() => handleLeague(data?.text)}>
+                    <div key={i} onClick={() => handleLeague(data?.name)}>
                       <p style={{ ...FONTS.body6, margin: "15px 0px", cursor: 'pointer' }}>
                         {data?.name}
                       </p>
@@ -236,7 +236,7 @@ function DashboardLayout({ children }) {
               <h3 style={{ ...FONTS.h7 }}>Top Leagues</h3>
               {TopLeagues?.map((data: any, i) => {
                 return (
-                  <div key={i} onClick={() => handleLeague(data?.text)}>
+                  <div key={i} onClick={() => handleLeague(data?.name)}>
                     <p style={{ ...FONTS.body7, margin: "15px 0px", cursor: 'pointer' }}>
                       {data?.name}
                     </p>

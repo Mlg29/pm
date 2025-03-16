@@ -55,7 +55,8 @@ function Darts({ calendarDate, setCalendarDate }) {
 
     setLoading(true)
     dispatch(getDartFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.category)
+      console.log({ dd })
+      setLive(dd?.payload?.category || [])
       setLoading(false)
     })
 
@@ -74,7 +75,7 @@ function Darts({ calendarDate, setCalendarDate }) {
     if (calendarDate) {
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getDartFixtures(payloadTomorrow)).then((dd) => {
-        setTomorrow(dd?.payload?.category)
+        setTomorrow(dd?.payload?.category || [])
         setLoading(false)
       })
     }
