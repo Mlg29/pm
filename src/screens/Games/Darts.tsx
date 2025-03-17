@@ -80,7 +80,7 @@ function Darts({ calendarDate, setCalendarDate }) {
       })
     }
   }, [calendarDate])
-  console.log({ live })
+
   const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match?.filter(match => /\d/.test(match.status))

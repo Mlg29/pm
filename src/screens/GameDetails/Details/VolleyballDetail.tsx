@@ -134,7 +134,7 @@ function VolleyballDetail({ gameInfo, isMobile, dateTime, selected, handleRoute 
       >
         <VolleyballCard data={gameInfo} />
       </div>
-      <div style={{ display: 'flex', marginBottom: 20, flexDirection: 'row', alignItems: 'center' }}>
+      <div style={{ display: 'flex', marginBottom: 20, flexDirection: 'row', alignItems: 'center', padding: "0px 15px" }}>
         <div style={styles.box2}>
           <p style={{ ...FONTS.h5 }}>{gameInfo?.localTeam?.name}</p>
           <p style={{ ...FONTS.h5 }}>{gameInfo?.awayTeam?.name}</p>

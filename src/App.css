@@ -248,3 +248,16 @@ button:not(:disabled) {
   border: 1px solid gray;
   border-radius: 10px;
 }
+
+.p-sidebar {
+  background: white !important;
+  padding: 20px 10px !important;
+}
+
+.p-sidebar-content {
+  margin-top: 20px;
+}
+
+.ant-select-selector {
+  border: none !important;
+}
