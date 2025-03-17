@@ -9,93 +9,49 @@ import moment from 'moment'
 import { useAppDispatch } from '../../redux/hooks'
 import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
-import { getEasportFixtures } from '../../redux/slices/Easport'
+import { getEasportFixtures, getEasportFixturesMatch } from '../../redux/slices/Easport'
 import EsportGameCard from '../../components/GameCard/EsportGameCard'
+import { MdCancel } from "react-icons/md";
+
 
 function Easport({ leagueName }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const [live, setLive] = useState<any>([])
-  const url = `${SportSportBaseUrl}/esport`
+
   const dispatch = useAppDispatch() as any
+  const [selectedStatus, setSelectedStatus] = useState('Live')
 
-  useEffect(() => {
-    const socket = io(url) as any
 
-    socket.on('connect', () => {
-      console.log('Connected to WebSocket server esport')
-    })
-
-    socket.on('connect_error', (err) => {
-      console.error('WebSocket connection error:', err)
-    })
-
-    socket.on('EsportEventUpdate', (message) => {
-      setLive((prevMessages) => {
-        const updatedMessages = prevMessages?.filter(
-          (msg) => msg?.id !== message?.id
-        )
-        return [...updatedMessages, message]
-      })
-    })
-
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect()
-    }
-  }, [])
 
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
+  const url = `${SportSportBaseUrl}`;
+
+
+
+
   useEffect(() => {
-    const payloadUpcoming = {
-      status: 'Not Started'
-    }
-    const payloadLive = {
-      status: 'Started'
-    }
 
-    const payloadFinished = {
-      status: 'Finished'
-    }
 
-    // dispatch(getEasportFixtures(payloadUpcoming)).then((dd) => {
-    //   setUpcoming(dd?.payload)
-    // })
-    // dispatch(getEasportFixtures(payloadFinished)).then((dd) => {
-    //   setFinished(dd?.payload)
-    // })
 
-    // dispatch(getEasportFixtures(payloadLive)).then((dd) => {
-    //   setLive(dd?.payload?.data)
-    // })
+    dispatch(getEasportFixtures()).then((dd) => {
+      console.log({ dd })
+      const filterData = dd?.payload?.match?.filter(m => leagueName?.some(word => m?.league?.toLowerCase().includes(word)))
+      setLive(filterData)
+    })
   }, [])
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league = current?.league
 
-      if (!acc[league]) {
-        acc[league] = []
-      }
+  const liveLeagues = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.filter(bb => bb?.status?.toLowerCase() === "live" || bb?.status === "Started")
+  const scheduleLeagues = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.filter(bb => bb?.status === "Not Started")
+  const finishedLeagues = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.filter(bb => bb?.status === "Finished" || bb?.status === "FT" || bb?.status === "Postponed")
 
-      acc[league].push(current)
 
-      return acc
-    }, {})
-  }
 
-  const liveOutput = groupedByData(live)
-
-  const upcomingOutput = groupedByData(upcoming?.data)
-
-  const finishedOutput = groupedByData(finished?.data)
-
-  const [selectedStatus, setSelectedStatus] = useState('Live')
-
-  const status = [
+  const oldStatus = [
     {
       id: 1,
       name: 'Live'
@@ -110,9 +66,24 @@ function Easport({ leagueName }) {
     }
   ]
 
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    }
+  ]
+
+  const status = oldStatus
+
   return (
-
-
     <div>
       <div>
 
@@ -126,30 +97,31 @@ function Easport({ leagueName }) {
         >
           {status?.map((aa, i) => {
             return (
-              <p
-                key={i}
-                onClick={() => setSelectedStatus(aa?.name)}
-                style={{
-                  width: 80,
-                  padding: 3,
-                  cursor: 'pointer',
-                  backgroundColor:
-                    selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                  color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                  marginRight: 4,
-                  textAlign: 'center',
-                  fontSize: 12
-                }}
-              >
-                {aa?.name}
-              </p>
+              <div key={i} style={{ position: 'relative' }}>
+
+                <p
+                  onClick={() => setSelectedStatus(aa?.name)}
+                  style={{
+                    width: 80,
+                    padding: 3,
+                    cursor: 'pointer',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
+                    marginRight: 4,
+                    textAlign: 'center',
+                    fontSize: 12
+                  }}
+                >
+                  {aa?.name}
+                </p>
+              </div>
             )
           })}
         </div>
       </div>
       {selectedStatus === 'Live' ? (
         <>
-          {liveOutput?.map((aa, i) => {
+          {liveLeagues?.map((aa, i) => {
             return (
               <div key={i}>
                 <p
@@ -163,13 +135,13 @@ function Easport({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {aa?.league}
+                  {aa?.type} - {aa?.league}
                 </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
             )
           })}
-          {liveOutput?.length < 1 ? (
+          {liveLeagues?.length < 1 ? (
             <EmptyState header='No Game Available for Easport' height='30vh' />
           ) : null}
         </>
@@ -177,7 +149,7 @@ function Easport({ leagueName }) {
 
       {selectedStatus === 'Scheduled' ? (
         <>
-          {upcomingOutput?.map((aa, i) => {
+          {scheduleLeagues?.map((aa, i) => {
             return (
               <div key={i}>
                 <p
@@ -191,13 +163,13 @@ function Easport({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {aa?.league}
+                  {aa?.type} - {aa?.league}
                 </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
             )
           })}
-          {upcomingOutput?.length < 1 ? (
+          {scheduleLeagues?.length < 1 ? (
             <EmptyState header='No Game Available for Easport' height='30vh' />
           ) : null}
         </>
@@ -205,7 +177,7 @@ function Easport({ leagueName }) {
 
       {selectedStatus === 'Finished' ? (
         <>
-          {finishedOutput?.map((aa, i) => {
+          {finishedLeagues?.map((aa, i) => {
             return (
               <div key={i}>
 
@@ -220,14 +192,14 @@ function Easport({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {aa?.league}
+                  {aa?.type} - {aa?.league}
                 </p>
                 <EsportGameCard id={i} data={aa} />
               </div>
             )
           })}
           {
-            finishedOutput?.length < 1 ? (
+            finishedLeagues?.length < 1 ? (
               <EmptyState header='No Game Available for Easport' height='30vh' />
             ) : null}
         </>

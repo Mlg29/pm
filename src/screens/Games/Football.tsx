@@ -100,7 +100,7 @@ function Football({ calendarDate, setCalendarDate }) {
 
   const upcomingMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
-    matches: league.matches.filter(match => isTimeFormat(match?.status))
+    matches: league.matches.filter(match => isTimeFormat(match?.status) || match?.status === "Postp")
   }))
     .filter(league => league.matches.length > 0);
 

@@ -103,7 +103,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
     .filter(league => league?.match.length > 0);
 
 
-  const upcomingMatches = Array.isArray(scheduled) && scheduled?.map(league => ({
+  const upcomingMatches = (Array.isArray(scheduled) ? scheduled : [scheduled]).filter(league => league && typeof league === "object")?.map(league => ({
     ...league,
     match: league?.match.filter(match => {
       const matchDate = match?.date;

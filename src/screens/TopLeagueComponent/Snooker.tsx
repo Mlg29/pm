@@ -11,81 +11,74 @@ import { getBoxingFixtures } from '../../redux/slices/BoxingSlice'
 import EmptyState from '../../components/EmptyState'
 import { getSnookerFixtures } from '../../redux/slices/SnookerSlice'
 import SnookerGameCard from '../../components/GameCard/SnookerGameCard'
+import { MdCancel } from "react-icons/md";
+import { LoadingState } from '../../components/LoadingState'
+
+
 
 function Snooker({ leagueName }) {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-
+  const [loading, setLoading] = useState(false)
+  const [live, setLive] = useState<any>([])
+  const [tomorrow, setTomorrow] = useState<any>([])
   const dispatch = useAppDispatch() as any
 
-  // useEffect(() => {
-  //   const socket = io(url) as any;
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to WebSocket server tennis");
-  //   });
 
-  //   socket.on("connect_error", (err) => {
-  //     console.error("WebSocket connection error:", err);
-  //   });
-
-  //   socket.on("BoxingEventUpdate", (message) => {
-  //   //   setLive((prevMessages) => {
-  //   //     const updatedMessages = prevMessages?.filter(
-  //   //       (msg) => msg?.id !== message?.id
-  //   //     );
-  //   //     return [...updatedMessages, message];
-  //   //   });
-  //   });
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
-  let createdDate = moment(new Date()).utc().format()
-  let tomorrowDate = moment(createdDate).add(1, 'd')
 
   useEffect(() => {
-    const payloadUpcoming = {
-      status: 'Not Started'
-    }
-    const payloadFinished = {
-      status: 'Finished'
-    }
 
-    dispatch(getSnookerFixtures(payloadUpcoming)).then((dd) => {
-      setUpcoming(dd?.payload)
+    setLoading(true)
+    dispatch(getSnookerFixtures(null)).then((dd) => {
+      console.log({ dd })
+      const filterData = dd?.payload?.category?.filter(m => leagueName?.some(word => m?.league?.toLowerCase().includes(word)))
+      setLive(filterData || [])
+      setLoading(false)
     })
 
-    dispatch(getSnookerFixtures(payloadFinished)).then((dd) => {
-      setFinished(dd?.payload)
-    })
+
   }, [])
 
-  const groupedByData = (collectedData) => {
-    return collectedData?.reduce((acc, current) => {
-      const league = current?.name
 
-      if (!acc[league]) {
-        acc[league] = []
-      }
 
-      acc[league].push(current)
 
-      return acc
-    }, {})
-  }
+  const liveMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")
+    .map(league => ({
+      ...league,
+      match: Array.isArray(league?.match)
+        ? league.match.filter(match => match?.status?.toLowerCase().includes("frame"))
+        : []
+    }))
+    .filter(league => league.match.length > 0)
 
-  const upcomingOutput = groupedByData(upcoming?.data)
 
-  const finishedOutput = groupedByData(finished?.data)
+  const upcomingMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => {
+      const matchDate = match?.date;
+      const today = new Date().toLocaleDateString('en-GB').split('/').join('.');
+      return matchDate === today && match.status === "Not Started";
+    })
+  }))
+    .filter(league => league?.match.length > 0);
+
+
+
+  const finishedMatches = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
+    ...league,
+    match: league?.match.filter(match => match.status === "Cancelled" || match.status === "Interrupted" || match.status === "Finished")
+  }))
+    .filter(league => league?.match.length > 0);
 
   const [selectedStatus, setSelectedStatus] = useState('Scheduled')
 
-  const status = [
+  const oldStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
     {
       id: 2,
       name: 'Scheduled'
@@ -96,10 +89,32 @@ function Snooker({ leagueName }) {
     }
   ]
 
+  const secondStatus = [
+    {
+      id: 1,
+      name: 'Live'
+    },
+    {
+      id: 2,
+      name: 'Scheduled'
+    },
+    {
+      id: 3,
+      name: 'Finished'
+    }
+  ]
+
+  const status = oldStatus
+
+
+
+
+
+
   return (
     <div>
       <div>
-        <p style={{ fontSize: 14, fontWeight: '500' }}>Snooker</p>
+
         <div
           style={{
             display: 'flex',
@@ -109,32 +124,33 @@ function Snooker({ leagueName }) {
         >
           {status?.map((aa, i) => {
             return (
-              <p
-                key={i}
-                onClick={() => setSelectedStatus(aa?.name)}
-                style={{
-                  width: 80,
-                  padding: 3,
-                  cursor: 'pointer',
-                  backgroundColor:
-                    selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                  color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                  marginRight: 4,
-                  textAlign: 'center',
-                  fontSize: 12
-                }}
-              >
-                {aa?.name}
-              </p>
+              <div key={i} style={{ position: 'relative' }}>
+
+                <p
+                  onClick={() => setSelectedStatus(aa?.name)}
+                  style={{
+                    width: 80,
+                    padding: 3,
+                    cursor: 'pointer',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
+                    marginRight: 4,
+                    textAlign: 'center',
+                    fontSize: 12
+                  }}
+                >
+                  {aa?.name}
+                </p>
+              </div>
             )
           })}
         </div>
       </div>
-      {selectedStatus === 'Scheduled' ? (
-        <>
-          {upcomingOutput &&
-            Object.keys(upcomingOutput)?.map((leagueName) => (
-              <div key={leagueName}>
+      <LoadingState isLoading={loading}>
+        {selectedStatus === 'Live' ? (
+          <>
+            {liveMatches?.map((league, index) => (
+              <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -146,27 +162,35 @@ function Snooker({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {leagueName}
+                  {league?.league}
                 </p>
                 <div>
-                  {upcomingOutput[leagueName].map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
                     return (
                       <div key={i}>
-                        <SnookerGameCard id={i} data={aa} />
+                        <SnookerGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
             ))}
-        </>
-      ) : null}
 
-      {selectedStatus === 'Finished' ? (
-        <>
-          {finishedOutput &&
-            Object.keys(finishedOutput)?.map((leagueName) => (
-              <div key={leagueName}>
+            {liveMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Snooker' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+        {selectedStatus === 'Scheduled' ? (
+          <>
+            {Array.isArray(upcomingMatches) && upcomingMatches?.map((league, index) => {
+              return <div key={league?.name}>
                 <p
                   style={{
                     ...FONTS.body7,
@@ -178,24 +202,76 @@ function Snooker({ leagueName }) {
                     marginRight: 10
                   }}
                 >
-                  {leagueName}
+                  {league?.league}
                 </p>
                 <div>
-                  {finishedOutput[leagueName].map((aa, i) => {
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
                     return (
                       <div key={i}>
-                        <SnookerGameCard id={i} data={aa} />
+                        <SnookerGameCard id={i} data={payload} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            })}
+
+            {upcomingMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Snooker' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+        {selectedStatus === 'Finished' ? (
+          <>
+            {finishedMatches?.map((league, index) => (
+              <div key={league?.name}>
+                <p
+                  style={{
+                    ...FONTS.body7,
+                    backgroundColor: COLORS.lightRed,
+                    padding: 5,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    color: COLORS.black,
+                    marginRight: 10
+                  }}
+                >
+                  {league?.league}
+                </p>
+                <div>
+                  {league?.match?.map((aa, i) => {
+                    const payload = {
+                      league: league.league,
+                      leagueId: league.id,
+                      country: league.country,
+                      ...aa
+                    }
+                    return (
+                      <div key={i}>
+                        <SnookerGameCard id={i} data={payload} />
                       </div>
                     )
                   })}
                 </div>
               </div>
             ))}
-        </>
-      ) : null}
-      {upcoming?.data?.length < 1 && finished?.data?.length < 1 ? (
-        <EmptyState header='No Game Available for Snooker' height='30vh' />
-      ) : null}
+
+            {finishedMatches?.length < 1 ? (
+              <EmptyState header='No Game Available for Snooker' height='30vh' />
+            ) : null}
+          </>
+        ) : null}
+
+
+
+      </LoadingState>
     </div>
   )
 }

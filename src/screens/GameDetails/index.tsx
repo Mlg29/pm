@@ -174,6 +174,7 @@ function GameDetails() {
     hour12: true
   });
 
+  console.log({ gameInfo })
 
   const handleRoute = (route: string, selection?: string) => {
 
