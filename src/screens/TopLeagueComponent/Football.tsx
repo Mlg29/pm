@@ -36,8 +36,8 @@ function Football({ leagueName }) {
     }
 
     dispatch(getFootballFixtures(null)).then((dd) => {
-
-      const filterData = dd?.payload?.category?.filter(m => leagueName?.some(word => m?.league?.toLowerCase().includes(word)))
+      console.log(">>", dd?.payload?.category)
+      const filterData = dd?.payload?.category?.filter(m => m?.leagueId === leagueName)
       setLive(filterData || [])
     })
 

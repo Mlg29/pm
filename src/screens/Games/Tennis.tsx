@@ -14,9 +14,10 @@ import EmptyState from '../../components/EmptyState'
 import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
 import { io } from "socket.io-client";
+import HeaderBox from '../HeaderBox'
 
 
-function Tennis({ calendarDate, setCalendarDate }) {
+function Tennis() {
   const [live, setLive] = useState<any>([])
   // const loading = useAppSelector(tennisFixtureStatusState) as any
   const [loading, setLoading] = useState(false)
@@ -25,7 +26,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
   const [tomorrow, setTomorrow] = useState<any>([])
   const dispatch = useAppDispatch() as any
   let createdDate = moment(new Date()).utc().format()
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
 
   const url = `${SportSportBaseUrl}`;
 
@@ -168,54 +169,7 @@ function Tennis({ calendarDate, setCalendarDate }) {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Tennis</p>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: '10px'
-          }}
-        >
-          {status?.map((aa, i) => {
-            return (
-              <div key={i} style={{ position: 'relative' }}>
-                {calendarDate && aa?.name === calendarDate?.formattedDate && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: -25,
-                      right: 0,
-                      cursor: 'pointer',
-                      fontSize: 12,
-                      color: 'red'
-                    }}
-                    onClick={() => {
-                      setCalendarDate(null)
-                      setSelectedStatus("Live")
-                    }}
-                  >
-                    <MdCancel size={25} />
-                  </span>
-                )}
-                <p
-                  onClick={() => setSelectedStatus(aa?.name)}
-                  style={{
-                    width: 80,
-                    padding: 3,
-                    cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                    marginRight: 4,
-                    textAlign: 'center',
-                    fontSize: 12
-                  }}
-                >
-                  {aa?.name}
-                </p>
-              </div>
-            )
-          })}
-        </div>
+        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

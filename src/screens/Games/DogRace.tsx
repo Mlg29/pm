@@ -2,7 +2,7 @@ import React from 'react'
 import { MdCancel } from "react-icons/md";
 
 
-function DogRace({ calendarDate, setCalendarDate }) {
+function DogRace() {
   return (
     <div>
 

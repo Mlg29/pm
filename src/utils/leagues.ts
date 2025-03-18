@@ -2,120 +2,120 @@
 
 export const Leagues = [
     {
-        id: 1,
+        id: "1005",
         name: "UEFA Champions League",
         text: "UEFA Champions League"
     },
     {
-        id: 2,
+        id: "1007",
         name: "UEFA Europa League",
         text: "UEFA Europa League"
     },
     {
-        id: 11,
+        id: "18853",
         name: "UEFA Conference League",
         text: "UEFA Conference League"
     },
     {
-        id: 3,
+        id: "1204",
         name: "English Premier League",
         text: "England: Premier League"
     },
     {
-        id: 4,
+        id: "1399",
         name: "La Liga",
         text: "Spain: LaLiga"
     },
     {
-        id: 5,
+        id: '1229',
         name: "Bundesliga",
         text: "Germany: Bundesliga"
     },
     {
-        id: 6,
+        id: "1269",
         name: "Seria A",
         text: "Italy: Serie A"
     },
     {
-        id: 7,
+        id: '1012',
         name: "League 1",
         text: "France: Ligue 1"
     },
     {
-        id: 8,
+        id: '1322',
         name: "Eredivise",
         text: "Netherlands: Eredivise"
     },
-    // {
-    //     id: 9,
-    //     name: "CAF Champions League",
-    //     text: ""
-    // },
-    // {
-    //     id: 10,
-    //     name: "World Championship",
-    //     text: ""
-    // },
-    // {
-    //     id: 12,
-    //     name: "Euro",
-    //     text: ""
-    // },
+    {
+        id: '1513',
+        name: "CAF Champions League",
+        text: ""
+    },
+    {
+        id: '1056',
+        name: "World Championship",
+        text: ""
+    },
+    {
+        id: '1001',
+        name: "Euro",
+        text: ""
+    },
 ]
 
 export const BasketLeagues = [
     {
-        id: 1,
+        id: '1046',
         name: "NBA",
         text: "NBA"
     },
     {
-        id: 2,
+        id: '1164',
         name: "NBA Women",
         text: "NBA Women"
     },
     {
-        id: 11,
-        name: "LNB/Betclic Elite",
-        text: "LNB/Betclic Elite",
+        id: '1440',
+        name: "LNB Super Cup",
+        text: "LNB Super Cup",
     },
     {
-        id: 3,
-        name: "Lega Basket Serie A",
-        text: "Lega Basket Serie A"
+        id: '1016',
+        name: "Lega A - Super Cup",
+        text: "Lega A - Super Cup"
     },
     {
-        id: 4,
-        name: "Liga ACB",
-        text: "Liga ACB"
+        id: '1170',
+        name: "Liga A",
+        text: "Liga A"
     },
     {
-        id: 5,
+        id: '2691',
         name: "NCAA",
         text: "NCAA"
     },
     {
-        id: 6,
+        id: '1312',
         name: "EuroBasket",
         text: "EuroBasket"
     },
     {
-        id: 7,
+        id: '1287',
         name: "Euroleague",
         text: "Euroleague"
     },
     {
-        id: 8,
+        id: '1291',
         name: "EuroCup Basketball",
         text: "EuroCup Basketball"
     },
     {
-        id: 9,
+        id: '2781',
         name: "Basketball Champions League",
         text: "Basketball Champions League"
     },
     {
-        id: 10,
+        id: '2603',
         name: "FIBA Basketball World Cup",
         text: "FIBA Basketball World Cup"
     },
@@ -123,36 +123,36 @@ export const BasketLeagues = [
 
 export const TennisLeague = [
     {
-        id: 1,
+        id: '17894',
         name: "Wimbledon"
     },
     {
-        id: 2,
+        id: '16241',
         name: "Australian Open",
         text: "Australian Open"
     },
     {
-        id: 3,
+        id: '21889',
         name: "French Open",
         text: "French Open"
     },
     {
-        id: 4,
+        id: '12148',
         name: "US Open",
         text: "US Open"
     },
     {
-        id: 5,
+        id: '16243',
         name: "ATP Tour",
         text: "ATP Tour"
     },
     {
-        id: 6,
+        id: '16206',
         name: "WTA Tour",
         text: "WTA Tour"
     },
     {
-        id: 7,
+        id: '19656',
         name: "Indian Wells Open",
         text: "Indian Wells Open"
     }
@@ -259,49 +259,49 @@ export const BoxingLeague = [
 ]
 export const HandballLeague = [
     {
-        id: 1,
-        name: "Lnh div"
+        id: '3135',
+        name: "HandbalNL League"
     },
     {
-        id: 2,
+        id: '1007',
         name: "Bundesliga"
     },
     {
-        id: 3,
+        id: '1011',
         name: "Liga Asobal"
     },
     {
-        id: 4,
-        name: "EHF Championship"
+        id: '1186',
+        name: "European Championship"
     },
     {
-        id: 5,
+        id: '2672',
         name: "IHF World Championship"
     },
 ]
 export const VolleyballLeague = [
     {
-        id: 1,
+        id: '1022',
         name: "SuperLega"
     },
     {
-        id: 2,
+        id: '1021',
         name: "Piusliga"
     },
     {
-        id: 3,
+        id: '1143',
         name: "Cev European Champions League"
     },
     {
-        id: 4,
+        id: '1107',
         name: "European Volleyball Championship"
     },
     {
-        id: 5,
+        id: '1125',
         name: "World Championship"
     },
     {
-        id: 6,
+        id: '3418',
         name: "FIVB Nations League"
     }
 ]
@@ -419,48 +419,48 @@ export const TableTennisLeague = [
 ]
 export const IceHockeyLeague = [
     {
-        id: 1,
+        id: '2436',
         name: "National Hockey League"
     },
     {
-        id: 2,
-        name: "FIH Hockey Nations Cup"
+        id: '4483',
+        name: "NHL 4 Nations Face-Off"
     },
     {
-        id: 3,
-        name: "Kontinental Hockey League"
+        id: '1037',
+        name: "Continental Cup"
     },
     {
-        id: 4,
+        id: '1062',
         name: "FIH World Cup"
     },
     {
-        id: 5,
-        name: "FIH Pro League"
+        id: '3974',
+        name: "Pro League"
     },
     {
-        id: 6,
+        id: '2041',
         name: "Olympics"
     },
     {
-        id: 7,
-        name: "Deutsh Cup"
+        id: '1151',
+        name: "Danish Cup"
     },
     {
-        id: 8,
+        id: '1055',
         name: "Hockey Allsvenskan"
     },
     {
-        id: 9,
+        id: '1056',
         name: "Swedish Hockey League"
     },
     {
-        id: 10,
-        name: "IIHF Champions Hockey League"
+        id: '1062',
+        name: "World Championship"
     },
     {
-        id: 11,
-        name: "IIHF Continental Cup"
+        id: '1037',
+        name: "Continental Cup"
     }
 ]
 export const MmaLeague = [
@@ -547,23 +547,23 @@ export const AflLeague = [
 
 export const BaseballLeague = [
     {
-        id: 1,
-        name: "Nippon Professional Baseball"
+        id: '1011',
+        name: "NPB"
     },
     {
-        id: 2,
-        name: "Major League Baseball"
+        id: '1000',
+        name: "Major League Baseball (MLB)"
     },
     {
-        id: 3,
+        id: '1005',
         name: "Liga Mexicana de Beisbol (LMB)"
     },
     {
-        id: 4,
-        name: "Korean Baseball Organization"
+        id: '1118',
+        name: "Korean Baseball Organization (KBO)"
     },
     {
-        id: 5,
+        id: '1121',
         name: "World Baseball Softball Confederation"
     },
 ]

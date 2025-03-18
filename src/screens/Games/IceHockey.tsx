@@ -13,8 +13,9 @@ import { MdCancel } from "react-icons/md";
 import { getIceHockeyFixtures } from '../../redux/slices/IceHockeySlice'
 import { LoadingState } from '../../components/LoadingState'
 import IceHockeyGameCard from '../../components/GameCard/IceHockeyGameCard'
+import HeaderBox from '../HeaderBox'
 
-function IceHockey({ calendarDate, setCalendarDate }) {
+function IceHockey() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
@@ -22,7 +23,7 @@ function IceHockey({ calendarDate, setCalendarDate }) {
   const [live, setLive] = useState<any>([])
   const [tomorrow, setTomorrow] = useState<any>([])
   const dispatch = useAppDispatch() as any
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   const url = `${SportSportBaseUrl}`;
 
 
@@ -151,54 +152,7 @@ function IceHockey({ calendarDate, setCalendarDate }) {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>IceHockey</p>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: 10
-          }}
-        >
-          {status?.map((aa, i) => {
-            return (
-              <div key={i} style={{ position: 'relative' }}>
-                {calendarDate && aa?.name === calendarDate?.formattedDate && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: -25,
-                      right: 0,
-                      cursor: 'pointer',
-                      fontSize: 12,
-                      color: 'red'
-                    }}
-                    onClick={() => {
-                      setCalendarDate(null)
-                      setSelectedStatus("Live")
-                    }}
-                  >
-                    <MdCancel size={25} />
-                  </span>
-                )}
-                <p
-                  onClick={() => setSelectedStatus(aa?.name)}
-                  style={{
-                    width: 80,
-                    padding: 3,
-                    cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                    marginRight: 4,
-                    textAlign: 'center',
-                    fontSize: 12
-                  }}
-                >
-                  {aa?.name}
-                </p>
-              </div>
-            )
-          })}
-        </div>
+        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

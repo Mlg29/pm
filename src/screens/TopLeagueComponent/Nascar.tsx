@@ -38,7 +38,7 @@ function Nascar({ leagueName }) {
 
     dispatch(getNascaFixtures(payloadLive)).then((dd) => {
 
-      const tp = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))?.map(rr => {
+      const tp = dd?.payload?.category?.filter(m => m?.id === leagueName)?.map(rr => {
         return {
           ...rr,
           race: Array.isArray(rr?.race) ? rr?.race : [rr?.race]

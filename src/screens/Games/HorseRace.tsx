@@ -14,11 +14,12 @@ import { MdCancel } from "react-icons/md";
 import { io } from "socket.io-client";
 import { SportSportBaseUrl } from '../../https'
 
-function HorseRace({ calendarDate, setCalendarDate }) {
+function HorseRace() {
   const dispatch = useAppDispatch() as any
   const [finished, setFinished] = useState<any>([])
   // const loading = useAppSelector(horseFixtureStatusState) as any
   const [loading, setLoading] = useState(false)
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   const [Live, setLive] = useState<any>([])
   const [Schedule, setSchedule] = useState<any>([])
 
@@ -175,13 +176,15 @@ function HorseRace({ calendarDate, setCalendarDate }) {
                   onClick={() => setSelectedStatus(aa?.name)}
                   style={{
                     width: 80,
-                    padding: 3,
+                    padding: "5px 3px",
                     cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'white',
                     color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
                     marginRight: 4,
                     textAlign: 'center',
-                    fontSize: 12
+                    fontSize: 12,
+                    border: "1px solid #2D0D02",
+                    borderRadius: 3
                   }}
                 >
                   {aa?.name}

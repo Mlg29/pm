@@ -12,14 +12,15 @@ import EmptyState from '../../components/EmptyState'
 import { getEasportFixtures, getEasportFixturesMatch } from '../../redux/slices/Easport'
 import EsportGameCard from '../../components/GameCard/EsportGameCard'
 import { MdCancel } from "react-icons/md";
+import HeaderBox from '../HeaderBox'
 
 
-function Easport({ calendarDate, setCalendarDate }) {
+function Easport() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const [live, setLive] = useState<any>([])
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   const dispatch = useAppDispatch() as any
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
@@ -131,54 +132,7 @@ function Easport({ calendarDate, setCalendarDate }) {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Easport</p>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: '10px'
-          }}
-        >
-          {status?.map((aa, i) => {
-            return (
-              <div key={i} style={{ position: 'relative' }}>
-                {calendarDate && aa?.name === calendarDate?.formattedDate && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: -25,
-                      right: 0,
-                      cursor: 'pointer',
-                      fontSize: 12,
-                      color: 'red'
-                    }}
-                    onClick={() => {
-                      setCalendarDate(null)
-                      setSelectedStatus("Live")
-                    }}
-                  >
-                    <MdCancel size={25} />
-                  </span>
-                )}
-                <p
-                  onClick={() => setSelectedStatus(aa?.name)}
-                  style={{
-                    width: 80,
-                    padding: 3,
-                    cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                    marginRight: 4,
-                    textAlign: 'center',
-                    fontSize: 12
-                  }}
-                >
-                  {aa?.name}
-                </p>
-              </div>
-            )
-          })}
-        </div>
+        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       {selectedStatus === 'Live' ? (
         <>

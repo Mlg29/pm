@@ -18,7 +18,7 @@ import { MdCancel } from "react-icons/md";
 
 
 
-function Boxing({ calendarDate, setCalendarDate }) {
+function Boxing() {
   const navigate = useNavigate()
   const [upcoming, setUpcoming] = useState<any>([])
   const [live, setLive] = useState<any>([])
@@ -28,7 +28,7 @@ function Boxing({ calendarDate, setCalendarDate }) {
   const [loading, setLoading] = useState(false)
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   const url = `${SportSportBaseUrl}`;
 
 
@@ -178,13 +178,15 @@ function Boxing({ calendarDate, setCalendarDate }) {
                   onClick={() => setSelectedStatus(aa?.name)}
                   style={{
                     width: 80,
-                    padding: 3,
+                    padding: "5px 3px",
                     cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'white',
                     color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
                     marginRight: 4,
                     textAlign: 'center',
-                    fontSize: 12
+                    fontSize: 12,
+                    border: "1px solid #2D0D02",
+                    borderRadius: 3
                   }}
                 >
                   {aa?.name}

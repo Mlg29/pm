@@ -25,7 +25,7 @@ export const createTransaction = createAsyncThunk(
   "transaction/createTransaction",
   async (payload: any, { rejectWithValue }) => {
     try {
-      const response = await postRequest(`${SportSportBaseUrl}/transactions`, payload);
+      const response = await postRequest(`${SportSportBaseUrl}/transactions/deposit`, payload);
       if (response?.status === 200 || response?.status === 201) {
         return response;
       }

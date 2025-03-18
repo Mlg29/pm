@@ -18,14 +18,14 @@ import Formula1Card from '../../components/GameCard/Formula1Card'
 import { MdCancel } from "react-icons/md";
 
 
-function Formula1({ calendarDate, setCalendarDate }) {
+function Formula1() {
   const navigate = useNavigate()
   const [live, setLive] = useState<any>([])
   const [upcoming, setUpcoming] = useState<any>([])
   const [schedule, setSchedule] = useState<any>([])
   const loading = useAppSelector(formulaFixtureStatusState) as any
   const dispatch = useAppDispatch() as any
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   let createdDate = moment(new Date()).utc().format()
   let tomorrowDate = moment(createdDate).add(1, 'd')
 
@@ -170,13 +170,15 @@ function Formula1({ calendarDate, setCalendarDate }) {
                   onClick={() => setSelectedStatus(aa?.name)}
                   style={{
                     width: 80,
-                    padding: 3,
+                    padding: "5px 3px",
                     cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'white',
                     color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
                     marginRight: 4,
                     textAlign: 'center',
-                    fontSize: 12
+                    fontSize: 12,
+                    border: "1px solid #2D0D02",
+                    borderRadius: 3
                   }}
                 >
                   {aa?.name}

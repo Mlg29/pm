@@ -35,7 +35,7 @@ function AussieRules({ leagueName }) {
 
     dispatch(getAussieRuleFixtures(payloadLive)).then((dd) => {
 
-      setLive(dd?.payload?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase())))
+      setLive(dd?.payload?.filter(m => m?.leagueId === leagueName))
     })
     dispatch(getAussieRuleFixtures(payloadSchedule)).then((dd) => {
 

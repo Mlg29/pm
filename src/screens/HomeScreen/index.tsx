@@ -121,29 +121,6 @@ function HomeScreen() {
 
 
 
-  const handleDateChange = (date) => {
-    const today = new Date() as any;
-    today.setHours(0, 0, 0, 0);
-    date.setHours(0, 0, 0, 0);
-
-    const difference = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
-
-    const relativeDate = difference === 0 ? "d0" : difference < 0 ? `d${difference}` : `d${difference}`;
-
-    const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
-      .toString().padStart(2, '0')}-${date.getFullYear()}`;
-    if (relativeDate === "d0") {
-      return
-    }
-    else {
-      setCalendarDate({
-        index: relativeDate,
-        formattedDate: formattedDate
-      })
-    }
-
-  };
-
   const getNotification = async () => {
     await dispatch(getNotifications());
   };
@@ -481,54 +458,36 @@ function HomeScreen() {
           );
         })}
       </Sidebar>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          cursor: "pointer",
-        }}
-      >
-        <DatePicker
-          selected={selectedDate}
-          popperPlacement="left-start"
-          onChange={(date) => handleDateChange(date)}
-          minDate={new Date(new Date().setDate(new Date().getDate() - 7))}
-          maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}
-          customInput={
 
-            <FaCalendarAlt />
-          }
-        />
-      </div>
       {selected === "Soccer" && (
         <div>
-          <Football calendarDate={calendarDate} setCalendarDate={setCalendarDate} />
+          <Football />
         </div>
       )}
-      {selected === "Basketball" && <Basketball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Basketball" && <Basketball />}
 
-      {selected === "Tennis" && <Tennis calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Tennis" && <Tennis />}
 
-      {selected === "Horse" && <HorseRace calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Horse" && <HorseRace />}
 
-      {selected === "Boxing" && <Boxing calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Cricket" && <Cricket calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Baseball" && <Baseball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Volleyball" && <Volleyball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Golf" && <Golf calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Hockey" && <Hockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Formula 1" && <Formula1 calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "American League" && <Rugby calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Handball" && <Handball calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Ice Hockey" && <IceHockey calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "NASCAR" && <Nascar calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Futsal" && <Futsol calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "MMA/UFC" && <Mma calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Darts" && <Darts calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Snooker" && <Snooker calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Esports" && <Easport calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Table Tennis" && <TableTennis calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
-      {selected === "Aussie Rules" && <AussieRules calendarDate={calendarDate} setCalendarDate={setCalendarDate} />}
+      {selected === "Boxing" && <Boxing />}
+      {selected === "Cricket" && <Cricket />}
+      {selected === "Baseball" && <Baseball />}
+      {selected === "Volleyball" && <Volleyball />}
+      {selected === "Golf" && <Golf />}
+      {selected === "Hockey" && <Hockey />}
+      {selected === "Formula 1" && <Formula1 />}
+      {selected === "American League" && <Rugby />}
+      {selected === "Handball" && <Handball />}
+      {selected === "Ice Hockey" && <IceHockey />}
+      {selected === "NASCAR" && <Nascar />}
+      {selected === "Futsal" && <Futsol />}
+      {selected === "MMA/UFC" && <Mma />}
+      {selected === "Darts" && <Darts />}
+      {selected === "Snooker" && <Snooker />}
+      {selected === "Esports" && <Easport />}
+      {selected === "Table Tennis" && <TableTennis />}
+      {selected === "Aussie Rules" && <AussieRules />}
 
       {getToken && <BottomTabs />}
     </div>

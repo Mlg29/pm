@@ -15,7 +15,7 @@ import { getTableTennisFixtures } from '../../redux/slices/TableTennisSlice'
 import TableTennisGameCard from '../../components/GameCard/TableTennisGameCard'
 
 
-function TableTennis({ calendarDate, setCalendarDate }) {
+function TableTennis() {
   const navigate = useNavigate()
   const [scheduled, setScheduled] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
@@ -23,7 +23,7 @@ function TableTennis({ calendarDate, setCalendarDate }) {
   const [tomorrow, setTomorrow] = useState<any>([])
   const [loading, setLoading] = useState(false)
   const [live, setLive] = useState<any>([])
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   const url = `${SportSportBaseUrl}`;
 
 
@@ -196,13 +196,15 @@ function TableTennis({ calendarDate, setCalendarDate }) {
                   onClick={() => setSelectedStatus(aa?.name)}
                   style={{
                     width: 80,
-                    padding: 3,
+                    padding: "5px 3px",
                     cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'white',
                     color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
                     marginRight: 4,
                     textAlign: 'center',
-                    fontSize: 12
+                    fontSize: 12,
+                    border: "1px solid #2D0D02",
+                    borderRadius: 3
                   }}
                 >
                   {aa?.name}

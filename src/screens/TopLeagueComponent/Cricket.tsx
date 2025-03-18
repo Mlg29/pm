@@ -43,7 +43,7 @@ function Cricket({ leagueName }) {
 
 
     dispatch(getCricketFixtures(payloadLive)).then((dd) => {
-      const filterData = dd?.payload?.scores?.categories?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.scores?.categories?.filter(m => m?.id === leagueName)
       setLive(filterData || [])
     })
 

@@ -31,7 +31,7 @@ function Baseball({ leagueName }) {
       range: 'd-1'
     }
     dispatch(getBaseballFixtures(null)).then((dd) => {
-      setLive(dd?.payload?.categories?.filter(m => m?.["@name"]?.toLowerCase().includes(leagueName?.toLowerCase())) || [])
+      setLive(dd?.payload?.categories?.filter(m => m?.id === leagueName) || [])
     })
 
   }, [dispatch])

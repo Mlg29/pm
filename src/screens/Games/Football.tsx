@@ -13,10 +13,11 @@ import { LoadingState } from '../../components/LoadingState'
 import { MdCancel } from "react-icons/md";
 import { io } from "socket.io-client";
 import { SportSportBaseUrl } from '../../https'
+import HeaderBox from '../HeaderBox'
 
 
 
-function Football({ calendarDate, setCalendarDate }) {
+function Football() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch() as any
   const [live, setLive] = useState<any>([])
@@ -25,7 +26,7 @@ function Football({ calendarDate, setCalendarDate }) {
   const [upcoming, setUpcoming] = useState<any>([])
   const [tomorrow, setTomorrow] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   const [selectedStatus, setSelectedStatus] = useState('Live')
 
 
@@ -61,6 +62,7 @@ function Football({ calendarDate, setCalendarDate }) {
     }
     setLoading(true)
     dispatch(getFootballFixtures(null)).then((dd) => {
+      console.log({ dd })
       setLive(dd?.payload?.category)
       setLoading(false)
     })
@@ -82,8 +84,8 @@ function Football({ calendarDate, setCalendarDate }) {
     if (calendarDate) {
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-        // console.log(">>", payloadTomorrow, { dd })
-        setTomorrow(dd?.payload || [])
+
+        setTomorrow(dd?.payload?.category || [])
       })
     }
 
@@ -156,54 +158,7 @@ function Football({ calendarDate, setCalendarDate }) {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Soccer</p>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: '10px'
-          }}
-        >
-          {status?.map((aa, i) => {
-            return (
-              <div key={i} style={{ position: 'relative' }}>
-                {calendarDate && aa?.name === calendarDate?.formattedDate && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: -25,
-                      right: 0,
-                      cursor: 'pointer',
-                      fontSize: 12,
-                      color: 'red'
-                    }}
-                    onClick={() => {
-                      setCalendarDate(null)
-                      setSelectedStatus("Live")
-                    }}
-                  >
-                    <MdCancel size={25} />
-                  </span>
-                )}
-                <p
-                  onClick={() => setSelectedStatus(aa?.name)}
-                  style={{
-                    width: 80,
-                    padding: 3,
-                    cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
-                    color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
-                    marginRight: 4,
-                    textAlign: 'center',
-                    fontSize: 12
-                  }}
-                >
-                  {aa?.name}
-                </p>
-              </div>
-            )
-          })}
-        </div>
+        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

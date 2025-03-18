@@ -11,12 +11,12 @@ import FutsalGameCard from '../../components/GameCard/FutsalGameCard'
 import { MdCancel } from "react-icons/md";
 import { io } from "socket.io-client";
 
-function Futsol({ calendarDate, setCalendarDate }) {
+function Futsol() {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const dispatch = useAppDispatch() as any
   const url = `${SportSportBaseUrl}`;
-
+  const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
 
   useEffect(() => {
 
@@ -126,13 +126,15 @@ function Futsol({ calendarDate, setCalendarDate }) {
                   onClick={() => setSelectedStatus(aa?.name)}
                   style={{
                     width: 80,
-                    padding: 3,
+                    padding: "5px 3px",
                     cursor: 'pointer',
-                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'gray',
+                    backgroundColor: selectedStatus === aa?.name ? '#2D0D02' : 'white',
                     color: selectedStatus === aa?.name ? 'white' : '#2d0d02',
                     marginRight: 4,
                     textAlign: 'center',
-                    fontSize: 12
+                    fontSize: 12,
+                    border: "1px solid #2D0D02",
+                    borderRadius: 3
                   }}
                 >
                   {aa?.name}

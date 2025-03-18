@@ -101,7 +101,7 @@ function DashboardLayout({ children }) {
 
   const handleLeague = (name) => {
     navigate("/league", {
-      state: { name: name, sport: sportEvents }
+      state: { data: name, sport: sportEvents }
     })
   }
 
@@ -139,12 +139,12 @@ function DashboardLayout({ children }) {
         <div style={{ ...styles.container }}>
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>Top Leagues</h3>
+              <h3 style={{ ...FONTS.h6 }}>Top {(sportEvents === "Soccer" || sportEvents === "Basketball" || sportEvents === "American Football") ? "Leagues" : (sportEvents === "Boxing" || sportEvents === "MMA/UFC") ? "Events/Orgs." : "Tournaments"}</h3>
 
               <>
                 {TopLeagues?.map((data: any, i) => {
                   return (
-                    <div key={i} onClick={() => handleLeague(data?.name)}>
+                    <div key={i} onClick={() => handleLeague(data)}>
                       <p
                         style={{
                           ...FONTS.body6,
@@ -189,11 +189,11 @@ function DashboardLayout({ children }) {
         <div style={{ ...styles.containerDes }}>
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h6 }}>Top Leagues</h3>
+              <h3 style={{ ...FONTS.h6 }}>Top {(sportEvents === "Soccer" || sportEvents === "Basketball" || sportEvents === "American Football") ? "Leagues" : (sportEvents === "Boxing" || sportEvents === "MMA/UFC") ? "Events/Orgs." : "Tournaments"}</h3>
               <>
                 {TopLeagues?.map((data: any, i) => {
                   return (
-                    <div key={i} onClick={() => handleLeague(data?.name)}>
+                    <div key={i} onClick={() => handleLeague(data)}>
                       <p style={{ ...FONTS.body6, margin: "15px 0px", cursor: 'pointer' }}>
                         {data?.name}
                       </p>
@@ -233,10 +233,10 @@ function DashboardLayout({ children }) {
         <div style={{ ...styles.containerTab }}>
           <div style={{ ...styles.box1 }}>
             <div style={{ ...styles.subBox }}>
-              <h3 style={{ ...FONTS.h7 }}>Top Leagues</h3>
+              <h3 style={{ ...FONTS.h7 }}>Top {(sportEvents === "Soccer" || sportEvents === "Basketball" || sportEvents === "American Football") ? "Leagues" : (sportEvents === "Boxing" || sportEvents === "MMA/UFC") ? "Events/Orgs." : "Tournaments"}</h3>
               {TopLeagues?.map((data: any, i) => {
                 return (
-                  <div key={i} onClick={() => handleLeague(data?.name)}>
+                  <div key={i} onClick={() => handleLeague(data)}>
                     <p style={{ ...FONTS.body7, margin: "15px 0px", cursor: 'pointer' }}>
                       {data?.name}
                     </p>

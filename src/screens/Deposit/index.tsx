@@ -108,8 +108,8 @@ function Deposit() {
   const handleNext = async () => {
     const payload = {
       amount: parseInt(value),
-      type: "DEPOSIT",
-      status: "SUCCESS"
+      // type: "DEPOSIT",
+      // status: "SUCCESS"
 
     };
 
@@ -118,15 +118,14 @@ function Deposit() {
 
     if (createTransaction.fulfilled.match(response)) {
       setLoader(false);
-      //  console.log({response})
-      // window.open(response?.payload?.data?.data?.paymentLink, '_blank');
-      closePaymentModal();
-      navigate("/deposit-success", {
-        state: {
-          message: "Deposit successfully completed",
-          type: "Deposit"
-        }
-      });
+      window.open(response?.payload?.data?.data?.paymentLink, '_blank');
+      // closePaymentModal();
+      // navigate("/deposit-success", {
+      //   state: {
+      //     message: "Deposit successfully completed",
+      //     type: "Deposit"
+      //   }
+      // });
       // toast.success(response?.payload?.data?.message, {
       //   position: "bottom-center",
       // });
@@ -197,18 +196,18 @@ function Deposit() {
           propStyle={{ width: "100%" }}
           isLoading={loader}
           // handlePress={() => navigate("/payment-options")}
-          //handlePress={() => handleNext()}
-          handlePress={() => {
-            setLoader(true);
-            return handleFlutterPayment({
-              callback: (response) => {
-                if (response?.status === "successful" || response?.status === "completed") {
-                  handleNext();
-                }
-              },
-              onClose: () => { },
-            });
-          }}
+          handlePress={() => handleNext()}
+        // handlePress={() => {
+        //   setLoader(true);
+        //   return handleFlutterPayment({
+        //     callback: (response) => {
+        //       if (response?.status === "successful" || response?.status === "completed") {
+        //         handleNext();
+        //       }
+        //     },
+        //     onClose: () => { },
+        //   });
+        // }}
         />
       </div>
 

@@ -33,7 +33,7 @@ function Rugby({ leagueName }) {
 
 
     dispatch(getAflFixtureLive()).then((dd) => {
-      const filterData = dd?.payload?.category?.filter(m => m?.name?.toLowerCase().includes(leagueName?.toLowerCase()))
+      const filterData = dd?.payload?.category?.filter(m => m?.id === leagueName)
       setLive(filterData || [])
     })
   }, [])
