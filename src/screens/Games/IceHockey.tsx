@@ -73,10 +73,12 @@ function IceHockey() {
 
 
     if (calendarDate) {
+      setLoading(true)
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getIceHockeyFixtures(payloadTomorrow)).then((dd) => {
         setTomorrow(dd?.payload?.category)
         setLoading(false)
+
       })
     }
   }, [calendarDate])
@@ -152,7 +154,7 @@ function IceHockey() {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>IceHockey</p>
-        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
+        <HeaderBox status={status} selectedStatus={selectedStatus} setTomorrow={setTomorrow} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

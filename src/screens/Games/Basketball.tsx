@@ -58,9 +58,7 @@ function Basketball() {
   }, []);
 
   useEffect(() => {
-    const payloadTomorrow = {
-      range: calendarDate?.index
-    }
+
 
     setLoading(true)
     dispatch(getBasketballFixtures(null)).then((dd) => {
@@ -69,13 +67,25 @@ function Basketball() {
       setLoading(false)
     })
 
+  }, [dispatch])
+
+
+  useEffect(() => {
+
+    const payloadTomorrow = {
+      range: calendarDate?.index
+    }
+
+
     if (calendarDate) {
+      setLoading(true)
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getBasketballFixtures(payloadTomorrow)).then((dd) => {
         setTomorrow(dd?.payload || [])
+        setLoading(false)
       })
     }
-  }, [dispatch, calendarDate])
+  }, [calendarDate])
 
 
   // const aa = (Array.isArray(live) ? live : [live]).filter(league => league && typeof league === "object")?.map(league => ({
@@ -149,7 +159,7 @@ function Basketball() {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Basketball</p>
-        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
+        <HeaderBox status={status} selectedStatus={selectedStatus} setTomorrow={setTomorrow} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

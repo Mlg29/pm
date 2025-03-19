@@ -62,9 +62,7 @@ function Tennis() {
     const PayloadScheduled = {
       range: 'upcoming'
     }
-    const payloadTomorrow = {
-      range: calendarDate?.index
-    }
+
 
     // dispatch(getTennisFixtures(PayloadFinished)).then((dd) => {
     //   setFinished(dd?.payload?.category || [])
@@ -76,14 +74,24 @@ function Tennis() {
       setLive(dd?.payload?.category || [])
       setLoading(false)
     })
+
+  }, [])
+
+
+  useEffect(() => {
+    const payloadTomorrow = {
+      range: calendarDate?.index
+    }
+
     if (calendarDate) {
+      setLoading(true)
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getTennisFixtures(payloadTomorrow)).then((dd) => {
         setTomorrow(dd?.payload?.category || [])
+        setLoading(false)
       })
     }
   }, [calendarDate])
-
 
 
 
@@ -169,7 +177,7 @@ function Tennis() {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Tennis</p>
-        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
+        <HeaderBox status={status} selectedStatus={selectedStatus} setTomorrow={setTomorrow} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

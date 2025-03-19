@@ -23,7 +23,7 @@ function Easport() {
   const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   const dispatch = useAppDispatch() as any
   const [selectedStatus, setSelectedStatus] = useState('Live')
-
+  const [loading, setLoading] = useState(false)
 
 
   let createdDate = moment(new Date()).utc().format()
@@ -55,32 +55,37 @@ function Easport() {
     };
   }, []);
 
-  console.log({ live })
+
+
+  useEffect(() => {
+
+
+
+    // dispatch(getEasportFixturesMatch(payloadFinished)).then((dd) => {
+    //   setFinished(dd?.payload?.match)
+    // })
+    setLoading(true)
+    dispatch(getEasportFixtures()).then((dd) => {
+      console.log({ dd })
+      setLive(dd?.payload?.match)
+      setLoading(false)
+    })
+  }, [])
 
   useEffect(() => {
     const payloadUpcoming = {
       range: calendarDate?.index
     }
 
-
-    const payloadFinished = {
-      range: 'finished'
-    }
-
     if (calendarDate) {
+      setLoading(true)
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getEasportFixturesMatch(payloadUpcoming)).then((dd) => {
         setUpcoming(dd?.payload?.match)
+        setLoading(false)
       })
     }
-    // dispatch(getEasportFixturesMatch(payloadFinished)).then((dd) => {
-    //   setFinished(dd?.payload?.match)
-    // })
 
-    dispatch(getEasportFixtures()).then((dd) => {
-      console.log({ dd })
-      setLive(dd?.payload?.match)
-    })
   }, [calendarDate])
 
 
@@ -132,7 +137,7 @@ function Easport() {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Easport</p>
-        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
+        <HeaderBox status={status} selectedStatus={selectedStatus} setTomorrow={setUpcoming} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       {selectedStatus === 'Live' ? (
         <>

@@ -57,22 +57,13 @@ function Football() {
 
 
   useEffect(() => {
-    const payloadTomorrow = {
-      range: calendarDate?.index
-    }
+
     setLoading(true)
     dispatch(getFootballFixtures(null)).then((dd) => {
       console.log({ dd })
       setLive(dd?.payload?.category)
       setLoading(false)
     })
-
-    if (calendarDate) {
-      setSelectedStatus(calendarDate?.formattedDate)
-      dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-        setTomorrow(dd?.payload || [])
-      })
-    }
 
 
   }, [])
@@ -82,10 +73,11 @@ function Football() {
       range: calendarDate?.index
     }
     if (calendarDate) {
+      setLoading(true)
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getFootballFixtures(payloadTomorrow)).then((dd) => {
-
         setTomorrow(dd?.payload?.category || [])
+        setLoading(false)
       })
     }
 
@@ -158,7 +150,7 @@ function Football() {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Soccer</p>
-        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
+        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setTomorrow={setTomorrow} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

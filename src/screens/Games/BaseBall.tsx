@@ -23,7 +23,7 @@ function Baseball() {
   const [upcoming, setUpcoming] = useState<any>([])
   const [finished, setFinished] = useState<any>([])
   const [tomorrow, setTomorrow] = useState<any>([])
-  const loading = useAppSelector(BaseballFixtureeStatusState) as any
+  const [loading, setLoading] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState('Finished')
   const [calendarDate, setCalendarDate] = useState<{ index: string; formattedDate: string } | null>(null);
   let createdDate = moment(new Date()).utc().format()
@@ -59,12 +59,11 @@ function Baseball() {
     const payloadFinished = {
       range: 'finished'
     }
-    const payloadTomorrow = {
-      range: calendarDate?.index
-    }
+    setLoading(true)
     dispatch(getBaseballFixtures(null)).then((dd) => {
       console.log({ dd })
       setLive(dd?.payload?.category || [])
+      setLoading(false)
     })
     // dispatch(getBaseballFixtures(payloadUpcoming)).then((dd) => {
     //   setUpcoming(dd?.payload?.categories || [])
@@ -73,13 +72,25 @@ function Baseball() {
     //   console.log({ dd })
     //   setFinished(dd?.payload?.categories || [])
     // })
+
+  }, [dispatch])
+
+
+  useEffect(() => {
+
+    const payloadTomorrow = {
+      range: calendarDate?.index
+    }
+
     if (calendarDate) {
+      setLoading(true)
       setSelectedStatus(calendarDate?.formattedDate)
       dispatch(getBaseballFixtures(payloadTomorrow)).then((dd) => {
         setTomorrow(dd?.payload || [])
+        setLoading(false)
       })
     }
-  }, [dispatch, calendarDate])
+  }, [calendarDate])
 
 
 
@@ -145,7 +156,7 @@ function Baseball() {
     <div>
       <div>
         <p style={{ fontSize: 14, fontWeight: '500' }}>Baseball</p>
-        <HeaderBox status={status} selectedStatus={selectedStatus} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
+        <HeaderBox status={status} selectedStatus={selectedStatus} setTomorrow={setTomorrow} calendarDate={calendarDate} setCalendarDate={setCalendarDate} setSelectedStatus={setSelectedStatus} />
       </div>
       <LoadingState isLoading={loading}>
         {selectedStatus === 'Live' ? (

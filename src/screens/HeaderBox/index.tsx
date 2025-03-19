@@ -6,7 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 
 
 
-function HeaderBox({ calendarDate, setCalendarDate, status, selectedStatus, setSelectedStatus }) {
+function HeaderBox({ calendarDate, setCalendarDate, setTomorrow, status, selectedStatus, setSelectedStatus }) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
     return (
@@ -40,6 +40,7 @@ function HeaderBox({ calendarDate, setCalendarDate, status, selectedStatus, setS
                                     }}
                                     onClick={() => {
                                         setCalendarDate(null)
+                                        setTomorrow([])
                                         setSelectedStatus("Live")
                                     }}
                                 >
