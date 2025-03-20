@@ -224,7 +224,7 @@ function EsportDetails({ gameInfo, dateTime, isMobile, selected, handleRoute }) 
                 }
               />
             </div>
-            <div style={{ width: '100%', margin: '10px 0px' }}>
+            <div style={{ width: '70%', margin: '10px 0px' }}>
               <Button
                 text='Draw'
                 propStyle={{

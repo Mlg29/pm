@@ -74,7 +74,6 @@ function IceHockeyCard(props) {
           <p
             style={{
               ...FONTS.body7,
-              fontSize: "8px",
               margin: "10px 0px 0px 0px",
             }}
           >
@@ -111,7 +110,6 @@ function IceHockeyCard(props) {
           <p
             style={{
               ...FONTS.body7,
-              fontSize: "8px",
               margin: "10px 0px 0px 0px",
             }}
           >

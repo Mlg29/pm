@@ -93,7 +93,7 @@ const styles = {
     alignItems: "center",
     borderBottom: `1px solid ${COLORS.semiGray}`,
     background: COLORS.white,
-    padding: "1rem 2rem",
+    padding: "0.2rem 2rem",
   },
   rowDes: {
     display: "flex",

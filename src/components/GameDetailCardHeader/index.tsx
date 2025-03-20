@@ -55,6 +55,14 @@ function GameDetailCardHeader(props: any) {
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
+      <p
+        style={{
+          ...FONTS.body7,
+          margin: "0px 0px 10px 0px",
+        }}
+      >
+        {data?.league}
+      </p>
       <div style={{ ...styles.row }}>
         <div
           style={{
@@ -65,15 +73,7 @@ function GameDetailCardHeader(props: any) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            {data?.league}
-          </p>
+
 
 
           {!homeLogo ? (
@@ -85,7 +85,7 @@ function GameDetailCardHeader(props: any) {
           <p
             style={{
               ...FONTS.body7,
-              fontSize: "8px",
+              // fontSize: "8px",
               margin: "10px 0px 0px 0px",
             }}
           >
@@ -137,7 +137,7 @@ function GameDetailCardHeader(props: any) {
           <p
             style={{
               ...FONTS.body7,
-              fontSize: "8px",
+              // fontSize: "8px",
               margin: "10px 0px 0px 0px",
             }}
           >

@@ -53,6 +53,14 @@ function MmaCard(props) {
 
   return (
     <div style={{ ...styles.container, ...propStyle }}>
+      <p
+        style={{
+          ...FONTS.body7,
+          margin: "0px 0px 10px 0px",
+        }}
+      >
+        {data?.name || data?.type}
+      </p>
       <div style={{ ...styles.row }}>
         <div
           style={{
@@ -63,20 +71,11 @@ function MmaCard(props) {
             width: "40%",
           }}
         >
-          <p
-            style={{
-              ...FONTS.body7,
-              fontSize: "8px",
-              margin: "0px 0px 10px 0px",
-            }}
-          >
-            {data?.name || data?.type}
-          </p>
+
           <SiUfc size={30} color={COLORS.primary} />
           <p
             style={{
               ...FONTS.body7,
-              fontSize: "8px",
               margin: "10px 0px 0px 0px",
             }}
           >
@@ -117,7 +116,6 @@ function MmaCard(props) {
           <p
             style={{
               ...FONTS.body7,
-              fontSize: "8px",
               margin: "10px 0px 0px 0px",
             }}
           >

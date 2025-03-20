@@ -86,12 +86,13 @@ const styles = {
     borderRadius: "5px",
   },
   tb: {
-    width: '30%',
+    width: '20%',
     display: "flex",
     justifyContent: "center",
     padding: 10,
     margin: "5px",
     borderRadius: "5px",
+
   },
   row: {
     display: "flex",
@@ -174,7 +175,7 @@ function GameDetails() {
     hour12: true
   });
 
-  console.log({ gameInfo })
+  // console.log({ gameInfo })
 
   const handleRoute = (route: string, selection?: string) => {
 
