@@ -125,6 +125,7 @@ function BasketballDetails({ selected, dateTime, gameInfo, handleRoute, isMobile
     ...gameInfo,
     dateTime
   }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <div

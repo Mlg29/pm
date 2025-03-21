@@ -152,7 +152,7 @@ function DartDetails({ gameInfo, dateTime, isMobile, selected, handleRoute }) {
                   backgroundColor:
                     selected === 'draw' ? COLORS.primary : COLORS.cream,
                   color: selected === 'draw' ? COLORS.cream : COLORS.primary,
-                  fontSize: 12
+
                 }}
                 //  handlePress={() => navigate('/home')}
                 handlePress={() => handleRoute('draw', 'draw')}
